@@ -5,46 +5,47 @@ export const ASTS = defineStock({
   name: 'AST SpaceMobile',
   sector: 'Space Technology',
   themeColor: '#38bdf8',
-  currentPrice: 84,
+  currentPrice: 93.15,
+  updatedOn: '03/26',
   fairPriceRange: '$20 - $250',
-  shares0: 380,
-  rev25: 60,
+  shares0: 370,
+  rev25: 71,
   fcfMargin25: -0.10,
   taxRate: 0.15,
-  cash: 3200,
-  debt: 1700,
+  cash: 3900,
+  debt: 2500,
   beta: 1.46,
-  costDebt: 0.035,
-  rsRating: 97,
+  costDebt: 0.03,
+  rsRating: 98,
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "AST SpaceMobile is building the only space-based cellular broadband network for standard smartphones — a category-defining asymmetric bet with 50+ MNO partnerships covering 3B+ subscribers. " +
-    "Revenue trajectory from $60M to $4.8B+ by 2029E hinges entirely on satellite deployment: 12 sats today scaling to 168 at $22M/sat. " +
-    "If 45+ sats achieve continuous coverage by YE26 and margins inflect toward 74% GM at scale, this is a space-infrastructure monopoly. " +
-    "If deployment delays or unit economics don't validate, ~3%/yr dilution erodes the thesis. RS 97 confirms conviction — but this is execution-or-bust.",
+    "AST SpaceMobile is the only space-based cellular broadband network for standard smartphones — a category-defining bet with 50+ MNO partnerships (incl. Verizon, AT&T, Vodafone, stc) covering 3B+ subscribers. " +
+    "Q4 2025 validated execution: FY25 revenue $71M (top of guidance), BB6 Block 2 (2,400 sq ft) successfully deployed, $1.2B contracted backlog, balance sheet fortified to $3.9B pro forma cash. " +
+    "2026 guidance $150-200M revenue with 45-60 sats targeting orbit; 2027 goal approaching $1B as commercial service scales across US, Europe, Japan, Middle East. " +
+    "Management targets 90%+ EBITDA margins at scale, $21-23M/sat cost, 95% vertically integrated manufacturing. Government revenue accelerating via Golden Dome, SHIELD, SDA contracts. " +
+    "Risk remains execution: launch cadence, stacking validation, and dilution from convertibles/ATM. RS 97 confirms conviction — execution-or-bust thesis intact.",
 
-
-  analystConsensus: { rating: 'Hold', targetLow: 30, targetMedian: 61, targetHigh: 137, numAnalysts: 7 },
+  analystConsensus: { rating: 'Hold', targetLow: 43, targetMedian: 70, targetHigh: 137, numAnalysts: 9 },
   revGrowth: [
-    [2.50, 2.00, 1.30, 0.80, 0.40],
-    [3.17, 2.60, 1.67, 1.00, 0.50],
-    [4.00, 3.20, 2.00, 1.30, 0.65],
+    [0.97, 2.21, 1.44, 0.70, 0.45],
+    [1.46, 4.14, 1.78, 0.90, 0.50],
+    [2.52, 4.20, 2.08, 1.15, 0.60],
   ],
   fcfMargin: [
-    [-2.00, -0.40, 0.05, 0.20, 0.28],
-    [-4.23, -0.88, 0.07, 0.39, 0.49],
-    [-3.50, -0.50, 0.15, 0.45, 0.52],
+    [-2.50, -0.40, 0.05, 0.20, 0.28],
+    [-5.00, -0.88, 0.07, 0.39, 0.49],
+    [-3.80, -0.50, 0.15, 0.45, 0.52],
   ],
   exitMultiple: [12, 18, 25],
   desc: [
-    'Deployment delays with <30 sats by YE26, limited continuous coverage. Revenue stalls below $2.5B by 2029. Margins compressed by hardware-heavy mix and elevated OpEx. Dilution accelerates.',
-    'On-plan deployment hitting 45 sats by YE26 with continuous coverage live. Revenue ramps from $60M to $4.8B by 2029. Service revenue reaches 88% of mix. Gross margins scale to 74% as unit economics validate.',
-    'Accelerated deployment (60+ sats YE26), government/DoD contracts secured, spectrum monetization live. Revenue exceeds $8B by 2030. Gross margins above 74%, multiple expansion as market re-rates ASTS as infrastructure monopoly.',
+    'Deployment delays with <30 sats by YE26, stacking issues persist. Revenue reaches ~$140M in 2026, stalls below $2.5B by 2030. Launch cadence misses targets. Margins compressed by hardware-heavy mix and elevated capex ($350-425M/qtr). Dilution accelerates from additional capital raises.',
+    'On-plan deployment hitting 45 sats by YE26, stacking validated, continuous coverage live. Revenue ramps from $71M (FY25 actual) through $175M (2026 guidance midpoint) to ~$900M (2027) and $4.8B by 2029. Service revenue reaches 88% of mix. $1.2B contracted backlog provides near-term visibility. 90%+ EBITDA margins at scale as unit economics validate.',
+    'Accelerated deployment (60+ sats YE26), government/DoD contracts secured (Golden Dome, SHIELD, SDA prime contractor), L/S-band spectrum monetization live. Revenue exceeds $1.3B by 2027 and $8B+ by 2030. EBITDA margins above 80%, multiple expansion as market re-rates ASTS as dual-use infrastructure monopoly.',
   ],
 
   bbRate: [0, 0, 0],
-  ebitdaProxy: [0.30, 0.45, 0.55],
-  bullMaOptVal: 80 * 380 * 0.07,
+  ebitdaProxy: [0.35, 0.55, 0.65],
+  bullMaOptVal: 93.15 * 370 * 0.07,
 
   driverOverrides: [
     {},
