@@ -5,7 +5,7 @@ export const ANET = defineStock({
   name: 'Arista Networks',
   sector: 'Cloud Networking',
   themeColor: '#6366f1',
-  currentPrice: 127,
+  currentPrice: 132,
   fairPriceRange: '$145',
   shares0: 1275,
   rev25: 9006,
@@ -15,7 +15,7 @@ export const ANET = defineStock({
   debt: 0,
   beta: 1.10,
   costDebt: 0.045,
-  rsRating: 80,
+  rsRating: 83,
   aiImpact: 'TAILWIND',
   strategicNarrative: "Arista is the pure-play backbone of the AI cluster with an EOS moat and hyperscaler lock-in. FY26 guided at $11.25B (+25% YoY) with AI networking at $3.25B. Quality is undeniable — 47% FCF margin, zero debt, strong campus diversification. DCF with discount rate calibrated to ANET's fortress balance sheet supports a BUY at current levels. Key risk remains P/E compression if AI capex decelerates, but sustained 15%+ growth and margin durability justify a premium exit multiple.",
 
