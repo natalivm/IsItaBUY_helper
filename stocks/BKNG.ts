@@ -5,7 +5,8 @@ export const BKNG = defineStock({
   name: 'Booking Holdings',
   sector: 'Online Travel / Marketplace',
   themeColor: '#003580',
-  currentPrice: 4001,
+  updatedOn: '07/03',
+  currentPrice: 4540,
   fairPriceRange: '$7,700 - $10,300',
   shares0: 30.6,
   rev25: 26917,
@@ -15,7 +16,7 @@ export const BKNG = defineStock({
   debt: 17500,
   beta: 1.15,
   costDebt: 0.04,
-  rsRating: 15,
+  rsRating: 22,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   strategicNarrative:
