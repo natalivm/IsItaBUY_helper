@@ -5,7 +5,8 @@ export const FTNT = defineStock({
   name: 'Fortinet',
   sector: 'Cybersecurity',
   themeColor: '#06b6d4',
-  currentPrice: 83.20,
+  currentPrice: 83.60,
+  updatedOn: '07/03',
   fairPriceRange: '$70 - $105',
   shares0: 743.6,
   rev25: 6800,
@@ -15,7 +16,7 @@ export const FTNT = defineStock({
   debt: 995,
   beta: 1.05,
   costDebt: 0.048,
-  rsRating: 27,
+  rsRating: 26,
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "Fortinet owns the ASIC-driven SASE platform play in cybersecurity — proprietary silicon gives a cost/performance edge that cloud-native peers can't match, with 32.5% FCF margins and a $4.6B net cash fortress. " +
