@@ -5,7 +5,7 @@ export const STRL = defineStock({
   name: 'Sterling Infrastructure, Inc.',
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
-  currentPrice: 428,
+  currentPrice: 391,
   fairPriceRange: '$320 - $560',
   shares0: 30.7,               // ~30.7M diluted shares outstanding (declining via buybacks)
   rev25: 2490,                 // FY2025 actual: $2.49B revenue (+32% YoY adj.)
@@ -19,7 +19,7 @@ export const STRL = defineStock({
   modelType: 'EPS_PE',
   baseEps: 10.95,              // FY2025 actual adj. EPS ~$10.95 (+53% YoY); Q4 $3.08 vs $2.52 est.
 
-  rsRating: 97,                 // Elite: $96→$477 52-wk range, near ATH; 53% EPS growth supports elevated RS
+  rsRating: 96,                 // Elite: $96→$477 52-wk range; 53% EPS growth supports elevated RS
   rsTrend: 'rising',            // Post-Q4 beat held $413-$442 range; ATH $477; FY26 guide $13.45-$14.05 well above Street $11.90
   aiImpact: 'TAILWIND',        // DC is ~70% of E-Infra revenue, +123% YoY segment growth; CEC adds turnkey electrical
   strategicNarrative:
@@ -56,7 +56,7 @@ export const STRL = defineStock({
   exitMultiple: [8, 12, 15],
   bbRate: [0.005, 0.012, 0.020],     // $400M buyback program authorized Nov 2025; ~1% annual at current market cap
   ebitdaProxy: [0.17, 0.205, 0.23],   // FY25 adj. EBITDA margin >20% (first time in history); $503.8M EBITDA; expanding with E-Infra mix shift
-  bullMaOptVal: 428 * 30.7 * 0.03,   // M&A optionality in fragmented infrastructure market (lower % at $13B+ market cap)
+  bullMaOptVal: 391 * 30.7 * 0.03,   // M&A optionality in fragmented infrastructure market (lower % at $13B+ market cap)
 
   desc: [
     'Data center capex cycles down in 2027 as hyperscalers digest the 2024-2026 build-out wave, slowing E-Infrastructure organic growth to low teens. ' +
