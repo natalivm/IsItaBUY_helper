@@ -22,17 +22,21 @@ export const TER = defineStock({
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
-    "Type B — cyclical growth on AI capex wave, not a structural compounder. Post-earnings update: Q4 revenue +41% q/q, non-GAAP EPS >100% q/q. Q1'26 guide $1.15-1.25B revenue, EPS $1.89-2.25. " +
-    "AI = 40-50% of Q3 revenue → 60%+ Q4 → 70%+ Q1'26E — TER sitting in epicenter of AI capex wave. Mgmt new target model: ATE TAM $12-14B, TER at ~$6B revenue, EPS $9.5-11, operating margin 30-34%. " +
-    "BUT mgmt explicitly confirmed cyclicality: sees '2-3 quarter surge' followed by 'shorter period of digestion'. 2H26 visibility weak. Demand more lumpy and less predictable. " +
-    "Customer concentration very high: 2 specifying customers >10%, 1 purchasing >10%. VIP compute segment extremely concentrated — one socket can shift a quarter. " +
-    "AI makes TER MORE cyclical, not less: shifted from mobile-driven to compute/AI infra-driven = more capital-intensive, burstier cycle. " +
-    "Call strengthens bull case quality but simultaneously confirms this is a cycle trade, not a safe compounder. RS 98 = hot phase of cycle, not structural quality signal. " +
-    "Expected CAGR ~0-3% base case. Probability of 15%+ CAGR: ~25-35% (up from 20-25% pre-call). Fair entry: $180-$200. Deep cycle buy: $140-$160.",
+    "Type B — cyclical growth on AI capex wave, not a structural compounder. CEO conference (post-earnings) was the most candid signal: " +
+    "'We're in the middle of a 4-quarter boom (Q3'25→Q2'26) … then there'll be a digestion.' This is textbook semicap mini-cycle language. " +
+    "AI raised test intensity structurally (HBM, AI accelerators, networking = expensive/complex/high-power chips → more testers). " +
+    "BUT critical insight: ATE growth = derivative of chip revenue GROWTH rate, not revenue. As soon as AI growth slows, ATE spending drops sharply even if AI revenue still grows. " +
+    "AI wave broader than mobile boom (data centers + HBM + networking + co-packaged optics + edge AI = longer cycle with multiple waves). " +
+    "GPU opportunity: 2026 qualification → 2H26 production → targeting 30% share (3+ year process, currently near-zero vs Advantest dominance). " +
+    "HBM: >50% share in stack/performance test, TAM structurally rising (8→12-high stacks, HBM3→HBM4E). " +
+    "VIP compute: only 2 hyperscaler ASIC programs at scale = extreme concentration risk. " +
+    "Mgmt target model: ATE TAM $12-14B, TER ~$6B rev, EPS $9.5-11, op margin 30-34%. " +
+    "Current phase: 'earnings expansion' — typical semicap pattern: earnings explode → investors extrapolate → multiple expands → digestion → correction. " +
+    "Amazing business, amazing cycle, expensive stock. Probability of 15%+ CAGR: ~25-30%. Fair entry: $180-$200. Deep cycle buy: $140-$160.",
 
-  epsCagr: [5, 15, 22],
-  exitPE: [18, 24, 30],
-  prob: [20, 45, 35],
+  epsCagr: [2, 9, 14],
+  exitPE: [18, 22, 28],
+  prob: [20, 50, 30],
 
   analystConsensus: { rating: 'Buy', targetLow: 150, targetMedian: 250, targetHigh: 320, numAnalysts: 22 },
   revGrowth: [
@@ -47,28 +51,29 @@ export const TER = defineStock({
   ],
   exitMultiple: [12, 18, 24],
   desc: [
-    'Mgmt-warned "2-3 quarter surge" plays out exactly — strong 1H26 followed by digestion in 2H26/2027 as hyperscaler AI capex pauses. ' +
-      'High customer concentration (2 specifying >10%) means one socket shift collapses a quarter. Revenue turns negative post-surge. ' +
-      'EBIT margins compress back to ~22%. P/E compresses to historical semicap trough (18x). EPS ~5% CAGR. Target ~$120, CAGR ~-15%.',
-    'AI demand sustains beyond the initial 2-3 quarter surge but growth decelerates. ATE TAM reaches $10-12B (below mgmt $12-14B target). ' +
-      'TER revenue approaches $5B (below $6B target). EBIT margin expands to ~28-30% on operating leverage. ' +
-      'Digestion periods are shorter and shallower than historical cycles due to structural AI test complexity. ' +
-      'EPS ~15% CAGR to ~$10-11 by 2030. P/E compresses from ~43x to ~24x. Target ~$260, CAGR ~0-3%.',
-    'AI supercycle extends — mgmt target model validates: ATE TAM $12-14B, TER at ~$6B revenue, EPS $9.5-11, op margin 30-34%. ' +
-      'AI mix at 70%+ proves structural, not cyclical. Advanced packaging + HBM + chiplets create test content multiplier. ' +
-      'Robotics inflects. GPU share gains accelerate. EPS ~22% CAGR to $15+ by 2030. Target ~$450, CAGR ~10-11%.',
+    'CEO-confirmed "4-quarter boom → digestion" plays out. 1H26 strong then ATE spending drops as AI chip revenue growth rate decelerates ' +
+      '(ATE demand = derivative of growth rate, not revenue level). VIP compute concentration (only 2 ASIC programs at scale) means one socket delay collapses revenue. ' +
+      'GPU penetration stalls at low single digits vs Advantest. P/E compresses to 18x. EPS ~$7 by 2030. Target ~$126, CAGR ~-14%.',
+    'AI waves (accelerators → HBM → co-packaged optics → edge AI) elongate cycle beyond single 4-quarter boom. Digestion periods shorter and shallower. ' +
+      'ATE TAM reaches $10-12B (below mgmt $12-14B target). TER revenue ~$5B. HBM test TAM rises structurally (8→12-high stacks, HBM3→HBM4E). ' +
+      'GPU qualification succeeds, initial production revenue 2H26. EPS ~$9.5 by 2030. P/E 22x. Target ~$209, CAGR ~-5%.',
+    'Full mgmt target model validates: ATE TAM $12-14B, TER ~$6B revenue, EPS $9.5-11, op margin 30-34%. Multiple AI waves sustain demand. ' +
+      'GPU share reaches 30% (3-year ramp from qualification). HBM >50% share compounds as stacks grow. Networking test benefits from 3 main players. ' +
+      'EPS ~$12 by 2030. P/E 28x. Target ~$336, CAGR ~4-5%. This is the ceiling — even bull case barely approaches 15% hurdle.',
   ],
   thesis: [
-    'Mgmt themselves warn of digestion after surge. 2H26 visibility is weak. AI makes TER MORE cyclical (compute/infra = burstier than mobile). ' +
-      'Customer concentration extreme — VIP compute segment dominated by 2-3 customers. One socket delay shifts entire quarter. ' +
-      'Advantest competition intensifies. Forward P/E 43x offers zero margin of safety. Historical pattern: $4.25 EPS → $3.47 in 3 years.',
-    'Q4 +41% q/q revenue and Q1 guide ($1.15-1.25B, EPS $1.89-2.25) validate near-term strength. AI at 60-70% of revenue = real structural demand floor. ' +
-      'Test complexity at 3nm/2nm, chiplets, HBM increases content per device. Automotive adds cyclical buffer. ' +
-      'Operating leverage drives margin expansion. Digestion periods shorter due to AI structural demand. Cycle elongated but not eliminated.',
-    'Full mgmt target model plays out: ATE TAM expands to $12-14B driven by AI chip proliferation, advanced packaging, inference scaling. ' +
-      'TER captures ~$6B revenue with 30-34% op margin. AI at 70%+ of revenue proves this is a structural shift, not just a cycle. ' +
-      'Universal Robots achieves breakout ($1B+). Memory test (HBM4) and GPU test share gains compound. ' +
-      'This is the only scenario approaching 15% hurdle — requires AI capex cycle to extend 5+ years.',
+    'CEO himself said: "4-quarter boom then digestion." ATE growth = derivative of chip revenue growth rate — when AI growth slows, ATE drops sharply ' +
+      'even if AI revenue still grows. VIP compute = only 2 hyperscaler ASIC programs at scale (extreme concentration). ' +
+      'GPU opportunity is 3+ year penetration story against Advantest dominance (currently near-zero share). ' +
+      'Forward P/E 43x in "earnings expansion phase" of semicap cycle = classic setup for post-peak correction.',
+    'AI raised test intensity structurally: HBM + AI accelerators + networking chips = expensive/complex/high-power → more testers per wafer. ' +
+      'Multiple waves (accelerators → memory → co-packaged optics → edge AI) make this longer than mobile boom. ' +
+      'HBM test TAM structurally rising (>50% share, stack complexity increasing). GPU qualification in 2026 opens $2B+ addressable market. ' +
+      'Operating leverage strong (EBIT 22%→30%+). Cycle elongated but digestion still inevitable.',
+    'AI supercycle extends 5+ years with overlapping waves. GPU share ramp hits 30% by 2029 (from near-zero). ' +
+      'HBM4/4E + 12-high stacks double memory test TAM. Co-packaged optics creates new test category. ' +
+      'Edge AI devices (wave 4) provide demand floor when data center wave matures. ' +
+      'Mgmt $6B revenue / $9.5-11 EPS / 30-34% op margin target proves achievable. Even so, from $272 entry only ~4-5% CAGR.',
   ],
 
   bbRate: [0.005, 0.015, 0.02],
