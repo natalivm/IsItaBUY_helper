@@ -5,7 +5,8 @@ export const ITT = defineStock({
   name: 'ITT Inc.',
   sector: 'Diversified Industrials',
   themeColor: '#3b82f6',
-  currentPrice: 203,
+  currentPrice: 186,
+  updatedOn: '07/03',
   fairPriceRange: '$170 - $250',
   shares0: 86,
   rev25: 3940,
@@ -15,7 +16,7 @@ export const ITT = defineStock({
   debt: 3800,
   beta: 1.35,
   costDebt: 0.045,
-  rsRating: 82,
+  rsRating: 79,
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative: "Strategically transformative SPX FLOW acquisition positions ITT as a global top-3 flow solutions provider. Strong exposure to energy transition (cryogenic pumps) and industrial AI (predictive maintenance). High margin aftermarket mix (43%) provides structural downside protection and margin upside.",
@@ -38,5 +39,5 @@ export const ITT = defineStock({
       'Aftermarket mix drives FCF margins toward ~16%. De-leveraging restores capital return capacity. Market re-rates to 19x as a global flow solutions platform with secular tailwinds.',
   ],
 
-  bullMaOptVal: 185.94 * 86 * 0.07,
+  bullMaOptVal: 186 * 86 * 0.07,
 });

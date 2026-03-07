@@ -25,10 +25,10 @@ export const CRDO = defineStock({
     "Credo delivered a blowout Q3 FY26 — $407M revenue (+52% QoQ, +200% YoY), 68.6% gross margin, $209M non-GAAP net income. " +
     "FY26 tracks to ~$1.3B (3x YoY), FY27 guided 50%+ growth to ~$2B. ZeroFlap Optics pulled forward 6 months to Q1 FY27, already shipping production units. " +
     "The thesis is intact: AECs are de facto standard for intra-rack connectivity, 5th hyperscaler added, and 3 new multi-billion TAM expansions (ZeroFlap Optics, ALCs, OmniConnect) layer in FY27-28. " +
-    "At $97 the prob-weighted 5yr return crosses the 15% CAGR hurdle that held us at HOLD previously. " +
-    "Risks: RS 33 signals severe momentum breakdown (stock crushed post-earnings despite beat), top-3 customer concentration remains 88%, Q4 GM guided down to 64-66%, " +
+    "At $109 the prob-weighted 5yr return still crosses the 15% CAGR hurdle. " +
+    "Risks: top-3 customer concentration remains 88%, Q4 GM guided down to 64-66%, " +
     "and FY27 sequential growth decelerates to mid-single digits. High beta (2.58) means sharp drawdowns in risk-off. " +
-    "Fundamental value is compelling but momentum is broken — position sizing and timing warrant caution.",
+    "RS has recovered from 33 to 85 — momentum rebuilding, but position sizing still warrants caution.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 72, targetMedian: 193, targetHigh: 260, numAnalysts: 16 },

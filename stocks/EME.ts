@@ -3,10 +3,10 @@ import { defineStock } from './defineStock';
 export const EME = defineStock({
   ticker: 'EME',
   name: 'EMCOR Group, Inc.',
-  updatedOn: '26/02',
+  updatedOn: '07/03',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 726,
+  currentPrice: 706,
   fairPriceRange: '$560 - $1350',
   shares0: 44.7,
   rev25: 16990,             // Revenue 2025A ($M); FY2025 actual; +18.5% YoY (record)
@@ -18,7 +18,7 @@ export const EME = defineStock({
   costDebt: 0.052,
   baseEps: 25.87,           // 2025A adj. EPS (record; +20% YoY); 2026E guided $27.25–29.25
   modelType: 'EPS_PE',
-  rsRating: 92,
+  rsRating: 90,
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
@@ -49,7 +49,7 @@ export const EME = defineStock({
   exitMultiple: [12, 16, 20],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.08, 0.10, 0.12],
-  bullMaOptVal: 726 * 44.7 * 0.04,
+  bullMaOptVal: 706 * 44.7 * 0.04,
 
   desc: [
     'Data center demand drops sharply, cutting about 12% of revenue despite starting 2026 with record $13.25B RPOs. Variable union labor absorbs some of the pain, but margins drift down to the 8-8.5% range. ' +
