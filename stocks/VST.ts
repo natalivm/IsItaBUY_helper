@@ -5,7 +5,7 @@ export const VST = defineStock({
   name: 'Vistra Corp',
   sector: 'Utilities / Power',
   themeColor: '#facc15',
-  currentPrice: 171,
+  currentPrice: 158,
   fairPriceRange: '$179 - $402',
   shares0: 339.0,
   rev25: 19600,
@@ -18,7 +18,7 @@ export const VST = defineStock({
   modelType: 'EPS_PE',
   baseEps: 10.0,
   rsRating: 48,
-  rsTrend: 'rising',
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   ratingOverride: 'BUY',
   updatedOn: '26/02',
@@ -54,5 +54,5 @@ export const VST = defineStock({
       'Market re-rates to 20x on contracted earnings quality. This is the $400+ path, and it now looks achievable given signed deal flow.',
   ],
 
-  bullMaOptVal: 171.00 * 339.0 * 0.07,
+  bullMaOptVal: 158.00 * 339.0 * 0.07,
 });
