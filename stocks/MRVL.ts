@@ -1,11 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const MRVL = defineStock({
+  updatedOn: '07/03',
   ticker: 'MRVL',
   name: 'Marvell Technology',
   sector: 'Semiconductors',
   themeColor: '#22d3ee',
-  currentPrice: 79,
+  currentPrice: 87.48,
   fairPriceRange: '$90 - $160',
   shares0: 870,
   rev25: 5770,
@@ -15,7 +16,7 @@ export const MRVL = defineStock({
   debt: 5100,
   beta: 2.29,
   costDebt: 0.055,
-  rsRating: 48,
+  rsRating: 81,
   aiImpact: 'TAILWIND',
   ratingOverride: 'BUY',
   strategicNarrative: "Type B — cyclical growth on AI capex wave. Post-Barclays (Dec 2025): mgmt frames AI as 10–15yr cycle with ups/downs, record bookings Q2→Q3→Q4 accelerating. Three engines: (1) optics/interconnect — 80–90% intra-DC traffic migration from copper, TAM from near-zero; (2) switching — $300M FY26 → $500M+ FY27, 51.2T ramp + 100T intro + scale-up UALink sampling 2H FY27; (3) custom XPU + attach (NIC+CXL) — FY27 base +20%, FY28 re-acceleration via new XPU customer + attach doubling. Moat moderate (design-win concentration). EBIT margin 29%→36%. Probability of 15%+ CAGR: ~60–65% (up from 55–60% pre-Barclays). Key risk: spending pause in FY27H2/FY28H1 hits MRVL harder than AVGO. MRVL beats AVGO only if FY28 re-accelerates + attach scales + P/E holds ≥22x.",
