@@ -1,11 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const PINS = defineStock({
+  updatedOn: '07/03',
   ticker: 'PINS',
   name: 'Pinterest',
   sector: 'Social Commerce',
   themeColor: '#e60023',
-  currentPrice: 17,
+  currentPrice: 19.90,
   fairPriceRange: '$15 - $32',
   shares0: 676.0,
   rev25: 4222,
@@ -14,10 +15,10 @@ export const PINS = defineStock({
   cash: 2500,
   debt: 0,
   beta: 1.58,
-  rsRating: 32,
+  rsRating: 10,
   aiImpact: 'DISRUPTION_RISK',
   ratingOverride: 'HOLD',
-  strategicNarrative: "Existential uncertainty. RS 32 signals that the market views GenAI search as a threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners.",
+  strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners.",
 
 
   analystConsensus: { rating: 'Buy', targetLow: 15, targetMedian: 28, targetHigh: 50, numAnalysts: 26 },
