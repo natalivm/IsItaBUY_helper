@@ -5,8 +5,8 @@ export const ASTS = defineStock({
   name: 'AST SpaceMobile',
   sector: 'Space Technology',
   themeColor: '#38bdf8',
-  currentPrice: 93.15,
-  updatedOn: '03/26',
+  currentPrice: 89,
+  updatedOn: '07/03',
   fairPriceRange: '$20 - $250',
   shares0: 370,
   rev25: 71,
@@ -16,7 +16,7 @@ export const ASTS = defineStock({
   debt: 2500,
   beta: 1.46,
   costDebt: 0.03,
-  rsRating: 98,
+  rsRating: 97,
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "AST SpaceMobile is the only space-based cellular broadband network for standard smartphones — a category-defining bet with 50+ MNO partnerships (incl. Verizon, AT&T, Vodafone, stc) covering 3B+ subscribers. " +
