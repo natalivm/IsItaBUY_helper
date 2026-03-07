@@ -5,7 +5,8 @@ export const GXO = defineStock({
   name: 'GXO Logistics',
   sector: 'Contract Logistics · Supply Chain',
   themeColor: '#10b981',
-  currentPrice: 63,
+  currentPrice: 55.50,
+  updatedOn: '07/03',
   fairPriceRange: '$50 - $139',
   shares0: 114.3,
   rev25: 13200,
@@ -17,7 +18,7 @@ export const GXO = defineStock({
   costDebt: 0.055,
   modelType: 'EPS_PE',
   baseEps: 3.00,
-  rsRating: 91,
+  rsRating: 83,
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
@@ -55,7 +56,7 @@ export const GXO = defineStock({
   ],
 
   ebitdaProxy: [0.08, 0.12, 0.15],
-  bullMaOptVal: 65.6 * 114.3 * 0.07,
+  bullMaOptVal: 55.50 * 114.3 * 0.07,
 
   driverOverrides: [
     {
