@@ -5,7 +5,7 @@ export const APH = defineStock({
   name: 'Amphenol Corp',
   sector: 'Electronic Components · Interconnect',
   themeColor: '#38bdf8',
-  currentPrice: 147.7,
+  currentPrice: 132,
   fairPriceRange: '$77 - $290',
   shares0: 1278,
   rev25: 23100,
@@ -17,13 +17,13 @@ export const APH = defineStock({
   costDebt: 0.055,
   modelType: 'EPS_PE',
   baseEps: 3.34,
-  rsRating: 91,
+  rsRating: 89,
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
     "Amphenol is the premium connector play for AI infrastructure — IT Datacom now 36% of revenue, Q4 book-to-bill 1.31x, FY25 adj EPS +77%. " +
-    "CCS acquisition extends the platform with ~$4.1B revenue. Quality anchors are real (diversified end-markets, 52% dividend raise, RS 91). " +
-    "The problem: at 44x trailing P/E, a compression to historical 22x means ~50% haircut — premium justified only if AI-driven growth sustains 15%+ CAGR. " +
+    "CCS acquisition extends the platform with ~$4.1B revenue. Quality anchors are real (diversified end-markets, 52% dividend raise, RS 89). " +
+    "The problem: at ~40x trailing P/E, a compression to historical 22x means ~45% haircut — premium justified only if AI-driven growth sustains 15%+ CAGR. " +
     "Pay-up-for-quality entry, not an asymmetric one.",
 
   epsCagr: [1, 10, 18],
