@@ -1,11 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const UBER = defineStock({
+  updatedOn: '07/03',
   ticker: 'UBER',
   name: 'Uber Technologies',
   sector: 'Mobility',
   themeColor: '#22c55e',
-  currentPrice: 73.86,
+  currentPrice: 75.03,
   fairPriceRange: '$65 - $140',
   shares0: 2110,
   rev25: 43500,
@@ -15,7 +16,7 @@ export const UBER = defineStock({
   debt: 9500,
   beta: 1.35,
   costDebt: 0.065,
-  rsRating: 16,
+  rsRating: 22,
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "Uber is a global mobility + delivery platform with $43.5B revenue, 11% FCF margins, and the theoretical optionality of becoming the platform-as-a-service layer for autonomous vehicles. " +
