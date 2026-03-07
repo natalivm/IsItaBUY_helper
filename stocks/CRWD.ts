@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 391,
+  currentPrice: 429,
   fairPriceRange: '$320 - $900',
   shares0: 248,
   rev25: 3950,
@@ -17,19 +17,19 @@ export const CRWD = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 3.93,
-  rsRating: 19,
-  rsTrend: 'falling',
+  rsRating: 34,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
     "CrowdStrike is a structural compounder in cybersecurity — high switching costs, endpoint + XDR ecosystem lock-in, and AI-native threat detection create a durable moat with 78% gross margins. " +
     "EBIT margin expanding from 21% → 30%E shows strong operating leverage on ~27% 3yr revenue CAGR. " +
-    "The problem: at 80x forward P/E you're paying for flawless execution with zero margin of safety. RS 19 signals no institutional momentum — this is not a momentum phase. " +
+    "The problem: at ~109x forward P/E you're paying for flawless execution with zero margin of safety. RS recovering from 19 to 34 but still weak — not yet a momentum phase. " +
     "Need 25-27% FCF CAGR for 15%+ annual returns; historically achieved but harder from a larger base. " +
     "If growth decelerates to 10-15%, operating leverage vanishes and multiple compression could deliver -30-40% drawdown. " +
     "Prob-weighted CAGR ~8-9% — quality business at a premium price. Wait for entry near $280-320 or next growth acceleration cycle.",
 
-  updatedOn: '04/03',
+  updatedOn: '07/03',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
