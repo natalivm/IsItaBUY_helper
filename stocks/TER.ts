@@ -7,61 +7,87 @@ export const TER = defineStock({
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
   currentPrice: 272,
-  fairPriceRange: '$160 – $628',
-  shares0: 160,            // ~160M diluted shares
-  rev25: 2800,             // FY25 revenue base ($M)
-  fcfMargin25: 0.20,       // ~20% FCF margin; capex-light in test, heavier in robotics
-  taxRate: 0.15,
-  cash: 800,
+  fairPriceRange: '$140 - $200',
+  shares0: 157,
+  rev25: 3190,
+  fcfMargin25: 0.141,
+  taxRate: 0.20,
+  cash: 900,
   debt: 100,
-  beta: 1.35,
+  beta: 1.45,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 6.3,            // Forward EPS 2026E
-  rsRating: 27,
+  baseEps: 6.25,
+  rsRating: 98,
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
-    "Teradyne is a deeply cyclical semi-equipment business priced as a quasi-compounder at 52-55x forward P/E — bull case requires AI capex to extend 5 full years while history says otherwise. " +
-    "Test complexity (3nm/2nm, chiplets, HBM) provides structural volume support, and robotics (UR/MiR) is optionality if it ever inflects. " +
-    "The problem: prob-weighted 5yr target implies only ~4.2% CAGR — well below 15% hurdle. RS 27 confirms momentum has broken down sharply, validating the cycle-turn concern. " +
-    "If AI capex supercycle extends and robotics inflects, 15%+ is achievable. If cycle normalizes, P/E compresses to 20x and this is -13% from here. " +
-    "A bet on AI-cycle continuation, not a structural compounder.",
+    "Type B — cyclical growth on AI capex wave, not a structural compounder. CEO conference (post-earnings) was the most candid signal: " +
+    "'We're in the middle of a 4-quarter boom (Q3'25→Q2'26) … then there'll be a digestion.' This is textbook semicap mini-cycle language. " +
+    "AI raised test intensity structurally (HBM, AI accelerators, networking = expensive/complex/high-power chips → more testers). " +
+    "BUT critical insight: ATE growth = derivative of chip revenue GROWTH rate, not revenue. As soon as AI growth slows, ATE spending drops sharply even if AI revenue still grows. " +
+    "AI wave broader than mobile boom (data centers + HBM + networking + co-packaged optics + edge AI = longer cycle with multiple waves). " +
+    "GPU opportunity: 2026 qualification → 2H26 production → targeting 30% share (3+ year process, currently near-zero vs Advantest dominance). " +
+    "HBM: >50% share in stack/performance test, TAM structurally rising (8→12-high stacks, HBM3→HBM4E). " +
+    "VIP compute: only 2 hyperscaler ASIC programs at scale = extreme concentration risk. " +
+    "Mgmt target model: ATE TAM $12-14B, TER ~$6B rev, EPS $9.5-11, op margin 30-34%. " +
+    "Current phase: 'earnings expansion' — typical semicap pattern: earnings explode → investors extrapolate → multiple expands → digestion → correction. " +
+    "Amazing business, amazing cycle, expensive stock. Probability of 15%+ CAGR: ~25-30%. Fair entry: $180-$200. Deep cycle buy: $140-$160.",
 
-  // ── EPS_PE model: epsCagr and exitPE are the primary valuation drivers ──
-  epsCagr: [5, 15, 20],
-  exitPE: [20, 30, 40],
-  prob: [25, 45, 30],
+  epsCagr: [2, 9, 14],
+  exitPE: [18, 22, 28],
+  prob: [20, 50, 30],
 
-
-  analystConsensus: { rating: 'Buy', targetLow: 170, targetMedian: 292, targetHigh: 400, numAnalysts: 18 },
+  analystConsensus: { rating: 'Buy', targetLow: 150, targetMedian: 250, targetHigh: 320, numAnalysts: 22 },
   revGrowth: [
-    [0.05, 0.04, 0.04, 0.05, 0.05],
-    [0.15, 0.14, 0.13, 0.12, 0.12],
-    [0.22, 0.20, 0.18, 0.17, 0.16],
+    [0.22, 0.05, 0.00, -0.05, 0.03],
+    [0.22, 0.15, 0.12, 0.08, 0.07],
+    [0.22, 0.20, 0.18, 0.15, 0.12],
   ],
   fcfMargin: [
-    [0.16, 0.14, 0.13, 0.13, 0.14],
-    [0.20, 0.20, 0.21, 0.22, 0.22],
-    [0.22, 0.23, 0.24, 0.25, 0.26],
+    [0.12, 0.11, 0.10, 0.09, 0.10],
+    [0.14, 0.16, 0.18, 0.19, 0.20],
+    [0.16, 0.19, 0.22, 0.24, 0.25],
   ],
-  exitMultiple: [10, 15, 20],
+  exitMultiple: [12, 18, 24],
   desc: [
-    'The AI capex cycle turns and semiconductor test demand normalizes. Robotics through Universal Robots and MiR remains subscale. ' +
-      'The market re-rates Teradyne as a mid-cycle industrial at 20x. Earnings grow at only 5% annually, ' +
-      'resulting in roughly -13% annualized returns from current entry as the premium valuation compresses.',
-    'A normal semiconductor cycle continues with AI capex growing but decelerating. ' +
-      'Test complexity at advanced nodes, chiplets, and high-bandwidth memory supports volume. The multiple normalizes to 30x. ' +
-      'Earnings compound at 15% annually, but from the current elevated valuation stock returns come in at only 3-4% annualized.',
-    'The AI capex supercycle extends for five years and Teradyne captures an outsized share of the test complexity opportunity. ' +
-      'The robotics business inflects meaningfully, adding a second growth engine. The market sustains a premium multiple, though below the current 52x. ' +
-      'Earnings compound at 20% annually, delivering 14-15% annualized stock returns. This is the only scenario that approaches the 15% hurdle.',
+    'CEO-confirmed "4-quarter boom → digestion" plays out. 1H26 strong then ATE spending drops as AI chip revenue growth rate decelerates ' +
+      '(ATE demand = derivative of growth rate, not revenue level). VIP compute concentration (only 2 ASIC programs at scale) means one socket delay collapses revenue. ' +
+      'GPU penetration stalls at low single digits vs Advantest. P/E compresses to 18x. EPS ~$7 by 2030. Target ~$126, CAGR ~-14%.',
+    'AI waves (accelerators → HBM → co-packaged optics → edge AI) elongate cycle beyond single 4-quarter boom. Digestion periods shorter and shallower. ' +
+      'ATE TAM reaches $10-12B (below mgmt $12-14B target). TER revenue ~$5B. HBM test TAM rises structurally (8→12-high stacks, HBM3→HBM4E). ' +
+      'GPU qualification succeeds, initial production revenue 2H26. EPS ~$9.5 by 2030. P/E 22x. Target ~$209, CAGR ~-5%.',
+    'Full mgmt target model validates: ATE TAM $12-14B, TER ~$6B revenue, EPS $9.5-11, op margin 30-34%. Multiple AI waves sustain demand. ' +
+      'GPU share reaches 30% (3-year ramp from qualification). HBM >50% share compounds as stacks grow. Networking test benefits from 3 main players. ' +
+      'EPS ~$12 by 2030. P/E 28x. Target ~$336, CAGR ~4-5%. This is the ceiling — even bull case barely approaches 15% hurdle.',
+  ],
+  thesis: [
+    'CEO himself said: "4-quarter boom then digestion." ATE growth = derivative of chip revenue growth rate — when AI growth slows, ATE drops sharply ' +
+      'even if AI revenue still grows. VIP compute = only 2 hyperscaler ASIC programs at scale (extreme concentration). ' +
+      'GPU opportunity is 3+ year penetration story against Advantest dominance (currently near-zero share). ' +
+      'Forward P/E 43x in "earnings expansion phase" of semicap cycle = classic setup for post-peak correction.',
+    'AI raised test intensity structurally: HBM + AI accelerators + networking chips = expensive/complex/high-power → more testers per wafer. ' +
+      'Multiple waves (accelerators → memory → co-packaged optics → edge AI) make this longer than mobile boom. ' +
+      'HBM test TAM structurally rising (>50% share, stack complexity increasing). GPU qualification in 2026 opens $2B+ addressable market. ' +
+      'Operating leverage strong (EBIT 22%→30%+). Cycle elongated but digestion still inevitable.',
+    'AI supercycle extends 5+ years with overlapping waves. GPU share ramp hits 30% by 2029 (from near-zero). ' +
+      'HBM4/4E + 12-high stacks double memory test TAM. Co-packaged optics creates new test category. ' +
+      'Edge AI devices (wave 4) provide demand floor when data center wave matures. ' +
+      'Mgmt $6B revenue / $9.5-11 EPS / 30-34% op margin target proves achievable. Even so, from $272 entry only ~4-5% CAGR.',
   ],
 
-  bbRate: [0.01, 0.02, 0.03],
+  bbRate: [0.005, 0.015, 0.02],
+  ebitdaProxy: [0.15, 0.25, 0.35],
+
   driverOverrides: [
     {},
-    {},
-    { fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02] },
+    {
+      revPrem: [0.005, 0.005, 0.005, 0.005, 0.005],
+      fcfUplift: [0.005, 0.005, 0.005, 0.005, 0.005],
+    },
+    {
+      revPrem: [0.01, 0.015, 0.015, 0.01, 0.01],
+      fcfUplift: [0.005, 0.01, 0.015, 0.015, 0.02],
+    },
   ],
 });
