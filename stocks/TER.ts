@@ -22,16 +22,17 @@ export const TER = defineStock({
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
-    "Type B — cyclical growth, classic semiconductor equipment cycle play. TER is a leading ATE vendor with narrow moat from switching costs, qualification cycles, and technical complexity. " +
-    "Oligopoly with Advantest as primary competitor. Revenue essentially flat 2022-2025 ($3.16B→$3.19B, ~0% CAGR), EPS declined $4.25→$3.47 — extreme cyclicality. " +
-    "Forward estimates price massive cycle recovery: EPS $3.47→$6.25E (FY26)→$8.11E (FY27). EBIT margin expanding from ~22% to ~33% on operating leverage. " +
-    "Growth decomposition: ~50% revenue expansion (AI/HPC + automotive + advanced nodes) + ~45% margin expansion + ~5% financial engineering. " +
-    "Forward P/E ~43x is very expensive for semicap historically (typical range 15-25x). RS 98 = top momentum but often a cycle-peak indicator for semicap. " +
-    "Expected CAGR ~0-3% base case. Probability of 15%+ CAGR: ~20-25%. Fair entry: $180-$200. Deep cycle buy: $140-$160.",
+    "Type B — cyclical growth on AI capex wave, not a structural compounder. Post-earnings update: Q4 revenue +41% q/q, non-GAAP EPS >100% q/q. Q1'26 guide $1.15-1.25B revenue, EPS $1.89-2.25. " +
+    "AI = 40-50% of Q3 revenue → 60%+ Q4 → 70%+ Q1'26E — TER sitting in epicenter of AI capex wave. Mgmt new target model: ATE TAM $12-14B, TER at ~$6B revenue, EPS $9.5-11, operating margin 30-34%. " +
+    "BUT mgmt explicitly confirmed cyclicality: sees '2-3 quarter surge' followed by 'shorter period of digestion'. 2H26 visibility weak. Demand more lumpy and less predictable. " +
+    "Customer concentration very high: 2 specifying customers >10%, 1 purchasing >10%. VIP compute segment extremely concentrated — one socket can shift a quarter. " +
+    "AI makes TER MORE cyclical, not less: shifted from mobile-driven to compute/AI infra-driven = more capital-intensive, burstier cycle. " +
+    "Call strengthens bull case quality but simultaneously confirms this is a cycle trade, not a safe compounder. RS 98 = hot phase of cycle, not structural quality signal. " +
+    "Expected CAGR ~0-3% base case. Probability of 15%+ CAGR: ~25-35% (up from 20-25% pre-call). Fair entry: $180-$200. Deep cycle buy: $140-$160.",
 
-  epsCagr: [5, 15, 20],
+  epsCagr: [5, 15, 22],
   exitPE: [18, 24, 30],
-  prob: [25, 50, 25],
+  prob: [20, 45, 35],
 
   analystConsensus: { rating: 'Buy', targetLow: 150, targetMedian: 250, targetHigh: 320, numAnalysts: 22 },
   revGrowth: [
@@ -46,28 +47,28 @@ export const TER = defineStock({
   ],
   exitMultiple: [12, 18, 24],
   desc: [
-    'Semiconductor capex cycle peaks in 2026-27, then collapses as TSMC/Intel/Samsung cut spending. Late-cycle ATE demand evaporates. ' +
-      'Revenue turns negative as chip demand normalizes. EBIT margins compress back to ~22%. ' +
-      'P/E compresses to historical semicap trough (18x). Historical pattern repeats: EPS $4.25→$3.47 over 3 years. ' +
-      'EPS grows only ~5% CAGR. Target ~$120, CAGR ~-15%.',
-    'AI/HPC test demand sustains through 2028. Advanced packaging (CoWoS, chiplets) drives incremental ATE content per chip. ' +
-      'Automotive semi recovery adds cyclical support. EBIT margin expands to ~30% on operating leverage. ' +
-      'Universal Robots contributes modest growth. P/E compresses from ~43x to ~24x as cycle matures. ' +
-      'EPS ~15% CAGR to ~$10-11 by 2030. Target ~$250, CAGR ~0-3%.',
-    'AI supercycle extends — advanced node proliferation, chiplet architectures, HBM testing create structural ATE demand uplift. ' +
-      'Robotics (UR/MiR) inflects with collaborative automation adoption. Revenue sustains 15%+ growth. ' +
-      'EBIT margin reaches ~33%. EPS ~20% CAGR to $14-16 by 2030. Target ~$450, CAGR ~10%.',
+    'Mgmt-warned "2-3 quarter surge" plays out exactly — strong 1H26 followed by digestion in 2H26/2027 as hyperscaler AI capex pauses. ' +
+      'High customer concentration (2 specifying >10%) means one socket shift collapses a quarter. Revenue turns negative post-surge. ' +
+      'EBIT margins compress back to ~22%. P/E compresses to historical semicap trough (18x). EPS ~5% CAGR. Target ~$120, CAGR ~-15%.',
+    'AI demand sustains beyond the initial 2-3 quarter surge but growth decelerates. ATE TAM reaches $10-12B (below mgmt $12-14B target). ' +
+      'TER revenue approaches $5B (below $6B target). EBIT margin expands to ~28-30% on operating leverage. ' +
+      'Digestion periods are shorter and shallower than historical cycles due to structural AI test complexity. ' +
+      'EPS ~15% CAGR to ~$10-11 by 2030. P/E compresses from ~43x to ~24x. Target ~$260, CAGR ~0-3%.',
+    'AI supercycle extends — mgmt target model validates: ATE TAM $12-14B, TER at ~$6B revenue, EPS $9.5-11, op margin 30-34%. ' +
+      'AI mix at 70%+ proves structural, not cyclical. Advanced packaging + HBM + chiplets create test content multiplier. ' +
+      'Robotics inflects. GPU share gains accelerate. EPS ~22% CAGR to $15+ by 2030. Target ~$450, CAGR ~10-11%.',
   ],
   thesis: [
-    'Semiconductor capex cycle turns down sharply in 2027-28. TSMC/Intel cut wafer fab capex as AI chip demand normalizes and inventory correction begins. ' +
-      'TER as late-cycle supplier gets hit hardest. Advantest competition intensifies on HBM and advanced packaging test. ' +
-      'Robotics growth disappoints. Forward P/E of 43x offers zero margin of safety for a cyclical business.',
-    'AI/HPC chips drive sustained ATE demand. Test complexity at 3nm/2nm, chiplets, and HBM increases test time and content per device. ' +
-      'Automotive recovery adds volume. Operating leverage drives EBIT margin from 22% to ~30%. ' +
-      'Universal Robots grows mid-teens. Cycle elongated by structural AI demand but not eliminated.',
-    'Full AI infrastructure thesis: every AI chip needs testing, complexity increases with each node shrink and packaging innovation. ' +
-      'TER captures disproportionate share of advanced packaging test. Universal Robots achieves breakout ($1B+ revenue). ' +
-      'Memory test (HBM3E/HBM4) becomes meaningful. This is the only scenario approaching 15% hurdle.',
+    'Mgmt themselves warn of digestion after surge. 2H26 visibility is weak. AI makes TER MORE cyclical (compute/infra = burstier than mobile). ' +
+      'Customer concentration extreme — VIP compute segment dominated by 2-3 customers. One socket delay shifts entire quarter. ' +
+      'Advantest competition intensifies. Forward P/E 43x offers zero margin of safety. Historical pattern: $4.25 EPS → $3.47 in 3 years.',
+    'Q4 +41% q/q revenue and Q1 guide ($1.15-1.25B, EPS $1.89-2.25) validate near-term strength. AI at 60-70% of revenue = real structural demand floor. ' +
+      'Test complexity at 3nm/2nm, chiplets, HBM increases content per device. Automotive adds cyclical buffer. ' +
+      'Operating leverage drives margin expansion. Digestion periods shorter due to AI structural demand. Cycle elongated but not eliminated.',
+    'Full mgmt target model plays out: ATE TAM expands to $12-14B driven by AI chip proliferation, advanced packaging, inference scaling. ' +
+      'TER captures ~$6B revenue with 30-34% op margin. AI at 70%+ of revenue proves this is a structural shift, not just a cycle. ' +
+      'Universal Robots achieves breakout ($1B+). Memory test (HBM4) and GPU test share gains compound. ' +
+      'This is the only scenario approaching 15% hurdle — requires AI capex cycle to extend 5+ years.',
   ],
 
   bbRate: [0.005, 0.015, 0.02],
