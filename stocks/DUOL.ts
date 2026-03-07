@@ -5,8 +5,8 @@ export const DUOL = defineStock({
   name: 'Duolingo',
   sector: 'EdTech · Language Learning · AI Platform',
   themeColor: '#58cc02',
-  currentPrice: 91.63,
-  updatedOn: '26/02',
+  currentPrice: 101.25,
+  updatedOn: '07/03',
   fairPriceRange: '$52 - $311',
   shares0: 46.23,
   rev25: 1040,
@@ -18,7 +18,7 @@ export const DUOL = defineStock({
   costDebt: 0,
   modelType: 'EPS_PE',
   baseEps: 3.40,
-  rsRating: 4,
+  rsRating: 3,
   aiImpact: 'DISRUPTION_RISK',
   strategicNarrative:
     "Post-earnings WAIT — 2025 was elite ($1.04B revenue +39%, 52.7M DAUs +30%, $360M FCF, $1.04B cash, zero debt) but that's not the story anymore. " +
