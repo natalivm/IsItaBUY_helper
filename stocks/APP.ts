@@ -5,8 +5,8 @@ export const APP = defineStock({
   name: 'AppLovin Corporation',
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
-  updatedOn: '07/03',
-  currentPrice: 502,
+  updatedOn: '11/03',
+  currentPrice: 460,
   fairPriceRange: '$310 - $836',
   shares0: 340,
   rev25: 5480,
@@ -18,13 +18,13 @@ export const APP = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 9.75,
-  rsRating: 75,
+  rsRating: 58,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "AppLovin is the highest-margin ad-tech engine in the market — 84% EBITDA margin, 95% incremental flow-through, $4B FCF. " +
     "Post-earnings: CAC/LTV 30-day breakeven + self-serve GA 1H'26 + GenAI creative tools signal a scalable growth loop beyond gaming. " +
-    "The problem: margin expansion is exhausted at 82-84% EBITDA, so from here growth = revenue growth. RS 75 (from 19) confirms institutional re-accumulation after the selloff. " +
+    "The problem: margin expansion is exhausted at 82-84% EBITDA, so from here growth = revenue growth. RS 58 (from 75) reflects weakening momentum after the selloff. " +
     "If self-serve + e-comm broaden the advertiser base, this is a 15%+ compounder. If ad cycle breaks, the leverage that created 84% margins works in brutal reverse. " +
     "60-65% probability of 15%+ CAGR — strong execution story, cyclical and priced for it.",
 
@@ -57,7 +57,7 @@ export const APP = defineStock({
   thesis: [
     'Ad cycle turns down — macro cuts budgets. Meta captures no-ID traffic, TikTok takes share. ' +
       'Margin at 82-84% EBITDA has zero room to expand — revenue miss flows straight to EPS. ' +
-      '"Black box" narrative keeps institutional discount. At $502, stock already prices strong execution. ' +
+      '"Black box" narrative keeps institutional discount. At $460, stock already prices strong execution. ' +
       'Self-serve qualified leads → go-live at 57% shows conversion bottleneck (lack of creatives for format).',
     'Q1 guide (+5-7% QoQ despite seasonality) validates growth engine intact. ' +
       'Self-serve GA 1H26 broadens advertiser base. CAC/LTV 30-day breakeven = scalable growth loop. ' +
