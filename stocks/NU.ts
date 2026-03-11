@@ -6,7 +6,7 @@ export const NU = defineStock({
   sector: 'FinTech / Digital Banking · LatAm',
   themeColor: '#8b5cf6',
   currentPrice: 14.49,
-  updatedOn: '26/02',
+  updatedOn: '11/03',
   fairPriceRange: '$18 - $45',
   // ~$84.9B market cap / $16.15 = ~5,254M shares
   shares0: 5254,
