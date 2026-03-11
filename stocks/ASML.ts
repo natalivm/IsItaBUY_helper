@@ -7,7 +7,7 @@ export const ASML = defineStock({
   themeColor: '#0064d2',
   updatedOn: '11/03',
   currentPrice: 1387,
-  fairPriceRange: '$1,800 - $4,270',
+  fairPriceRange: '$420 - $1,400',
   shares0: 384,
   rev25: 34400,
   fcfMargin25: 0.32,
@@ -16,8 +16,6 @@ export const ASML = defineStock({
   debt: 5000,
   beta: 1.15,
   costDebt: 0.025,
-  modelType: 'EPS_PE',
-  baseEps: 45.21,
   rsRating: 94,
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
@@ -28,10 +26,7 @@ export const ASML = defineStock({
     "Fundamentals = top tier. Valuation = not cheap. Cycle = decides everything. " +
     "55-65% probability of 15%+ CAGR — best entry on cyclical dips or P/E <30x.",
 
-  epsCagr: [10, 18, 22],
-  exitPE: [25, 30, 35],
   prob: [30, 40, 30],
-
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 1150, targetMedian: 1476, targetHigh: 1911, numAnalysts: 12 },
   revGrowth: [
@@ -62,17 +57,4 @@ export const ASML = defineStock({
 
   ebitdaProxy: [0.35, 0.45, 0.55],
   bbRate: [0.01, 0.02, 0.025],
-
-  driverOverrides: [
-    {},
-    {
-      revPrem: [0.01, 0.01, 0.01, 0.01, 0.01],
-      fcfUplift: [0.005, 0.005, 0.01, 0.01, 0.01],
-    },
-    {
-      revPrem: [0.02, 0.02, 0.02, 0.02, 0.02],
-      fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],
-      maOptVal: 1294 * 384 * 0.05,
-    },
-  ],
 });
