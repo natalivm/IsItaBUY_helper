@@ -5,7 +5,7 @@ export const DASH = defineStock({
   name: 'DoorDash, Inc.',
   sector: 'Internet / Consumer Logistics',
   themeColor: '#ff3008',
-  currentPrice: 180,
+  currentPrice: 169,
   updatedOn: '07/03',
   fairPriceRange: '$120 - $215',
   shares0: 430,
@@ -16,7 +16,7 @@ export const DASH = defineStock({
   debt: 2700,
   beta: 1.60,
   costDebt: 0.048,
-  rsRating: 19,
+  rsRating: 16,
   aiImpact: 'TAILWIND',
   strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in 2025. Post Q4'25: NV unit economics positive 2H'26, ads scaling (2× advertisers, 3× spend), and tech stack consolidation (3→1) provide three EPS levers above consensus. Thesis is execution-driven earnings growth, not P/E rerating.",
 
