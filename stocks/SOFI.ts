@@ -6,7 +6,7 @@ export const SOFI = defineStock({
   name: 'SoFi Technologies',
   sector: 'FinTech / Digital Banking',
   themeColor: '#3b82f6',
-  currentPrice: 18.56,
+  currentPrice: 17.37,
   fairPriceRange: '$13 - $48',
   shares0: 1279,
   rev25: 3600,

@@ -6,7 +6,7 @@ export const CRDO = defineStock({
   sector: 'Semiconductors · AI Interconnect',
   themeColor: '#d4af37',
   updatedOn: '07/03',
-  currentPrice: 109,
+  currentPrice: 105,
   fairPriceRange: '$91 - $322',
   shares0: 197,
   rev25: 437,

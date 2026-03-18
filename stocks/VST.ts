@@ -5,7 +5,7 @@ export const VST = defineStock({
   name: 'Vistra Corp',
   sector: 'Utilities / Power',
   themeColor: '#facc15',
-  currentPrice: 159,
+  currentPrice: 168,
   fairPriceRange: '$179 - $402',
   shares0: 339.0,
   rev25: 19600,

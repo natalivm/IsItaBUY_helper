@@ -5,7 +5,7 @@ export const RVLV = defineStock({
   name: 'Revolve Group, Inc.',
   sector: 'Consumer Discretionary · Fashion E-Commerce',
   themeColor: '#c2185b',
-  currentPrice: 25.30,
+  currentPrice: 23.19,
   fairPriceRange: '$14 - $49',
   shares0: 73,
   rev25: 1230,
