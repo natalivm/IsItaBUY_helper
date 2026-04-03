@@ -18,7 +18,7 @@ export const LLY = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 24.21,
-  rsRating: 80,
+  rsRating: 69,
   rsTrend: 'flat',
   aiImpact: 'NEUTRAL',
   strategicNarrative:
