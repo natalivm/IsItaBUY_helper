@@ -21,7 +21,6 @@ export const FLEX = defineStock({
   rsRating: 85,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "Flex is a top-5 global EMS player riding AI server and EV content tailwinds, but the underlying story is more complex than headline EPS suggests. " +
     "FY2025 EPS of $2.65 grew at ~24% CAGR from $1.43, yet revenue declined from $30.3B to $25.8B — ~80% of EPS growth came from margin expansion and aggressive buybacks, not organic business growth. " +

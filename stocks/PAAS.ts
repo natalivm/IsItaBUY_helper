@@ -23,7 +23,6 @@ export const PAAS = defineStock({
   rsRating: 96,
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "PAAS is a leveraged bet on silver and gold prices — fully unhedged, maximum beta to metals, with record FCF $1.2B driven by price not structural margin expansion. " +
     "Juanicipio is a low-cost FCF engine and Escobal restart (+$0.8-1.3 EPS, ~$2B NPV at $32 silver) is real optionality, but operating leverage is brutal both ways: 10% revenue decline means 20-30% profit decline. " +

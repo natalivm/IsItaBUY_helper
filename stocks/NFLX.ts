@@ -17,9 +17,8 @@ export const NFLX = defineStock({
   beta: 1.10,
   costDebt: 0.052,
   modelType: 'EPS_PE',
-  rsRating: 28,
+  rsRating: 29,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "Netflix is a structural compounder — scale, brand, global distribution, and a nascent ads business doubling to ~$3B in 2026 give it compounding levers few media companies possess. " +
     "2026E guide: $51B revenue (+14%), 31.5% op margin (+2pp YoY), with pricing power and ads scaling as the dual margin engines. " +

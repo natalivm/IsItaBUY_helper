@@ -20,7 +20,6 @@ export const THM = defineStock({
   rsRating: 98,
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'BUY',
   analystConsensus: { rating: 'Strong Buy', targetLow: 2, targetMedian: 2, targetHigh: 2, numAnalysts: 1 },
   strategicNarrative:
     "THM is a long-dated call option on gold staying above ~$2,000/oz. The Livengood project holds 9.0M oz P+P reserves at 0.65 g/t — 317k oz/yr over a 20.3-year mine life with AISC of $1,068/oz. " +

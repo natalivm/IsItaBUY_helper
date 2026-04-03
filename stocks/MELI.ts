@@ -6,7 +6,7 @@ export const MELI = defineStock({
   name: 'MercadoLibre',
   sector: 'E-Commerce / Fintech',
   themeColor: '#f59e0b',
-  currentPrice: 1729,
+  currentPrice: 1714,
   fairPriceRange: '$2,100 - $3,750',
   shares0: 50.4,
   rev25: 28900,
@@ -18,7 +18,7 @@ export const MELI = defineStock({
   costDebt: 0.065,
   modelType: 'EPS_PE',
   baseEps: 36.69,
-  rsRating: 19,
+  rsRating: 20,
   aiImpact: 'TAILWIND',
   strategicNarrative: "LATAM e-commerce and fintech compounder in deep margin-investment mode. FY25 EPS fell to $36.69 from FY24's $37.69 despite 39% revenue growth to $28.9B — three consecutive quarterly EPS misses. Q4'25 revenue beat ($8.8B vs $8.5B est.) but EPS missed again ($8.32 vs $9.30) as EBIT margin compressed to 10.1% vs 13.5% a year ago. Credit portfolio swelled to $12.5B, driving provisions higher. RS 22 reflects justified skepticism, but top-line acceleration (44% Q4 YoY) and infrastructure moat remain intact. Qualified buy for 3-5 year horizon investors willing to hold through the earnings trough.",
 

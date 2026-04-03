@@ -19,7 +19,6 @@ export const ALAB = defineStock({
   rsRating: 31,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "Astera is building the connectivity control plane for AI scale-up — not GPUs, not memory, but the fabric layer between them. " +
     "$6.5B Amazon warrant + Scorpio X (2027 volume ramp) + protocol-agnostic positioning (UALink + NVLink Fusion) make the bull case structural, not just cyclical. " +

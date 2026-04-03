@@ -18,7 +18,6 @@ export const SOFI = defineStock({
   costDebt: 0.055,
   rsRating: 37,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative: "Cyclical growth fintech-bank (Type B) with fee-based platform optionality. 2025 actual: Revenue $3.6B (+38% YoY), Adj EBITDA $1.1B (+58%, 31% margin), EPS $0.39. Management guides 2026 revenue ~$4.66B (+30%), EBITDA 34% margin, EPS ~$0.60. Medium-term: revenue CAGR ≥30% and EPS CAGR 38-42% through 2028. Fee-based mix now 44% ($1.8B annualized). Weak moat — lending is commodity, switching costs low, brand awareness only ~9.6%. Exposed to credit cycle (NCO ~2.80%, tolerance 7-8%) and cost of capital. RS 34 = weak institutional demand. Optionality on stablecoin (SoFi USD), crypto rails, business banking (2026 launch). Probability-weighted expected CAGR ~8.5%. Probability of 15%+: ~30-40%. Not a compounder — execution + cycle bet with upside from fee-based platform scaling.",
 
 

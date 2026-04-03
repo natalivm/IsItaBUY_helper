@@ -20,7 +20,6 @@ export const KKR = defineStock({
   modelType: 'EPS_PE',
   rsRating: 10,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "KKR is the instrument for playing private capital recovery — DE path $6.74 -> $8.16 -> $9.88 (~21% CAGR through 2028), with insurance accrued income as the hidden catalyst for 2027-28. " +
     "At ~15x 2026E DE, the stock is adequately valued: prob-weighted IRR ~12-13%, with stress test (0% growth post-2028, 15x) still yielding 8.8%. " +

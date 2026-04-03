@@ -6,7 +6,7 @@ export const ROAD = defineStock({
   name: 'Construction Partners, Inc.',
   sector: 'Infrastructure Construction · Road & Highway',
   themeColor: '#f59e0b',
-  currentPrice: 108,
+  currentPrice: 107.95,
   fairPriceRange: '$112 - $270',
   shares0: 56.5,               // ~56.5M shares (market cap $7.45B / $131.9)
   rev25: 2300,                 // FY 09/2025 revenue ($M)
@@ -20,7 +20,7 @@ export const ROAD = defineStock({
   modelType: 'EPS_PE',
   baseEps: 2.21,               // Trailing EPS FY 09/2025
 
-  rsRating: 85,
+  rsRating: 77,
   aiImpact: 'NEUTRAL',
   strategicNarrative:
     "Construction Partners is a compounding-through-M&A infrastructure play — revenue +44% YoY, record EBITDA margins, $3.09B backlog with 80-85% coverage, and Road 2030 targeting >$6B revenue / 17% EBITDA margin (doubling the business). " +

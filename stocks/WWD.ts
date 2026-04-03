@@ -20,7 +20,6 @@ export const WWD = defineStock({
   baseEps: 8.4,         // FY26 mid-guide EPS
   rsRating: 94,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "Woodward is an aerospace & industrial controls compounder coming off a monster Q1 — revenue +29%, aero margin +420bps to 23.4%, FY26 guide raised to 14-18% sales growth and $8.20-$8.60 EPS. " +
     "China on-highway wind-down ($60M revenue exiting) is actually a portfolio quality upgrade, and RS 95 confirms elite relative strength. " +

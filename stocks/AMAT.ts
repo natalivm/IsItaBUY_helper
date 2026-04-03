@@ -20,7 +20,6 @@ export const AMAT = defineStock({
   baseEps: 11.09,         // FY26E consensus (TIKR); Q1 actual $2.38 + Q2 guide $2.64 mid + "2H stronger"
   rsRating: 95,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "AMAT is the largest semiconductor equipment company by revenue — dominant in CVD, PVD, ALD, and etch with 49% gross margins and an AGS services segment (~25% of revenue) that is genuinely recurring: 2/3 under multi-year contracts (~2.9yr avg), ~90% renewal rate, growing 12-15% YoY. " +
     "Q1 FY26: $2.38 EPS actual; Q2 guided $2.64 mid. Equipment segment growing >20% in CY2026 (2H-weighted), momentum into 2027. Equipment GM ~54% disclosed separately. " +

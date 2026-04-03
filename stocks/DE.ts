@@ -18,7 +18,6 @@ export const DE = defineStock({
   costDebt: 0.0497,
   rsRating: 85,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative: "High-quality cyclical growth with real moat (precision ag, switching costs, #1 brand). RS 87 confirms strong institutional momentum. However, P/E ~35x on declining EPS (FY25: 18.50, FY26E: 17.83) is expensive for a cyclical. EBIT margin at ~15.5% vs peak >20%. Only ~20-25% probability of 15%+ CAGR from current price. This is a bet on agro-cycle recovery and tech transformation, not a structural compounder entry.",
 
 

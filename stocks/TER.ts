@@ -20,7 +20,6 @@ export const TER = defineStock({
   baseEps: 6.25,
   rsRating: 98,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "Type B — cyclical growth on AI capex wave, not a structural compounder. CEO conference (post-earnings) was the most candid signal: " +
     "'We're in the middle of a 4-quarter boom (Q3'25→Q2'26) … then there'll be a digestion.' This is textbook semicap mini-cycle language. " +

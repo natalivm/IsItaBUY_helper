@@ -17,7 +17,6 @@ export const PINS = defineStock({
   beta: 1.58,
   rsRating: 10,
   aiImpact: 'DISRUPTION_RISK',
-  ratingOverride: 'HOLD',
   strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners.",
 
 
