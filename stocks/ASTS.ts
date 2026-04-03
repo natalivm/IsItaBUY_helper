@@ -5,7 +5,7 @@ export const ASTS = defineStock({
   name: 'AST SpaceMobile',
   sector: 'Space Technology',
   themeColor: '#38bdf8',
-  currentPrice: 94,
+  currentPrice: 96,
   updatedOn: '07/03',
   fairPriceRange: '$20 - $250',
   shares0: 370,

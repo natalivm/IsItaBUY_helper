@@ -6,7 +6,7 @@ export const RBRK = defineStock({
   name: 'Rubrik',
   sector: 'Data Security',
   themeColor: '#22d3ee',
-  currentPrice: 52.84,
+  currentPrice: 48.59,
   fairPriceRange: '$35 - $100',
   shares0: 201.0,
   rev25: 1281,

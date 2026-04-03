@@ -6,7 +6,7 @@ export const EME = defineStock({
   updatedOn: '07/03',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 720,
+  currentPrice: 740,
   fairPriceRange: '$560 - $1350',
   shares0: 44.7,
   rev25: 16990,             // Revenue 2025A ($M); FY2025 actual; +18.5% YoY (record)

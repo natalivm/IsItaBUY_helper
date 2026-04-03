@@ -6,7 +6,7 @@ export const CEG = defineStock({
   sector: 'Power',
   themeColor: '#3b82f6',
   updatedOn: '11/03',
-  currentPrice: 320,
+  currentPrice: 301,
   fairPriceRange: '$200 - $540',
   shares0: 358,
   rev25: 25200,

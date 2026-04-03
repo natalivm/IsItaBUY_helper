@@ -6,7 +6,7 @@ export const APP = defineStock({
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
   updatedOn: '11/03',
-  currentPrice: 475,
+  currentPrice: 509,
   fairPriceRange: '$310 - $836',
   shares0: 340,
   rev25: 5480,

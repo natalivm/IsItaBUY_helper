@@ -6,7 +6,7 @@ export const STRL = defineStock({
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
   updatedOn: '07/03',
-  currentPrice: 412,
+  currentPrice: 420,
   fairPriceRange: '$320 - $560',
   shares0: 30.7,               // ~30.7M diluted shares outstanding (declining via buybacks)
   rev25: 2490,                 // FY2025 actual: $2.49B revenue (+32% YoY adj.)

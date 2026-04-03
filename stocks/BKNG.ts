@@ -6,7 +6,7 @@ export const BKNG = defineStock({
   sector: 'Online Travel / Marketplace',
   themeColor: '#003580',
   updatedOn: '11/03',
-  currentPrice: 4442,
+  currentPrice: 4194,
   fairPriceRange: '$7,700 - $10,300',
   shares0: 30.6,
   rev25: 26917,
