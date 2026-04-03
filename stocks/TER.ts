@@ -14,10 +14,10 @@ export const TER = defineStock({
   taxRate: 0.20,
   cash: 900,
   debt: 100,
-  beta: 1.45,
+  beta: 1.84,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 6.25,
+  baseEps: 6.43,
   rsRating: 99,
   aiImpact: 'TAILWIND',
   strategicNarrative:
