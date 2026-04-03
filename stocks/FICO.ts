@@ -5,7 +5,7 @@ export const FICO = defineStock({
   name: 'Fair Isaac Corp',
   sector: 'Analytics',
   themeColor: '#2979ff',
-  currentPrice: 1068,
+  currentPrice: 1089,
   updatedOn: '11/03',
   fairPriceRange: '$1,100 - $2,200',
   shares0: 23.72,
@@ -16,7 +16,7 @@ export const FICO = defineStock({
   debt: 4200,
   beta: 1.03,
   costDebt: 0.055,
-  rsRating: 15,
+  rsRating: 9,
   aiImpact: 'NEUTRAL',
   strategicNarrative: "Structural compounder facing first real competitive threat. VantageScore 4.0 backed by aggressive Experian/Equifax pricing and FHFA regulatory support challenges FICO's mortgage scoring monopoly — the key risk is pricing power erosion, not just cycle timing. Platform ARR +33% and NRR 122% provide diversification, but Scores still drives the majority of high-margin revenue. $1B debt offering adds leverage risk (debt now ~$4.2B). RS 15 signals severe technical deterioration. DCF approach anchors valuation to cash flow generation rather than multiple expansion. Key risks: VantageScore adoption by GSEs, FHFA-mandated pricing caps, mortgage cycle reversal, elevated leverage.",
 
