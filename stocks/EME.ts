@@ -6,7 +6,7 @@ export const EME = defineStock({
   updatedOn: '04/03',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 740,
+  currentPrice: 756,
   fairPriceRange: '$560 - $1350',
   shares0: 44.7,
   rev25: 16990,             // Revenue 2025A ($M); FY2025 actual; +18.5% YoY (record)
@@ -18,7 +18,7 @@ export const EME = defineStock({
   costDebt: 0.052,
   baseEps: 25.87,           // 2025A adj. EPS (record; +20% YoY); 2026E guided $27.25–29.25
   modelType: 'EPS_PE',
-  rsRating: 91,
+  rsRating: 92,
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "EMCOR is a B+ quality cyclical grower with a confirmed productivity moat — FY2025 actuals: $16.99B revenue (+18.5%), $25.87 adj. EPS (+20%), record 9.4% operating margin. " +
