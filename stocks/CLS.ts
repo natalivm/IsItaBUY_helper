@@ -6,7 +6,7 @@ export const CLS = defineStock({
   sector: 'EMS',
   themeColor: '#f97316',
   updatedOn: '07/03',
-  currentPrice: 377,
+  currentPrice: 295,
   fairPriceRange: '$120 - $360',
   shares0: 117.9,
   rev25: 12400,
