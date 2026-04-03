@@ -130,7 +130,7 @@ export const TICKER = defineStock({
    - `EPS_PE`: Uses baseEps, epsCagr, exitPE, prob
 6. **Model selection rule** — use the decision tree below to pick the right model for each new stock
 7. **RS Rating tiers**: <15 very low, 15-39 low, 40-79 neutral, 80-90 strong, >90 overextended
-7. **Investment verdicts**: STRONG BUY / BUY / HOLD / AVOID — determined by base-case upside (>30%, >15%, near fair value, overvalued)
+7. **Investment verdicts**: STRONG BUY / BUY / HOLD / AVOID — see "Rating Logic" section below for full rules
 8. **Prices**: Static `currentPrice` in each stock file — updated manually by request (no live price fetching)
 9. **`prob` and `epsCagr` must be integer percentages**: Use `[25, 50, 25]` not `[0.25, 0.50, 0.25]`. The model divides by 100 internally.
 
@@ -171,6 +171,37 @@ Use `DCF_ADVANCED` (default) when:
 - [ ] If EPS_PE: `baseEps`, `epsCagr`, `exitPE` are all provided
 - [ ] Bear case produces a positive, plausible stock price (not negative)
 - [ ] Weighted average is directionally aligned with analyst consensus (within 50%)
+
+## Rating Logic
+
+Rating is determined automatically in `getInstitutionalRating()` (`services/projectionService.ts`) based on base-case upside and quality signals.
+
+### Thresholds
+
+| Condition | Rating |
+|-----------|--------|
+| RS rating < 30 | **AVOID** (hard cap — weak institutional support) |
+| Base-case upside > 30% | **STRONG BUY** |
+| Upside > 25% + quality boost | **STRONG BUY** |
+| Base-case upside > 15% | **BUY** |
+| Upside > 12% + quality boost | **BUY** |
+| Target < 96% of spot (overvalued) + **no** quality boost | **AVOID** |
+| Target < 96% of spot (overvalued) + quality boost | **HOLD** |
+| Everything else | **HOLD** |
+
+### Quality boost
+
+A stock has a "quality boost" when RS rating >= 80 **or** aiImpact is TAILWIND. This softens thresholds in two ways:
+- **Lowers the BUY/STRONG BUY entry points** (12% instead of 15%, 25% instead of 30%)
+- **Prevents AVOID when overvalued** — stocks with strong fundamentals and institutional momentum that happen to trade above model fair value get HOLD, not AVOID
+
+### Why AVOID requires weak quality signals
+
+AVOID is a strong verdict that implies "sell / don't touch." It should be reserved for stocks where:
+- The model says overvalued **AND** fundamentals are lagging (no quality boost), or
+- RS rating is below 30 (institutions are actively exiting)
+
+Stocks like TER (RS 98, AI TAILWIND) that trade above model fair value are simply at fair price or mildly extended — not broken. These get HOLD, signaling "don't add here, wait for a pullback" rather than "stay away."
 
 ## Alpha Strategic View
 
