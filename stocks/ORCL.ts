@@ -21,7 +21,6 @@ export const ORCL = defineStock({
   rsRating: 16,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'BUY',
   strategicNarrative:
     "Strong enterprise moat business entering AI-fueled cyclical/secular acceleration phase, paying for it with very heavy capex. " +
     "Q3 FY26 was the first quarter in 15+ years where both organic revenue and organic non-GAAP EPS grew 20%+ in USD — real acceleration, not just narrative. " +

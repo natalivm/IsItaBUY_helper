@@ -18,7 +18,6 @@ export const CIEN = defineStock({
   costDebt: 0.045,
   rsRating: 99,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative: "Type B — cyclical growth on AI optical networking / data center interconnect wave. CIEN is the undisputed global leader in high-speed optical connectivity, benefiting from hyperscaler AI capex and 800G/1.6T upgrades. Q1 FY26 record: $1.43B revenue (+33% YoY), adj EPS $1.35 (2x YoY), gross margin 44.7%. FY26 guidance raised to $5.9B-$6.3B (+24-28% YoY). Backlog surged to $7B (+$2B in one quarter), with nearly all new orders for FY27 — providing multiyear visibility. Three hyperscalers deploying scale-across AI training solutions (early innings). Supply-constrained: demand outstripping supply for several quarters. New product inflections: Hyper-rail, Vesta 200 CPO, Nitro Redriver. Moat moderate — switching costs, vertical integration, deep hyperscaler collaboration, but faces Cisco/Nokia/Huawei competition in WAN. Forward P/E ~48x prices in significant cycle recovery. Key risk: telecom capex cyclicality — hardware revenue non-recurring, EPS historically volatile (2.91→1.90→2.72→1.82→0.85). RS 99 = massive momentum, not structural moat. Expected CAGR ~3-5% at current price. Probability of 15%+ CAGR: ~10-15%. Fair entry for 15% returns ~$150-$180.",
 
   analystConsensus: { rating: 'Buy', targetLow: 180, targetMedian: 260, targetHigh: 320, numAnalysts: 20 },

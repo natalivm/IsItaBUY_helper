@@ -21,7 +21,6 @@ export const LLY = defineStock({
   rsRating: 80,
   rsTrend: 'flat',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "LLY is a structural compounder driven by the GLP-1 revolution (obesity + diabetes). " +
     "Q4 2025 earnings + TD Cowen call confirmed a broader thesis: not a one-drug obesity winner but a metabolic disease platform " +

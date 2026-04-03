@@ -20,7 +20,6 @@ export const EME = defineStock({
   modelType: 'EPS_PE',
   rsRating: 91,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "EMCOR is a B+ quality cyclical grower with a confirmed productivity moat — FY2025 actuals: $16.99B revenue (+18.5%), $25.87 adj. EPS (+20%), record 9.4% operating margin. " +
     "RPOs hit a record $13.25B (+31% YoY, up from $10.1B), with network/communications alone at $4.46B (+60% YoY). " +

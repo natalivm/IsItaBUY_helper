@@ -29,7 +29,6 @@ export const DUOL = defineStock({
     "The binary bet: 100M DAUs by 2028 unlocks a monetization base that justifies massive re-rating — or the strategy fails and slow growth + declining margins gets punished hard. " +
     "AI disruption risk is real but DUOL is also AI-first (Video Call, Max tier, 18x content acceleration). WAIT for 2026 guidance stabilization or first evidence of DAU re-acceleration before adding aggressively.",
 
-  ratingOverride: 'AVOID',
 
   epsCagr: [5, 15, 25],
   exitPE: [12, 22, 30],

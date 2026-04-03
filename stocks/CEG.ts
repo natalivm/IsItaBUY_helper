@@ -20,7 +20,6 @@ export const CEG = defineStock({
   baseEps: 9.39,
   rsRating: 49,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'BUY',
   strategicNarrative:
     "Q4/FY25 earnings confirmed: adj operating EPS $9.39 (+8.3% YoY), matching consensus. Nuclear capacity factor 96.8%. " +
     "But real FCF is only $1.29B (OCF $4.24B − CapEx $2.95B) → 1.2% FCF yield at $105B market cap — very thin for a power business. " +

@@ -18,7 +18,6 @@ export const MNST = defineStock({
   costDebt: 0.04,
   rsRating: 82,
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'HOLD',
   strategicNarrative: "Monster is a rare, high-quality structural compounder. Q3 2025 confirmed the margin recovery thesis: record quarterly net sales of $2.20B (+16.8%), operating income +40.7%, net income +41.4%, with EBITDA margins recovering sharply from 26.8% in 2024 toward a street-projected 31.9% in 2025. Business quality is not in question — 56% gross margins, 21.5% FCF margins, Coke relationship deepening, and international runway (APAC $33B TAM, 158 countries). Analyst targets cluster $79–$98 (JP Morgan $79, Morgan Stanley $96, HSBC $98), and the stock's 64% run from its 52-week low reflects the market pricing in the bull case. At $80, MNST trades at ~41x forward P/E on a 12-13% EPS grower — you're paying compounder prices for above-average but not elite growth. Q4 2025 earnings (Feb 26) are a near-term binary: sustained margin expansion and constructive guidance could push toward $95–100; any guidance disappointment has $60–70 to fall through. HOLD with a materially better entry near $72–76.",
 
 

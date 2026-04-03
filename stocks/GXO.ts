@@ -20,7 +20,6 @@ export const GXO = defineStock({
   baseEps: 3.00,
   rsRating: 83,
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "GXO is a cyclical logistics operator playing an execution + margin expansion story — not a secular megatrend bet. " +
     "FY26 guide: adj EPS +20% mid ($2.85-$3.15), organic 4-5% on flat volume assumptions (conservative), Wincanton synergy ramping to $60M run-rate by end-2026. " +

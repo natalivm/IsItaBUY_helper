@@ -18,7 +18,6 @@ export const SMWB = defineStock({
   costDebt: 0.0,
   rsRating: 3,
   aiImpact: 'DISRUPTION_RISK',
-  ratingOverride: 'AVOID',
   strategicNarrative: "Terminal technical weakness. RS 3 signals total institutional abandonment. The existential threat to web traffic measurement in an LLM-first world is a heavy anchor. Avoid at all costs despite the low P/S ratio.",
 
 

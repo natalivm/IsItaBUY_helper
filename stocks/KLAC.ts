@@ -20,7 +20,6 @@ export const KLAC = defineStock({
   rsRating: 94,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "KLAC is the dominant leader in semiconductor process control and inspection — a critical, monopolistic position in yield management with extremely high switching costs and a real data/analytics 'network effect' moat. Customers include TSMC, Samsung, and Intel. " +
     "Earnings call confirms structural demand: WFE 2026 total mid-$130B (core low $120B + AP ~$12B), 1H26 virtually sold out with growing lead times, 2H26 acceleration. HBM intensity, advanced packaging (facility-constrained), and EUV layers all drive process control intensity higher. " +

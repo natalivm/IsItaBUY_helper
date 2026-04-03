@@ -21,7 +21,6 @@ export const LRCX = defineStock({
   rsRating: 97,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "Lam Research is the dominant etch & deposition equipment supplier, with SAM share at mid-30% of WFE and targeting high-30% — " +
     "structural content gains (GAA, backside power, advanced packaging, high-performance materials) mean etch/dep intensity rises with each new node. " +

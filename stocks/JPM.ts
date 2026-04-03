@@ -21,7 +21,6 @@ export const JPM = defineStock({
   rsRating: 51,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'HOLD',
   strategicNarrative:
     "D+ quality financial ecosystem compounder — best bank in the world, but still a bank. " +
     "2025 actual: Revenue $182B, Net income $56B, EPS $20.02. Forward: EPS 2026E $21.9 → 2030E $29.8 (~7-8% CAGR). " +
