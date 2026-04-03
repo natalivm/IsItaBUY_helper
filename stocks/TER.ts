@@ -6,7 +6,7 @@ export const TER = defineStock({
   name: 'Teradyne, Inc.',
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
-  currentPrice: 297,
+  currentPrice: 308,
   fairPriceRange: '$140 - $200',
   shares0: 157,
   rev25: 3190,
@@ -14,11 +14,11 @@ export const TER = defineStock({
   taxRate: 0.20,
   cash: 900,
   debt: 100,
-  beta: 1.45,
+  beta: 1.84,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 6.25,
-  rsRating: 98,
+  baseEps: 6.43,
+  rsRating: 99,
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "Type B — cyclical growth on AI capex wave, not a structural compounder. CEO conference (post-earnings) was the most candid signal: " +
