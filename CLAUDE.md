@@ -38,7 +38,7 @@ Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (l
    ```bash
    npm run build
    ```
-   Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% AVOID, else HOLD.
+   Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% AVOID (only if no quality boost, otherwise HOLD), else HOLD. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
    Group assignment depends on rating + market cap + RS rating + RS trend (see `classifyStock()` in `App.tsx`).
 
    If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.

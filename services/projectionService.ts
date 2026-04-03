@@ -77,7 +77,7 @@ export const getInstitutionalRating = (target: number, spot: number, ratingOverr
   if (boosted && upsidePct > STRONG_BUY_SOFT_UPSIDE) return ratingResult('STRONG BUY');
   if (upsidePct > BUY_UPSIDE) return ratingResult('BUY');
   if (boosted && upsidePct > BUY_SOFT_UPSIDE) return ratingResult('BUY');
-  if (downsideRatio < AVOID_DOWNSIDE_RATIO) return ratingResult('AVOID');
+  if (downsideRatio < AVOID_DOWNSIDE_RATIO) return ratingResult(boosted ? 'HOLD' : 'AVOID');
   return ratingResult('HOLD');
 };
 
