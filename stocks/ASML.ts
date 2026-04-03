@@ -6,7 +6,7 @@ export const ASML = defineStock({
   sector: 'Semiconductor Equipment · EUV Lithography',
   themeColor: '#0064d2',
   updatedOn: '04/03',
-  currentPrice: 1244,
+  currentPrice: 1322,
   fairPriceRange: '$420 - $1,400',
   shares0: 384,
   rev25: 34400,
