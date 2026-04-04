@@ -49,7 +49,8 @@ const App: React.FC = () => {
     return Object.values(tickers).map((t: TickerDefinition) => {
       const proj = calculateProjection(t.ticker, ScenarioType.BASE, tickers, true);
       const rating = getInstitutionalRating(proj.pricePerShare, t.currentPrice, t.ratingOverride, { rsRating: t.rsRating, aiImpact: t.aiImpact });
-      const group = classifyStock(t, rating.label, t.rsRating);
+      const baseCaseUpside = (proj.pricePerShare - t.currentPrice) / t.currentPrice;
+      const group = classifyStock(t, rating.label, t.rsRating, baseCaseUpside);
 
       return { ticker: t.ticker, fairPriceRange: t.fairPriceRange || 'N/A', active: t.active, ...rating, aiImpact: t.aiImpact, group };
     }).sort((a, b) => a.ticker.localeCompare(b.ticker));

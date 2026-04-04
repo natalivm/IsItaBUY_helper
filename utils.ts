@@ -25,14 +25,14 @@ const LARGE_CAP_THRESHOLD_M = 10_000;
 const GOOD_MOMENTUM_RS = 70;
 const MID_RS_RISING_THRESHOLD = 40;
 
-export function classifyStock(t: TickerDefinition, rating: string, rsRating: number): StockGroup {
+export function classifyStock(t: TickerDefinition, rating: string, rsRating: number, baseCaseUpside: number): StockGroup {
   const marketCapM = t.currentPrice * t.shares0;
   const isLargeCap = marketCapM >= LARGE_CAP_THRESHOLD_M;
   const isBuyOrAbove = rating === 'STRONG BUY' || rating === 'BUY';
   const hasGoodMomentum = rsRating >= GOOD_MOMENTUM_RS;
   const hasMidRsRising = rsRating >= MID_RS_RISING_THRESHOLD && t.rsTrend === 'rising';
 
-  if (rating === 'OVERVALUED') return 'AVOID';
+  if (baseCaseUpside < 0) return 'AVOID';
   if (isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'PRIME_GROWTH';
   if (!isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'TURBO_GROWTH';
   return 'WATCH_LIST';
