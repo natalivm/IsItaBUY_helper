@@ -75,11 +75,11 @@ const InvestmentVerdict: React.FC<Props> = ({
       return `Our model assigns ${ticker} a BUY rating. The base-case target of ${baseTarget} implies ${upside}% upside from spot, and the probability-weighted blended value of ${pwBlended} supports favorable risk/reward. With a ${cagr} probability-weighted 5-year CAGR and a ${probAcceleration}% composite acceleration score, the fundamentals support building a position.`;
     }
 
-    if (activeStockData?.label === 'AVOID') {
+    if (activeStockData?.label === 'OVERVALUED') {
       if (rsOverextended) {
-        return `Our model flags ${ticker} as AVOID. The base-case target of ${baseTarget} shows limited upside from ${spot}, and RS ${rs} signals the stock is overextended in the top decile of momentum. This combination of stretched valuation and stretched technicals creates elevated downside risk — a pullback from these levels is likely. Avoid new positions and consider trimming existing exposure.`;
+        return `Our model flags ${ticker} as OVERVALUED. The base-case target of ${baseTarget} shows limited upside from ${spot}, and RS ${rs} signals the stock is overextended in the top decile of momentum. This combination of stretched valuation and stretched technicals creates elevated downside risk — a pullback from these levels is likely. Consider waiting for a meaningful pullback before initiating or adding to positions.`;
       }
-      return `Our model flags ${ticker} as AVOID. The base-case target of ${baseTarget} shows limited upside from the current spot of ${spot}, and the probability-weighted blended value of ${pwBlended} does not justify entry risk at this price. Risk/reward is unfavorable — consider waiting for a better entry or allocating capital elsewhere.`;
+      return `Our model flags ${ticker} as OVERVALUED. The base-case target of ${baseTarget} shows limited upside from the current spot of ${spot}, and the probability-weighted blended value of ${pwBlended} does not justify entry risk at this price. Risk/reward is unfavorable — consider waiting for a better entry or allocating capital elsewhere.`;
     }
 
     // HOLD cases
@@ -157,7 +157,7 @@ const InvestmentVerdict: React.FC<Props> = ({
                 <div className={cn("text-6xl lg:text-7xl font-black tracking-tighter leading-none", v.color)}>
                   {v.text}
                 </div>
-                {/* Only show sub-label when it adds info (YES→BUY, NO→AVOID); skip when same as big text (HOLD→HOLD) */}
+                {/* Only show sub-label when it adds info (YES→BUY, NO→OVERVALUED); skip when same as big text (HOLD→HOLD) */}
                 {v.text !== ourLabel && (
                   <div className={cn("text-xs font-black uppercase tracking-widest mt-1", v.subtextColor)}>
                     {ourLabel}
@@ -214,7 +214,7 @@ const InvestmentVerdict: React.FC<Props> = ({
         };
 
         // Map both systems to a 1-5 scale for agreement comparison
-        const ourScale: Record<string, number> = { 'STRONG BUY': 5, 'BUY': 4, 'HOLD': 3, 'AVOID': 1 };
+        const ourScale: Record<string, number> = { 'STRONG BUY': 5, 'BUY': 4, 'HOLD': 3, 'OVERVALUED': 1 };
         const analystScale: Record<AnalystRating, number> = {
           'Strong Buy': 5, 'Buy': 4, 'Hold': 3, 'Sell': 2, 'Strong Sell': 1,
         };

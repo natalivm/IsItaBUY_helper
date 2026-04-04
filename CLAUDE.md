@@ -34,11 +34,11 @@ Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (l
    grep -r 'currentPrice:' stocks/ | sort
    ```
 
-5. **Review tiering impact** — after updating prices, check if any stocks changed their rating (STRONG BUY / BUY / HOLD / AVOID) or home page group (PRIME GROWTH / TURBO GROWTH / WATCH LIST / GRAVEYARD). Run the build to verify:
+5. **Review tiering impact** — after updating prices, check if any stocks changed their rating (STRONG BUY / BUY / HOLD / OVERVALUED) or home page group (PRIME GROWTH / TURBO GROWTH / WATCH LIST / GRAVEYARD). Run the build to verify:
    ```bash
    npm run build
    ```
-   Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% AVOID (only if no quality boost, otherwise HOLD), else HOLD. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
+   Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% OVERVALUED (only if no quality boost, otherwise HOLD), else HOLD. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
    Group assignment depends on rating + market cap + RS rating + RS trend (see `classifyStock()` in `App.tsx`).
 
    If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.

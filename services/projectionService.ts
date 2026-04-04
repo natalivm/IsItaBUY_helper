@@ -39,7 +39,7 @@ const BUY_UPSIDE = 0.15;               // >15% upside → automatic BUY
 const BUY_SOFT_UPSIDE = 0.12;          // 12-15% upside → BUY if quality signals present
 const AVOID_DOWNSIDE_RATIO = 0.96;     // <96% of spot = overvalued
 const RS_QUALITY_THRESHOLD = 80;       // RS rating considered "high"
-const RS_AVOID_THRESHOLD = 30;         // RS rating below this → cap at AVOID
+const RS_OVERVALUED_THRESHOLD = 30;    // RS rating below this → skip quality boost
 
 const ZERO_ARRAY: number[] = [0, 0, 0, 0, 0];
 
@@ -71,13 +71,11 @@ export const getInstitutionalRating = (target: number, spot: number, ratingOverr
   const downsideRatio = target / spot;
   const boosted = hasQualityBoost(signals);
 
-  if (signals?.rsRating !== undefined && signals.rsRating < RS_AVOID_THRESHOLD) return ratingResult('AVOID');
-
   if (upsidePct > STRONG_BUY_UPSIDE) return ratingResult('STRONG BUY');
   if (boosted && upsidePct > STRONG_BUY_SOFT_UPSIDE) return ratingResult('STRONG BUY');
   if (upsidePct > BUY_UPSIDE) return ratingResult('BUY');
   if (boosted && upsidePct > BUY_SOFT_UPSIDE) return ratingResult('BUY');
-  if (downsideRatio < AVOID_DOWNSIDE_RATIO) return ratingResult(boosted ? 'HOLD' : 'AVOID');
+  if (downsideRatio < AVOID_DOWNSIDE_RATIO) return ratingResult(boosted ? 'HOLD' : 'OVERVALUED');
   return ratingResult('HOLD');
 };
 

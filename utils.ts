@@ -33,7 +33,7 @@ export function classifyStock(t: TickerDefinition, rating: string, rsRating: num
   const hasGoodMomentum = rsRating >= GOOD_MOMENTUM_RS;
   const hasMidRsRising = rsRating >= MID_RS_RISING_THRESHOLD && t.rsTrend === 'rising';
 
-  if (rating === 'AVOID' && rsRating < GRAVEYARD_RS_THRESHOLD) return 'GRAVEYARD';
+  if (rating === 'OVERVALUED' && rsRating < GRAVEYARD_RS_THRESHOLD) return 'GRAVEYARD';
   if (isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'PRIME_GROWTH';
   if (!isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'TURBO_GROWTH';
   return 'WATCH_LIST';

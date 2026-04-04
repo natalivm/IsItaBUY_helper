@@ -25,7 +25,7 @@ npm run lint      # Type-check (tsc --noEmit)
 ```
 ├── components/             # React components
 │   ├── StockDetailView.tsx  # Full stock analysis page
-│   ├── InvestmentVerdict.tsx # Buy/Hold/Avoid verdict with RS-aware narratives
+│   ├── InvestmentVerdict.tsx # Buy/Hold/Overvalued verdict with RS-aware narratives
 │   ├── StockPageHeader.tsx
 │   ├── StockMetricCards.tsx
 │   └── ScenarioMetricsCard.tsx
@@ -78,7 +78,7 @@ export const TICKER = defineStock({
   fairPriceRange: '$80 - $150',
 
   // Alpha Strategic View — override when narrative disagrees with model
-  // ratingOverride: 'HOLD',  // 'STRONG BUY' | 'BUY' | 'HOLD' | 'AVOID'
+  // ratingOverride: 'HOLD',  // 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED'
 
   // Model type (default: 'DCF_ADVANCED')
   modelType: 'DCF_ADVANCED',  // or 'EPS_PE'
@@ -130,7 +130,7 @@ export const TICKER = defineStock({
    - `EPS_PE`: Uses baseEps, epsCagr, exitPE, prob
 6. **Model selection rule** — use the decision tree below to pick the right model for each new stock
 7. **RS Rating tiers**: <15 very low, 15-39 low, 40-79 neutral, 80-90 strong, >90 overextended
-7. **Investment verdicts**: STRONG BUY / BUY / HOLD / AVOID — see "Rating Logic" section below for full rules
+7. **Investment verdicts**: STRONG BUY / BUY / HOLD / OVERVALUED — see "Rating Logic" section below for full rules
 8. **Prices**: Static `currentPrice` in each stock file — updated manually by request (no live price fetching)
 9. **`prob` and `epsCagr` must be integer percentages**: Use `[25, 50, 25]` not `[0.25, 0.50, 0.25]`. The model divides by 100 internally.
 
@@ -180,12 +180,11 @@ Rating is determined automatically in `getInstitutionalRating()` (`services/proj
 
 | Condition | Rating |
 |-----------|--------|
-| RS rating < 30 | **AVOID** (hard cap — weak institutional support) |
 | Base-case upside > 30% | **STRONG BUY** |
 | Upside > 25% + quality boost | **STRONG BUY** |
 | Base-case upside > 15% | **BUY** |
 | Upside > 12% + quality boost | **BUY** |
-| Target < 96% of spot (overvalued) + **no** quality boost | **AVOID** |
+| Target < 96% of spot (overvalued) + **no** quality boost | **OVERVALUED** |
 | Target < 96% of spot (overvalued) + quality boost | **HOLD** |
 | Everything else | **HOLD** |
 
@@ -193,15 +192,15 @@ Rating is determined automatically in `getInstitutionalRating()` (`services/proj
 
 A stock has a "quality boost" when RS rating >= 80 **or** aiImpact is TAILWIND. This softens thresholds in two ways:
 - **Lowers the BUY/STRONG BUY entry points** (12% instead of 15%, 25% instead of 30%)
-- **Prevents AVOID when overvalued** — stocks with strong fundamentals and institutional momentum that happen to trade above model fair value get HOLD, not AVOID
+- **Prevents OVERVALUED when model says overvalued** — stocks with strong fundamentals and institutional momentum that trade above model fair value get HOLD, not OVERVALUED
 
-### Why AVOID requires weak quality signals
+### Why we use OVERVALUED instead of AVOID
 
-AVOID is a strong verdict that implies "sell / don't touch." It should be reserved for stocks where:
-- The model says overvalued **AND** fundamentals are lagging (no quality boost), or
-- RS rating is below 30 (institutions are actively exiting)
+"AVOID" was too strong — it implied "sell / don't touch" which is wrong for quality stocks that are simply priced above model fair value. OVERVALUED is descriptive: it says "the model thinks you're paying more than intrinsic value" without making a judgment about the business quality.
 
-Stocks like TER (RS 98, AI TAILWIND) that trade above model fair value are simply at fair price or mildly extended — not broken. These get HOLD, signaling "don't add here, wait for a pullback" rather than "stay away."
+- **Low RS is temporary.** A stock with RS 18 but strong fundamentals (like BKNG) may simply be out of favor — institutions haven't arrived yet, but the business is fine. That's not "avoid," it's "wait for momentum confirmation."
+- **OVERVALUED + low RS → GRAVEYARD group** on the home page, which provides the visual signal that the stock needs monitoring without the loaded "avoid" language.
+- **OVERVALUED + quality boost → HOLD** — stocks like TER (RS 98, TAILWIND) trading above model fair value are simply at fair price. HOLD signals "don't add here, wait for a pullback."
 
 ## Alpha Strategic View
 
@@ -209,8 +208,8 @@ The narrative assessment in `strategicNarrative` is the **authoritative rating**
 
 ### Rules for every stock addition or update:
 
-1. **Write the `strategicNarrative` first** — it must include a clear verdict (BUY, HOLD, WAIT, AVOID) with reasoning
-2. **Compare the narrative verdict to the quantitative model output** (base-case upside thresholds: >30% STRONG BUY, >15% BUY, <96% AVOID, else HOLD)
+1. **Write the `strategicNarrative` first** — it must include a clear verdict (BUY, HOLD, WAIT, OVERVALUED) with reasoning
+2. **Compare the narrative verdict to the quantitative model output** (base-case upside thresholds: >30% STRONG BUY, >15% BUY, <96% OVERVALUED, else HOLD)
 3. **If they disagree, set `ratingOverride`** to match the narrative assessment:
    ```typescript
    ratingOverride: 'HOLD',  // narrative says WAIT, model says STRONG BUY
@@ -220,8 +219,8 @@ The narrative assessment in `strategicNarrative` is the **authoritative rating**
 
 ### Common mismatch patterns:
 - Model says STRONG BUY/BUY but CAGR is below 15% threshold → override to HOLD
-- Model says AVOID but narrative is bullish on structural thesis → override to BUY
-- Model says STRONG BUY but narrative flags existential risk → override to HOLD or AVOID
+- Model says OVERVALUED but narrative is bullish on structural thesis → override to BUY
+- Model says STRONG BUY but narrative flags existential risk → override to HOLD or OVERVALUED
 
 ## Vercel Deployment
 

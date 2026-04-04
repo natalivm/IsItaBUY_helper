@@ -55,7 +55,7 @@ export interface SimpleStockInput {
    * narrative assessment disagrees. The model rating is still shown as
    * "Model: X" in the Investment Verdict for monitoring.
    */
-  ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'AVOID';
+  ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
   strategicNarrative: string;
 
   // ── Model type (default: DCF_ADVANCED) ──

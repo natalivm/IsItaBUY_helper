@@ -4,7 +4,7 @@ import { ALL_STOCKS } from './stocks';
 
 // ── Rating Definitions (single source of truth) ──
 
-export type RatingKey = 'STRONG BUY' | 'BUY' | 'HOLD' | 'AVOID';
+export type RatingKey = 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
 
 export const RATING_DEFS: Record<RatingKey, {
   verdictText: string;
@@ -46,7 +46,7 @@ export const RATING_DEFS: Record<RatingKey, {
     activeBorder: 'border-blue-500',
     activeBg: 'bg-blue-500/10',
   },
-  'AVOID': {
+  'OVERVALUED': {
     verdictText: 'NO',
     status: 'overvalued',
     color: 'text-red-400',
@@ -78,7 +78,7 @@ export interface TagDef {
 }
 
 export const TAG_DEFS: TagDef[] = [
-  ...(['STRONG BUY', 'BUY', 'HOLD', 'AVOID'] as RatingKey[]).map(key => {
+  ...(['STRONG BUY', 'BUY', 'HOLD', 'OVERVALUED'] as RatingKey[]).map(key => {
     const r = RATING_DEFS[key];
     return { tag: key, label: key, color: r.color, activeBorder: r.activeBorder, activeBg: r.activeBg, dot: r.dot };
   }),
