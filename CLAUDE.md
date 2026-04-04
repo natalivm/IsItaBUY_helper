@@ -67,6 +67,6 @@ Group assignment depends on rating + market cap + RS rating + RS trend (see `cla
 
 If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.
 
-### Price Rounding Convention
+### Price Format
 
-Match the existing style — for stocks >$100 round to nearest integer (e.g., `375`). For stocks <$20 keep one or two decimal places (e.g., `18.84`).
+Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).

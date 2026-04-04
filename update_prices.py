@@ -52,11 +52,12 @@ def get_tickers():
 
 
 def format_price(price):
-    """Round price per project convention: >=100 integer, <100 keep 2 decimals."""
-    if price >= 100:
-        return str(int(round(price)))
-    else:
-        return f"{price:.2f}"
+    """Format price to 2 decimal places, stripping unnecessary trailing zeros."""
+    formatted = f"{price:.2f}"
+    # 348.00 -> 348, 348.40 -> 348.4, 348.47 -> 348.47
+    if "." in formatted:
+        formatted = formatted.rstrip("0").rstrip(".")
+    return formatted
 
 
 def fetch_prices(tickers):
