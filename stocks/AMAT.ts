@@ -50,10 +50,10 @@ export const AMAT = defineStock({
       'FY26 EPS lands near ~$10.2 (Q2 at the guidance floor of $2.44, Q3 ~$2.60, Q4 ~$2.75). ' +
       'EPS grows at only 4% annually from this base; the multiple reverts toward 17x as cycle visibility shrinks. ' +
       'Stress-test: $11.09 × 18x = ~$200. At P/E 20, even the bear EPS path gives ~$210. Roughly -7% to -10% annualized from $366.',
-    'CY2026-2027 play out as guided: >20% equipment growth (2H-weighted), AGS compounding at 12-13% YoY with 90% renewal rates. ' +
-      'FY26 EPS lands ~$10.8 (Q2 at $2.64 mid, Q3 ~$2.80, Q4 ~$3.00). Consensus FY27E $13.78 (+24%) then normalizes: FY28E $15.38, FY30E $21.02. ' +
-      'The market already prices this trajectory — P/E compresses from 33x to 23x as cycle visibility shortens post-2027. ' +
-      'EPS compounds at 11% from FY26 base, P/E shrinks, stock delivers ~5-6% CAGR. Math: $11.09 × (1.11)^5 ≈ $18.7, at 23x exit ≈ $430.',
+    'The next two years play out as management guided — equipment revenue grows over 20% (back-half loaded), and the services business keeps compounding at 12–13% per year with 90% of customers renewing. ' +
+      'FY26 EPS lands around $10.80 per share. FY27 jumps 24% to ~$13.78, then growth gradually slows: ~$15.38 in 2028, ~$21 by 2030. ' +
+      'The problem: the stock already reflects all of this. Today you pay 33× this year\'s earnings, and by 2030 the market would only pay ~23× — the valuation steadily shrinks even as earnings grow. ' +
+      'Earnings compound at ~11% per year, but the shrinking multiple eats into returns. Net result: ~5–6% annual return. Earnings grow to ~$18.70 by 2030, at 23× that\'s a ~$430 stock — decent but not exciting from $348.',
     'AI supercycle extends to 2028-2029: GAA at 2nm and below, HBM memory buildout, and advanced packaging (CoWoS, 3D-IC) all require disproportionately more AMAT deposition and etch steps per wafer. ' +
       'FY26 EPS lands ~$11.4 (Q2 at $2.84 guidance top, Q3 ~$2.95, Q4 ~$3.20 — a clear exit-rate into FY27). ' +
       'FY27 run-rate implies $14+ EPS; with +10% expansion FY27 hits $14-14.5. Cleanroom constraints get solved, AGS attaches at 30%+ of revenue. ' +
