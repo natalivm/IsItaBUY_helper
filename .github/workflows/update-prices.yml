@@ -19,6 +19,13 @@ jobs:
         with:
           python-version: '3.12'
 
+      # Restore cached price history from previous runs
+      - name: Restore price history
+        uses: actions/cache@v4
+        with:
+          path: price_history.json
+          key: price-history
+
       - name: Fetch and apply latest prices
         run: python update_prices.py --apply
 
