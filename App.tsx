@@ -71,7 +71,7 @@ const App: React.FC = () => {
       PRIME_GROWTH: [],
       TURBO_GROWTH: [],
       WATCH_LIST: [],
-      GRAVEYARD: [],
+      AVOID: [],
     };
     filtered.forEach(s => groups[s.group].push(s));
     return groups;

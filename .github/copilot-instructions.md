@@ -199,7 +199,7 @@ A stock has a "quality boost" when RS rating >= 80 **or** aiImpact is TAILWIND. 
 "AVOID" was too strong — it implied "sell / don't touch" which is wrong for quality stocks that are simply priced above model fair value. OVERVALUED is descriptive: it says "the model thinks you're paying more than intrinsic value" without making a judgment about the business quality.
 
 - **Low RS is temporary.** A stock with RS 18 but strong fundamentals (like BKNG) may simply be out of favor — institutions haven't arrived yet, but the business is fine. That's not "avoid," it's "wait for momentum confirmation."
-- **OVERVALUED + low RS → GRAVEYARD group** on the home page, which provides the visual signal that the stock needs monitoring without the loaded "avoid" language.
+- **OVERVALUED → AVOID group** on the home page, signaling the model sees negative base-case upside at current prices.
 - **OVERVALUED + quality boost → HOLD** — stocks like TER (RS 98, TAILWIND) trading above model fair value are simply at fair price. HOLD signals "don't add here, wait for a pullback."
 
 ## Alpha Strategic View

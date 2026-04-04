@@ -22,7 +22,7 @@ interface Props {
 }
 
 const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect }) => {
-  const isGraveyard = stock.group === 'GRAVEYARD';
+  const isAvoid = stock.group === 'AVOID';
   return (
     <motion.button
       key={stock.ticker}
@@ -33,21 +33,21 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       onClick={() => onSelect(stock.ticker)}
       className={cn(
         "w-full flex items-center gap-4 py-4 px-4 group transition-all duration-300 border-b border-slate-800/50 hover:bg-white/5 text-left",
-        isGraveyard && "opacity-60"
+        isAvoid && "opacity-60"
       )}
     >
       <div className={cn("w-3 h-3 rounded-full flex-shrink-0", stock.dot)}></div>
       <span className={cn(
         "text-2xl lg:text-3xl font-black transition-colors tracking-tighter flex-shrink-0 flex items-center gap-1",
-        isGraveyard
+        isAvoid
           ? "text-slate-600 group-hover:text-slate-500 w-32"
           : "text-white group-hover:text-[#ff007f] w-28"
       )}>
-        {isGraveyard && <span className="hidden group-hover:inline text-xl">{'\u2620'}</span>}
+        {isAvoid && <span className="hidden group-hover:inline text-xl text-red-400">{'\u26A0'}</span>}
         {stock.ticker}
       </span>
       <div className="w-24 flex-shrink-0 flex flex-col">
-        <span className={cn("text-base font-bold mono", isGraveyard ? "text-blue-400/40" : "text-blue-400")}>${tickerDef.currentPrice.toFixed(2)}</span>
+        <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>${tickerDef.currentPrice.toFixed(2)}</span>
         {tickerDef.updatedOn && (
           <span className="text-xs font-medium text-slate-500 border border-slate-700 rounded px-1.5 py-0.5 mt-0.5 self-start">
             upd {tickerDef.updatedOn}
@@ -61,8 +61,8 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
         "text-sm font-bold mono border rounded px-1.5 py-0.5 flex-shrink-0",
         rsRatingStyle(tickerDef.rsRating)
       )}>RS {tickerDef.rsRating}</span>
-      <span className={cn("text-sm font-bold mono", isGraveyard ? "text-slate-300/40" : "text-slate-300")}>{stock.fairPriceRange}</span>
-      <span className={cn("text-sm font-medium truncate", isGraveyard ? "text-slate-400/40" : "text-slate-400")}>{tickerDef.sector.split(/\s[·\/]\s/)[0]}</span>
+      <span className={cn("text-sm font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>{stock.fairPriceRange}</span>
+      <span className={cn("text-sm font-medium truncate", isAvoid ? "text-slate-400/40" : "text-slate-400")}>{tickerDef.sector.split(/\s[·\/]\s/)[0]}</span>
     </motion.button>
   );
 };

@@ -24,7 +24,6 @@ export function rsRatingColor(rsRating: number): string {
 const LARGE_CAP_THRESHOLD_M = 10_000;
 const GOOD_MOMENTUM_RS = 70;
 const MID_RS_RISING_THRESHOLD = 40;
-const GRAVEYARD_RS_THRESHOLD = 40;
 
 export function classifyStock(t: TickerDefinition, rating: string, rsRating: number): StockGroup {
   const marketCapM = t.currentPrice * t.shares0;
@@ -33,7 +32,7 @@ export function classifyStock(t: TickerDefinition, rating: string, rsRating: num
   const hasGoodMomentum = rsRating >= GOOD_MOMENTUM_RS;
   const hasMidRsRising = rsRating >= MID_RS_RISING_THRESHOLD && t.rsTrend === 'rising';
 
-  if (rating === 'OVERVALUED' && rsRating < GRAVEYARD_RS_THRESHOLD) return 'GRAVEYARD';
+  if (rating === 'OVERVALUED') return 'AVOID';
   if (isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'PRIME_GROWTH';
   if (!isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'TURBO_GROWTH';
   return 'WATCH_LIST';

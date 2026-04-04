@@ -34,7 +34,7 @@ Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (l
    grep -r 'currentPrice:' stocks/ | sort
    ```
 
-5. **Review tiering impact** — after updating prices, check if any stocks changed their rating (STRONG BUY / BUY / HOLD / OVERVALUED) or home page group (PRIME GROWTH / TURBO GROWTH / WATCH LIST / GRAVEYARD). Run the build to verify:
+5. **Review tiering impact** — after updating prices, check if any stocks changed their rating (STRONG BUY / BUY / HOLD / OVERVALUED) or home page group (PRIME GROWTH / TURBO GROWTH / WATCH LIST / AVOID). Run the build to verify:
    ```bash
    npm run build
    ```

@@ -88,9 +88,9 @@ export const TAG_DEFS: TagDef[] = [
 
 // ── Stock Groups ──
 
-export type StockGroup = 'PRIME_GROWTH' | 'TURBO_GROWTH' | 'WATCH_LIST' | 'GRAVEYARD';
+export type StockGroup = 'PRIME_GROWTH' | 'TURBO_GROWTH' | 'WATCH_LIST' | 'AVOID';
 
-export const GROUP_ORDER: StockGroup[] = ['PRIME_GROWTH', 'TURBO_GROWTH', 'WATCH_LIST', 'GRAVEYARD'];
+export const GROUP_ORDER: StockGroup[] = ['PRIME_GROWTH', 'TURBO_GROWTH', 'WATCH_LIST', 'AVOID'];
 
 export const GROUP_META: Record<StockGroup, { label: string; accent: string; border: string; bg: string; desc: string }> = {
   PRIME_GROWTH: {
@@ -114,12 +114,12 @@ export const GROUP_META: Record<StockGroup, { label: string; accent: string; bor
     bg: 'bg-slate-500/5',
     desc: 'Monitoring \u00b7 Criteria Not Met',
   },
-  GRAVEYARD: {
-    label: '\u2620 GRAVEYARD',
-    accent: 'text-red-800',
-    border: 'border-red-900/40',
-    bg: 'bg-red-950/10',
-    desc: 'Avoid \u00b7 Low Momentum \u00b7 Unfavorable Risk/Reward',
+  AVOID: {
+    label: 'AVOID',
+    accent: 'text-red-400',
+    border: 'border-red-500/40',
+    bg: 'bg-red-500/5',
+    desc: 'Overvalued \u00b7 Negative Base-Case Upside',
   },
 };
 
