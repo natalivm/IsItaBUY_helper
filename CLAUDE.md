@@ -4,11 +4,35 @@ See `.github/copilot-instructions.md` for full project conventions, stock defini
 
 ## Updating Stock Prices
 
-Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (line 8). There is no live price fetching — prices are updated manually by request.
+Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (line 8). Prices are updated automatically via GitHub Actions and can also be updated manually.
 
-### Procedure
+### Automatic Updates (GitHub Actions)
 
-1. **Get the ticker list** — grep all `currentPrice` values from `stocks/`:
+A workflow (`.github/workflows/update-prices.yml`) runs **every weekday at 9:30 PM UTC** (after US market close). It fetches prices from Yahoo Finance, commits changes to `main`, and triggers a site redeploy. You can also trigger it manually from the **Actions** tab on GitHub.
+
+### Manual Update via Script (on your local machine)
+
+The `update_prices.py` script fetches prices from Yahoo Finance. No dependencies needed — just Python 3.
+
+```bash
+cd IsItaBUY_gemini
+python3 update_prices.py          # dry run — shows what would change
+python3 update_prices.py --apply  # writes changes to stock files
+```
+
+After applying, commit and push:
+
+```bash
+git add stocks/
+git commit -m "Update stock prices"
+git push
+```
+
+### Manual Update via Claude Code (uses credits)
+
+If the script is unavailable, prices can be updated via web search:
+
+1. **Get the ticker list**:
    ```bash
    grep -r 'currentPrice:' stocks/ | sort
    ```
@@ -19,34 +43,30 @@ Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (l
    ```
    Sources that reliably return prices in search snippets: **investing.com, CNBC, Morningstar, TradingView, stockanalysis.com, finviz.com**.
 
-   Run 4-5 parallel WebSearch calls to cover all stocks in ~8-10 searches.
+   **Note**: Direct API calls (Yahoo Finance, yfinance Python) and WebFetch to major finance sites are blocked from this environment (403 proxy). WebSearch is the only reliable method from Claude Code.
 
-   **Important**: Direct API calls (Yahoo Finance, yfinance Python) and WebFetch to major finance sites are blocked from this environment (403 proxy). WebSearch is the only reliable method.
-
-3. **Update prices** — use `sed` for bulk updates (faster than Edit for many files):
+3. **Update prices** — use `sed` for bulk updates:
    ```bash
    cd stocks
    sed -i 's/currentPrice: OLD,/currentPrice: NEW,/' TICKER.ts
    ```
 
-4. **Verify** — confirm all updates applied:
+4. **Verify**:
    ```bash
    grep -r 'currentPrice:' stocks/ | sort
    ```
 
-5. **Review tiering impact** — after updating prices, check if any stocks changed their rating (STRONG BUY / BUY / HOLD / OVERVALUED) or home page group (PRIME GROWTH / TURBO GROWTH / WATCH LIST / AVOID). Run the build to verify:
-   ```bash
-   npm run build
-   ```
-   Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% OVERVALUED (only if no quality boost, otherwise HOLD), else HOLD. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
-   Group assignment depends on rating + market cap + RS rating + RS trend (see `classifyStock()` in `App.tsx`).
+### After Any Price Update
 
-   If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.
+Review tiering impact — check if any stocks changed their rating (STRONG BUY / BUY / HOLD / OVERVALUED) or home page group (PRIME GROWTH / TURBO GROWTH / WATCH LIST / AVOID). Run the build to verify:
+```bash
+npm run build
+```
+Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% OVERVALUED (only if no quality boost, otherwise HOLD), else HOLD. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
+Group assignment depends on rating + market cap + RS rating + RS trend (see `classifyStock()` in `App.tsx`).
+
+If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.
 
 ### Price Rounding Convention
 
 Match the existing style — for stocks >$100 round to nearest integer (e.g., `375`). For stocks <$20 keep one or two decimal places (e.g., `18.84`).
-
-### Data Freshness
-
-Web search prices reflect the most recent trading session close or intraday snapshot. Some results may show stale data — cross-reference multiple sources for tickers with ambiguous results. Always prefer the most recent date.
