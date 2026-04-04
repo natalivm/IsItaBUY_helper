@@ -6,7 +6,7 @@ export const ALAB = defineStock({
   sector: 'Semiconductors · AI Interconnect',
   themeColor: '#0ea5e9',
   updatedOn: '04/03',
-  currentPrice: 120,
+  currentPrice: 117,
   fairPriceRange: '$100 - $260',
   shares0: 169,
   rev25: 1345,

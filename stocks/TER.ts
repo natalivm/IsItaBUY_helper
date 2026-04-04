@@ -6,7 +6,7 @@ export const TER = defineStock({
   name: 'Teradyne, Inc.',
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
-  currentPrice: 308,
+  currentPrice: 310,
   fairPriceRange: '$140 - $200',
   shares0: 157,
   rev25: 3190,

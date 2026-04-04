@@ -6,7 +6,7 @@ export const ARRY = defineStock({
   name: 'Array Technologies',
   sector: 'Solar / Industrial Equipment',
   themeColor: '#f59e0b',
-  currentPrice: 7.37,
+  currentPrice: 7.34,
   fairPriceRange: '$4 - $18',
   shares0: 153,
   rev25: 1280,
