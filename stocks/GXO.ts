@@ -6,7 +6,7 @@ export const GXO = defineStock({
   sector: 'Contract Logistics · Supply Chain',
   themeColor: '#10b981',
   currentPrice: 53.02,
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   fairPriceRange: '$50 - $139',
   shares0: 114.3,
   rev25: 13200,

@@ -6,7 +6,7 @@ export const DASH = defineStock({
   sector: 'Internet / Consumer Logistics',
   themeColor: '#ff3008',
   currentPrice: 155.07,
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   fairPriceRange: '$120 - $215',
   shares0: 430,
   rev25: 13700,

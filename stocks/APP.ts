@@ -5,7 +5,7 @@ export const APP = defineStock({
   name: 'AppLovin Corporation',
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   currentPrice: 412.68,
   fairPriceRange: '$310 - $836',
   shares0: 340,

@@ -5,7 +5,7 @@ export const ORCL = defineStock({
   name: 'Oracle Corporation',
   sector: 'Cloud / Enterprise Software',
   themeColor: '#c74634',
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   currentPrice: 145.54,
   fairPriceRange: '$140 - $380',
   shares0: 2870,

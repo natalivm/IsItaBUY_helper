@@ -5,7 +5,7 @@ export const LLY = defineStock({
   name: 'Eli Lilly and Company',
   sector: 'Pharmaceuticals / GLP-1',
   themeColor: '#e01933',
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   currentPrice: 927.06,
   fairPriceRange: '$750 - $1800',
   shares0: 947,

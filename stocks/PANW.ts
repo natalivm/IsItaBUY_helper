@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const PANW = defineStock({
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   ticker: 'PANW',
   name: 'Palo Alto Networks',
   sector: 'Cybersecurity',

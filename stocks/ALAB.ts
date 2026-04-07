@@ -5,7 +5,7 @@ export const ALAB = defineStock({
   name: 'Astera Labs',
   sector: 'Semiconductors · AI Interconnect',
   themeColor: '#0ea5e9',
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   currentPrice: 117.99,
   fairPriceRange: '$100 - $260',
   shares0: 169,

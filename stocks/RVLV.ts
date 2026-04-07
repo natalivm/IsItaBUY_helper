@@ -28,7 +28,7 @@ export const RVLV = defineStock({
     "At $24 with $4+/share cash and analysts targeting $28-$40 post-earnings, risk/reward has shifted materially from HOLD territory. " +
     "Main risk: stock ran to $31.68 post-earnings then sold off — market not fully buying the acceleration yet. RS 47 with price below 50-day MA reflects that skepticism.",
 
-  updatedOn: '04/03',
+  updatedOn: '04/06',
 
   epsCagr: [5, 14, 22],
   exitPE: [13, 18, 22],

@@ -99,5 +99,5 @@ export const KLAC = defineStock({
     },
   ],
 
-  updatedOn: '04/03',
+  updatedOn: '04/06',
 });

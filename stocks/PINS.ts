@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const PINS = defineStock({
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   ticker: 'PINS',
   name: 'Pinterest',
   sector: 'Social Commerce',

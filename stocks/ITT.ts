@@ -6,7 +6,7 @@ export const ITT = defineStock({
   sector: 'Diversified Industrials',
   themeColor: '#3b82f6',
   currentPrice: 194.1,
-  updatedOn: '04/03',
+  updatedOn: '04/06',
   fairPriceRange: '$170 - $250',
   shares0: 86,
   rev25: 3940,
