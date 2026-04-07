@@ -237,9 +237,10 @@ def show_history(threshold):
 # --------------- File Updates ---------------
 
 def update_files(tickers, prices, apply=False):
-    """Update currentPrice in each stock file."""
+    """Update currentPrice and updatedOn in each stock file."""
     changes = []
     errors = []
+    today_tag = datetime.now().strftime("%m/%d")
 
     for symbol, info in sorted(tickers.items()):
         if symbol not in prices:
@@ -264,6 +265,12 @@ def update_files(tickers, prices, apply=False):
 
         if apply:
             new_content = content[:old_match.start(2)] + new_price + content[old_match.end(2):]
+            # Update updatedOn tag to today's date
+            new_content = re.sub(
+                r"updatedOn:\s*'[^']*'",
+                f"updatedOn: '{today_tag}'",
+                new_content,
+            )
             with open(info["path"], "w") as f:
                 f.write(new_content)
 
