@@ -25,3 +25,4 @@ dist-ssr
 
 # Price update script local history
 price_history.json
+__pycache__/

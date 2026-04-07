@@ -2,8 +2,8 @@ name: Update Stock Prices
 
 on:
   schedule:
-    # Runs Mon-Fri at 9:30 PM UTC (after US market close)
-    - cron: '30 21 * * 1-5'
+    # Runs Mon-Fri at 8:01 PM UTC (11:01 PM UTC+3, after US market close)
+    - cron: '1 20 * * 1-5'
   workflow_dispatch: # allows manual trigger from GitHub UI
 
 permissions:
