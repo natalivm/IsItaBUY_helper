@@ -60,6 +60,23 @@ def format_price(price):
     return formatted
 
 
+def get_yahoo_session():
+    """Obtain a Yahoo Finance session cookie + crumb required for authenticated API calls."""
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
+    try:
+        req = urllib.request.Request("https://fc.yahoo.com/", headers=HEADERS)
+        opener.open(req, timeout=10)
+        crumb_req = urllib.request.Request(
+            "https://query2.finance.yahoo.com/v1/test/getcrumb", headers=HEADERS
+        )
+        crumb = opener.open(crumb_req, timeout=10).read().decode()
+        if crumb and "<" not in crumb:  # sanity check — not an HTML error page
+            return opener, crumb
+    except Exception:
+        pass
+    return None, None
+
+
 def fetch_prices(tickers):
     """Fetch latest prices using Yahoo Finance API."""
     symbols = list(tickers.keys())
@@ -67,18 +84,27 @@ def fetch_prices(tickers):
 
     prices = {}
 
-    # Try batch endpoint first
+    # Obtain session cookie + crumb (required since Yahoo Finance added auth)
+    opener, crumb = get_yahoo_session()
+
+    # Batch request — all symbols in one call
     symbols_str = ",".join(symbols)
-    url = f"https://query2.finance.yahoo.com/v7/finance/quote?symbols={symbols_str}"
-    req = urllib.request.Request(url, headers=HEADERS)
+    if crumb:
+        url = f"https://query2.finance.yahoo.com/v7/finance/quote?symbols={symbols_str}&crumb={crumb}"
+    else:
+        url = f"https://query2.finance.yahoo.com/v7/finance/quote?symbols={symbols_str}"
+
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode())
+        req = urllib.request.Request(url, headers=HEADERS)
+        fetch = opener.open(req, timeout=20) if opener else urllib.request.urlopen(req, timeout=20)
+        data = json.loads(fetch.read().decode())
         for quote in data.get("quoteResponse", {}).get("result", []):
             sym = quote.get("symbol", "")
             price = quote.get("regularMarketPrice")
             if sym and price:
                 prices[sym] = float(price)
+        if prices:
+            print(f"  Batch request succeeded: got {len(prices)}/{len(symbols)} prices\n")
     except (urllib.error.HTTPError, urllib.error.URLError) as e:
         print(f"  Batch request failed ({e}), falling back to individual requests...\n")
 
@@ -88,8 +114,8 @@ def fetch_prices(tickers):
         try:
             url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=1d&interval=1d"
             req = urllib.request.Request(url, headers=HEADERS)
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                data = json.loads(resp.read().decode())
+            fetch = opener.open(req, timeout=10) if opener else urllib.request.urlopen(req, timeout=10)
+            data = json.loads(fetch.read().decode())
             meta = data["chart"]["result"][0]["meta"]
             price = meta.get("regularMarketPrice", 0)
             if price > 0:
