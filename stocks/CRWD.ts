@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 394.68,
+  currentPrice: 375.37,
   fairPriceRange: '$320 - $900',
   shares0: 248,
   rev25: 3950,
@@ -28,7 +28,7 @@ export const CRWD = defineStock({
     "If growth decelerates to 10-15%, operating leverage vanishes and multiple compression could deliver -30-40% drawdown. " +
     "Prob-weighted CAGR ~8-9% — quality business at a premium price. Wait for entry near $280-320 or next growth acceleration cycle.",
 
-  updatedOn: '04/09',
+  updatedOn: '04/10',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
