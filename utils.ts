@@ -33,6 +33,7 @@ export function classifyStock(t: TickerDefinition, rating: string, rsRating: num
   const hasMidRsRising = rsRating >= MID_RS_RISING_THRESHOLD && t.rsTrend === 'rising';
 
   if (baseCaseUpside < 0) return 'AVOID';
+  if (rating === 'OVERVALUED') return 'AVOID';
   if (isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'PRIME_GROWTH';
   if (!isLargeCap && isBuyOrAbove && (hasGoodMomentum || hasMidRsRising)) return 'TURBO_GROWTH';
   return 'WATCH_LIST';

@@ -5,8 +5,8 @@ export const ALAB = defineStock({
   name: 'Astera Labs',
   sector: 'Semiconductors · AI Interconnect',
   themeColor: '#0ea5e9',
-  updatedOn: '04/06',
-  currentPrice: 117.99,
+  updatedOn: '04/10',
+  currentPrice: 149.05,
   fairPriceRange: '$100 - $260',
   shares0: 169,
   rev25: 1345,
@@ -16,8 +16,8 @@ export const ALAB = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 1.84,
-  rsRating: 31,
-  rsTrend: 'falling',
+  rsRating: 75,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "Astera is building the connectivity control plane for AI scale-up — not GPUs, not memory, but the fabric layer between them. " +

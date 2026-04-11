@@ -5,7 +5,7 @@ export const RVLV = defineStock({
   name: 'Revolve Group, Inc.',
   sector: 'Consumer Discretionary · Fashion E-Commerce',
   themeColor: '#c2185b',
-  currentPrice: 23.45,
+  currentPrice: 24.56,
   fairPriceRange: '$14 - $49',
   shares0: 73,
   rev25: 1230,
@@ -16,7 +16,7 @@ export const RVLV = defineStock({
   beta: 1.60,
   modelType: 'EPS_PE',
   baseEps: 0.83,
-  rsRating: 58,
+  rsRating: 59,
   rsTrend: 'falling',
   aiImpact: 'POSITIVE',
   strategicNarrative:
@@ -28,7 +28,7 @@ export const RVLV = defineStock({
     "At $24 with $4+/share cash and analysts targeting $28-$40 post-earnings, risk/reward has shifted materially from HOLD territory. " +
     "Main risk: stock ran to $31.68 post-earnings then sold off — market not fully buying the acceleration yet. RS 47 with price below 50-day MA reflects that skepticism.",
 
-  updatedOn: '04/06',
+  updatedOn: '04/10',
 
   epsCagr: [5, 14, 22],
   exitPE: [13, 18, 22],

@@ -51,6 +51,8 @@ export default defineConfig({
         ],
       },
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         // Precache all static assets built by Vite (JS, CSS, HTML, fonts)
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         // Runtime caching for Google Fonts
