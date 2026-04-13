@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const SMWB = defineStock({
-  updatedOn: '04/10',
+  updatedOn: '04/13',
   ticker: 'SMWB',
   name: 'Similarweb Ltd.',
   sector: 'Web Analytics',
   themeColor: '#3b82f6',
-  currentPrice: 2.33,
+  currentPrice: 2.38,
   fairPriceRange: '$6 - $12',
   shares0: 83.5,
   rev25: 286.5,
