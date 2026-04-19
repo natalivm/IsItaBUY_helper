@@ -18,7 +18,6 @@ export const FICO = defineStock({
   costDebt: 0.055,
   rsRating: 11,
   rsTrend: 'falling',
-  ratingOverride: 'OVERVALUED',
   aiImpact: 'NEUTRAL',
   strategicNarrative: "Monopoly under siege — April 2026 crash (-40% from highs) signals market is repricing competitive and regulatory risk as real, not hypothetical. VantageScore 4.0 backed by aggressive Experian/Equifax pricing and FHFA regulatory support now actively threatens FICO's mortgage scoring monopoly. RS 9 reflects severe institutional distribution. Platform ARR +33% and NRR 122% provide diversification but Scores still drives majority of high-margin revenue. $4.2B debt with no near-term buyback capacity limits capital return. Technical picture broken across all timeframes — RSI 16 (hourly) suggests short-term bounce possible, but 50-day ($1,057) and 200-day ($1,730) MAs are far overhead. At $922, market prices in meaningful VantageScore adoption. Key question: is this capitulation or the start of a structural de-rating?",
 
