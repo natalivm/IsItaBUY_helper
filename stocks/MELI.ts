@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const MELI = defineStock({
-  updatedOn: '04/23',
+  updatedOn: '04/24',
   ticker: 'MELI',
   name: 'MercadoLibre',
   sector: 'E-Commerce / Fintech',
   themeColor: '#f59e0b',
-  currentPrice: 1809.2,
+  currentPrice: 1835.22,
   fairPriceRange: '$2,100 - $3,750',
   shares0: 50.4,
   rev25: 28900,
