@@ -16,14 +16,16 @@ export const ASTS = defineStock({
   debt: 2500,
   beta: 1.46,
   costDebt: 0.03,
-  rsRating: 97,
+  rsRating: 90,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "AST SpaceMobile is the only space-based cellular broadband network for standard smartphones — a category-defining bet with 50+ MNO partnerships (incl. Verizon, AT&T, Vodafone, stc) covering 3B+ subscribers. " +
     "Q4 2025 validated execution: FY25 revenue $71M (top of guidance), BB6 Block 2 (2,400 sq ft) successfully deployed, $1.2B contracted backlog, balance sheet fortified to $3.9B pro forma cash. " +
     "2026 guidance $150-200M revenue with 45-60 sats targeting orbit; 2027 goal approaching $1B as commercial service scales across US, Europe, Japan, Middle East. " +
     "Management targets 90%+ EBITDA margins at scale, $21-23M/sat cost, 95% vertically integrated manufacturing. Government revenue accelerating via Golden Dome, SHIELD, SDA contracts. " +
-    "Risk remains execution: launch cadence, stacking validation, and dilution from convertibles/ATM. RS 97 confirms conviction — execution-or-bust thesis intact.",
+    "April 2025: a satellite launch failure pressured the stock -10.7% and trimmed RS from 97 to 90. Existing constellation intact; $3.9B cash provides runway to absorb delays. " +
+    "Risk remains execution: launch cadence recovery, stacking validation, and dilution from convertibles/ATM. Execution-or-bust thesis intact but bear-case probability elevated near-term.",
 
   analystConsensus: { rating: 'Hold', targetLow: 43, targetMedian: 70, targetHigh: 137, numAnalysts: 9 },
   revGrowth: [
