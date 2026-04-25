@@ -6,7 +6,7 @@ export const DUOL = defineStock({
   sector: 'EdTech · Language Learning · AI Platform',
   themeColor: '#58cc02',
   currentPrice: 103.45,
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   fairPriceRange: '$52 - $311',
   shares0: 46.23,
   rev25: 1040,

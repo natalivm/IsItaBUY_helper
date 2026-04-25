@@ -6,7 +6,7 @@ export const DE = defineStock({
   sector: 'Machinery',
   themeColor: '#10b981',
   currentPrice: 562.64,
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   fairPriceRange: '$370 - $775',
   shares0: 270.0,
   rev25: 38900,

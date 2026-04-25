@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const MRVL = defineStock({
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   ticker: 'MRVL',
   name: 'Marvell Technology',
   sector: 'Semiconductors',

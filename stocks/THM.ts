@@ -5,7 +5,7 @@ export const THM = defineStock({
   name: 'International Tower Hill Mines',
   sector: 'Gold Mining · Exploration & Development',
   themeColor: '#CA8A04',
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   currentPrice: 2.63,
   fairPriceRange: '$1 - $12',
   shares0: 245,

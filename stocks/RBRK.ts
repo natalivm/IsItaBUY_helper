@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const RBRK = defineStock({
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   ticker: 'RBRK',
   name: 'Rubrik',
   sector: 'Data Security',

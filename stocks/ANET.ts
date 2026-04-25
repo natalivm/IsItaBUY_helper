@@ -5,7 +5,7 @@ export const ANET = defineStock({
   name: 'Arista Networks',
   sector: 'Cloud Networking',
   themeColor: '#6366f1',
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   currentPrice: 176.91,
   fairPriceRange: '$145',
   shares0: 1275,

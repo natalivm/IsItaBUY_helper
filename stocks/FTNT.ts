@@ -6,7 +6,7 @@ export const FTNT = defineStock({
   sector: 'Cybersecurity',
   themeColor: '#06b6d4',
   currentPrice: 84.34,
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   fairPriceRange: '$70 - $105',
   shares0: 743.6,
   rev25: 6800,

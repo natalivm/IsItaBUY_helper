@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const MLM = defineStock({
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   ticker: 'MLM',
   name: 'Martin Marietta Materials',
   sector: 'Building Materials · Aggregates & Heavy Construction Materials',

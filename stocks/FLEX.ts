@@ -6,7 +6,7 @@ export const FLEX = defineStock({
   sector: 'Electronics Manufacturing Services (EMS)',
   themeColor: '#0072CE',
   currentPrice: 91.41,
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   fairPriceRange: '$45 - $128',
   shares0: 356,
   rev25: 25800,
@@ -19,7 +19,7 @@ export const FLEX = defineStock({
   modelType: 'EPS_PE',
   baseEps: 2.65,
   rsRating: 91,
-  rsTrend: 'falling',
+  rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "Flex is a top-5 global EMS player riding AI server and EV content tailwinds, but the underlying story is more complex than headline EPS suggests. " +

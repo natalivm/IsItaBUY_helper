@@ -5,7 +5,7 @@ export const CRDO = defineStock({
   name: 'Credo Technology Group Holding',
   sector: 'Semiconductors · AI Interconnect',
   themeColor: '#d4af37',
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   currentPrice: 195.04,
   fairPriceRange: '$91 - $322',
   shares0: 197,
@@ -18,7 +18,7 @@ export const CRDO = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 3.12,
-  rsRating: 69,
+  rsRating: 85,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:

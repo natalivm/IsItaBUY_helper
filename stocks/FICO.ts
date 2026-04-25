@@ -6,7 +6,7 @@ export const FICO = defineStock({
   sector: 'Analytics',
   themeColor: '#2979ff',
   currentPrice: 1004.72,
-  updatedOn: '04/24',
+  updatedOn: '04/25',
   fairPriceRange: '$1,100 - $2,200',
   shares0: 23.72,
   rev25: 1990,
