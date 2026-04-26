@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { ScenarioType, TickerDefinition } from './types';
 import { calculateProjection, getInstitutionalRating } from './services/projectionService';
 import { TICKERS, TAG_DEFS, GROUP_ORDER, GROUP_META, StockGroup, SPLASH_DURATION_MS, weightedScenarioAverage } from './constants';
@@ -15,16 +15,36 @@ import { motion, AnimatePresence } from 'motion/react';
 // ── Main App ──
 
 const App: React.FC = () => {
-  const [activeTicker, setActiveTicker] = useState<string>('home');
+  const tickers = TICKERS;
+
+  const getTickerFromHash = useCallback(() => {
+    const hash = window.location.hash.slice(1);
+    return hash && tickers[hash] ? hash : 'home';
+  }, [tickers]);
+
+  const [activeTicker, setActiveTicker] = useState<string>(getTickerFromHash);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
 
-  const tickers = TICKERS;
+  const navigateTo = useCallback((ticker: string) => {
+    if (ticker === 'home') {
+      history.pushState(null, '', location.pathname + location.search);
+    } else {
+      history.pushState(null, '', '#' + ticker);
+    }
+    setActiveTicker(ticker);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), SPLASH_DURATION_MS);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const onPopState = () => setActiveTicker(getTickerFromHash());
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [getTickerFromHash]);
 
   useEffect(() => {
     if (activeTicker !== 'home') {
@@ -141,7 +161,7 @@ const App: React.FC = () => {
                               stock={stock}
                               tickerDef={tickers[stock.ticker]}
                               animationIndex={idx}
-                              onSelect={setActiveTicker}
+                              onSelect={navigateTo}
                             />
                           );
                         })}
@@ -172,11 +192,11 @@ const App: React.FC = () => {
         allProjections={allProjections}
         investmentConclusion={investmentConclusion}
         activeStockData={activeStockData}
-        onBack={() => setActiveTicker('home')}
+        onBack={() => navigateTo('home')}
         onNext={() => {
           const idx = flatTickerOrder.indexOf(activeTicker);
           const next = flatTickerOrder[idx + 1] ?? flatTickerOrder[0];
-          setActiveTicker(next);
+          navigateTo(next);
         }}
       />
     </AnimatePresence>
