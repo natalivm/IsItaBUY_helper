@@ -5,7 +5,7 @@ export const BKNG = defineStock({
   name: 'Booking Holdings',
   sector: 'Online Travel / Marketplace',
   themeColor: '#003580',
-  updatedOn: '04/27',
+  updatedOn: '04/28',
   currentPrice: 177.12,
   fairPriceRange: '$180 - $268',
   // 25-for-1 forward split effective 04/06/2026: 30.6M × 25 = 765M shares
@@ -22,29 +22,30 @@ export const BKNG = defineStock({
   aiImpact: 'NEUTRAL',
   strategicNarrative:
     "BKNG is a high-quality travel compounder with a dominant two-sided marketplace moat. " +
-    "Q4'25 call confirmed: 2026 algo targets ~9% CC top line (8% algo + 100 bps), mid-teens EPS growth, +50 bps EBITDA margin — even after $700M incremental reinvestment. " +
-    "Transformation Program delivers $550M annual run-rate savings (end-2025), $500-550M in-year savings in 2026, self-funding growth investments with ROI discipline. " +
-    "Capital return: 2025 FCF ~$9.1B, returned $8.2B (~90%). Since 2022: $29B buybacks, -22% net share count. ~4% annual net share reduction modeled in DCF. " +
-    "LLM/AI risk addressed by CEO Fogel: LLMs may become new top-of-funnel, but merchant-of-record, supply integrations, payments, regulatory compliance, and service = deep moat at bottom of funnel. More likely a new paid traffic channel (like Google was) than an existential threat. " +
-    "At ~15-16x forward P/E, market prices BKNG as cyclical trough — below historical 16-30x range. " +
-    "DCF base fair value ~$208 (~17% upside, post 25-for-1 split) including ~3% annual net share reduction. FCF yield ~7-8% provides downside cushion. " +
-    "RS 18 = no momentum — value entry, not breakout. Risks: travel macro slowdown (mgmt notes 'thoughtful discretionary spending'), EU regulation, Google distribution risk.",
+    "Q1 2026 actuals: Revenue $5.5B (+16% YoY), Gross bookings $53.8B (+15%), Room nights 338M (+6%), Adj. EBITDA $1.3B (+19%, margin 23.3%), FCF $3.1B. Expenses +15% vs revenue +16% — operating leverage intact. " +
+    "Critical insight: revenue growing 16% vs. room nights only +6% → pricing power and merchant/payments mix are doing the heavy lifting, not volume. This is a quality signal. " +
+    "Q2 2026 guide: 4–6% revenue/booking growth. Soft, but mgmt explicitly cited ~2pt Middle East headwind on room nights; structural demand is intact. FY2026 guide maintained: HSD revenue, HSD–LDD bookings, low-mid teens EPS growth. " +
+    "Buyback acceleration: $3.6B repurchased in Q1 alone, $18.2B authorization remaining. At ~$135B market cap, Q1 pace implies ~11% annualized gross buyback yield — among the highest in large-cap. " +
+    "Transformation Program: $550M annual savings self-fund $700M reinvestment. EBITDA margin guide of +50bps intact. Capital return: 2025 FCF ~$9.1B, returned $8.2B (~90%). Since 2022: $29B buybacks, -22% net share count. " +
+    "LLM/AI risk: merchant-of-record, supply integrations, payments, compliance = deep moat at transaction layer. LLMs more likely a new paid traffic channel (like Google) than existential threat. " +
+    "At ~15-16x forward P/E — below historical 16-30x — market is pricing geopolitical/macro risk, not business quality. FCF yield ~9% at current price provides downside cushion. " +
+    "RS 18 = no momentum — value entry, not breakout. Risks: Middle East conflict, airline disruption, EU regulation, Google distribution, travel macro.",
 
   // Targets split-adjusted for 25-for-1: 4495/25=179.8, 5900/25=236, 6700/25=268
   analystConsensus: { rating: 'Buy', targetLow: 179.8, targetMedian: 236, targetHigh: 268, numAnalysts: 29 },
 
-  // Revenue growth: 2026 algo ~9% CC top line. Q1'26 room nights +5-7%.
+  // Revenue growth: Q1'26 actual +16%, Q2'26 guide 4-6% (Middle East drag), FY'26 guide HSD.
   revGrowth: [
-    [0.05, 0.05, 0.05, 0.04, 0.04],   // Bear: travel slowdown, below algo, discretionary pullback
-    [0.09, 0.09, 0.09, 0.08, 0.08],   // Base: algo execution ~9% CC, gradual deceleration
-    [0.11, 0.10, 0.10, 0.09, 0.09],   // Bull: above-algo execution + global expansion
+    [0.05, 0.05, 0.05, 0.04, 0.04],   // Bear: Q2 softness becomes new normal, Middle East+macro persist
+    [0.09, 0.09, 0.08, 0.08, 0.07],   // Base: FY HSD guide, pricing power sustains, gradual deceleration
+    [0.11, 0.10, 0.10, 0.09, 0.09],   // Bull: above guide, H2 recovery + merchant mix acceleration
   ],
 
-  // FCF margin: 2025A ~33.7%. Call: +50 bps EBITDA margin even after $700M reinvest.
-  // $550M savings self-fund investments. Net margin expansion is policy, not accident.
+  // FCF margin: 2025A ~33.7%. Q1'26 FCF $3.1B (-2% YoY) on $5.5B rev — slight pressure.
+  // $550M savings self-fund investments. EBITDA margin +50bps guide intact.
   fcfMargin: [
-    [0.32, 0.31, 0.30, 0.30, 0.30],   // Bear: margin compression from cycle pressure + reinvestment
-    [0.34, 0.34, 0.345, 0.35, 0.35],  // Base: modest expansion, savings offset reinvestment
+    [0.31, 0.30, 0.29, 0.29, 0.29],   // Bear: FCF slip continues, macro/Middle East drag on margins
+    [0.34, 0.34, 0.345, 0.35, 0.35],  // Base: stable-to-modest expansion, savings offset reinvestment
     [0.35, 0.355, 0.36, 0.365, 0.37], // Bull: operating leverage + merchant mix tailwind
   ],
 
@@ -52,27 +53,28 @@ export const BKNG = defineStock({
   exitMultiple: [10, 14, 16],
 
   desc: [
-    'People cut back on travel due to a recession. Booking\'s revenue only grows 4-5% a year — basically treading water. ' +
-      'New EU regulations squeeze the fees Booking charges hotels, and AI chatbots start stealing some customers who used to search on Booking.com. ' +
-      'The company still generates solid cash (~33-34% of revenue), but Wall Street loses confidence and the stock gets cheap. Fair value ~$180 — barely above today\'s price, so you\'d earn roughly ~2% per year.',
-    'Booking hits the targets management laid out: ~9% annual revenue growth, profits growing mid-teens, and the company keeps buying back ~4% of its own shares every year (making each remaining share worth more). ' +
-      'They\'re funding growth by cutting $550M in internal costs, not by spending more. Cash generation improves from 34% to 36% of revenue over five years as they earn more from payments processing. ' +
-      'The stock isn\'t expensive today at ~16x earnings (it historically trades at 16-30x). Fair value ~$308 — nearly double today\'s price, a ~14% annual return driven by the business actually growing, not by hype.',
-    'Travel demand stays strong longer than expected and Booking\'s AI-powered personalization helps them win even more bookings. They earn more per transaction as they handle payments directly instead of just connecting buyers and sellers. ' +
-      'The company aggressively buys back ~5% of shares per year, turbocharging per-share growth. AI chatbots turn out to be a new advertising channel for Booking (like Google search ads were) rather than a threat — ' +
-      'because when you actually want to book and pay, you still need Booking\'s hotel network, payment system, and customer support. Fair value ~$412 — more than 2.3x today\'s price.',
+    'Q2\'s soft 4–6% guide becomes the full-year story as Middle East tensions, macro fears, and airline disruptions spread globally. Volume growth stays stuck near 4–5% and pricing can\'t fill the gap. ' +
+      'EU regulators squeeze hotel fees and AI chatbots siphon top-of-funnel traffic. FCF margins slip as fixed costs grow faster than revenue. ' +
+      'The company still generates cash (~31% of revenue) and keeps buying back shares, but not enough to move the needle. Fair value ~$180 — essentially flat with today\'s price.',
+    'Q1 2026 proved the model works: revenue +16%, EBITDA +19%, and Booking repurchased $3.6B of its own stock in a single quarter ($18.2B authorization still remaining). ' +
+      'The Q2 softness (4–6% guide) is a Middle East/macro blip — not structural. Full-year high-single-digit revenue and mid-teens EPS growth holds. ' +
+      'The $550M savings program self-funds $700M of reinvestment. With buybacks running at an aggressive pace, each remaining share compounds faster. ' +
+      'At ~16x earnings (historically 16–30x), the market is paying cyclical-trough prices for a compounder. Fair value ~$308 — nearly double today\'s price, a ~14% annual return.',
+    'Revenue is growing 2–3x faster than room nights (Q1: +16% vs +6%) — pricing power and merchant payments are inflecting. H2 2026 demand rebounds as Middle East tensions ease, and Booking\'s AI personalization drives share gains. ' +
+      'Management maintains near-Q1 buyback pace off the $18.2B authorization, aggressively shrinking the float. Merchant payments expand margins toward 37%. ' +
+      'LLM integration proves to be a net positive — a new paid channel, not a threat — because the transaction layer (payments, supply, service) stays with Booking. Fair value ~$412 — more than 2x today\'s price.',
   ],
 
   thesis: [
-    'Macro recession hits discretionary travel. "Thoughtful spending" becomes real pullback. EU regulation + LLM-driven disintermediation erode take rate. Market re-rates to trough.',
-    'Company executes algo (9% top line, mid-teens EPS). Transformation Program savings self-fund reinvestment. 90% FCF returned. P/E stays compressed but FCF compounds.',
-    'Travel cycle extends, algo beats on merchant mix + payments. LLM integration becomes paid channel (like Google). P/E normalizes from 16x toward 18x.',
+    'Q2 softness (4–6%) bleeds into full year. Middle East + macro + airline disruptions suppress volume; EU regulation erodes take rate. Market stays at trough valuation.',
+    'Q1 beat (rev +16%, EBITDA +19%) and $3.6B Q1 buybacks signal execution. FY HSD rev + mid-teens EPS holds. $18.2B authorization compounds per-share value aggressively.',
+    'Revenue growing 2-3x faster than room nights = pricing power inflecting. Near-Q1 buyback pace shrinks float. H2 recovery normalizes P/E from ~16x toward 18-20x.',
   ],
 
   termGrowth: [0.02, 0.025, 0.03],
-  // Buybacks: -4% net share count in 2025 (net of SBC), -22% since 2022. ~90% FCF returned.
-  // Bear: recession slows buybacks. Base: continues at ~4% (actual 2025 rate). Bull: accelerates.
-  bbRate: [0.01, 0.03, 0.04],
+  // Buybacks: $3.6B in Q1'26 alone, $18.2B remaining (~$135B mkt cap). Q1 annualized = ~11% gross.
+  // Net of SBC (~2-3% dilution): Bear ~2%, Base ~5%, Bull ~8%.
+  bbRate: [0.02, 0.05, 0.08],
   ebitdaProxy: [0.35, 0.38, 0.40],
   bullMaOptVal: false,
 
