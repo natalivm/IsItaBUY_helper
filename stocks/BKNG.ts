@@ -7,8 +7,9 @@ export const BKNG = defineStock({
   themeColor: '#003580',
   updatedOn: '04/27',
   currentPrice: 177.12,
-  fairPriceRange: '$4,500 - $6,700',
-  shares0: 30.6,
+  fairPriceRange: '$180 - $268',
+  // 25-for-1 forward split effective 04/06/2026: 30.6M × 25 = 765M shares
+  shares0: 765,
   rev25: 26917,
   fcfMargin25: 0.337,
   taxRate: 0.18,
@@ -26,10 +27,11 @@ export const BKNG = defineStock({
     "Capital return: 2025 FCF ~$9.1B, returned $8.2B (~90%). Since 2022: $29B buybacks, -22% net share count. ~4% annual net share reduction modeled in DCF. " +
     "LLM/AI risk addressed by CEO Fogel: LLMs may become new top-of-funnel, but merchant-of-record, supply integrations, payments, regulatory compliance, and service = deep moat at bottom of funnel. More likely a new paid traffic channel (like Google was) than an existential threat. " +
     "At ~15-16x forward P/E, market prices BKNG as cyclical trough — below historical 16-30x range. " +
-    "DCF base fair value ~$5.2k (~25% upside) including ~3% annual net share reduction. FCF yield ~7-8% provides downside cushion. " +
+    "DCF base fair value ~$208 (~17% upside, post 25-for-1 split) including ~3% annual net share reduction. FCF yield ~7-8% provides downside cushion. " +
     "RS 18 = no momentum — value entry, not breakout. Risks: travel macro slowdown (mgmt notes 'thoughtful discretionary spending'), EU regulation, Google distribution risk.",
 
-  analystConsensus: { rating: 'Buy', targetLow: 4495, targetMedian: 5900, targetHigh: 6700, numAnalysts: 29 },
+  // Targets split-adjusted for 25-for-1: 4495/25=179.8, 5900/25=236, 6700/25=268
+  analystConsensus: { rating: 'Buy', targetLow: 179.8, targetMedian: 236, targetHigh: 268, numAnalysts: 29 },
 
   // Revenue growth: 2026 algo ~9% CC top line. Q1'26 room nights +5-7%.
   revGrowth: [
@@ -52,13 +54,13 @@ export const BKNG = defineStock({
   desc: [
     'People cut back on travel due to a recession. Booking\'s revenue only grows 4-5% a year — basically treading water. ' +
       'New EU regulations squeeze the fees Booking charges hotels, and AI chatbots start stealing some customers who used to search on Booking.com. ' +
-      'The company still generates solid cash (~33-34% of revenue), but Wall Street loses confidence and the stock gets cheap. Fair value ~$4,500 — barely above today\'s price, so you\'d earn roughly ~2% per year.',
+      'The company still generates solid cash (~33-34% of revenue), but Wall Street loses confidence and the stock gets cheap. Fair value ~$180 — barely above today\'s price, so you\'d earn roughly ~2% per year.',
     'Booking hits the targets management laid out: ~9% annual revenue growth, profits growing mid-teens, and the company keeps buying back ~4% of its own shares every year (making each remaining share worth more). ' +
       'They\'re funding growth by cutting $550M in internal costs, not by spending more. Cash generation improves from 34% to 36% of revenue over five years as they earn more from payments processing. ' +
-      'The stock isn\'t expensive today at ~16x earnings (it historically trades at 16-30x). Fair value ~$7,700 — nearly double today\'s price, a ~14% annual return driven by the business actually growing, not by hype.',
+      'The stock isn\'t expensive today at ~16x earnings (it historically trades at 16-30x). Fair value ~$308 — nearly double today\'s price, a ~14% annual return driven by the business actually growing, not by hype.',
     'Travel demand stays strong longer than expected and Booking\'s AI-powered personalization helps them win even more bookings. They earn more per transaction as they handle payments directly instead of just connecting buyers and sellers. ' +
       'The company aggressively buys back ~5% of shares per year, turbocharging per-share growth. AI chatbots turn out to be a new advertising channel for Booking (like Google search ads were) rather than a threat — ' +
-      'because when you actually want to book and pay, you still need Booking\'s hotel network, payment system, and customer support. Fair value ~$10,300 — more than 2.5x today\'s price.',
+      'because when you actually want to book and pay, you still need Booking\'s hotel network, payment system, and customer support. Fair value ~$412 — more than 2.3x today\'s price.',
   ],
 
   thesis: [
