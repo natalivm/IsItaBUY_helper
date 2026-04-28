@@ -6,7 +6,7 @@ export const AVGO = defineStock({
   sector: 'Semiconductors / Enterprise Software',
   themeColor: '#7c4dff',
   updatedOn: '04/27',
-  currentPrice: 418.2,
+  currentPrice: 397.13,
   fairPriceRange: '$330 - $540',
   shares0: 4700,
   rev25: 73000,

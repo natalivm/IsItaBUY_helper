@@ -6,7 +6,7 @@ export const UBER = defineStock({
   name: 'Uber Technologies',
   sector: 'Mobility',
   themeColor: '#22c55e',
-  currentPrice: 76.27,
+  currentPrice: 74.7,
   fairPriceRange: '$65 - $140',
   shares0: 2110,
   rev25: 43500,

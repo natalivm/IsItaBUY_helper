@@ -5,7 +5,7 @@ export const DE = defineStock({
   name: 'Deere & Company',
   sector: 'Machinery',
   themeColor: '#10b981',
-  currentPrice: 567.69,
+  currentPrice: 562.6,
   updatedOn: '04/27',
   fairPriceRange: '$370 - $775',
   shares0: 270.0,

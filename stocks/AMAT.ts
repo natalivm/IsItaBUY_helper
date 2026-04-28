@@ -6,7 +6,7 @@ export const AMAT = defineStock({
   sector: 'Semiconductor Equipment · Deposition & Etch',
   themeColor: '#1a5f7a',
   updatedOn: '04/27',
-  currentPrice: 404.86,
+  currentPrice: 380.36,
   fairPriceRange: '$210 - $750',
   shares0: 800,           // ~800M diluted shares (market cap ~$293B / $366)
   rev25: 28370,           // FY25 revenue $28.37B

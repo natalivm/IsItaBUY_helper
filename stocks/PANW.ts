@@ -6,7 +6,7 @@ export const PANW = defineStock({
   name: 'Palo Alto Networks',
   sector: 'Cybersecurity',
   themeColor: '#00a3e0',
-  currentPrice: 182.9,
+  currentPrice: 183.75,
   fairPriceRange: '$160 - $225',
   shares0: 770.0,
   rev25: 9200,

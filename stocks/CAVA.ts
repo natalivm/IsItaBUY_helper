@@ -6,7 +6,7 @@ export const CAVA = defineStock({
   name: 'CAVA Group, Inc.',
   sector: 'Restaurants · Fast-Casual · Mediterranean',
   themeColor: '#c8553d',
-  currentPrice: 94.23,
+  currentPrice: 92,
   fairPriceRange: '$25 - $128',
   shares0: 118,
   rev25: 1080,
@@ -21,6 +21,7 @@ export const CAVA = defineStock({
   rsRating: 87,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
+  ratingOverride: 'OVERVALUED',
   strategicNarrative:
     "Downgraded to OVERVALUED after Q4 FY2025 showed weakening same-store economics: SSS decelerated to just +0.5% (full year +4%), " +
     "RLP margin compressed to 21.4% with food costs +50bps (tariffs) and other opex +60bps (delivery mix, KDS costs). " +

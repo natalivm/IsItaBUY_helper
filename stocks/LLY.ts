@@ -6,7 +6,7 @@ export const LLY = defineStock({
   sector: 'Pharmaceuticals / GLP-1',
   themeColor: '#e01933',
   updatedOn: '04/27',
-  currentPrice: 868.27,
+  currentPrice: 863.82,
   fairPriceRange: '$750 - $1800',
   shares0: 947,
   rev25: 65200,
