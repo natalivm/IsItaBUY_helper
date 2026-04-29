@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const SMCI = defineStock({
-  updatedOn: '04/28',
+  updatedOn: '04/29',
   ticker: 'SMCI',
   name: 'Super Micro Computer, Inc.',
   sector: 'AI Infrastructure / Servers',
   themeColor: '#eab308',
-  currentPrice: 27.25,
+  currentPrice: 26.32,
   fairPriceRange: '$22 - $65',
   shares0: 700,
   rev25: 23500,
