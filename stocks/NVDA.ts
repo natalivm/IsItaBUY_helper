@@ -5,7 +5,7 @@ export const NVDA = defineStock({
   name: 'NVIDIA Corporation',
   sector: 'Semiconductors / AI Infrastructure',
   themeColor: '#76b900',
-  currentPrice: 198.48,
+  currentPrice: 196.5,
   fairPriceRange: '$180 - $350',
   shares0: 24400,
   rev25: 215900,
@@ -20,7 +20,7 @@ export const NVDA = defineStock({
   strategicNarrative: "NVDA is a structural AI infrastructure monopolist priced near perfection. Q4 FY26 revenue hit $68.1B (+73% YoY); full-year FY26 $215.9B (+65% YoY) beat estimates. Data center $62.3B (+75% YoY, 91% of sales). Q1 FY27 guided at ~$78B ex-China, implying ~$312B+ FY27 run-rate. Vera Rubin AI platform in full production (2H 2026 deployment), Meta multiyear partnership locks in hyperscaler demand visibility across CPUs, networking, and millions of Blackwell+Rubin GPUs. 41% FCF margin, 75% gross margins, CUDA ecosystem lock-in. The stress floor (~$175–180 at 25× FY27E EPS) sits just below current price — P/E compression risk largely absorbed, all upside is EPS execution. Content/GW rising Hopper ($22.5B) → Blackwell ($30B) → Rubin ($40B est) signals structural pricing power.",
 
 
-  updatedOn: '05/04',
+  updatedOn: '05/05',
   analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 254, targetHigh: 352, numAnalysts: 37 },
   revGrowth: [
     [0.25, 0.08, 0.05, 0.03, 0.02],

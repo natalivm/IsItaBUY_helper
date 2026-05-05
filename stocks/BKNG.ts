@@ -5,8 +5,8 @@ export const BKNG = defineStock({
   name: 'Booking Holdings',
   sector: 'Online Travel / Marketplace',
   themeColor: '#003580',
-  updatedOn: '05/04',
-  currentPrice: 165.58,
+  updatedOn: '05/05',
+  currentPrice: 167.63,
   fairPriceRange: '$180 - $268',
   // 25-for-1 forward split effective 04/06/2026: 30.6M × 25 = 765M shares
   shares0: 765,
