@@ -7,7 +7,7 @@ export const CIEN = defineStock({
   sector: 'Optical Networking / Telecom Infrastructure',
   themeColor: '#0ea5e9',
   currentPrice: 544.75,
-  fairPriceRange: '$150 - $220',
+  fairPriceRange: '$70 - $350',
   shares0: 141,
   rev25: 4770,
   fcfMargin25: 0.139,

@@ -7,7 +7,7 @@ export const MELI = defineStock({
   sector: 'E-Commerce / Fintech',
   themeColor: '#f59e0b',
   currentPrice: 1817.31,
-  fairPriceRange: '$2,100 - $3,750',
+  fairPriceRange: '$2,100 - $5,450',
   shares0: 50.4,
   rev25: 28900,
   fcfMargin25: 0.085,
