@@ -6,7 +6,7 @@ export const VST = defineStock({
   sector: 'Utilities / Power',
   themeColor: '#facc15',
   currentPrice: 160.38,
-  fairPriceRange: '$179 - $402',
+  fairPriceRange: '$180 - $460',
   shares0: 339.0,
   rev25: 19600,
   fcfMargin25: 0.157,

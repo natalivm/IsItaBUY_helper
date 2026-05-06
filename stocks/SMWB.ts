@@ -7,7 +7,7 @@ export const SMWB = defineStock({
   sector: 'Web Analytics',
   themeColor: '#3b82f6',
   currentPrice: 3.19,
-  fairPriceRange: '$6 - $12',
+  fairPriceRange: '$4.5 - $21',
   shares0: 83.5,
   rev25: 286.5,
   fcfMargin25: 0.08,

@@ -7,7 +7,7 @@ export const NU = defineStock({
   themeColor: '#8b5cf6',
   currentPrice: 14.25,
   updatedOn: '05/05',
-  fairPriceRange: '$18 - $45',
+  fairPriceRange: '$26 - $80',
   // ~$84.9B market cap / $16.15 = ~5,254M shares
   shares0: 5254,
   rev25: 16500,        // $16.5B 2025A (Q4 revenue $4.9B; full-year ~$16.5B)

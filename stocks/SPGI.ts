@@ -7,7 +7,7 @@ export const SPGI = defineStock({
   sector: 'Financial Data',
   themeColor: '#c5a44e',
   currentPrice: 423.87,
-  fairPriceRange: '$470 - $1000',
+  fairPriceRange: '$250 - $800',
   shares0: 298.8,
   rev25: 15340,
   fcfMargin25: 0.357,

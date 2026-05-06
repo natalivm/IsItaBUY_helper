@@ -7,7 +7,7 @@ export const TER = defineStock({
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
   currentPrice: 357.1,
-  fairPriceRange: '$140 - $200',
+  fairPriceRange: '$130 - $350',
   shares0: 157,
   rev25: 3190,
   fcfMargin25: 0.141,

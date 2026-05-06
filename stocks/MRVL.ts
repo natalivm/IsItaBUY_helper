@@ -7,7 +7,7 @@ export const MRVL = defineStock({
   sector: 'Semiconductors',
   themeColor: '#22d3ee',
   currentPrice: 168.75,
-  fairPriceRange: '$80 - $140',
+  fairPriceRange: '$34 - $160',
   shares0: 870,
   rev25: 8195,
   fcfMargin25: 0.24,

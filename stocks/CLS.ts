@@ -7,7 +7,7 @@ export const CLS = defineStock({
   themeColor: '#f97316',
   updatedOn: '05/05',
   currentPrice: 417.66,
-  fairPriceRange: '$120 - $360',
+  fairPriceRange: '$160 - $550',
   shares0: 117.9,
   rev25: 12400,
   fcfMargin25: 0.037,

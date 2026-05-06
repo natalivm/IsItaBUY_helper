@@ -7,7 +7,7 @@ export const STRL = defineStock({
   themeColor: '#e67e22',
   updatedOn: '05/05',
   currentPrice: 806,
-  fairPriceRange: '$320 - $560',
+  fairPriceRange: '$320 - $800',
   shares0: 30.7,               // ~30.7M diluted shares outstanding (declining via buybacks)
   rev25: 2490,                 // FY2025 actual: $2.49B revenue (+32% YoY adj.)
   fcfMargin25: 0.116,          // ~11.6% FCF margin (FY25 OCF ~$340M less ~$63M capex on $2.49B rev)
