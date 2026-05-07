@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const UBER = defineStock({
-  updatedOn: '05/06',
+  updatedOn: '05/07',
   ticker: 'UBER',
   name: 'Uber Technologies',
   sector: 'Mobility',
   themeColor: '#22c55e',
-  currentPrice: 79.17,
+  currentPrice: 76.73,
   fairPriceRange: '$65 - $140',
   shares0: 2110,
   rev25: 43500,
