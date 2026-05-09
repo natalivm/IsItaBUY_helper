@@ -12,8 +12,8 @@ export const LRCX = defineStock({
   rev25: 18400,            // FY25 revenue ~$18.4B
   fcfMargin25: 0.29,       // FCF ~$5.4B / rev ~$18.4B ≈ 29%
   taxRate: 0.12,
-  cash: 5700,
-  debt: 5000,
+  cash: 4750,             // post MarQ26: $4.77B (down from $6.2B YoY — heavy buybacks/divs)
+  debt: 3730,             // post MarQ26: ~$3.73B
   beta: 1.35,
   costDebt: 0.035,
   modelType: 'EPS_PE',
@@ -25,9 +25,12 @@ export const LRCX = defineStock({
     "Lam Research is the dominant etch & deposition equipment supplier, with SAM share at mid-30% of WFE and targeting high-30% — " +
     "structural content gains (GAA, backside power, advanced packaging, high-performance materials) mean etch/dep intensity rises with each new node. " +
     "CSBG installed base >100,000 chambers with Equipment Intelligence + Dextro (autonomous fab) provides a sticky, recurring-like revenue component growing faster than the installed base — " +
-    "MarQ26 CSBG hit $2.11B, first ever $2B+ quarter. " +
-    "FY25 record margins: GM ~49.9%, OPM ~34.1%. MarQ26 print: rev $5.84B, EPS $1.47 (above guide); JunQ guide rev $6.6B ± $400M, EPS $1.65 ± $0.15 — 2H26 > 1H26. " +
+    "MarQ26 CSBG hit $2.11B, first ever $2B+ quarter. Revenue mix is now ~36% services (Systems $3.73B / CSBG $2.11B) — meaningfully reducing earnings cyclicality. " +
+    "MarQ26 print: rev $5.84B (+9% QoQ), EPS $1.47 (+15% QoQ), OPM expanded to ~35% (op income $2.05B vs $1.81B QoQ), net income $1.83B — growth + margin expansion simultaneously, rare for semi equipment. " +
+    "JunQ guide rev $6.6B ± $400M, EPS $1.65 ± $0.15 — 2H26 > 1H26. " +
     "WFE 2026 now guided ~$140B (bias to upside) vs prior $135B, advanced packaging revenue >50% growth in CY26 (vs prior +40%). " +
+    "Capital returns aggressive: MarQ26 buybacks $1.16B + dividends $326M = $1.49B vs op CF $1.14B / FCF ~$800M — net cash position compressing (cash $6.2B → $4.77B over a year), deliberate but reduces cushion. " +
+    "Geographic concentration: China 34%, Korea+Taiwan ~46% — Asia is overwhelming, China remains the single largest policy risk. " +
     "Buybacks aggressive: 85% of FCF returned, ~39M shares repurchased in FY25 at avg ~$104, contributing 2-4% annually to EPS CAGR. " +
     "The tension: at ~44x forward P/E, the stock prices in a multi-year AI supercycle with no margin of safety for WFE normalization. " +
     "Historical P/E range is 15-35x — multiple compression to 25-30x alone erases 3-5 years of EPS growth. " +
@@ -73,11 +76,13 @@ export const LRCX = defineStock({
     'Bear mechanics: WFE cycles historically run 2-3 strong years before digestion — we are already in year 2 of the upcycle. ' +
       'Management explicitly flags 2H-weighted WFE, cleanroom constraints, and mix-dependent margins — classic late-cycle signals. ' +
       'NAND recovery is "upgrades before greenfield" with greenfield pushed to 2027-28 — if those slip, a WFE air pocket opens. ' +
-      'China WFE "flattish YoY" means mix deterioration as China share falls but volatility remains. ' +
+      'China 34% revenue exposure + Korea+Taiwan ~46% = Asia is overwhelming; a China policy shock alone could erase a quarter of revenue. ' +
+      'Aggressive capital returns ($1.49B buyback+div in MarQ26 vs $1.14B op CF) compressed net cash from $6.2B to $4.77B — less cushion to absorb a downturn. ' +
       'Multiple sensitivity dominates: at P/E 18 (historical trough), even base EPS of ~$10.7 → price $193 (-18%). ' +
       'No macro shock required — a normal WFE pause + multiple mean reversion is sufficient for -20% to -30% drawdown.',
     'Post-MarQ26, the base case has stronger support: WFE 2026 raised to ~$140B (bias to upside), share gains (+1pp YoY), advanced packaging revenue >50% in CY26. ' +
-      'CSBG with >100K installed chambers hit $2.11B in MarQ26 (record, first $2B+ quarter), growing faster than base — genuine revenue stability through cycles. ' +
+      'MarQ26 hard data: rev +9% QoQ, EPS +15% QoQ, OPM expanded to 35% — growth AND margin expansion together, signaling premium franchise dynamics. ' +
+      'CSBG hit $2.11B in MarQ26 (first $2B+ quarter), now ~36% of revenue mix — genuine recurring stability through cycles. ' +
       'Buybacks at 85% FCF return provide 2-3% annual EPS tailwind. FY25 records (GM 49.9%, OPM 34.1%) show peak-level execution. ' +
       'The problem: the market already prices this trajectory. Forward P/E at 44x implies near-perfect execution for 3+ years. ' +
       'If EPS hits $10.7 in 5 years (15% CAGR) but P/E normalizes to 28x, you get ~5% annualized — functional dead money. ' +
