@@ -18,7 +18,7 @@ export const RVLV = defineStock({
   baseEps: 0.83,
   rsRating: 59,
   rsTrend: 'falling',
-  aiImpact: 'POSITIVE',
+  aiImpact: 'TAILWIND',
   strategicNarrative:
     "Q4 2025 blowout: +10% revenue, +58% net income, +63% EPS beat vs consensus, EBITDA +44%. Early Q1 2026 tracking +16% YoY — acceleration is real. " +
     "FCF surged 157% to $46M; cash reached $303M with zero debt ($4+/share net cash). The story has upgraded from 'margin recovery' to 'multi-lever growth.' " +
