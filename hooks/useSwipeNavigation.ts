@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 
 const MIN_SWIPE_DISTANCE = 80;
 const MAX_SWIPE_TIME = 400;
