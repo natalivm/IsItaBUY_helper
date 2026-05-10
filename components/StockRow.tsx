@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { TickerDefinition } from '../types';
 import { StockGroup } from '../constants';
 import { cn, rsRatingStyle } from '../utils';
+import BurryBadge from './BurryBadge';
 
 export interface StockRowData {
   ticker: string;
@@ -61,6 +62,7 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
         "text-sm font-bold mono border rounded px-1.5 py-0.5 flex-shrink-0",
         rsRatingStyle(tickerDef.rsRating)
       )}>RS {tickerDef.rsRating}</span>
+      <BurryBadge tickerDef={tickerDef} dimmed={isAvoid} />
       <span className={cn("text-sm font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>{stock.fairPriceRange}</span>
       <span className={cn("text-sm font-medium truncate", isAvoid ? "text-slate-400/40" : "text-slate-400")}>{tickerDef.sector.split(/\s[·\/]\s/)[0]}</span>
     </motion.button>
