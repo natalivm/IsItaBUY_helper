@@ -1,4 +1,4 @@
-import { StockDefinition, ScenarioType, RsTrend, AnalystConsensus } from '../types';
+import { StockDefinition, ScenarioType, RsTrend, AnalystConsensus, BurryData } from '../types';
 
 /**
  * Simplified stock input format.
@@ -122,6 +122,9 @@ export interface SimpleStockInput {
 
   /** Date of last manual data refresh, e.g. '26/02' */
   updatedOn?: string;
+
+  /** Burry SBC dilution indicator data (display-only). */
+  burry?: BurryData;
 }
 
 // Standard driver templates (identical across almost all stocks)
@@ -178,6 +181,9 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
 
     // Updated date
     updatedOn,
+
+    // Burry indicator
+    burry,
   } = input;
 
   // Build drivers for each scenario
@@ -226,6 +232,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     baseEps,
     analystConsensus,
     updatedOn,
+    burry,
     scenarios: {
       revGrowth: toRecord(revGrowth),
       fcfMargin: toRecord([

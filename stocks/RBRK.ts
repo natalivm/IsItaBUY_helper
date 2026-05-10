@@ -63,4 +63,13 @@ export const RBRK = defineStock({
   prob: [25, 45, 30],
   bbRate: [0.005, 0.01, 0.015],
   bullMaOptVal: true,
+
+  burry: {
+    sbc: 340,
+    gaapNi: -1100,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: 'FY25 LTM (post-IPO normalized)',
+    note: 'FY25 GAAP loss of ~$1.1B; LTM SBC ~27% of revenue. Reported FCF ($199M) is fully consumed by SBC at cash level.',
+  },
 });

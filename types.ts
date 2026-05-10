@@ -84,6 +84,28 @@ export interface TickerDefinition {
   analystConsensus?: AnalystConsensus;
   /** Date of last manual data refresh, e.g. '26/02' */
   updatedOn?: string;
+  /**
+   * Michael Burry "Cassandra Unchained" SBC dilution check.
+   * Dollar values in millions ($M).
+   * Coefficient = 1 - sbc / gaapNi. <0.70 = warning, ≤0 = "tragic level".
+   * Display-only — does not feed the valuation model.
+   */
+  burry?: BurryData;
+}
+
+export interface BurryData {
+  /** Annual stock-based compensation, $M (cash-flow statement) */
+  sbc: number;
+  /** Annual GAAP net income, $M (negative = loss) */
+  gaapNi: number;
+  /** Annual share buybacks, $M (gross repurchases of common stock) */
+  buyback?: number;
+  /** Whether the model's baseEps / FCF basis is GAAP-equivalent or non-GAAP */
+  epsBasis?: 'GAAP' | 'NON_GAAP';
+  /** Fiscal year label, e.g. "FY25" or "2025" */
+  fy?: string;
+  /** Optional one-line context */
+  note?: string;
 }
 
 export interface ProjectionData {

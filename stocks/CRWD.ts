@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 527.77,
+  currentPrice: 526.05,
   fairPriceRange: '$320 - $900',
   shares0: 248,
   rev25: 3950,
@@ -74,4 +74,13 @@ export const CRWD = defineStock({
   bbRate: [0.00, 0.005, 0.01],
   ebitdaProxy: [0.25, 0.32, 0.38],
   bullMaOptVal: false,
+
+  burry: {
+    sbc: 1000,
+    gaapNi: -15,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    note: 'July 2024 outage tipped GAAP NI negative; SBC ~25% of revenue annually.',
+  },
 });

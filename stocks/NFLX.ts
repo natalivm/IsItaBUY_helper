@@ -73,4 +73,13 @@ export const NFLX = defineStock({
   // M&A optionality: WB/HBO transaction pending but no deal parameters available.
   // Standalone valuation is base; M&A case kept as separate layer.
   bullMaOptVal: 78.67 * 4222.0 * 0.07,
+
+  burry: {
+    sbc: 827,
+    gaapNi: 10981,
+    buyback: 8460,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    note: 'Pristine — SBC only 7.5% of GAAP NI; buybacks 10× SBC. Best-in-class shareholder treatment in the cohort.',
+  },
 });

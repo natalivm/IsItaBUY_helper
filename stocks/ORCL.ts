@@ -65,4 +65,13 @@ export const ORCL = defineStock({
   bbRate: [0.010, 0.015, 0.020],
   ebitdaProxy: [0.35, 0.42, 0.45],
   termGrowth: [0.015, 0.025, 0.035],
+
+  burry: {
+    sbc: 4674,
+    gaapNi: 12400,
+    buyback: 150,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    note: 'baseEps $6.03 is non-GAAP; GAAP EPS $4.34. SBC = 38% of GAAP NI (Burry coef 0.62, below 0.70 threshold). AI capex consumes buyback capacity.',
+  },
 });

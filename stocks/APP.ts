@@ -77,4 +77,13 @@ export const APP = defineStock({
   bbRate: [0.01, 0.02, 0.03],
   ebitdaProxy: [0.70, 0.78, 0.82],
   bullMaOptVal: false,
+
+  burry: {
+    sbc: 660,
+    gaapNi: 3334,
+    buyback: 1000,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    note: 'baseEps ($9.75) already aligns with GAAP — no haircut needed. SBC trending down (-29% YoY); buybacks > SBC.',
+  },
 });

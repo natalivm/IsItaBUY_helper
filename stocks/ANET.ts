@@ -57,4 +57,13 @@ export const ANET = defineStock({
       fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
     },
   ],
+
+  burry: {
+    sbc: 750,
+    gaapNi: 3511,
+    buyback: 1600,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    note: 'Buyback covers SBC ~2.1× — net dilution near zero; fortress balance sheet supports continued repurchases.',
+  },
 });
