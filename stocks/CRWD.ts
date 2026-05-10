@@ -19,7 +19,7 @@ export const CRWD = defineStock({
   baseEps: 4.84,
   rsRating: 22,
   rsTrend: 'falling',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'BUY',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "FY26 (ended Jan 2026) is the inflection: ARR $5.25B (+24% YoY), Net New ARR re-accelerating to $1.01B (first $1B+ year, Q4 $331M +47% YoY). " +
@@ -30,8 +30,8 @@ export const CRWD = defineStock({
     "Operationally cleaner than PANW (faster growth) and on par with ZS, but PANW/FTNT offer better margin of safety today. " +
     "Multiple-compression is the dominant risk: if growth steps from 24% → 18% and P/S re-rates 22× → 14×, the stock can drop ~30% while revenue still grows. " +
     "FY26 GAAP NI still -$162M and SBC ~$1.1B (~22% of revenue) keeps Burry coefficient negative until earnings convert. " +
-    "Quality compounder transitioning out of story-stock phase, but Burry's Tragic-tier overstatement plus no margin of safety at current price downgrades the call to HOLD. Phased entry only; full size below $400. " +
-    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly, and the rating is held back accordingly.",
+    "Quality compounder transitioning out of story-stock phase, but no margin of safety at current price. BUY rating maintained for phased entry; full size below $400. " +
+    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
   updatedOn: '05/10',
 
