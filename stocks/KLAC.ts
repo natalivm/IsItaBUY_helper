@@ -100,4 +100,13 @@ export const KLAC = defineStock({
   ],
 
   updatedOn: '05/08',
+
+  burry: {
+    sbc: 592,
+    gaapNi: 4060,
+    buyback: 2400,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    note: 'OK — SBC ~15% of GAAP NI; buybacks ~4× SBC drove non-GAAP EPS +40% YoY (vs ~+22% revenue). New $5B repurchase authorization extends the runway. Modest haircut applies since baseEps is forward consensus.',
+  },
 });

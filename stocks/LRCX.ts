@@ -110,4 +110,13 @@ export const LRCX = defineStock({
       fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 320,
+    gaapNi: 5400,
+    buyback: 3400,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    note: 'Pristine — SBC ~6% of GAAP NI; FY25 buybacks $3.4B = ~11× SBC, structural share-count compression. Aggressive 85%-of-FCF capital return is a Burry-approved pattern.',
+  },
 });

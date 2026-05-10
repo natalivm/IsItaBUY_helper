@@ -59,4 +59,13 @@ export const AVGO = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.015],
     },
   ],
+
+  burry: {
+    sbc: 14500,
+    gaapNi: 23126,
+    buyback: 7176,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    note: 'WARNING — SBC = 63% of GAAP NI (post-VMware integration drove +74% YoY jump). Buyback $7.2B covers only 0.5× SBC, so net dilution remains. Burry coefficient 0.37 — well below the 0.70 threshold.',
+  },
 });

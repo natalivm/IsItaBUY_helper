@@ -95,4 +95,13 @@ export const AMAT = defineStock({
       fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 668,
+    gaapNi: 6900,
+    buyback: 4000,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    note: 'Pristine — SBC ~10% of GAAP NI; FY25 GAAP EPS $8.66 vs non-GAAP nearly aligned. AMAT distributes ~85% of FCF; buybacks ~6× SBC = real share count shrinks.',
+  },
 });

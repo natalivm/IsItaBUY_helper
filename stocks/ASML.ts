@@ -56,4 +56,13 @@ export const ASML = defineStock({
 
   ebitdaProxy: [0.35, 0.45, 0.55],
   bbRate: [0.01, 0.02, 0.025],
+
+  burry: {
+    sbc: 544,
+    gaapNi: 10300,
+    buyback: 5000,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    note: 'Pristine — SBC only ~5% of net income. €12B 2022-2025 buyback completed; new €12B 2026-2028 program announced. Most repurchased shares are cancelled (not just employee-plan offset), so true float shrinks.',
+  },
 });

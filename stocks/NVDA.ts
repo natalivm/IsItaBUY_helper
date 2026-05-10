@@ -55,4 +55,13 @@ export const NVDA = defineStock({
       fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 6400,
+    gaapNi: 120067,
+    buyback: 40600,
+    epsBasis: 'GAAP',
+    fy: 'FY26',
+    note: 'Pristine — SBC only ~5% of GAAP NI; FY26 buybacks $40.6B = 6.3× SBC. NVDA also begins including SBC in non-GAAP from FY27 onward, removing the optics distortion.',
+  },
 });
