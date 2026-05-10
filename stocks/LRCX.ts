@@ -117,6 +117,7 @@ export const LRCX = defineStock({
     buyback: 3400,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
-    note: 'Pristine — SBC ~6% of GAAP NI; FY25 buybacks $3.4B = ~11× SBC, structural share-count compression. Aggressive 85%-of-FCF capital return is a Burry-approved pattern.',
+    overstatementPct: 49,
+    note: 'Critical per Burry — real owner profit ~51% of GAAP after full SBC adjustment (payroll tax + mark-to-market dilution at current price). Despite reported SBC being only $320M and buybacks $3.4B, the economic dilution cost of vested awards is much higher when valued at the post-split share price.',
   },
 });

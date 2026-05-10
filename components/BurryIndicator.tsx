@@ -74,14 +74,21 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
   if (!b) return null;
 
   const niPositive = b.gaapNi > 0;
-  const coef = niPositive ? 1 - b.sbc / b.gaapNi : -1;
-  const sbcPctNi = niPositive ? (b.sbc / b.gaapNi) * 100 : Infinity;
+  const usePublished = b.overstatementPct != null;
+  // When Burry has published an overstatement %, prefer it (covers payroll
+  // tax + mark-to-market dilution beyond the GAAP SBC line).
+  const coef = usePublished
+    ? 1 - (b.overstatementPct as number) / 100
+    : niPositive ? 1 - b.sbc / b.gaapNi : -1;
+  const sbcPctNi = usePublished
+    ? (b.overstatementPct as number)
+    : niPositive ? (b.sbc / b.gaapNi) * 100 : Infinity;
   const buybackVsSbc = b.buyback != null && b.sbc > 0 ? b.buyback / b.sbc : null;
-  const tier = pickTier(coef, niPositive);
+  const tier = pickTier(coef, usePublished ? true : niPositive);
   const Icon = tier.Icon;
 
-  // P/E haircut effect: only meaningful if model uses non-GAAP EPS and NI is positive
-  const haircutApplies = b.epsBasis === 'NON_GAAP' && niPositive && coef > 0;
+  // P/E haircut effect: only meaningful if model uses non-GAAP EPS and we have a positive coefficient
+  const haircutApplies = b.epsBasis === 'NON_GAAP' && coef > 0;
   const reportedPe = tickerDef.baseEps && tickerDef.baseEps > 0
     ? tickerDef.currentPrice / tickerDef.baseEps
     : null;
@@ -104,9 +111,16 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
           <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2 mb-2">
             <AlertTriangle className="w-3 h-3" />
             Burry SBC Indicator
+            {usePublished && (
+              <span className="text-[10px] font-black uppercase tracking-widest text-amber-300/80 normal-case ml-2">
+                · Burry published value
+              </span>
+            )}
           </div>
           <p className="text-xs text-slate-400 leading-relaxed max-w-xl">
-            Michael Burry's "Cassandra Unchained" check: how much of GAAP profit is consumed by stock-based compensation, and whether buybacks offset the resulting dilution. Display-only — does not feed the model.
+            {usePublished
+              ? "Burry's full-SBC-adjustment methodology — includes payroll tax and mark-to-market dilution cost beyond the GAAP SBC line. Display-only."
+              : 'Michael Burry\'s "Cassandra Unchained" check: how much of GAAP profit is consumed by stock-based compensation, and whether buybacks offset the resulting dilution. Display-only — does not feed the model.'}
           </p>
         </div>
         <div
@@ -128,20 +142,22 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
             Burry Coefficient
           </span>
           <span className={cn('text-3xl font-black leading-none', tier.color)}>
-            {niPositive ? coef.toFixed(2) : 'N/A'}
+            {usePublished || niPositive ? coef.toFixed(2) : 'N/A'}
           </span>
-          <span className="text-xs text-slate-500 mt-1">1 − SBC/NI · target ≥ 0.70</span>
+          <span className="text-xs text-slate-500 mt-1">
+            {usePublished ? 'real / GAAP profit · target ≥ 0.70' : '1 − SBC/NI · target ≥ 0.70'}
+          </span>
         </div>
 
         <div className="flex flex-col">
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
-            SBC / GAAP NI
+            {usePublished ? 'Profit Overstatement' : 'SBC / GAAP NI'}
           </span>
           <span className="text-3xl font-black leading-none text-white">
-            {niPositive ? `${sbcPctNi.toFixed(0)}%` : '∞'}
+            {usePublished || niPositive ? `${sbcPctNi.toFixed(0)}%` : '∞'}
           </span>
           <span className="text-xs text-slate-500 mt-1">
-            {fmt$M(b.sbc)} SBC · {fmt$M(b.gaapNi)} NI
+            {fmt$M(b.sbc)} SBC · {niPositive ? fmt$M(b.gaapNi) : fmt$M(b.gaapNi)} NI
           </span>
         </div>
 

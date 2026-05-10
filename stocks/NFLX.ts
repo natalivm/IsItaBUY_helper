@@ -80,6 +80,7 @@ export const NFLX = defineStock({
     buyback: 8460,
     epsBasis: 'GAAP',
     fy: '2025',
-    note: 'Pristine — SBC only 7.5% of GAAP NI; buybacks 10× SBC. Best-in-class shareholder treatment in the cohort.',
+    overstatementPct: 22,
+    note: 'Elevated per Burry — real owner profit ~78% of GAAP after full SBC adjustment. Naive SBC/NI (~7.5%) is the cleanest in the elevated-cohort, and $8.5B buyback offsets gross dilution, but mark-to-market valuation of vested NFLX equity at current price still leaves a ~22% overstatement.',
   },
 });

@@ -106,6 +106,14 @@ export interface BurryData {
   fy?: string;
   /** Optional one-line context */
   note?: string;
+  /**
+   * Burry's published "full SBC adjustment" overstatement %.
+   * When set, the indicator uses this directly (and labels it as
+   * Burry's published analysis) instead of the naive SBC/NI ratio.
+   * Burry's methodology includes payroll-tax effects and mark-to-market
+   * dilution cost beyond the GAAP SBC line. Range 0–100.
+   */
+  overstatementPct?: number;
 }
 
 export interface ProjectionData {
