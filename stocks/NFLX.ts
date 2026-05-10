@@ -73,4 +73,15 @@ export const NFLX = defineStock({
   // M&A optionality: WB/HBO transaction pending but no deal parameters available.
   // Standalone valuation is base; M&A case kept as separate layer.
   bullMaOptVal: 78.67 * 4222.0 * 0.07,
+
+  burry: {
+    sbc: 827,
+    gaapNi: 10981,
+    buyback: 8460,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 22,
+    overstatementSource: 'burry-published',
+    note: 'Elevated per Burry — real owner profit ~78% of GAAP after full SBC adjustment. Naive SBC/NI (~7.5%) is the cleanest in the elevated-cohort, and $8.5B buyback offsets gross dilution, but mark-to-market valuation of vested NFLX equity at current price still leaves a ~22% overstatement.',
+  },
 });

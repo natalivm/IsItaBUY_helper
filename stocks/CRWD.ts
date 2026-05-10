@@ -5,31 +5,34 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 527.77,
+  currentPrice: 526.05,
   fairPriceRange: '$320 - $900',
-  shares0: 248,
-  rev25: 3950,
-  fcfMargin25: 0.268,
+  shares0: 252,
+  rev25: 4810,
+  fcfMargin25: 0.258,
   taxRate: 0.15,
   cash: 3800,
   debt: 750,
   beta: 1.15,
   costDebt: 0.04,
   modelType: 'EPS_PE',
-  baseEps: 3.93,
+  baseEps: 4.84,
   rsRating: 22,
   rsTrend: 'falling',
   ratingOverride: 'BUY',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "CrowdStrike is a structural compounder in cybersecurity — high switching costs, endpoint + XDR ecosystem lock-in, and AI-native threat detection create a durable moat with 78% gross margins. " +
-    "EBIT margin expanding from 21% → 30%E shows strong operating leverage on ~27% 3yr revenue CAGR. " +
-    "The problem: at ~109x forward P/E you're paying for flawless execution with zero margin of safety. RS recovering from 19 to 34 but still weak — not yet a momentum phase. " +
-    "Need 25-27% FCF CAGR for 15%+ annual returns; historically achieved but harder from a larger base. " +
-    "If growth decelerates to 10-15%, operating leverage vanishes and multiple compression could deliver -30-40% drawdown. " +
-    "Prob-weighted CAGR ~8-9% — quality business at a premium price. Wait for entry near $280-320 or next growth acceleration cycle.",
+    "FY26 (ended Jan 2026) is the inflection: ARR $5.25B (+24% YoY), Net New ARR re-accelerating to $1.01B (first $1B+ year, Q4 $331M +47% YoY). " +
+    "Q4 turned GAAP-profitable ($38.7M NI), FY26 FCF $1.24B at ~26% margin, Rule of 40 = 47 — elite SaaS economics. " +
+    "Platform moat compounding: 50% of customers run 6+ modules, 34% run 7+, 24% run 8+. Next-Gen SIEM +75%, Cloud +35%, Identity +34% YoY extend the growth runway. " +
+    "FY27 guide: ARR $6.47–6.52B (+23–24%), revenue $5.87–5.93B, non-GAAP EPS $4.78–4.90 — durable, not decaying. " +
+    "Valuation reality at $526 / ~$133B mkt cap: forward P/S ~22×, EV/ARR ~20×, FCF yield <1%, FY27 P/E ~109× — pricing CRWD as 'the cybersecurity OS of the AI era,' a high bar. " +
+    "Operationally cleaner than PANW (faster growth) and on par with ZS, but PANW/FTNT offer better margin of safety today. " +
+    "Multiple-compression is the dominant risk: if growth steps from 24% → 18% and P/S re-rates 22× → 14×, the stock can drop ~30% while revenue still grows. " +
+    "FY26 GAAP NI still -$162M and SBC ~$1.1B (~22% of revenue) keeps Burry coefficient negative until earnings convert. " +
+    "Quality compounder transitioning out of story-stock phase, but no margin of safety at current price. BUY rating maintained for phased entry; full size below $400.",
 
-  updatedOn: '05/08',
+  updatedOn: '05/10',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
@@ -48,8 +51,8 @@ export const CRWD = defineStock({
   exitMultiple: [18, 24, 30],
 
   desc: [
-    'Growth decelerates to 10-12% as enterprise cybersecurity budgets tighten. EBIT margin stalls at 22-24% — operating leverage disappears without top-line acceleration. ' +
-      'P/E compresses from 80x to 35x as market re-rates from growth to value. EPS reaches $9-10 by FY30. 5yr price ~$320, roughly -3% to 0% annual return.',
+    'Growth decelerates from 24% → 12-15% as enterprise cybersecurity budgets tighten and Microsoft/PANW pressure intensifies. EBIT margin stalls at 22-24% — operating leverage disappears without top-line acceleration. ' +
+      'Forward P/S re-rates from 22× toward 12-14×, P/E compresses from ~109× to 35×. EPS reaches $9-10 by FY30. 5yr price ~$320, roughly -3% to 0% annual return — multiple compression overwhelms revenue growth.',
     'Revenue compounds at ~17% with EBIT margin expanding to 28-30%. Platform consolidation (endpoint → XDR → cloud → identity) drives net dollar retention above 120%. ' +
       'EPS reaches ~$12 by FY30. P/E compresses naturally from 80x to 45x through earnings growth. 5yr price ~$540, ~6-7% CAGR.',
     'Cybersecurity supercycle — AI threat acceleration drives structural budget increases. CrowdStrike wins consolidation as platform of choice. Revenue sustains 20%+ growth, ' +
@@ -74,4 +77,15 @@ export const CRWD = defineStock({
   bbRate: [0.00, 0.005, 0.01],
   ebitdaProxy: [0.25, 0.32, 0.38],
   bullMaOptVal: false,
+
+  burry: {
+    sbc: 1100,
+    gaapNi: -162,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY26',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Burry explicitly cites CRWD in his SBC overstatement list. FY26 GAAP NI -$162M with $1.1B SBC; under full-SBC adjustment (mark-to-market vesting at $526 share price + payroll tax) real owner earnings are firmly negative. Q4 turned GAAP-profitable but the full year still flunks.',
+  },
 });

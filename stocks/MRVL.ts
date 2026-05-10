@@ -59,4 +59,15 @@ export const MRVL = defineStock({
       fcfUplift: [0.005, 0.01, 0.015, 0.02, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 620,
+    gaapNi: 500,
+    buyback: 700,
+    epsBasis: 'GAAP',
+    fy: 'FY26',
+    overstatementPct: 70,
+    overstatementSource: 'estimated',
+    note: 'Burry explicitly cites MRVL in his Cassandra Unchained list. FY25 was GAAP-loss (-$885M) on $597M SBC; FY26 just turned slightly positive but SBC ($620M) still exceeds GAAP NI on a naive basis. Under full-SBC adjustment with ~3.8× 3yr stock MTM amplifier, real owner profit is firmly negative. The "AI interconnect architect" thesis works on FCF, not GAAP earnings.',
+  },
 });

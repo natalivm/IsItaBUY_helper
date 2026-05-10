@@ -63,4 +63,15 @@ export const RBRK = defineStock({
   prob: [25, 45, 30],
   bbRate: [0.005, 0.01, 0.015],
   bullMaOptVal: true,
+
+  burry: {
+    sbc: 340,
+    gaapNi: -1100,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: 'FY25 LTM (post-IPO normalized)',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'FY25 GAAP loss ~$1.1B with $914M annual SBC + post-IPO bulge driving real cost much higher under full-SBC adjustment. Reported FCF $199M is fully consumed at cash level by SBC alone before any MTM amplification. Real owner earnings deeply negative.',
+  },
 });

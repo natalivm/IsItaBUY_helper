@@ -57,4 +57,15 @@ export const ANET = defineStock({
       fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
     },
   ],
+
+  burry: {
+    sbc: 750,
+    gaapNi: 3511,
+    buyback: 1600,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 35,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~35% overstatement under full-SBC adjustment. Naive SBC/NI is 21%, but with ~3.5× stock appreciation since 2023 the MTM dilution cost is meaningfully higher. $1.6B buyback covers gross SBC 2.1× but doesn\'t fully neutralize the MTM amplifier. Crosses Burry\'s 30% Critical threshold.',
+  },
 });

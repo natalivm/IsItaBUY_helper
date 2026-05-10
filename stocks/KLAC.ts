@@ -100,4 +100,15 @@ export const KLAC = defineStock({
   ],
 
   updatedOn: '05/08',
+
+  burry: {
+    sbc: 592,
+    gaapNi: 4060,
+    buyback: 2400,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 35,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~35% overstatement under full-SBC adjustment — crosses Burry\'s 30% Critical threshold. Naive SBC/NI is 15%, but ~5× 3yr stock appreciation ($370 → $1869) drives a large MTM dilution amplifier on vested awards. $2.4B buyback offset is meaningful but doesn\'t fully neutralize.',
+  },
 });

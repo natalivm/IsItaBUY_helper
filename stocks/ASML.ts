@@ -56,4 +56,15 @@ export const ASML = defineStock({
 
   ebitdaProxy: [0.35, 0.45, 0.55],
   bbRate: [0.01, 0.02, 0.025],
+
+  burry: {
+    sbc: 544,
+    gaapNi: 10300,
+    buyback: 5000,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 12,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~12% overstatement under full-SBC adjustment — still cleanest in semis. Naive SBC/NI just 5%; even with ~2.3× 3yr stock MTM the overstatement stays modest because ASML cancels most repurchased shares (not employee-plan offset). The €12B 2026-2028 buyback program reinforces durable shareholder treatment.',
+  },
 });

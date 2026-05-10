@@ -95,4 +95,15 @@ export const AMAT = defineStock({
       fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 668,
+    gaapNi: 6900,
+    buyback: 4000,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 22,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~22% overstatement under full-SBC adjustment. Naive SBC/NI is 10%, but ~3.3× 3yr stock appreciation amplifies the MTM dilution cost. $4B buyback covers SBC ~6× — partial offset, similar profile to NVDA where Burry calibrated 29%. Lands in Elevated zone, not Critical.',
+  },
 });

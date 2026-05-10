@@ -77,4 +77,15 @@ export const APP = defineStock({
   bbRate: [0.01, 0.02, 0.03],
   ebitdaProxy: [0.70, 0.78, 0.82],
   bullMaOptVal: false,
+
+  burry: {
+    sbc: 660,
+    gaapNi: 3334,
+    buyback: 1000,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 50,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~50% overstatement under full-SBC adjustment. Naive SBC/NI is only 20%, but APP has 19× 3-year stock return ($25 → $469), so MTM dilution cost on vested awards is several multiples of the GAAP charge. Buyback ~$1B partially offsets but not enough to neutralize the MTM amplifier.',
+  },
 });

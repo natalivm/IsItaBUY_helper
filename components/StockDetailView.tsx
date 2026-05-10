@@ -9,6 +9,7 @@ import ScenarioMetricsCard from './ScenarioMetricsCard';
 import StockPageHeader from './StockPageHeader';
 import StockMetricCards from './StockMetricCards';
 import InvestmentVerdict from './InvestmentVerdict';
+import BurryIndicator from './BurryIndicator';
 import { cn, rsRatingColor } from '../utils';
 import { useSwipeNavigation } from '../hooks/useSwipeNavigation';
 
@@ -145,6 +146,9 @@ const StockDetailView: React.FC<Props> = ({
                 </div>
               </div>
             </motion.div>
+
+            {/* Burry SBC indicator (renders only when stock has burry data) */}
+            <BurryIndicator tickerDef={tickerDef} />
 
             {/* Scenario cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
