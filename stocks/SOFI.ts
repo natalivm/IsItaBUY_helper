@@ -41,4 +41,15 @@ export const SOFI = defineStock({
   ],
 
   bullMaOptVal: 19 * 1279 * 0.07,
+
+  burry: {
+    sbc: 262,
+    gaapNi: 370,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 70,
+    overstatementSource: 'estimated',
+    note: 'Tragic — naive SBC/NI 71% (FY25 SBC $262M = 7% of revenue, GAAP NI ~$370M after the FY24 $258M tax-benefit normalization). No buyback program. Recently transitioned to GAAP profitability but SBC consumes most of it. Stock 3× from 2023 lows amplifies MTM cost on vested awards.',
+  },
 });

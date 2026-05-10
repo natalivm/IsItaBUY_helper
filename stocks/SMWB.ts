@@ -39,4 +39,15 @@ export const SMWB = defineStock({
   ],
 
   bullMaOptVal: 3.98 * 83.5 * 0.07,
+
+  burry: {
+    sbc: 21.2,
+    gaapNi: -33,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Tragic — FY25 GAAP loss $33M with SBC $21.2M (almost two-thirds of the loss). Non-GAAP NI $5.1M illustrates exactly the dynamic Burry critiques: small headline non-GAAP profit only exists by adding back SBC. No buyback program. Real owner economics are negative. Per-share impact magnified by tiny float (83.5M shares).',
+  },
 });
