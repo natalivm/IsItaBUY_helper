@@ -52,4 +52,15 @@ export const CLS = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.08, 0.10, 0.13],
+
+  burry: {
+    sbc: 70,
+    gaapNi: 823,
+    buyback: 200,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 18,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~18% overstatement — clean for an AI-tailwind stock. Naive SBC/NI just 8.5% (FY25 GAAP EPS $7.16 doubled YoY). Buybacks ~$200M cover SBC ~3×. Lower-margin EMS business model means less stock-based compensation than AI-chip peers; 5× 3yr stock surge is the main MTM amplifier.',
+  },
 });

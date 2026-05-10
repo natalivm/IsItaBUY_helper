@@ -75,4 +75,15 @@ export const ALAB = defineStock({
   bbRate: [0.002, 0.008, 0.015],
   ebitdaProxy: [0.25, 0.40, 0.50],
   bullMaOptVal: false,
+
+  burry: {
+    sbc: 350,
+    gaapNi: 100,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 90,
+    overstatementSource: 'estimated',
+    note: 'Tragic — recent IPO (Mar 2024) with ongoing post-IPO RSU vesting bulge. FY24 had $88.9M cumulative SBC tied to IPO unlock; FY25 annual SBC estimated ~$350M (post-IPO heavy run-rate). Naive SBC/NI is multiples of GAAP NI, with no buyback offset. Stock 8× from IPO ($35 → $200) amplifies MTM dilution cost dramatically. baseEps $1.84 is non-GAAP — meaningful haircut applies.',
+  },
 });

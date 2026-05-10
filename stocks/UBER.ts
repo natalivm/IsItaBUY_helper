@@ -40,4 +40,15 @@ export const UBER = defineStock({
   ],
 
   bullMaOptVal: 78.45 * 2110 * 0.07,
+
+  burry: {
+    sbc: 1830,
+    gaapNi: 5100,
+    buyback: 6500,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 30,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~30% overstatement. Headline FY25 GAAP NI $10.1B but ~$5B was a one-time tax valuation release; core operating GAAP NI ~$5.1B (used here). SBC $1.83B = 36% of core NI naive. Buyback $6.5B/yr covers SBC ~3.6× — strong offset, similar to NVDA tier. Solid cash returns but SBC cost still meaningful at MTM.',
+  },
 });

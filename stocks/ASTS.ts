@@ -57,4 +57,15 @@ export const ASTS = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 47,
+    gaapNi: -342,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Pre-revenue/pre-commercial — FY25 GAAP loss $342M on $71M revenue and $47M SBC. Burry framework breaks down for loss-makers; real owner economics are deeply negative regardless of any "story" multiple. CEO compensation disclosures (Apr 2026) drove a share-price slide and reinforce dilution concerns. Tragic until commercial deployment proves unit economics.',
+  },
 });
