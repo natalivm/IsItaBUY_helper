@@ -200,7 +200,8 @@ const InvestmentVerdict: React.FC<Props> = ({
         const coef = 1 - b.overstatementPct / 100;
         if (coef <= 0 || coef >= 1) return null;
         const adjustedPw = investmentConclusion.pwAvg * coef;
-        const adjustedCagr = (Math.pow(1 + investmentConclusion.cagr / 100, 1) * Math.pow(coef, 1 / 5) - 1) * 100;
+        // 5y target shrinks by coef → new CAGR = (1 + pwCagr) × coef^(1/5) − 1
+        const adjustedCagr = ((1 + investmentConclusion.cagr / 100) * Math.pow(coef, 1 / 5) - 1) * 100;
         const haircut = b.overstatementPct;
         const tierColor = b.overstatementPct >= 70
           ? 'text-rose-300'

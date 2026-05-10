@@ -16,6 +16,7 @@ interface Tier {
   label: string;
   color: string;
   bg: string;
+  bgStrong: string;
   border: string;
   ring: string;
   Icon: React.ComponentType<{ className?: string }>;
@@ -26,6 +27,7 @@ const PRISTINE: Tier = {
   label: 'PRISTINE',
   color: 'text-emerald-300',
   bg: 'bg-emerald-500/10',
+  bgStrong: 'bg-emerald-500/60',
   border: 'border-emerald-500/30',
   ring: 'ring-emerald-500/40',
   Icon: ShieldCheck,
@@ -35,15 +37,17 @@ const OK: Tier = {
   label: 'OK',
   color: 'text-lime-300',
   bg: 'bg-lime-500/10',
+  bgStrong: 'bg-lime-500/60',
   border: 'border-lime-500/30',
   ring: 'ring-lime-500/40',
   Icon: ShieldCheck,
   blurb: 'Coefficient above the 0.70 threshold. SBC dilution exists but stays within manageable bounds.',
 };
-const WARNING: Tier = {
-  label: 'WARNING',
+const CRITICAL: Tier = {
+  label: 'CRITICAL',
   color: 'text-amber-300',
   bg: 'bg-amber-500/10',
+  bgStrong: 'bg-amber-500/60',
   border: 'border-amber-500/40',
   ring: 'ring-amber-500/40',
   Icon: ShieldAlert,
@@ -53,16 +57,22 @@ const TRAGIC: Tier = {
   label: 'TRAGIC',
   color: 'text-rose-300',
   bg: 'bg-rose-500/10',
+  bgStrong: 'bg-rose-500/60',
   border: 'border-rose-500/40',
   ring: 'ring-rose-500/50',
   Icon: Skull,
-  blurb: 'SBC equals or exceeds GAAP profit. Real economic earnings are zero or negative regardless of non-GAAP optics.',
+  blurb: 'Real owner economics are dramatically below GAAP — 30% or less of reported. Non-GAAP optics flatter the picture significantly; buybacks alone do not close the gap.',
 };
 
+// Tier thresholds: aligned with BurryBadge home-row pill (15/30/70% overstatement bands).
+// coef ≤ 0.30 (≥70% overstatement) → Tragic
+// 0.30 < coef < 0.70 (30-70%) → Critical
+// 0.70 ≤ coef < 0.85 (15-30%) → Ok
+// coef ≥ 0.85 (<15%) → Pristine
 function pickTier(coef: number, niPositive: boolean): Tier {
   if (!niPositive) return TRAGIC;
-  if (coef <= 0) return TRAGIC;
-  if (coef < 0.70) return WARNING;
+  if (coef <= 0.30) return TRAGIC;
+  if (coef < 0.70) return CRITICAL;
   if (coef < 0.85) return OK;
   return PRISTINE;
 }
@@ -124,7 +134,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
         tier.border
       )}
     >
-      <div className={cn('absolute top-0 left-0 right-0 h-[2px]', tier.bg.replace('/10', '/60'))} />
+      <div className={cn('absolute top-0 left-0 right-0 h-[2px]', tier.bgStrong)} />
 
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
@@ -179,7 +189,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
             {usePublished || niPositive ? `${sbcPctNi.toFixed(0)}%` : '∞'}
           </span>
           <span className="text-xs text-slate-500 mt-1">
-            {fmt$M(b.sbc)} SBC · {niPositive ? fmt$M(b.gaapNi) : fmt$M(b.gaapNi)} NI
+            {fmt$M(b.sbc)} SBC · {fmt$M(b.gaapNi)} NI
           </span>
         </div>
 
@@ -248,7 +258,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
                 Model PW Target
               </span>
               <span className="text-2xl font-black leading-none text-white">
-                ${pwTarget!.toFixed(0)}
+                ${pwTarget.toFixed(0)}
               </span>
               <span className="text-xs text-slate-500 mt-1">unadjusted blended value</span>
             </div>
