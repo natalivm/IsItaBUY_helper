@@ -53,4 +53,15 @@ export const SMCI = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 200,
+    gaapNi: 1000,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 35,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~35% overstatement — Critical zone. Naive SBC/NI ~20% (estimated FY25 SBC $200M vs GAAP NI $1.0B, which actually declined YoY from $1.2B). No buyback program means dilution is unoffset. Extreme stock volatility (peak $1200 → crash → recovery, split-adjusted) creates MTM amplification on vested awards. Accounting controversy (delayed 10-K, auditor change) adds qualitative governance discount.',
+  },
 });

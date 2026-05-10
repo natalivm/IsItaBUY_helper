@@ -42,4 +42,15 @@ export const PANW = defineStock({
   ebitdaProxy: [0.28, 0.35, 0.42],
   bbRate: [0.005, 0.015, 0.02],
   bullMaOptVal: 149.0 * 770.0 * 0.07,
+
+  burry: {
+    sbc: 1295,
+    gaapNi: 1500,
+    buyback: 700,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 90,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~90% overstatement — naive SBC/NI already 86% (SBC $1.3B vs GAAP NI ~$1.5B FY25, down from $2.6B FY24 due to platformization investment). Buybacks $700M cover SBC just 0.5×. Under full-SBC adjustment with ~3× 3yr stock MTM, real owner profit is firmly negative. Despite earlier framing as a "more conservative entry vs CRWD," PANW actually scores worse than CRWD on naive Burry coefficient and lands deep in Tragic territory.',
+  },
 });

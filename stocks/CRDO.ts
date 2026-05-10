@@ -65,4 +65,15 @@ export const CRDO = defineStock({
 
   bbRate: [0, 0, 0],
   ebitdaProxy: [0.15, 0.25, 0.38],
+
+  burry: {
+    sbc: 120,
+    gaapNi: 52,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 95,
+    overstatementSource: 'estimated',
+    note: 'Tragic — naive SBC/NI is 230% (estimated FY25 SBC $120M vs $52M GAAP NI). FY25 just turned GAAP-positive after years of losses, but SBC dwarfs reported earnings. Recent IPO (Jan 2022) with massive RSU bulge; stock is +20× from IPO levels = enormous MTM dilution cost on vested awards. No buyback program. The "AI interconnect" thesis works on revenue growth narrative, not yet on real owner economics.',
+  },
 });

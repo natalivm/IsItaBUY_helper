@@ -53,4 +53,15 @@ export const FICO = defineStock({
       'Platform ARR re-accelerates with AI-driven decisioning demand; non-platform erosion is fully absorbed. FCF margins reach 43% on continued operating leverage. ' +
       'Multiple re-rates back toward 30x EBITDA as the bear case dissolves.',
   ],
+
+  burry: {
+    sbc: 170,
+    gaapNi: 652,
+    buyback: 1400,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 22,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~22% overstatement — on the OK boundary. Naive SBC/NI 26% (SBC ~$170M vs FY25 GAAP NI $652M). Massive $1.4B buyback covers SBC ~8.2× = structural share-count compression on a tiny float (23.7M). The MTM amplifier from 5× 3yr stock is offset by aggressive buyback retirement — cleaner profile than typical software peers.',
+  },
 });

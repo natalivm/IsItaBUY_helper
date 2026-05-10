@@ -42,4 +42,15 @@ export const SPOT = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   ebitdaProxy: [0.17, 0.25, 0.38],
   bullMaOptVal: 496 * 206 * 0.07,
+
+  burry: {
+    sbc: 676,
+    gaapNi: 2503,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 50,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~50% overstatement — naive SBC/NI 27% (SBC $676M, FY25 GAAP NI $2.5B, +103% YoY). Notable that SBC actually declined -11% YoY, a Burry-positive direction. But minimal buyback program means dilution is unoffset, and ~4× 3-year stock appreciation ($100 → $418) amplifies MTM cost on vested awards. Lands in Critical zone.',
+  },
 });

@@ -79,4 +79,15 @@ export const DUOL = defineStock({
       bbRate: 0.02,
     },
   ],
+
+  burry: {
+    sbc: 300,
+    gaapNi: 414,
+    buyback: 50,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 75,
+    overstatementSource: 'estimated',
+    note: 'Tragic — naive SBC/NI 72% (SBC ~$300M vs FY25 GAAP NI $414M). Minimal buyback program means dilution is essentially unoffset. Stock peaked near $500 then retraced to $108 — even with the drawdown, vested awards from the up-cycle period carry significant MTM cost. baseEps $3.40 is non-GAAP — material P/E haircut applies.',
+  },
 });
