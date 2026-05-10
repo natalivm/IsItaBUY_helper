@@ -95,6 +95,14 @@ export const LRCX = defineStock({
       'Post-earnings probability: ~35% — upgraded from ~25% due to strong guide and structural content growth story.',
   ],
 
+  keyTakeaways: [
+    "Cash dropped $5.7B → $4.75B because they're returning more to shareholders than they generate in free cash flow right now ($1.49B buybacks+divs vs $1.14B op CF). Fine during a strong cycle — but less cushion if WFE softens.",
+    "Revenue +9% QoQ AND margins expanding to 35% at the same time. That combination is rare in semi equipment — it signals pricing power, not just volume. This is the bull case showing up in real numbers today.",
+    "~36% of revenue is services (CSBG $2.11B/quarter, a new record). Services don't disappear when customers pause equipment orders. This is why LRCX deserves a higher multiple than pure-play equipment peers — it's stickier than it looks.",
+    "China is 34% of revenue. Korea+Taiwan is another 46%. Nearly all revenue is Asia. One executive order on export controls — like 2022 — and a third of revenue is at risk overnight. This is a policy risk, not an execution risk.",
+    "Bottom line: the business is executing at peak quality and the market knows it. You're paying for perfection. The single biggest risk has nothing to do with whether Lam does its job well.",
+  ],
+
   termGrowth: [0.015, 0.025, 0.03],
   bbRate: [0.01, 0.02, 0.03],
   ebitdaProxy: [0.30, 0.38, 0.44],
