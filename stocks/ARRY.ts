@@ -55,4 +55,15 @@ export const ARRY = defineStock({
       bbRate: 0.02,
     },
   ],
+
+  burry: {
+    sbc: 28,
+    gaapNi: -112,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Tragic — FY25 GAAP loss $112M (driven by $29.5M inventory charge + $102.6M goodwill impairment), with SBC ~$28M unable to be evaluated against negative NI. Underlying operations show Adj EBITDA $187.6M and Adj EPS $0.67, so the SBC/(adjusted NI) ratio is more like ~25-30% (Critical), but Burry framework breaks down for GAAP loss-makers. Watch FY26 if profitability returns.',
+  },
 });

@@ -68,4 +68,15 @@ export const MELI = defineStock({
       fcfUplift: [0.01, 0.015, 0.02, 0.025, 0.03],
     },
   ],
+
+  burry: {
+    sbc: 793,
+    gaapNi: 1900,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 50,
+    overstatementSource: 'estimated',
+    note: 'Critical — naive SBC/NI ~42% (LTM SBC $793M, +38.6% YoY against estimated FY25 GAAP NI $1.9B). Aggressive SBC growth is concerning given MELI is now a profitable company. No meaningful buyback program. baseEps $36.69 is non-GAAP — meaningful haircut applies. Region/EM context partially explains higher equity-comp dependence.',
+  },
 });

@@ -71,4 +71,15 @@ export const CIEN = defineStock({
       fcfUplift: [0.005, 0.01, 0.01, 0.015, 0.015],
     },
   ],
+
+  burry: {
+    sbc: 130,
+    gaapNi: 200,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 70,
+    overstatementSource: 'estimated',
+    note: 'Tragic — naive SBC/NI ~65% (estimated SBC ~$130M vs FY25 GAAP NI ~$200M; full-year EPS ~$1.40 across volatile quarters). Stock is +11× over 3 years ($50 → $548), creating massive MTM amplifier on vested awards. Minimal buyback program. Hardware-centric revenue with high SBC dependence makes the GAAP-to-economic gap worst among networking peers.',
+  },
 });
