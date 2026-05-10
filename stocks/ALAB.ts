@@ -24,7 +24,8 @@ export const ALAB = defineStock({
     "$6.5B Amazon warrant + Scorpio X (2027 volume ramp) + protocol-agnostic positioning (UALink + NVLink Fusion) make the bull case structural, not just cyclical. " +
     "The problem: revenue decelerating fast (85% 3Y CAGR → +8% by 2028E), margins peak 2029E then compress, and at ~53x forward P/E the market already prices the optimistic path. " +
     "If Scorpio X becomes standard in 2–3 hyperscalers, this transitions from cycle play to architectural moat (type B → A). If not, it's another AI silicon story with a semiconductor downturn ahead. " +
-    "35–40% probability of 15%+ CAGR — a tactical bet on AI infrastructure positioning, not a compounder.",
+    "35–40% probability of 15%+ CAGR — a tactical bet on AI infrastructure positioning, not a compounder. " +
+    "Burry full-SBC adjustment (estimated): 90% overstatement (Tragic) — real owner economics ~10% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 80, targetMedian: 192, targetHigh: 225, numAnalysts: 16 },

@@ -18,7 +18,8 @@ export const PANW = defineStock({
   costDebt: 0.05,
   rsRating: 21,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "Q2 FY2026 beat (NGS ARR +33% to $6.3B, EPS $1.03 vs $0.94 est.), but FY2026 EPS guidance cut to $3.65–3.70 (from $3.80) on CyberArk + Chronosphere integration costs. CyberArk (closed Feb 11) adds Identity as 4th pillar. 1,550 platformized customers, 119% NRR, SASE ARR >$1.5B. Stock RS ~20 — tape is broken. Avoid until integration costs digest and RS recovers above 40.",
+  strategicNarrative: "Q2 FY2026 beat (NGS ARR +33% to $6.3B, EPS $1.03 vs $0.94 est.), but FY2026 EPS guidance cut to $3.65–3.70 (from $3.80) on CyberArk + Chronosphere integration costs. CyberArk (closed Feb 11) adds Identity as 4th pillar. 1,550 platformized customers, 119% NRR, SASE ARR >$1.5B. Stock RS ~20 — tape is broken. Avoid until integration costs digest and RS recovers above 40. " +
+  "Burry full-SBC adjustment (estimated): 90% overstatement (Tragic) — real owner economics ~10% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
 
   analystConsensus: { rating: 'Buy', targetLow: 160, targetMedian: 216, targetHigh: 260, numAnalysts: 38 },

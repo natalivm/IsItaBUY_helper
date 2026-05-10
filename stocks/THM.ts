@@ -27,7 +27,8 @@ export const THM = defineStock({
     "However, $1.93B capex is the mountain: $115M raised covers only 6% of needs, requiring a major JV or streaming deal. " +
     "RS 99, Paulson & Co. backing ($40M private placement, ~38% ownership), and Alaska Tier-1 jurisdiction are positives. " +
     "But this is pre-revenue, pre-production, no earnings, no operating cash flow — purely speculative. " +
-    "Bull case ~$6 driven by gold reserve optionality; bear case ~$0.40 (cash floor minus burn). Size as speculation only.",
+    "Bull case ~$6 driven by gold reserve optionality; bear case ~$0.40 (cash floor minus burn). Size as speculation only. " +
+    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
   revGrowth: [
     [-0.10, -0.15, -0.20, -0.20, -0.20],

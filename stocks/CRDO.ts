@@ -28,7 +28,8 @@ export const CRDO = defineStock({
     "At $109 the prob-weighted 5yr return still crosses the 15% CAGR hurdle. " +
     "Risks: top-3 customer concentration remains 88%, Q4 GM guided down to 64-66%, " +
     "and FY27 sequential growth decelerates to mid-single digits. High beta (2.58) means sharp drawdowns in risk-off. " +
-    "RS has recovered from 33 to 85 — momentum rebuilding, but position sizing still warrants caution.",
+    "RS has recovered from 33 to 85 — momentum rebuilding, but position sizing still warrants caution. " +
+    "Burry full-SBC adjustment (estimated): 95% overstatement (Tragic) — real owner economics ~5% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 72, targetMedian: 193, targetHigh: 260, numAnalysts: 16 },

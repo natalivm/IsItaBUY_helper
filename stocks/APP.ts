@@ -26,7 +26,8 @@ export const APP = defineStock({
     "Post-earnings: CAC/LTV 30-day breakeven + self-serve GA 1H'26 + GenAI creative tools signal a scalable growth loop beyond gaming. " +
     "The problem: margin expansion is exhausted at 82-84% EBITDA, so from here growth = revenue growth. RS 58 (from 75) reflects weakening momentum after the selloff. " +
     "If self-serve + e-comm broaden the advertiser base, this is a 15%+ compounder. If ad cycle breaks, the leverage that created 84% margins works in brutal reverse. " +
-    "60-65% probability of 15%+ CAGR — strong execution story, cyclical and priced for it.",
+    "60-65% probability of 15%+ CAGR — strong execution story, cyclical and priced for it. " +
+    "Burry full-SBC adjustment (estimated): 50% overstatement (Critical) — real owner profit ~50% of GAAP; apply discount when comparing multiples to peers.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 465, targetMedian: 705, targetHigh: 860, numAnalysts: 26 },

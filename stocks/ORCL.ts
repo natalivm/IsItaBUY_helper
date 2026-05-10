@@ -33,7 +33,8 @@ export const ORCL = defineStock({
     "Partner-funded model helps but this is NOT asset-light compounder. Need to prove capex converts to large recurring cash flow in 2-4 years. " +
     "Key risks: (1) AI capex may not convert if OCI stays 4th behind AWS/Azure/GCP; (2) gross margin compression 71% → 55%; (3) RS 16 — market aggressively selling, -51% from $346 ATH. " +
     "P(15% CAGR) ≈ 45-55% post-Q3 call (raised from ~45% pre-call). Bet decomposition: 50% execution, 35% structural AI/cloud trend, 15% cycle/sentiment. " +
-    "Not a structural compounder yet, but no longer a mature dinosaur. One of the most serious 'non-obvious AI infrastructure + enterprise software' bets in the market.",
+    "Not a structural compounder yet, but no longer a mature dinosaur. One of the most serious 'non-obvious AI infrastructure + enterprise software' bets in the market. " +
+    "Burry full-SBC adjustment (estimated): 65% overstatement (Critical) — real owner profit ~35% of GAAP; apply discount when comparing multiples to peers.",
 
   epsCagr: [9, 15, 21],
   exitPE: [15, 20, 24],
