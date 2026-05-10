@@ -84,6 +84,8 @@ export const CRWD = defineStock({
     buyback: 0,
     epsBasis: 'NON_GAAP',
     fy: 'FY26',
-    note: 'FY26 GAAP NI -$162M (Q4 turned profitable +$38.7M, but full year still in loss); SBC ~$1.1B = ~22% of revenue. Trajectory improving but not yet GAAP-positive on the year.',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Burry explicitly cites CRWD in his SBC overstatement list. FY26 GAAP NI -$162M with $1.1B SBC; under full-SBC adjustment (mark-to-market vesting at $526 share price + payroll tax) real owner earnings are firmly negative. Q4 turned GAAP-profitable but the full year still flunks.',
   },
 });

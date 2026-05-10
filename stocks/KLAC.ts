@@ -107,6 +107,8 @@ export const KLAC = defineStock({
     buyback: 2400,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
-    note: 'OK — SBC ~15% of GAAP NI; buybacks ~4× SBC drove non-GAAP EPS +40% YoY (vs ~+22% revenue). New $5B repurchase authorization extends the runway. Modest haircut applies since baseEps is forward consensus.',
+    overstatementPct: 35,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~35% overstatement under full-SBC adjustment — crosses Burry\'s 30% Critical threshold. Naive SBC/NI is 15%, but ~5× 3yr stock appreciation ($370 → $1869) drives a large MTM dilution amplifier on vested awards. $2.4B buyback offset is meaningful but doesn\'t fully neutralize.',
   },
 });

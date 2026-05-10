@@ -72,6 +72,8 @@ export const ORCL = defineStock({
     buyback: 150,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
-    note: 'baseEps $6.03 is non-GAAP; GAAP EPS $4.34. SBC = 38% of GAAP NI (Burry coef 0.62, below 0.70 threshold). AI capex consumes buyback capacity.',
+    overstatementPct: 65,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~65% overstatement — naive SBC/NI already at 38% (well above 30% Critical), and AI capex has consumed buyback capacity to ~$150M (vs $4.7B SBC), so dilution is essentially unoffset. Under full-SBC adjustment with MTM at $196 share price (~2.5× 3yr), real owner earnings ~35% of GAAP. Switching baseEps from non-GAAP $6.03 to GAAP $4.34 alone would already trim valuation materially.',
   },
 });

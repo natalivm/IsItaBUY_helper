@@ -63,6 +63,7 @@ export const NVDA = defineStock({
     epsBasis: 'GAAP',
     fy: 'FY26',
     overstatementPct: 29,
+    overstatementSource: 'burry-published',
     note: 'Elevated per Burry — real owner profit ~71% of GAAP after full SBC adjustment. The naive SBC/NI ratio (~5%) understates the true economic cost: vested equity at NVDA\'s share price translates to ~$30B+ of effective dilution cost, partially but not fully offset by the $40.6B FY26 buyback.',
   },
 });

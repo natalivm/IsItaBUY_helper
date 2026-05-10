@@ -84,6 +84,8 @@ export const APP = defineStock({
     buyback: 1000,
     epsBasis: 'GAAP',
     fy: '2025',
-    note: 'baseEps ($9.75) already aligns with GAAP — no haircut needed. SBC trending down (-29% YoY); buybacks > SBC.',
+    overstatementPct: 50,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~50% overstatement under full-SBC adjustment. Naive SBC/NI is only 20%, but APP has 19× 3-year stock return ($25 → $469), so MTM dilution cost on vested awards is several multiples of the GAAP charge. Buyback ~$1B partially offsets but not enough to neutralize the MTM amplifier.',
   },
 });

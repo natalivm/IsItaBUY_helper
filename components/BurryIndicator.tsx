@@ -113,13 +113,15 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
             Burry SBC Indicator
             {usePublished && (
               <span className="text-[10px] font-black uppercase tracking-widest text-amber-300/80 normal-case ml-2">
-                · Burry published value
+                · {b.overstatementSource === 'estimated' ? 'estimated full-SBC adjustment' : 'Burry published value'}
               </span>
             )}
           </div>
           <p className="text-xs text-slate-400 leading-relaxed max-w-xl">
             {usePublished
-              ? "Burry's full-SBC-adjustment methodology — includes payroll tax and mark-to-market dilution cost beyond the GAAP SBC line. Display-only."
+              ? (b.overstatementSource === 'estimated'
+                  ? 'Estimated using Burry\'s full-SBC-adjustment methodology — naive SBC/NI scaled by mark-to-market amplifier, payroll-tax adder, and buyback offset. Calibrated against Burry\'s published values for LRCX/NVDA/NFLX. Display-only.'
+                  : "Burry's full-SBC-adjustment methodology — includes payroll tax and mark-to-market dilution cost beyond the GAAP SBC line. Display-only.")
               : 'Michael Burry\'s "Cassandra Unchained" check: how much of GAAP profit is consumed by stock-based compensation, and whether buybacks offset the resulting dilution. Display-only — does not feed the model.'}
           </p>
         </div>

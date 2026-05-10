@@ -63,6 +63,8 @@ export const ASML = defineStock({
     buyback: 5000,
     epsBasis: 'GAAP',
     fy: '2025',
-    note: 'Pristine — SBC only ~5% of net income. €12B 2022-2025 buyback completed; new €12B 2026-2028 program announced. Most repurchased shares are cancelled (not just employee-plan offset), so true float shrinks.',
+    overstatementPct: 12,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~12% overstatement under full-SBC adjustment — still cleanest in semis. Naive SBC/NI just 5%; even with ~2.3× 3yr stock MTM the overstatement stays modest because ASML cancels most repurchased shares (not employee-plan offset). The €12B 2026-2028 buyback program reinforces durable shareholder treatment.',
   },
 });

@@ -118,6 +118,7 @@ export const LRCX = defineStock({
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
     overstatementPct: 49,
+    overstatementSource: 'burry-published',
     note: 'Critical per Burry — real owner profit ~51% of GAAP after full SBC adjustment (payroll tax + mark-to-market dilution at current price). Despite reported SBC being only $320M and buybacks $3.4B, the economic dilution cost of vested awards is much higher when valued at the post-split share price.',
   },
 });

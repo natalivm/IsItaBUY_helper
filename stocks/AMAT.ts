@@ -102,6 +102,8 @@ export const AMAT = defineStock({
     buyback: 4000,
     epsBasis: 'GAAP',
     fy: 'FY25',
-    note: 'Pristine — SBC ~10% of GAAP NI; FY25 GAAP EPS $8.66 vs non-GAAP nearly aligned. AMAT distributes ~85% of FCF; buybacks ~6× SBC = real share count shrinks.',
+    overstatementPct: 22,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~22% overstatement under full-SBC adjustment. Naive SBC/NI is 10%, but ~3.3× 3yr stock appreciation amplifies the MTM dilution cost. $4B buyback covers SBC ~6× — partial offset, similar profile to NVDA where Burry calibrated 29%. Lands in Elevated zone, not Critical.',
   },
 });

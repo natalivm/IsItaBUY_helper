@@ -66,6 +66,8 @@ export const AVGO = defineStock({
     buyback: 7176,
     epsBasis: 'GAAP',
     fy: 'FY25',
-    note: 'WARNING — SBC = 63% of GAAP NI (post-VMware integration drove +74% YoY jump). Buyback $7.2B covers only 0.5× SBC, so net dilution remains. Burry coefficient 0.37 — well below the 0.70 threshold.',
+    overstatementPct: 75,
+    overstatementSource: 'estimated',
+    note: 'Estimated ~75% overstatement — the most severe in our coverage. VMware integration drove SBC +74% YoY to $14.5B (63% of GAAP NI naive). Under full-SBC adjustment with ~4× post-split stock MTM and $7.2B buyback covering only half the dilution, real owner earnings are ~25% of GAAP. SBC may normalize lower as VMware vesting completes (3-4yr), but FY25 prints as a Critical-tier overstatement year.',
   },
 });
