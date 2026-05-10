@@ -89,4 +89,15 @@ export const THM = defineStock({
       bbRate: 0.005,
     },
   ],
+
+  burry: {
+    sbc: 1.0,
+    gaapNi: -4,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Tragic by default — pre-production gold-miner exploration company with no revenue and ongoing losses. SBC ~$1M is tiny in absolute terms but exceeds nothing meaningful since GAAP NI is -$4M. Burry framework breaks down for option-like assets; the underlying thesis is a NPV bet on the Livengood project, not earnings.',
+  },
 });

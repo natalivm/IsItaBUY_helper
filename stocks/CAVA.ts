@@ -102,4 +102,15 @@ export const CAVA = defineStock({
       bbRate: 0.005,
     },
   ],
+
+  burry: {
+    sbc: 25,
+    gaapNi: 64,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 50,
+    overstatementSource: 'estimated',
+    note: 'Critical — naive SBC/NI ~39% (estimated FY25 SBC $25M vs FY25 GAAP NI $63.7M, down from $130M FY24 due to last year\'s $80M tax-valuation release tailwind). No buyback program. Stock peaked at $172 then halved to $79, but vested awards from the up-cycle still carry significant MTM cost. baseEps $0.54 is non-GAAP.',
+  },
 });

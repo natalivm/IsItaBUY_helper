@@ -70,4 +70,15 @@ export const LLY = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.40, 0.45, 0.50],
+
+  burry: {
+    sbc: 700,
+    gaapNi: 20600,
+    buyback: 4100,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 10,
+    overstatementSource: 'estimated',
+    note: 'Pristine — naive SBC/NI just 3.4% (estimated FY25 SBC ~$700M vs GAAP NI $20.6B, +96% YoY EPS growth). FY25 buybacks $4.1B (+64% YoY) cover SBC ~5.9×; $13.1B remains under $15B Dec 2024 authorization. Pharma profile is structurally Burry-friendly — capital absorbed in R&D, not equity comp.',
+  },
 });

@@ -84,4 +84,15 @@ export const BKNG = defineStock({
     { revPrem: [0, 0, 0, 0, 0], fcfUplift: [0, 0, 0, 0, 0] },
     { revPrem: [0, 0, 0, 0, 0], fcfUplift: [0, 0, 0, 0, 0] },
   ],
+
+  burry: {
+    sbc: 1600,
+    gaapNi: 5400,
+    buyback: 5900,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 28,
+    overstatementSource: 'estimated',
+    note: 'OK boundary — naive SBC/NI 30% (FY25 SBC ~$1.6B vs GAAP NI $5.4B). Critical caveat: BKNG retired 22% of its share count over 2022-2025 via buybacks ($5.9B FY25 + $3.6B Q1\'26 alone), genuinely shrinking the float. Aggressive net buyback offsets MTM dilution, keeping the effective Burry coefficient closer to OK than the naive ratio suggests.',
+  },
 });

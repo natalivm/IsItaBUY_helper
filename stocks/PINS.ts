@@ -38,4 +38,15 @@ export const PINS = defineStock({
   ],
 
   bullMaOptVal: 15.42 * 676.0 * 0.07,
+
+  burry: {
+    sbc: 880,
+    gaapNi: 417,
+    buyback: 600,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 80,
+    overstatementSource: 'estimated',
+    note: 'Tragic — naive SBC/NI is 211% (FY25 SBC $880M vs GAAP NI $417M; SBC was 22.8% of revenue in Q2). Buybacks ~$600M FY25 only partially offset SBC dilution. Q1 2026 saw a $2B buyback acceleration which may improve the picture going forward. The non-GAAP profitability story largely exists by adding SBC back to operating losses.',
+  },
 });
