@@ -18,7 +18,8 @@ export const DASH = defineStock({
   costDebt: 0.048,
   rsRating: 16,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in 2025. Post Q4'25: NV unit economics positive 2H'26, ads scaling (2× advertisers, 3× spend), and tech stack consolidation (3→1) provide three EPS levers above consensus. Thesis is execution-driven earnings growth, not P/E rerating.",
+  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in 2025. Post Q4'25: NV unit economics positive 2H'26, ads scaling (2× advertisers, 3× spend), and tech stack consolidation (3→1) provide three EPS levers above consensus. Thesis is execution-driven earnings growth, not P/E rerating. " +
+  "Burry full-SBC adjustment (estimated): 95% overstatement (Tragic) — real owner economics ~5% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 222, targetMedian: 278, targetHigh: 360, numAnalysts: 33 },

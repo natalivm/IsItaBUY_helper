@@ -28,7 +28,8 @@ export const CAVA = defineStock({
     "FCF dropped to $26M from $53M prior year on heavy capex. Tax rate jumping from 10% to 25-30% in FY2026 will hit EPS hard. " +
     "Management guiding conservative 3-5% SSS and cutting NRO productivity assumption to 90% (from 100%+). " +
     "Salmon launch adds ~100bps RLP margin headwind. At ~125x fwd P/E, the stock still prices in near-flawless execution " +
-    "while same-store momentum is fading and margins are under pressure from reinvestment. OVERVALUED until valuation resets meaningfully.",
+    "while same-store momentum is fading and margins are under pressure from reinvestment. OVERVALUED until valuation resets meaningfully. " +
+    "Burry full-SBC adjustment (estimated): 50% overstatement (Critical) — real owner profit ~50% of GAAP; apply discount when comparing multiples to peers.",
 
   epsCagr: [13, 27, 37],
   exitPE: [25, 35, 50],

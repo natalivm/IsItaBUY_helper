@@ -23,7 +23,8 @@ export const RBRK = defineStock({
     "Moat is in integrated execution: high switching costs (resilience + identity + telemetry), regulatory tailwind (DORA/NIS2/SEC disclosure), and cloud ARR at 87% of subscription (+53% YoY). " +
     "The problem: RS 10 signals zero institutional momentum, FY27 material-rights headwind creates headline slowdown risk, and at current price prob-weighted CAGR is ~14.5% nominal / ~11-12% risk-adjusted. " +
     "If ARR sustains >20% and market pays >25x FCF, this is a cyber resilience compounder. If NRR normalizes and FY27 GAAP noise triggers a sell-off, there's -30-50% path risk to ~$27. " +
-    "Best entry likely after a compression event — bet on execution + structural cyber trend, not current momentum.",
+    "Best entry likely after a compression event — bet on execution + structural cyber trend, not current momentum. " +
+    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
   // Revenue growth: starts elevated (ARR +34% momentum) then decelerates
   // Bear CAGR ~12%, Base ~18%, Bull ~24%

@@ -22,7 +22,8 @@ export const UBER = defineStock({
     "Uber is a global mobility + delivery platform with $43.5B revenue, 11% FCF margins, and the theoretical optionality of becoming the platform-as-a-service layer for autonomous vehicles. " +
     "The problem: RS 16 signals aggressive institutional rotation out as AV promise meets regulatory friction and Waymo/Tesla competition threatens the core ride-hailing moat. " +
     "If Uber becomes the demand aggregator for AVs (fleet management, routing, insurance, demand matching), the platform value compounds far beyond current pricing. If AVs disintermediate Uber, the moat erodes. " +
-    "Heavy distribution phase — wait for RS recovery above 40 before building a position. The AV optionality is real but the tape says institutions aren't paying for it yet.",
+    "Heavy distribution phase — wait for RS recovery above 40 before building a position. The AV optionality is real but the tape says institutions aren't paying for it yet. " +
+    "Burry full-SBC adjustment (estimated): 30% overstatement (Critical) — real owner profit ~70% of GAAP; apply discount when comparing multiples to peers.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 72, targetMedian: 107, targetHigh: 150, numAnalysts: 33 },

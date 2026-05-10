@@ -70,3 +70,81 @@ If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or
 ### Price Format
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).
+
+## Burry SBC Indicator
+
+Each stock can carry an optional `burry` block in its `defineStock` call. When present, the home-page row gets a colored `B X%` badge, the detail page renders a full `BurryIndicator` panel + `Burry-Adjusted Read` callout in the verdict, and (for ≥30% overstatement) the strategicNarrative ends with a Burry-context sentence. The model verdict itself is **never** affected — Burry data is parallel/display-only.
+
+### Schema
+
+```ts
+burry: {
+  sbc: number;              // Annual stock-based compensation in $M
+  gaapNi: number;           // Annual GAAP net income in $M (negative = loss)
+  buyback?: number;         // Annual gross share repurchases in $M
+  epsBasis?: 'GAAP' | 'NON_GAAP';  // Basis of `baseEps` for the multiple-haircut tile
+  fy?: string;              // Fiscal year label, e.g. "FY25" or "2025"
+  overstatementPct?: number;       // 0-100; preferred over computed SBC/NI when set
+  overstatementSource?: 'burry-published' | 'estimated';
+  note?: string;            // One-line context shown in the indicator panel
+}
+```
+
+### Tier thresholds (must match across BurryBadge + BurryIndicator)
+
+| Tier | Overstatement % | Coefficient (1 − pct/100) | Color |
+|---|---|---|---|
+| Pristine | < 15% | > 0.85 | emerald |
+| OK | 15–30% | 0.70–0.85 | lime |
+| Critical | 30–70% | 0.30–0.70 | amber |
+| Tragic | ≥ 70% (or GAAP loss) | ≤ 0.30 (or any when NI ≤ 0) | rose |
+
+### Setting `overstatementPct` for a new stock
+
+**If on Burry's published chart** (LRCX 49%, AMD 32%, INTU 32%, SNPS 31%, NVDA 29%, NFLX 22%, META 20%, AMZN 21%): use the published value with `overstatementSource: 'burry-published'`.
+
+**Otherwise**, estimate using calibrated heuristic:
+
+1. Compute naive SBC/NI = `sbc / gaapNi` × 100
+2. Apply MTM amplifier based on 3-year stock return:
+   - 1×–2× return → multiplier ~1.5
+   - 2×–4× return → multiplier ~2.5
+   - 4×–8× return → multiplier ~4.0
+   - 8×+ return → multiplier ~6.0
+3. Subtract buyback offset: `min(20%, (buyback / sbc - 1) × 10)` if buyback > SBC, else 0
+4. Cap at 100%; round to nearest 5%
+
+Examples (calibration check against published values):
+- LRCX naive 6%, 4.8× stock, modest buyback → est. ~50% (matches published 49%)
+- NVDA naive 5%, 7.2× stock, $40B buyback (6× SBC) → est. ~30% (matches published 29%)
+- NFLX naive 7.5%, 2.6× stock, 10× SBC buyback → est. ~22% (matches published 22%)
+
+Use `overstatementSource: 'estimated'` for these.
+
+### When to refresh Burry data
+
+Update the `burry` block when:
+1. A company reports a new fiscal year (refresh `sbc`, `gaapNi`, `buyback`, `fy`)
+2. SBC growth deviates significantly from prior years (>20% change)
+3. A buyback authorization is materially exercised or paused
+4. Burry publishes new chart data and the stock appears on it
+
+After any update:
+- Verify the badge tier changes haven't broken expected groupings
+- Re-read the strategicNarrative if its appended Burry sentence references stale numbers
+- Run `npm run build` to confirm no TypeScript errors
+
+### Loss-makers and edge cases
+
+- For GAAP-loss stocks (e.g., RBRK, ASTS, ARRY, SMWB, THM): set `overstatementPct: 100` with a note explaining the framework breaks down for negative NI
+- For pre-revenue companies (THM): `gaapNi` should be negative, `overstatementPct: 100`
+- For stocks with no `baseEps` (DCF/FCF model): `epsBasis` can be `'GAAP'` since there's no non-GAAP P/E haircut to apply
+- Coefficient ≤ 0 always falls into Tragic tier regardless of percentage
+
+### Source data
+
+Always cite specific FY when entering data. Useful sources for SBC + buybacks:
+- **macrotrends.net** — annual SBC time series
+- **financecharts.com** — buybacks + SBC quarterly/annual
+- Company 10-K filings (cash flow statement: "Stock-based compensation" line)
+- Quarterly press releases for buyback dollar amounts

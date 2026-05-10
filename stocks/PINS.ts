@@ -17,7 +17,8 @@ export const PINS = defineStock({
   beta: 1.58,
   rsRating: 10,
   aiImpact: 'DISRUPTION_RISK',
-  strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners.",
+  strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners. " +
+  "Burry full-SBC adjustment (estimated): 80% overstatement (Tragic) — real owner economics ~20% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
 
   analystConsensus: { rating: 'Buy', targetLow: 15, targetMedian: 28, targetHigh: 50, numAnalysts: 26 },

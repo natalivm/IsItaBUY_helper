@@ -25,7 +25,8 @@ export const KKR = defineStock({
     "At ~15x 2026E DE, the stock is adequately valued: prob-weighted IRR ~12-13%, with stress test (0% growth post-2028, 15x) still yielding 8.8%. " +
     "The problem: RS 16 signals no institutional momentum, carry is deeply cyclical, and post-2028 execution is the key unknown — this is not a lifetime compounder. " +
     "If exit markets normalize and insurance/private wealth channels accelerate, IRR reaches 18%+. If carry stays depressed, it's 7% dead money with a soft moat. " +
-    "30-35% probability of 15%+ CAGR — a cycle bet on capital markets recovery, not a structural compounder.",
+    "30-35% probability of 15%+ CAGR — a cycle bet on capital markets recovery, not a structural compounder. " +
+    "Burry full-SBC adjustment (estimated): 35% overstatement (Critical) — real owner profit ~65% of GAAP; apply discount when comparing multiples to peers.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 112, targetMedian: 153, targetHigh: 187, numAnalysts: 15 },

@@ -18,7 +18,8 @@ export const ANET = defineStock({
   costDebt: 0.045,
   rsRating: 83,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "Arista is the pure-play backbone of the AI cluster with an EOS moat and hyperscaler lock-in. FY26 guided at $11.25B (+25% YoY) with AI networking at $3.25B. Quality is undeniable — 47% FCF margin, zero debt, strong campus diversification. DCF with discount rate calibrated to ANET's fortress balance sheet supports a BUY at current levels. Key risk remains P/E compression if AI capex decelerates, but sustained 15%+ growth and margin durability justify a premium exit multiple.",
+  strategicNarrative: "Arista is the pure-play backbone of the AI cluster with an EOS moat and hyperscaler lock-in. FY26 guided at $11.25B (+25% YoY) with AI networking at $3.25B. Quality is undeniable — 47% FCF margin, zero debt, strong campus diversification. DCF with discount rate calibrated to ANET's fortress balance sheet supports a BUY at current levels. Key risk remains P/E compression if AI capex decelerates, but sustained 15%+ growth and margin durability justify a premium exit multiple. " +
+  "Burry full-SBC adjustment (estimated): 35% overstatement (Critical) — real owner profit ~65% of GAAP; apply discount when comparing multiples to peers.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 174, targetHigh: 200, numAnalysts: 15 },

@@ -36,7 +36,8 @@ export const LRCX = defineStock({
     "Historical P/E range is 15-35x — multiple compression to 25-30x alone erases 3-5 years of EPS growth. " +
     "Probability of 15%+ CAGR from current levels: ~40-50% (upgraded post earnings call due to strong WFE guide, share gains, and CSBG stickiness). " +
     "This is a quality cyclical growth business with real structural tailwinds, but not a cheap compounder — " +
-    "you're betting on sustained AI capex, no major WFE digestion cycle, and the market maintaining a premium multiple.",
+    "you're betting on sustained AI capex, no major WFE digestion cycle, and the market maintaining a premium multiple. " +
+    "Burry full-SBC adjustment (Burry-published): 49% overstatement (Critical) — real owner profit ~51% of GAAP; apply discount when comparing multiples to peers.",
 
   epsCagr: [9, 15, 19],
   exitPE: [20, 28, 38],

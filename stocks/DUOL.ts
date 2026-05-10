@@ -27,7 +27,8 @@ export const DUOL = defineStock({
     "At $91.63 (down 79% from ATH), EV/FCF is ~9x on 2025 actuals — priced for zero growth. " +
     "Near-term: expect analyst estimate cuts, multiple compression, and continued volatility as the market digests a growth-to-reinvestment narrative shift. " +
     "The binary bet: 100M DAUs by 2028 unlocks a monetization base that justifies massive re-rating — or the strategy fails and slow growth + declining margins gets punished hard. " +
-    "AI disruption risk is real but DUOL is also AI-first (Video Call, Max tier, 18x content acceleration). WAIT for 2026 guidance stabilization or first evidence of DAU re-acceleration before adding aggressively.",
+    "AI disruption risk is real but DUOL is also AI-first (Video Call, Max tier, 18x content acceleration). WAIT for 2026 guidance stabilization or first evidence of DAU re-acceleration before adding aggressively. " +
+    "Burry full-SBC adjustment (estimated): 75% overstatement (Tragic) — real owner economics ~25% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
 
   epsCagr: [5, 15, 25],

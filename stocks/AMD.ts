@@ -30,7 +30,8 @@ export const AMD = defineStock({
     "The catch: stock is +112% YTD / +347% 1Y, RSI ~80, forward P/E ~35× on FY27E EPS ~$13 (Bernstein bull-target $525) — market is pricing high-base + partial-bull. Operating expenses +34% YoY signal aggressive AI spend; if growth slows, margins get hit fast. " +
     "Single-engine concentration risk: ~56% of revenue is data center; the entire AI-capex cycle pause scenario hits AMD harder than diversified peers. NVDA still dominates margins, ecosystem (CUDA), and scale — AMD share gains have to be real and durable, not pilot-program one-offs. " +
     "Bull (~30%): DC +50% sustains, MI300/450 ramps clean, share from NVDA, margins 58-60%, EPS $5-6 forward → $550-650. Base (~50%): DC +30-40%, margins 55-57%, EPS $4-5, multiple compresses 25-30× → $400-520. Bear (~20%): AI digestion, NVDA software moat widens, multiple compresses to 20-25× → $280-380. " +
-    "Risk/reward no longer asymmetric in your favor at $455. Quality AI bet, but valuation already reflects continued perfection. HOLD; full-size add only on a >25% pullback or fresh data-center inflection.",
+    "Risk/reward no longer asymmetric in your favor at $455. Quality AI bet, but valuation already reflects continued perfection. HOLD; full-size add only on a >25% pullback or fresh data-center inflection. " +
+    "Burry full-SBC adjustment (Burry-published): 32% overstatement (Critical) — real owner profit ~68% of GAAP; apply discount when comparing multiples to peers.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 265, targetMedian: 478, targetHigh: 650, numAnalysts: 38 },
 
