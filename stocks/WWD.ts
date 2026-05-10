@@ -64,4 +64,15 @@ export const WWD = defineStock({
     {},
     { fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02] },
   ],
+
+  burry: {
+    sbc: 35,
+    gaapNi: 491,
+    buyback: 200,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 12,
+    overstatementSource: 'estimated',
+    note: 'Pristine — aerospace/industrial with low SBC (~$35M) vs FY25 GAAP NI ~$491M (EPS $8.4 × 58.5M). Modest buybacks ~$200M cover SBC ~5×. Classic Burry-friendly industrial — capex/working-capital-intensive business leaves little room for equity comp.',
+  },
 });

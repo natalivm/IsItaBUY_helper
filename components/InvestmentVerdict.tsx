@@ -5,7 +5,7 @@ import { StockMetrics, usd, pctFmt } from '../services/stockMetrics';
 import { getInstitutionalRating } from '../services/projectionService';
 import { RATING_DEFS, RatingKey } from '../constants';
 import { cn } from '../utils';
-import { Lightbulb } from 'lucide-react';
+import { Lightbulb, AlertTriangle } from 'lucide-react';
 
 interface Props {
   tickerDef: TickerDefinition;
@@ -193,6 +193,48 @@ const InvestmentVerdict: React.FC<Props> = ({
           {narrativeOverride || defaultNarrative}
         </p>
       </div>
+
+      {(() => {
+        const b = tickerDef.burry;
+        if (!b || b.overstatementPct == null || b.overstatementPct < 30) return null;
+        const coef = 1 - b.overstatementPct / 100;
+        if (coef <= 0 || coef >= 1) return null;
+        const adjustedPw = investmentConclusion.pwAvg * coef;
+        const adjustedCagr = (Math.pow(1 + investmentConclusion.cagr / 100, 1) * Math.pow(coef, 1 / 5) - 1) * 100;
+        const haircut = b.overstatementPct;
+        const tierColor = b.overstatementPct >= 70
+          ? 'text-rose-300'
+          : b.overstatementPct >= 30
+            ? 'text-amber-300'
+            : 'text-lime-300';
+        const tierBg = b.overstatementPct >= 70
+          ? 'bg-rose-500/10 border-rose-500/40'
+          : 'bg-amber-500/10 border-amber-500/40';
+        const sourceLabel = b.overstatementSource === 'burry-published'
+          ? 'Burry-published'
+          : 'estimated full-SBC adjustment';
+        return (
+          <div className={cn('mt-6 pt-6 border-t border-slate-800/80')}>
+            <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-3 h-3 text-amber-400" />
+              <span>Burry-Adjusted Read</span>
+            </div>
+            <div className={cn('p-4 rounded-lg border', tierBg)}>
+              <p className="text-sm text-slate-200 leading-relaxed">
+                Applying the {sourceLabel} overstatement of{' '}
+                <span className={cn('font-black', tierColor)}>{haircut}%</span>{' '}
+                to the model's PW target trims it from{' '}
+                <span className="font-black text-white">{usd(investmentConclusion.pwAvg)}</span> to{' '}
+                <span className={cn('font-black', tierColor)}>{usd(adjustedPw)}</span>{' '}
+                and the 5Y CAGR from{' '}
+                <span className="font-black text-white">{pctFmt(investmentConclusion.cagr / 100)}</span> to{' '}
+                <span className={cn('font-black', tierColor)}>{pctFmt(adjustedCagr / 100)}</span>.{' '}
+                The model verdict above is unchanged — this is a parallel read, not a model override.
+              </p>
+            </div>
+          </div>
+        );
+      })()}
 
       {tickerDef.keyTakeaways && tickerDef.keyTakeaways.length > 0 && (
         <div className="mt-6 pt-6 border-t border-slate-800/80">

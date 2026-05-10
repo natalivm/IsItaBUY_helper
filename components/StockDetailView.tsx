@@ -10,6 +10,7 @@ import StockPageHeader from './StockPageHeader';
 import StockMetricCards from './StockMetricCards';
 import InvestmentVerdict from './InvestmentVerdict';
 import BurryIndicator from './BurryIndicator';
+import TradingViewMiniChart from './TradingViewMiniChart';
 import { cn, rsRatingColor } from '../utils';
 import { useSwipeNavigation } from '../hooks/useSwipeNavigation';
 
@@ -148,7 +149,11 @@ const StockDetailView: React.FC<Props> = ({
             </motion.div>
 
             {/* Burry SBC indicator (renders only when stock has burry data) */}
-            <BurryIndicator tickerDef={tickerDef} />
+            <BurryIndicator
+              tickerDef={tickerDef}
+              pwTarget={investmentConclusion.pwAvg}
+              pwCagr={investmentConclusion.cagr}
+            />
 
             {/* Scenario cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
@@ -160,7 +165,7 @@ const StockDetailView: React.FC<Props> = ({
 
           {/* Sidebar */}
           <div className="space-y-8">
-            <div className="bg-surface-card border border-slate-800 rounded-2xl p-8 shadow-2xl sticky top-8 overflow-hidden">
+            <div className="bg-surface-card border border-slate-800 rounded-2xl p-8 shadow-2xl overflow-hidden relative">
               <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-8 mt-1">Model Verdict</h3>
               <div className="space-y-6">
@@ -173,6 +178,13 @@ const StockDetailView: React.FC<Props> = ({
                   <span className="text-3xl font-black leading-none" style={{ color: tc }}>{usd(investmentConclusion.pwAvg)}</span>
                 </div>
               </div>
+            </div>
+
+            {/* Live price chart (TradingView mini overview) */}
+            <div className="bg-surface-card border border-slate-800 rounded-2xl p-5 shadow-2xl overflow-hidden relative">
+              <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-3 mt-1">Price Chart</h3>
+              <TradingViewMiniChart ticker={tickerDef.ticker} themeColor={tc} height={220} />
             </div>
           </div>
         </div>

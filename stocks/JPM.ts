@@ -65,4 +65,15 @@ export const JPM = defineStock({
 
   bbRate: [0.01, 0.02, 0.03],
   ebitdaProxy: [0.35, 0.46, 0.50],
+
+  burry: {
+    sbc: 5500,
+    gaapNi: 57000,
+    buyback: 31600,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 12,
+    overstatementSource: 'estimated',
+    note: 'Pristine — naive SBC/NI just 10% (estimated SBC ~$5.5B vs FY25 GAAP NI $57B). FY25 buybacks $31.6B (+68% YoY) cover SBC ~5.7×, retired 3.5% of float. Big-bank profile is structurally Burry-friendly: low equity-comp dependence + huge capital returns.',
+  },
 });

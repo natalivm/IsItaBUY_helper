@@ -58,4 +58,15 @@ export const AGCO = defineStock({
       bbRate: 0.03,
     },
   ],
+
+  burry: {
+    sbc: 35,
+    gaapNi: 600,
+    buyback: 100,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 10,
+    overstatementSource: 'estimated',
+    note: 'Pristine — agricultural-equipment cyclical with low SBC (~$35M) vs estimated FY25 GAAP NI ~$600M. Modest buybacks but cyclical EPS swings dominate the volatility, not dilution.',
+  },
 });
