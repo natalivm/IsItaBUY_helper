@@ -165,7 +165,7 @@ const StockDetailView: React.FC<Props> = ({
 
           {/* Sidebar */}
           <div className="space-y-8">
-            <div className="bg-surface-card border border-slate-800 rounded-2xl p-8 shadow-2xl overflow-hidden relative">
+            <div className="bg-surface-card border border-slate-800 rounded-2xl p-8 shadow-2xl sticky top-8 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-8 mt-1">Model Verdict</h3>
               <div className="space-y-6">
