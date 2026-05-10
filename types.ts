@@ -84,6 +84,8 @@ export interface TickerDefinition {
   analystConsensus?: AnalystConsensus;
   /** Date of last manual data refresh, e.g. '26/02' */
   updatedOn?: string;
+  /** Plain-language investor takeaways from the latest earnings/data — rendered as a "What This Means For You" card */
+  keyTakeaways?: string[];
 }
 
 export interface ProjectionData {

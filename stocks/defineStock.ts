@@ -122,6 +122,8 @@ export interface SimpleStockInput {
 
   /** Date of last manual data refresh, e.g. '26/02' */
   updatedOn?: string;
+  /** Plain-language investor takeaways from the latest earnings/data */
+  keyTakeaways?: string[];
 }
 
 // Standard driver templates (identical across almost all stocks)
@@ -178,6 +180,9 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
 
     // Updated date
     updatedOn,
+
+    // Investor takeaways
+    keyTakeaways,
   } = input;
 
   // Build drivers for each scenario
@@ -226,6 +231,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     baseEps,
     analystConsensus,
     updatedOn,
+    keyTakeaways,
     scenarios: {
       revGrowth: toRecord(revGrowth),
       fcfMargin: toRecord([

@@ -5,6 +5,7 @@ import { StockMetrics, usd, pctFmt } from '../services/stockMetrics';
 import { getInstitutionalRating } from '../services/projectionService';
 import { RATING_DEFS, RatingKey } from '../constants';
 import { cn } from '../utils';
+import { Lightbulb } from 'lucide-react';
 
 interface Props {
   tickerDef: TickerDefinition;
@@ -192,6 +193,23 @@ const InvestmentVerdict: React.FC<Props> = ({
           {narrativeOverride || defaultNarrative}
         </p>
       </div>
+
+      {tickerDef.keyTakeaways && tickerDef.keyTakeaways.length > 0 && (
+        <div className="mt-6 pt-6 border-t border-slate-800/80">
+          <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+            <Lightbulb className="w-3 h-3 text-amber-400" />
+            <span>What This Means For You</span>
+          </div>
+          <ul className="space-y-3">
+            {tickerDef.keyTakeaways.map((point, i) => (
+              <li key={i} className="flex gap-3 text-sm text-slate-300 leading-relaxed">
+                <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: tc }} />
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {tickerDef.analystConsensus && (() => {
         const ac = tickerDef.analystConsensus;
