@@ -6,6 +6,10 @@ import { cn } from '../utils';
 
 interface Props {
   tickerDef: TickerDefinition;
+  /** Probability-weighted blended target from the main model (used to compute Burry-adjusted target). */
+  pwTarget?: number;
+  /** 5-year probability-weighted CAGR % from the main model (used to derive Burry-adjusted CAGR). */
+  pwCagr?: number;
 }
 
 interface Tier {
@@ -69,7 +73,7 @@ const fmt$M = (v: number) => {
   return `${v < 0 ? '-' : ''}$${abs.toFixed(0)}M`;
 };
 
-const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
+const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
   const b = tickerDef.burry;
   if (!b) return null;
 
@@ -93,6 +97,22 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
     ? tickerDef.currentPrice / tickerDef.baseEps
     : null;
   const adjustedPe = haircutApplies && reportedPe ? reportedPe / coef : null;
+
+  // Burry-adjusted target: scale model PW target by the coefficient.
+  // Only meaningful when we actually have a positive coefficient and a model target.
+  const showAdjustedTarget = pwTarget != null && coef > 0 && coef < 1;
+  const adjustedTarget = showAdjustedTarget ? pwTarget * coef : null;
+  const targetDeltaPct = showAdjustedTarget && adjustedTarget != null
+    ? ((adjustedTarget - pwTarget) / pwTarget) * 100
+    : null;
+  // Adjusted CAGR: if 5y target shrinks by factor `coef`, the CAGR shifts by
+  // (coef^(1/5) - 1) on top of (1 + pwCagr). Only show if we have pwCagr.
+  const adjustedCagr = showAdjustedTarget && pwCagr != null
+    ? ((1 + pwCagr / 100) * Math.pow(coef, 1 / 5) - 1) * 100
+    : null;
+  const adjustedTargetVsSpot = adjustedTarget != null
+    ? ((adjustedTarget - tickerDef.currentPrice) / tickerDef.currentPrice) * 100
+    : null;
 
   return (
     <motion.div
@@ -216,6 +236,77 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef }) => {
           )}
         </div>
       </div>
+
+      {showAdjustedTarget && adjustedTarget != null && targetDeltaPct != null && (
+        <div className="mb-6 p-4 rounded-lg border border-slate-800 bg-slate-900/40">
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3">
+            Burry-Adjusted Valuation
+          </div>
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 items-start sm:items-end">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+                Model PW Target
+              </span>
+              <span className="text-2xl font-black leading-none text-white">
+                ${pwTarget!.toFixed(0)}
+              </span>
+              <span className="text-xs text-slate-500 mt-1">unadjusted blended value</span>
+            </div>
+
+            <div className="text-2xl text-slate-600 hidden sm:block">→</div>
+
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+                Burry-Adjusted Target
+              </span>
+              <span className={cn('text-3xl font-black leading-none', tier.color)}>
+                ${adjustedTarget.toFixed(0)}
+              </span>
+              <span className="text-xs text-slate-500 mt-1">
+                target × ({coef.toFixed(2)}) ·{' '}
+                <span className={adjustedTargetVsSpot != null && adjustedTargetVsSpot >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                  {adjustedTargetVsSpot != null && adjustedTargetVsSpot >= 0 ? '+' : ''}
+                  {adjustedTargetVsSpot?.toFixed(1)}% vs spot
+                </span>
+              </span>
+            </div>
+
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+                Haircut
+              </span>
+              <span className="text-2xl font-black leading-none text-amber-300">
+                {targetDeltaPct.toFixed(1)}%
+              </span>
+              <span className="text-xs text-slate-500 mt-1">vs unadjusted</span>
+            </div>
+
+            {adjustedCagr != null && pwCagr != null && (
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+                  Adjusted 5Y CAGR
+                </span>
+                <span
+                  className={cn(
+                    'text-2xl font-black leading-none',
+                    adjustedCagr >= 0 ? 'text-emerald-300' : 'text-rose-300'
+                  )}
+                >
+                  {adjustedCagr >= 0 ? '+' : ''}
+                  {adjustedCagr.toFixed(1)}%
+                </span>
+                <span className="text-xs text-slate-500 mt-1">
+                  vs {pwCagr.toFixed(1)}% model
+                </span>
+              </div>
+            )}
+          </div>
+          <p className="text-xs text-slate-500 mt-4 leading-relaxed">
+            Applies Burry's overstatement % directly to the model's probability-weighted target.
+            Side-by-side comparison only — does not change the model verdict above.
+          </p>
+        </div>
+      )}
 
       <div className={cn('p-4 rounded-lg border', tier.bg, tier.border)}>
         <p className={cn('text-sm font-bold leading-relaxed', tier.color)}>{tier.blurb}</p>

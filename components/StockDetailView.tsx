@@ -148,7 +148,11 @@ const StockDetailView: React.FC<Props> = ({
             </motion.div>
 
             {/* Burry SBC indicator (renders only when stock has burry data) */}
-            <BurryIndicator tickerDef={tickerDef} />
+            <BurryIndicator
+              tickerDef={tickerDef}
+              pwTarget={investmentConclusion.pwAvg}
+              pwCagr={investmentConclusion.cagr}
+            />
 
             {/* Scenario cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
