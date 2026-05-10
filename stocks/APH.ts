@@ -58,4 +58,15 @@ export const APH = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.15, 0.22, 0.28],
+
+  burry: {
+    sbc: 200,
+    gaapNi: 4270,
+    buyback: 500,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 8,
+    overstatementSource: 'estimated',
+    note: 'Pristine — connector industrial with tiny SBC/NI ratio of 4.7% (estimated SBC ~$200M vs FY25 GAAP NI ~$4.27B = EPS $3.34 × 1278M). Modest but consistent buybacks. Among the cleanest profiles across the entire portfolio.',
+  },
 });

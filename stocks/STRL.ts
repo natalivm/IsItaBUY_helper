@@ -108,7 +108,18 @@ export const STRL = defineStock({
     },
     {
       revPrem: [0.01, 0.01, 0.01, 0.01, 0.01],
-      fcfUplift: [0.008, 0.008, 0.010, 0.010, 0.012],
+      fcfUplift: [0.008, 0.008, 0.010, 0.010, 0.010],
     },
   ],
+
+  burry: {
+    sbc: 25,
+    gaapNi: 336,
+    buyback: 100,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 15,
+    overstatementSource: 'estimated',
+    note: 'Pristine — small-cap E-infrastructure with low SBC (~$25M) vs FY25 GAAP NI ~$336M (adj EPS $10.95 × 30.7M). $400M buyback authorized Nov 2025, deploying ~$100M. baseEps is non-GAAP/adj. Stock is +5× from 2023 lows but small absolute SBC keeps overstatement contained.',
+  },
 });

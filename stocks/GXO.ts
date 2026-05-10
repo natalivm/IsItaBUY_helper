@@ -72,4 +72,15 @@ export const GXO = defineStock({
       bbRate: 0.015,
     },
   ],
+
+  burry: {
+    sbc: 60,
+    gaapNi: 343,
+    buyback: 50,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 18,
+    overstatementSource: 'estimated',
+    note: 'Ok — logistics 3PL with modest SBC (~$60M) vs FY25 GAAP NI ~$343M (EPS ~$3 × 114.3M). Wincanton integration absorbing cash, so buybacks are minimal. Spin-off from XPO in 2021 means no IPO bulge. baseEps $3.00 is non-GAAP.',
+  },
 });

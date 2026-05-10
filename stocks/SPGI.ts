@@ -46,4 +46,15 @@ export const SPGI = defineStock({
   ],
 
   bullMaOptVal: 417 * 298.8 * 0.07,
+
+  burry: {
+    sbc: 200,
+    gaapNi: 4471,
+    buyback: 5000,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 12,
+    overstatementSource: 'estimated',
+    note: 'Pristine — naive SBC/NI just 4.5% (estimated SBC ~$200M vs FY25 GAAP NI $4.47B, +16% YoY). FY25 buybacks $5B cover SBC ~25× — extreme structural shareholder return. Total capital returns $6.2B (incl. $1.2B dividends). Among the cleanest in coverage.',
+  },
 });

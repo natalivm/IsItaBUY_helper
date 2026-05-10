@@ -60,4 +60,15 @@ export const KKR = defineStock({
 
   bbRate: [0.005, 0.01, 0.02],
   ebitdaProxy: [0.10, 0.18, 0.30],
+
+  burry: {
+    sbc: 700,
+    gaapNi: 2250,
+    buyback: 200,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 35,
+    overstatementSource: 'estimated',
+    note: 'Critical — naive SBC/NI 31% (FY25 SBC ~$700M vs GAAP NI $2.25B, down -27% YoY on weaker carried interest). Partner-heavy alt-asset structure means SBC is structurally elevated for the financial sector. Dividend prioritized over buybacks. Stock 2.5× from 2023 lows adds MTM amplification.',
+  },
 });

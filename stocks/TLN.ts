@@ -42,4 +42,14 @@ export const TLN = defineStock({
     'AI-driven electricity demand accelerates PJM capacity prices; Susquehanna co-location model expands to additional hyperscaler agreements, unlocking AI-infrastructure multiples across the full asset base.',
   ],
 
+  burry: {
+    sbc: 100,
+    gaapNi: -219,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 90,
+    overstatementSource: 'estimated',
+    note: 'Tragic for FY25 due to one-time $501M Q4 SBC charge from accounting modification (equity-to-liability for cash-settled awards). Adjusted EBITDA $1.04B and Adj FCF $524M still positive. Once the one-time charge anniversaries, the underlying utility profile likely lands closer to Pristine. Watch FY26 to recalibrate.',
+  },
 });

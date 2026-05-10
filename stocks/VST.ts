@@ -54,4 +54,15 @@ export const VST = defineStock({
   ],
 
   bullMaOptVal: 158.00 * 339.0 * 0.07,
+
+  burry: {
+    sbc: 50,
+    gaapNi: 944,
+    buyback: 1000,
+    epsBasis: 'NON_GAAP',
+    fy: '2025',
+    overstatementPct: 10,
+    overstatementSource: 'estimated',
+    note: 'Pristine — naive SBC/NI just 5% (estimated SBC ~$50M vs FY25 GAAP NI $944M, down -64% YoY on hedge marks). FY25 buyback $1B = 20× SBC, deeply share-count compressing. baseEps $10.0 is non-GAAP. Utility/IPP profile is structurally Burry-friendly.',
+  },
 });
