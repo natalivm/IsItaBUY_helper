@@ -7,25 +7,28 @@ export const FTNT = defineStock({
   themeColor: '#06b6d4',
   currentPrice: 114.07,
   updatedOn: '05/08',
-  fairPriceRange: '$70 - $105',
-  shares0: 743.6,
+  fairPriceRange: '$80 - $135',
+  shares0: 734,
   rev25: 6800,
   fcfMargin25: 0.325,
   taxRate: 0.18,
-  cash: 4600,
+  cash: 3266,
   debt: 995,
-  beta: 1.05,
+  beta: 0.96,
   costDebt: 0.048,
-  rsRating: 30,
+  rsRating: 95,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "Fortinet owns the ASIC-driven SASE platform play in cybersecurity — proprietary silicon gives a cost/performance edge that cloud-native peers can't match, with 32.5% FCF margins and a $4.6B net cash fortress. " +
-    "SASE inflection is showing early signs (40% billings growth Q4), AI is driving incremental demand across data centers and SecOps, and OT security (25% growth) adds a fast-growing third vector. " +
-    "The risk: RS 27 signals institutions aren't buying yet, and the stock needs sustained execution to justify its premium. " +
-    "Hold for existing positions; entry improves on a pullback or if RS trend turns up confirming institutional accumulation.",
+    "Fortinet is the quality compounder of cybersecurity. FY25 revenue $6.80B (+14% YoY, TTM $7.11B), 80% gross margin, **31% GAAP operating margin**, 27% net margin, 131% ROIC — extraordinary capital efficiency. Net income $1.95B TTM. " +
+    "Real shareholder economics: diluted shares 839M (2017) → 734M (current) = **−12.5% net retirement over 8 years** thanks to consistent buybacks. EPS compounded from $0.38 (FY18) to $2.59 (TTM), a 6.8× in 7 years. " +
+    "ASIC-driven SASE platform creates a cost/performance edge that cloud-native peers can't match. Three growth vectors: SASE (40%+ billings growth), AI security across data centers + SecOps, and OT security (25%+ growth). " +
+    "Momentum confirmed: stock +43% YTD, +41% in the past month, RSI 84 (overbought near-term but RS 95 means institutional accumulation is real). Up +169% over 5 years, +1,683% over 10 years. " +
+    "Valuation: at $114.07 / $84.4B market cap on $3.42 forward EPS, forward P/E ~33×. Forward P/S ~12×. EV/EBITDA 35×. Premium multiple but on a 27% net margin business with $3.3B cash and a buyback engine. " +
+    "Analyst median target $107 (Recom 2.71 = Hold/Buy boundary) implies the rally has run ahead of consensus targets — wait for a 10-15% pullback for a cleaner entry, or trim into strength.",
 
 
-  analystConsensus: { rating: 'Hold', targetLow: 70, targetMedian: 84, targetHigh: 100, numAnalysts: 25 },
+  analystConsensus: { rating: 'Hold', targetLow: 85, targetMedian: 107, targetHigh: 130, numAnalysts: 25 },
   revGrowth: [
     [0.06, 0.05, 0.05, 0.04, 0.04],
     [0.12, 0.11, 0.10, 0.09, 0.08],
