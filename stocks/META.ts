@@ -93,13 +93,13 @@ export const META = defineStock({
   ],
 
   burry: {
-    sbc: 20400,
-    gaapNi: 59700,
-    buyback: 26250,
+    sbc: 20427,
+    gaapNi: 63000,
+    buyback: 44648,
     epsBasis: 'GAAP',
     fy: '2025',
     overstatementPct: 20,
     overstatementSource: 'burry-published',
-    note: 'Elevated per Burry — 20% overstatement, similar to NFLX tier. Naive SBC/NI is higher (~34%, SBC $20.4B vs FY25 GAAP NI $59.7B), but $26.3B buyback covers SBC 1.3× and reduces effective dilution. Diluted share count compressed 2.91B (2017) → 2.54B (2025) — Burry-approved structural pattern. The 20% residual is mostly MTM amplifier on the gross SBC.',
+    note: 'Elevated per Burry — 20% overstatement, similar to NFLX tier. TIKR FY25 actuals: SBC $20,427M (10.4% of revenue), buybacks $44,648M (was previously understated at $26.3B), GAAP NI ~$63B. Buyback covers SBC 2.2× and diluted share count compressed 2,859M → 2,567M = -10.2% over 5 years. Our 4y-MTM formula massively overshoots (71% vs Burry\'s 20%) because it doesn\'t credit buybacks for offsetting MTM cost. Burry\'s 20% reflects the genuine net-buyback effect: even though SBC is large in absolute dollars, share count is shrinking 2.1%/yr.',
   },
 });
