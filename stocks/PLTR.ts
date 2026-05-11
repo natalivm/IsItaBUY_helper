@@ -3,90 +3,107 @@ import { defineStock } from './defineStock';
 export const PLTR = defineStock({
   ticker: 'PLTR',
   name: 'Palantir Technologies',
-  sector: 'AI / Data Analytics Software',
-  themeColor: '#0ea5e9',
-  updatedOn: '05/10',
-  currentPrice: 137.80,
-  fairPriceRange: '$95 - $230',
-  shares0: 2300,
-  rev25: 4480,
-  fcfMargin25: 0.45,
-  taxRate: 0.15,
-  cash: 7700,
+  sector: 'AI Software / Defense & Commercial Analytics',
+  themeColor: '#0080FF',
+  currentPrice: 170,
+  fairPriceRange: '$90 - $220',
+  shares0: 2570,
+  rev25: 4475,
+  fcfMargin25: 0.42,
+  taxRate: 0.10,
+  cash: 5500,
   debt: 240,
-  beta: 1.51,
-  costDebt: 0.04,
+  beta: 2.20,
+  costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 0.89,
-  rsRating: 72,
-  rsTrend: 'falling',
-  ratingOverride: 'HOLD',
+  baseEps: 0.85,
+  rsRating: 99,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Palantir is the highest-quality, highest-multiple AI software story in the market. " +
-    "FY25 revenue $4.48B (+56% YoY, accelerating), 84% gross margin, 38% operating margin, 43% net margin, ~45% FCF margin, $7.7B net cash, debt/equity 0.03 — pristine. " +
-    "US Commercial revenue compounding 70%+ as AIP becomes the operational layer for Fortune 500 enterprise AI; Government remains a structural moat with multi-decade contract durability. " +
-    "Consensus 5Y EPS CAGR 56.7%, FY26 EPS expected to roughly double from $0.89 TTM to ~$1.70-$2.00 — the growth is real and the unit economics are elite. " +
-    "Valuation reality at $137.80 / ~$330B mkt cap: trailing P/E 155×, forward P/E 68×, P/S 63×, EV/Sales 62×, P/FCF 123× — pricing PLTR as the operating system for enterprise AI, the highest bar in software. " +
-    "Even on bull-case execution (50%+ rev growth, 60% exit P/E on FY30 EPS ~$8) the math compounds at ~25% — but the bear case (deceleration to 25%, multiple compression to 30×) goes to ~$120 even with strong execution. " +
-    "Risk is asymmetric and reflexive: PLTR trades on momentum + narrative more than fundamentals. RS faded from 99 to 72 with -22% YTD and -34% from highs; the unwind has started but the multiple is still nowhere near 'cheap.' " +
-    "Quality is unimpeachable — wait for a real reset (sub-$110, P/S below 35×) before a full position. HOLD: own a starter, add aggressively only on multiple compression, not on price weakness alone.",
+  ratingOverride: 'HOLD',
+  updatedOn: '05/10',
 
-  analystConsensus: { rating: 'Hold', targetLow: 95, targetMedian: 186, targetHigh: 280, numAnalysts: 24 },
+  strategicNarrative:
+    "Palantir is the dominant AI/data platform serving both government (USG bedrock since 2003) and a rapidly scaling commercial book — FY25 revenue $4.48B (+56% YoY), TTM $5.22B with growth still accelerating. Operating income inflected from $310M FY24 → $1,414M FY25 (+356%) on AIP-driven commercial expansion. " +
+    "Margins are now elite: 84% gross, 38% operating, 52% FCF margin. Operating cash flow $2.72B LTM nearly matches GAAP NI $2.28B — earnings quality has transformed from SBC-dependent (2021-2022) to genuine cash generation. " +
+    "The valuation problem: at ~$170 / ~$437B market cap on $0.85 forward EPS, forward P/E is ~200×. EV/sales ~85×. Even with 30-40% sustained growth, current valuation prices in many years of perfect execution. Bernstein-style stress test: 30% revenue CAGR for 5 more years × 35% net margin × 30× exit P/E = ~$220 — barely upside from spot. " +
+    "Cumulative dilution is the unique scar: diluted shares 1,924M (FY21) → 2,570M (LTM) = +33.6% / +6.0%/yr CAGR. That's transferred ~$110B (at current price) from original owners to employees over 5 years. SBC has stabilized at 14% of revenue (vs 50%+ historically) and recent buybacks ($156M LTM) only cover 21% of SBC issuance. " +
+    "Risk decomposition: Bull (~30%): AIP commercial growth extends, defense budget durable, gets to $20B revenue by FY30 at 60× P/E → ~$300. Base (~45%): Growth decelerates to 25-30%, multiple compresses 200× → 50× through earnings expansion → ~$200. Bear (~25%): AI hype cools or AIP commercial growth tops out at $5B run-rate, multiple to 25× → ~$80-100. " +
+    "HOLD at $170 — quality compounder priced beyond perfection. Burry-cited stock; despite recent profitability inflection, the cumulative dilution and current valuation extreme make this asymmetrically downside-skewed vs upside. Full size only on a >40% drawdown.",
+
+  analystConsensus: { rating: 'Hold', targetLow: 100, targetMedian: 165, targetHigh: 250, numAnalysts: 22 },
 
   revGrowth: [
-    [0.30, 0.22, 0.18, 0.14, 0.12], // Bear: enterprise AI hype cools, growth halves
-    [0.42, 0.35, 0.28, 0.22, 0.18], // Base: AIP scales, government stable, natural deceleration
-    [0.55, 0.48, 0.40, 0.32, 0.25], // Bull: AIP becomes Fortune 500 standard, govt re-acceleration
+    [0.30, 0.20, 0.15, 0.12, 0.10], // Bear: commercial AIP plateau, government flat
+    [0.45, 0.35, 0.28, 0.22, 0.18], // Base: continued AIP commercial momentum, gov stable
+    [0.55, 0.45, 0.36, 0.28, 0.22], // Bull: AIP becomes industry standard, gov expands with AI defense
   ],
 
   fcfMargin: [
-    [0.42, 0.42, 0.41, 0.40, 0.39], // Bear: margin stalls, reinvestment continues
-    [0.45, 0.47, 0.48, 0.49, 0.50], // Base: scale economics, operating leverage
-    [0.48, 0.51, 0.54, 0.56, 0.58], // Bull: software unit economics fully expressed
+    [0.42, 0.43, 0.44, 0.45, 0.45], // Bear: margin stalls
+    [0.45, 0.48, 0.50, 0.52, 0.53], // Base: operating leverage on commercial scale
+    [0.48, 0.52, 0.55, 0.57, 0.60], // Bull: software dominance economics
   ],
 
-  exitMultiple: [22, 32, 45],
+  exitMultiple: [20, 35, 55],
 
   desc: [
-    'Enterprise AI spending normalizes as ROI proof-points lag deployment hype. AIP boot-camps convert to pilots but not full operational rollouts. Revenue growth halves from 56% to ~15% by FY30. ' +
-      'EBIT margin stalls in the high-30s as PLTR continues investing in forward deployed engineers. Forward P/S re-rates from 63× toward 18×, P/E compresses from 155× to ~30×. ' +
-      'GAAP EPS reaches ~$4.50 by FY30 (from $0.89 TTM). 5yr price ~$110, roughly -3% to -5% annual return — multiple compression overwhelms strong absolute growth.',
-    'AIP scales steadily, US Commercial sustains 50%+ growth through FY27 then decelerates gracefully. Government modernization continues with stable double-digit growth. ' +
-      'Operating margin expands from 38% to mid-40s, FCF margin reaches ~50%. EPS compounds at ~45% annually to ~$5.80 by FY30. ' +
-      'Multiple compresses naturally from 155× to 32× through earnings growth. 5yr price ~$185, ~6% CAGR — quality compounds but you pay the multiple-compression tax.',
-    'AIP becomes the default enterprise AI orchestration layer. Revenue sustains 40%+ growth through FY28 as Fortune 500 standardize on Foundry + AIP. ' +
-      'Government wins on AI-enabled defense modernization (Maven, TITAN, NGC2). Operating margin reaches 50%+, FCF margin ~58%. EPS reaches ~$11 by FY30. ' +
-      'Market awards 45× exit P/E for durable 25%+ growth + structural moat. 5yr price ~$495, ~29% CAGR.',
+    'AIP commercial momentum plateaus as larger enterprises take longer to deploy and pricing power compresses. ' +
+      'Government revenue holds but stops compounding. Heavy SBC continues; dilution stays at ~5% annually. ' +
+      'Multiple compresses from 200× to 25-30× as market re-rates Palantir as a mature gov-tech compounder rather than AI hyper-growth. ' +
+      '5yr target ~$90-110, roughly -10% to -12% annualized as multiple contraction overwhelms EPS growth.',
+    'AIP commercial pipeline converts to durable revenue; government defense AI spending sustains. Operating leverage continues — margins expand to 53% FCF. ' +
+      'Revenue compounds at ~28% CAGR. EPS grows to $3-4 by FY30. Multiple compresses naturally to 50× through earnings growth. ' +
+      '5yr target ~$200, ~3-4% annualized. Business performs but valuation already priced.',
+    'Palantir becomes the de-facto AI operating system for large enterprises + the global defense AI standard. AIP commercial revenue compounds 40%+ for multiple years. ' +
+      'Margins reach software dominance (55%+ FCF). Massive operating leverage drives EPS to $6+ by FY30. ' +
+      'Market maintains premium 55-60× P/E given platform position. 5yr target ~$300+, ~12% annualized.',
   ],
 
   thesis: [
-    'AI spending hype-cycle peaks; enterprises pull back on big-platform commitments and favor point-solutions. AIP pilots fail to convert to production at scale. ' +
-      'Government budget cycle tightens. At 155× trailing P/E, multiple compression dominates returns even with continued revenue growth. RS 72 (from 99) signals momentum unwind has started.',
-    'AIP boot-camps continue to convert to multi-million dollar contracts. US Commercial growth remains 50%+ through FY27. Net cash $7.7B funds aggressive buybacks if needed. ' +
-      'Operating margin expansion validates software unit economics. EPS compounds 40%+ annually but multiple compression caps total return at high-single-digits.',
-    'AIP becomes the operating system for enterprise AI — every Fortune 500 builds on Foundry/AIP. Government wins TITAN, Maven, NGC2 expansions plus international defense. ' +
-      'Revenue sustains 40%+ growth through FY28. The "enterprise AI infrastructure layer" thesis re-rates the multiple permanently above software peers.',
+    'AIP excitement gives way to enterprise reality: deployments are slow, pricing competition intensifies (MSFT/GOOG/AMZN bundle AI), and many pilots don\'t convert to expansion. ' +
+      'Government revenue is durable but doesn\'t scale at hypergrowth rates. SBC remains elevated at 12-14% of revenue. ' +
+      'At 200× forward P/E, even modest growth deceleration triggers severe multiple compression. Buybacks ($156M LTM) cover only 21% of $730M SBC — net dilution persists at 5-6%/yr. ' +
+      'Cumulative 5y dilution has already cost original shareholders ~25% of their stake; another 5y of similar dilution compounds the problem.',
+    'AIP commercial revenue grows from <$1B to $5B+ over 5 years as Fortune 500 enterprises deploy AI ops platforms at scale. ' +
+      'Government revenue stays durable and grows mid-teens. Operating leverage drives margins to FCF ~52%. ' +
+      'EPS compounds at ~30% from $0.85 base. SBC ratio improves as revenue outgrows comp. Multiple compresses but earnings growth offsets. ' +
+      'Real risk: at 200× entry, multiple compression to 50× alone shaves -75% of valuation. Even good execution at this price = modest returns.',
+    'Palantir captures the AI-OS opportunity. AIP becomes embedded in every Fortune 500 ops stack. Government AI defense buildout ($150B+/yr) anchors structural defense revenue. ' +
+      'Karp/Thiel insider control + AIP boot-camp methodology creates unique sales motion competitors can\'t replicate. ' +
+      'Revenue scales toward $20B by FY30 with 55%+ FCF margins. Multiple holds 55-60× as the market accepts Palantir as the AI infrastructure standard. ' +
+      'Requires AI capex super-cycle to persist + competition (CRWD/PANW/AI-native startups) to fail to displace AIP — both must be true simultaneously.',
   ],
 
-  termGrowth: [0.02, 0.03, 0.035],
-
-  epsCagr: [38, 50, 65],
-  exitPE: [25, 38, 55],
-  prob: [30, 50, 20],
-
-  bbRate: [0.00, 0.005, 0.01],
-  ebitdaProxy: [0.40, 0.48, 0.55],
+  termGrowth: [0.025, 0.035, 0.040],
+  bbRate: [0.001, 0.005, 0.010],
+  ebitdaProxy: [0.38, 0.45, 0.55],
   bullMaOptVal: false,
 
+  epsCagr: [15, 30, 50],
+  exitPE: [30, 50, 80],
+  prob: [25, 45, 30],
+
+  driverOverrides: [
+    {},
+    {
+      revPrem: [0.02, 0.02, 0.015, 0.015, 0.01],
+      fcfUplift: [0.005, 0.01, 0.015, 0.015, 0.02],
+    },
+    {
+      revPrem: [0.03, 0.03, 0.025, 0.02, 0.02],
+      fcfUplift: [0.01, 0.015, 0.02, 0.025, 0.025],
+    },
+  ],
+
   burry: {
-    sbc: 700,
-    gaapNi: 1449,
-    buyback: 0,
+    sbc: 684,
+    gaapNi: 1700,
+    buyback: 156,
     epsBasis: 'GAAP',
     fy: 'FY25',
-    overstatementPct: 90,
+    overstatementPct: 70,
     overstatementSource: 'estimated',
-    note: 'Naive SBC/NI is ~48% (FY25 SBC ~$700M on $1.45B GAAP NI). PLTR has compounded ~20× in 3 years ($7 → $137), which under full-SBC adjustment makes mark-to-market dilution cost on vested awards a multiple of the GAAP charge. No buyback to offset. Real owner economics materially below GAAP — Tragic tier.',
+    note: 'Tragic per our framework — Burry explicitly cites PLTR in his Cassandra Unchained list. TIKR FY25 actuals: SBC $684M (LTM $730M = 14% of revenue), GAAP NI ~$1.7B FY25, buybacks $156M (covers only 21% of SBC). The damage is structural: diluted shares 1,924M (FY21) → 2,570M (LTM) = +33.6% over 5 years = ~$110B of value transferred from original owners to employees at current price. Our 4y-MTM formula breaks down at PLTR\'s ~20× stock multiplier (extreme high-MTM zone), producing implausible >100% overstatement. The 70% estimate reflects Burry-cited tier + recent profitability inflection improving the picture from where it would have been in 2022. Watch the share-count trajectory — current run-rate is +6%/yr dilution, which is still alarming.',
   },
 });
