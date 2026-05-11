@@ -7,71 +7,71 @@ export const AXON = defineStock({
   themeColor: '#FFC72C',
   currentPrice: 394.36,
   fairPriceRange: '$420 - $900',
-  shares0: 83,
-  rev25: 2780,
-  fcfMargin25: 0.07,
+  shares0: 85,
+  rev25: 3600,           // FY2026 estimate: $2.78B FY25 × guided 30-32% growth
+  fcfMargin25: 0.125,    // FCF guide ~$450M / ~$3.6B revenue
   taxRate: 0.18,
-  cash: 1200,
+  cash: 1300,
   debt: 700,
   beta: 1.30,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 4.50,
+  baseEps: 7.00,         // FY2026 estimate: 25.5% adj EBITDA on $3.6B → ~$600M NI / 85M shares
   rsRating: 92,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   updatedOn: '05/11',
+  lastReportTag: 'Q1 2026',
 
   strategicNarrative:
-    "Axon is the operating system of modern policing — body cams + Tasers + evidence.com cloud + Records management + AI report-writing (Draft One). FY25 revenue $2.78B (+33% YoY), LTM $2.98B sustaining elite ~30% growth. Recurring software revenue mix has become the structural moat: switching costs are enormous once a department runs evidence + records + cameras through Axon. " +
-    "AI tailwind is real: Draft One auto-drafts police reports from body-cam audio, saving hours per officer per shift. International expansion (UK, EU, Australia) opens a >2× US TAM. Government contracts produce multi-year recurring revenue with high gross retention. " +
-    "The Burry problem is catastrophic: SBC $629M LTM = **21.1% of revenue**, with operating cash flow only $154M LTM — meaning **SBC is 408% of operating cash flow**. Reported FCF is just $19.5M LTM, so **SBC equals 3,222% of free cash flow**. Essentially the entire 'cash flow generation' narrative is SBC addback; without it, AXON would be deeply cash-negative. " +
-    "Working capital is also a current drag: −$617M LTM (rapid government contract growth + receivables stretching). May normalize but adds noise to cash conversion. " +
-    "Buybacks $356M LTM = a real shareholder return effort, but only covers 57% of SBC. Diluted shares 66M (FY21) → 83M (LTM) = +24.8% cumulative / +4.5%/yr. " +
-    "Valuation: at $650 / ~$54B market cap on $4.50 forward non-GAAP EPS, forward P/E ~145×. Bernstein-style stress test: 30% revenue CAGR for 5y × 20% non-GAAP net margin × 40× exit P/E = ~$1,200 — meaningful upside if execution holds. But 20% net margin requires the eventual operating leverage that hasn't materialized yet (LTM operating margin 0.3%). " +
-    "Bull (~30%): Draft One + Records + international = AI-policing super-cycle, operating leverage finally emerges, margins expand to 20%+ → $900-1,100. Base (~45%): 25% revenue growth, SBC ratio improves but slowly, margins reach 12-15% → ~$700. Bear (~25%): SBC structural, AI report tools commoditize, growth halves → $400-500. " +
-    "HOLD — best government-tech moat in the market combined with worst cash-flow-quality in our coverage. Burry-cited stock; the framework would flag this as deeply Tragic on a strict accounting view. The bet is essentially: 'eventually operating leverage will emerge and SBC will look small.' Until that inflection, every dollar of headline FCF is mostly stock comp accounting.",
+    "Q1 2026: revenue $807M (+34% YoY), the 9th consecutive quarter of 30%+ growth. Software & services $355M (+35%), AI product revenue +700% YoY. ARR $1.5B (+35%), NRR 125%. Future contracted bookings $14.3B (+44% YoY) — the most important forward indicator in the model. " +
+    "International is the breakout: +100%+ YoY, now 20% of revenue. Dedrone revenue +300%+ YoY, bookings +500% — counter-drone adds a defense vertical. AI Era Plan bookings +140% YoY. $40M telco enterprise deal (Fusus + Body Mini + Outpost) shows expansion beyond law enforcement. " +
+    "FY2026 guidance RAISED to 30-32% growth (~$3.6B), adj EBITDA margin 25.5%, FCF ~$450M (12.5% of revenue vs. FY25's ~7%) — structural FCF inflection happening now. New product velocity is high: Axon Vision, Guardian, Assistant (1M+ monthly uses), Form One, BriefOne. " +
+    "SBC remains the core challenge: FY2026 guide $590-620M (~16% of revenue). But management now targets <2.5% annual dilution — implying buybacks will be scaled up to cover. This is an improvement from FY25's +4.5%/yr net dilution; execution will be the test. " +
+    "At ~$394 / ~56x FY2026 non-GAAP EPS (~$7.00), premium is still demanding. But with $14.3B backlog (+44%), 125% NRR, and FCF finally inflecting, the quality trajectory is clearer than it was a year ago. " +
+    "HOLD — best government-tech moat in the market combined with worst cash-flow-quality in our coverage. The framework flags this as Tragic on strict Burry accounting. The bet: operating leverage + buyback discipline compress SBC dilution, eventually vindicating the premium.",
 
   analystConsensus: { rating: 'Buy', targetLow: 450, targetMedian: 770, targetHigh: 1000, numAnalysts: 18 },
 
   revGrowth: [
-    [0.18, 0.15, 0.12, 0.10, 0.08], // Bear: AI tools commoditize, gov budget pressure
-    [0.28, 0.24, 0.20, 0.17, 0.14], // Base: continued moat + AI Draft One scales
-    [0.35, 0.30, 0.25, 0.20, 0.16], // Bull: international + software + AI super-cycle
+    [0.18, 0.14, 0.11, 0.09, 0.08], // Bear: FY27 deceleration as AI tools commoditize, gov budget pressure
+    [0.25, 0.21, 0.17, 0.14, 0.12], // Base: platform + international compound from FY26 base
+    [0.30, 0.26, 0.22, 0.18, 0.15], // Bull: international + software + defense (Dedrone) all accelerate
   ],
 
   fcfMargin: [
-    [0.05, 0.07, 0.09, 0.11, 0.13],   // Bear: slow margin expansion, working capital pressure
-    [0.10, 0.14, 0.18, 0.22, 0.25],   // Base: software mix shift drives operating leverage
-    [0.13, 0.18, 0.24, 0.29, 0.33],   // Bull: full SaaS-like economics emerge by FY29-30
+    [0.12, 0.14, 0.16, 0.18, 0.20],   // Bear: modest improvement from FY26 12.5% base, SBC drag persists
+    [0.14, 0.18, 0.22, 0.25, 0.27],   // Base: software mix drives operating leverage, FCF inflects
+    [0.17, 0.22, 0.27, 0.31, 0.34],   // Bull: full SaaS-like economics emerge by FY29-30
   ],
 
   exitMultiple: [22, 35, 50],
 
   desc: [
-    'AI report-writing tools (Draft One) get commoditized by Microsoft/Google/startup challengers. Body-cam market saturates in the US, international expansion stumbles on regulatory friction. ' +
-      'SBC remains structurally elevated at 18-20% of revenue. Working capital pressure persists. ' +
-      'GAAP profitability arrives slowly; FCF margin reaches 13% by FY30 but lags peers. Multiple compresses from 145× to 35× as market reprices Axon as a high-quality but mature gov-tech business. ' +
-      '5yr target ~$400-500, roughly -7% annualized as multiple contraction overwhelms EPS growth.',
-    'Records + evidence.com + Draft One drive ARPU expansion in the installed base. International contributes ~25% of revenue by FY30. Operating leverage gradually inflects as software mix grows. ' +
-      'FCF margin expands from 1% to 22% over 5 years. SBC ratio improves from 21% to 14% but absolute SBC stays elevated. ' +
-      'Multiple compresses 145× → 50× through earnings growth. 5yr target ~$700, ~2% annualized — fair value priced to perfection.',
-    'AI super-cycle for public safety. Draft One becomes the standard police report tool. Records system displaces incumbent CAD/RMS vendors. International TAM expands aggressively as the US model is replicated globally. ' +
-      'Software mix reaches 60%+ of revenue, FCF margin scales to 33%. SBC ratio drops below 14% as revenue outgrows comp. ' +
-      'Multiple holds 50× as Axon becomes the structural AI-policing platform. EPS compounds at 28%+. 5yr target $900-1,100, ~8-10% annualized.',
+    'The $14.3B backlog proves hollow — government budget cycles tighten and international expansion stumbles on regulatory friction. AI Era Plan upgrades slow. ' +
+      'SBC stays at 15-17% of revenue as Axon competes for AI talent; management misses the <2.5% dilution target. FCF margin inches up from 12.5% but never reaches the inflection investors expected. ' +
+      'Multiple compresses from 56× to 25× as AI tools face credible competition. EPS CAGR ~12% from $7.00 base; 5yr target ~$500, roughly flat annualized.',
+    'Q1 2026 set the template: 34% revenue growth, adj EBITDA at 25%, FCF finally inflecting to $450M+ guidance. ARR $1.5B at 125% NRR compounds the installed base. ' +
+      'International sustains above 25% annual contribution through FY28. Dedrone + enterprise deals (telco, $40M+) open non-law-enforcement TAM. ' +
+      'Management hits <2.5% dilution target; SBC ratio compresses to ~12% by FY28. FCF margin reaches 25%+ by FY29. Multiple normalizes from 56× to 40×. ' +
+      'EPS CAGR ~25% from $7.00 base; 5yr target ~$700-750, ~12-13% annualized.',
+    'The $14.3B backlog (+44% YoY) and 125% NRR are the compounding engine — every department that runs evidence + records + AI tools adds modules and never leaves. ' +
+      'International reaches 35%+ of revenue by FY29 (Dedrone bookings +500% signals defense vertical is real). AI product revenue +700% YoY inflects into core platform economics. ' +
+      'SBC ratio compresses below 12%, buybacks ramp. FCF margin scales to 34%. Multiple holds at 55×+ as market prices a structural AI-policing platform. ' +
+      'EPS CAGR ~35% from $7.00 base; 5yr target $950-1,100, ~18-22% annualized.',
   ],
 
   thesis: [
-    'AI commoditization risk + SBC structural problem + working capital pressure all hit simultaneously. Draft One faces competition from Microsoft Copilot for Government, Google\'s public sector AI, and emerging startups. ' +
-      'SBC stays at 20%+ of revenue indefinitely as Axon competes for AI talent. Net dilution continues at 4-5%/yr. Buybacks ($356M LTM) cover only 57% of $629M SBC. ' +
-      'At 145× forward P/E with operating leverage that hasn\'t materialized after 3 years of promise, the market loses patience. Multiple compresses severely if AI tools turn out to be cyclical rather than secular advantage.',
-    'Axon\'s ecosystem moat continues compounding: each new module (Records, Draft One, Air, real-time crime center) makes the platform more sticky. International expansion adds 15-20% growth contribution by FY28. ' +
-      'Government recurring revenue keeps growing at 30%+; gross retention >97%. AI Draft One drives meaningful ARPU expansion across the existing installed base. ' +
-      'Operating leverage finally inflects in FY27 as software revenue grows faster than hardware costs. SBC ratio gradually improves. Multiple compresses but earnings growth offsets. Quality compounder at fair price.',
-    'Axon becomes the dominant public safety platform globally. Draft One + Records + evidence.com + AI investigations becomes irreplaceable for police departments. International (UK, EU, AU, Latin America) scales to 30%+ of revenue. ' +
-      'AI inflection is real: Draft One scales from $100M to $1B+ in standalone AI revenue. Software mix flips to dominate hardware. ' +
-      'Operating leverage delivers: margins expand from 0% to 25%+ in 4 years. SBC ratio compresses materially. Multiple holds 50×+ given the platform position. 28%+ EPS CAGR delivers 8-10% annualized returns from current entry.',
+    'Government budgets tighten and AI commoditization risk rises — Draft One, BriefOne, Assistant all face Microsoft/Google competition. SBC <2.5% dilution target gets missed. ' +
+      'International regulatory friction (EU data privacy, local procurement rules) slows the 100%+ growth rate. ' +
+      'The backlog ($14.3B) is real but slow-converting — recognition lags booking velocity. At 56× forward P/E, any growth scare triggers severe multiple compression.',
+    'Q1 2026 delivered 9 consecutive 30%+ growth quarters with FCF finally inflecting ($450M guide = 12.5% margin vs. 7% FY25). NRR 125% + ARR $1.5B confirm the moat. ' +
+      'International +100%+ and Dedrone +500% bookings open structural new TAMs. AI Era Plan bookings +140% — existing customers upgrading voluntarily. ' +
+      '<2.5% dilution target is achievable: implies $600M+ buybacks against $600M SBC, which Q1 FCF trajectory supports. Platform is de-risked from the "pure SBC story" narrative.',
+    'The $14.3B future contracted bookings (+44% YoY) is a multi-year revenue lock-in unlike anything in govtech. International + defense (Dedrone) + enterprise double the addressable market. ' +
+      'AI product revenue +700% YoY proves the monetization cycle is early, not late. Axon Vision, Guardian, Assistant are platform extensions that increase switching costs further. ' +
+      'FCF structurally inflecting from ~7% to 12.5% in one year — the operating leverage skeptics doubted is materializing. If margins reach 25%+ by FY29, SBC ratio becomes manageable.',
   ],
 
   termGrowth: [0.025, 0.035, 0.040],
@@ -81,7 +81,7 @@ export const AXON = defineStock({
 
   epsCagr: [12, 25, 35],
   exitPE: [25, 40, 55],
-  prob: [25, 45, 30],
+  prob: [20, 45, 35],
 
   driverOverrides: [
     {},
@@ -96,13 +96,13 @@ export const AXON = defineStock({
   ],
 
   burry: {
-    sbc: 634,
-    gaapNi: 206,
-    buyback: 356,
+    sbc: 605,
+    gaapNi: 150,
+    buyback: 450,
     epsBasis: 'NON_GAAP',
-    fy: 'FY25',
+    fy: 'FY26 est',
     overstatementPct: 85,
     overstatementSource: 'estimated',
-    note: 'Tragic — Burry explicitly cites AXON. Most extreme SBC-to-cash-flow ratio in our coverage: SBC $634M FY25 (LTM $629M) vs LTM operating cash flow of just $154M = **408%** and vs FCF $19.5M = **3,222%**. Essentially the entire reported FCF is SBC addback. Buybacks $356M LTM are notable (covers 57% of SBC) but still leave net dilution; 5-year cumulative dilution +24.8%. The valuation premium prices in software-economics inflection that hasn\'t happened (LTM operating margin 0.3%). baseEps $4.50 is non-GAAP — material P/E haircut applies. The 85% estimate reflects Burry-cited tier + extreme SBC dependence partially offset by genuine buybacks and elite revenue growth that could eventually justify the structure.',
+    note: 'Tragic — Burry explicitly cites AXON. FY26 estimates: SBC $590-620M guide (mid $605M) = ~16% of revenue. Management now targets <2.5% dilution implying buybacks ~$600M+ — a structural improvement from FY25 57% SBC coverage. GAAP NI estimate ~$150M (down from FY25 $206M as SBC stays high). FCF inflecting: $450M FY26 guide vs $19.5M LTM — the core SBC-to-FCF ratio improves dramatically. Still Tragic tier, but trajectory is better. baseEps $7.00 is non-GAAP; P/E haircut still material.',
   },
 });
