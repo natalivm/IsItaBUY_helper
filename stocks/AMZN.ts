@@ -84,6 +84,6 @@ export const AMZN = defineStock({
     fy: '2025',
     overstatementPct: 21,
     overstatementSource: 'burry-published',
-    note: 'Elevated per Burry — 21% overstatement, similar to NFLX tier. Naive SBC/NI 25% (FY25 SBC $19.5B vs GAAP NI $77.7B). Zero buybacks (Amazon reinvests rather than returns capital), so dilution is unoffset. Massive scale plus high stock price makes vested-RSU MTM cost meaningful even though SBC % of revenue is modest at 2.7%. Despite the haircut, underlying earnings growth at scale still produces positive Burry-adjusted CAGR.',
+    note: 'Elevated per Burry — 21% overstatement, similar to NFLX tier. TIKR FY25 actuals: SBC $19,467M (2.7% of revenue — low for scale), zero buybacks (full reinvestment into AI capex). Naive SBC/NI 25%. Diluted shares only +5.4% over 5y (+1.1%/yr) despite zero buyback offset — modest dilution thanks to revenue/profit compounding. AMZN is the opposite of META: same Burry tier (~20%) but achieved by no buybacks + moderate stock appreciation rather than massive buybacks. Our 4y-MTM formula overshoots (32% vs Burry\'s 21%) because the 2.275× MTM multiplier produces noisier results in the 2-4× zone. Trust Burry\'s 21% as the anchor.',
   },
 });

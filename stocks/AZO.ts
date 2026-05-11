@@ -56,15 +56,4 @@ export const AZO = defineStock({
   bbRate: [0.03, 0.04, 0.05],
   ebitdaProxy: [0.20, 0.22, 0.24],
   bullMaOptVal: false,
-
-  burry: {
-    sbc: 50,
-    gaapNi: 2500,
-    buyback: 1600,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 8,
-    overstatementSource: 'estimated',
-    note: 'Pristine — quintessential Burry-approved capital allocator. Naive SBC/NI just 2% (estimated SBC ~$50M vs FY25 GAAP NI $2.5B). Tiny 16.6M-share float compressed by relentless multi-decade buyback ($1.6B FY25). SBC is structurally minimal for a capital-light auto parts retailer.',
-  },
 });

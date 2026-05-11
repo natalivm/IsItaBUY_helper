@@ -75,13 +75,13 @@ export const NFLX = defineStock({
   bullMaOptVal: 78.67 * 4222.0 * 0.07,
 
   burry: {
-    sbc: 827,
+    sbc: 368,
     gaapNi: 10981,
-    buyback: 8460,
+    buyback: 9173,
     epsBasis: 'GAAP',
     fy: '2025',
     overstatementPct: 22,
     overstatementSource: 'burry-published',
-    note: 'Elevated per Burry — real owner profit ~78% of GAAP after full SBC adjustment. Naive SBC/NI (~7.5%) is the cleanest in the elevated-cohort, and $8.5B buyback offsets gross dilution, but mark-to-market valuation of vested NFLX equity at current price still leaves a ~22% overstatement.',
+    note: 'Elevated per Burry — real owner profit ~78% of GAAP. FY25 actuals (TIKR): SBC just $368M (0.78% of revenue — extraordinarily low), buybacks $9,173M = 25× SBC, share count down 5% over 5y. Our 4y-MTM formula reproduces only 11% from these inputs (vs Burry\'s 22%) because (a) SBC has declined sharply since the 2022 peak ($575M), so the vesting cohort carries higher historical SBC than current flow suggests, (b) the Nov 2025 10:1 stock split scrambles single-multiplier MTM math across grant cohorts. Trust Burry\'s 22% as the anchor here.',
   },
 });

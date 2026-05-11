@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { AlertTriangle, ShieldCheck, ShieldAlert, Skull } from 'lucide-react';
 import { TickerDefinition } from '../types';
 import { cn } from '../utils';
+import { tierFromOverstatement, resolveOverstatementPct, BurryTierKey } from '../services/burryTier';
 
 interface Props {
   tickerDef: TickerDefinition;
@@ -12,70 +13,12 @@ interface Props {
   pwCagr?: number;
 }
 
-interface Tier {
-  label: string;
-  color: string;
-  bg: string;
-  bgStrong: string;
-  border: string;
-  ring: string;
-  Icon: React.ComponentType<{ className?: string }>;
-  blurb: string;
-}
-
-const PRISTINE: Tier = {
-  label: 'PRISTINE',
-  color: 'text-emerald-300',
-  bg: 'bg-emerald-500/10',
-  bgStrong: 'bg-emerald-500/60',
-  border: 'border-emerald-500/30',
-  ring: 'ring-emerald-500/40',
-  Icon: ShieldCheck,
-  blurb: 'SBC is a small share of GAAP profit and buybacks more than offset dilution. Burry-approved.',
+const TIER_ICON: Record<BurryTierKey, React.ComponentType<{ className?: string }>> = {
+  PRISTINE: ShieldCheck,
+  OK: ShieldCheck,
+  CRITICAL: ShieldAlert,
+  TRAGIC: Skull,
 };
-const OK: Tier = {
-  label: 'OK',
-  color: 'text-lime-300',
-  bg: 'bg-lime-500/10',
-  bgStrong: 'bg-lime-500/60',
-  border: 'border-lime-500/30',
-  ring: 'ring-lime-500/40',
-  Icon: ShieldCheck,
-  blurb: 'Coefficient above the 0.70 threshold. SBC dilution exists but stays within manageable bounds.',
-};
-const CRITICAL: Tier = {
-  label: 'CRITICAL',
-  color: 'text-amber-300',
-  bg: 'bg-amber-500/10',
-  bgStrong: 'bg-amber-500/60',
-  border: 'border-amber-500/40',
-  ring: 'ring-amber-500/40',
-  Icon: ShieldAlert,
-  blurb: 'Coefficient below 0.70 — Burry flags this as a "real-earnings haircut" zone. Apply discount to multiples.',
-};
-const TRAGIC: Tier = {
-  label: 'TRAGIC',
-  color: 'text-rose-300',
-  bg: 'bg-rose-500/10',
-  bgStrong: 'bg-rose-500/60',
-  border: 'border-rose-500/40',
-  ring: 'ring-rose-500/50',
-  Icon: Skull,
-  blurb: 'Real owner economics are dramatically below GAAP — 30% or less of reported. Non-GAAP optics flatter the picture significantly; buybacks alone do not close the gap.',
-};
-
-// Tier thresholds: aligned with BurryBadge home-row pill (15/30/70% overstatement bands).
-// coef ≤ 0.30 (≥70% overstatement) → Tragic
-// 0.30 < coef < 0.70 (30-70%) → Critical
-// 0.70 ≤ coef < 0.85 (15-30%) → Ok
-// coef ≥ 0.85 (<15%) → Pristine
-function pickTier(coef: number, niPositive: boolean): Tier {
-  if (!niPositive) return TRAGIC;
-  if (coef <= 0.30) return TRAGIC;
-  if (coef < 0.70) return CRITICAL;
-  if (coef < 0.85) return OK;
-  return PRISTINE;
-}
 
 const fmt$M = (v: number) => {
   const abs = Math.abs(v);
@@ -89,20 +32,17 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
 
   const niPositive = b.gaapNi > 0;
   const usePublished = b.overstatementPct != null;
-  // When Burry has published an overstatement %, prefer it (covers payroll
-  // tax + mark-to-market dilution beyond the GAAP SBC line).
-  const coef = usePublished
-    ? 1 - (b.overstatementPct as number) / 100
-    : niPositive ? 1 - b.sbc / b.gaapNi : -1;
-  const sbcPctNi = usePublished
-    ? (b.overstatementPct as number)
-    : niPositive ? (b.sbc / b.gaapNi) * 100 : Infinity;
+  const overstatementPct = resolveOverstatementPct(b);
+  // Coefficient = real owner profit / GAAP profit. Cap at 0 floor so the math
+  // is bounded for catastrophic cases.
+  const coef = Math.max(0, 1 - overstatementPct / 100);
   const buybackVsSbc = b.buyback != null && b.sbc > 0 ? b.buyback / b.sbc : null;
-  const tier = pickTier(coef, usePublished ? true : niPositive);
-  const Icon = tier.Icon;
+  const tier = tierFromOverstatement(overstatementPct);
+  const Icon = TIER_ICON[tier.key];
 
-  // P/E haircut effect: only meaningful if model uses non-GAAP EPS and we have a positive coefficient
-  const haircutApplies = b.epsBasis === 'NON_GAAP' && coef > 0;
+  // P/E haircut effect: only meaningful if model uses non-GAAP EPS and we have a positive coefficient.
+  // Clamp at coef ≥ 0.05 to avoid a runaway "100×" display for tragic-tier stocks.
+  const haircutApplies = b.epsBasis === 'NON_GAAP' && coef > 0.05;
   const reportedPe = tickerDef.baseEps && tickerDef.baseEps > 0
     ? tickerDef.currentPrice / tickerDef.baseEps
     : null;
@@ -115,8 +55,8 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
   const targetDeltaPct = showAdjustedTarget && adjustedTarget != null
     ? ((adjustedTarget - pwTarget) / pwTarget) * 100
     : null;
-  // Adjusted CAGR: if 5y target shrinks by factor `coef`, the CAGR shifts by
-  // (coef^(1/5) - 1) on top of (1 + pwCagr). Only show if we have pwCagr.
+  // Adjusted CAGR: if the 5y target shrinks by factor `coef`, the CAGR shifts by
+  // (coef^(1/5) − 1) on top of (1 + pwCagr). Only show if we have pwCagr.
   const adjustedCagr = showAdjustedTarget && pwCagr != null
     ? ((1 + pwCagr / 100) * Math.pow(coef, 1 / 5) - 1) * 100
     : null;
@@ -174,7 +114,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
             Burry Coefficient
           </span>
           <span className={cn('text-3xl font-black leading-none', tier.color)}>
-            {usePublished || niPositive ? coef.toFixed(2) : 'N/A'}
+            {coef.toFixed(2)}
           </span>
           <span className="text-xs text-slate-500 mt-1">
             {usePublished ? 'real / GAAP profit · target ≥ 0.70' : '1 − SBC/NI · target ≥ 0.70'}
@@ -186,7 +126,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
             {usePublished ? 'Profit Overstatement' : 'SBC / GAAP NI'}
           </span>
           <span className="text-3xl font-black leading-none text-white">
-            {usePublished || niPositive ? `${sbcPctNi.toFixed(0)}%` : '∞'}
+            {`${overstatementPct.toFixed(0)}%`}
           </span>
           <span className="text-xs text-slate-500 mt-1">
             {fmt$M(b.sbc)} SBC · {fmt$M(b.gaapNi)} NI

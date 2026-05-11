@@ -41,15 +41,4 @@ export const DE = defineStock({
 
   bbRate: [0.005, 0.015, 0.02],
   ebitdaProxy: [0.15, 0.22, 0.28],
-
-  burry: {
-    sbc: 130,
-    gaapNi: 5027,
-    buyback: 700,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 8,
-    overstatementSource: 'estimated',
-    note: 'Pristine — naive SBC/NI just 2.6% (estimated SBC ~$130M vs FY25 GAAP NI $5.03B, down -29% YoY on cyclical farm slowdown). Buybacks ~$700M FY25 cover SBC ~5×. Classic industrial profile that Burry favors over tech.',
-  },
 });

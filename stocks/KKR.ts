@@ -25,8 +25,7 @@ export const KKR = defineStock({
     "At ~15x 2026E DE, the stock is adequately valued: prob-weighted IRR ~12-13%, with stress test (0% growth post-2028, 15x) still yielding 8.8%. " +
     "The problem: RS 16 signals no institutional momentum, carry is deeply cyclical, and post-2028 execution is the key unknown — this is not a lifetime compounder. " +
     "If exit markets normalize and insurance/private wealth channels accelerate, IRR reaches 18%+. If carry stays depressed, it's 7% dead money with a soft moat. " +
-    "30-35% probability of 15%+ CAGR — a cycle bet on capital markets recovery, not a structural compounder. " +
-    "Burry full-SBC adjustment (estimated): 35% overstatement (Critical) — real owner profit ~65% of GAAP; apply discount when comparing multiples to peers.",
+    "30-35% probability of 15%+ CAGR — a cycle bet on capital markets recovery, not a structural compounder. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 112, targetMedian: 153, targetHigh: 187, numAnalysts: 15 },
@@ -61,15 +60,4 @@ export const KKR = defineStock({
 
   bbRate: [0.005, 0.01, 0.02],
   ebitdaProxy: [0.10, 0.18, 0.30],
-
-  burry: {
-    sbc: 700,
-    gaapNi: 2250,
-    buyback: 200,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 35,
-    overstatementSource: 'estimated',
-    note: 'Critical — naive SBC/NI 31% (FY25 SBC ~$700M vs GAAP NI $2.25B, down -27% YoY on weaker carried interest). Partner-heavy alt-asset structure means SBC is structurally elevated for the financial sector. Dividend prioritized over buybacks. Stock 2.5× from 2023 lows adds MTM amplification.',
-  },
 });

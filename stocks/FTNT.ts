@@ -48,15 +48,4 @@ export const FTNT = defineStock({
     'SASE inflection — ASIC-driven performance edge wins enterprise platform consolidation over cloud-native peers. Revenue sustains low-teens growth as firewall + SASE converge into a single budget line. ' +
       'FCF margins expand to ~37% on operating leverage and software attach. Net cash funds aggressive buybacks. Market re-rates to 35x as cybersecurity compounder with structural margin advantage.',
   ],
-
-  burry: {
-    sbc: 300,
-    gaapNi: 1900,
-    buyback: 2300,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 25,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~25% overstatement — Burry-friendly profile in cybersecurity. Naive SBC/NI is only 16%, and FY25 buybacks of $2.3B cover SBC ~7.7×, so net dilution is firmly negative. Modest 3yr stock appreciation (~2×) keeps the MTM amplifier muted. Closer to NVDA/NFLX tier than the rest of cybersec cohort.',
-  },
 });

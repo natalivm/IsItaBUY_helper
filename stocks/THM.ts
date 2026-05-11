@@ -27,8 +27,7 @@ export const THM = defineStock({
     "However, $1.93B capex is the mountain: $115M raised covers only 6% of needs, requiring a major JV or streaming deal. " +
     "RS 99, Paulson & Co. backing ($40M private placement, ~38% ownership), and Alaska Tier-1 jurisdiction are positives. " +
     "But this is pre-revenue, pre-production, no earnings, no operating cash flow — purely speculative. " +
-    "Bull case ~$6 driven by gold reserve optionality; bear case ~$0.40 (cash floor minus burn). Size as speculation only. " +
-    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+    "Bull case ~$6 driven by gold reserve optionality; bear case ~$0.40 (cash floor minus burn). Size as speculation only. ",
 
   revGrowth: [
     [-0.10, -0.15, -0.20, -0.20, -0.20],
@@ -90,15 +89,4 @@ export const THM = defineStock({
       bbRate: 0.005,
     },
   ],
-
-  burry: {
-    sbc: 1.0,
-    gaapNi: -4,
-    buyback: 0,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 100,
-    overstatementSource: 'estimated',
-    note: 'Tragic by default — pre-production gold-miner exploration company with no revenue and ongoing losses. SBC ~$1M is tiny in absolute terms but exceeds nothing meaningful since GAAP NI is -$4M. Burry framework breaks down for option-like assets; the underlying thesis is a NPV bet on the Livengood project, not earnings.',
-  },
 });

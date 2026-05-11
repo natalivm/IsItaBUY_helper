@@ -80,13 +80,13 @@ export const CRWD = defineStock({
   bullMaOptVal: false,
 
   burry: {
-    sbc: 1100,
+    sbc: 1097,
     gaapNi: -162,
     buyback: 0,
     epsBasis: 'NON_GAAP',
     fy: 'FY26',
     overstatementPct: 100,
     overstatementSource: 'estimated',
-    note: 'Burry explicitly cites CRWD in his SBC overstatement list. FY26 GAAP NI -$162M with $1.1B SBC; under full-SBC adjustment (mark-to-market vesting at $526 share price + payroll tax) real owner earnings are firmly negative. Q4 turned GAAP-profitable but the full year still flunks.',
+    note: 'Burry explicitly cites CRWD. TIKR LTM actuals: SBC $1,097M (22.8% of revenue — extreme), GAAP NI -$162M (loss), buybacks $0. The most damning single number: SBC = 83.7% of reported FCF. Headline FCF $1.31B drops to TRUE OWNER FCF of just $213M once you treat SBC as the real cash cost it is — a 6× distortion. Diluted shares +15% over 5 years (218M → 251M), zero buyback offset, so all dilution lands on shareholders directly. Loss-making stocks like CRWD break the overstatement % math; the 100% label is a placeholder meaning real owner economics are deeply negative.',
   },
 });

@@ -6,6 +6,7 @@ import { getInstitutionalRating } from '../services/projectionService';
 import { RATING_DEFS, RatingKey } from '../constants';
 import { cn } from '../utils';
 import { Lightbulb, AlertTriangle } from 'lucide-react';
+import { tierFromOverstatement } from '../services/burryTier';
 
 interface Props {
   tickerDef: TickerDefinition;
@@ -202,34 +203,26 @@ const InvestmentVerdict: React.FC<Props> = ({
         const adjustedPw = investmentConclusion.pwAvg * coef;
         // 5y target shrinks by coef → new CAGR = (1 + pwCagr) × coef^(1/5) − 1
         const adjustedCagr = ((1 + investmentConclusion.cagr / 100) * Math.pow(coef, 1 / 5) - 1) * 100;
-        const haircut = b.overstatementPct;
-        const tierColor = b.overstatementPct >= 70
-          ? 'text-rose-300'
-          : b.overstatementPct >= 30
-            ? 'text-amber-300'
-            : 'text-lime-300';
-        const tierBg = b.overstatementPct >= 70
-          ? 'bg-rose-500/10 border-rose-500/40'
-          : 'bg-amber-500/10 border-amber-500/40';
+        const tier = tierFromOverstatement(b.overstatementPct);
         const sourceLabel = b.overstatementSource === 'burry-published'
           ? 'Burry-published'
           : 'estimated full-SBC adjustment';
         return (
-          <div className={cn('mt-6 pt-6 border-t border-slate-800/80')}>
+          <div className="mt-6 pt-6 border-t border-slate-800/80">
             <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
               <AlertTriangle className="w-3 h-3 text-amber-400" />
               <span>Burry-Adjusted Read</span>
             </div>
-            <div className={cn('p-4 rounded-lg border', tierBg)}>
+            <div className={cn('p-4 rounded-lg border', tier.bg, tier.border)}>
               <p className="text-sm text-slate-200 leading-relaxed">
                 Applying the {sourceLabel} overstatement of{' '}
-                <span className={cn('font-black', tierColor)}>{haircut}%</span>{' '}
+                <span className={cn('font-black', tier.color)}>{b.overstatementPct}%</span>{' '}
                 to the model's PW target trims it from{' '}
                 <span className="font-black text-white">{usd(investmentConclusion.pwAvg)}</span> to{' '}
-                <span className={cn('font-black', tierColor)}>{usd(adjustedPw)}</span>{' '}
+                <span className={cn('font-black', tier.color)}>{usd(adjustedPw)}</span>{' '}
                 and the 5Y CAGR from{' '}
                 <span className="font-black text-white">{pctFmt(investmentConclusion.cagr / 100)}</span> to{' '}
-                <span className={cn('font-black', tierColor)}>{pctFmt(adjustedCagr / 100)}</span>.{' '}
+                <span className={cn('font-black', tier.color)}>{pctFmt(adjustedCagr / 100)}</span>.{' '}
                 The model verdict above is unchanged — this is a parallel read, not a model override.
               </p>
             </div>

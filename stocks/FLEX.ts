@@ -58,15 +58,4 @@ export const FLEX = defineStock({
   termGrowth: [0.015, 0.02, 0.025],
   bbRate: [0.01, 0.025, 0.035],
   ebitdaProxy: [0.07, 0.09, 0.11],
-
-  burry: {
-    sbc: 90,
-    gaapNi: 944,
-    buyback: 1000,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 12,
-    overstatementSource: 'estimated',
-    note: 'Pristine — EMS profile with low SBC (~$90M) vs FY25 GAAP NI ~$944M (EPS $2.65 × 356M). Aggressive buybacks at ~$1B/yr cover SBC ~11× — structural share-count compression. Margins thin but capital allocation is among the cleanest in coverage.',
-  },
 });

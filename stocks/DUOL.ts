@@ -82,13 +82,13 @@ export const DUOL = defineStock({
   ],
 
   burry: {
-    sbc: 300,
-    gaapNi: 414,
-    buyback: 50,
+    sbc: 137,
+    gaapNi: 120,
+    buyback: 42,
     epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 75,
+    fy: 'FY25',
+    overstatementPct: 45,
     overstatementSource: 'estimated',
-    note: 'Tragic — naive SBC/NI 72% (SBC ~$300M vs FY25 GAAP NI $414M). Minimal buyback program means dilution is essentially unoffset. Stock peaked near $500 then retraced to $108 — even with the drawdown, vested awards from the up-cycle period carry significant MTM cost. baseEps $3.40 is non-GAAP — material P/E haircut applies.',
+    note: 'Critical (downgraded from original Tragic 75% estimate after TIKR refresh). FY25 actuals: SBC $137M (just 12.8% of revenue — much lower than my $300M estimate; in NOW/PLTR territory rather than DDOG/ZS), buybacks $42M (covers 31% of SBC — partial offset). FCF margin 37.9% is genuinely elite — cash generation is real, not just SBC addback (SBC = 32.6% of CFO vs DDOG 70%, ZS 66%). The dilution story is post-IPO normalization: 23M (FY21) → 48M shares (LTM) = +107% but mostly from IPO + 2022 follow-ons. Post-IPO from FY22→LTM = +22.7% / +7.1%/yr (still elevated). GAAP just turned profitable (operating margin 14.8% LTM). Elite consumer-subscription economics + improving capital allocation = reclassified out of broken-SaaS cohort.',
   },
 });

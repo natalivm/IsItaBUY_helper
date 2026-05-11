@@ -89,15 +89,4 @@ export const TER = defineStock({
       fcfUplift: [0.005, 0.01, 0.015, 0.015, 0.02],
     },
   ],
-
-  burry: {
-    sbc: 120,
-    gaapNi: 700,
-    buyback: 785,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 25,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~25% overstatement — Ok tier. Naive SBC/NI ~17% (estimated FY25 SBC $120M vs GAAP NI ~$700M). FY25 buybacks $785M cover SBC ~6.5×; authorization raised to $1B through 2026. Burry-friendly capital return profile cushions the 4.5× 3yr stock MTM amplifier. baseEps $6.43 is non-GAAP — modest haircut applies.',
-  },
 });

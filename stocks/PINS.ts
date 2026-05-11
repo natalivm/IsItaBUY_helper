@@ -17,8 +17,7 @@ export const PINS = defineStock({
   beta: 1.58,
   rsRating: 10,
   aiImpact: 'DISRUPTION_RISK',
-  strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners. " +
-  "Burry full-SBC adjustment (estimated): 80% overstatement (Tragic) — real owner economics ~20% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners. ",
 
 
   analystConsensus: { rating: 'Buy', targetLow: 15, targetMedian: 28, targetHigh: 50, numAnalysts: 26 },
@@ -39,15 +38,4 @@ export const PINS = defineStock({
   ],
 
   bullMaOptVal: 15.42 * 676.0 * 0.07,
-
-  burry: {
-    sbc: 880,
-    gaapNi: 417,
-    buyback: 600,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 80,
-    overstatementSource: 'estimated',
-    note: 'Tragic — naive SBC/NI is 211% (FY25 SBC $880M vs GAAP NI $417M; SBC was 22.8% of revenue in Q2). Buybacks ~$600M FY25 only partially offset SBC dilution. Q1 2026 saw a $2B buyback acceleration which may improve the picture going forward. The non-GAAP profitability story largely exists by adding SBC back to operating losses.',
-  },
 });

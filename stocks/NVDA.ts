@@ -57,13 +57,13 @@ export const NVDA = defineStock({
   ],
 
   burry: {
-    sbc: 6400,
+    sbc: 6386,
     gaapNi: 120067,
-    buyback: 40600,
+    buyback: 48035,
     epsBasis: 'GAAP',
     fy: 'FY26',
     overstatementPct: 29,
     overstatementSource: 'burry-published',
-    note: 'Elevated per Burry — real owner profit ~71% of GAAP after full SBC adjustment. The naive SBC/NI ratio (~5%) understates the true economic cost: vested equity at NVDA\'s share price translates to ~$30B+ of effective dilution cost, partially but not fully offset by the $40.6B FY26 buyback.',
+    note: 'Elevated per Burry — real owner profit ~71% of GAAP. FY26 actuals (TIKR): SBC $6,386M, GAAP NI $120,067M, buybacks $48,035M (+18% YoY from $40,638M FY25). Naive SBC/NI is only 5.3%, but with NVDA stock 6.7× since 2022 grants, the true MTM economic cost is ~$43B/yr — buybacks ($48B) more than cover it on a cash basis, but Burry still recognizes the SBC adjustment because the dilution is real regardless of how the buybacks are spent. Calibrated 4y-MTM formula reproduces 30.5% from these inputs, within 1.5pp of Burry\'s 29%.',
   },
 });

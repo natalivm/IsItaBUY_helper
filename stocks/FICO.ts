@@ -55,13 +55,13 @@ export const FICO = defineStock({
   ],
 
   burry: {
-    sbc: 170,
+    sbc: 157,
     gaapNi: 652,
-    buyback: 1400,
+    buyback: 1619,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
-    overstatementPct: 22,
+    overstatementPct: 18,
     overstatementSource: 'estimated',
-    note: 'Estimated ~22% overstatement — on the OK boundary. Naive SBC/NI 26% (SBC ~$170M vs FY25 GAAP NI $652M). Massive $1.4B buyback covers SBC ~8.2× = structural share-count compression on a tiny float (23.7M). The MTM amplifier from 5× 3yr stock is offset by aggressive buyback retirement — cleaner profile than typical software peers.',
+    note: 'Ok (downgraded from original 22% after TIKR refresh confirms even cleaner profile). FY25 TIKR actuals: SBC $157M (7.3% of revenue — excellent), buybacks $1,619M (LTM $1,923M = **12× SBC coverage** — best ratio in our entire coverage). Diluted shares 29.26M (FY21) → 24.11M (LTM) = **−17.6% over 5 years** at −3.8%/yr. This is the strongest net buyback profile in our 70-stock universe. SBC = 18% of CFO (elite); SBC = 18% of FCF — far cleaner than DDOG/ZS/AXON (66-3,222%). Model behaves like Moody\'s/SPGI/VeriSign-style monopoly compounder rather than dilution-dependent SaaS. Risk note: FICO funds buybacks partly with debt issuance, which adds modest financial risk but is manageable given 50%+ operating margins.',
   },
 });

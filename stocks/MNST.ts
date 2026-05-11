@@ -61,15 +61,4 @@ export const MNST = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
-
-  burry: {
-    sbc: 252,
-    gaapNi: 1910,
-    buyback: 100,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 22,
-    overstatementSource: 'estimated',
-    note: 'Ok — naive SBC/NI 13% (FY25 SBC $252M vs $1.91B GAAP NI). SBC up 25% YoY (concerning trend). $500M buyback authorization remains but no shares retired in Q2/Q4 2025. Beverage CPG profile is structurally Burry-friendly thanks to capital-light operations; absolute SBC stays modest.',
-  },
 });

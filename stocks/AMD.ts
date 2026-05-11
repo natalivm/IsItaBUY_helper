@@ -101,13 +101,13 @@ export const AMD = defineStock({
   ],
 
   burry: {
-    sbc: 3700,
-    gaapNi: 4300,
-    buyback: 1500,
+    sbc: 487,
+    gaapNi: 5009,
+    buyback: 355,
     epsBasis: 'NON_GAAP',
-    fy: 'FY25',
+    fy: 'FY25 LTM',
     overstatementPct: 32,
     overstatementSource: 'burry-published',
-    note: 'Critical per Burry — 32% overstatement (real owner profit ~68% of GAAP). FY25 GAAP NI $4.3B vs SBC $3.7B (naive 86% — already alarming). Buyback $1.5B covers SBC only 0.4× as cash is reserved for AI capex. Burry explicitly cites AMD in his Cassandra Unchained list. baseEps $5.50 is non-GAAP forward, so a meaningful P/E haircut applies.',
+    note: 'Critical per Burry — 32% overstatement. FY25 LTM actuals (TIKR): SBC $487M, GAAP NI $5.0B, buybacks just $355M = 0.73× SBC. Real dilution is the story: diluted share count grew from 1,229M (FY21) to 1,642M (LTM) = +33.6% over 5 years (+6%/yr CAGR). Unlike LRCX (which shrinks the float but at 10× MTM cost), AMD has not yet inflected to net buybacks. Stock +4-5× since 2021 grants amplifies the MTM cost; calibrated formula reproduces 34.5% from these inputs, within 2.5pp of Burry\'s 32%.',
   },
 });

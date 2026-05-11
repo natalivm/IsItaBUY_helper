@@ -80,13 +80,13 @@ export const INTU = defineStock({
   prob: [25, 50, 25],
 
   burry: {
-    sbc: 1970,
-    gaapNi: 3900,
-    buyback: 2800,
+    sbc: 1968,
+    gaapNi: 4340,
+    buyback: 3754,
     epsBasis: 'GAAP',
     fy: 'FY25',
     overstatementPct: 32,
     overstatementSource: 'burry-published',
-    note: 'Critical per Burry — 32% overstatement, real owner profit ~68% of GAAP. Naive SBC/NI 51% (FY25 SBC $1.97B vs GAAP NI $3.9B). Buybacks $2.8B cover SBC ~1.4× — partial but insufficient offset given the ~3-4× 3yr stock MTM amplifier (peak $813 → $396 has compressed it but vested awards in the $500-800 range still carry MTM cost).',
+    note: 'Critical per Burry — 32% overstatement. FY25 calendar actuals (TIKR): SBC $1,968M (10.1% of revenue — very heavy), buybacks $3,754M = 2.1× SBC. Despite buybacks consistently exceeding SBC, diluted share count grew 273M → 282M over 5 years (+3.3%) because gross issuance roughly equals gross retirements. Our 4y-MTM formula breaks down here because the stock is flat-to-down over 4 years ($430 → $396, multiplier 0.92×), producing a perverse negative haircut. Burry\'s 32% reflects the absolute SBC burden ($2B/yr is real money) rather than MTM amplification. Trust the published value; do not apply our calculator to flat-stock + high-SBC names like INTU.',
   },
 });
