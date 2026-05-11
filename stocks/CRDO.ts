@@ -65,4 +65,15 @@ export const CRDO = defineStock({
 
   bbRate: [0, 0, 0],
   ebitdaProxy: [0.15, 0.25, 0.38],
+
+  burry: {
+    sbc: 161,
+    gaapNi: 250,
+    buyback: 16,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25 LTM',
+    overstatementPct: 80,
+    overstatementSource: 'estimated',
+    note: 'Tragic — TIKR LTM actuals: SBC $161M (15.1% of revenue), buybacks just $16M (covers 10% of SBC). Operating leverage just inflected dramatically: -19% margin FY24 → +30% LTM. GAAP NI ~$250M LTM (improving fast). The catch: diluted shares 155M (FY24) → 186M (LTM) = +20% in ONE year, on top of post-IPO baseline of 88M (FY22). SBC = 47% of CFO, 57% of FCF — half of reported FCF is SBC addback (true owner FCF ~11.5% margin vs headline 26.6%). 4y MTM extreme (~13-15× since IPO) breaks the formula. The 80% estimate places CRDO between PLTR (70%, more mature buyback) and the deeply broken cohort. CRDO\'s operational excellence (68% gross margin, 30% operating margin, 107% revenue CAGR) is genuine; the question is whether SBC will normalize as growth matures, or remain structurally elevated. Watch FY27 share count trajectory.',
+  },
 });
