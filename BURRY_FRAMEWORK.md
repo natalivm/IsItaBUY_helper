@@ -31,7 +31,7 @@ Why does Wall Street use non-GAAP earnings, and which is correct?
 
 **Why the market ignores it**: companies report non-GAAP, analysts model non-GAAP, every tech firm uses non-GAAP, and pointing out SBC dilution costs analysts their access. The structural blind spot is real.
 
-## Calibration history — 7 anchors
+## Calibration history — 8 anchors
 
 The formula: `overstatement % = (SBC × MTM_multiplier − SBC) / GAAP_NI × 100`
 Where `MTM_multiplier = current_price / stock_price_4y_ago`
@@ -42,6 +42,7 @@ Where `MTM_multiplier = current_price / stock_price_4y_ago`
 | **AMD** | SBC $487M, NI $5,009M, BB $355M | 4.55× | 34.5% | 32% | +2.5pp ✓ |
 | **NVDA** | SBC $6,386M, NI $120,067M, BB $48,035M | 6.72× | 30.5% | 29% | +1.5pp ✓ |
 | **NFLX** | SBC $368M, NI $10,981M, BB $9,173M | 4.35× (split) | 11% | 22% | −11pp ❌ |
+| **SNPS** | SBC $893M, NI $1,336M, BB $306M | 1.72× | 48% | 31% | +17pp ❌ |
 | **INTU** | SBC $1,968M, NI $4,340M, BB $3,754M | 0.92× | −3.7% | 32% | −36pp ❌ |
 | **META** | SBC $20,427M, NI $63,000M, BB $44,648M | 3.2× | 71% | 20% | +51pp ❌ |
 | **AMZN** | SBC $19,467M, NI $77,670M, BB $0 | 2.275× | 32% | 21% | +11pp ⚠️ |
