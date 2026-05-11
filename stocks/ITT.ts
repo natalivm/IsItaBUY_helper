@@ -39,15 +39,4 @@ export const ITT = defineStock({
   ],
 
   bullMaOptVal: 186 * 86 * 0.07,
-
-  burry: {
-    sbc: 30,
-    gaapNi: 480,
-    buyback: 200,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 12,
-    overstatementSource: 'estimated',
-    note: 'Pristine — flow-control industrial with low SBC (~$30M) vs FY25 GAAP NI ~$480M. Modest but consistent buybacks cover SBC ~6×. Standard Burry-friendly industrial profile.',
-  },
 });

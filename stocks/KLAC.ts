@@ -26,8 +26,7 @@ export const KLAC = defineStock({
     "Revenue CAGR ~13.6% (FY25–30E) with EPS growing faster at ~14–16% CAGR via margin expansion, buybacks, and operating leverage. Service business targets 12–14% long-term growth (upper end). GM ~62% in 2026, long-term 63%+. " +
     "Near-term headwinds: DRAM chip costs (~75–100 bps) and tariffs (~50–100 bps) pressure 2026 gross margins. China exposure mid/high-20% of revenue — any tightening of restrictions is a material risk. " +
     "At ~50x trailing P/E and ~41x forward, the stock prices in the strong phase of the semicap cycle. Expected total return ~8–10% CAGR. Probability of 15%+ CAGR: ~20%. " +
-    "High-quality cyclical champion at full price. Best entry on cycle correction below $1,100. " +
-    "Burry full-SBC adjustment (estimated): 35% overstatement (Critical) — real owner profit ~65% of GAAP; apply discount when comparing multiples to peers.",
+    "High-quality cyclical champion at full price. Best entry on cycle correction below $1,100. ",
 
   epsCagr: [10, 14, 22],
   exitPE: [25, 28, 40],
@@ -101,15 +100,4 @@ export const KLAC = defineStock({
   ],
 
   updatedOn: '05/08',
-
-  burry: {
-    sbc: 592,
-    gaapNi: 4060,
-    buyback: 2400,
-    epsBasis: 'NON_GAAP',
-    fy: 'FY25',
-    overstatementPct: 35,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~35% overstatement under full-SBC adjustment — crosses Burry\'s 30% Critical threshold. Naive SBC/NI is 15%, but ~5× 3yr stock appreciation ($370 → $1869) drives a large MTM dilution amplifier on vested awards. $2.4B buyback offset is meaningful but doesn\'t fully neutralize.',
-  },
 });

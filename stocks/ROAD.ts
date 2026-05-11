@@ -98,15 +98,4 @@ export const ROAD = defineStock({
       fcfUplift: [0.008, 0.008, 0.010, 0.010, 0.012],
     },
   ],
-
-  burry: {
-    sbc: 15,
-    gaapNi: 125,
-    buyback: 30,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 12,
-    overstatementSource: 'estimated',
-    note: 'Pristine — small-cap construction with very low SBC (~$15M) vs FY25 GAAP NI ~$125M (EPS $2.21). Deleveraging + M&A absorb cash, so buybacks are minimal but SBC is also small. Burry-friendly profile despite the rich multiple.',
-  },
 });

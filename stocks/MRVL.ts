@@ -18,8 +18,7 @@ export const MRVL = defineStock({
   costDebt: 0.055,
   rsRating: 81,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "AI interconnect architect with record FY26 ($8.2B, +42%) and strong FY27 guide (~$11B, +30%). Three engines firing: (1) optical DSP — 70-80% share of 800G, 1.6T in volume production, Celestial AI photonic fabric targets $500M run-rate by Q4 FY28; (2) custom silicon — scaled from near-zero to $1.5B in one year (Amazon Trainium, Microsoft Maia, Google), +20% FY27 with FY28 re-acceleration; (3) switching/CXL — XConn acquisition adds PCIe/CXL depth, 51.2T workhorse + 100T intro. Mgmt targets ~$15B FY28 revenue with non-GAAP EPS 'well over $5'. At $90 entry, stock prices significant growth but not yet the FY28 inflection. Key risks: customer concentration (3 hyperscalers drive bulk of growth), Broadcom competition in optical DSPs, 2nm execution risk, AI capex cyclicality. Prob-weighted 5yr target ~$130 → ~8% CAGR at $90 — asymmetric if FY28 delivers. " +
-  "Burry full-SBC adjustment (estimated): 70% overstatement (Tragic) — real owner economics ~30% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "AI interconnect architect with record FY26 ($8.2B, +42%) and strong FY27 guide (~$11B, +30%). Three engines firing: (1) optical DSP — 70-80% share of 800G, 1.6T in volume production, Celestial AI photonic fabric targets $500M run-rate by Q4 FY28; (2) custom silicon — scaled from near-zero to $1.5B in one year (Amazon Trainium, Microsoft Maia, Google), +20% FY27 with FY28 re-acceleration; (3) switching/CXL — XConn acquisition adds PCIe/CXL depth, 51.2T workhorse + 100T intro. Mgmt targets ~$15B FY28 revenue with non-GAAP EPS 'well over $5'. At $90 entry, stock prices significant growth but not yet the FY28 inflection. Key risks: customer concentration (3 hyperscalers drive bulk of growth), Broadcom competition in optical DSPs, 2nm execution risk, AI capex cyclicality. Prob-weighted 5yr target ~$130 → ~8% CAGR at $90 — asymmetric if FY28 delivers. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 90, targetMedian: 120, targetHigh: 155, numAnalysts: 30 },
@@ -62,13 +61,13 @@ export const MRVL = defineStock({
   ],
 
   burry: {
-    sbc: 620,
-    gaapNi: 500,
-    buyback: 700,
-    epsBasis: 'GAAP',
+    sbc: 591,
+    gaapNi: 2670,
+    buyback: 2281,
+    epsBasis: 'NON_GAAP',
     fy: 'FY26',
-    overstatementPct: 70,
+    overstatementPct: 35,
     overstatementSource: 'estimated',
-    note: 'Burry explicitly cites MRVL in his Cassandra Unchained list. FY25 was GAAP-loss (-$885M) on $597M SBC; FY26 just turned slightly positive but SBC ($620M) still exceeds GAAP NI on a naive basis. Under full-SBC adjustment with ~3.8× 3yr stock MTM amplifier, real owner profit is firmly negative. The "AI interconnect architect" thesis works on FCF, not GAAP earnings.',
+    note: 'Critical (downgraded from earlier 70% Tragic estimate after TIKR refresh). FY26 TIKR actuals: SBC $591M (7.2% of revenue — moderate), buybacks $2,281M = 3.86× SBC coverage (the inflection point). GAAP NI $2.67B FY26 (EPS $3.07) — major swing from -$1.02 EPS FY25; operating income flipped from -$8.5M to +$1.34B. The 30% cumulative 5y dilution is real but largely M&A-related (Inphi, Cavium acquisitions issued stock), not pure SBC. Adjusted FCF view: $1.4B reported FCF − $591M SBC = ~$806M true owner FCF (9.8% margin). 4y MTM ~3.4× ($50 → $170) puts MRVL in the formula\'s low-MTM unreliable zone; the 35% estimate splits the difference between META\'s 20% (similar buyback profile) and the original 70% I had (which over-weighted the dilution history without crediting the recent buyback inflection).',
   },
 });

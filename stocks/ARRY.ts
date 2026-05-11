@@ -18,8 +18,7 @@ export const ARRY = defineStock({
   costDebt: 0.065,
   rsRating: 58,
   aiImpact: 'NEUTRAL',
-  strategicNarrative: "Cyclical growth (Type B) solar tracker — post-earnings update. 2025 actual: revenue ~$1.28B (+40% YoY), tracker volume +35%, record order book $2.2B (book-to-bill 2x), 95% domestic backlog, >50% Tier 1 customers. APA already EBITDA-accretive. 2026 guide: revenue $1.4–1.5B, adj. EBITDA $200–230M, adj. EPS $0.65–0.75. What improved: backlog quality, Tier 1 mix, share gains, APA/SG&A leverage, software/services recurring layer. What stayed weak: gross margin ceiling (mgmt admits pricing competition), FCF conversion weak ($80M on $188M EBITDA, 2026 'similar to 2025'), international selective due to price war risk. Moat weak-to-medium: DuraTrack tech, terrain-following, wind-stow, integrated foundation+tracker, but mgmt itself admits pricing pressure. Growth driver split: revenue expansion > margin expansion (SG&A leverage from ~15% to ~10%) > financial engineering (minimal buybacks). Not a compounder — execution + cycle story with better visibility post-call. Prob-weighted expected CAGR ~9.4% at current price. Fair entry for 15% CAGR: ~$5.3–5.7. Probability of 15%+: ~40–45%. RS 24 = market not yet buying recovery narrative — watchlist / tactical position, not high-conviction leader. " +
-  "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "Cyclical growth (Type B) solar tracker — post-earnings update. 2025 actual: revenue ~$1.28B (+40% YoY), tracker volume +35%, record order book $2.2B (book-to-bill 2x), 95% domestic backlog, >50% Tier 1 customers. APA already EBITDA-accretive. 2026 guide: revenue $1.4–1.5B, adj. EBITDA $200–230M, adj. EPS $0.65–0.75. What improved: backlog quality, Tier 1 mix, share gains, APA/SG&A leverage, software/services recurring layer. What stayed weak: gross margin ceiling (mgmt admits pricing competition), FCF conversion weak ($80M on $188M EBITDA, 2026 'similar to 2025'), international selective due to price war risk. Moat weak-to-medium: DuraTrack tech, terrain-following, wind-stow, integrated foundation+tracker, but mgmt itself admits pricing pressure. Growth driver split: revenue expansion > margin expansion (SG&A leverage from ~15% to ~10%) > financial engineering (minimal buybacks). Not a compounder — execution + cycle story with better visibility post-call. Prob-weighted expected CAGR ~9.4% at current price. Fair entry for 15% CAGR: ~$5.3–5.7. Probability of 15%+: ~40–45%. RS 24 = market not yet buying recovery narrative — watchlist / tactical position, not high-conviction leader. ",
 
   analystConsensus: { rating: 'Hold', targetLow: 6, targetMedian: 10, targetHigh: 16, numAnalysts: 10 },
   revGrowth: [
@@ -56,15 +55,4 @@ export const ARRY = defineStock({
       bbRate: 0.02,
     },
   ],
-
-  burry: {
-    sbc: 28,
-    gaapNi: -112,
-    buyback: 0,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 100,
-    overstatementSource: 'estimated',
-    note: 'Tragic — FY25 GAAP loss $112M (driven by $29.5M inventory charge + $102.6M goodwill impairment), with SBC ~$28M unable to be evaluated against negative NI. Underlying operations show Adj EBITDA $187.6M and Adj EPS $0.67, so the SBC/(adjusted NI) ratio is more like ~25-30% (Critical), but Burry framework breaks down for GAAP loss-makers. Watch FY26 if profitability returns.',
-  },
 });

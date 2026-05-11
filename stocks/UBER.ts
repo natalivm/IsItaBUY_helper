@@ -22,8 +22,7 @@ export const UBER = defineStock({
     "Uber is a global mobility + delivery platform with $43.5B revenue, 11% FCF margins, and the theoretical optionality of becoming the platform-as-a-service layer for autonomous vehicles. " +
     "The problem: RS 16 signals aggressive institutional rotation out as AV promise meets regulatory friction and Waymo/Tesla competition threatens the core ride-hailing moat. " +
     "If Uber becomes the demand aggregator for AVs (fleet management, routing, insurance, demand matching), the platform value compounds far beyond current pricing. If AVs disintermediate Uber, the moat erodes. " +
-    "Heavy distribution phase — wait for RS recovery above 40 before building a position. The AV optionality is real but the tape says institutions aren't paying for it yet. " +
-    "Burry full-SBC adjustment (estimated): 30% overstatement (Critical) — real owner profit ~70% of GAAP; apply discount when comparing multiples to peers.",
+    "Heavy distribution phase — wait for RS recovery above 40 before building a position. The AV optionality is real but the tape says institutions aren't paying for it yet. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 72, targetMedian: 107, targetHigh: 150, numAnalysts: 33 },
@@ -41,15 +40,4 @@ export const UBER = defineStock({
   ],
 
   bullMaOptVal: 78.45 * 2110 * 0.07,
-
-  burry: {
-    sbc: 1830,
-    gaapNi: 5100,
-    buyback: 6500,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 30,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~30% overstatement. Headline FY25 GAAP NI $10.1B but ~$5B was a one-time tax valuation release; core operating GAAP NI ~$5.1B (used here). SBC $1.83B = 36% of core NI naive. Buyback $6.5B/yr covers SBC ~3.6× — strong offset, similar to NVDA tier. Solid cash returns but SBC cost still meaningful at MTM.',
-  },
 });

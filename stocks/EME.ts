@@ -76,15 +76,4 @@ export const EME = defineStock({
       fcfUplift: [0.005, 0.005, 0.005, 0.005, 0.005],
     },
   ],
-
-  burry: {
-    sbc: 50,
-    gaapNi: 1156,
-    buyback: 500,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 12,
-    overstatementSource: 'estimated',
-    note: 'Pristine — construction-services profile with very low SBC (~$50M) vs FY25 GAAP NI ~$1.16B (record adj EPS $25.87). $500M buyback covers SBC ~10×. Industrial union-labor cost structure means equity comp is structurally minimal.',
-  },
 });

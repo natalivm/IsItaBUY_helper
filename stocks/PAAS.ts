@@ -95,15 +95,4 @@ export const PAAS = defineStock({
       bbRate: 0.012,
     },
   ],
-
-  burry: {
-    sbc: 25,
-    gaapNi: 1640,
-    buyback: 50,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 8,
-    overstatementSource: 'estimated',
-    note: 'Pristine — silver miner with very low SBC (~$25M) vs estimated FY25 GAAP NI ~$1.64B (record adj EPS $1.11 in Q4 alone). Capital absorbed in mine development, not equity comp. Cyclical commodity earnings dwarf SBC by orders of magnitude in up-cycle.',
-  },
 });

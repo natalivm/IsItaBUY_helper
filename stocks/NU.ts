@@ -76,15 +76,4 @@ export const NU = defineStock({
   bbRate: [0.0, 0.0, 0.0],          // No buybacks — growth reinvestment
   ebitdaProxy: [0.22, 0.28, 0.36],  // Bull upgraded: AI efficiency + op leverage
   bullMaOptVal: false,               // Regulatory complexity limits M&A optionality
-
-  burry: {
-    sbc: 180,
-    gaapNi: 2869,
-    buyback: 0,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 15,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~15% overstatement — Pristine for an EM fintech. Naive SBC/NI just 6% (SBC ~$180M vs $2.87B GAAP NI, +45% YoY). No buyback program (capital reinvested for growth) means dilution is unoffset, but absolute SBC scale on 5.25B share base keeps the per-share impact small. Banks/fintechs structurally have lower SBC than software, and NU\'s record ROE 33% reflects genuine capital-light economics.',
-  },
 });

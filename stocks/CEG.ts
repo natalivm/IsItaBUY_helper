@@ -52,15 +52,4 @@ export const CEG = defineStock({
   ],
 
   bbRate: [0.005, 0.012, 0.025],
-
-  burry: {
-    sbc: 80,
-    gaapNi: 2360,
-    buyback: 600,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 10,
-    overstatementSource: 'estimated',
-    note: 'Pristine — utility profile with low SBC (~$80M) vs FY25 GAAP NI ~$2.4B (GAAP EPS $7.40). $5B buyback authorization with $600M deployed. baseEps $9.39 is non-GAAP/operating; GAAP-to-non-GAAP gap driven by hedge fair-value swings, not SBC. Among the cleanest in the AI-tailwind cohort.',
-  },
 });

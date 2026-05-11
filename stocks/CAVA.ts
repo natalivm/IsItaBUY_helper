@@ -28,8 +28,7 @@ export const CAVA = defineStock({
     "FCF dropped to $26M from $53M prior year on heavy capex. Tax rate jumping from 10% to 25-30% in FY2026 will hit EPS hard. " +
     "Management guiding conservative 3-5% SSS and cutting NRO productivity assumption to 90% (from 100%+). " +
     "Salmon launch adds ~100bps RLP margin headwind. At ~125x fwd P/E, the stock still prices in near-flawless execution " +
-    "while same-store momentum is fading and margins are under pressure from reinvestment. OVERVALUED until valuation resets meaningfully. " +
-    "Burry full-SBC adjustment (estimated): 50% overstatement (Critical) — real owner profit ~50% of GAAP; apply discount when comparing multiples to peers.",
+    "while same-store momentum is fading and margins are under pressure from reinvestment. OVERVALUED until valuation resets meaningfully. ",
 
   epsCagr: [13, 27, 37],
   exitPE: [25, 35, 50],
@@ -103,15 +102,4 @@ export const CAVA = defineStock({
       bbRate: 0.005,
     },
   ],
-
-  burry: {
-    sbc: 25,
-    gaapNi: 64,
-    buyback: 0,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 50,
-    overstatementSource: 'estimated',
-    note: 'Critical — naive SBC/NI ~39% (estimated FY25 SBC $25M vs FY25 GAAP NI $63.7M, down from $130M FY24 due to last year\'s $80M tax-valuation release tailwind). No buyback program. Stock peaked at $172 then halved to $79, but vested awards from the up-cycle still carry significant MTM cost. baseEps $0.54 is non-GAAP.',
-  },
 });

@@ -25,8 +25,7 @@ export const ASTS = defineStock({
     "2026 guidance $150-200M revenue with 45-60 sats targeting orbit; 2027 goal approaching $1B as commercial service scales across US, Europe, Japan, Middle East. " +
     "Management targets 90%+ EBITDA margins at scale, $21-23M/sat cost, 95% vertically integrated manufacturing. Government revenue accelerating via Golden Dome, SHIELD, SDA contracts. " +
     "April 2025: a satellite launch failure pressured the stock -10.7% and trimmed RS from 97 to 90. Existing constellation intact; $3.9B cash provides runway to absorb delays. " +
-    "Risk remains execution: launch cadence recovery, stacking validation, and dilution from convertibles/ATM. Execution-or-bust thesis intact but bear-case probability elevated near-term. " +
-    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+    "Risk remains execution: launch cadence recovery, stacking validation, and dilution from convertibles/ATM. Execution-or-bust thesis intact but bear-case probability elevated near-term. ",
 
   analystConsensus: { rating: 'Hold', targetLow: 43, targetMedian: 70, targetHigh: 137, numAnalysts: 9 },
   revGrowth: [
@@ -58,15 +57,4 @@ export const ASTS = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
-
-  burry: {
-    sbc: 47,
-    gaapNi: -342,
-    buyback: 0,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 100,
-    overstatementSource: 'estimated',
-    note: 'Pre-revenue/pre-commercial — FY25 GAAP loss $342M on $71M revenue and $47M SBC. Burry framework breaks down for loss-makers; real owner economics are deeply negative regardless of any "story" multiple. CEO compensation disclosures (Apr 2026) drove a share-price slide and reinforce dilution concerns. Tragic until commercial deployment proves unit economics.',
-  },
 });

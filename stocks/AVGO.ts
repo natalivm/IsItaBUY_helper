@@ -19,8 +19,7 @@ export const AVGO = defineStock({
   rsRating: 79,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative: "The debate has moved from 'will growth happen?' to 'how much multiple for 22.8% EPS CAGR at $1.6T scale?' $73B AI backlog provides 18-month visibility. Q1 AI revenue +100% YoY. VMware adds $20B+ in sticky recurring software. Street numbers are now order-book validated — the biggest risk is exit multiple, not execution. " +
-  "Burry full-SBC adjustment (estimated): 75% overstatement (Tragic) — real owner economics ~25% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "The debate has moved from 'will growth happen?' to 'how much multiple for 22.8% EPS CAGR at $1.6T scale?' $73B AI backlog provides 18-month visibility. Q1 AI revenue +100% YoY. VMware adds $20B+ in sticky recurring software. Street numbers are now order-book validated — the biggest risk is exit multiple, not execution. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 335, targetMedian: 454, targetHigh: 525, numAnalysts: 30 },
@@ -60,15 +59,4 @@ export const AVGO = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.015],
     },
   ],
-
-  burry: {
-    sbc: 14500,
-    gaapNi: 23126,
-    buyback: 7176,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 75,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~75% overstatement — the most severe in our coverage. VMware integration drove SBC +74% YoY to $14.5B (63% of GAAP NI naive). Under full-SBC adjustment with ~4× post-split stock MTM and $7.2B buyback covering only half the dilution, real owner earnings are ~25% of GAAP. SBC may normalize lower as VMware vesting completes (3-4yr), but FY25 prints as a Critical-tier overstatement year.',
-  },
 });
