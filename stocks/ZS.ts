@@ -5,20 +5,20 @@ export const ZS = defineStock({
   name: 'Zscaler',
   sector: 'Cybersecurity / Zero Trust',
   themeColor: '#0067D9',
-  currentPrice: 240,
-  fairPriceRange: '$150 - $320',
-  shares0: 157,
-  rev25: 2673,
+  currentPrice: 152.13,
+  fairPriceRange: '$115 - $280',
+  shares0: 161,
+  rev25: 3000,
   fcfMargin25: 0.30,
   taxRate: 0.20,
-  cash: 2700,
+  cash: 3508,
   debt: 1150,
-  beta: 1.25,
+  beta: 0.98,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 3.50,
-  rsRating: 65,
-  rsTrend: 'flat',
+  baseEps: 4.57,
+  rsRating: 55,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   updatedOn: '05/10',
@@ -30,11 +30,13 @@ export const ZS = defineStock({
     "DDOG 21.3%, AXON 21.1%, CRWD 22.8%, but ZS tops them all. SBC = **66.2% of operating cash flow** and **77.9% of reported FCF**. The 'cash machine' narrative depends on counting SBC as non-cash; without that addback, true owner economics shrink dramatically. " +
     "Zero buybacks across all years. Diluted shares 136M (FY21) → 157M (LTM) = +16% cumulative / +3.0%/yr — better than PLTR/AXON but unoffset by any repurchase program. " +
     "GAAP profitability remains elusive: operating margin LTM -4.4%, has narrowed from -14% in FY23 but stays negative. The path to 20%+ operating margin requires either (a) SBC ratio compressing dramatically — historically rare for high-growth SaaS, or (b) revenue growing far faster than comp — possible but needs continued 25%+ growth. " +
-    "Valuation: at $240 / ~$38B market cap on $3.50 forward non-GAAP EPS, forward P/E ~69×. Forward P/S ~12×. Premium multiple for a high-growth cybersec leader, but priced for sustained 25%+ growth + eventual operating leverage. " +
-    "Bull (~30%): Zero-trust supercycle extends + AI security inflection, growth holds 25%+, margins finally inflect to 15%+ by FY28 → $320. Base (~45%): Growth decelerates to 18-20%, margins slowly improve, multiple compresses → $240-280. Bear (~25%): Competition (PANW, Microsoft Entra, Cisco) intensifies, growth halves, SBC stays structural, multiple compresses to 30× → $150-180. " +
-    "HOLD — best zero-trust pure-play, but the SBC profile is the worst in our coverage. Burry-cited stock; the framework flags this as deeply Tragic. The bet is zero-trust supercycle + eventual operating leverage. Quality business at a multiple that doesn't account for SBC drag. Wait for $170-190 entry for real margin of safety.",
+    "Valuation context at $152.13 / ~$24B market cap (May 2026): forward P/E 33× on $4.57 forward non-GAAP EPS, forward P/S 8×, EV/Sales 7.6×. Stock has crashed from 52w high of $337 (−55% drawdown), currently +33% above 52w low of $115. YTD −32%, 1Y −35%. RS faded but recently bounced (SMA20 +11%, RSI 61). " +
+    "GAAP picture remains weak: LTM operating margin -4.5%, net income -$67.6M, GAAP EPS -$0.43. The non-GAAP forward EPS of $4.57 vs LTM GAAP -$0.43 = a $5 EPS gap, almost entirely SBC addback. " +
+    "Analyst target median $221 (Recom 1.47 Strong Buy) implies +45% upside, but consensus has been wrong before on ZS. " +
+    "Bull (~30%): Zero-trust supercycle extends + AI security inflection, growth holds 25%+, margins finally inflect to 15%+ by FY28 → $280. Base (~45%): Growth decelerates to 18-20%, margins slowly improve, multiple stays 33× → $175-200. Bear (~25%): Competition (PANW, Microsoft Entra, Cisco) intensifies, growth halves, SBC stays structural, multiple compresses to 22× → $115. " +
+    "HOLD — best zero-trust pure-play, but the SBC profile is the worst in our coverage and the company has yet to generate GAAP profits at scale. Burry-cited stock; the framework flags this as deeply Tragic (95% overstatement). At $152 the multiple is materially more reasonable than at $337 peak, but until ZS shows durable GAAP profitability + initiates buybacks, the dilution overhang remains the dominant risk.",
 
-  analystConsensus: { rating: 'Buy', targetLow: 180, targetMedian: 270, targetHigh: 350, numAnalysts: 30 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 115, targetMedian: 221, targetHigh: 280, numAnalysts: 30 },
 
   revGrowth: [
     [0.15, 0.13, 0.11, 0.10, 0.08], // Bear: PANW Cortex + MSFT Entra erode share, growth halves
@@ -56,7 +58,7 @@ export const ZS = defineStock({
       'Multiple compresses from 69× to 30×. EPS grows at ~10% from $3.50 base. 5yr target ~$150-180, roughly -7% to -5% annualized.',
     'Zero-trust architecture continues winning vs perimeter security. ZS maintains its position as the standard for enterprise SSE. Growth normalizes to 18-20%. ' +
       'Operating leverage gradually delivers: FCF margin expands to 37%, GAAP operating margin reaches 8-10% by FY28. SBC ratio drops from 24% to 17%. ' +
-      'Multiple compresses 69× → 45× through earnings growth. 5yr target ~$240-280, ~2-4% annualized — full valuation already pricing this.',
+      'Multiple compresses 43× → 35× through earnings growth. 5yr target ~$155-175, ~0-3% annualized — fair valuation, modest returns.',
     'Zero-trust + AI security super-cycle. ZS captures the AI-agent security TAM (every agent needs identity + policy). Workload protection + browser isolation become core platform. ' +
       'Operating leverage delivers: FCF margin to 45%, GAAP operating margin to 18%+. SBC ratio falls to 14%. Buybacks initiate in FY28 once cash position justifies it. ' +
       'Multiple holds 50× given platform position. EPS compounds at 25%+ from $3.50 base. 5yr target $320+, ~6-8% annualized.',
@@ -97,12 +99,12 @@ export const ZS = defineStock({
 
   burry: {
     sbc: 661,
-    gaapNi: -130,
+    gaapNi: -68,
     buyback: 0,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
     overstatementPct: 95,
     overstatementSource: 'estimated',
-    note: 'Tragic — Burry explicitly cites ZS in his Cassandra Unchained list. TIKR FY25 actuals: SBC $661M (LTM $737M = 24.6% of revenue — highest in our entire 67-stock coverage). LTM operating margin -4.4%, GAAP NI ~-$130M. The reported $947M FCF is 77.9% SBC addback by accounting math; true owner FCF is closer to $200M after treating SBC as the real cash cost. Zero buybacks across all years. Diluted shares +16% over 5y (+3%/yr). baseEps $3.50 is non-GAAP; GAAP is negative, so the haircut framework already broken. The 95% estimate reflects Burry-cited tier + worst SBC ratio in coverage + no buyback offset + GAAP loss-maker status. ZS makes CRWD look like a buyback hero by comparison.',
+    note: 'Tragic — Burry explicitly cites ZS in his Cassandra Unchained list. TIKR FY25 actuals: SBC $661M (LTM $737M = 24.6% of revenue — highest in our entire coverage). May 2026 finviz refresh: LTM operating margin -4.5%, GAAP NI -$67.6M, GAAP EPS -$0.43. The reported $947M FCF is 77.9% SBC addback by accounting math; true owner FCF is closer to $200M after treating SBC as the real cash cost. Zero buybacks across all years. Diluted shares +16% over 5y (+3%/yr); current 160.57M. baseEps $4.57 is non-GAAP forward; GAAP is negative, so the haircut framework already broken. The 95% estimate reflects Burry-cited tier + worst SBC ratio in coverage + no buyback offset + GAAP loss-maker status. ZS makes CRWD look like a buyback hero by comparison.',
   },
 });
