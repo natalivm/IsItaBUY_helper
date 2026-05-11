@@ -71,13 +71,13 @@ export const MELI = defineStock({
   ],
 
   burry: {
-    sbc: 793,
-    gaapNi: 1900,
+    sbc: 303,
+    gaapNi: 1997,
     buyback: 0,
     epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 50,
+    fy: 'FY25',
+    overstatementPct: 20,
     overstatementSource: 'estimated',
-    note: 'Critical — naive SBC/NI ~42% (LTM SBC $793M, +38.6% YoY against estimated FY25 GAAP NI $1.9B). Aggressive SBC growth is concerning given MELI is now a profitable company. No meaningful buyback program. baseEps $36.69 is non-GAAP — meaningful haircut applies. Region/EM context partially explains higher equity-comp dependence.',
+    note: 'Ok (major downgrade from original Tragic 50% after TIKR refresh). FY25 TIKR actuals: SBC just $303M (2.6× lower than my $793M estimate — apparently I had used a wrong figure), revenue $28.89B = SBC just **1.0% of revenue** (one of the lowest ratios across our entire 70-stock coverage, alongside AMZN 2.7%). SBC = 2.5% of operating cash flow, 2.8% of FCF — elite cash quality. GAAP NI $2.0B FY25 (confirmed). No buyback program (capital reinvested in fintech + logistics expansion), but share count nearly flat: 49.80M (FY21) → 50.70M (LTM) = just +1.8% over 5 years (+0.4%/yr). Formula at 2.33× MTM gives 20% overstatement — clean match. MELI is genuinely a reformed-cohort name (like META/SHOP/NOW/APP) operating in a high-growth EM commerce + fintech market with elite cash conversion (37% FCF margin, $10.8B annual FCF).',
   },
 });
