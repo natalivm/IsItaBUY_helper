@@ -21,8 +21,7 @@ export const TLN = defineStock({
   rsRating: 64,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  strategicNarrative: "Nuclear moat meets AI infrastructure premium. The January 2026 acquisition of 2.6 GW of PJM gas capacity from Energy Capital Partners at 6.6x EBITDA — well below peer comps of 9–11x — transforms TLN into a scale power platform with a compounding FCF engine. The trailing P/E of 77x is an accounting distortion from hedging; the real thesis is >15% annual adjusted FCF/share growth through 2030 as legacy hedges roll off and AI-driven electricity demand accelerates. The Amazon Susquehanna co-location deal is the template: 24/7 carbon-free nuclear baseload cannot be replicated at scale, and hyperscalers will pay a structural premium for it. TLN's low hedge ratios give it the highest leverage to rising power prices among peers — it's a leveraged bet on electricity pricing embedded in a nuclear moat. 12-analyst consensus rates it Strong Buy at a $435 average 12-month target; Scotiabank raised its target to $463 post-acquisition. Key risks: PJM concentration (no ERCOT diversification unlike peers), integration execution on the ECP gas plants, and regulatory exposure to FERC scrutiny on nuclear-to-data-center co-location. Any macro softening or policy setback could reprice this sharply given how much forward value is already baked in. For investors with conviction on the AI power supercycle, TLN is the purest nuclear moat play in the market — but it demands near-perfect execution. " +
-  "Burry full-SBC adjustment (estimated): 90% overstatement (Tragic) — real owner economics ~10% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "Nuclear moat meets AI infrastructure premium. The January 2026 acquisition of 2.6 GW of PJM gas capacity from Energy Capital Partners at 6.6x EBITDA — well below peer comps of 9–11x — transforms TLN into a scale power platform with a compounding FCF engine. The trailing P/E of 77x is an accounting distortion from hedging; the real thesis is >15% annual adjusted FCF/share growth through 2030 as legacy hedges roll off and AI-driven electricity demand accelerates. The Amazon Susquehanna co-location deal is the template: 24/7 carbon-free nuclear baseload cannot be replicated at scale, and hyperscalers will pay a structural premium for it. TLN's low hedge ratios give it the highest leverage to rising power prices among peers — it's a leveraged bet on electricity pricing embedded in a nuclear moat. 12-analyst consensus rates it Strong Buy at a $435 average 12-month target; Scotiabank raised its target to $463 post-acquisition. Key risks: PJM concentration (no ERCOT diversification unlike peers), integration execution on the ECP gas plants, and regulatory exposure to FERC scrutiny on nuclear-to-data-center co-location. Any macro softening or policy setback could reprice this sharply given how much forward value is already baked in. For investors with conviction on the AI power supercycle, TLN is the purest nuclear moat play in the market — but it demands near-perfect execution. ",
 
 
   epsCagr: [8, 15, 22],
@@ -42,15 +41,4 @@ export const TLN = defineStock({
     'ECP acquisition integrates on schedule and drives >15% FCF/share growth through 2030; nuclear scarcity premium holds as hyperscalers compete for 24/7 carbon-free baseload power.',
     'AI-driven electricity demand accelerates PJM capacity prices; Susquehanna co-location model expands to additional hyperscaler agreements, unlocking AI-infrastructure multiples across the full asset base.',
   ],
-
-  burry: {
-    sbc: 100,
-    gaapNi: -219,
-    buyback: 0,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 90,
-    overstatementSource: 'estimated',
-    note: 'Tragic for FY25 due to one-time $501M Q4 SBC charge from accounting modification (equity-to-liability for cash-settled awards). Adjusted EBITDA $1.04B and Adj FCF $524M still positive. Once the one-time charge anniversaries, the underlying utility profile likely lands closer to Pristine. Watch FY26 to recalibrate.',
-  },
 });

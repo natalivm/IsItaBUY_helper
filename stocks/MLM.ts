@@ -111,15 +111,4 @@ export const MLM = defineStock({
       fcfUplift: [0.008, 0.008, 0.010, 0.010, 0.010],  // DC/energy + network optimization upside
     },
   ],
-
-  burry: {
-    sbc: 50,
-    gaapNi: 1130,
-    buyback: 300,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 10,
-    overstatementSource: 'estimated',
-    note: 'Pristine — aggregates business with very low SBC (~$50M) vs FY25 GAAP NI ~$1.13B (EPS $18.77 down from $32.41 peak). Capital-intensive operations leave little room for equity comp. Buybacks modest but consistent.',
-  },
 });

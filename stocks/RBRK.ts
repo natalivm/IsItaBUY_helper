@@ -23,8 +23,7 @@ export const RBRK = defineStock({
     "Moat is in integrated execution: high switching costs (resilience + identity + telemetry), regulatory tailwind (DORA/NIS2/SEC disclosure), and cloud ARR at 87% of subscription (+53% YoY). " +
     "The problem: RS 10 signals zero institutional momentum, FY27 material-rights headwind creates headline slowdown risk, and at current price prob-weighted CAGR is ~14.5% nominal / ~11-12% risk-adjusted. " +
     "If ARR sustains >20% and market pays >25x FCF, this is a cyber resilience compounder. If NRR normalizes and FY27 GAAP noise triggers a sell-off, there's -30-50% path risk to ~$27. " +
-    "Best entry likely after a compression event — bet on execution + structural cyber trend, not current momentum. " +
-    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+    "Best entry likely after a compression event — bet on execution + structural cyber trend, not current momentum. ",
 
   // Revenue growth: starts elevated (ARR +34% momentum) then decelerates
   // Bear CAGR ~12%, Base ~18%, Bull ~24%
@@ -64,15 +63,4 @@ export const RBRK = defineStock({
   prob: [25, 45, 30],
   bbRate: [0.005, 0.01, 0.015],
   bullMaOptVal: true,
-
-  burry: {
-    sbc: 340,
-    gaapNi: -1100,
-    buyback: 0,
-    epsBasis: 'GAAP',
-    fy: 'FY25 LTM (post-IPO normalized)',
-    overstatementPct: 100,
-    overstatementSource: 'estimated',
-    note: 'FY25 GAAP loss ~$1.1B with $914M annual SBC + post-IPO bulge driving real cost much higher under full-SBC adjustment. Reported FCF $199M is fully consumed at cash level by SBC alone before any MTM amplification. Real owner earnings deeply negative.',
-  },
 });

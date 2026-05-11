@@ -18,8 +18,7 @@ export const PANW = defineStock({
   costDebt: 0.05,
   rsRating: 21,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "Q2 FY2026 beat (NGS ARR +33% to $6.3B, EPS $1.03 vs $0.94 est.), but FY2026 EPS guidance cut to $3.65–3.70 (from $3.80) on CyberArk + Chronosphere integration costs. CyberArk (closed Feb 11) adds Identity as 4th pillar. 1,550 platformized customers, 119% NRR, SASE ARR >$1.5B. Stock RS ~20 — tape is broken. Avoid until integration costs digest and RS recovers above 40. " +
-  "Burry full-SBC adjustment (estimated): 90% overstatement (Tragic) — real owner economics ~10% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "Q2 FY2026 beat (NGS ARR +33% to $6.3B, EPS $1.03 vs $0.94 est.), but FY2026 EPS guidance cut to $3.65–3.70 (from $3.80) on CyberArk + Chronosphere integration costs. CyberArk (closed Feb 11) adds Identity as 4th pillar. 1,550 platformized customers, 119% NRR, SASE ARR >$1.5B. Stock RS ~20 — tape is broken. Avoid until integration costs digest and RS recovers above 40. ",
 
 
   analystConsensus: { rating: 'Buy', targetLow: 160, targetMedian: 216, targetHigh: 260, numAnalysts: 38 },
@@ -43,15 +42,4 @@ export const PANW = defineStock({
   ebitdaProxy: [0.28, 0.35, 0.42],
   bbRate: [0.005, 0.015, 0.02],
   bullMaOptVal: 149.0 * 770.0 * 0.07,
-
-  burry: {
-    sbc: 1295,
-    gaapNi: 1500,
-    buyback: 700,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 90,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~90% overstatement — naive SBC/NI already 86% (SBC $1.3B vs GAAP NI ~$1.5B FY25, down from $2.6B FY24 due to platformization investment). Buybacks $700M cover SBC just 0.5×. Under full-SBC adjustment with ~3× 3yr stock MTM, real owner profit is firmly negative. Despite earlier framing as a "more conservative entry vs CRWD," PANW actually scores worse than CRWD on naive Burry coefficient and lands deep in Tragic territory.',
-  },
 });

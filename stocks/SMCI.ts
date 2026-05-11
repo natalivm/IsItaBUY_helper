@@ -18,8 +18,7 @@ export const SMCI = defineStock({
   costDebt: 0.055,
   rsRating: 19,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "SMCI is a high-volume, low-margin AI server assembler riding the GPU infrastructure wave. Revenue is hypergrowth (~$40B FY26E) but gross margins sit at 6.4% with 63% single-client concentration. The bull case requires margin recovery to 8%+ and client diversification. Post-earnings verdict: revenue story strong, quality story weak. This is a controlled cyclical bet, not a compounder. " +
-  "Burry full-SBC adjustment (estimated): 35% overstatement (Critical) — real owner profit ~65% of GAAP; apply discount when comparing multiples to peers.",
+  strategicNarrative: "SMCI is a high-volume, low-margin AI server assembler riding the GPU infrastructure wave. Revenue is hypergrowth (~$40B FY26E) but gross margins sit at 6.4% with 63% single-client concentration. The bull case requires margin recovery to 8%+ and client diversification. Post-earnings verdict: revenue story strong, quality story weak. This is a controlled cyclical bet, not a compounder. ",
 
 
   analystConsensus: { rating: 'Hold', targetLow: 26, targetMedian: 42, targetHigh: 70, numAnalysts: 17 },
@@ -54,15 +53,4 @@ export const SMCI = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
-
-  burry: {
-    sbc: 200,
-    gaapNi: 1000,
-    buyback: 0,
-    epsBasis: 'GAAP',
-    fy: 'FY25',
-    overstatementPct: 35,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~35% overstatement — Critical zone. Naive SBC/NI ~20% (estimated FY25 SBC $200M vs GAAP NI $1.0B, which actually declined YoY from $1.2B). No buyback program means dilution is unoffset. Extreme stock volatility (peak $1200 → crash → recovery, split-adjusted) creates MTM amplification on vested awards. Accounting controversy (delayed 10-K, auditor change) adds qualitative governance discount.',
-  },
 });

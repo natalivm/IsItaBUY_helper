@@ -24,8 +24,7 @@ export const ALAB = defineStock({
     "$6.5B Amazon warrant + Scorpio X (2027 volume ramp) + protocol-agnostic positioning (UALink + NVLink Fusion) make the bull case structural, not just cyclical. " +
     "The problem: revenue decelerating fast (85% 3Y CAGR → +8% by 2028E), margins peak 2029E then compress, and at ~53x forward P/E the market already prices the optimistic path. " +
     "If Scorpio X becomes standard in 2–3 hyperscalers, this transitions from cycle play to architectural moat (type B → A). If not, it's another AI silicon story with a semiconductor downturn ahead. " +
-    "35–40% probability of 15%+ CAGR — a tactical bet on AI infrastructure positioning, not a compounder. " +
-    "Burry full-SBC adjustment (estimated): 90% overstatement (Tragic) — real owner economics ~10% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+    "35–40% probability of 15%+ CAGR — a tactical bet on AI infrastructure positioning, not a compounder. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 80, targetMedian: 192, targetHigh: 225, numAnalysts: 16 },
@@ -76,15 +75,4 @@ export const ALAB = defineStock({
   bbRate: [0.002, 0.008, 0.015],
   ebitdaProxy: [0.25, 0.40, 0.50],
   bullMaOptVal: false,
-
-  burry: {
-    sbc: 350,
-    gaapNi: 100,
-    buyback: 0,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 90,
-    overstatementSource: 'estimated',
-    note: 'Tragic — recent IPO (Mar 2024) with ongoing post-IPO RSU vesting bulge. FY24 had $88.9M cumulative SBC tied to IPO unlock; FY25 annual SBC estimated ~$350M (post-IPO heavy run-rate). Naive SBC/NI is multiples of GAAP NI, with no buyback offset. Stock 8× from IPO ($35 → $200) amplifies MTM dilution cost dramatically. baseEps $1.84 is non-GAAP — meaningful haircut applies.',
-  },
 });

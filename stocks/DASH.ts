@@ -18,8 +18,7 @@ export const DASH = defineStock({
   costDebt: 0.048,
   rsRating: 16,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in 2025. Post Q4'25: NV unit economics positive 2H'26, ads scaling (2× advertisers, 3× spend), and tech stack consolidation (3→1) provide three EPS levers above consensus. Thesis is execution-driven earnings growth, not P/E rerating. " +
-  "Burry full-SBC adjustment (estimated): 95% overstatement (Tragic) — real owner economics ~5% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in 2025. Post Q4'25: NV unit economics positive 2H'26, ads scaling (2× advertisers, 3× spend), and tech stack consolidation (3→1) provide three EPS levers above consensus. Thesis is execution-driven earnings growth, not P/E rerating. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 222, targetMedian: 278, targetHigh: 360, numAnalysts: 33 },
@@ -54,15 +53,4 @@ export const DASH = defineStock({
       fcfUplift: [0.005, 0.005, 0.01, 0.01, 0.01],
     },
   ],
-
-  burry: {
-    sbc: 2626,
-    gaapNi: 935,
-    buyback: 0,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 95,
-    overstatementSource: 'estimated',
-    note: 'Tragic — naive SBC/NI is 281% (LTM SBC $2.63B vs FY25 GAAP NI $935M). DASH spent $0 on buybacks in FY25 despite a $5B authorization from Feb 2025 — suggests management is preserving cash or signaling they\'re not yet ready to deploy. SBC dwarfs reported GAAP NI by nearly 3×; real owner economics are deeply negative once mark-to-market dilution is added. The 7.6× transition from $123M to $935M GAAP NI looks great until you anchor against the $2.6B SBC line.',
-  },
 });

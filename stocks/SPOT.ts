@@ -18,8 +18,7 @@ export const SPOT = defineStock({
   costDebt: 0.042,
   rsRating: 16,
   aiImpact: 'DISRUPTION_RISK',
-  strategicNarrative: "At $496: Spotify is a legitimate ~12% CAGR cash compounder — market-beating, but not enough margin of safety for a full-conviction position. The FCF story (CAGR ~20%, margin 17%→23%) is real, but you're paying ~35x for it. At $400–420 it becomes a comfortable accumulate (implied P/FCF ~28x fwd, CAGR 14–15% at 25x exit). Below $380 it's aggressive buy territory — 15%+ returns even with conservative multiple. Risk: if SPOT converges to Netflix-like 20–25x FCF as it matures, $496 delivers only ~7%. RS 14 confirms the market isn't in a hurry to reprice higher. " +
-  "Burry full-SBC adjustment (estimated): 50% overstatement (Critical) — real owner profit ~50% of GAAP; apply discount when comparing multiples to peers.",
+  strategicNarrative: "At $496: Spotify is a legitimate ~12% CAGR cash compounder — market-beating, but not enough margin of safety for a full-conviction position. The FCF story (CAGR ~20%, margin 17%→23%) is real, but you're paying ~35x for it. At $400–420 it becomes a comfortable accumulate (implied P/FCF ~28x fwd, CAGR 14–15% at 25x exit). Below $380 it's aggressive buy territory — 15%+ returns even with conservative multiple. Risk: if SPOT converges to Netflix-like 20–25x FCF as it matures, $496 delivers only ~7%. RS 14 confirms the market isn't in a hurry to reprice higher. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 420, targetMedian: 667, targetHigh: 900, numAnalysts: 27 },
@@ -43,15 +42,4 @@ export const SPOT = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   ebitdaProxy: [0.17, 0.25, 0.38],
   bullMaOptVal: 496 * 206 * 0.07,
-
-  burry: {
-    sbc: 676,
-    gaapNi: 2503,
-    buyback: 0,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 50,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~50% overstatement — naive SBC/NI 27% (SBC $676M, FY25 GAAP NI $2.5B, +103% YoY). Notable that SBC actually declined -11% YoY, a Burry-positive direction. But minimal buyback program means dilution is unoffset, and ~4× 3-year stock appreciation ($100 → $418) amplifies MTM cost on vested awards. Lands in Critical zone.',
-  },
 });

@@ -78,15 +78,4 @@ export const RVLV = defineStock({
   bbRate: [0, 0.005, 0.01],
   ebitdaProxy: [0.07, 0.11, 0.15],
   bullMaOptVal: false,
-
-  burry: {
-    sbc: 13,
-    gaapNi: 62,
-    buyback: 2,
-    epsBasis: 'NON_GAAP',
-    fy: '2025',
-    overstatementPct: 25,
-    overstatementSource: 'estimated',
-    note: 'Ok — naive SBC/NI ~21% (estimated FY25 SBC $13M vs GAAP NI $61.7M, +24.5% YoY). Buyback program effectively zero ($2M FY25, -83% YoY). Small-cap retailer with founder-owned profile keeps SBC manageable, but lack of buybacks means dilution is unoffset.',
-  },
 });

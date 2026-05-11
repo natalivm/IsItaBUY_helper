@@ -18,8 +18,7 @@ export const ANET = defineStock({
   costDebt: 0.045,
   rsRating: 83,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "Arista is the pure-play backbone of the AI cluster with an EOS moat and hyperscaler lock-in. FY26 guided at $11.25B (+25% YoY) with AI networking at $3.25B. Quality is undeniable — 47% FCF margin, zero debt, strong campus diversification. DCF with discount rate calibrated to ANET's fortress balance sheet supports a BUY at current levels. Key risk remains P/E compression if AI capex decelerates, but sustained 15%+ growth and margin durability justify a premium exit multiple. " +
-  "Burry full-SBC adjustment (estimated): 35% overstatement (Critical) — real owner profit ~65% of GAAP; apply discount when comparing multiples to peers.",
+  strategicNarrative: "Arista is the pure-play backbone of the AI cluster with an EOS moat and hyperscaler lock-in. FY26 guided at $11.25B (+25% YoY) with AI networking at $3.25B. Quality is undeniable — 47% FCF margin, zero debt, strong campus diversification. DCF with discount rate calibrated to ANET's fortress balance sheet supports a BUY at current levels. Key risk remains P/E compression if AI capex decelerates, but sustained 15%+ growth and margin durability justify a premium exit multiple. ",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 174, targetHigh: 200, numAnalysts: 15 },
@@ -58,15 +57,4 @@ export const ANET = defineStock({
       fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
     },
   ],
-
-  burry: {
-    sbc: 750,
-    gaapNi: 3511,
-    buyback: 1600,
-    epsBasis: 'GAAP',
-    fy: '2025',
-    overstatementPct: 35,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~35% overstatement under full-SBC adjustment. Naive SBC/NI is 21%, but with ~3.5× stock appreciation since 2023 the MTM dilution cost is meaningfully higher. $1.6B buyback covers gross SBC 2.1× but doesn\'t fully neutralize the MTM amplifier. Crosses Burry\'s 30% Critical threshold.',
-  },
 });

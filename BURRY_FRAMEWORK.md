@@ -4,11 +4,45 @@ Reference doc for resuming work on the Michael Burry "Cassandra Unchained" SBC d
 
 ## Quick state (as of last update)
 
-- **Coverage**: 64/64 stocks (100%) have a `burry` block in `stocks/TICKER.ts`
-- **UI**: BurryBadge on home rows, BurryIndicator panel + Burry-Adjusted Read callout on detail pages, TradingView mini chart in sidebar
+- **Coverage**: **20 stocks** have a `burry` block — ONLY those manually TIKR-verified or Burry-published. Hand-estimated values were removed because they proved systematically biased (multiple stocks like APP/MELI/DUOL/ORCL were originally estimated 50-75% Tragic but TIKR data showed 20-50% OK/Critical).
+- **UI**: BurryBadge on home rows, BurryIndicator panel + Burry-Adjusted Read callout on detail pages, TradingView mini chart in sidebar (all unchanged; just render for fewer stocks)
 - **PR**: [#197](https://github.com/natalivm/IsItaBUY_helper/pull/197) on `claude/stock-valuation-checker-LuPEm` branch
-- **Calibration**: 7 anchors against Burry-published values (LRCX 49%, AMD 32%, NVDA 29%, NFLX 22%, INTU 32%, META 20%, AMZN 21%) + ORCL/CRWD TIKR-refreshed
-- **Status**: Calibration phase complete; framework parked in stable state, awaiting case-by-case refresh of stocks the user is actively considering
+- **Status**: Conservative-coverage stance. Better to show no signal than a wrong signal. Anyone wanting Burry data on a new stock should pull TIKR cash flow data and run the verification recipe below.
+
+### Verified stocks with burry data (20)
+
+| Ticker | overstatement % | Source |
+|---|---|---|
+| LRCX | 49% | Burry-published |
+| AMD | 32% | Burry-published |
+| INTU | 32% | Burry-published |
+| SNPS | 31% | Burry-published |
+| NVDA | 29% | Burry-published |
+| NFLX | 22% | Burry-published |
+| AMZN | 21% | Burry-published |
+| META | 20% | Burry-published |
+| CRWD | 100% (GAAP-loss) | TIKR-verified |
+| DDOG | 90% | TIKR-verified |
+| ZS | 95% | TIKR-verified |
+| AXON | 85% | TIKR-verified |
+| PLTR | 70% | TIKR-verified |
+| ORCL | 50% (data-derived) | TIKR-verified |
+| DUOL | 45% | TIKR-verified |
+| NOW | 35% | TIKR-verified |
+| SHOP | 25% | TIKR-verified |
+| APP | 25% | TIKR-verified |
+| MELI | 20% | TIKR-verified |
+| FICO | 18% | TIKR-verified |
+
+### Why the conservative stance
+
+Original hand-estimates were calibrated against Burry's 8 published values + a heuristic for amplifying naive SBC/NI by stock-return MTM. The heuristic worked well for stocks where MTM >4× (LRCX, AMD, NVDA), but failed badly for:
+- Low-MTM stocks (INTU at 0.92× MTM → formula gives −3.7%; Burry says 32%)
+- High-buyback stocks (META 3.2× MTM → formula gives 71%; Burry says 20%)
+- Stock-split affected (NFLX → formula understates)
+- High-quality compounders with low SBC ratio (FICO, APP, MELI → formula overstates)
+
+After 12 TIKR-refreshed stocks, the pattern was clear: hand-estimates were systematically too high for the "reformed compounder" cohort (companies with low SBC + real buybacks). Rather than ship known-biased estimates for 50+ stocks, we cleaned up to only show the 20 we've independently verified.
 
 ## What the framework does
 

@@ -66,15 +66,4 @@ export const ENVA = defineStock({
       fcfUplift: [0.005, 0.01, 0.015, 0.015, 0.015],
     },
   ],
-
-  burry: {
-    sbc: 35,
-    gaapNi: 320,
-    buyback: 200,
-    epsBasis: 'NON_GAAP',
-    fy: 'FY25',
-    overstatementPct: 18,
-    overstatementSource: 'estimated',
-    note: 'Estimated ~18% overstatement — clean for a consumer lender. Naive SBC/NI ~11% (FY25 GAAP NI ~$320M, est. SBC ~$35M). Aggressive buybacks (Q1 2026 alone retired 110K of a 24.8M float = small but consistent) cover SBC ~5×. Tiny share base (24.7M) limits absolute SBC pressure even with strong stock appreciation. baseEps $11.52 is non-GAAP/adjusted.',
-  },
 });
