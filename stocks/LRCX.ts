@@ -121,13 +121,13 @@ export const LRCX = defineStock({
   ],
 
   burry: {
-    sbc: 320,
-    gaapNi: 5400,
-    buyback: 3400,
+    sbc: 343,
+    gaapNi: 5358,
+    buyback: 3422,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
     overstatementPct: 49,
     overstatementSource: 'burry-published',
-    note: 'Critical per Burry — real owner profit ~51% of GAAP after full SBC adjustment (payroll tax + mark-to-market dilution at current price). Despite reported SBC being only $320M and buybacks $3.4B, the economic dilution cost of vested awards is much higher when valued at the post-split share price.',
+    note: 'Critical per Burry — real owner profit ~51% of GAAP. FY25 actuals (TIKR): SBC $343M, GAAP NI $5,358M, buybacks $3,422M. Naive lens looks heroic (buybacks 13× SBC, 5y diluted share count down 12.9%), but the post-split stock has appreciated ~10× since most awards were granted — so the GAAP charge captures only ~10% of true economic SBC cost at MTM. Burry: "buybacks aren\'t returning capital — they\'re laundering SBC at 10× cost."',
   },
 });
