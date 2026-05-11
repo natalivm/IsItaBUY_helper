@@ -59,4 +59,15 @@ export const MRVL = defineStock({
       fcfUplift: [0.005, 0.01, 0.015, 0.02, 0.02],
     },
   ],
+
+  burry: {
+    sbc: 591,
+    gaapNi: 2670,
+    buyback: 2281,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY26',
+    overstatementPct: 35,
+    overstatementSource: 'estimated',
+    note: 'Critical (downgraded from earlier 70% Tragic estimate after TIKR refresh). FY26 TIKR actuals: SBC $591M (7.2% of revenue — moderate), buybacks $2,281M = 3.86× SBC coverage (the inflection point). GAAP NI $2.67B FY26 (EPS $3.07) — major swing from -$1.02 EPS FY25; operating income flipped from -$8.5M to +$1.34B. The 30% cumulative 5y dilution is real but largely M&A-related (Inphi, Cavium acquisitions issued stock), not pure SBC. Adjusted FCF view: $1.4B reported FCF − $591M SBC = ~$806M true owner FCF (9.8% margin). 4y MTM ~3.4× ($50 → $170) puts MRVL in the formula\'s low-MTM unreliable zone; the 35% estimate splits the difference between META\'s 20% (similar buyback profile) and the original 70% I had (which over-weighted the dilution history without crediting the recent buyback inflection).',
+  },
 });
