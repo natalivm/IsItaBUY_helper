@@ -78,13 +78,13 @@ export const SNPS = defineStock({
   prob: [20, 50, 30],
 
   burry: {
-    sbc: 415,
+    sbc: 893,
     gaapNi: 1336,
-    buyback: 170,
+    buyback: 306,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
     overstatementPct: 31,
     overstatementSource: 'burry-published',
-    note: 'Critical per Burry — 31% overstatement, real owner profit ~69% of GAAP. Naive SBC/NI 31% (estimated FY25 SBC $415M vs GAAP NI $1.34B). Buybacks ~$170M only offset SBC (per management commentary, repurchases mostly counter dilution rather than retiring float). 4-5× 3yr stock MTM amplifier inflates the real economic cost. baseEps $15.50 is non-GAAP — material haircut applies.',
+    note: 'Critical per Burry — 31% overstatement. TIKR FY25 actuals: SBC $893M (12.1% of revenue — elevated for an EDA company), buybacks just $306M (covers only 34% of SBC). Ansys acquisition closed in 2025 pushed diluted shares from 156M (FY24) → 174M (LTM) = +12% in one year, plus added $16.7B to acquisition spend. Our 4y-MTM formula overshoots (48% vs Burry\'s 31%) because the 1.72× MTM multiplier sits in the unreliable <4× zone where simple formula misses Burry\'s buyback-credit and other adjustments. Trust Burry\'s 31% as the anchor; SNPS\'s post-Ansys profile is structurally different from when his data was likely captured.',
   },
 });
