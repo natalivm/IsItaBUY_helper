@@ -103,6 +103,6 @@ export const AXON = defineStock({
     fy: 'FY26 est',
     overstatementPct: 85,
     overstatementSource: 'estimated',
-    note: 'Tragic — Burry explicitly cites AXON. FY26 estimates: SBC $590-620M guide (mid $605M) = ~16% of revenue. Management now targets <2.5% dilution implying buybacks ~$600M+ — a structural improvement from FY25 57% SBC coverage. GAAP NI estimate ~$150M (down from FY25 $206M as SBC stays high). FCF inflecting: $450M FY26 guide vs $19.5M LTM — the core SBC-to-FCF ratio improves dramatically. Still Tragic tier, but trajectory is better. baseEps $7.00 is non-GAAP; P/E haircut still material.',
+    note: 'Tragic — Burry explicitly cites AXON. FY26 estimates: SBC $590-620M guide (mid $605M) = ~16% of revenue. GAAP NI ~$150M → naive SBC/NI = 403%, caps at 100% even before MTM amplifier — math supports moving to 100% but 85% pin retained since Burry published it (tier unchanged). Key improvement: FCF guide $450M vs LTM $19.5M — SBC-to-FCF ratio drops from 3,222% to ~135%. Management targets <2.5% dilution (was +4.5%/yr FY25), implying buybacks scale to cover SBC. Still structurally Tragic, but the trajectory is clearly better.',
   },
 });
