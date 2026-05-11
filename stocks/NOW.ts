@@ -5,34 +5,34 @@ export const NOW = defineStock({
   name: 'ServiceNow',
   sector: 'Enterprise SaaS / Workflow Platform',
   themeColor: '#62D84E',
-  currentPrice: 920,
-  fairPriceRange: '$680 - $1,200',
-  shares0: 207,
-  rev25: 13300,
+  currentPrice: 91.18,
+  fairPriceRange: '$70 - $150',
+  shares0: 1030,
+  rev25: 13960,
   fcfMargin25: 0.34,
   taxRate: 0.20,
-  cash: 5800,
+  cash: 5180,
   debt: 1500,
-  beta: 1.15,
+  beta: 0.82,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 17.50,
-  rsRating: 72,
-  rsTrend: 'rising',
+  baseEps: 5.06,
+  rsRating: 18,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   updatedOn: '05/10',
 
   strategicNarrative:
-    "ServiceNow is the rare Burry-cited name with genuinely strong shareholder economics. FY25 revenue $13.3B (+21% YoY), LTM $14.0B sustaining ~19% growth at $200B+ market cap — extraordinary for the scale. Operating leverage is real: GAAP operating margin 14.7% LTM, expanded from 5% in FY22 → 9% FY23 → 13% FY24 → 15% FY25. Real GAAP profitability that compounds, unlike DDOG/ZS/AXON. " +
-    "Workflow + ITSM + GenAI assistants (Now Assist) + Industry Cloud + Workforce platform expansion all drive >25% RPO growth. Deferred revenue increase of $1B+ per year signals durable enterprise prepayments. Switching costs are enormous — NOW becomes the system of record for IT operations + employee experience + customer service. " +
-    "The Burry profile is the cleanest in the cited-software cohort: " +
-    "SBC $1,955M FY25 (14.6% of revenue — high but not extreme), buybacks $2,610M FY25 = **1.3× SBC coverage**. Diluted shares essentially flat 1,016M (FY21) → 1,045M (LTM) = +2.9% over 5 years = +0.6%/yr. Net dilution is minimal. " +
-    "FCF margin 33% LTM, FCF/share growing faster than absolute FCF thanks to buyback compression. SBC is 37% of operating cash flow (vs ZS 66%, DDOG 70%, AXON 408%) — meaningfully better. " +
-    "Valuation: at $920 / ~$190B market cap on $17.50 forward non-GAAP EPS, forward P/E ~53×. Forward P/S ~14×. Quality compounder priced as a quality compounder — not as extreme as DDOG/ZS but rich. " +
-    "Bull (~30%): Now Assist + GenAI inflection drives durable 22%+ growth + margin expansion to 22% GAAP operating margin → $1,200+. Base (~50%): Continued execution, 18% growth, margins to 20% → ~$1,000. Bear (~20%): SaaS spending consolidation, GenAI commoditization, growth halves → $680. " +
-    "BUY-leaning HOLD — best capital allocation in the Burry-cited cohort. Quality enterprise platform at a fair-to-rich multiple. SBC concern is muted by aggressive buybacks (only 1 of 5 Burry-cited SaaS where buybacks actually exceed SBC issuance).",
+    "ServiceNow has been crushed — down −53% over 1Y, −40% YTD (from a 52w high of $211 to $91), one of the worst large-cap tech drawdowns of the cycle. The crash reflects AI-spending-consolidation fears: enterprises pull SaaS budgets toward Microsoft Copilot / Power Platform bundles, and GenAI threatens to commoditize ITSM workflow tools. " +
+    "But the underlying business is still elite: FY25 revenue $13.3B (+21% YoY), LTM $13.96B (+22% YoY) at $94B market cap. GAAP operating margin 14.8% LTM expanded from 5% FY22 → 9% FY23 → 13% FY24 → 15% LTM. Real GAAP profitability that keeps compounding even through the stock crash. " +
+    "Workflow + ITSM + Now Assist (GenAI) + Industry Cloud + Workforce platform all driving >25% RPO growth. Deferred revenue +$1B+ per year. Net retention 120%+. Switching costs enormous once NOW becomes the system of record for IT + employee + customer workflows. " +
+    "Burry profile is the cleanest in the cited-software cohort: SBC $1,955M FY25 (14.6% of revenue), buybacks $2,610M FY25 = **1.3× SBC coverage**. Diluted shares essentially flat 1,016M (FY21) → 1,030M (LTM). Net dilution is minimal. SBC = 37% of operating cash flow (vs ZS 66%, DDOG 70%, AXON 408%) — meaningfully better than peers. " +
+    "Valuation: at $91.18 / ~$94B market cap on $5.06 forward non-GAAP EPS, forward P/E **18×** — a multiple usually reserved for mature SaaS, not 22% growers. Forward P/S 6.7×. EV/Sales 6.5×. Cheapest quality-software valuation we've seen in years. PEG 0.86. " +
+    "Analyst median target $144 (+58% upside from $91). Recom 1.35 (Strong Buy). " +
+    "Bull (~35%): GenAI fears overblown, growth sustains 20%+ + margin expansion to 22% GAAP operating margin → $150+. Base (~45%): Growth normalizes to 18%, margins to 20%, multiple re-rates to 24× → ~$115. Bear (~20%): SaaS spending consolidates with hyperscaler bundles, growth halves, multiple stays at 18× → $70. " +
+    "BUY at $91 — best capital allocation in the Burry-cited cohort + worst valuation drawdown in a decade for the same business. Quality compounder being thrown out with the AI-fear bathwater. Asymmetric setup vs the original $200+ thesis.",
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 750, targetMedian: 1050, targetHigh: 1300, numAnalysts: 40 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 75, targetMedian: 144, targetHigh: 180, numAnalysts: 40 },
 
   revGrowth: [
     [0.13, 0.12, 0.11, 0.10, 0.09], // Bear: enterprise SaaS consolidation, growth halves
@@ -96,12 +96,12 @@ export const NOW = defineStock({
 
   burry: {
     sbc: 1955,
-    gaapNi: 1500,
+    gaapNi: 1760,
     buyback: 2610,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
     overstatementPct: 35,
     overstatementSource: 'estimated',
-    note: 'Critical per Burry — explicitly cited in Cassandra Unchained list. But uniquely among Burry-cited names, NOW has GENUINE buyback offset: FY25 buybacks $2,610M > SBC $1,955M = 1.33× coverage. Diluted share count nearly flat (+2.9% over 5 years vs +24-34% for PLTR/AXON). SBC/CFO of 37% is materially better than ZS/DDOG/AXON (66-408%). GAAP operating margin already 15% and rising. The 35% estimate reflects: high absolute SBC ($2B/yr) and 14.6% of revenue (still elevated for mature SaaS), partially offset by aggressive buybacks and genuine operating leverage. NOW deserves to be ranked separately from the broken-SBC-cohort cybersecurity names.',
+    note: 'Critical per Burry — explicitly cited in Cassandra Unchained list. But uniquely among Burry-cited names, NOW has GENUINE buyback offset: FY25 buybacks $2,610M > SBC $1,955M = 1.33× coverage. Diluted share count nearly flat (1,016M FY21 → 1,030M LTM = +1.4% over 5 years vs +24-34% for PLTR/AXON). SBC/CFO of 37% is materially better than ZS/DDOG/AXON (66-408%). GAAP NI $1.76B LTM, operating margin 14.8% and rising. The 35% estimate reflects: high absolute SBC ($2B/yr) and 14.6% of revenue (still elevated for mature SaaS), partially offset by aggressive buybacks and genuine operating leverage. NOW deserves to be ranked separately from the broken-SBC-cohort cybersecurity names — and at $91 the valuation finally reflects this.',
   },
 });
