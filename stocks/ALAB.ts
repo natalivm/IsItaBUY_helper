@@ -75,4 +75,15 @@ export const ALAB = defineStock({
   bbRate: [0.002, 0.008, 0.015],
   ebitdaProxy: [0.25, 0.40, 0.50],
   bullMaOptVal: false,
+
+  burry: {
+    sbc: 167,
+    gaapNi: 170,
+    buyback: 0,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 75,
+    overstatementSource: 'estimated',
+    note: 'Tragic — TIKR FY25 actuals: SBC $167M (16.6% of revenue — high), buybacks $0, recently turned GAAP-profitable (operating margin 22% LTM, +20pp swing from -29% FY24). The good news: elite 76% gross margins, 132% 3y revenue CAGR, FCF $343M ($176M after SBC adjustment). The bad news: post-IPO RSU wave is ongoing — diluted shares 131M (FY24) → 180M (FY26 LTM) = +37% in one year. Zero buyback offset. SBC = 49% of reported FCF (true owner FCF is half headline). 4y MTM at extreme high end (~5× since IPO grants) breaks the formula. 75% estimate reflects: recent profitability inflection (better than pure broken-SaaS), but elite-tier dilution velocity (worse than typical Critical). Watch the share-count trajectory — if dilution slows in FY27 as IPO vesting completes, ALAB could reclassify down to Critical 50%.',
+  },
 });
