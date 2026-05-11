@@ -84,6 +84,8 @@ export interface TickerDefinition {
   analystConsensus?: AnalystConsensus;
   /** Date of last manual data refresh, e.g. '26/02' */
   updatedOn?: string;
+  /** Earnings report that was last used to update this stock, e.g. 'Q1 2026' */
+  lastReportTag?: string;
   /**
    * Michael Burry "Cassandra Unchained" SBC dilution check.
    * Dollar values in millions ($M).

@@ -6,6 +6,7 @@ export const ENVA = defineStock({
   sector: 'FinTech / Lending',
   themeColor: '#3b82f6',
   updatedOn: '05/11',
+  lastReportTag: 'Q1 2026',
   currentPrice: 168.9,
   fairPriceRange: '$160 - $250',
   shares0: 24.7,         // Q1 2026: ~110K shares repurchased; was 24.8M

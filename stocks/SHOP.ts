@@ -16,28 +16,27 @@ export const SHOP = defineStock({
   beta: 2.10,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 1.30,
+  baseEps: 1.68,
   rsRating: 58,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '05/11',
+  lastReportTag: 'Q1 2026',
 
   strategicNarrative:
-    "Shopify is the cleanest 'Burry-cited' stock by a wide margin. The reputation for excess dilution was earned 2021-2022 era; the current profile is genuinely reformed. FY25 revenue $11.6B (+30% YoY), LTM $12.4B sustaining ~22% growth at meaningful scale. GAAP operating margin LTM 17.1% (up from -8.5% in FY22) — real operating leverage delivered, not promised. " +
-    "Commerce flywheel: merchant solutions revenue (payments, capital, fulfillment) now drives most growth via attach to the subscription base. GenAI commerce tools (Sidekick, agentic shopping) compound the platform position. International expansion + B2B + offline POS all add growth vectors. " +
-    "Capital allocation now genuinely shareholder-friendly: " +
-    "SBC $449M FY25 = just **3.8% of revenue** (lowest of any Burry-cited name; better than NOW 14.6%, META 10.4%). Buybacks $491M LTM just started — slightly exceed SBC issuance. Diluted shares 1,274M (FY21) → 1,307M (LTM) = **+2.6% cumulative / +0.5%/yr** — minimal net dilution. SBC/CFO 22% (vs ZS 66%, DDOG 70%, AXON 408%). " +
-    "Caveat: SHOP's gross margin (48%) is lower than pure SaaS peers because payments/merchant services are a real cost-of-sale, not a software-only model. This is a commerce-infrastructure hybrid, not classic SaaS. " +
-    "Valuation: at $115 / ~$150B market cap on $1.30 forward non-GAAP EPS, forward P/E ~88×. Forward P/S ~12×. Premium multiple, but for a 22% grower with 17% FCF margin and real operating leverage, the multiple is at least defensible vs DDOG/ZS premium for slower growers with no GAAP profits. " +
-    "Bull (~35%): Agentic commerce + Shop Pay network + international expansion sustains 22%+ growth, margins inflect to 25% → $155. Base (~45%): Growth normalizes to 18-20%, margins to 22% → $115-130. Bear (~20%): E-commerce decelerates + Amazon competition intensifies + GenAI commoditizes Shopify's value-add → $85. " +
-    "BUY-leaning HOLD — Shopify deserves to be reclassified from 'Burry-cited dilution story' to 'reformed quality compounder.' Genuine net buybacks + low SBC + GAAP profitable + 22% growth is a rare combination. Trust the recent capital allocation trajectory.",
+    "Q1 2026 confirmed Shopify's acceleration: $3.2B revenue (+34% YoY), GMV $101B (+35%) — second consecutive $100B+ quarter, fastest US growth rate in 4 years. Four straight quarters of 30%+ revenue growth alongside mid-to-high-teens FCF margins ($476M FCF, 15% margin in Q1). " +
+    "Commerce velocity is broad: B2B GMV +80%, Shop Pay GMV +59% to $35B, offline +33%, international +45% (Europe +48%). AI is no longer a feature — it's the operating system: Sidekick weekly active shops 4× YoY, AI writes 50%+ of Shopify code, AI-driven traffic to merchant stores 8× YoY, orders from AI searches 13× YoY. " +
+    "Platform lock-in is structural: Shopify co-developed UCP (Universal Commerce Protocol) with Google, now adopted by Amazon, Meta, Microsoft, Salesforce and Stripe. Shopify is the only platform powering selling inside ChatGPT, Copilot and Google from one system. Q2 guidance: high-20s revenue growth, mid-teens FCF margin. " +
+    "Capital allocation profile (FY25 basis): SBC $449M = 3.8% of revenue — the lowest of any Burry-cited name. Buybacks $491M LTM already exceed SBC. Diluted shares 1,274M (FY21) → 1,307M (LTM) = +2.6% cumulative over 5y. GAAP operating margin 17.1% (up from -8.5% in FY22). Real operating leverage. " +
+    "At ~$103 / ~$135B market cap on ~$1.68 FY2026 non-GAAP EPS, forward P/E ~61×. Premium, but Q1 momentum suggests the high-28% base EPS CAGR is achievable. " +
+    "BUY-leaning HOLD: reformed compounder (low SBC, net buybacks, GAAP profitable) now layered with a defensible AI infrastructure moat via UCP. The deceleration to 'high 20s' in Q2 from 34% Q1 is the principal near-term risk to multiple.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 90, targetMedian: 135, targetHigh: 175, numAnalysts: 45 },
 
   revGrowth: [
-    [0.14, 0.12, 0.10, 0.09, 0.08], // Bear: e-commerce decelerates + Amazon competition
-    [0.22, 0.19, 0.16, 0.14, 0.12], // Base: continued execution, normalizes
-    [0.27, 0.24, 0.20, 0.17, 0.14], // Bull: agentic commerce + international + B2B inflection
+    [0.22, 0.14, 0.10, 0.09, 0.08], // Bear: decelerates sharply after Q1 momentum fades
+    [0.29, 0.20, 0.17, 0.14, 0.12], // Base: Q1 +34% / Q2 guided high 20s, normalizes 2027+
+    [0.33, 0.26, 0.21, 0.17, 0.14], // Bull: agentic + B2B + international sustain acceleration
   ],
 
   fcfMargin: [
@@ -49,28 +48,27 @@ export const SHOP = defineStock({
   exitMultiple: [25, 40, 55],
 
   desc: [
-    'E-commerce growth decelerates as the post-COVID adjustment normalizes and Amazon intensifies competition for SMB merchants. ' +
-      'GenAI agents commoditize SHOP\'s differentiated features as every commerce platform adds AI-native tools. ' +
-      'GMV growth halves; payments take-rate compresses. Growth decelerates to 10-12% by FY28. Multiple compresses from 88× to 30× as market reprices SHOP as a mature commerce platform. ' +
-      '5yr target ~$85-95, roughly -4% to -2% annualized as multiple contraction overwhelms EPS growth.',
-    'Shopify continues compounding as the de-facto SMB commerce OS. Merchant solutions revenue (payments, capital, fulfillment) grows faster than subscription. ' +
-      'Operating margin expands from 17% to 24% by FY30. Buyback program scales to $1B+/yr as cash flow grows. Share count nearly flat throughout. ' +
-      'EPS compounds at ~28% from $1.30 base. Multiple compresses 88× → 50× through earnings growth. 5yr target ~$130, ~3% annualized.',
-    'Agentic commerce + Shop Pay network effects drive multi-year growth acceleration. International expansion (especially Europe + LatAm) adds 30%+ growth contribution. B2B commerce scales to $1B+ revenue. ' +
-      'Operating leverage compounds: FCF margin to 30%, operating margin to 28%. SBC stays at 3-4% of revenue indefinitely. Buybacks accelerate. ' +
-      'EPS compounds at 35% from $1.30 base. Multiple holds 55× given platform position. 5yr target ~$155, ~6-8% annualized.',
+    'Q1 2026 momentum fades as macro headwinds dampen SMB formation and Amazon intensifies competition. ' +
+      'GenAI agents commoditize Shopify\'s AI edge as competing platforms close the gap. GMV growth slows to low teens; Shopify Payments take-rate compresses. ' +
+      'Revenue decelerates despite Q1 tailwind; multiple compresses from ~60× to ~30× as market reprices SHOP toward mature-platform status. EPS growth ~14% from $1.68 base.',
+    'Shopify sustains the Q1 2026 trajectory: FY2026 revenue ~30% growth followed by gradual normalization. B2B, offline and international each add durable growth vectors. ' +
+      'UCP becomes the de-facto agentic commerce standard; Shopify Payments penetration climbs past 70%. Operating margins expand from ~17% toward 24% by FY30. ' +
+      'EPS compounds at ~28% from the $1.68 FY2026 base. Multiple de-rates 60× → 45× through earnings growth. Solid but valuation-dependent returns.',
+    'Agentic commerce inflects growth above 30% for multiple years. UCP network effects lock in merchants across ChatGPT, Copilot and Google surfaces. ' +
+      'B2B scales to $2B+ revenue, Shop Pay becomes the Internet\'s default checkout outside the US, international sustains 45%+ GMV growth. ' +
+      'FCF margin reaches 30%+ by FY30. EPS compounds at ~35% from $1.68 base. Multiple holds 60× given platform position.',
   ],
 
   thesis: [
-    'E-commerce TAM saturates. Amazon Multi-Channel Fulfillment + Walmart Marketplace + TikTok Shop all eat into SMB acquisition. SHOP\'s share of new commerce launches plateaus. ' +
-      'Merchant solutions take-rate compresses as payments alternatives (Stripe, Adyen) compete. Operating leverage expansion stalls at 18-20%. ' +
-      'At 88× forward P/E, even modest growth deceleration triggers severe multiple compression. The capital allocation story is good, but the growth story is the valuation justification.',
-    'SHOP\'s flywheel keeps spinning: more merchants → more payments volume → more capital lending → more fulfillment → more advanced commerce features → more merchants. Network effects compound. ' +
-      'Shop Pay (consumer side) becomes a meaningful competitor to PayPal/Apple Pay. Agentic AI commerce tools drive new revenue tiers. ' +
-      'Operating leverage continues delivering 200-300bps/yr of margin expansion. Buybacks scale as cash grows. Quality commerce-infrastructure compounder at full price — returns ~3% from $115 entry.',
-    'AI-driven commerce inflection: Sidekick + Shop AI agents make starting and running a commerce business 10× easier, dramatically expanding the addressable merchant base. Agentic shopping experience drives consumer adoption of Shop Pay. ' +
-      'International expansion accelerates as the GenAI translation layer removes language barriers for global commerce. B2B commerce scales as the network effect crosses over. ' +
-      'Operating margins reach 28% by FY30. EPS compounds at 35%+. Multiple holds 55× given the platform position. 6-8% annualized returns from current entry.',
+    'E-commerce TAM saturates. Amazon Multi-Channel Fulfillment + Walmart Marketplace + TikTok Shop erode SMB acquisition. Q1 2026 momentum proves transitory. ' +
+      'Merchant solutions take-rate compresses as Stripe, Adyen and Meta-native checkout compete. Operating leverage stalls. ' +
+      'At ~61× forward P/E on $1.68 FY2026 EPS, even modest deceleration from Q1\'s 34% triggers severe multiple compression. Growth is the entire valuation justification.',
+    'SHOP\'s flywheel keeps spinning off the Q1 2026 base. UCP becomes the agentic commerce standard; Shopify is embedded in ChatGPT/Copilot/Google as the de-facto checkout. ' +
+      'Shop Pay approaches 70%+ GMV penetration. Operating leverage delivers 200-300 bps/yr of margin expansion. Buybacks scale as FCF compounds. ' +
+      'Quality commerce-infrastructure compounder — returns reasonable from $103 entry if 28% EPS CAGR materializes.',
+    'AI-driven entrepreneurship inflection: Sidekick + agentic tools make starting a commerce business radically easier, expanding the addressable merchant base. ' +
+      'UCP network effects lock in Shopify at the center of all AI-native commerce. International + B2B cross the compound threshold simultaneously. ' +
+      'Operating margins reach 28%+ by FY30. EPS compounds at 35%+ from $1.68 base. Multiple holds 60×. Strong annualized returns from current entry.',
   ],
 
   termGrowth: [0.025, 0.035, 0.040],

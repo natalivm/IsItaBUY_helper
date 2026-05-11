@@ -122,6 +122,8 @@ export interface SimpleStockInput {
 
   /** Date of last manual data refresh, e.g. '26/02' */
   updatedOn?: string;
+  /** Earnings report last used to refresh this stock, e.g. 'Q1 2026' */
+  lastReportTag?: string;
 
   /** Burry SBC dilution indicator data (display-only). */
   burry?: BurryData;
@@ -181,6 +183,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
 
     // Updated date
     updatedOn,
+    lastReportTag,
 
     // Burry indicator
     burry,
@@ -232,6 +235,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     baseEps,
     analystConsensus,
     updatedOn,
+    lastReportTag,
     burry,
     scenarios: {
       revGrowth: toRecord(revGrowth),
