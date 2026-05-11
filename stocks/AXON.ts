@@ -5,7 +5,7 @@ export const AXON = defineStock({
   name: 'Axon Enterprise',
   sector: 'Public Safety Tech / Government Platform',
   themeColor: '#FFC72C',
-  currentPrice: 650,
+  currentPrice: 394.36,
   fairPriceRange: '$420 - $900',
   shares0: 83,
   rev25: 2780,
@@ -21,7 +21,7 @@ export const AXON = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '05/10',
+  updatedOn: '05/11',
 
   strategicNarrative:
     "Axon is the operating system of modern policing — body cams + Tasers + evidence.com cloud + Records management + AI report-writing (Draft One). FY25 revenue $2.78B (+33% YoY), LTM $2.98B sustaining elite ~30% growth. Recurring software revenue mix has become the structural moat: switching costs are enormous once a department runs evidence + records + cameras through Axon. " +

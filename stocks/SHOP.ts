@@ -5,7 +5,7 @@ export const SHOP = defineStock({
   name: 'Shopify',
   sector: 'E-commerce Infrastructure / Payments',
   themeColor: '#95BF47',
-  currentPrice: 115,
+  currentPrice: 102.54,
   fairPriceRange: '$85 - $155',
   shares0: 1307,
   rev25: 11600,
@@ -20,7 +20,7 @@ export const SHOP = defineStock({
   rsRating: 58,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/10',
+  updatedOn: '05/11',
 
   strategicNarrative:
     "Shopify is the cleanest 'Burry-cited' stock by a wide margin. The reputation for excess dilution was earned 2021-2022 era; the current profile is genuinely reformed. FY25 revenue $11.6B (+30% YoY), LTM $12.4B sustaining ~22% growth at meaningful scale. GAAP operating margin LTM 17.1% (up from -8.5% in FY22) — real operating leverage delivered, not promised. " +

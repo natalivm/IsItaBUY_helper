@@ -5,7 +5,7 @@ export const META = defineStock({
   name: 'Meta Platforms',
   sector: 'Social Media / Digital Advertising / AI',
   themeColor: '#1877F2',
-  currentPrice: 609.63,
+  currentPrice: 598.86,
   fairPriceRange: '$520 - $820',
   shares0: 2540,
   rev25: 200970,
@@ -20,7 +20,7 @@ export const META = defineStock({
   rsRating: 42,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/10',
+  updatedOn: '05/11',
 
   strategicNarrative:
     "Meta is a high-quality digital advertising compounder with elite economics — FY25 revenue $201B (+18% YoY), 41% operating margin, 33% net margin, 82% gross margin, 33% ROE, 22% ROIC. " +

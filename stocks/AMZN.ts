@@ -5,7 +5,7 @@ export const AMZN = defineStock({
   name: 'Amazon.com',
   sector: 'E-commerce / Cloud / AI Infrastructure',
   themeColor: '#ff9900',
-  currentPrice: 272.68,
+  currentPrice: 268.99,
   fairPriceRange: '$220 - $420',
   shares0: 10800,
   rev25: 716920,
@@ -20,7 +20,7 @@ export const AMZN = defineStock({
   rsRating: 52,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/10',
+  updatedOn: '05/11',
 
   strategicNarrative:
     "Amazon is the dominant cloud + e-commerce + ads platform — 2025 revenue $716.9B (+12% YoY), GAAP NI $77.7B (+31%), Q1 2026 EPS $2.78 vs $1.63 estimate (a 70% beat). " +

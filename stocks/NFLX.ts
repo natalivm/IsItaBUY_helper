@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const NFLX = defineStock({
-  updatedOn: '05/08',
+  updatedOn: '05/11',
   ticker: 'NFLX',
   name: 'Netflix',
   sector: 'Entertainment',
   themeColor: '#ff007f',
-  currentPrice: 87.49,
+  currentPrice: 85.45,
   fairPriceRange: '$56 - $200',
   shares0: 4222.0,
   rev25: 45180,
