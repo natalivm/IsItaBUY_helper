@@ -47,10 +47,15 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
         {isAvoid && <span className="hidden group-hover:inline text-xl text-red-400">{'\u26A0'}</span>}
         {stock.ticker}
       </span>
-      <div className="w-24 flex-shrink-0 flex flex-col">
+      <div className="w-24 flex-shrink-0 flex flex-col gap-0.5">
         <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>${tickerDef.currentPrice.toFixed(2)}</span>
-        {tickerDef.updatedOn && (
-          <span className="text-xs font-medium text-slate-500 border border-slate-700 rounded px-1.5 py-0.5 mt-0.5 self-start">
+        {tickerDef.lastReportTag && (
+          <span className="text-[10px] font-black text-emerald-400 border border-emerald-700/60 bg-emerald-950/40 rounded px-1.5 py-0.5 self-start uppercase tracking-wide">
+            {tickerDef.lastReportTag}
+          </span>
+        )}
+        {tickerDef.updatedOn && !tickerDef.lastReportTag && (
+          <span className="text-xs font-medium text-slate-500 border border-slate-700 rounded px-1.5 py-0.5 self-start">
             upd {tickerDef.updatedOn}
           </span>
         )}

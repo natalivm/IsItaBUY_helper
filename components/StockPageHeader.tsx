@@ -49,6 +49,11 @@ const StockPageHeader: React.FC<Props> = ({
               "text-base font-black border rounded px-2 py-1 mb-1 flex-shrink-0",
               rsRatingStyle(tickerDef.rsRating)
             )}>RS {tickerDef.rsRating}</span>
+            {tickerDef.lastReportTag && (
+              <span className="text-xs font-black uppercase tracking-widest text-emerald-400 border border-emerald-600/50 bg-emerald-950/50 rounded-full px-3 py-1 mb-1 flex-shrink-0">
+                {tickerDef.lastReportTag} ✓
+              </span>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-3">

@@ -7,6 +7,7 @@ export const FICO = defineStock({
   themeColor: '#2979ff',
   currentPrice: 1092,
   updatedOn: '05/11',
+  lastReportTag: 'Q2 FY26',
   fairPriceRange: '$1,100 - $2,200',
   shares0: 23.72,
   rev25: 1990,
