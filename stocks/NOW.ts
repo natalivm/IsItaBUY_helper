@@ -5,9 +5,9 @@ export const NOW = defineStock({
   name: 'ServiceNow',
   sector: 'Enterprise SaaS / Workflow Platform',
   themeColor: '#62D84E',
-  currentPrice: 920,
-  fairPriceRange: '$680 - $1,200',
-  shares0: 207,
+  currentPrice: 91.18,
+  fairPriceRange: '$68 - $120',
+  shares0: 1045,
   rev25: 13300,
   fcfMargin25: 0.34,
   taxRate: 0.20,
@@ -16,7 +16,7 @@ export const NOW = defineStock({
   beta: 1.15,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 17.50,
+  baseEps: 3.50,
   rsRating: 72,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
@@ -28,11 +28,11 @@ export const NOW = defineStock({
     "The Burry profile is the cleanest in the cited-software cohort: " +
     "SBC $1,955M FY25 (14.6% of revenue — high but not extreme), buybacks $2,610M FY25 = **1.3× SBC coverage**. Diluted shares essentially flat 1,016M (FY21) → 1,045M (LTM) = +2.9% over 5 years = +0.6%/yr. Net dilution is minimal. " +
     "FCF margin 33% LTM, FCF/share growing faster than absolute FCF thanks to buyback compression. SBC is 37% of operating cash flow (vs ZS 66%, DDOG 70%, AXON 408%) — meaningfully better. " +
-    "Valuation: at $920 / ~$190B market cap on $17.50 forward non-GAAP EPS, forward P/E ~53×. Forward P/S ~14×. Quality compounder priced as a quality compounder — not as extreme as DDOG/ZS but rich. " +
-    "Bull (~30%): Now Assist + GenAI inflection drives durable 22%+ growth + margin expansion to 22% GAAP operating margin → $1,200+. Base (~50%): Continued execution, 18% growth, margins to 20% → ~$1,000. Bear (~20%): SaaS spending consolidation, GenAI commoditization, growth halves → $680. " +
-    "BUY-leaning HOLD — best capital allocation in the Burry-cited cohort. Quality enterprise platform at a fair-to-rich multiple. SBC concern is muted by aggressive buybacks (only 1 of 5 Burry-cited SaaS where buybacks actually exceed SBC issuance).",
+    "Valuation: at $91.18 / ~$95B market cap on $3.50 forward non-GAAP EPS, forward P/E ~26×. Forward P/S ~7×. Quality compounder at a reasonable multiple — much more attractive entry than its software peers. " +
+    "Bull (~30%): Now Assist + GenAI inflection drives durable 22%+ growth + margin expansion to 22% GAAP operating margin → $120+. Base (~50%): Continued execution, 18% growth, margins to 20% → ~$100. Bear (~20%): SaaS spending consolidation, GenAI commoditization, growth halves → $68. " +
+    "BUY-leaning HOLD — best capital allocation in the Burry-cited cohort. Quality enterprise platform at a fair multiple. SBC concern is muted by aggressive buybacks (only 1 of 5 Burry-cited SaaS where buybacks actually exceed SBC issuance).",
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 750, targetMedian: 1050, targetHigh: 1300, numAnalysts: 40 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 75, targetMedian: 105, targetHigh: 130, numAnalysts: 40 },
 
   revGrowth: [
     [0.13, 0.12, 0.11, 0.10, 0.09], // Bear: enterprise SaaS consolidation, growth halves

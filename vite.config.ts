@@ -53,6 +53,12 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        // Cache versioning — bump to force users to drop the old precache and
+        // pick up the new build immediately on next visit. Increment when
+        // shipping data changes (e.g. Burry indicator scope) that may otherwise
+        // be masked by stale SW cache.
+        cacheId: 'isitabuy-v2',
+        cleanupOutdatedCaches: true,
         // Precache all static assets built by Vite (JS, CSS, HTML, fonts)
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         // Runtime caching for Google Fonts
