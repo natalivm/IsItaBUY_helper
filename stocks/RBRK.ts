@@ -63,4 +63,15 @@ export const RBRK = defineStock({
   prob: [25, 45, 30],
   bbRate: [0.005, 0.01, 0.015],
   bullMaOptVal: true,
+
+  burry: {
+    sbc: 329,
+    gaapNi: -350,
+    buyback: 6,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY26 LTM',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Tragic — TIKR LTM shows RBRK is the rare stock where ADJUSTED FCF AFTER SBC IS ACTUALLY NEGATIVE: reported FCF $253M − SBC $329M = -$76M. SBC = 130% of reported FCF; the "cash flow positive" headline is fully accounting-driven (SBC addback). 25% of revenue is SBC — the highest in our verified coverage (tied with ZS at 24.6%). FY25 GAAP loss of -$1.1B was distorted by IPO compensation accounting (one-time spike), but underlying business remains GAAP-loss at -$350M LTM. Buybacks negligible at $6M (covers 2% of SBC). Diluted shares 60M (FY24) → 196M (LTM) = +225% (mostly IPO effects). Recent post-IPO dilution +27% in one year. 100% placeholder for loss-maker; would still register as deeply Tragic on any non-loss-maker scale. Worse profile than CRWD ($1B FCF before SBC adjustment becomes ~$200M after) because RBRK\'s baseline FCF doesn\'t even cover SBC.',
+  },
 });
