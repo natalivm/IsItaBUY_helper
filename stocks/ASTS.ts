@@ -45,6 +45,17 @@ export const ASTS = defineStock({
     'Accelerated deployment (60+ sats YE26), government/DoD contracts secured (Golden Dome, SHIELD, SDA prime contractor), L/S-band spectrum monetization live. Revenue exceeds $1.3B by 2027 and $8B+ by 2030. EBITDA margins above 80%, multiple expansion as market re-rates ASTS as dual-use infrastructure monopoly.',
   ],
 
+  burry: {
+    sbc: 47.49,
+    gaapNi: -341.94,
+    buyback: 23.02,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'GAAP loss company — SBC overstatement framework inapplicable; rated Tragic by default. Real risk is constellation capex ($1.06B) and 395% 5-year share dilution, not SBC.',
+  },
+
   bbRate: [0, 0, 0],
   ebitdaProxy: [0.35, 0.55, 0.65],
   bullMaOptVal: 93.15 * 370 * 0.07,
