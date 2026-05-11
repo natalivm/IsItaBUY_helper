@@ -8,11 +8,11 @@ export const FTNT = defineStock({
   currentPrice: 114.07,
   updatedOn: '05/08',
   fairPriceRange: '$80 - $135',
-  shares0: 734,
+  shares0: 756,
   rev25: 6800,
-  fcfMargin25: 0.325,
+  fcfMargin25: 0.34,
   taxRate: 0.18,
-  cash: 3266,
+  cash: 2224,
   debt: 995,
   beta: 0.96,
   costDebt: 0.048,
@@ -51,4 +51,15 @@ export const FTNT = defineStock({
     'SASE inflection — ASIC-driven performance edge wins enterprise platform consolidation over cloud-native peers. Revenue sustains low-teens growth as firewall + SASE converge into a single budget line. ' +
       'FCF margins expand to ~37% on operating leverage and software attach. Net cash funds aggressive buybacks. Market re-rates to 35x as cybersecurity compounder with structural margin advantage.',
   ],
+
+  burry: {
+    sbc: 286,
+    gaapNi: 1955,
+    buyback: 3223,
+    epsBasis: 'GAAP',
+    fy: 'FY25 LTM',
+    overstatementPct: 20,
+    overstatementSource: 'estimated',
+    note: 'Ok — FTNT is actually one of the cleanest profiles in our entire coverage, despite being in the cybersec sector that\'s otherwise dominated by Tragic-tier names (CRWD/ZS/DDOG/AXON). TIKR LTM actuals: SBC just $286M (**4.0% of revenue** — lowest among all verified cybersec, only AMZN/MELI/SHOP are lower), buybacks **$3,222M = 11.3× SBC** (similar to FICO 12× and NFLX 25×). Diluted shares 835M (FY21) → 756M (LTM) = **−9.5% over 5 years** (comparable to META −10.2%). SBC = 12% of FCF. GAAP genuinely profitable: 27.5% net margin, 31% operating margin, $1.95B GAAP NI. Adjusted FCF after SBC: $2.15B = 30.2% margin (still elite). FTNT belongs in the reformed-compounder cohort with META/FICO/SHOP/APP/AMAT — not the broken-SaaS cohort with the rest of cybersec.',
+  },
 });
