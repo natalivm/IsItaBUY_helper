@@ -49,12 +49,7 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       </span>
       <div className="w-24 flex-shrink-0 flex flex-col gap-0.5">
         <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>${tickerDef.currentPrice.toFixed(2)}</span>
-        {tickerDef.lastReportTag && (
-          <span className="text-[10px] font-black text-emerald-400 border border-emerald-700/60 bg-emerald-950/40 rounded px-1.5 py-0.5 self-start uppercase tracking-wide">
-            {tickerDef.lastReportTag}
-          </span>
-        )}
-        {tickerDef.updatedOn && !tickerDef.lastReportTag && (
+        {tickerDef.updatedOn && (
           <span className="text-xs font-medium text-slate-500 border border-slate-700 rounded px-1.5 py-0.5 self-start">
             upd {tickerDef.updatedOn}
           </span>
@@ -70,6 +65,11 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       <BurryBadge tickerDef={tickerDef} dimmed={isAvoid} />
       <span className={cn("text-sm font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>{stock.fairPriceRange}</span>
       <span className={cn("text-sm font-medium truncate", isAvoid ? "text-slate-400/40" : "text-slate-400")}>{tickerDef.sector.split(/\s[·\/]\s/)[0]}</span>
+      {tickerDef.lastReportTag && (
+        <span className="text-[10px] font-black text-emerald-400 border border-emerald-700/60 bg-emerald-950/40 rounded px-1.5 py-0.5 flex-shrink-0 uppercase tracking-wide ml-auto">
+          {tickerDef.lastReportTag}
+        </span>
+      )}
     </motion.button>
   );
 };
