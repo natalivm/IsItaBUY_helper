@@ -5,14 +5,15 @@ export const ASTS = defineStock({
   name: 'AST SpaceMobile',
   sector: 'Space Technology',
   themeColor: '#38bdf8',
-  currentPrice: 82.55,
+  currentPrice: 73.65,
   updatedOn: '05/11',
+  lastReportTag: 'Q1 2026',
   fairPriceRange: '$20 - $250',
   shares0: 370,
   rev25: 71,
   fcfMargin25: -0.10,
   taxRate: 0.15,
-  cash: 3900,
+  cash: 3500,           // Q1 2026 end: $3.5B (inclusive of Feb convertible notes)
   debt: 2500,
   beta: 1.46,
   costDebt: 0.03,
@@ -21,13 +22,13 @@ export const ASTS = defineStock({
   ratingOverride: 'HOLD',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "AST SpaceMobile is the only space-based cellular broadband network for standard smartphones — a category-defining bet with 50+ MNO partnerships (incl. Verizon, AT&T, Vodafone, stc) covering 3B+ subscribers. " +
-    "Q4 2025 validated execution: FY25 revenue $71M (top of guidance), BB6 Block 2 (2,400 sq ft) successfully deployed, $1.2B contracted backlog, balance sheet fortified to $3.9B pro forma cash. " +
-    "2026 guidance $150-200M revenue with 45-60 sats targeting orbit; 2027 goal approaching $1B as commercial service scales across US, Europe, Japan, Middle East. " +
-    "Management targets 90%+ EBITDA margins at scale, $21-23M/sat cost, 95% vertically integrated manufacturing. Government revenue accelerating via Golden Dome, SHIELD, SDA contracts. " +
-    "April 2025: a satellite launch failure pressured the stock -10.7% and trimmed RS from 97 to 90. Existing constellation intact; $3.9B cash provides runway to absorb delays. " +
-    "Q1 2026 earnings miss: revenue $14.7M vs $36.6M expected (60% miss), EPS -$0.66 vs -$0.20 expected. Revenue down 73% QoQ, putting $150-200M FY2026 guidance at serious risk — remaining 3 quarters need to average $45-62M each. " +
-    "Downgraded to HOLD pending full report clarity on deployment timeline, revenue recognition timing, and whether guidance is revised. ",
+    "AST SpaceMobile is the only space-based cellular broadband network for standard smartphones — now ~60 MNO partners covering 3B+ subscribers (Verizon, AT&T, Vodafone, STC, Bell, TELUS, Rakuten). " +
+    "Q1 2026 key facts: revenue $14.7M (below $36.6M expected, down 73% QoQ), FY2026 guidance $150-200M reiterated, cash $3.5B at Q1-end. Management explicitly said revenue will build each sequential quarter in 2026. " +
+    "Technology milestone: 98.9 Mbps peak downlink achieved on Block 1 satellites over international waters to unmodified off-the-shelf smartphones — record, and Block 2 (BB8/9/10) expected to nearly double this to ~200 Mbps. ASIC delivers 10 GHz processing bandwidth vs 1 GHz on FPGA satellites (10×). " +
+    "Manufacturing at scale: BB11-BB33 in advanced assembly, phased arrays complete through BB28. Target 6 fully assembled satellites/month. BB8/9/10 on Falcon 9 launching mid-June. BB7 lost in Blue Origin upper-stage anomaly; Blue Origin back-pad timeline uncertain but BO has 2 boosters in integration — management remains optimistic. Target: ~45 satellites in orbit by YE2026. " +
+    "Ground integration active in 19 countries (US, Canada, UK, India, Brazil, Spain, Germany, France, Romania, Saudi Arabia, Japan, NZ, Philippines + 5 African markets) covering 2.9B people. Commissioning target 45 days post-launch → aiming for 2 weeks. Handoff achieved without connectivity disruption. FCC commercial authorization granted for US operations. " +
+    "New partners: TELUS (Canada #2), Axian Telecom (pan-African, 11 countries). 3 new U.S. government awards through prime contractors (comms + non-comms). Golden Dome / Space Force budget request >$70B backdrop is favorable. 2027 revenue opportunity approaching $1B (contracted + highly recurring). " +
+    "Bear case remains the same: Q1 miss creates pressure on a guide that requires the back 3 quarters to average $45-62M each. No guidance revision — that's the key signal to watch. RS falling to 90 reflects post-miss institutional caution. HOLD until launch milestones and H2 revenue ramp provide evidence.",
 
   analystConsensus: { rating: 'Hold', targetLow: 43, targetMedian: 70, targetHigh: 137, numAnalysts: 9 },
   revGrowth: [
@@ -60,7 +61,7 @@ export const ASTS = defineStock({
 
   bbRate: [0, 0, 0],
   ebitdaProxy: [0.35, 0.55, 0.65],
-  bullMaOptVal: 93.15 * 370 * 0.07,
+  bullMaOptVal: 73.65 * 370 * 0.07,
 
   driverOverrides: [
     {},
