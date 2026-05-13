@@ -50,7 +50,7 @@ const StockPageHeader: React.FC<Props> = ({
               rsRatingStyle(tickerDef.rsRating)
             )}>RS {tickerDef.rsRating}</span>
             {tickerDef.lastReportTag && (
-              <span className="text-xs font-black uppercase tracking-widest text-emerald-400 border border-emerald-600/50 bg-emerald-950/50 rounded-full px-3 py-1 mb-1 flex-shrink-0">
+              <span className="text-xs font-black uppercase tracking-widest text-[#ffffff] border border-emerald-700/50 bg-emerald-950/70 rounded-full px-3 py-1 mb-1 flex-shrink-0">
                 {tickerDef.lastReportTag} ✓
               </span>
             )}

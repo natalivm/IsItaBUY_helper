@@ -114,7 +114,7 @@ const InvestmentVerdict: React.FC<Props> = ({
     {
       label: 'Upside to Base',
       value: (
-        <span className={cn("text-2xl font-black", momentumUpside >= 0 ? 'text-green-400' : 'text-red-400')}>
+        <span className={cn("text-2xl font-black", momentumUpside >= 0 ? 'text-green-600' : 'text-red-400')}>
           {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
         </span>
       ),
@@ -252,16 +252,16 @@ const InvestmentVerdict: React.FC<Props> = ({
         const ourLabel = activeStockData?.label || 'HOLD';
 
         const analystColor: Record<AnalystRating, string> = {
-          'Strong Buy': 'text-green-400',
-          'Buy': 'text-emerald-400',
+          'Strong Buy': 'text-green-600',
+          'Buy': 'text-emerald-600',
           'Hold': 'text-blue-400',
           'Sell': 'text-orange-400',
           'Strong Sell': 'text-red-400',
         };
 
         const analystBg: Record<AnalystRating, string> = {
-          'Strong Buy': 'bg-green-400/10 border-green-400/30',
-          'Buy': 'bg-emerald-400/10 border-emerald-400/30',
+          'Strong Buy': 'bg-green-600/10 border-green-600/30',
+          'Buy': 'bg-emerald-600/10 border-emerald-600/30',
           'Hold': 'bg-blue-400/10 border-blue-400/30',
           'Sell': 'bg-orange-400/10 border-orange-400/30',
           'Strong Sell': 'bg-red-400/10 border-red-400/30',
@@ -274,7 +274,7 @@ const InvestmentVerdict: React.FC<Props> = ({
         };
         const diff = Math.abs((ourScale[ourLabel] || 3) - analystScale[ac.rating]);
         const agreement = diff === 0 ? 'Aligned' : diff === 1 ? 'Close' : 'Divergent';
-        const agreementColor = diff === 0 ? 'text-green-400' : diff === 1 ? 'text-yellow-400' : 'text-red-400';
+        const agreementColor = diff === 0 ? 'text-green-600' : diff === 1 ? 'text-yellow-400' : 'text-red-400';
 
         const spotMedianUpside = ((ac.targetMedian - tickerDef.currentPrice) / tickerDef.currentPrice * 100).toFixed(1);
 

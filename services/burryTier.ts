@@ -32,21 +32,21 @@ export interface BurryTierTheme {
 const PRISTINE: BurryTierTheme = {
   key: 'PRISTINE',
   label: 'PRISTINE',
-  color: 'text-emerald-300',
-  bg: 'bg-emerald-500/10',
-  bgStrong: 'bg-emerald-500/60',
-  border: 'border-emerald-500/30',
-  ring: 'ring-emerald-500/40',
+  color: 'text-emerald-600',
+  bg: 'bg-emerald-600/10',
+  bgStrong: 'bg-emerald-600/60',
+  border: 'border-emerald-600/30',
+  ring: 'ring-emerald-600/40',
   blurb: 'SBC is a small share of GAAP profit and buybacks more than offset dilution. Burry-approved.',
 };
 const OK: BurryTierTheme = {
   key: 'OK',
   label: 'OK',
-  color: 'text-lime-300',
-  bg: 'bg-lime-500/10',
-  bgStrong: 'bg-lime-500/60',
-  border: 'border-lime-500/30',
-  ring: 'ring-lime-500/40',
+  color: 'text-lime-600',
+  bg: 'bg-lime-600/10',
+  bgStrong: 'bg-lime-600/60',
+  border: 'border-lime-600/30',
+  ring: 'ring-lime-600/40',
   blurb: 'Coefficient above the 0.70 threshold. SBC dilution exists but stays within manageable bounds.',
 };
 const CRITICAL: BurryTierTheme = {

@@ -142,7 +142,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
               <span
                 className={cn(
                   'text-3xl font-black leading-none',
-                  buybackVsSbc >= 1 ? 'text-emerald-300' : 'text-amber-300'
+                  buybackVsSbc >= 1 ? 'text-emerald-500' : 'text-amber-300'
                 )}
               >
                 {buybackVsSbc.toFixed(2)}×
@@ -175,7 +175,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
             </>
           ) : niPositive && b.epsBasis === 'GAAP' ? (
             <>
-              <span className="text-3xl font-black leading-none text-emerald-300">none</span>
+              <span className="text-3xl font-black leading-none text-emerald-500">none</span>
               <span className="text-xs text-slate-500 mt-1">model already on GAAP basis</span>
             </>
           ) : (
@@ -214,7 +214,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
               </span>
               <span className="text-xs text-slate-500 mt-1">
                 target × ({coef.toFixed(2)}) ·{' '}
-                <span className={adjustedTargetVsSpot != null && adjustedTargetVsSpot >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                <span className={adjustedTargetVsSpot != null && adjustedTargetVsSpot >= 0 ? 'text-emerald-600' : 'text-rose-400'}>
                   {adjustedTargetVsSpot != null && adjustedTargetVsSpot >= 0 ? '+' : ''}
                   {adjustedTargetVsSpot?.toFixed(1)}% vs spot
                 </span>
@@ -239,7 +239,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
                 <span
                   className={cn(
                     'text-2xl font-black leading-none',
-                    adjustedCagr >= 0 ? 'text-emerald-300' : 'text-rose-300'
+                    adjustedCagr >= 0 ? 'text-emerald-500' : 'text-rose-300'
                   )}
                 >
                   {adjustedCagr >= 0 ? '+' : ''}

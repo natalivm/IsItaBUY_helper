@@ -19,22 +19,22 @@ export const RATING_DEFS: Record<RatingKey, {
   'STRONG BUY': {
     verdictText: 'YES',
     status: 'undervalued',
-    color: 'text-green-400',
-    subtextColor: 'text-green-500/70',
-    dot: 'bg-green-500',
-    glowDot: 'bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.8)]',
-    activeBorder: 'border-green-500',
-    activeBg: 'bg-green-500/10',
+    color: 'text-green-600',
+    subtextColor: 'text-green-600/70',
+    dot: 'bg-green-600',
+    glowDot: 'bg-green-600 shadow-[0_0_12px_rgba(22,163,74,0.8)]',
+    activeBorder: 'border-green-600',
+    activeBg: 'bg-green-600/10',
   },
   'BUY': {
     verdictText: 'YES',
     status: 'undervalued',
-    color: 'text-emerald-400',
-    subtextColor: 'text-emerald-500/70',
-    dot: 'bg-emerald-400',
-    glowDot: 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]',
-    activeBorder: 'border-emerald-400',
-    activeBg: 'bg-emerald-400/10',
+    color: 'text-emerald-600',
+    subtextColor: 'text-emerald-600/70',
+    dot: 'bg-emerald-600',
+    glowDot: 'bg-emerald-600 shadow-[0_0_12px_rgba(5,150,105,0.8)]',
+    activeBorder: 'border-emerald-600',
+    activeBg: 'bg-emerald-600/10',
   },
   'HOLD': {
     verdictText: 'HOLD',
@@ -61,7 +61,7 @@ export const RATING_DEFS: Record<RatingKey, {
 // ── AI Impact Badge Styling ──
 
 export const AI_IMPACT_BADGE: Record<string, string> = {
-  TAILWIND: 'border-emerald-500 text-emerald-400 bg-emerald-500/10',
+  TAILWIND: 'border-emerald-600 text-emerald-600 bg-emerald-600/10',
   DISRUPTION_RISK: 'border-amber-500 text-amber-400 bg-amber-500/10',
   NEUTRAL: 'border-amber-500 text-amber-400 bg-amber-500/10',
 };
@@ -82,7 +82,7 @@ export const TAG_DEFS: TagDef[] = [
     const r = RATING_DEFS[key];
     return { tag: key, label: key, color: r.color, activeBorder: r.activeBorder, activeBg: r.activeBg, dot: r.dot };
   }),
-  { tag: 'TAILWIND', label: 'AI TAILWIND', color: 'text-emerald-400', activeBorder: 'border-emerald-500', activeBg: 'bg-emerald-500/10', dot: 'bg-emerald-500' },
+  { tag: 'TAILWIND', label: 'AI TAILWIND', color: 'text-emerald-600', activeBorder: 'border-emerald-600', activeBg: 'bg-emerald-600/10', dot: 'bg-emerald-600' },
   { tag: 'DISRUPTION_RISK', label: 'AI RISK', color: 'text-orange-400', activeBorder: 'border-orange-500', activeBg: 'bg-orange-500/10', dot: 'bg-orange-500' },
 ];
 
@@ -95,9 +95,9 @@ export const GROUP_ORDER: StockGroup[] = ['PRIME_GROWTH', 'TURBO_GROWTH', 'WATCH
 export const GROUP_META: Record<StockGroup, { label: string; accent: string; border: string; bg: string; desc: string }> = {
   PRIME_GROWTH: {
     label: 'PRIME GROWTH',
-    accent: 'text-emerald-400',
-    border: 'border-emerald-500/40',
-    bg: 'bg-emerald-500/5',
+    accent: 'text-emerald-600',
+    border: 'border-emerald-600/40',
+    bg: 'bg-emerald-600/5',
     desc: 'Large Cap \u00b7 Strong Valuation \u00b7 High or Rising Momentum',
   },
   TURBO_GROWTH: {
