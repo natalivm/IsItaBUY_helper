@@ -2,12 +2,12 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { ScenarioType, TickerDefinition } from './types';
 import { calculateProjection, getInstitutionalRating } from './services/projectionService';
-import { TICKERS, TAG_DEFS, GROUP_ORDER, GROUP_META, StockGroup, SPLASH_DURATION_MS, weightedScenarioAverage } from './constants';
+import { TICKERS, GROUP_ORDER, GROUP_META, StockGroup, SPLASH_DURATION_MS, weightedScenarioAverage } from './constants';
 import { classifyStock, cn } from './utils';
 import StockDetailView from './components/StockDetailView';
 import LoadingSplash from './components/LoadingSplash';
-import TagFilterBar from './components/TagFilterBar';
 import StockRow from './components/StockRow';
+import ThemeToggle from './components/ThemeToggle';
 import InstallPrompt from './components/InstallPrompt';
 
 import { motion, AnimatePresence } from 'motion/react';
@@ -24,7 +24,6 @@ const App: React.FC = () => {
 
   const [activeTicker, setActiveTicker] = useState<string>(getTickerFromHash);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
 
   const navigateTo = useCallback((ticker: string) => {
     if (ticker === 'home') {
@@ -76,27 +75,16 @@ const App: React.FC = () => {
     }).sort((a, b) => a.ticker.localeCompare(b.ticker));
   }, [tickers]);
 
-  const tagCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    TAG_DEFS.forEach(({ tag }) => {
-      counts[tag] = universeData.filter(s => s.label === tag || s.aiImpact === tag).length;
-    });
-    return counts;
-  }, [universeData]);
-
   const groupedData = useMemo(() => {
-    const filtered = activeTagFilter
-      ? universeData.filter(s => s.label === activeTagFilter || s.aiImpact === activeTagFilter)
-      : universeData;
     const groups: Record<StockGroup, typeof universeData> = {
       PRIME_GROWTH: [],
       TURBO_GROWTH: [],
       WATCH_LIST: [],
       AVOID: [],
     };
-    filtered.forEach(s => groups[s.group].push(s));
+    universeData.forEach(s => groups[s.group].push(s));
     return groups;
-  }, [universeData, activeTagFilter]);
+  }, [universeData]);
 
   const flatTickerOrder = useMemo(() => {
     const list: string[] = [];
@@ -132,11 +120,9 @@ const App: React.FC = () => {
               className="min-h-screen bg-surface-card overflow-y-auto px-4 lg:px-24 pt-20 pb-24 scrollbar-hide"
             >
               <div className="max-w-4xl mx-auto mb-12">
-                <TagFilterBar
-                  activeTagFilter={activeTagFilter}
-                  tagCounts={tagCounts}
-                  onToggle={setActiveTagFilter}
-                />
+                <div className="flex justify-end mb-6 pt-1">
+                  <ThemeToggle />
+                </div>
 
                 <div className="space-y-0">
                 {(() => {
