@@ -25,12 +25,10 @@ export const AXON = defineStock({
   lastReportTag: 'Q1 2026',
 
   strategicNarrative:
-    "Q1 2026: revenue $807M (+34% YoY), the 9th consecutive quarter of 30%+ growth. Software & services $355M (+35%), AI product revenue +700% YoY. ARR $1.5B (+35%), NRR 125%. Future contracted bookings $14.3B (+44% YoY) — the most important forward indicator in the model. " +
-    "International is the breakout: +100%+ YoY, now 20% of revenue. Dedrone revenue +300%+ YoY, bookings +500% — counter-drone adds a defense vertical. AI Era Plan bookings +140% YoY. $40M telco enterprise deal (Fusus + Body Mini + Outpost) shows expansion beyond law enforcement. " +
-    "FY2026 guidance RAISED to 30-32% growth (~$3.6B), adj EBITDA margin 25.5%, FCF ~$450M (12.5% of revenue vs. FY25's ~7%) — structural FCF inflection happening now. New product velocity is high: Axon Vision, Guardian, Assistant (1M+ monthly uses), Form One, BriefOne. " +
-    "SBC remains the core challenge: FY2026 guide $590-620M (~16% of revenue). But management now targets <2.5% annual dilution — implying buybacks will be scaled up to cover. This is an improvement from FY25's +4.5%/yr net dilution; execution will be the test. " +
-    "At ~$394 / ~56x FY2026 non-GAAP EPS (~$7.00), premium is still demanding. But with $14.3B backlog (+44%), 125% NRR, and FCF finally inflecting, the quality trajectory is clearer than it was a year ago. " +
-    "HOLD — best government-tech moat in the market combined with worst cash-flow-quality in our coverage. The framework flags this as Tragic on strict Burry accounting. The bet: operating leverage + buyback discipline compress SBC dilution, eventually vindicating the premium.",
+    "Q1 2026 was the kind of quarter that resets the conversation. Revenue grew 34% — the ninth straight quarter above 30% — and software is now driving the bus. AI product revenue jumped 700% year-over-year. International doubled and already accounts for 20% of the business. Dedrone bookings exploded 500%, quietly opening a defense vertical nobody had in their model. A $40M telco deal (Fusus + Body Mini + Outpost) is the first serious crack outside law enforcement.\n\n" +
+    "The signal that matters most: future contracted bookings hit $14.3B, up 44% YoY. That's not pipeline — it's signed, multi-year revenue waiting to be recognized. ARR is $1.5B at 125% net retention. Every department that adopts Axon's evidence + records + AI stack adds modules and never leaves. This is a moat compounding in real time.\n\n" +
+    "Management raised FY26 guidance to 30–32% growth with FCF inflecting to ~$450M — 12.5% of revenue versus FY25's ~7%. After years of skeptics arguing the cash flow would never show up, it's showing up. The catch, and it's a big one, is SBC: guided at $590–620M, or roughly 16% of revenue. Burry called Axon out by name. Management's new commitment to <2.5% annual dilution means buybacks finally have to absorb SBC instead of letting share count drift higher. That's the bet.\n\n" +
+    "The verdict: this is the best government-tech moat in our coverage paired with one of the worst cash-flow-quality profiles. At ~56× FY26 non-GAAP EPS, the premium prices in execution that hasn't fully happened yet. We HOLD until SBC dilution actually compresses — but the trajectory is finally pointing the right way.",
 
   analystConsensus: { rating: 'Buy', targetLow: 450, targetMedian: 770, targetHigh: 1000, numAnalysts: 18 },
 
@@ -49,17 +47,9 @@ export const AXON = defineStock({
   exitMultiple: [22, 35, 50],
 
   desc: [
-    'The $14.3B backlog proves hollow — government budget cycles tighten and international expansion stumbles on regulatory friction. AI Era Plan upgrades slow. ' +
-      'SBC stays at 15-17% of revenue as Axon competes for AI talent; management misses the <2.5% dilution target. FCF margin inches up from 12.5% but never reaches the inflection investors expected. ' +
-      'Multiple compresses from 56× to 25× as AI tools face credible competition. EPS CAGR ~12% from $7.00 base; 5yr target ~$500, roughly flat annualized.',
-    'Q1 2026 set the template: 34% revenue growth, adj EBITDA at 25%, FCF finally inflecting to $450M+ guidance. ARR $1.5B at 125% NRR compounds the installed base. ' +
-      'International sustains above 25% annual contribution through FY28. Dedrone + enterprise deals (telco, $40M+) open non-law-enforcement TAM. ' +
-      'Management hits <2.5% dilution target; SBC ratio compresses to ~12% by FY28. FCF margin reaches 25%+ by FY29. Multiple normalizes from 56× to 40×. ' +
-      'EPS CAGR ~25% from $7.00 base; 5yr target ~$700-750, ~12-13% annualized.',
-    'The $14.3B backlog (+44% YoY) and 125% NRR are the compounding engine — every department that runs evidence + records + AI tools adds modules and never leaves. ' +
-      'International reaches 35%+ of revenue by FY29 (Dedrone bookings +500% signals defense vertical is real). AI product revenue +700% YoY inflects into core platform economics. ' +
-      'SBC ratio compresses below 12%, buybacks ramp. FCF margin scales to 34%. Multiple holds at 55×+ as market prices a structural AI-policing platform. ' +
-      'EPS CAGR ~35% from $7.00 base; 5yr target $950-1,100, ~18-22% annualized.',
+    'Government budgets tighten, international expansion hits regulatory friction in Europe, and Microsoft and Google AI tools chip away at Draft One and Assistant. The $14.3B backlog converts to revenue slower than hoped, and Axon keeps paying up in stock to retain AI talent — SBC stays stubborn at 15–17% of revenue and the <2.5% dilution target slips. FCF improves but never makes the leap investors expected. The market loses patience with a 56× multiple and re-rates Axon as a normal govtech vendor at 25×. EPS compounds at 12% and the stock trades roughly flat over five years.',
+    'Q1 2026 sets the template and Axon executes against it. 30%+ growth holds through FY27 and naturally decelerates to mid-teens by FY30 as the base gets bigger. International sustains above 25% of revenue. Dedrone and enterprise wins keep opening new adjacencies beyond law enforcement. Management hits the <2.5% dilution target — for the first time, buybacks actually absorb SBC. FCF margin walks from 12.5% to 25%+ by FY29. The market normalizes the multiple from 56× to 40× as Axon graduates from "premium growth" to "premium compounder." EPS compounds ~25%; the stock returns 12–13% annualized — solid, but short of the heroic case.',
+    'The $14.3B backlog turns out to be the engine, and the AI Era Plan upgrades (+140% bookings) prove customers will pay up for new modules without being pushed. International reaches 35% of revenue. Dedrone\'s 500% bookings growth becomes a real defense business. AI product revenue keeps compounding — Vision, Guardian, Assistant become the operating system for modern policing and corrections, and switching costs harden. SBC ratio drops below 12% as revenue outruns it and buybacks scale aggressively. FCF margin reaches 34% by FY30. The market refuses to compress the multiple — Axon isn\'t "govtech" anymore, it\'s critical AI infrastructure. EPS compounds ~35%; the stock returns 18–22% annualized.',
   ],
 
   thesis: [
