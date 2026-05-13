@@ -8,63 +8,62 @@ export const AMZN = defineStock({
   currentPrice: 268.99,
   fairPriceRange: '$220 - $420',
   shares0: 10800,
-  rev25: 716920,
-  fcfMargin25: 0.06,
+  rev25: 800000,         // FY2026 estimate: Q1 $181.5B + Q2 mid $196.5B + H2 ~$420B
+  fcfMargin25: 0.04,     // FY2026 peak capex year — Q1 CapEx $43.2B compresses FCF sharply
   taxRate: 0.18,
   cash: 100000,
   debt: 60000,
   beta: 1.20,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 9.50,
+  baseEps: 11.00,        // FY2026 estimate: Q1 $2.78 actual; Q2-Q4 seasonal ramp → ~$11
   rsRating: 52,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   updatedOn: '05/11',
+  lastReportTag: 'Q1 2026',
 
   strategicNarrative:
-    "Amazon is the dominant cloud + e-commerce + ads platform — 2025 revenue $716.9B (+12% YoY), GAAP NI $77.7B (+31%), Q1 2026 EPS $2.78 vs $1.63 estimate (a 70% beat). " +
-    "Three engines firing: (1) AWS — leading hyperscaler with structural AI infra demand (Trainium 2/3, Bedrock, agentic AI), (2) Retail — operating margin expanding past 9% on logistics density and automation, (3) Ads — third-largest digital ad platform behind GOOG/META, fastest-growing of the three. " +
-    "AI capex bet is massive (~$100B+/yr) but unlike pure software peers, Amazon owns the customers (AWS workloads + Prime + Alexa) — the capex translates more directly to revenue. Q1 2026 13.1% operating margin is a record. " +
-    "Capital allocation philosophy: zero buybacks, full reinvestment. SBC $19.5B (~2.7% of revenue) is high in absolute terms but small relative to NI ($77.7B). Burry chart flags 21% overstatement — meaningful but bottom of the Elevated tier. " +
-    "Bull (~30%): AWS sustains 17%+ growth, retail margin expands to 11%, ads scale past $80B → $410+. " +
-    "Base (~50%): AWS 15%, retail margin 9-10%, ads 25% growth, EPS compounds 22% → $310. " +
-    "Bear (~20%): AWS decelerates to single digits, AI capex doesn't ROI, retail margin compresses → $220. " +
-    "At $272 / forward P/E ~28× on FY26E EPS ~$10, Amazon screens reasonable for the AI-tailwind cohort. The Burry haircut is real but the underlying earnings growth more than compensates over a 5yr horizon.",
+    "Q1 2026: revenue $181.5B (+17% YoY), operating income $23.9B at 13.1% margin — the highest operating margin in Amazon history. Three engines firing: AWS +28% (fastest growth rate in 15 quarters, $150B annualized), Ads +22% ($17.2B), retail units +15% (best since COVID peak). " +
+    "AWS backlog $364B (excludes $100B+ Anthropic commitment). AI revenue run rate >$15B — in 3 years of AI wave, AWS AI grew 260× faster than AWS itself did in its first 3 years. Bedrock: 125,000+ customers, 170% QoQ customer spend growth, tokens processed in Q1 > all prior years combined. " +
+    "Trainium is now a top-3 data center chip business: ~40% QoQ growth, >$20B annualized run rate, triple-digit YoY %, $225B+ revenue commitments. T2 ~30% better price/performance than GPUs (largely sold out); T3 started shipping early 2026 (30-40% better than T2, nearly fully subscribed). Implied $50B standalone run rate if sold externally like peers. Graviton chosen by Meta for tens of millions of CPU cores for agentic AI workloads. " +
+    "Amazon Leo: >250 satellites in orbit, commercial service launching Q3 2026. Delta Airlines committed half their fleet from 2028. Acquiring Globalstar for direct-to-device spectrum; Apple partnership for iPhones/Apple Watches. >20 launches planned in 2026. " +
+    "Rufus: MAU +115%, engagement +400% YoY. Amazon Now (30-min delivery) in 9 countries. Grocery business #2 in U.S., perishables 40× YoY growth. Q1 CapEx $43.2B — massive AI infrastructure build. " +
+    "Q2 guided $194-199B revenue, $20-24B OI (lower than Q1 from seasonal SBC step-up + ~$1B Leo launch costs). FCF compressed in FY2026 as CapEx front-loads infrastructure; management explicitly expects FCF recovery in medium term as capacity monetizes.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 240, targetMedian: 320, targetHigh: 410, numAnalysts: 65 },
 
+  // rev25 = FY2026 estimate; year-1 = FY2027 growth
   revGrowth: [
-    [0.08, 0.07, 0.06, 0.06, 0.05],
-    [0.13, 0.12, 0.11, 0.10, 0.09],
-    [0.16, 0.15, 0.13, 0.12, 0.11],
+    [0.10, 0.09, 0.08, 0.07, 0.06], // Bear: AWS decelerates to high-single-digits, retail flats
+    [0.14, 0.12, 0.11, 0.10, 0.09], // Base: AWS 15-18%, ads 20%+, retail stable
+    [0.18, 0.16, 0.14, 0.12, 0.11], // Bull: Trainium/Leo/Rufus all scale; all-three-engines
   ],
+  // fcfMargin25 = 4% (FY2026 peak capex); year-1 = FY2027 as capex moderates
   fcfMargin: [
-    [0.05, 0.06, 0.07, 0.08, 0.09],
-    [0.07, 0.08, 0.10, 0.11, 0.12],
-    [0.09, 0.11, 0.13, 0.14, 0.15],
+    [0.05, 0.06, 0.07, 0.08, 0.09], // Bear: capex stays elevated, slow FCF recovery
+    [0.08, 0.09, 0.10, 0.11, 0.12], // Base: CapEx peaks FY26-27, FCF inflects
+    [0.11, 0.13, 0.14, 0.15, 0.16], // Bull: Trainium ROI + Leo early monetization
   ],
   exitMultiple: [14, 18, 24],
 
   desc: [
-    'AI capex bet underwhelms — AWS growth normalizes to high-single digits as enterprise AI adoption is slower than hyped. Retail margin expansion stalls at 8% as labor costs persist. Ads growth slows. ' +
-      'EPS compounds at ~12% but the market re-rates AMZN from secular grower to mature platform at 22× P/E. 5yr target ~$220, ~-4% annualized.',
-    'AWS sustains 15% growth on durable AI infra demand. Retail operating margin expands to 9-10% on automation and logistics density. Ads scale to $80B+ at 25% YoY. AI capex peaks 2026-27 then moderates, FCF inflects strongly. ' +
-      'EPS compounds at ~22%. Multiple compresses 30× → 24× through earnings growth. 5yr target ~$310, ~3% annualized.',
-    'AI super-cycle: AWS dominates AI infra (Trainium ramps, Bedrock scales, AGI workloads emerge). Retail margin pushes 11%+ on full automation + Project Kuiper (satellite internet) cross-sell. Ads exceed $100B by FY28. ' +
-      'EPS compounds at ~30% on all-three-engines firing. Premium 30× multiple held. 5yr target ~$410+, ~9% annualized.',
+    'Q1 2026 record margins (13.1%) prove fleeting — AI capex ($43B+ Q1 alone) fails to generate incremental AWS revenue. Enterprise AI slower than hyped; Azure/Google take share. AWS decelerates to high-single digits by FY28. ' +
+      'Retail margin stalls at 8% on labor/tariff costs; Amazon Leo burns cash without revenue payback. EPS CAGR ~12%. Multiple 22×. 5yr target ~$220, ~-4% annualized.',
+    'AWS $364B backlog + Trainium sold-out validates the AI infrastructure thesis. AWS sustains 15-18% growth through FY28. Retail margin expands to 10-11% on robotics/automation. Ads reaches $80B+ by FY28. ' +
+      'Leo commercial Q3 launch + Delta/Apple anchor deals build toward the "many billion-dollar revenue" vision. CapEx peaks FY26-27, FCF inflects sharply. ' +
+      'EPS compounds at 22% CAGR. Multiple 28×. 5yr target ~$350, ~5% annualized.',
+    'Trainium becomes the leading AI chip ($50B+ standalone implied) as T3/T4 scale. Leo launches profitably Q3 2026 (Delta, Apple, enterprises) and grows into an AWS-like capital return story. ' +
+      'Rufus agentic commerce expands wallet share; ads grow to $100B+ with first-party shopper data advantage. All three engines at full speed. EPS compounds 30%+. Multiple 34×. 5yr target ~$450+.',
   ],
 
   thesis: [
-    'AI capex cycle peaks before AWS sees durable enterprise revenue conversion. Hyperscalers consolidate workloads on Microsoft Azure (OpenAI exclusive) and Google Cloud (Gemini, internal AI), squeezing AWS growth to high-single digits. ' +
-      'Retail operating margin expansion slows as wage pressure and tariff costs absorb productivity gains. Ads growth decelerates as TikTok / Meta capture incremental dollars. ' +
-      'Massive AI capex ($100B+/yr) without revenue payback compresses FCF for 2-3 years. Multiple re-rates to 22× as Amazon transitions from secular grower to mature platform.',
-    'AWS proves to be the de-facto enterprise AI infrastructure provider for the Fortune 1000 — Trainium/Inferentia competitive with NVDA on price/performance, Bedrock as the model marketplace, AgentCore as the agentic AI runtime. ' +
-      'Retail margin expansion is real and durable (third-party seller mix + automation + Project Kuiper logistics). Ads becomes a $100B+ business by 2028. ' +
-      'AI capex peaks in 2026-2027 then moderates, FCF inflects sharply higher. Quality compounder at fair multiple.',
-    'AI super-cycle plays out fully: AWS dominates inference and agentic AI workloads (the larger TAM beyond training). Project Kuiper satellite constellation enables global low-latency cloud + retail + ads in emerging markets. ' +
-      'Retail platform becomes the AI-native commerce OS — agents buy on behalf of consumers, dramatically expanding wallet share. Ads at $100B+ approaches Meta\'s scale but with first-party shopper intent data (more valuable). ' +
-      'Operating leverage drives margins to 13-15% structurally. EPS compounds 30%+. Premium AI-tailwind multiple holds at 30×.',
+    'Q1 $43.2B CapEx run rate is unsustainable without proportional FCF. Azure (OpenAI exclusive), Google (Gemini + Tensor) take share as AI labs consolidate platforms. ' +
+      'Retail wage/tariff headwinds absorb automation productivity gains. Leo launch delays or low adoption add ~$1B/quarter to losses. Multiple re-rates from 28× to 22× on capex anxiety.',
+    'Q1 validated all three engines: AWS +28% (fastest in 15 quarters), $364B backlog, Bedrock tokens in Q1 > all prior years combined, Trainium top-3 chip globally on 40% QoQ growth, retail units +15%. ' +
+      'Leo Q3 launch + Delta/Apple deals de-risk the satellite bet. Trainium $225B+ commitments + T3 nearly fully subscribed proves pricing power. CapEx investment follows AWS\'s established playbook — big upfront, big returns later.',
+    'Trainium\'s $50B implied standalone run rate + $225B commitments puts Amazon at the center of AI compute in a way the market hasn\'t fully priced. Leo + Globalstar + Apple = the direct-to-device platform for the next decade. ' +
+      'Rufus agentic commerce disrupts traditional search-to-purchase funnel in Amazon\'s favor. Graviton chosen by Meta for agentic AI proves CPU + GPU chip stack dominance. All TAMs compound simultaneously.',
   ],
 
   termGrowth: [0.025, 0.035, 0.040],
