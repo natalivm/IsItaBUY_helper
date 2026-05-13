@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const TER = defineStock({
-  updatedOn: '05/11',
+  updatedOn: '05/12',
   ticker: 'TER',
   name: 'Teradyne, Inc.',
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
-  currentPrice: 366.64,
+  currentPrice: 358.45,
   fairPriceRange: '$130 - $350',
   shares0: 157,
   rev25: 3190,

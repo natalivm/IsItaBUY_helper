@@ -5,7 +5,7 @@ export const VST = defineStock({
   name: 'Vistra Corp',
   sector: 'Utilities / Power',
   themeColor: '#facc15',
-  currentPrice: 152.05,
+  currentPrice: 146.87,
   fairPriceRange: '$180 - $460',
   shares0: 339.0,
   rev25: 19600,
@@ -20,7 +20,7 @@ export const VST = defineStock({
   rsRating: 38,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/11',
+  updatedOn: '05/12',
   strategicNarrative: "Q4 2025 record year: $5.912B adj EBITDA ($4.29B gen + $1.62B retail), $3.592B adj FCF — both above guidance midpoints. 2026E confirmed at $6.8–7.6B EBITDA. Step-change in contracted revenue: 3.8 GW nuclear PPAs signed (Amazon 20yr/1,200MW Comanche Peak; Meta 20yr/2,609MW PJM operating + uprates). ~50% of adj EBITDA from contracted/retail stable sources by 2027. Cogentrix (5,500MW modern gas, ~$730/kW net of tax) adds mid-single-digit AFCF/share accretion in 2027. Management projects >$12.5 AFCF/share 2026 → ~$16 (Cogentrix + Meta operating PPAs + $5B buybacks) → $22–25 long-term as all remaining cash deployed through 2030.\n\nStructural shift underway: from pure merchant power to hybrid contracted + merchant. $10B+ cash through 2027; $3B+ available for allocation after growth and returns. Target net debt/EBITDA ~2.3x by 2027. Buybacks accelerated Jan–Feb on price weakness; $1.8B authorization remaining.\n\nRisk: ~50% earnings still market-price dependent; Cogentrix integration; nuclear uprate capex majority post-2028; stock hit $90 in 2025 before recovering. Data center load impact on markets not meaningful until late 2027/early 2028. At $171, trading at ~14x 2026 AFCF guidance — contracted earnings derisk and buyback support the floor. Verdict: BUY — improved earnings quality and signed long-term contracts make prior HOLD too conservative.",
 
 

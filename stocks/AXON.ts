@@ -5,7 +5,7 @@ export const AXON = defineStock({
   name: 'Axon Enterprise',
   sector: 'Public Safety Tech / Government Platform',
   themeColor: '#FFC72C',
-  currentPrice: 394.36,
+  currentPrice: 393.66,
   fairPriceRange: '$420 - $900',
   shares0: 85,
   rev25: 3600,           // FY2026 estimate: $2.78B FY25 × guided 30-32% growth
@@ -21,7 +21,7 @@ export const AXON = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '05/11',
+  updatedOn: '05/12',
   lastReportTag: 'Q1 2026',
 
   strategicNarrative:
