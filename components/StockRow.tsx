@@ -66,7 +66,7 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       <span className={cn("text-sm font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>{stock.fairPriceRange}</span>
       <span className={cn("text-sm font-medium truncate", isAvoid ? "text-slate-400/40" : "text-slate-400")}>{tickerDef.sector.split(/\s[·\/]\s/)[0]}</span>
       {tickerDef.lastReportTag && (
-        <span className="text-[10px] font-black text-emerald-400 border border-emerald-700/60 bg-emerald-950/40 rounded px-1.5 py-0.5 flex-shrink-0 uppercase tracking-wide ml-auto">
+        <span className="text-[10px] font-black text-[#ffffff] border border-emerald-700/60 bg-emerald-950/70 rounded px-1.5 py-0.5 flex-shrink-0 uppercase tracking-wide ml-auto">
           {tickerDef.lastReportTag}
         </span>
       )}

@@ -8,13 +8,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function rsRatingStyle(rsRating: number): string {
-  if (rsRating >= 80) return 'text-green-400 border-green-700';
+  if (rsRating >= 80) return 'text-green-600 border-green-700';
   if (rsRating >= 40) return 'text-white border-slate-600';
   return 'text-red-400 border-red-800';
 }
 
 export function rsRatingColor(rsRating: number): string {
-  if (rsRating >= 80) return 'text-green-500';
+  if (rsRating >= 80) return 'text-green-600';
   if (rsRating >= 40) return 'text-white';
   return 'text-red-500';
 }
