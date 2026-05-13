@@ -5,7 +5,7 @@ export const AMD = defineStock({
   name: 'Advanced Micro Devices',
   sector: 'Semiconductors / AI Compute',
   themeColor: '#ed1c24',
-  currentPrice: 448.29,
+  currentPrice: 445.5,
   fairPriceRange: '$280 - $650',
   shares0: 1620,
   rev25: 34600,
@@ -21,7 +21,7 @@ export const AMD = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '05/12',
+  updatedOn: '05/13',
 
   strategicNarrative:
     "AMD is no longer a turnaround story — it is a high-expectation AI infrastructure bet. Q1 FY26 delivered $10.3B revenue (+38% YoY), GAAP EPS $0.84 (+91%), non-GAAP $1.37 (+43%), record FCF $2.6B, gross margin 53% GAAP / 55% non-GAAP — operating leverage finally working. " +

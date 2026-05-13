@@ -7,7 +7,7 @@ export const CRDO = defineStock({
   themeColor: '#d4af37',
   updatedOn: '05/13',
   lastReportTag: 'Q3 FY26',
-  currentPrice: 198.57,
+  currentPrice: 189.36,
   fairPriceRange: '$91 - $322',
   shares0: 197,
   rev25: 437,

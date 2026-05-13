@@ -7,7 +7,7 @@ export const ANET = defineStock({
   themeColor: '#6366f1',
   updatedOn: '05/13',
   lastReportTag: 'Q1 2026',
-  currentPrice: 146.23,
+  currentPrice: 140.69,
   fairPriceRange: '$145',
   shares0: 1270,
   rev25: 9006,

@@ -5,7 +5,7 @@ export const AMZN = defineStock({
   name: 'Amazon.com',
   sector: 'E-commerce / Cloud / AI Infrastructure',
   themeColor: '#ff9900',
-  currentPrice: 265.82,
+  currentPrice: 270.13,
   fairPriceRange: '$220 - $420',
   shares0: 10800,
   rev25: 800000,         // FY2026 estimate: Q1 $181.5B + Q2 mid $196.5B + H2 ~$420B
@@ -20,7 +20,7 @@ export const AMZN = defineStock({
   rsRating: 52,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/11',
+  updatedOn: '05/13',
   lastReportTag: 'Q1 2026',
 
   strategicNarrative:

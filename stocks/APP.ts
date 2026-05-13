@@ -5,9 +5,9 @@ export const APP = defineStock({
   name: 'AppLovin Corporation',
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
-  updatedOn: '05/12',
+  updatedOn: '05/13',
   lastReportTag: 'Q1 2026',
-  currentPrice: 490.69,
+  currentPrice: 453.53,
   fairPriceRange: '$310 - $836',
   shares0: 336,
   rev25: 7500,          // FY2026 estimate: Q1 $1.84B + Q2 guide $1.93B + H2 ~$3.8B
