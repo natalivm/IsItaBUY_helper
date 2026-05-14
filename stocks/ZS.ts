@@ -5,7 +5,7 @@ export const ZS = defineStock({
   name: 'Zscaler',
   sector: 'Cybersecurity / Zero Trust',
   themeColor: '#0067D9',
-  currentPrice: 152.43,
+  currentPrice: 153.7,
   fairPriceRange: '$115 - $280',
   shares0: 161,
   rev25: 3000,
@@ -21,7 +21,7 @@ export const ZS = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '05/13',
+  updatedOn: '05/14',
 
   strategicNarrative:
     "Zscaler is the dominant zero-trust security platform — FY25 revenue $2.67B (+23% YoY), LTM $3.00B sustaining ~28% growth. Elite scale economics: 77% gross margin, 31.5% FCF margin, strong deferred revenue ($573M increase in FY25 alone signals durable enterprise prepayments). Revenue 5y CAGR 35% — extremely rare in cybersecurity at this scale. " +

@@ -5,7 +5,7 @@ export const SNPS = defineStock({
   name: 'Synopsys',
   sector: 'EDA Software / Chip Design',
   themeColor: '#7b2cbf',
-  currentPrice: 509.28,
+  currentPrice: 510.02,
   fairPriceRange: '$420 - $720',
   shares0: 192,
   rev25: 7054,
@@ -21,7 +21,7 @@ export const SNPS = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '05/13',
+  updatedOn: '05/14',
 
   strategicNarrative:
     "Synopsys is the dominant EDA + IP supplier (TCAD, simulation, verification, libraries) — FY25 (ended Oct 2025) revenue $7.054B (+15% YoY), GAAP EPS $8.07, non-GAAP EPS $12.91, record $11.4B backlog. " +

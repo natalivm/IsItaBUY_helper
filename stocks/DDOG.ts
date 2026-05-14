@@ -5,7 +5,7 @@ export const DDOG = defineStock({
   name: 'Datadog',
   sector: 'Observability / Cloud Monitoring',
   themeColor: '#632CA6',
-  currentPrice: 205.31,
+  currentPrice: 202.84,
   fairPriceRange: '$95 - $200',
   shares0: 364,
   rev25: 3427,
@@ -21,7 +21,7 @@ export const DDOG = defineStock({
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '05/13',
+  updatedOn: '05/14',
 
   strategicNarrative:
     "Datadog is the dominant observability platform — FY25 revenue $3.43B (+28% YoY), LTM $3.67B sustaining ~29% growth. Unit economics are elite: 80% gross margin, 29% FCF margin, 120%+ net revenue retention from cross-product attach (logs, APM, security, RUM). " +
