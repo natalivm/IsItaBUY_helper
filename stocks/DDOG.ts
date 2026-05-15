@@ -7,7 +7,7 @@ export const DDOG = defineStock({
   themeColor: '#632CA6',
   currentPrice: 202.84,
   fairPriceRange: '$95 - $200',
-  shares0: 364,
+  shares0: 372,        // FY26 guide: ~372M weighted-avg diluted shares
   rev25: 3427,
   fcfMargin25: 0.29,
   taxRate: 0.18,
@@ -16,23 +16,52 @@ export const DDOG = defineStock({
   beta: 1.45,
   costDebt: 0.04,
   modelType: 'EPS_PE',
-  baseEps: 2.10,
+  baseEps: 2.40,       // 2026E EPS = FY26 non-GAAP EPS guide midpoint $2.36-$2.44 (prior FY25 basis $2.10). Q1 2026 revenue +32% accelerating; FY26 revenue guide 25-27%. Still non-GAAP — GAAP EPS far lower (SBC); P/E haircut applies (see burry).
   rsRating: 45,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Valuation + SBC-quality driven, NOT operational. Stock re-rated ~$140 → ~$203 (above $95-200 fair range); model would say STRONG BUY on baseEps $2.40 (+28% cumulative + quality boost) so the override is MORE necessary post-Q1, not less.
   updatedOn: '05/14',
+  lastReportTag: 'Q1 2026',
+
+  // Q1 2026 CALL UPDATE (May 7, 2026)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Exceptional operational quarter. Revenue $1.01B (+32% YoY — ACCELERATING
+  // from 29% last Q, 25% year-ago; first $1B quarter), above guide high end.
+  // QoQ +$53M (record Q1 add), +6% QoQ (best Q1 since 2022). Total ARR >$4B
+  // (record sequential ARR add). Non-AI customer revenue accelerated to
+  // mid-20s% (from 23%, 19%) — broad-based, not just AI. NRR low-120s (up
+  // from ~120%); gross retention mid-high 90s. Customers ~33,200 (30,500
+  // y/y); $100K+ ARR ~4,550 (3,770 y/y, 90% of ARR). New-logo annualized
+  // bookings: all-time record, >2x y/y; avg land size record, >2x y/y.
+  // Platform attach deepening: 56% use 4+ products, 35% 6+, 20% 8+. 26
+  // products (5 >$100M ARR, 3 $50-100M). NEW: training market opening —
+  // landed 7-fig + 8-fig annualized deals with AI research divisions at 2 of
+  // the world's largest tech cos (hyperscaler super-intelligence labs) for
+  // GPU/training-workload monitoring; previously inference-only. 6,500+
+  // customers on AI integrations (20% of customers, 80% of ARR). FedRAMP
+  // High cert; UK data center planned; bring-your-own-cloud product traction.
+  // FINANCIALS (non-GAAP): gross margin 80.2% (81.4% last Q, 80.3% y/y),
+  // op income $223M / 22% margin (24% last Q — OpEx +31% y/y, no leverage
+  // inflection yet). FCF $289M, 29% margin. Cash $4.8B. Billings $1.03B
+  // (+37%); RPO $3.48B (+51%), cRPO mid-40s%. GUIDE: Q2 rev $1.07-1.08B
+  // (29-31%), non-GAAP EPS $0.57-0.59; FY26 rev $4.3-4.34B (25-27%),
+  // non-GAAP op margin 22-23%, non-GAAP EPS $2.36-2.44, 21% tax, capex
+  // 4-5% of rev. Extra conservatism applied to largest customer (unchanged
+  // methodology). Net: thesis operationally validated; HOLD is now a
+  // valuation/SBC call, not an execution doubt — stock above fair range.
+  // ─────────────────────────────────────────────────────────────────────────
 
   strategicNarrative:
-    "Datadog is the dominant observability platform — FY25 revenue $3.43B (+28% YoY), LTM $3.67B sustaining ~29% growth. Unit economics are elite: 80% gross margin, 29% FCF margin, 120%+ net revenue retention from cross-product attach (logs, APM, security, RUM). " +
-    "AI tailwind is real: more cloud complexity = more telemetry = more Datadog ingestion. GenAI workloads multiply observability spend per workload — DDOG is the picks-and-shovels for the AI cloud build-out. " +
-    "The Burry problem: SBC is $783M LTM = 21.3% of revenue and a stunning 73.8% of FCF. The reported $1.06B free cash flow is mostly accounting addback of stock comp, not real cash earned for shareholders. GAAP operating margin is -0.6% LTM and bounces between small profits and losses quarter-to-quarter. " +
-    "Zero buybacks — DDOG has never meaningfully offset its SBC issuance. Diluted shares 309M (FY21) → 364M (LTM) = +17.7% cumulative dilution, ~3.3%/yr. Better than Palantir's 6% but still material. " +
-    "Valuation: at $140 / ~$51B market cap on $3.67B LTM revenue, forward P/S ~12-14×. On non-GAAP EPS of $2.10, forward P/E ~67×. Premium multiple priced for sustained 25-30% growth + eventual operating leverage. " +
-    "Bull (~30%): Observability TAM expands with AI; DDOG captures another 30-40% of new spend; multi-product attach drives operating leverage to 20%+ margins by FY28; multiple sustains 60×+ → $230. " +
-    "Base (~45%): Growth decelerates to 22-25% as base scales; margins inflect slowly toward 15%; multiple compresses to 45× → $170. " +
-    "Bear (~25%): OpenTelemetry/Splunk-Cisco/Elastic price competition + lack of GAAP profitability triggers re-rating to 30× → $95. " +
-    "HOLD — elite operational story, but SBC dependence makes the cash flow reported overstate real owner economics by ~3-4×. Burry-cited name; would be Tragic on a strict accounting view. Wait for $100-110 entry for real margin of safety.",
+    "Datadog is the dominant observability platform. Q1 2026 was exceptional: revenue $1.01B (+32% YoY, ACCELERATING from 29% and 25%; first $1B quarter), total ARR >$4B, NRR back up to low-120s, record new-logo bookings (>2x y/y). Critically, non-AI revenue also re-accelerated to mid-20s% — strength is broad-based, not just AI. " +
+    "AI tailwind is real and widening: a NEW training/GPU-monitoring market is opening — DDOG landed 7- and 8-figure annualized deals with the AI research divisions of two of the world's largest tech companies (hyperscaler super-intelligence labs), a category it explicitly did not serve a year ago. Picks-and-shovels for the AI cloud build-out. " +
+    "The Burry problem is unchanged: SBC ~$780M LTM (~21% of revenue, ~3/4 of reported FCF). Reported FCF is mostly an accounting addback of stock comp, not owner cash. GAAP operating margin hovers near breakeven; non-GAAP op margin actually slipped to 22% (from 24% QoQ) on +31% OpEx — no operating-leverage inflection yet. " +
+    "Zero buybacks — DDOG has never meaningfully offset its SBC issuance. Diluted shares 309M (FY21) → ~372M (FY26E) ≈ +20% cumulative, ~3.7%/yr. " +
+    "Valuation is the binding constraint: at ~$203 / ~$75B market cap on FY26 revenue ~$4.32B, forward P/S ~17×; on FY26 non-GAAP EPS $2.40, forward P/E ~85×. The stock has re-rated well above the $95–200 fair range — priced for sustained 25-30% growth AND a margin inflection that has not started. " +
+    "Bull (~35%): AI super-cycle + training TAM; DDOG captures disproportionate new spend; attach drives leverage to 20%+ margins; multiple holds 55× → ~$530 (5yr). " +
+    "Base (~45%): growth decelerates to 22-25% as base scales; margins inflect slowly; multiple compresses to 40× → ~$260 (~5%/yr). " +
+    "Bear (~20%): OpenTelemetry/Splunk-Cisco/Elastic competition + persistent non-GAAP-only profitability triggers re-rating to 25× → ~$97 (~-14%/yr). " +
+    "HOLD — operationally the thesis is now validated, but SBC dependence overstates owner economics ~3-4× and the post-run valuation removes any margin of safety. Burry-cited name; Tragic on a strict accounting view. Wait for a meaningful pullback for real margin of safety.",
 
   analystConsensus: { rating: 'Buy', targetLow: 110, targetMedian: 170, targetHigh: 230, numAnalysts: 38 },
 
@@ -52,21 +81,21 @@ export const DDOG = defineStock({
 
   desc: [
     'OpenTelemetry standardization + Splunk-Cisco bundling + Elastic price competition erode DDOG\'s premium. Customer expansion slows to mid-teens. ' +
-      'GAAP profitability remains elusive; SBC continues at 20%+ of revenue. Operating margin inflection delayed indefinitely. ' +
-      'Multiple compresses from 67× to 30×. EPS grows at ~12% from $2.10 base. 5yr target ~$95-110, roughly -7% to -4% annualized.',
-    'Observability stays mission-critical and DDOG maintains its premium positioning. AI workloads drive 25% revenue CAGR. Multi-product attach reaches 80%+ for enterprise accounts. ' +
-      'Operating leverage gradually delivers: FCF margin expands to 35%, GAAP operating margin inflects to 8-10% by FY28. SBC ratio drops to 15% of revenue. ' +
-      'Multiple compresses 67× → 45× through earnings growth. 5yr target ~$170, ~4% annualized — fair value with no margin of safety at current entry.',
-    'Datadog becomes the default observability + security platform for the AI cloud era. AI workloads multiply telemetry 3-5× per workload, structurally expanding TAM. ' +
+      'GAAP profitability remains elusive; SBC continues at ~21% of revenue. Operating margin inflection delayed indefinitely. ' +
+      'Multiple compresses from ~85× to 25×. EPS grows at ~10% from $2.40 base. 5yr target ~$95-100, roughly -14% annualized from the re-rated ~$203 entry.',
+    'Observability stays mission-critical and DDOG maintains its premium positioning. AI workloads drive ~22-25% revenue CAGR. Multi-product attach reaches 80%+ for enterprise accounts. ' +
+      'Operating leverage gradually delivers: FCF margin expands to 35%, GAAP operating margin inflects to 8-10% by FY29. SBC ratio drops toward 15% of revenue. ' +
+      'Multiple compresses ~85× → 40× through earnings growth. 5yr target ~$260, ~5% annualized — fair value with no margin of safety at current entry.',
+    'Datadog becomes the default observability + security platform for the AI cloud era. AI training + inference workloads multiply telemetry per workload, structurally expanding TAM. ' +
       'Operating leverage finally inflects: FCF margin to 43%, GAAP operating margin to 15%+. SBC ratio falls below 12% as revenue outgrows comp. ' +
-      'Multiple holds 50-55× on AI infrastructure premium. EPS compounds at 28%+. 5yr target ~$230+, ~10% annualized.',
+      'Multiple holds ~55× on AI infrastructure premium. EPS compounds at ~32%. 5yr target ~$530, ~21% annualized.',
   ],
 
   thesis: [
     'OpenTelemetry standardization commoditizes the bottom of the observability stack; customers move logs/metrics to open standards and only retain DDOG for APM/RUM. ' +
       'Splunk-Cisco bundling and Elastic compete aggressively on price for the bottom 50% of the market. Hyperscalers (CloudWatch, Azure Monitor, GCP Cloud Operations) capture native deployments. ' +
       'Net retention drifts from 120% to 110% as expansion slows. SBC stays at 20%+ of revenue with no buyback offset — net dilution continues at 3-4%/yr. ' +
-      'At 67× forward P/E, even modest growth deceleration combined with multiple compression delivers severe drawdown. GAAP operating losses prevent quality investors from owning the stock at scale.',
+      'At ~85× forward P/E (post Q1 2026 re-rating to ~$203), even modest growth deceleration combined with multiple compression delivers severe drawdown. GAAP operating losses prevent quality investors from owning the stock at scale.',
     'AI workloads expand observability TAM. Cloud-native enterprises continue migrating from on-prem monitoring to DDOG. Multi-product attach drives 120%+ NRR. ' +
       'Operating leverage is real but slow — 5-7 years to reach Salesforce-style margins. SBC ratio gradually improves from 21% to 14-15% of revenue. ' +
       'Buybacks start in 2027-2028 once cash position justifies it. Multiple compresses gradually as growth normalizes. ' +
@@ -84,7 +113,7 @@ export const DDOG = defineStock({
 
   epsCagr: [10, 22, 32],
   exitPE: [25, 40, 55],
-  prob: [25, 45, 30],
+  prob: [20, 45, 35],     // Post-Q1 2026: accelerating growth (32%, broad-based) + new training/hyperscaler TAM + record new-logo bookings weaken the bear competition/decel case (25→20) and strengthen the bull AI-supercycle case (30→35); base unchanged. Display weighting only — HOLD override (valuation/SBC) is unaffected.
 
   driverOverrides: [
     {},

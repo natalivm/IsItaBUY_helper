@@ -7,6 +7,7 @@ export const NU = defineStock({
   themeColor: '#8b5cf6',
   currentPrice: 12.93,
   updatedOn: '05/14',
+  lastReportTag: 'Q1 2026',
   fairPriceRange: '$26 - $80',
   // ~$84.9B market cap / $16.15 = ~5,254M shares
   shares0: 5254,
@@ -21,31 +22,42 @@ export const NU = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',  // nuFormer: in production for credit decisioning Brazil; expanding to lending + Mexico credit cards 2026
   modelType: 'EPS_PE',
-  baseEps: 0.72,       // 2026E EPS (Q4 2025 net income $895M = ~$0.68 annualized; ~6% lift for 2026E despite investment year)
-  // Q4 2025 CALL UPDATE (Feb 2026)
+  baseEps: 0.72,       // 2026E EPS — held post Q1 2026: Q1 NI $871M (Q1 record, +41% YoY FX-neutral) annualizes ~$0.66; came in BELOW Q4's $895M on seasonally-peak CLA, and Q1 ETR 8.7% rises to 15-20% IFRS for rest of year. Recovering risk-adj NIM + revenue growth offset tax normalization → FY2026 ~$0.68-0.74. Confirming quarter, not an upgrade.
+  // Q1 2026 CALL UPDATE (May 2026)
   // ─────────────────────────────────────────────────────────────────────────
-  // Operational snapshot: 131M customers (+17M net new in 2025), activity 83%.
-  // Brazil 113M (86% active) — now largest private bank by customer count.
-  // Mexico 14M customers, banking license process ongoing. Colombia 4M+.
-  // ARPAC $15 (+27% YoY FX-neutral, +9% QoQ). Q4 revenue $4.9B (+45% YoY).
-  // Net income $895M (+50% YoY). ROE 33% (record). Efficiency ratio 19.9%
-  // (new methodology, below 20% for first time). Credit book $32.7B (+40% YoY).
-  // Deposits $41.9B (+29% YoY). Risk-adjusted NIM 10.5% (ex-Prosofipo one-off).
-  // Early-stage NPLs (15-90 day) improved for 4th consecutive quarter → 4.1%;
-  // 90+ NPLs declined to 6.6%. Capital: $3B unrestricted cash at Holdings,
-  // $2.2B excess in operating entities, $3.6B covering regulatory requirements.
-  // nuFormer AI in production for Brazil credit decisioning; deploying to
-  // lending (Brazil) and credit cards (Mexico) in 2026. Unused credit limits
-  // expanded ~60% YoY ($18B → $29B) — purchase volume market share gain of
-  // 50bps in Q4, largest in 10+ quarters; IBB translation still ahead.
-  // Super-core segment (BRL 5K-12K/mo) growing ~100% YoY; high-income +40% YoY.
-  // US OCC conditional bank charter approval received Jan 2026.
-  // 2026 is deliberate "investment year": RTO (July 2026, +80-100bps efficiency),
-  // AI/GPU infra, US groundwork. Efficiency ratio to rise near term, then compress.
+  // Operational snapshot: 135M+ customers (Brazil 115M+, Mexico 15M+, Colombia
+  // ~5M). Consolidated activity 83% (expanded QoQ); Brazil approaching 100M MAC.
+  // ARPAC ~$16 (up QoQ — every quarter since reporting). Record revenue $5.0B
+  // (first time ever). Net income $871M — Q1 record, +41% YoY FX-neutral (vs
+  // Q4's +50%: expected investment-year decel; $871M < Q4's $895M on seasonal
+  // CLA). Efficiency ratio 17.6% reported / 16.6% core (record low <18%; ~2/3
+  // timing, 1/3 structural — FY2026 still guided ~20%). Credit book $37.2B
+  // (+40% YoY FX-neutral, +7% QoQ): cards +36%, unsecured +53% ($10B), secured
+  // +38% (8% mix). Deposits $42.4B (+22% YoY); cost of deposits 88% of
+  // interbank. NII record $3.25B (+12% QoQ); NIM 21.1%. CLA $1.79B (+33% QoQ)
+  // — seasonality + growth + mix, NOT asset-quality degradation. Risk-adjusted
+  // NIM 9.5% (-100bps QoQ from 10.5%; reverts toward 2H'25 as Q1 normalizes).
+  // NPL 15-90 5.0% (seasonal peak, +89bps; 65bps pure seasonality); 90+ NPL
+  // 6.5% (-10bps QoQ, below 7% Q3'24 peak — late-stage still easing). Total
+  // exposure $70.7B (+44% YoY); ECL allowance $6.1B (+$800M, 86% from
+  // growth+seasonality). Coverage 16.2% (~2.5x 90+); gross CLA/new 90+ 153.8%.
+  // Gross profit $1.88B (+27% YoY). IFRS ETR 8.7% — structural (guided 15-20%
+  // remainder 2026; managerial 30-35%) — a net-income tailwind offsetting
+  // investment-year OpEx. MEXICO: 15M customers, 3rd largest FI; FIRST quarter
+  // of IFRS profitability — AHEAD of internal plan; ARPAC ~2x, efficiency
+  // -78pts since launch (bull-case second S-curve inflecting). AI now in
+  // PRODUCTION not pilots: ~100% employee tool utilization, eng throughput
+  // +50% YoY, testing 90% faster; nuFormer models live for card decisioning
+  // (Brazil+Mexico) + Brazil unsecured lending; real-time AI loan valuation
+  // <1s; AI Private Banker 15M+ MAU. SME: ~5M customers at ~0 CAC, 2M+ cards.
+  // Carl Rivera named CPO. Brazil profit pool >$100B GP (NU ~7% share); Mexico
+  // >$40B GP (NU <1%). US framed as bounded "call option": max OpEx headwind
+  // <100bps efficiency in EACH of 2026 & 2027, inside the ~20% FY envelope.
   // Classification: A- (Structural Compounder with EM premium).
-  // Probability of 15%+ CAGR: ~75% (upgraded from ~70% post-Q3 2025).
+  // Probability of 15%+ CAGR: ~75% (held — Mexico IFRS profitability + AI-in-
+  // production confirm thesis; YoY NI decel + seasonal CLA cap further upgrade).
   // ─────────────────────────────────────────────────────────────────────────
-  strategicNarrative: "Type A- Structural Compounder: LatAm digital banking platform at scale inflection. Q4 2025 record quarter — 131M customers (83% active), ROE 33%, efficiency ratio <20% for first time, risk-adjusted NIM 10.5%. nuFormer AI in production for Brazil credit; expanding to lending and Mexico credit cards in 2026. Mexico second S-curve: 14M customers, banking license in process — LDR expansion unlocks next credit phase. Super-core (BRL 5K-12K/mo) growing 100% YoY; high-income +40% YoY. US OCC conditional charter Jan 2026 opens global optionality. 2026 is deliberate investment year (RTO + AI infra + US groundwork) — efficiency ratio rises ~80-100bps near term before structural operating leverage reasserts. Risks: Brazil macro, SELIC, credit cycle, Mexico regulation, FX.",
+  strategicNarrative: "Type A- Structural Compounder: LatAm digital banking platform compounding through its scale inflection. Q1 2026 — first-ever $5.0B revenue quarter, Q1-record net income $871M (+41% YoY FX-neutral), record-low efficiency ratio 17.6% / 16.6% core. 135M+ customers (Brazil 115M+, Mexico 15M+, Colombia ~5M). Mexico hit its FIRST quarter of IFRS profitability ahead of internal plan — the second S-curve is inflecting. AI is now in production, not pilots: nuFormer models live for card decisioning (Brazil+Mexico) and Brazil unsecured lending, real-time sub-second loan valuation, engineering throughput +50% YoY. Higher Q1 CLA (+33% QoQ) and NPL 15-90 (5.0%) are seasonality + growth + mix, not credit degradation — risk-adjusted NIM (9.5%) reverts toward 2H'25 as Q1 normalizes; 90+ NPL eased to 6.5%. Structural IFRS ETR drop (8.7%, guided 15-20%) offsets deliberate investment-year OpEx; FY2026 efficiency still ~20%. US treated as a bounded call option (<100bps efficiency headwind, fully absorbable). A confirming quarter — thesis and STRONG BUY model rating intact. Risks: Brazil macro/SELIC, household debt-service, credit cycle, Mexico regulation, FX.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 16, targetMedian: 19, targetHigh: 22, numAnalysts: 9 },
@@ -63,17 +75,28 @@ export const NU = defineStock({
 
   desc: [
     'Brazil macro shock triggers delinquency spike past 7-8% — 4 consecutive quarters of NPL improvement reverse sharply. SELIC holding high combined with Brazil corporate tax rate hike to 45% compress net income. Mexico banking license delayed, blocking credit scale-up. 2026 investment year costs hit without revenue payback. Multiple re-rates to traditional EM bank comps (10-12x P/E).',
-    'Q4 2025 momentum (ROE 33%, NPLs improving, efficiency <20%) sustains into 2026 despite investment year headwinds. nuFormer AI rolls out to lending and Mexico credit cards, moderately improving risk-adjusted NIM. Mexico LDR scales after banking license clears. ARPAC continues growing as super-core and high-income segments deepen. US charter provides optionality without near-term P&L contribution. Sustainable 25-28% EPS compounding.',
+    'Q1 2026 momentum sustains — record $5.0B revenue, Q1-record net income, efficiency at record lows — despite investment-year headwinds. nuFormer AI, now in production for card decisioning (Brazil+Mexico) and Brazil unsecured lending, moderately improves risk-adjusted NIM as Q1 seasonality normalizes. Mexico inflects after its first IFRS-profitable quarter; LDR scales as the second S-curve matures. ARPAC keeps climbing (~$16) as super-core and high-income deepen. Structural ETR decline offsets investment-year OpEx without touching the core trajectory. US optionality without near-term P&L drag. Sustainable 25-28% EPS compounding.',
     'nuFormer AI proves structurally transformative across all geographies — $29B unused credit limit pool converts to IBB at meaningfully lower loss rates, driving ARPAC beyond $20+. Mexico banking license clears, LDR expands rapidly to rival Brazil. Super-core growing 100% YoY compounds into material P&L. US fintech launch captures a profitable niche. ROE sustains 35%+, P/E re-rates toward premium global digital bank comps. NU graduates to undisputed type A structural compounder.',
   ],
 
   epsCagr: [19, 27, 34],  // Bear $1.72 / Base $2.43 / Bull $3.37 in 2031E (from 2026E base of $0.72)
   exitPE: [15, 20, 25],
-  prob: [15, 45, 40],     // Upgraded after Q4 2025 call — record ROE, 4th consecutive NPL improvement, US charter, super-core 100% growth
+  prob: [15, 45, 40],     // Held post-Q1 2026 — Mexico's first IFRS-profitable quarter + AI in production confirm the bull S-curve, but YoY NI decel (50%→41%) and seasonal CLA cap further upgrade; quarter confirms the existing distribution
 
   termGrowth: [0.020, 0.030, 0.035],
   waccAdj: [0.020, 0.010, 0.000],   // EM risk premium: highest in bear
   bbRate: [0.0, 0.0, 0.0],          // No buybacks — growth reinvestment
   ebitdaProxy: [0.22, 0.28, 0.36],  // Bull upgraded: AI efficiency + op leverage
   bullMaOptVal: false,               // Regulatory complexity limits M&A optionality
+
+  burry: {
+    sbc: 63.27,
+    gaapNi: 2868.89,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 5,
+    overstatementSource: 'estimated',
+    note: 'Pristine — the Burry SBC framework barely registers here. FY25 actuals: SBC just $63.27M = 2.2% of $2,868.89M GAAP NI (0.9% of $6,991M revenue), zero buybacks (full growth reinvestment — and none needed). Naive SBC/NI ~2.2%; even applying a ~1.5x MTM amplifier for NU\'s modest ~1.7x 3-year stock return keeps the estimate deep inside the Pristine band (~3-5%). The headline 206% 5-year diluted-share increase (1,602M FY21 → 4,907M FY25) is NOT SBC dilution — it is IPO transition / capitalization / conversion effects; from 2023 onward the share count is nearly flat (4,858M → 4,907M, ~+1%/yr). Owner earnings ≈ GAAP earnings here. The real NU debate is EM credit-cycle risk, LatAm regulation, FX, and a ~28x earnings multiple — not accounting quality.',
+  },
 });
