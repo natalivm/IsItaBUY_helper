@@ -88,4 +88,15 @@ export const NU = defineStock({
   bbRate: [0.0, 0.0, 0.0],          // No buybacks — growth reinvestment
   ebitdaProxy: [0.22, 0.28, 0.36],  // Bull upgraded: AI efficiency + op leverage
   bullMaOptVal: false,               // Regulatory complexity limits M&A optionality
+
+  burry: {
+    sbc: 63.27,
+    gaapNi: 2868.89,
+    buyback: 0,
+    epsBasis: 'GAAP',
+    fy: '2025',
+    overstatementPct: 5,
+    overstatementSource: 'estimated',
+    note: 'Pristine — the Burry SBC framework barely registers here. FY25 actuals: SBC just $63.27M = 2.2% of $2,868.89M GAAP NI (0.9% of $6,991M revenue), zero buybacks (full growth reinvestment — and none needed). Naive SBC/NI ~2.2%; even applying a ~1.5x MTM amplifier for NU\'s modest ~1.7x 3-year stock return keeps the estimate deep inside the Pristine band (~3-5%). The headline 206% 5-year diluted-share increase (1,602M FY21 → 4,907M FY25) is NOT SBC dilution — it is IPO transition / capitalization / conversion effects; from 2023 onward the share count is nearly flat (4,858M → 4,907M, ~+1%/yr). Owner earnings ≈ GAAP earnings here. The real NU debate is EM credit-cycle risk, LatAm regulation, FX, and a ~28x earnings multiple — not accounting quality.',
+  },
 });
