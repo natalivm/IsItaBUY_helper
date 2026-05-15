@@ -6,7 +6,7 @@ export const AMZN = defineStock({
   sector: 'E-commerce / Cloud / AI Infrastructure',
   themeColor: '#ff9900',
   currentPrice: 267.22,
-  fairPriceRange: '$220 - $420',
+  fairPriceRange: '$220 - $455',
   shares0: 10800,
   rev25: 800000,         // FY2026 estimate: Q1 $181.5B + Q2 mid $196.5B + H2 ~$420B
   fcfMargin25: 0.04,     // FY2026 peak capex year — Q1 CapEx $43.2B compresses FCF sharply
@@ -16,7 +16,7 @@ export const AMZN = defineStock({
   beta: 1.20,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 11.00,        // FY2026 estimate: Q1 $2.78 actual; Q2-Q4 seasonal ramp → ~$11
+  baseEps: 7.85,         // FY2026 Street consensus (~$7.75-7.96). Q1 GAAP $2.78 included a $16.8B one-time pre-tax Anthropic mark-up — excluded from recurring earnings power here
   rsRating: 52,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
@@ -29,7 +29,8 @@ export const AMZN = defineStock({
     "Trainium is now a top-3 data center chip business: ~40% QoQ growth, >$20B annualized run rate, triple-digit YoY %, $225B+ revenue commitments. T2 ~30% better price/performance than GPUs (largely sold out); T3 started shipping early 2026 (30-40% better than T2, nearly fully subscribed). Implied $50B standalone run rate if sold externally like peers. Graviton chosen by Meta for tens of millions of CPU cores for agentic AI workloads. " +
     "Amazon Leo: >250 satellites in orbit, commercial service launching Q3 2026. Delta Airlines committed half their fleet from 2028. Acquiring Globalstar for direct-to-device spectrum; Apple partnership for iPhones/Apple Watches. >20 launches planned in 2026. " +
     "Rufus: MAU +115%, engagement +400% YoY. Amazon Now (30-min delivery) in 9 countries. Grocery business #2 in U.S., perishables 40× YoY growth. Q1 CapEx $43.2B — massive AI infrastructure build. " +
-    "Q2 guided $194-199B revenue, $20-24B OI (lower than Q1 from seasonal SBC step-up + ~$1B Leo launch costs). FCF compressed in FY2026 as CapEx front-loads infrastructure; management explicitly expects FCF recovery in medium term as capacity monetizes.",
+    "Q2 guided $194-199B revenue, $20-24B OI (lower than Q1 from seasonal SBC step-up + ~$1B Leo launch costs). FCF compressed in FY2026 as CapEx front-loads infrastructure; management explicitly expects FCF recovery in medium term as capacity monetizes. " +
+    "Note: Q1 GAAP EPS $2.78 was lifted by a one-time $16.8B pre-tax mark-up on the Anthropic stake (vs $1.64 expected); normalized FY2026 EPS ~$7.85 (Street consensus) anchors the valuation, not the headline print.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 240, targetMedian: 320, targetHigh: 410, numAnalysts: 65 },
 
@@ -49,17 +50,17 @@ export const AMZN = defineStock({
 
   desc: [
     'Q1 2026 record margins (13.1%) prove fleeting — AI capex ($43B+ Q1 alone) fails to generate incremental AWS revenue. Enterprise AI slower than hyped; Azure/Google take share. AWS decelerates to high-single digits by FY28. ' +
-      'Retail margin stalls at 8% on labor/tariff costs; Amazon Leo burns cash without revenue payback. EPS CAGR ~12%. Multiple 22×. 5yr target ~$220, ~-4% annualized.',
+      'Retail margin stalls at 8% on labor/tariff costs; Amazon Leo burns cash without revenue payback. EPS CAGR ~5%. Multiple 22×. 5yr target ~$220, ~-4% annualized.',
     'AWS $364B backlog + Trainium sold-out validates the AI infrastructure thesis. AWS sustains 15-18% growth through FY28. Retail margin expands to 10-11% on robotics/automation. Ads reaches $80B+ by FY28. ' +
       'Leo commercial Q3 launch + Delta/Apple anchor deals build toward the "many billion-dollar revenue" vision. CapEx peaks FY26-27, FCF inflects sharply. ' +
-      'EPS compounds at 22% CAGR. Multiple 28×. 5yr target ~$350, ~5% annualized.',
+      'EPS compounds at ~10% CAGR. Multiple 27×. 5yr target ~$340, ~5% annualized.',
     'Trainium becomes the leading AI chip ($50B+ standalone implied) as T3/T4 scale. Leo launches profitably Q3 2026 (Delta, Apple, enterprises) and grows into an AWS-like capital return story. ' +
-      'Rufus agentic commerce expands wallet share; ads grow to $100B+ with first-party shopper data advantage. All three engines at full speed. EPS compounds 30%+. Multiple 34×. 5yr target ~$450+.',
+      'Rufus agentic commerce expands wallet share; ads grow to $100B+ with first-party shopper data advantage. All three engines at full speed. EPS compounds ~14% CAGR. Multiple 30×. 5yr target ~$450+.',
   ],
 
   thesis: [
     'Q1 $43.2B CapEx run rate is unsustainable without proportional FCF. Azure (OpenAI exclusive), Google (Gemini + Tensor) take share as AI labs consolidate platforms. ' +
-      'Retail wage/tariff headwinds absorb automation productivity gains. Leo launch delays or low adoption add ~$1B/quarter to losses. Multiple re-rates from 28× to 22× on capex anxiety.',
+      'Retail wage/tariff headwinds absorb automation productivity gains. Leo launch delays or low adoption add ~$1B/quarter to losses. Multiple re-rates from 27× to 22× on capex anxiety.',
     'Q1 validated all three engines: AWS +28% (fastest in 15 quarters), $364B backlog, Bedrock tokens in Q1 > all prior years combined, Trainium top-3 chip globally on 40% QoQ growth, retail units +15%. ' +
       'Leo Q3 launch + Delta/Apple deals de-risk the satellite bet. Trainium $225B+ commitments + T3 nearly fully subscribed proves pricing power. CapEx investment follows AWS\'s established playbook — big upfront, big returns later.',
     'Trainium\'s $50B implied standalone run rate + $225B commitments puts Amazon at the center of AI compute in a way the market hasn\'t fully priced. Leo + Globalstar + Apple = the direct-to-device platform for the next decade. ' +
@@ -71,8 +72,8 @@ export const AMZN = defineStock({
   ebitdaProxy: [0.14, 0.18, 0.22],
   bullMaOptVal: false,
 
-  epsCagr: [12, 22, 30],
-  exitPE: [22, 28, 34],
+  epsCagr: [5, 10, 14],
+  exitPE: [22, 27, 30],
   prob: [20, 50, 30],
 
   burry: {
