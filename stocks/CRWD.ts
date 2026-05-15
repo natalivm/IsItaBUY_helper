@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 579.95,
+  currentPrice: 594.08,
   fairPriceRange: '$320 - $900',
   shares0: 252,
   rev25: 4810,
@@ -33,7 +33,7 @@ export const CRWD = defineStock({
     "Quality compounder transitioning out of story-stock phase, but no margin of safety at current price. BUY rating maintained for phased entry; full size below $400. " +
     "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
-  updatedOn: '05/14',
+  updatedOn: '05/15',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 

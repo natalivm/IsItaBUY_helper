@@ -5,7 +5,7 @@ export const DDOG = defineStock({
   name: 'Datadog',
   sector: 'Observability / Cloud Monitoring',
   themeColor: '#632CA6',
-  currentPrice: 202.84,
+  currentPrice: 207.98,
   fairPriceRange: '$95 - $200',
   shares0: 372,        // FY26 guide: ~372M weighted-avg diluted shares
   rev25: 3427,
@@ -21,7 +21,7 @@ export const DDOG = defineStock({
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Valuation + SBC-quality driven, NOT operational. Stock re-rated ~$140 → ~$203 (above $95-200 fair range); model would say STRONG BUY on baseEps $2.40 (+28% cumulative + quality boost) so the override is MORE necessary post-Q1, not less.
-  updatedOn: '05/14',
+  updatedOn: '05/15',
   lastReportTag: 'Q1 2026',
 
   // Q1 2026 CALL UPDATE (May 7, 2026)

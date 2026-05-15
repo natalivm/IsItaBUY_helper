@@ -5,7 +5,7 @@ export const NOW = defineStock({
   name: 'ServiceNow',
   sector: 'Enterprise SaaS / Workflow Platform',
   themeColor: '#62D84E',
-  currentPrice: 90.5,
+  currentPrice: 95.07,
   fairPriceRange: '$70 - $150',
   shares0: 1030,
   rev25: 13960,
@@ -20,7 +20,7 @@ export const NOW = defineStock({
   rsRating: 18,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/14',
+  updatedOn: '05/15',
 
   strategicNarrative:
     "ServiceNow has been crushed — down −53% over 1Y, −40% YTD (from a 52w high of $211 to $91), one of the worst large-cap tech drawdowns of the cycle. The crash reflects AI-spending-consolidation fears: enterprises pull SaaS budgets toward Microsoft Copilot / Power Platform bundles, and GenAI threatens to commoditize ITSM workflow tools. " +
