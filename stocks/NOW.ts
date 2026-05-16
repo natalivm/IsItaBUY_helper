@@ -27,7 +27,7 @@ export const NOW = defineStock({
     "ServiceNow has been crushed — down −53% over 1Y, −40% YTD (from a 52w high of $211 to $91), one of the worst large-cap tech drawdowns of the cycle. The crash reflects AI-spending-consolidation fears: enterprises pull SaaS budgets toward Microsoft Copilot / Power Platform bundles, and GenAI threatens to commoditize ITSM workflow tools. " +
     "Q1 2026 (reported Apr 22): total revenue $3.8B (+22% YoY), subscription $3.671B (+19% cc), cRPO $12.64B (+22.5%), non-GAAP EPS $0.97 (vs $0.81), non-GAAP op margin 32%, GAAP net income $469M / GAAP EPS $0.45, FCF $1.665B (44% margin). FY2026 guide raised: subscription $15.735–15.775B (~21% cc), FCF margin 35%, op margin 31.5% (incl. Armis headwinds). Growth ACCELERATED to +22% even into the AI-fear selloff. " +
     "Workflow + ITSM + Now Assist (GenAI) + Industry Cloud + Workforce platform all driving >25% RPO growth. Deferred revenue +$1B+ per year. Net retention 120%+. Switching costs enormous once NOW becomes the system of record for IT + employee + customer workflows. " +
-    "Burry profile is the cleanest in the cited-software cohort: SBC $1,955M FY25 (14.6% of revenue), buybacks $2,610M FY25 = **1.3× SBC coverage**. Diluted shares essentially flat 1,016M (FY21) → 1,030M (LTM). Net dilution is minimal. SBC = 37% of operating cash flow (vs ZS 66%, DDOG 70%, AXON 408%) — meaningfully better than peers. " +
+    "Burry profile is the cleanest in the cited-software cohort: LTM Q1'26 SBC ~$1,976M (~14.2% of revenue) vs LTM gross buybacks ~$4,500M = **~2.3× SBC coverage** (up from FY25's 1.3×, helped by the Q1'26 $2B ASR + fresh $5B authorization). Diluted shares essentially flat 1,015.84M (FY21) → 1,044.95M (LTM) = +2.9% over 5 years. Net dilution is minimal — materially better than the broken-SBC cohort (ZS/DDOG/AXON). " +
     "Valuation: at ~$95 / ~$98B market cap on ~$4.85 forward FY26 non-GAAP EPS, forward P/E **~20×** — a multiple usually reserved for mature SaaS, not a +22% grower. Forward P/S ~7×. PEG ~1.6 on a tempered ~12% EPS CAGR. Still the cheapest quality-software valuation in years, but the de-rating is the market pricing real AI-disruption risk, not pure overreaction. " +
     "Analyst median target $144 (~+51% from $95). Recom Strong Buy. The May 2026 Analyst Day reaffirmed the bull case (AI as tailwind, $30–32B 2030 subscription target, Rule of 60+, SBC to sub-10% by 2029) — but that is management talking its book into a beaten-down stock, so we weight the bear more heavily than consensus does. " +
     "Bull (~25%): GenAI fears overblown, growth holds high-teens + margin expansion, multiple re-rates → ~$200 5yr (~+17%/yr). Base (~45%): growth normalizes to mid-teens, multiple ~17×, ~$150 5yr (~+10%/yr, near analyst median). Bear (~30%): hyperscaler bundles + GenAI commoditize ITSM, growth halves, multiple stays compressed → ~$90 5yr (flat-to-down). " +
@@ -96,13 +96,13 @@ export const NOW = defineStock({
   ],
 
   burry: {
-    sbc: 1955,
-    gaapNi: 1760,
-    buyback: 2610,
+    sbc: 1976,
+    gaapNi: 1748,
+    buyback: 4500,
     epsBasis: 'NON_GAAP',
-    fy: 'FY25',
+    fy: "LTM Q1'26",
     overstatementPct: 35,
     overstatementSource: 'estimated',
-    note: 'Critical per Burry — explicitly cited in Cassandra Unchained list. But uniquely among Burry-cited names, NOW has GENUINE buyback offset: FY25 buybacks $2,610M > SBC $1,955M = 1.33× coverage. Diluted share count nearly flat (1,016M FY21 → 1,030M LTM = +1.4% over 5 years vs +24-34% for PLTR/AXON). SBC/CFO of 37% is materially better than ZS/DDOG/AXON (66-408%). GAAP NI $1.76B LTM, operating margin 14.8% and rising. The 35% estimate reflects: high absolute SBC ($2B/yr) and 14.6% of revenue (still elevated for mature SaaS), partially offset by aggressive buybacks and genuine operating leverage. NOW deserves to be ranked separately from the broken-SBC-cohort cybersecurity names — and at $91 the valuation finally reflects this.',
+    note: "Critical per Burry — explicitly cited in Cassandra Unchained list. But uniquely among Burry-cited names, NOW has a GENUINE and now-stronger buyback offset: LTM Q1'26 SBC ~$1,976M (Q1'26 $494M annualized, ~14.2% of revenue) vs LTM gross buybacks ~$4,500M (FY25 $2,610M + Q1'26 ~$2B ASR + Q4'25 $597M, less Q1'25) = ~2.3× coverage, up from FY25's 1.3×. Board added a fresh $5B authorization in Jan 2026. Diluted share count essentially flat: 1,015.84M (FY21) → 1,044.95M (LTM) = +2.9% over 5 years (~+0.6%/yr) vs +24-34% for PLTR/AXON. GAAP NI ~$1,748M LTM (GAAP suppressed by SBC; non-GAAP economics far higher). The 35% estimate already credits the buyback offset; with coverage now ~2.3× and dilution still ~nil, an OK-tier (sub-30%) read is defensible — revisit if the $5B authorization is exercised as expected. NOW deserves to be ranked separately from the broken-SBC-cohort cybersecurity names.",
   },
 });
