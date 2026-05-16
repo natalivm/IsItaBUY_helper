@@ -20,7 +20,7 @@ export const META = defineStock({
   rsRating: 42,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/15',
+  updatedOn: '05/16',
   lastReportTag: 'Q1 2026',
 
   strategicNarrative:
