@@ -2,7 +2,7 @@ import { defineStock } from './defineStock';
 
 export const FRSH = defineStock({
   updatedOn: '05/16',
-  lastReportTag: 'Q1 FY2026 (3/31/26)',
+  lastReportTag: 'Q1 2026',
   ticker: 'FRSH',
   name: 'Freshworks Inc.',
   sector: 'Enterprise SaaS / ITSM & CX',
