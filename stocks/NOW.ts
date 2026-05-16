@@ -8,26 +8,27 @@ export const NOW = defineStock({
   currentPrice: 95.07,
   fairPriceRange: '$85 - $185',
   shares0: 1030,
-  rev25: 13960,
-  fcfMargin25: 0.34,
+  rev25: 14000,          // LTM total revenue after Q1 2026 ($3.8B Q1, +22% YoY)
+  fcfMargin25: 0.35,     // FY2026 FCF margin guide 35% (Q1 2026 was 44%)
   taxRate: 0.20,
-  cash: 5180,
-  debt: 1500,
+  cash: 7906,            // Q1 2026: cash & investments ~$7.906B
+  debt: 1491,            // Q1 2026: long-term debt ~$1.491B
   beta: 0.82,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 5.06,
+  baseEps: 4.85,         // FY2026 non-GAAP EPS estimate (Q1 2026 $0.97, +20% YoY)
   rsRating: 18,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   updatedOn: '05/16',
+  lastReportTag: 'Q1 2026',
 
   strategicNarrative:
     "ServiceNow has been crushed — down −53% over 1Y, −40% YTD (from a 52w high of $211 to $91), one of the worst large-cap tech drawdowns of the cycle. The crash reflects AI-spending-consolidation fears: enterprises pull SaaS budgets toward Microsoft Copilot / Power Platform bundles, and GenAI threatens to commoditize ITSM workflow tools. " +
-    "But the underlying business is still elite: FY25 revenue $13.3B (+21% YoY), LTM $13.96B (+22% YoY) at $94B market cap. GAAP operating margin 14.8% LTM expanded from 5% FY22 → 9% FY23 → 13% FY24 → 15% LTM. Real GAAP profitability that keeps compounding even through the stock crash. " +
+    "Q1 2026 (reported Apr 22): total revenue $3.8B (+22% YoY), subscription $3.671B (+19% cc), cRPO $12.64B (+22.5%), non-GAAP EPS $0.97 (vs $0.81), non-GAAP op margin 32%, GAAP net income $469M / GAAP EPS $0.45, FCF $1.665B (44% margin). FY2026 guide raised: subscription $15.735–15.775B (~21% cc), FCF margin 35%, op margin 31.5% (incl. Armis headwinds). Growth ACCELERATED to +22% even into the AI-fear selloff. " +
     "Workflow + ITSM + Now Assist (GenAI) + Industry Cloud + Workforce platform all driving >25% RPO growth. Deferred revenue +$1B+ per year. Net retention 120%+. Switching costs enormous once NOW becomes the system of record for IT + employee + customer workflows. " +
     "Burry profile is the cleanest in the cited-software cohort: SBC $1,955M FY25 (14.6% of revenue), buybacks $2,610M FY25 = **1.3× SBC coverage**. Diluted shares essentially flat 1,016M (FY21) → 1,030M (LTM). Net dilution is minimal. SBC = 37% of operating cash flow (vs ZS 66%, DDOG 70%, AXON 408%) — meaningfully better than peers. " +
-    "Valuation: at ~$95 / ~$98B market cap on $5.06 forward non-GAAP EPS, forward P/E **~19×** — a multiple usually reserved for mature SaaS, not a mid-teens grower. Forward P/S ~7×. PEG ~1.4 on a tempered ~12% EPS CAGR. Still the cheapest quality-software valuation in years, but the de-rating is the market pricing real AI-disruption risk, not pure overreaction. " +
+    "Valuation: at ~$95 / ~$98B market cap on ~$4.85 forward FY26 non-GAAP EPS, forward P/E **~20×** — a multiple usually reserved for mature SaaS, not a +22% grower. Forward P/S ~7×. PEG ~1.6 on a tempered ~12% EPS CAGR. Still the cheapest quality-software valuation in years, but the de-rating is the market pricing real AI-disruption risk, not pure overreaction. " +
     "Analyst median target $144 (~+51% from $95). Recom Strong Buy. The May 2026 Analyst Day reaffirmed the bull case (AI as tailwind, $30–32B 2030 subscription target, Rule of 60+, SBC to sub-10% by 2029) — but that is management talking its book into a beaten-down stock, so we weight the bear more heavily than consensus does. " +
     "Bull (~25%): GenAI fears overblown, growth holds high-teens + margin expansion, multiple re-rates → ~$200 5yr (~+17%/yr). Base (~45%): growth normalizes to mid-teens, multiple ~17×, ~$150 5yr (~+10%/yr, near analyst median). Bear (~30%): hyperscaler bundles + GenAI commoditize ITSM, growth halves, multiple stays compressed → ~$90 5yr (flat-to-down). " +
     "BUY-leaning at ~$95 — best capital allocation in the Burry-cited cohort + a decade-worst valuation drawdown for the same business. But AI commoditization is a genuine, unresolved forward risk, so this is a tempered BUY, not the original $200+ slam-dunk thesis.",
@@ -51,7 +52,7 @@ export const NOW = defineStock({
   desc: [
     'Enterprise SaaS consolidation pressures NOW pricing power as Microsoft Power Platform + Salesforce + SAP all bundle workflow/automation capabilities. Now Assist gets commoditized by hyperscaler-native GenAI — the live AI-disruption risk that crushed the stock. Growth halves to high-single-digits. ' +
       'GAAP operating margin expansion stalls. SBC stays elevated at ~14% of revenue. Buybacks continue but slow on cash-flow pressure. ' +
-      'Multiple stays compressed ~13×. EPS grows only ~6% from the $5.06 base to ~$6.8 by FY30. 5yr target ~$90, roughly flat-to-down (~-1%/yr).',
+      'Multiple stays compressed ~13×. EPS grows only ~6% from the $4.85 base to ~$6.5 by FY30. 5yr target ~$85, roughly flat-to-down (~-2%/yr).',
     'NOW continues executing as enterprise platform of choice for IT + employee + customer workflow. Now Assist drives meaningful ARPU expansion. Industry Cloud adds verticals — but AI commoditization caps the upside vs the pre-crash thesis. ' +
       'Revenue compounds mid-teens. Operating margins expand gradually. Buybacks at ~$3B/yr keep share count roughly flat. ' +
       'EPS compounds at ~12% to ~$8.9 by FY30 at a ~17× exit. 5yr target ~$150 (~+10%/yr, near the analyst median).',
