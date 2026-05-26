@@ -5,7 +5,7 @@ export const KLAC = defineStock({
   name: 'KLA Corporation',
   sector: 'Semiconductor Equipment · Process Control & Inspection',
   themeColor: '#00539b',
-  currentPrice: 1888.38,
+  currentPrice: 2011.39,
   fairPriceRange: '$1,200 - $3,300',
   shares0: 132,              // ~132M diluted shares (market cap ~$199.8B)
   rev25: 11100,              // FY25 revenue ~$11.1B
@@ -99,5 +99,5 @@ export const KLAC = defineStock({
     },
   ],
 
-  updatedOn: '05/22',
+  updatedOn: '05/26',
 });

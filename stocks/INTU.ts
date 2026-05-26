@@ -5,7 +5,7 @@ export const INTU = defineStock({
   name: 'Intuit Inc.',
   sector: 'Software / SMB Finance & Tax',
   themeColor: '#0077c5',
-  currentPrice: 319.94,
+  currentPrice: 304.35,
   fairPriceRange: '$340 - $640',
   shares0: 280,
   rev25: 18800,
@@ -21,7 +21,7 @@ export const INTU = defineStock({
   rsTrend: 'falling',
   aiImpact: 'DISRUPTION_RISK',
   ratingOverride: 'HOLD',
-  updatedOn: '05/22',
+  updatedOn: '05/26',
 
   strategicNarrative:
     "Intuit is the dominant SMB-finance + consumer-tax platform (TurboTax, QuickBooks, Credit Karma, Mailchimp) — FY25 revenue $18.8B (+16% YoY), GAAP EPS $13.67 (+31%), GAAP operating margin 26%, non-GAAP EPS $20.15 (+19%). " +

@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const WWD = defineStock({
-  updatedOn: '05/22',
+  updatedOn: '05/26',
   lastReportTag: 'Q2 FY26',
   ticker: 'WWD',
   name: 'Woodward, Inc.',
   sector: 'Aerospace & Defense',
   themeColor: '#3b82f6',
-  currentPrice: 351.36,
+  currentPrice: 361.25,
   fairPriceRange: '$290 – $420',
   shares0: 61.5,
   rev25: 3600,          // FY25 actual base; FY26 guide raised to +20–23% → ~$4.3–4.4B
