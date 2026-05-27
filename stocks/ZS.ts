@@ -33,7 +33,9 @@ export const ZS = defineStock({
 
     "SBC problem accelerating: Q3 SBC $207M → annualized $828M = 25.5% of FY26 revenue. SBC is growing faster than revenue. GAAP net loss Q3: $13.9M. Non-GAAP EPS $1.08 vs GAAP EPS −$0.09 = $1.17/share gap, almost entirely SBC. Zero buybacks across all years. 165M diluted shares.\n\n" +
 
-    "Valuation at $144.70: Forward P/E ~32× on FY27 consensus ~$4.50 EPS. P/ARR ~5.2×. Analyst consensus: 36 analysts, Strong Buy, median target $265 (+83% from $144.70). Weighted fair value ~$208 (28% bear/$130 · 45% base/$195 · 27% bull/$310) = +44% implied upside.",
+    "Valuation at $144.70: Forward P/E ~32× on FY27 consensus ~$4.50 EPS. P/ARR ~5.2×. Analyst consensus: 36 analysts, Strong Buy, median target $265 (+83% from $144.70). Weighted fair value ~$208 (28% bear/$130 · 45% base/$195 · 27% bull/$310) = +44% implied upside.\n\n" +
+
+    "Burry read — Tragic (100% overstatement, GAAP loss-maker): the framework fully breaks down here. Annualized SBC ~$828M vs GAAP net income −$55M makes the SBC/NI ratio undefined. Reported non-GAAP FCF ~$760M (FY26E) is almost entirely an SBC accounting addback — true owner FCF is near zero or negative after treating compensation as a real cost. Zero buybacks across all years mean dilution compounds with no offset. The model verdict reflects non-GAAP economics; the Burry lens says the business has not yet demonstrated it can generate cash for owners.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 130, targetMedian: 265, targetHigh: 320, numAnalysts: 36 },
 
