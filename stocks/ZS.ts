@@ -16,7 +16,7 @@ export const ZS = defineStock({
   beta: 0.98,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 4.80,
+  baseEps: 4.50,
   rsRating: 62,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
@@ -30,12 +30,11 @@ export const ZS = defineStock({
     "AI is a genuine tailwind — not just narrative: AI Protect TTM bookings crossed $100M. Data Security ARR $500M+ (+30% YoY). Zero Trust Everywhere enterprises 700+ (vs 550+ in Q2 and 210+ a year ago — nearly 3.5× YoY). Z-Flex TCV $480M in Q3, +60% QoQ, $1B+ LTM at 4-year average term — multi-year commitments signal durable ARR visibility and reduces churn risk. " +
     "Partnership moat: Anthropic Project Glasswing (access to frontier models to harden ZS systems) + OpenAI Daybreak / GPT 5.5-Cyber + Codex Security. Symmetry Systems acquisition (identity access graph for AI agents). Project AI-Guardian with GSI partners for AI asset discovery. ZS is positioning as the default AI-security enforcement layer for agentic workflows — the largest AI risk surface enterprises haven't secured yet. " +
     "SBC problem is getting worse: Q3 FY26 SBC = $212M for one quarter → annualized ~$849M = **25.5% of FY26 revenue** (was $661M / 24.6% in FY25). SBC growing faster than revenue. GAAP Q3 net loss: $13.9M — still GAAP loss-making. Non-GAAP EPS $1.08 vs GAAP EPS -$0.09 = $1.17/share gap, almost entirely SBC addback. Diluted shares 165M (non-GAAP). Zero buybacks across all history. " +
-    "Valuation at $184.60: forward FY27 P/E ~38× on ~$4.80 estimated EPS; P/ARR ~5.2× on $3.525B ARR; deferred revenue $2.477B (+25% YoY signals durable backlog). Weighted fair value ~$207 (28% bear/$130, 45% base/$195, 27% bull/$310) → +12% implied upside from current price, just below BUY threshold. " +
-    "Analyst consensus: Strong Buy, median target ~$230, implies +25% upside — but consensus has been burned before on ZS post-guidance-cut quarters. " +
+    "Valuation at $184.60: forward FY27 P/E ~41× on consensus ~$4.50 EPS (street at $4.39 pre-Q3, revisions likely push to $4.50+); P/ARR ~5.2× on $3.525B ARR; deferred revenue $2.477B (+25% YoY signals durable backlog). Analyst consensus: 36 analysts, Strong Buy, median target ~$265 (+43% upside). " +
     "Bull (~27%): AI agent security super-cycle drives FY27 reacceleration past guide; AI Protect → $500M+ ARR; capex pull-forward proves temporary; operating leverage delivers 25%+ EPS CAGR → $310. Base (~45%): FY27 plays out at 16-17%, margins improve to 25%+ non-GAAP by FY28, EPS CAGR ~18% → $195. Bear (~28%): FY27 disappoints below guide, capex pressure permanent, SBC stays 25%+ revenue, multiple compresses to 20-22× → $130. " +
     "HOLD — ZS delivered a clean Q3 beat-and-raise with record non-GAAP margins, and the AI positioning is among the strongest in our coverage. But the FY27 deceleration guide, rising capex, and accelerating SBC dilution are structural headwinds. At 38× forward P/E for a 16-17% grower, the margin of safety is slim. Best entry would be a pullback or evidence that AI security drives FY27 reacceleration above guidance.",
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 130, targetMedian: 230, targetHigh: 300, numAnalysts: 30 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 130, targetMedian: 265, targetHigh: 320, numAnalysts: 36 },
 
   revGrowth: [
     [0.13, 0.12, 0.11, 0.10, 0.09], // Bear: FY27 guide disappoints, Red Canary churn + competition erode growth further
@@ -54,13 +53,13 @@ export const ZS = defineStock({
   desc: [
     'FY27 preliminary guide of 16-17% is the ceiling, not the floor. Red Canary churn (MDR businesses have structurally higher churn than core ZS) hits net new ARR harder than expected. PANW Cortex + MSFT Entra bundle attacks mid-market pricing power. ' +
       'Capex pressure proves permanent: data center + branch appliance inflation keeps capex at high single-digits % of revenue indefinitely. FCF margin stays sub-22%. SBC stays 25%+ of revenue; GAAP profitability remains years away. ' +
-      'Multiple compresses from 38× to 20-22× as growth rerates toward mid-teens. EPS CAGR ~8% from $4.80. 5yr target ~$105-130, roughly -6% to -7% annualized.',
+      'Multiple compresses from 38× to 20-22× as growth rerates toward mid-teens. EPS CAGR ~8% from $4.50. 5yr target ~$105-130, roughly -6% to -7% annualized.',
     'ZS delivers on FY27 guide of 16-17%. AI Protect crosses $250M ARR by FY28, Data Security sustains 25%+ growth. Z-Flex deepens multi-year customer relationships and reduces churn. ' +
       'Capex pull-forward proves temporary; FCF margin recovers to 28-31% by FY29-30. Non-GAAP operating margin expands to 25-26% by FY28. SBC ratio gradually falls from 25% to 20% as revenue base scales. ' +
-      'Multiple holds 35-38× — ZS re-rates as a stable compounder. EPS CAGR ~18% from $4.80. 5yr target ~$175-215, ~-1% to +3% annualized.',
+      'Multiple holds 35-38× — ZS re-rates as a stable compounder. EPS CAGR ~18% from $4.50. 5yr target ~$175-215, ~-1% to +3% annualized.',
     'AI agent security super-cycle: every AI agent, model deployment, and agentic workflow needs zero-trust identity + policy enforcement. ZS becomes the de-facto AI-security infrastructure. Symmetry acquisition + Anthropic/OpenAI partnerships create durable moat. ' +
       'FY27 reaccelerates above guidance: AI Protect → $500M+ ARR by FY28. Capex pull-forward was one-time; FCF margins recover to 36-40%. SBC ratio falls to 18% by FY28 as revenue scales faster than comp. ' +
-      'Premium multiple holds at 50-55× on AI platform position. EPS CAGR ~25% from $4.80. 5yr target $310-370, ~11-15% annualized.',
+      'Premium multiple holds at 50-55× on AI platform position. EPS CAGR ~25% from $4.50. 5yr target $310-370, ~11-15% annualized.',
   ],
 
   thesis: [
@@ -97,7 +96,7 @@ export const ZS = defineStock({
   ],
 
   burry: {
-    sbc: 849,
+    sbc: 828,
     gaapNi: -55,
     buyback: 0,
     epsBasis: 'NON_GAAP',
