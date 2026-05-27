@@ -102,8 +102,8 @@ export const ZS = defineStock({
     buyback: 0,
     epsBasis: 'NON_GAAP',
     fy: 'FY26E',
-    overstatementPct: 95,
+    overstatementPct: 100,
     overstatementSource: 'estimated',
-    note: 'Tragic — and getting worse. Q3 FY26 SBC = $212M for one quarter → annualized ~$849M = 25.5% of FY26 $3.33B revenue (was 24.6% in FY25). SBC is growing faster than revenue. GAAP Q3 net loss $13.9M; FY26E GAAP NI estimated ~-$55M. Non-GAAP EPS $1.08 vs GAAP EPS -$0.09 in Q3 = $1.17/share gap, almost entirely SBC addback. Zero buybacks across all years. Diluted shares 165M (non-GAAP Q3). FCF guided 22.8-23.3% FY26 = ~$760M non-GAAP FCF; subtract $849M SBC and true owner FCF is deeply negative. The Tragic tier classification is unambiguous — GAAP loss-maker with accelerating SBC and no buyback program.',
+    note: 'Tragic — framework breaks down entirely; GAAP NI is negative so the SBC/NI ratio is undefined. Q3 FY26 SBC = $212M for one quarter → annualized ~$849M = 25.5% of FY26 $3.33B revenue (was 24.6% in FY25). SBC is growing faster than revenue. GAAP Q3 net loss $13.9M; FY26E GAAP NI estimated ~-$55M. Non-GAAP EPS $1.08 vs GAAP EPS -$0.09 in Q3 = $1.17/share gap, almost entirely SBC addback. Zero buybacks across all years. Diluted shares 165M (non-GAAP Q3). FCF guided 22.8-23.3% FY26 = ~$760M reported FCF; subtract $849M SBC and true owner FCF is deeply negative.',
   },
 });
