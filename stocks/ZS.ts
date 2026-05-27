@@ -23,15 +23,19 @@ export const ZS = defineStock({
   updatedOn: '05/27',
 
   strategicNarrative:
-    "Q3 FY26 (May 2026): Revenue $850M +25% YoY, non-GAAP operating margin 23% (all-time high), ARR $3.525B +25% YoY. Exceeded guidance on every metric. FY26 full-year raised to $3.330B revenue (+24.7%) and $4.10-$4.11 non-GAAP EPS (+25%). Strong execution — but FY27 preliminary guide of 16-17% growth is the headline risk. " +
-    "The deceleration story: 16-17% FY27 revenue/ARR growth (vs FY26's 25%) reflects (a) Red Canary renewal ARR won't repeat in FY27 metrics, (b) MDR churn headwind from Red Canary, and (c) core ZS engine decelerating naturally at $3.5B+ ARR scale. Ex-Red Canary, Q3 net new ARR grew only 14% YoY — below headline 25%. The 16-17% guide is honest and structurally meaningful for multiple de-rating. " +
-    "FCF margin headwind is real: FY26 FCF guided at 22.8-23.3% (vs prior 26.5-27% = 400bps cut). Root cause: ZS is pulling forward data center equipment and branch appliance capex to lock in prices ahead of tariff-driven inflation. FY27 capex expected to rise another 200bps vs FY26 levels. The 'capital-light SaaS' narrative has eroded; capex is now high single-digits % of revenue and rising. FCF margin ~16% in Q3 alone. " +
-    "AI is a genuine tailwind — not just narrative: AI Protect TTM bookings crossed $100M. Data Security ARR $500M+ (+30% YoY). Zero Trust Everywhere enterprises 700+ (vs 550+ in Q2 and 210+ a year ago — nearly 3.5× YoY). Z-Flex TCV $480M in Q3, +60% QoQ, $1B+ LTM at 4-year average term — multi-year commitments signal durable ARR visibility and reduces churn risk. " +
-    "Partnership moat: Anthropic Project Glasswing (access to frontier models to harden ZS systems) + OpenAI Daybreak / GPT 5.5-Cyber + Codex Security. Symmetry Systems acquisition (identity access graph for AI agents). Project AI-Guardian with GSI partners for AI asset discovery. ZS is positioning as the default AI-security enforcement layer for agentic workflows — the largest AI risk surface enterprises haven't secured yet. " +
-    "SBC problem is getting worse: Q3 FY26 SBC = $212M for one quarter → annualized ~$849M = **25.5% of FY26 revenue** (was $661M / 24.6% in FY25). SBC growing faster than revenue. GAAP Q3 net loss: $13.9M — still GAAP loss-making. Non-GAAP EPS $1.08 vs GAAP EPS -$0.09 = $1.17/share gap, almost entirely SBC addback. Diluted shares 165M (non-GAAP). Zero buybacks across all history. " +
-    "Valuation at $184.60: forward FY27 P/E ~41× on consensus ~$4.50 EPS (street at $4.39 pre-Q3, revisions likely push to $4.50+); P/ARR ~5.2× on $3.525B ARR; deferred revenue $2.477B (+25% YoY signals durable backlog). Analyst consensus: 36 analysts, Strong Buy, median target ~$265 (+43% upside). " +
-    "Bull (~27%): AI agent security super-cycle drives FY27 reacceleration past guide; AI Protect → $500M+ ARR; capex pull-forward proves temporary; operating leverage delivers 25%+ EPS CAGR → $310. Base (~45%): FY27 plays out at 16-17%, margins improve to 25%+ non-GAAP by FY28, EPS CAGR ~18% → $195. Bear (~28%): FY27 disappoints below guide, capex pressure permanent, SBC stays 25%+ revenue, multiple compresses to 20-22× → $130. " +
-    "HOLD — ZS delivered a clean Q3 beat-and-raise with record non-GAAP margins, and the AI positioning is among the strongest in our coverage. But the FY27 deceleration guide, rising capex, and accelerating SBC dilution are structural headwinds. At 38× forward P/E for a 16-17% grower, the margin of safety is slim. Best entry would be a pullback or evidence that AI security drives FY27 reacceleration above guidance.",
+    "Q3 FY26 actuals: Revenue $850M +25% YoY | ARR $3.525B +25% | Non-GAAP op margin 23% (all-time high) | FCF $136M (16% margin) | EPS $1.08 vs $1.01 guide. Beat every metric.\n\n" +
+
+    "FY26 raised guidance: Revenue $3.330B (+24.7%) · EPS $4.10–$4.11 (+25%) · ARR $3.740–3.749B. FY27 preliminary: 16–17% ARR and revenue growth — the headline risk. Core ZS ex-Red Canary net new ARR was only +14% YoY in Q3; Red Canary renewals (~$10M net new ARR) won't repeat in FY27 metrics.\n\n" +
+
+    "FCF headwind: FY26 FCF margin guided 22.8–23.3% (cut from prior 26.5–27%). Cause: ZS is pulling forward data center + branch appliance capex ahead of tariff inflation. FY27 capex guided +200bps vs FY26. Near-term FCF is depressed, not structural, but the 'capital-light SaaS' narrative is strained.\n\n" +
+
+    "AI positioning is real: AI Protect TTM bookings $100M+. Data Security ARR $500M+ (+30% YoY). Zero Trust Everywhere enterprises 700+ (vs 210+ a year ago). Z-Flex TCV $480M in Q3 alone (+60% QoQ) at 4-year average term — multi-year lock-in. Partnerships: Anthropic Project Glasswing + OpenAI Daybreak/GPT-5.5-Cyber. Acquiring Symmetry Systems (identity graph for AI agents).\n\n" +
+
+    "SBC problem accelerating: Q3 SBC $207M → annualized $828M = 25.5% of FY26 revenue. SBC is growing faster than revenue. GAAP net loss Q3: $13.9M. Non-GAAP EPS $1.08 vs GAAP EPS −$0.09 = $1.17/share gap, almost entirely SBC. Zero buybacks across all years. 165M diluted shares.\n\n" +
+
+    "Valuation at $144.70: Forward P/E ~32× on FY27 consensus ~$4.50 EPS. P/ARR ~5.2×. Analyst consensus: 36 analysts, Strong Buy, median target $265 (+83% from $144.70). Weighted fair value ~$208 (28% bear/$130 · 45% base/$195 · 27% bull/$310) = +44% implied upside.\n\n" +
+
+    "Burry read — Tragic (100% overstatement, GAAP loss-maker): the framework fully breaks down here. Annualized SBC ~$828M vs GAAP net income −$55M makes the SBC/NI ratio undefined. Reported non-GAAP FCF ~$760M (FY26E) is almost entirely an SBC accounting addback — true owner FCF is near zero or negative after treating compensation as a real cost. Zero buybacks across all years mean dilution compounds with no offset. The model verdict reflects non-GAAP economics; the Burry lens says the business has not yet demonstrated it can generate cash for owners.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 130, targetMedian: 265, targetHigh: 320, numAnalysts: 36 },
 
@@ -63,8 +67,8 @@ export const ZS = defineStock({
 
   thesis: [
     'FY27 guide of 16-17% disappoints in execution. Red Canary MDR churn is higher than modeled; net new ARR ex-Red Canary stays at 10-12%. PANW Cortex bundling + MSFT Entra compress ZS pricing in mid-market. ' +
-      'Capex stays structurally elevated (tariffs + data center inflation); FCF margin never recovers above 22%. SBC at 25%+ of revenue means true owner FCF is ~$200M on a $30B market cap = FCF yield of 0.7%. ' +
-      'At 38× forward P/E for a decelerating 12-13% grower, multiple compression to 20-22× is the dominant return driver. Negative annualized return over 5 years.',
+      'Capex stays structurally elevated (tariffs + data center inflation); FCF margin never recovers above 22%. SBC at 25%+ of revenue means true owner FCF is ~$200M on a ~$24B market cap = FCF yield ~0.8%. ' +
+      'At 32× forward P/E for a decelerating 12-13% grower, multiple compression to 20-22× is the dominant return driver. Flat-to-negative annualized return over 5 years.',
     'ZS executes on FY27 guidance. Zero Trust Everywhere momentum (700+ enterprises, growing ~27% QoQ) shows platform stickiness. Z-Flex locks customers into multi-year terms, smoothing revenue and reducing churn. ' +
       'AI Protect + Data Security add $150-200M ARR by FY28 — incremental but meaningful. Operating leverage delivers: non-GAAP operating margin to 25%+ by FY28. Capex normalizes after FY26-27 pull-forward. ' +
       'SBC ratio gradually improves; GAAP operating margin approaches breakeven by FY28. Multiple holds as ZS re-rates from hyperscale to large-scale compounder. Fair return at current price.',
@@ -102,6 +106,6 @@ export const ZS = defineStock({
     fy: 'FY26E',
     overstatementPct: 100,
     overstatementSource: 'estimated',
-    note: 'Tragic — framework breaks down entirely; GAAP NI is negative so the SBC/NI ratio is undefined. Q3 FY26 SBC = $212M for one quarter → annualized ~$849M = 25.5% of FY26 $3.33B revenue (was 24.6% in FY25). SBC is growing faster than revenue. GAAP Q3 net loss $13.9M; FY26E GAAP NI estimated ~-$55M. Non-GAAP EPS $1.08 vs GAAP EPS -$0.09 in Q3 = $1.17/share gap, almost entirely SBC addback. Zero buybacks across all years. Diluted shares 165M (non-GAAP Q3). FCF guided 22.8-23.3% FY26 = ~$760M reported FCF; subtract $849M SBC and true owner FCF is deeply negative.',
+    note: 'Tragic — framework breaks down entirely; GAAP NI is negative so the SBC/NI ratio is undefined. Q3 FY26 SBC = $207M for one quarter (10-Q, excl. payroll taxes) → annualized ~$828M = 25% of FY26 $3.33B revenue (was 24.6% in FY25). SBC growing faster than revenue. GAAP Q3 net loss $13.9M; FY26E GAAP NI estimated ~-$55M. Non-GAAP EPS $1.08 vs GAAP EPS -$0.09 in Q3 = $1.17/share gap, almost entirely SBC addback. Zero buybacks across all years. Diluted shares 165M (non-GAAP Q3). FCF guided 22.8-23.3% FY26 = ~$760M reported FCF; subtract $828M SBC and true owner FCF is deeply negative.',
   },
 });
