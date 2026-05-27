@@ -5,32 +5,30 @@ export const NOW = defineStock({
   name: 'ServiceNow',
   sector: 'Enterprise SaaS / Workflow Platform',
   themeColor: '#62D84E',
-  currentPrice: 95.07,
-  fairPriceRange: '$70 - $150',
+  currentPrice: 99.92,
+  fairPriceRange: '$85 - $185',
   shares0: 1030,
-  rev25: 13960,
-  fcfMargin25: 0.34,
+  rev25: 14000,          // LTM total revenue after Q1 2026 ($3.8B Q1, +22% YoY)
+  fcfMargin25: 0.35,     // FY2026 FCF margin guide 35% (Q1 2026 was 44%)
   taxRate: 0.20,
-  cash: 5180,
-  debt: 1500,
+  cash: 7906,            // Q1 2026: cash & investments ~$7.906B
+  debt: 1491,            // Q1 2026: long-term debt ~$1.491B
   beta: 0.82,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 5.06,
+  baseEps: 4.85,         // FY2026 non-GAAP EPS estimate (Q1 2026 $0.97, +20% YoY)
   rsRating: 18,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '05/15',
+  updatedOn: '05/26',
+  lastReportTag: 'Q1 2026',
 
   strategicNarrative:
-    "ServiceNow has been crushed — down −53% over 1Y, −40% YTD (from a 52w high of $211 to $91), one of the worst large-cap tech drawdowns of the cycle. The crash reflects AI-spending-consolidation fears: enterprises pull SaaS budgets toward Microsoft Copilot / Power Platform bundles, and GenAI threatens to commoditize ITSM workflow tools. " +
-    "But the underlying business is still elite: FY25 revenue $13.3B (+21% YoY), LTM $13.96B (+22% YoY) at $94B market cap. GAAP operating margin 14.8% LTM expanded from 5% FY22 → 9% FY23 → 13% FY24 → 15% LTM. Real GAAP profitability that keeps compounding even through the stock crash. " +
-    "Workflow + ITSM + Now Assist (GenAI) + Industry Cloud + Workforce platform all driving >25% RPO growth. Deferred revenue +$1B+ per year. Net retention 120%+. Switching costs enormous once NOW becomes the system of record for IT + employee + customer workflows. " +
-    "Burry profile is the cleanest in the cited-software cohort: SBC $1,955M FY25 (14.6% of revenue), buybacks $2,610M FY25 = **1.3× SBC coverage**. Diluted shares essentially flat 1,016M (FY21) → 1,030M (LTM). Net dilution is minimal. SBC = 37% of operating cash flow (vs ZS 66%, DDOG 70%, AXON 408%) — meaningfully better than peers. " +
-    "Valuation: at $91.18 / ~$94B market cap on $5.06 forward non-GAAP EPS, forward P/E **18×** — a multiple usually reserved for mature SaaS, not 22% growers. Forward P/S 6.7×. EV/Sales 6.5×. Cheapest quality-software valuation we've seen in years. PEG 0.86. " +
-    "Analyst median target $144 (+58% upside from $91). Recom 1.35 (Strong Buy). " +
-    "Bull (~35%): GenAI fears overblown, growth sustains 20%+ + margin expansion to 22% GAAP operating margin → $150+. Base (~45%): Growth normalizes to 18%, margins to 20%, multiple re-rates to 24× → ~$115. Bear (~20%): SaaS spending consolidates with hyperscaler bundles, growth halves, multiple stays at 18× → $70. " +
-    "BUY at $91 — best capital allocation in the Burry-cited cohort + worst valuation drawdown in a decade for the same business. Quality compounder being thrown out with the AI-fear bathwater. Asymmetric setup vs the original $200+ thesis.",
+    "The stock has been cut in half — down ~53% in a year, from $211 to the low $90s — and the reason is one big fear: that AI lets Microsoft and others bundle workflow tools for free and commoditize what ServiceNow sells. That fear is doing the pricing here, not the fundamentals. " +
+    "Because the fundamentals didn't break. Q1 2026 actually accelerated: revenue +22%, subscription +19%, FCF margin 44%, and management raised the full-year guide. Net retention is still north of 120%, and once NOW becomes the system of record for a company's IT, employee and customer workflows, ripping it out is genuinely hard. This is still a high-quality, sticky, growing business. " +
+    "Capital allocation is the cleanest part of the story — and it matters here because Burry explicitly flagged NOW on his Cassandra Unchained list. At a ~0.65 coefficient it lands in his 'real-earnings haircut' zone, where the rule is to discount the multiple for inflated reported earnings. But NOW is the rare name that earns a pass: it buys back ~2.3× what it pays out in stock comp, diluted share count has barely moved in five years (+0.6%/yr vs +24–34% for PLTR/AXON), and a fresh $5B authorization landed in January. The 35% haircut already credits that offset; an OK-tier read is defensible, and NOW deserves to be ranked apart from the broken-SBC cohort. " +
+    "So you're paying ~20× forward earnings for a 20%+ grower with great economics — historically cheap for this business. The honest catch: the de-rating isn't pure panic. Whether GenAI commoditizes ITSM is a real, unresolved question, and May's Analyst Day bull case ($30B+ 2030 subscription, Rule of 60) is management talking up a beaten-down stock, so we lean more cautious than consensus. " +
+    "Net: a BUY, but a tempered one. The base case (~$150 in 5 years, near the analyst median) is a quality compounder at a fair price; the bear case (AI eats the moat, ~$90) is live enough that we weight it at 30%. Best capital allocation in the cohort and a decade-worst valuation for the same company — just not the slam-dunk it would have been without the AI overhang.",
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 75, targetMedian: 144, targetHigh: 180, numAnalysts: 40 },
 
@@ -49,28 +47,28 @@ export const NOW = defineStock({
   exitMultiple: [22, 32, 42],
 
   desc: [
-    'Enterprise SaaS consolidation pressures NOW pricing power as Microsoft Power Platform + Salesforce + SAP all bundle workflow/automation capabilities. Now Assist gets commoditized by hyperscaler-native GenAI. Growth halves to low-teens. ' +
-      'GAAP operating margin expansion stalls at 16-17%. SBC stays elevated at 14-15% of revenue. Buybacks continue but slow on cash flow pressure. ' +
-      'Multiple compresses from 53× to 30×. EPS grows at ~14% from $17.50 base. 5yr target ~$680-750, ~-4% to -1% annualized.',
-    'NOW continues executing as enterprise platform of choice for IT + employee + customer workflow. Now Assist drives meaningful ARPU expansion. Industry Cloud expansion adds new verticals. ' +
-      'Revenue compounds at 18% CAGR. Operating margins expand to 20-22% by FY29. Buybacks continue at $3B+/yr keeping share count flat. ' +
-      'EPS compounds at ~22% to $48 by FY30. Multiple compresses 53× → 40× through earnings growth. 5yr target ~$1,000, ~2-3% annualized.',
-    'Now Assist + Workforce + Industry Cloud + Customer Service combine into the dominant enterprise AI workflow platform. RPO compounds 25%+. GenAI-native customer agents drive new pricing tiers. ' +
-      'Operating leverage compounds: FCF margin to 46%, GAAP operating margin to 25%+. Buyback program accelerates as cash piles up. Share count starts to actually shrink. ' +
-      'EPS compounds at 28% to $60 by FY30. Multiple holds 42× given the platform position. 5yr target ~$1,200, ~5-7% annualized.',
+    'Enterprise SaaS consolidation pressures NOW pricing power as Microsoft Power Platform + Salesforce + SAP all bundle workflow/automation capabilities. Now Assist gets commoditized by hyperscaler-native GenAI — the live AI-disruption risk that crushed the stock. Growth halves to high-single-digits. ' +
+      'GAAP operating margin expansion stalls. SBC stays elevated at ~14% of revenue. Buybacks continue but slow on cash-flow pressure. ' +
+      'Multiple stays compressed ~13×. EPS grows only ~6% from the $4.85 base to ~$6.5 by FY30. 5yr target ~$85, roughly flat-to-down (~-2%/yr).',
+    'NOW continues executing as enterprise platform of choice for IT + employee + customer workflow. Now Assist drives meaningful ARPU expansion. Industry Cloud adds verticals — but AI commoditization caps the upside vs the pre-crash thesis. ' +
+      'Revenue compounds mid-teens. Operating margins expand gradually. Buybacks at ~$3B/yr keep share count roughly flat. ' +
+      'EPS compounds at ~12% to ~$8.9 by FY30 at a ~17× exit. 5yr target ~$150 (~+10%/yr, near the analyst median).',
+    'Now Assist + Workforce + Industry Cloud + Customer Service combine into the dominant enterprise AI workflow platform; the May 2026 Analyst Day vision ($30–32B 2030 subscription, Rule of 60+) plays out. GenAI-native agents drive new pricing tiers. ' +
+      'Operating leverage compounds; buyback program accelerates and share count shrinks. ' +
+      'EPS compounds at ~18% to ~$11.6 by FY30 at a tempered ~18× exit (trimmed for AI risk vs the old 42× framing). 5yr target ~$208 (~+17%/yr).',
   ],
 
   thesis: [
     'Enterprise SaaS spending consolidates as Microsoft pushes Power Platform + Copilot integration with M365, and Salesforce Agentforce/Data Cloud expands into ITSM territory. NOW\'s premium pricing model gets attacked from above (MSFT bundles) and below (ServiceTitan-style verticals). ' +
       'Now Assist faces commoditization as every SaaS vendor adds GenAI features at minimal cost. Net retention drifts from 120% to 110%. ' +
-      'Growth decelerates to 12-14% and the market reprices NOW as a mature SaaS rather than premium platform.',
+      'Growth halves to high-single-digits and the market keeps NOW de-rated as a mature SaaS rather than a premium platform. ~30% probability — weighted above consensus because AI commoditization is unresolved.',
     'NOW remains the de-facto enterprise workflow platform. Now Assist drives 5-7% net incremental ARR per customer. Industry Cloud expansion to financial services, healthcare, public sector adds another growth vector. ' +
-      'Operating margin expansion compounds: 15% → 22% by FY29. Buyback program ($3B+/yr) keeps diluted share count flat or slightly shrinking. ' +
-      'Quality enterprise compounder at fair multiple — returns mostly from EPS growth, ~2-3% annualized at $920 entry.',
-    'AI workflow super-cycle for the enterprise. NOW becomes the orchestration layer for every Fortune 500 enterprise (autonomous IT ops, autonomous employee experience, autonomous customer service). ' +
-      'Now Assist evolves from co-pilot to AI agents that complete entire workflows autonomously. Each AI agent commands its own premium pricing tier. ' +
-      'Operating leverage compounds dramatically as GenAI does the work humans used to do. FCF margin to 46%, operating margin to 25%+. Multiple holds premium 42×. ' +
-      'EPS compounds at 28%+, delivering 5-7% annualized from current entry.',
+      'Operating margin expansion compounds. Buyback program (~$3B/yr) keeps diluted share count flat or slightly shrinking. ' +
+      'Quality enterprise compounder at a fair multiple — ~12% EPS CAGR at a ~17× exit, ~+10%/yr from the ~$95 entry.',
+    'AI workflow super-cycle for the enterprise — the May 2026 Analyst Day vision. NOW becomes the orchestration layer for Fortune 500 autonomous IT/employee/customer workflows. ' +
+      'Now Assist evolves from co-pilot to agents that complete entire workflows autonomously, each commanding its own pricing tier. ' +
+      'Operating leverage compounds; buybacks accelerate and share count shrinks. ' +
+      'EPS compounds ~18% at a tempered ~18× exit (trimmed from the old 42× for AI risk), ~+17%/yr from the ~$95 entry.',
   ],
 
   termGrowth: [0.025, 0.035, 0.040],
@@ -78,9 +76,9 @@ export const NOW = defineStock({
   ebitdaProxy: [0.30, 0.38, 0.46],
   bullMaOptVal: false,
 
-  epsCagr: [14, 22, 28],
-  exitPE: [25, 38, 50],
-  prob: [20, 50, 30],
+  epsCagr: [6, 12, 18],
+  exitPE: [13, 17, 18],
+  prob: [30, 45, 25],
 
   driverOverrides: [
     {},
@@ -95,13 +93,13 @@ export const NOW = defineStock({
   ],
 
   burry: {
-    sbc: 1955,
-    gaapNi: 1760,
-    buyback: 2610,
+    sbc: 1976,
+    gaapNi: 1748,
+    buyback: 4500,
     epsBasis: 'NON_GAAP',
-    fy: 'FY25',
+    fy: "LTM Q1'26",
     overstatementPct: 35,
     overstatementSource: 'estimated',
-    note: 'Critical per Burry — explicitly cited in Cassandra Unchained list. But uniquely among Burry-cited names, NOW has GENUINE buyback offset: FY25 buybacks $2,610M > SBC $1,955M = 1.33× coverage. Diluted share count nearly flat (1,016M FY21 → 1,030M LTM = +1.4% over 5 years vs +24-34% for PLTR/AXON). SBC/CFO of 37% is materially better than ZS/DDOG/AXON (66-408%). GAAP NI $1.76B LTM, operating margin 14.8% and rising. The 35% estimate reflects: high absolute SBC ($2B/yr) and 14.6% of revenue (still elevated for mature SaaS), partially offset by aggressive buybacks and genuine operating leverage. NOW deserves to be ranked separately from the broken-SBC-cohort cybersecurity names — and at $91 the valuation finally reflects this.',
+    note: "Critical per Burry — explicitly cited in Cassandra Unchained list. But uniquely among Burry-cited names, NOW has a GENUINE and now-stronger buyback offset: LTM Q1'26 SBC ~$1,976M (Q1'26 $494M annualized, ~14.2% of revenue) vs LTM gross buybacks ~$4,500M (FY25 $2,610M + Q1'26 ~$2B ASR + Q4'25 $597M, less Q1'25) = ~2.3× coverage, up from FY25's 1.3×. Board added a fresh $5B authorization in Jan 2026. Diluted share count essentially flat: 1,015.84M (FY21) → 1,044.95M (LTM) = +2.9% over 5 years (~+0.6%/yr) vs +24-34% for PLTR/AXON. GAAP NI ~$1,748M LTM (GAAP suppressed by SBC; non-GAAP economics far higher). The 35% estimate already credits the buyback offset; with coverage now ~2.3× and dilution still ~nil, an OK-tier (sub-30%) read is defensible — revisit if the $5B authorization is exercised as expected. NOW deserves to be ranked separately from the broken-SBC-cohort cybersecurity names.",
   },
 });
