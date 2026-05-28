@@ -5,22 +5,21 @@ export const SNOW = defineStock({
   name: 'Snowflake',
   sector: 'Cloud Data Platform / AI Analytics',
   themeColor: '#29B5E8',
-  currentPrice: 176.40,
-  fairPriceRange: '$120 - $195',
-  shares0: 347,           // ~346.6M diluted shares (Q1 FY27)
+  currentPrice: 217.90,
+  fairPriceRange: '$135 - $215',
+  shares0: 344,           // 343.9M shares outstanding at Jan 31, 2026 (10-K)
   rev25: 4684,            // FY26 total revenue ($4.684B, ended Jan 31, 2026)
   fcfMargin25: 0.23,      // TTM FCF margin ~23% (P/FCF 51.93 at $175.26 pre-earnings)
   taxRate: 0.20,
-  cash: 2960,             // Cash/sh $8.53 × 346.6M shares (Q1 FY27 snapshot)
-  debt: 2770,             // Convertible notes (Debt/Eq 1.43 × book equity ~$1.94B)
+  cash: 4030,             // Cash $2,828M + short-term investments $1,202M (10-K, Jan 31, 2026)
+  debt: 2645,             // Long-term debt / convertible notes (MacroTrends, Q3 FY26)
   beta: 1.15,
   costDebt: 0.035,
   modelType: 'EPS_PE',
-  baseEps: 2.00,          // FY27E non-GAAP EPS post-Q1 beat. Q1 actuals $0.39 vs $0.32 est (+22% beat). FY27 guided $5.84B product revenue + 12.5% non-GAAP op margin; at ~20% non-GAAP tax + $140M interest income ÷ ~348M shares ≈ $2.00 full year. Pre-earnings FY27 consensus ~$1.88 → raised ~$0.12 on Q1 beat.
-  rsRating: 38,
-  rsTrend: 'rising',      // Perf Month +21.5%, recovering from -20% YTD; RS improving from lows
+  baseEps: 2.20,          // FY27E non-GAAP EPS post-Q1 beat. Q1 actuals $0.39 vs $0.32 (+22% beat). FY27 guided $5.84B product revenue + 13.5% non-GAAP op margin (raised from 12.5%); at ~20% non-GAAP tax + ~$180M interest income on $4B liquid ÷ ~348M diluted shares ≈ $2.20 full year.
+  rsRating: 50,
+  rsTrend: 'rising',      // Stock +24% post-Q1 FY27 earnings; recovering from -20% YTD trough
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD', // Model says BUY (~17% upside, quality-boost threshold 12%). Override to HOLD: at 88× FY27E non-GAAP EPS with GAAP loss -$1.33B and SBC at 34% of revenue (Tragic Burry tier), base case barely shows real returns. Stock ran +21.5% into earnings; margin of safety absent. Wait for a pullback below $145.
   updatedOn: '05/28',
   lastReportTag: 'Q1 FY27',
 
@@ -32,26 +31,25 @@ export const SNOW = defineStock({
   // (up from 125%). $1M+ TTM customers: 779 (+29% YoY); 46 added in Q1 vs
   // 26 a year ago — acceleration at the high end. RPO $9.21B (+38% YoY).
   // FY27 product revenue raised to ~$5.84B (from ~$5.66B; +31% guide vs 27%
-  // prior guide). Non-GAAP op margin guide 12.5% for FY27.
+  // prior guide). Non-GAAP op margin guidance raised to 13.5% (from 12.5%).
+  // Q2 FY27 product revenue guided $1.415-$1.42B (+30% YoY).
   // AI: 9,100+ accounts using AI features; Snowflake Intelligence at 2,500
   // accounts (3 months post-launch); Cortex Code at 4,400+ customers.
+  // Total customers 13,912; net new +616 (+38% YoY in net adds).
   // $6B multi-year AWS agreement signed; Natoma (enterprise MCP/AI agent
   // governance platform) acquisition announced. OpenAI partnership deepened.
-  // Sridhar Ramaswamy framed the quarter as a "clear inflection point" —
-  // SNOW evolving from trusted data foundation into enterprise AI control
-  // plane. After-hours spike ~29% (to ~$226), then gave back most of gains
-  // in May 28 regular session; closed ~$176. Pre-print thesis validated.
+  // Stock +24% post-earnings to ~$218 (settled from ~$226 after-hours peak).
   // ─────────────────────────────────────────────────────────────────────────
 
   strategicNarrative:
-    'Snowflake delivered a milestone Q1 FY27: product revenue $1.33B growing 34% YoY (vs 27% expected), the strongest sequential dollar growth in company history. NRR improved to 126%, $1M+ TTM customers added 46 new members (vs 26 a year ago), and RPO grew 38% YoY to $9.21B — giving forward visibility that underpins the raised $5.84B FY27 product revenue guide. The AI thesis is no longer a bet: 9,100+ accounts use AI features, Snowflake Intelligence reached 2,500 accounts within three months of launch, and Cortex Code is deployed across 4,400+ customers. ' +
+    'Snowflake delivered a milestone Q1 FY27: product revenue $1.33B growing 34% YoY (vs 27% expected), the strongest sequential dollar growth in company history. NRR improved to 126%, $1M+ TTM customers added 46 new members (vs 26 a year ago), and RPO grew 38% YoY to $9.21B — providing forward visibility that underpins the raised $5.84B FY27 product revenue guide. The AI thesis is no longer a bet: 9,100+ accounts use AI features, Snowflake Intelligence reached 2,500 accounts within three months of launch, and Cortex Code is deployed across 4,400+ customers. ' +
     'The $6B multi-year AWS agreement is the most strategically significant disclosure. AWS\'s Redshift was supposed to compete for the same workloads; instead AWS signed a multi-year $6B commitment, signaling the AI data workload pull is large enough to make hyperscalers expand the partnership rather than fight it. The deepened OpenAI partnership extends Cortex AI capability across the enterprise base. The Natoma acquisition (MCP-based AI agent governance platform) positions SNOW at the governance layer of the agentic enterprise — the control plane thesis is now backed by product, partnership, and M&A. ' +
-    'The Burry problem is severe and structural: SBC of $1.6B was 34% of FY26 revenue ($4.684B), declining from 41% in FY24 (CEO targets 27% FY27) but still Tragic tier. GAAP net loss was -$1.33B in FY26. FCF of ~$1.07B is nominally positive but almost entirely driven by SBC addback; real owner free cash flow is near breakeven. Buybacks (~$700M est. FY26 under the $2.5B authorization) cover less than half of SBC. Zero buyback offset for owner economics. ' +
+    'The Burry problem is severe and structural: SBC of $1.6B was 34% of FY26 revenue ($4.684B), declining from 41% in FY24 (CEO targets 27% FY27) but still Tragic tier. GAAP net loss was -$1.33B in FY26. FCF of ~$1.07B is nominally positive but almost entirely driven by SBC addback; real owner free cash flow is near breakeven. Buybacks (~$700M est. FY26 under the $2.5B authorization) cover less than half of SBC. ' +
     'Competitive risk remains: Databricks aggressively expands into structured data/warehouse with Delta Sharing + Apache Iceberg; Google BigQuery competes hard on price; and hyperscaler-native data tools offer free migration incentives. The $6B AWS deal addresses one flank but Databricks remains the sharpest challenge. ' +
-    'Bear (~20%): Databricks + hyperscaler competition erodes SNOW pricing power; revenue decelerates to high-teens by FY29; multiple compresses 88× → 18× on normalization; 5yr target ~$70 (~-14%/yr from $176). ' +
-    'Base (~50%): AI-driven data consumption sustains 24-26% EPS CAGR; SBC falls from 34% → 20% of revenue as top line outgrows comp; FCF margin expands to 32%; multiple compresses 88× → 30× through earnings growth; 5yr target ~$190 (~+1.5%/yr — fair value with minimal margin of safety at $176 entry). ' +
-    'Bull (~30%): Intelligence + Cortex + Natoma + Iceberg = enterprise AI control plane; RPO doubles to $18B; NRR reaches 130%+; SBC ratio falls below 15%; multiple holds premium 44×; 5yr target ~$320 (~+13%/yr). ' +
-    'HOLD — Q1 FY27 validates the AI inflection thesis operationally, but at $176 / 88× FY27E non-GAAP EPS with GAAP losses and SBC at 34% of revenue (Tragic Burry tier), the base case barely generates positive returns. Reported FCF materially overstates owner economics. Wait for a pullback below $145 where base case offers real margin of safety.',
+    'Bear (~20%): Databricks + hyperscaler competition erodes SNOW pricing power; revenue decelerates to high-teens by FY29; multiple compresses 99× → 18×; 5yr target ~$76 (~-19%/yr from $218). ' +
+    'Base (~50%): AI-driven data consumption sustains 24-26% EPS CAGR; SBC falls 34% → 20% of revenue as top line outgrows comp; multiple compresses 99× → 30× through earnings growth; 5yr target ~$210 (roughly flat — fair value with no margin of safety at $218 entry). ' +
+    'Bull (~30%): Intelligence + Cortex + Natoma + Iceberg = enterprise AI control plane; RPO doubles to $18B; NRR reaches 130%+; SBC falls below 15%; multiple holds premium 44×; 5yr target ~$357 (~+10%/yr). ' +
+    'HOLD — Q1 FY27 validates the AI inflection thesis operationally, but at $218 / 99× FY27E non-GAAP EPS with GAAP losses and SBC at 34% of revenue (Tragic Burry tier), the base case is roughly flat from here. Reported FCF materially overstates owner economics. Wait for a pullback below $150 where base case offers real margin of safety.',
 
   analystConsensus: { rating: 'Buy', targetLow: 140, targetMedian: 225, targetHigh: 350, numAnalysts: 36 },
 
@@ -73,28 +71,28 @@ export const SNOW = defineStock({
     'Databricks expands aggressively into the structured data warehouse with Delta Sharing + Apache Iceberg, eroding SNOW\'s core positioning in mid-market and enterprise. ' +
       'Google BigQuery\'s $0 data-ingress pricing and hyperscaler-native AI integrations make SNOW hard to justify in mixed-cloud environments. Revenue growth decelerates from 34% to high-teens by FY28, then high-single-digits by FY31. ' +
       'FCF margin stalls at 20-22% as competitive pressure limits pricing; SBC ratio stays elevated at 28-30% of slowing revenue. ' +
-      'Multiple compresses 88× → 18× as the market reprices SNOW as a decelerating database vendor. 5yr EPS ~$3.87 at 18× exit = ~$70, roughly -14%/yr from $176.',
+      'Multiple compresses 99× → 18× as the market reprices SNOW as a decelerating database vendor. 5yr EPS ~$4.24 at 18× exit = ~$76, roughly -19%/yr from $218.',
     'Enterprise data gravity holds: once petabytes of production data live in Snowflake, migration costs (people, time, risk) exceed hyperscaler price advantages. AI consumption via Cortex and Intelligence drives incremental spend above what the core warehouse generates. ' +
       '$6B AWS deal locks in hyperscaler distribution; NRR sustains 125%+ as $1M+ customers deepen platform adoption from warehouse → AI platform. SBC ratio falls from 34% → 20% of revenue over 5 years, delivering real operating leverage. ' +
-      'Non-GAAP EPS compounds at ~26% from $2.00 base. Multiple compresses 88× → 30× through earnings growth. 5yr target ~$190, roughly +1.5%/yr — fair value with minimal margin of safety at $176.',
+      'Non-GAAP EPS compounds at ~26% from $2.20 base. Multiple compresses 99× → 30× through earnings growth. 5yr target ~$210, roughly flat — fair value with no margin of safety at $218.',
     'Snowflake becomes the enterprise AI control plane: Intelligence handles enterprise UX, Cortex executes AI workflows, Natoma governs AI agents, Iceberg provides the open storage layer. ' +
       'RPO doubles to $18B by FY29; NRR accelerates to 132%; $1M+ customers reach 1,200+. AWS $6B deal seeds $15B+ in total hyperscaler AI-data partnerships. SBC ratio falls below 15% as revenue sustains 30%+ compound; GAAP profitability arrives by FY30. ' +
-      'Multiple holds premium 44× as the market awards SNOW the AI enterprise infrastructure label. 5yr EPS ~$7.36 at 44× exit = ~$324, roughly +13%/yr from $176.',
+      'Multiple holds premium 44× as the market awards SNOW the AI enterprise infrastructure label. 5yr EPS ~$8.06 at 44× exit = ~$357, roughly +10%/yr from $218.',
   ],
 
   thesis: [
     'The AI consumption risk re-emerges from a different angle: enterprises build LLM-native query layers directly over Databricks lakehouses using Delta Sharing + Apache Iceberg, bypassing the proprietary Snowflake storage format. ' +
       'Databricks exploits open-standard positioning to win net-new enterprise data stack deals. Google BigQuery\'s $0 data ingress and native Vertex AI integration make SNOW a harder sell in GCP shops; Redshift Serverless competes in AWS accounts despite the $6B partnership. ' +
       'Revenue growth decelerates faster than the market models. SBC ratio stays sticky at 25-30% of slowing revenue — the CEO\'s 27% FY27 target is missed as headcount is maintained to defend growth. ' +
-      'Multiple compression from 88× to 18× is severe as the market accepts SNOW as a mature database vendor, not an AI platform. At current prices, this scenario delivers -14%/yr over 5 years.',
+      'Multiple compression from 99× to 18× is severe as the market accepts SNOW as a mature database vendor, not an AI platform. At current prices, this scenario delivers -19%/yr over 5 years.',
     'Enterprise data gravity is a real moat: the cost of migrating petabytes of production data, rewriting SQL, retraining teams, and losing Snowflake\'s data collaboration features (Data Sharing, Marketplace) exceeds hyperscaler price advantages for most enterprises. ' +
       'AI consumption drives incremental workload expansion: Cortex inference and Snowflake Intelligence queries monetize existing data without requiring new ingestion, extending LTV per customer. ' +
       '$6B AWS deal confirms SNOW\'s multi-cloud neutral positioning is commercially valued — enterprises prefer a data layer that doesn\'t preference any one hyperscaler. $1M+ customer expansion accelerating (46 new in Q1 vs 26 a year ago) signals the high-end enterprise base is still growing. ' +
-      'SBC ratio declining ~7pp/year (41% → 34% → 27% target) creates real operating leverage as the top line outgrows comp. Base case is a quality platform at fair value, not cheap, at the $176 entry.',
-    'The enterprise AI control plane thesis plays out in full: Snowflake is positioned at the intersection of every major enterprise AI investment theme — data infrastructure for training/RAG/retrieval context, inference execution via Cortex, AI workflow UX via Intelligence, and AI agent governance via Natoma (MCP platform acquired May 2026). ' +
+      'SBC ratio declining ~7pp/year (41% → 34% → 27% target) creates real operating leverage as the top line outgrows comp. At $218 / 99× forward EPS, base case is roughly flat — quality platform at full price, not cheap.',
+    'The enterprise AI control plane thesis plays out in full: Snowflake is positioned at the intersection of every major enterprise AI investment theme — data infrastructure for training/RAG/retrieval context, inference execution via Cortex, AI workflow UX via Intelligence, and AI agent governance via Natoma (MCP platform, May 2026). ' +
       '$6B AWS commitment is the opening move of a hyperscaler-distribution flywheel — Azure and GCP must follow with similar multi-year commitments to keep SNOW neutral, expanding the addressable market beyond what any single cloud could offer. ' +
       'RPO of $9.21B growing 38% YoY implies contracted revenue visibility far above the current run-rate; as that RPO converts, it supports the $18B target. NRR accelerates to 132% as $1M+ enterprise customers expand from warehouse → AI platform. ' +
-      'SBC ratio below 15% by FY30 as $8B+ revenue outgrows the comp structure; GAAP profitability becomes the investor story. Market awards 44× exit on $7.36 5yr EPS = ~$324 target — +13%/yr from $176.',
+      'SBC ratio below 15% by FY30 as $8B+ revenue outgrows the comp structure; GAAP profitability becomes the investor story. Market awards 44× exit on $8.06 5yr EPS = ~$357 target — +10%/yr from $218.',
   ],
 
   termGrowth: [0.025, 0.035, 0.040],
