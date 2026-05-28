@@ -2,6 +2,7 @@ import { defineStock } from './defineStock';
 
 export const CIEN = defineStock({
   updatedOn: '05/27',
+  lastReportTag: 'Q1 FY26',
   ticker: 'CIEN',
   name: 'Ciena Corporation',
   sector: 'Optical Networking / Telecom Infrastructure',

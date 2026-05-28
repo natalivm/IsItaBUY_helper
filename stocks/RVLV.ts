@@ -29,6 +29,7 @@ export const RVLV = defineStock({
     "Main risk: stock ran to $31.68 post-earnings then sold off — market not fully buying the acceleration yet. RS 47 with price below 50-day MA reflects that skepticism.",
 
   updatedOn: '05/27',
+  lastReportTag: 'Q1 2026',
 
   epsCagr: [5, 14, 22],
   exitPE: [13, 18, 22],

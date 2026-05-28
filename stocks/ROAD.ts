@@ -2,6 +2,7 @@ import { defineStock } from './defineStock';
 
 export const ROAD = defineStock({
   updatedOn: '05/27',
+  lastReportTag: 'Q1 FY26',
   ticker: 'ROAD',
   name: 'Construction Partners, Inc.',
   sector: 'Infrastructure Construction · Road & Highway',

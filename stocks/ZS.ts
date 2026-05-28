@@ -21,6 +21,7 @@ export const ZS = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: "Q3'26",
+  lastReportTag: 'Q3 FY26',
 
   strategicNarrative:
     "Q3 FY26: Rev $850M (+25%) · ARR $3.525B (+25%) · Op margin 23% (record) · FCF $136M (16%) · EPS $1.08. Beat every metric.\n\n" +
