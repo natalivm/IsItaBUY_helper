@@ -20,7 +20,7 @@ export const ZS = defineStock({
   rsRating: 62,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: "Q3'26",
+  updatedOn: '05/28',
   lastReportTag: 'Q3 FY26',
 
   strategicNarrative:
