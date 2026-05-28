@@ -2,6 +2,7 @@ import { defineStock } from './defineStock';
 
 export const CAVA = defineStock({
   updatedOn: '05/27',
+  lastReportTag: 'Q4 FY25',
   ticker: 'CAVA',
   name: 'CAVA Group, Inc.',
   sector: 'Restaurants · Fast-Casual · Mediterranean',

@@ -22,6 +22,7 @@ export const AMD = defineStock({
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   updatedOn: '05/27',
+  lastReportTag: 'Q1 FY26',
 
   strategicNarrative:
     "AMD is no longer a turnaround story — it is a high-expectation AI infrastructure bet. Q1 FY26 delivered $10.3B revenue (+38% YoY), GAAP EPS $0.84 (+91%), non-GAAP $1.37 (+43%), record FCF $2.6B, gross margin 53% GAAP / 55% non-GAAP — operating leverage finally working. " +

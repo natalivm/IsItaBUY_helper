@@ -21,6 +21,7 @@ export const NVDA = defineStock({
 
 
   updatedOn: '05/27',
+  lastReportTag: 'Q1 FY27',
   analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 254, targetHigh: 352, numAnalysts: 37 },
   revGrowth: [
     [0.55, 0.05, 0.02, 0.02, 0.01],

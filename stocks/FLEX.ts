@@ -7,6 +7,7 @@ export const FLEX = defineStock({
   themeColor: '#0072CE',
   currentPrice: 145.79,
   updatedOn: '05/27',
+  lastReportTag: 'Q3 FY26',
   fairPriceRange: '$45 - $128',
   shares0: 356,
   rev25: 25800,
