@@ -87,4 +87,10 @@ export const SNPS = defineStock({
     overstatementSource: 'burry-published',
     note: 'Critical per Burry — 31% overstatement. TIKR FY25 actuals: SBC $893M (12.1% of revenue — elevated for an EDA company), buybacks just $306M (covers only 34% of SBC). Ansys acquisition closed in 2025 pushed diluted shares from 156M (FY24) → 174M (LTM) = +12% in one year, plus added $16.7B to acquisition spend. Our 4y-MTM formula overshoots (48% vs Burry\'s 31%) because the 1.72× MTM multiplier sits in the unreliable <4× zone where simple formula misses Burry\'s buyback-credit and other adjustments. Trust Burry\'s 31% as the anchor; SNPS\'s post-Ansys profile is structurally different from when his data was likely captured.',
   },
+  debtSafety: {
+    netDebt: 2000,
+    ebitda: 2600,
+    fy: 'FY25',
+    note: 'Despite $16B gross debt from the Ansys acquisition, $14B in cash (raised via equity + debt financing) keeps net leverage at just 0.77× EBITDA. Asset-light EDA model generates strong FCF to deleverage rapidly.',
+  },
 });
