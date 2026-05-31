@@ -58,4 +58,10 @@ export const ANET = defineStock({
       fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
     },
   ],
+  debtSafety: {
+    netDebt: -12350,
+    ebitda: 4200,
+    fy: 'FY25',
+    note: 'Zero debt, $12.35B cash. One of the cleanest balance sheets in networking. Net cash exceeds annual EBITDA nearly 3×.',
+  },
 });

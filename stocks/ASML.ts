@@ -56,4 +56,10 @@ export const ASML = defineStock({
 
   ebitdaProxy: [0.35, 0.45, 0.55],
   bbRate: [0.01, 0.02, 0.025],
+  debtSafety: {
+    netDebt: -1000,
+    ebitda: 10500,
+    fy: 'FY25',
+    note: 'Slight net cash position ($6B cash vs $5B debt). EUV monopoly generates strong cash flows; balance sheet is conservatively managed.',
+  },
 });

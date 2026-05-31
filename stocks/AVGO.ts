@@ -60,4 +60,10 @@ export const AVGO = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.015],
     },
   ],
+  debtSafety: {
+    netDebt: 59500,
+    ebitda: 42000,
+    fy: 'FY25',
+    note: 'Debt entirely from VMware acquisition ($69B). At ~1.4× Net Debt/EBITDA, leverage is well within safe bounds and deleveraging rapidly on 52%+ FCF margins.',
+  },
 });
