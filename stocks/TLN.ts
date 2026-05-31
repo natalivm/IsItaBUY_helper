@@ -41,4 +41,13 @@ export const TLN = defineStock({
     'ECP acquisition integrates on schedule and drives >15% FCF/share growth through 2030; nuclear scarcity premium holds as hyperscalers compete for 24/7 carbon-free baseload power.',
     'AI-driven electricity demand accelerates PJM capacity prices; Susquehanna co-location model expands to additional hyperscaler agreements, unlocking AI-infrastructure multiples across the full asset base.',
   ],
+  debtSafety: {
+    netDebt: 8600,
+    ebitda: 900,
+    capexToOcf: 0.44,
+    interestCoverage: 1.1,
+    altmanZ: 1.6,
+    fy: 'FY25',
+    note: 'Most alarming leverage profile in the portfolio — 9.6× EBITDA with interest coverage barely above 1×. The $3.45B ECP gas plant acquisition piled onto existing debt against a sub-$1B EBITDA base. Entire investment thesis depends on AI power demand driving rapid EBITDA expansion. If capacity pricing disappoints, this balance sheet breaks.',
+  },
 });

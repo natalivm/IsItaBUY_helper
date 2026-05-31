@@ -84,4 +84,10 @@ export const NFLX = defineStock({
     overstatementSource: 'burry-published',
     note: 'Elevated per Burry — real owner profit ~78% of GAAP. FY25 actuals (TIKR): SBC just $368M (0.78% of revenue — extraordinarily low), buybacks $9,173M = 25× SBC, share count down 5% over 5y. Our 4y-MTM formula reproduces only 11% from these inputs (vs Burry\'s 22%) because (a) SBC has declined sharply since the 2022 peak ($575M), so the vesting cohort carries higher historical SBC than current flow suggests, (b) the Nov 2025 10:1 stock split scrambles single-multiplier MTM math across grant cohorts. Trust Burry\'s 22% as the anchor here.',
   },
+  debtSafety: {
+    netDebt: 5500,
+    ebitda: 14000,
+    fy: 'FY25',
+    note: 'Balance sheet transformed by the ads + password-sharing crackdown. Massive FCF generation has rendered $14B debt nearly irrelevant at 0.39× EBITDA. Stops at Step 2 with ease.',
+  },
 });
