@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/IsItaBUY_gemini/',
+  base: '/IsItaBUY_helper/',
   server: {
     port: 3000,
     host: '0.0.0.0',
@@ -29,8 +29,8 @@ export default defineConfig({
         background_color: '#020617',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/IsItaBUY_gemini/',
-        start_url: '/IsItaBUY_gemini/',
+        scope: '/IsItaBUY_helper/',
+        start_url: '/IsItaBUY_helper/',
         icons: [
           {
             src: 'pwa-192x192.png',
