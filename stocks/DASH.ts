@@ -53,4 +53,15 @@ export const DASH = defineStock({
       fcfUplift: [0.005, 0.005, 0.01, 0.01, 0.01],
     },
   ],
+
+  burry: {
+    sbc: 1200,
+    gaapNi: 935,
+    buyback: 400,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'SBC $1.2B exceeds GAAP NI $935M (128% naive ratio) — reported earnings are effectively zero once stock compensation is treated as a real cash cost. MTM amplifier modest (~1.5×) but the ratio caps at 100%. Buybacks ($400M) are only 0.33× SBC — insufficient offset. Tragic tier: a Burry-framework investor sees no real earnings here.',
+  },
 });
