@@ -57,7 +57,7 @@ export default defineConfig({
         // pick up the new build immediately on next visit. Increment when
         // shipping data changes (e.g. Burry indicator scope) that may otherwise
         // be masked by stale SW cache.
-        cacheId: 'isitabuy-v2',
+        cacheId: 'isitabuy-v3',
         cleanupOutdatedCaches: true,
         // Precache all static assets built by Vite (JS, CSS, HTML, fonts)
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
