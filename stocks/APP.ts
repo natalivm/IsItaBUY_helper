@@ -88,4 +88,11 @@ export const APP = defineStock({
     overstatementSource: 'estimated',
     note: 'Ok (major downgrade from original Tragic 50% after TIKR refresh). FY25 TIKR actuals dramatically cleaner than estimated: SBC just $210M (was $660M est, 3× too high), buybacks $2,584M (was $1,000M est, 2.5× too low). Key metrics put APP in elite-compounder territory: SBC just 3.8% of revenue (matches FICO 7%, SHOP 3.8% range), Buyback/SBC ~12× (matches FICO 12× — highest tier), diluted share count actually **-0.7% over 5 years** (342.76M FY21 → 340.43M LTM). SBC = 5.2% of CFO — among the cleanest in our coverage. The ~16× MTM amplifier (stock $30 → $469) suggests Burry-style methodology should apply some haircut, but aggressive buybacks at current prices are literally paying the MTM cost upfront — that\'s the right way to handle dilution. 77% operating margin + 73% FCF margin at 70% revenue growth is genuinely extraordinary. APP should be classified alongside META/SHOP/NOW as a reformed-compounder, not the broken-SaaS cohort.',
   },
+
+  debtSafety: {
+    netDebt: 740,        // Q1 2026: debt $3,500M − cash $2,760M
+    ebitda: 6300,        // FY2026E: ~85% adj EBITDA margin × $7.5B rev guide
+    fy: 'FY26E',
+    note: 'Net leverage 0.12× — effectively debt-free relative to earnings power. $5B+ annual FCF rapidly deleverages; $3.28B buyback authorization provides capital return floor.',
+  },
 });
