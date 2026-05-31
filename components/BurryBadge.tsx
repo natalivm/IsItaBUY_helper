@@ -30,7 +30,7 @@ const BurryBadge: React.FC<Props> = ({ tickerDef, dimmed }) => {
     <span
       title={`Burry SBC overstatement: ${pct.toFixed(0)}% (${sourceLabel})`}
       className={cn(
-        'text-xs font-bold mono border rounded px-1.5 py-0.5 flex-shrink-0',
+        'text-sm font-bold mono border rounded px-1.5 py-0.5 flex-shrink-0',
         tier.border,
         tier.color,
         tier.bg,
