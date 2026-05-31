@@ -91,7 +91,7 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
 
       {/* Report tag */}
       {tickerDef.lastReportTag && (
-        <span className="text-[10px] font-black text-white border border-emerald-700/60 bg-emerald-950/70 rounded px-1.5 py-0.5 flex-shrink-0 uppercase tracking-wide ml-auto mb-0.5">
+        <span className="text-sm font-bold text-white border border-emerald-700/60 bg-emerald-950/70 rounded px-1.5 py-0.5 flex-shrink-0 ml-auto mb-0.5">
           {tickerDef.lastReportTag}
         </span>
       )}
