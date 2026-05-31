@@ -130,7 +130,7 @@ const StockDetailView: React.FC<Props> = ({
                   <div className="rounded-xl border border-slate-800/60 overflow-hidden">
                     <button
                       onClick={() => setQuantOpen(o => !o)}
-                      className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/40 transition-colors"
+                      className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-800/40 transition-colors min-h-[44px]"
                     >
                       <h3 className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2">
                         <Info className="w-3 h-3" />
@@ -160,7 +160,7 @@ const StockDetailView: React.FC<Props> = ({
                   <div className="rounded-xl border border-slate-800/60 overflow-hidden">
                     <button
                       onClick={() => setAlphaOpen(o => !o)}
-                      className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/40 transition-colors"
+                      className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-800/40 transition-colors min-h-[44px]"
                     >
                       <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-2">
                         <LayoutDashboard className="w-3 h-3" />
