@@ -152,7 +152,24 @@ const App: React.FC = () => {
               className="min-h-screen bg-surface-card overflow-y-auto px-4 lg:px-24 pt-20 pb-24 scrollbar-hide"
             >
               <div className="max-w-4xl mx-auto mb-12">
-                <div className="flex justify-end mb-6 pt-1">
+                <div className="flex items-center justify-between mb-6 pt-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-1">Sort</span>
+                    {(['default', 'upside', 'rs'] as const).map(opt => (
+                      <button
+                        key={opt}
+                        onClick={() => setSortBy(opt)}
+                        className={cn(
+                          "text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border transition-colors",
+                          sortBy === opt
+                            ? "bg-amber-500/20 border-amber-500/60 text-amber-400"
+                            : "border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600"
+                        )}
+                      >
+                        {opt === 'default' ? 'A–Z' : opt === 'upside' ? 'Upside %' : 'RS Rating'}
+                      </button>
+                    ))}
+                  </div>
                   <ThemeToggle />
                 </div>
 
@@ -179,24 +196,6 @@ const App: React.FC = () => {
                       </svg>
                     </button>
                   )}
-                </div>
-
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-1">Sort</span>
-                  {(['default', 'upside', 'rs'] as const).map(opt => (
-                    <button
-                      key={opt}
-                      onClick={() => setSortBy(opt)}
-                      className={cn(
-                        "text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border transition-colors",
-                        sortBy === opt
-                          ? "bg-amber-500/20 border-amber-500/60 text-amber-400"
-                          : "border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600"
-                      )}
-                    >
-                      {opt === 'default' ? 'A–Z' : opt === 'upside' ? 'Upside %' : 'RS Rating'}
-                    </button>
-                  ))}
                 </div>
 
                 <div className="space-y-0">
