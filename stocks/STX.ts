@@ -50,6 +50,12 @@ export const STX = defineStock({
 
   exitMultiple: [8, 12, 16],
 
+  modelType: 'EPS_PE',
+  baseEps: 10.60,      // FCF per share ($2.375B FCF / 224M shares); exitPE = P/FCF multiples
+  epsCagr: [4, 13, 20],
+  exitPE: [41, 46, 54],
+  prob: [25, 50, 25],
+
   termGrowth: [0.015, 0.025, 0.030],
   bbRate: [0.005, 0.012, 0.020],
   ebitdaProxy: [0.22, 0.28, 0.34],
