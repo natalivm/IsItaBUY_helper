@@ -179,15 +179,42 @@ const InvestmentVerdict: React.FC<Props> = ({
 
         <div className="w-px h-20 bg-slate-800 hidden lg:block" />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
-          {metricsToShow.map((m, i) => (
-            <div key={i} className="flex flex-col gap-1">
-              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
-              {m.value}
-              <span className="text-xs text-slate-400">{m.subtext}</span>
+        {extraMetrics ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
+            {extraMetrics.map((m, i) => (
+              <div key={i} className="flex flex-col gap-1">
+                <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
+                {m.value}
+                <span className="text-xs text-slate-400">{m.subtext}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3 flex-1">
+            {/* Tile 1: 5Y Base Target */}
+            <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">5Y Base Target</span>
+              <span className="text-2xl font-black" style={{ color: tc }}>{usd(allProjections.base.pricePerShare)}</span>
+              <span className="text-xs text-slate-500">vs {usd(tickerDef.currentPrice)} spot</span>
+              <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 uppercase tracking-widest">PW Blended</span>
+                <span className="text-xs font-black text-slate-300">{usd(investmentConclusion.pwAvg)}</span>
+              </div>
             </div>
-          ))}
-        </div>
+            {/* Tile 2: Upside */}
+            <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Upside to Base</span>
+              <span className={cn("text-2xl font-black", momentumUpside >= 0 ? 'text-emerald-400' : 'text-red-400')}>
+                {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
+              </span>
+              <span className="text-xs text-slate-500">~{Math.max(0.5, timeToTarget).toFixed(1)}Y to target</span>
+              <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 uppercase tracking-widest">5Y CAGR</span>
+                <span className="text-xs font-black text-slate-300">{pctFmt(investmentConclusion.cagr / 100)}</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-8 pt-8 border-t border-slate-800/80">
