@@ -65,4 +65,13 @@ export const CEG = defineStock({
     overstatementSource: 'estimated',
     note: 'Pristine — SBC is immaterial for a large-scale power-generation platform. LTM GAAP NI $3.79B on $29.87B revenue (12.7% net margin, 26.6% EBITDA margin). 5-year diluted share count is flat-to-down (329M → 324M, -1.5%) — virtually no dilution, very different from the SBC-heavy growth-software cohort. $5B buyback authorization with $335M (1.2M shares @ ~$285 avg) executed in early Q2 26 after the business update. Naive SBC/NI is near zero; even applying a 4× MTM amplifier for the post-spin rerating (~5× since 2022 spin) keeps the estimate well inside the Pristine band. The Burry framework barely registers here — CEG is a real-asset infrastructure compounder where the debate is power-pricing durability, nuclear-scarcity premium, and Calpine integration, not accounting quality.',
   },
+  debtSafety: {
+    netDebt: 15400,
+    ebitda: 7500,
+    capexToOcf: 0.38,
+    interestCoverage: 7.0,
+    altmanZ: 2.6,
+    fy: 'LTM Q1 26',
+    note: 'Nuclear infrastructure is inherently CapEx-heavy and utilities score low on Altman Z (a metric calibrated for manufacturers). Strong interest coverage (7×) from long-term contracted generation reflects genuine financial strength. RED tier reflects framework mismatch more than distress — same structural caveat as VST.',
+  },
 });

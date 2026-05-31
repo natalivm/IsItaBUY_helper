@@ -60,4 +60,10 @@ export const APH = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.15, 0.22, 0.28],
+  debtSafety: {
+    netDebt: 14100,
+    ebitda: 8000,
+    fy: 'FY25',
+    note: 'Managed leverage from acquisition-driven growth (CommScope fiber assets). At 1.76× EBITDA, well within safe bounds. Amphenol consistently generates 19%+ FCF margins to deleverage quickly after each deal.',
+  },
 });
