@@ -24,6 +24,7 @@ const App: React.FC = () => {
 
   const [activeTicker, setActiveTicker] = useState<string>(getTickerFromHash);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const navigateTo = useCallback((ticker: string) => {
     if (ticker === 'home') {
@@ -86,6 +87,28 @@ const App: React.FC = () => {
     return groups;
   }, [universeData]);
 
+  const filteredGroupedData = useMemo(() => {
+    if (!searchQuery.trim()) return groupedData;
+    const q = searchQuery.toLowerCase();
+    const filtered: Record<StockGroup, typeof universeData> = {
+      PRIME_GROWTH: [],
+      TURBO_GROWTH: [],
+      WATCH_LIST: [],
+      AVOID: [],
+    };
+    (Object.keys(groupedData) as StockGroup[]).forEach(group => {
+      filtered[group] = groupedData[group].filter(s => {
+        const def = tickers[s.ticker];
+        return (
+          s.ticker.toLowerCase().includes(q) ||
+          def.name.toLowerCase().includes(q) ||
+          (def.sector && def.sector.toLowerCase().includes(q))
+        );
+      });
+    });
+    return filtered;
+  }, [groupedData, searchQuery, tickers]);
+
   const flatTickerOrder = useMemo(() => {
     const list: string[] = [];
     GROUP_ORDER.forEach(groupKey => {
@@ -124,11 +147,36 @@ const App: React.FC = () => {
                   <ThemeToggle />
                 </div>
 
+                <div className="relative mb-6">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Search by ticker, name, or sector…"
+                    className="w-full bg-surface-card border border-slate-700/60 rounded-lg pl-9 pr-9 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500/40 transition-all"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                      </svg>
+                    </button>
+                  )}
+                </div>
+
                 <div className="space-y-0">
                 {(() => {
                   let globalIdx = 0;
-                  return GROUP_ORDER.map(groupKey => {
-                    const stocks = groupedData[groupKey];
+                  const rows = GROUP_ORDER.map(groupKey => {
+                    const stocks = filteredGroupedData[groupKey];
                     if (stocks.length === 0) return null;
                     const meta = GROUP_META[groupKey];
                     return (
@@ -154,6 +202,18 @@ const App: React.FC = () => {
                       </div>
                     );
                   });
+                  const hasResults = rows.some(r => r !== null);
+                  if (!hasResults && searchQuery.trim()) {
+                    return (
+                      <div className="flex flex-col items-center justify-center py-16 text-slate-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-3 opacity-50">
+                          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <p className="text-sm">No stocks match <span className="text-slate-300 font-mono">"{searchQuery}"</span></p>
+                      </div>
+                    );
+                  }
+                  return rows;
                 })()}
                 </div>
               </div>
