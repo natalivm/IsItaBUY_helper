@@ -144,20 +144,90 @@ const InvestmentVerdict: React.FC<Props> = ({
     >
       <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
 
-      {/* Always-visible header */}
-      <button
-        onClick={() => setVerdictOpen(o => !o)}
-        className="w-full flex items-center justify-between px-8 py-5 hover:bg-slate-800/30 transition-colors min-h-[44px]"
-      >
-        <div className="flex items-center gap-4">
+      {/* Always-visible: header + rating + metrics */}
+      <div className="px-8 pt-5 pb-6">
+        <div className="flex items-center justify-between mb-5">
           <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-3">
             <span className="w-6 h-[2px] bg-amber-500/50" />
             Investment Verdict
           </div>
-          <span className={cn('text-2xl font-black tracking-tighter leading-none', verdictColor)}>
-            {verdictText}
-          </span>
         </div>
+
+        <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
+          <div className="flex flex-col gap-1 shrink-0">
+            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Is it a Buy?</span>
+            {(() => {
+              const quantRating = tickerDef.ratingOverride
+                ? getInstitutionalRating(allProjections.base.pricePerShare, tickerDef.currentPrice)
+                : null;
+              const modelDiffers = quantRating && quantRating.label !== ourLabel;
+              return (
+                <>
+                  <div className={cn('text-6xl lg:text-7xl font-black tracking-tighter leading-none', verdictColor)}>
+                    {verdictText}
+                  </div>
+                  {verdictText !== ourLabel && (
+                    <div className={cn('text-xs font-black uppercase tracking-widest mt-1', rd.subtextColor)}>
+                      {ourLabel}
+                    </div>
+                  )}
+                  {modelDiffers && (
+                    <div className="text-xs font-medium text-slate-400 mt-1">
+                      Model: <span className={quantRating.color}>{quantRating.label}</span>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </div>
+
+          <div className="w-px h-20 bg-slate-800 hidden lg:block" />
+
+          {extraMetrics ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
+              {extraMetrics.map((m, i) => (
+                <div key={i} className="flex flex-col gap-1">
+                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
+                  {m.value}
+                  <span className="text-xs text-slate-400">{m.subtext}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-3 flex-1">
+              <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">5Y Base Target</span>
+                <span className="text-2xl font-black" style={{ color: tc }}>{usd(allProjections.base.pricePerShare)}</span>
+                <span className="text-xs text-slate-500">vs {usd(tickerDef.currentPrice)} spot</span>
+                <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] text-slate-500 uppercase tracking-widest">PW Blended</span>
+                  <span className="text-xs font-black text-slate-300">{usd(investmentConclusion.pwAvg)}</span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Upside to Base</span>
+                <span className={cn('text-2xl font-black', momentumUpside >= 0 ? 'text-emerald-400' : 'text-red-400')}>
+                  {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
+                </span>
+                <span className="text-xs text-slate-500">~{Math.max(0.5, timeToTarget).toFixed(1)}Y to target</span>
+                <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] text-slate-500 uppercase tracking-widest">5Y CAGR</span>
+                  <span className="text-xs font-black text-slate-300">{pctFmt(investmentConclusion.cagr / 100)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Collapsible: narrative + analysis text */}
+      <button
+        onClick={() => setVerdictOpen(o => !o)}
+        className="w-full flex items-center justify-between px-8 py-3 border-t border-slate-800/60 hover:bg-slate-800/30 transition-colors min-h-[44px]"
+      >
+        <span className="text-xs font-black text-slate-500 uppercase tracking-[0.3em]">
+          {verdictOpen ? 'Hide analysis' : 'Read analysis'}
+        </span>
         <ChevronDown className={cn('w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0', verdictOpen && 'rotate-180')} />
       </button>
 
@@ -173,75 +243,8 @@ const InvestmentVerdict: React.FC<Props> = ({
           >
             <div className="px-8 pb-8 space-y-6">
 
-              {/* Rating + metrics */}
-              <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
-                <div className="flex flex-col gap-1 shrink-0">
-                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Is it a Buy?</span>
-                  {(() => {
-                    const quantRating = tickerDef.ratingOverride
-                      ? getInstitutionalRating(allProjections.base.pricePerShare, tickerDef.currentPrice)
-                      : null;
-                    const modelDiffers = quantRating && quantRating.label !== ourLabel;
-                    return (
-                      <>
-                        <div className={cn('text-6xl lg:text-7xl font-black tracking-tighter leading-none', verdictColor)}>
-                          {verdictText}
-                        </div>
-                        {verdictText !== ourLabel && (
-                          <div className={cn('text-xs font-black uppercase tracking-widest mt-1', rd.subtextColor)}>
-                            {ourLabel}
-                          </div>
-                        )}
-                        {modelDiffers && (
-                          <div className="text-xs font-medium text-slate-400 mt-1">
-                            Model: <span className={quantRating.color}>{quantRating.label}</span>
-                          </div>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-
-                <div className="w-px h-20 bg-slate-800 hidden lg:block" />
-
-                {extraMetrics ? (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
-                    {extraMetrics.map((m, i) => (
-                      <div key={i} className="flex flex-col gap-1">
-                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
-                        {m.value}
-                        <span className="text-xs text-slate-400">{m.subtext}</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-3 flex-1">
-                    <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">5Y Base Target</span>
-                      <span className="text-2xl font-black" style={{ color: tc }}>{usd(allProjections.base.pricePerShare)}</span>
-                      <span className="text-xs text-slate-500">vs {usd(tickerDef.currentPrice)} spot</span>
-                      <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
-                        <span className="text-[10px] text-slate-500 uppercase tracking-widest">PW Blended</span>
-                        <span className="text-xs font-black text-slate-300">{usd(investmentConclusion.pwAvg)}</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Upside to Base</span>
-                      <span className={cn('text-2xl font-black', momentumUpside >= 0 ? 'text-emerald-400' : 'text-red-400')}>
-                        {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
-                      </span>
-                      <span className="text-xs text-slate-500">~{Math.max(0.5, timeToTarget).toFixed(1)}Y to target</span>
-                      <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
-                        <span className="text-[10px] text-slate-500 uppercase tracking-widest">5Y CAGR</span>
-                        <span className="text-xs font-black text-slate-300">{pctFmt(investmentConclusion.cagr / 100)}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* Verdict narrative */}
-              <div className="pt-4 border-t border-slate-800/80">
+              <div className="pt-2">
                 <p className="text-base text-slate-200 leading-relaxed">
                   {narrativeOverride || defaultNarrative}
                 </p>
