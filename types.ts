@@ -74,6 +74,7 @@ export interface TickerDefinition {
   aiImpact: 'TAILWIND' | 'DISRUPTION_RISK' | 'NEUTRAL';
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
   strategicNarrative: string;
+  verdictNarrative?: string;
   cash?: number;
   debt?: number;
   beta?: number;

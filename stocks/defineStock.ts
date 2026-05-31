@@ -57,6 +57,7 @@ export interface SimpleStockInput {
    */
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
   strategicNarrative: string;
+  verdictNarrative?: string;
 
   // ── Model type (default: DCF_ADVANCED) ──
   modelType?: 'DCF_ADVANCED' | 'EPS_PE';
@@ -164,7 +165,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     ticker, name, sector, themeColor, currentPrice, shares0,
     rev25, fcfMargin25, taxRate, cash, debt, beta, costDebt,
     fairPriceRange, active = true,
-    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative,
+    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative, verdictNarrative,
     modelType = 'DCF_ADVANCED',
 
     // Scenarios
@@ -238,6 +239,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     aiImpact,
     ratingOverride,
     strategicNarrative,
+    verdictNarrative,
     baseEps,
     analystConsensus,
     updatedOn,

@@ -25,9 +25,13 @@ export const STX = defineStock({
   strategicNarrative:
     'The AI storage thesis is real: HAMR technology gives Seagate a density edge that hyperscalers are paying for, and AI data creation requires orders of magnitude more raw storage per compute dollar than prior generations. FCF is genuine at $2.4B (19% margin) and growing. ' +
     "The problem is that the market already knows all of this. After a 600%+ run, STX trades at ~83× FCF — pricing in years of hypercycle growth before it happens. The probability-weighted target is $938, only fractionally above today's price ($879.80). " +
-    'Multiple compression is the hidden risk in every scenario. The current P/FCF at $880 is ~83× — even the bull case assumes compression from 83× → 54× while FCF compounds at 20%/yr. That is actually a coherent and conservative framing of the AI hypercycle: the business grows fast, but the multiple normalizes as the narrative matures. In the base case, 13% FCF growth after a 45% multiple haircut yields roughly flat performance. Being right on the business does not guarantee being right on the investment. ' +
     'HOLD. A pullback to $650–750 would materially improve the setup. At $880, you are already paying for the bull case. ' +
     'Burry (estimated): 45% overstatement (Critical), adjusted target ~$516.',
+
+  verdictNarrative:
+    'STX trades at ~83× FCF — the market is already pricing in years of AI-storage hypercycle growth. The probability-weighted target of $938 is only fractionally above today\'s price, leaving almost no margin of safety. ' +
+    'Multiple compression is a structural headwind in every scenario. The current P/FCF at $880 is ~83× — even the bull case assumes compression from 83× → 54× while FCF compounds at 20%/yr. That is actually a coherent and conservative framing of the AI hypercycle: the business grows fast, but the multiple normalizes as the narrative matures. In the base case, 13% FCF growth after a 45% multiple haircut yields roughly flat stock performance. Being right on the business does not guarantee being right on the investment. ' +
+    'HOLD. A pullback to $650–750 shifts the setup toward BUY. At $880, you are paying for the bull case before it happens.',
 
   analystConsensus: { rating: 'Buy', targetLow: 545, targetMedian: 814, targetHigh: 1140, numAnalysts: 24 },
 

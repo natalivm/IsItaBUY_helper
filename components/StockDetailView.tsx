@@ -243,6 +243,7 @@ const StockDetailView: React.FC<Props> = ({
           investmentConclusion={investmentConclusion}
           activeStockData={activeStockData}
           metrics={metrics}
+          narrativeOverride={tickerDef.verdictNarrative}
         />
       </div>
     </motion.div>
