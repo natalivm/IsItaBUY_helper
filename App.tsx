@@ -25,6 +25,7 @@ const App: React.FC = () => {
   const [activeTicker, setActiveTicker] = useState<string>(getTickerFromHash);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'default' | 'upside' | 'rs'>('default');
 
   const navigateTo = useCallback((ticker: string) => {
     if (ticker === 'home') {
@@ -72,7 +73,7 @@ const App: React.FC = () => {
       const baseCaseUpside = (proj.pricePerShare - t.currentPrice) / t.currentPrice;
       const group = classifyStock(t, rating.label, t.rsRating, baseCaseUpside);
 
-      return { ticker: t.ticker, fairPriceRange: t.fairPriceRange || 'N/A', baseTarget: proj.pricePerShare, active: t.active, ...rating, aiImpact: t.aiImpact, group };
+      return { ticker: t.ticker, fairPriceRange: t.fairPriceRange || 'N/A', baseTarget: proj.pricePerShare, baseUpside: baseCaseUpside, rsRating: t.rsRating, active: t.active, ...rating, aiImpact: t.aiImpact, group };
     }).sort((a, b) => a.ticker.localeCompare(b.ticker));
   }, [tickers]);
 
@@ -88,8 +89,13 @@ const App: React.FC = () => {
   }, [universeData]);
 
   const filteredGroupedData = useMemo(() => {
-    if (!searchQuery.trim()) return groupedData;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
+    type Row = (typeof universeData)[0];
+    const sortFn =
+      sortBy === 'upside' ? (a: Row, b: Row) => b.baseUpside - a.baseUpside
+      : sortBy === 'rs'   ? (a: Row, b: Row) => b.rsRating - a.rsRating
+      : null;
+
     const filtered: Record<StockGroup, typeof universeData> = {
       PRIME_GROWTH: [],
       TURBO_GROWTH: [],
@@ -97,17 +103,20 @@ const App: React.FC = () => {
       AVOID: [],
     };
     (Object.keys(groupedData) as StockGroup[]).forEach(group => {
-      filtered[group] = groupedData[group].filter(s => {
-        const def = tickers[s.ticker];
-        return (
-          s.ticker.toLowerCase().includes(q) ||
-          def.name.toLowerCase().includes(q) ||
-          (def.sector && def.sector.toLowerCase().includes(q))
-        );
-      });
+      let items = q
+        ? groupedData[group].filter(s => {
+            const def = tickers[s.ticker];
+            return (
+              s.ticker.toLowerCase().includes(q) ||
+              def.name.toLowerCase().includes(q) ||
+              (def.sector && def.sector.toLowerCase().includes(q))
+            );
+          })
+        : groupedData[group];
+      filtered[group] = sortFn ? [...items].sort(sortFn) : items;
     });
     return filtered;
-  }, [groupedData, searchQuery, tickers]);
+  }, [groupedData, searchQuery, sortBy, tickers]);
 
   const flatTickerOrder = useMemo(() => {
     const list: string[] = [];
@@ -170,6 +179,24 @@ const App: React.FC = () => {
                       </svg>
                     </button>
                   )}
+                </div>
+
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-1">Sort</span>
+                  {(['default', 'upside', 'rs'] as const).map(opt => (
+                    <button
+                      key={opt}
+                      onClick={() => setSortBy(opt)}
+                      className={cn(
+                        "text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border transition-colors",
+                        sortBy === opt
+                          ? "bg-amber-500/20 border-amber-500/60 text-amber-400"
+                          : "border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600"
+                      )}
+                    >
+                      {opt === 'default' ? 'A–Z' : opt === 'upside' ? 'Upside %' : 'RS Rating'}
+                    </button>
+                  ))}
                 </div>
 
                 <div className="space-y-0">
