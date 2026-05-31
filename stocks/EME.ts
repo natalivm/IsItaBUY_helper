@@ -20,11 +20,17 @@ export const EME = defineStock({
   baseEps: 25.87,           // 2025A adj. EPS (record; +20% YoY); 2026E guided $27.25–29.25
   modelType: 'EPS_PE',
   rsRating: 76,
+  ratingOverride: 'HOLD',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "Q1 2026 (April 29): quarterly record — $4.63B revenue (+19.7% YoY, +16.8% organic), EPS $6.84 (+30%), operating margin 8.7% (up from 8.2%). RPO hit a new record $15.62B (+32.9% YoY). Guidance raised: FY2026 revenue $18.5–19.25B, EPS $28.25–29.75 (midpoint $29.00). " +
     "AI data center mechanical scope multiplier (1.5–2× vs. cloud-era builds) continues to drive outsized RPO growth. 9 consecutive quarters of EPS acceleration. " +
     "At $827, the stock is just below the IBD cup breakout point ($835, as of 05/15/2026) with RS 76 and Acc/Dist E — strong fundamentals but institutional distribution near the prior high is a caution flag. Base-case target ~$1,143 still implies 38% upside from current levels.",
+
+  verdictNarrative:
+    'The fundamental case remains strong — Q1 2026 record revenue +19.7%, EPS +30%, RPO $15.62B (+33%), and raised FY2026 guidance. Long-term base-case target ~$1,143 implies 38% upside. ' +
+    'However the chart is flashing warning signs that override the model rating. A potential head-and-shoulders pattern is forming: left shoulder ~$850, head ~$965, right shoulder currently building ~$827. MACD has crossed bearish with a widening red histogram (-11.98). Acc/Dist rated E — institutions were selling into the $950–965 head. ' +
+    'HOLD. Do not add here. The key level is the neckline at ~$780–810 — a break on volume would confirm the H&S and open a measured move toward $600–620. A reclaim of the 50-day MA ($833) with improving Acc/Dist would flip this back to BUY.',
 
   // ── Scenarios ──
   epsCagr: [7, 13, 17],        // bear: DC slows; base: DC normalizes; bull: DC high-teens + M&A
