@@ -43,6 +43,13 @@ export const KRMN = defineStock({
     [0.12, 0.15, 0.18, 0.20, 0.22],
   ],
   exitMultiple: [10, 16, 22],
+
+  modelType: 'EPS_PE',
+  baseEps: 0.72,        // GAAP NI/share ($95M / 132.5M shares)
+  epsCagr: [18, 26, 35],
+  exitPE: [25, 40, 48],
+  prob: [25, 50, 25],
+
   desc: [
     'Defense budget pressure and program delays slow growth to 7–15% per year. FCF margins stabilize near 10%. Re-rating toward normal defense multiples; bear target $42.',
     'Hypersonics and missile production ramp as contracted. Revenue grows 35% in FY26 to ~$637M, decelerating to 12% by FY30. FCF margins expand from 10% to 16% as scale offsets fixed overhead. Base target $92.',
