@@ -18,7 +18,7 @@ export const SNDK = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '31/05',
-  lastReportTag: 'LTM Q3 FY26',
+  lastReportTag: 'Q3 FY26',
   fairPriceRange: '$1,500 - $4,500',
 
   strategicNarrative:
