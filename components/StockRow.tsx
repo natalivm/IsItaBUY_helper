@@ -34,42 +34,64 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       transition={{ delay: animationIndex * 0.02 }}
       onClick={() => onSelect(stock.ticker)}
       className={cn(
-        "w-full flex items-center gap-4 py-4 px-4 group transition-all duration-300 border-b border-slate-800/50 hover:bg-white/5 text-left",
+        "w-full flex items-end gap-4 py-3 px-4 group transition-all duration-300 border-b border-slate-800/50 hover:bg-white/5 text-left",
         isAvoid && "opacity-60"
       )}
     >
-      <div className={cn("w-3 h-3 rounded-full flex-shrink-0", stock.dot)}></div>
+      {/* Dot */}
+      <div className={cn("w-3 h-3 rounded-full flex-shrink-0 mb-1", stock.dot)} />
+
+      {/* Ticker */}
       <span className={cn(
-        "text-2xl lg:text-3xl font-black transition-colors tracking-tighter flex-shrink-0 flex items-center gap-1",
-        isAvoid
-          ? "text-slate-600 group-hover:text-slate-500 w-32"
-          : "text-white group-hover:text-[#ff007f] w-28"
+        "text-2xl lg:text-3xl font-black transition-colors tracking-tighter flex-shrink-0 flex items-center gap-1 w-28",
+        isAvoid ? "text-slate-600 group-hover:text-slate-500" : "text-white group-hover:text-[#ff007f]"
       )}>
-        {isAvoid && <span className="hidden group-hover:inline text-xl text-red-400">{'\u26A0'}</span>}
+        {isAvoid && <span className="hidden group-hover:inline text-xl text-red-400">⚠</span>}
         {stock.ticker}
       </span>
-      <div className="w-44 flex-shrink-0 flex flex-col gap-0.5">
-        <div className="flex items-baseline gap-2">
-          <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>${tickerDef.currentPrice.toFixed(2)}</span>
-          <span className={cn("text-base font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>${stock.baseTarget.toFixed(0)}</span>
+
+      {/* Prices + upd tag */}
+      <div className="flex-shrink-0 flex flex-col items-start w-48">
+        <div className="flex items-baseline gap-3">
+          <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>
+            ${tickerDef.currentPrice.toFixed(2)}
+          </span>
+          <span className="text-slate-600 text-sm">→</span>
+          <span className={cn("text-base font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>
+            ${stock.baseTarget.toFixed(0)}
+          </span>
         </div>
         {tickerDef.updatedOn && (
-          <span className="text-xs font-medium text-slate-500 border border-slate-700 rounded px-1.5 py-0.5 self-start">
+          <span className="text-[10px] font-medium text-slate-500 border border-slate-800 rounded px-1.5 py-0.5 mt-1">
             upd {tickerDef.updatedOn}
           </span>
         )}
       </div>
-      <div className="flex flex-col w-28 flex-shrink-0">
-        <span className={cn("text-xs font-black uppercase tracking-widest", stock.color)}>{stock.label}</span>
-      </div>
+
+      {/* Rating label */}
+      <span className={cn("text-xs font-black uppercase tracking-widest flex-shrink-0 w-28 mb-0.5", stock.color)}>
+        {stock.label}
+      </span>
+
+      {/* RS badge */}
       <span className={cn(
-        "text-sm font-bold mono border rounded px-1.5 py-0.5 flex-shrink-0",
+        "text-sm font-bold mono border rounded px-1.5 py-0.5 flex-shrink-0 mb-0.5",
         rsRatingStyle(tickerDef.rsRating)
-      )}>RS {tickerDef.rsRating}</span>
+      )}>
+        RS {tickerDef.rsRating}
+      </span>
+
+      {/* Burry badge */}
       <BurryBadge tickerDef={tickerDef} dimmed={isAvoid} />
-      <span className={cn("text-sm font-medium truncate", isAvoid ? "text-slate-400/40" : "text-slate-400")}>{tickerDef.sector.split(/\s[·\/]\s/)[0]}</span>
+
+      {/* Sector */}
+      <span className={cn("text-sm font-medium truncate mb-0.5", isAvoid ? "text-slate-400/40" : "text-slate-400")}>
+        {tickerDef.sector.split(/\s[·\/]\s/)[0]}
+      </span>
+
+      {/* Report tag */}
       {tickerDef.lastReportTag && (
-        <span className="text-[10px] font-black text-[#ffffff] border border-emerald-700/60 bg-emerald-950/70 rounded px-1.5 py-0.5 flex-shrink-0 uppercase tracking-wide ml-auto">
+        <span className="text-sm font-bold text-white border border-emerald-700/60 bg-emerald-950/70 rounded px-1.5 py-0.5 flex-shrink-0 ml-auto mb-0.5">
           {tickerDef.lastReportTag}
         </span>
       )}
