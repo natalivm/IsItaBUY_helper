@@ -31,6 +31,7 @@ export const STX = defineStock({
     'Base (~50%): AI storage sustains moderate acceleration; HAMR upgrade cycle proceeds steadily; FCF grows to ~$3.8B by Year 5; 12× exit → $905. Market-fair valuation — business performs, stock already prices it. ' +
     'Bull (~25%): HAMR becomes the definitive hyperscale cold-storage platform; AI data growth exceeds projections; pricing power and volume expand simultaneously; FCF margins reach 26%; 16× exit → $1,420. ' +
     'Probability-weighted intrinsic value: $938. Current price: $879.80. Margin of safety: thin. ' +
+    'Multiple compression is a structural headwind embedded in every scenario. STX currently trades at ~83× FCF/share ($879.80 / $10.60). The model assigns exit P/FCF multiples of 41× (bear), 46× (base), and 54× (bull) — meaning even the most optimistic scenario requires the multiple to compress by ~35% from today. In the base case, the multiple compresses ~45%. FCF growth must not only deliver returns but first overcome this valuation drag. A 13% FCF CAGR over 5 years sounds impressive; after a 45% multiple haircut, it yields roughly flat stock performance. ' +
     'HOLD. If STX were to pull back into the $650–750 range, the setup would likely shift into BUY territory. At nearly $880, most of the AI-storage upside appears already reflected in the stock. ' +
     'Burry full-SBC adjustment (estimated): 45% overstatement (Critical) — SBC $520M vs. GAAP NI $1.3B = 40% naive ratio, amplified by >5× stock appreciation; Burry-adjusted blended target ~$516.',
 
