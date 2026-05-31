@@ -9,6 +9,8 @@ export interface StockRowData {
   ticker: string;
   fairPriceRange: string;
   baseTarget: number;
+  baseUpside: number;
+  rsRating: number;
   label: string;
   color: string;
   dot: string;
@@ -25,6 +27,7 @@ interface Props {
 
 const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect }) => {
   const isAvoid = stock.group === 'AVOID';
+  const upsidePct = stock.baseUpside * 100;
   return (
     <motion.button
       key={stock.ticker}
@@ -45,14 +48,20 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       </span>
 
       {/* Prices + upd tag */}
-      <div className="flex-shrink-0 flex flex-col items-start w-48">
-        <div className="flex items-baseline gap-3">
+      <div className="flex-shrink-0 flex flex-col items-start w-56">
+        <div className="flex items-baseline gap-2">
           <span className="text-base font-bold mono text-blue-400">
             ${tickerDef.currentPrice.toFixed(2)}
           </span>
           <span className="text-slate-600 text-sm">→</span>
           <span className="text-base font-bold mono text-slate-300">
             ${stock.baseTarget.toFixed(0)}
+          </span>
+          <span className={cn(
+            "text-xs font-black",
+            upsidePct >= 0 ? "text-emerald-400" : "text-rose-400"
+          )}>
+            {upsidePct >= 0 ? '+' : ''}{upsidePct.toFixed(0)}%
           </span>
         </div>
         {tickerDef.updatedOn && (

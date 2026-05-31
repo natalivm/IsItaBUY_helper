@@ -62,6 +62,13 @@ export const DASH = defineStock({
     },
   ],
 
+  debtSafety: {
+    netDebt: -1700,
+    ebitda: 2100,
+    fy: 'FY25',
+    note: 'Net cash — $4.4B cash vs $2.7B debt = $1.7B net cash. No leverage concern.',
+  },
+
   burry: {
     sbc: 1350,
     gaapNi: 925,
