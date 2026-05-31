@@ -1,11 +1,11 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { TickerDefinition, ProjectionData, ScenarioType, AnalystRating } from '../types';
 import { StockMetrics, usd, pctFmt } from '../services/stockMetrics';
 import { getInstitutionalRating } from '../services/projectionService';
 import { RATING_DEFS, RatingKey } from '../constants';
 import { cn } from '../utils';
-import { Lightbulb, AlertTriangle } from 'lucide-react';
+import { Lightbulb, AlertTriangle, ChevronDown } from 'lucide-react';
 import { tierFromOverstatement } from '../services/burryTier';
 
 interface Props {
@@ -28,6 +28,7 @@ const InvestmentVerdict: React.FC<Props> = ({
   extraMetrics,
 }) => {
   const tc = tickerDef.themeColor;
+  const [verdictOpen, setVerdictOpen] = useState(false);
   const { momentumUpside, timeToTarget, probAcceleration } = metrics;
   const rs = tickerDef.rsRating;
 
@@ -190,9 +191,29 @@ const InvestmentVerdict: React.FC<Props> = ({
       </div>
 
       <div className="mt-8 pt-8 border-t border-slate-800/80">
-        <p className="text-base text-slate-200 leading-relaxed">
-          {narrativeOverride || defaultNarrative}
-        </p>
+        <button
+          onClick={() => setVerdictOpen(o => !o)}
+          className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-[0.3em] hover:text-slate-200 transition-colors mb-3"
+        >
+          <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', verdictOpen && 'rotate-180')} />
+          Verdict Narrative
+        </button>
+        <AnimatePresence initial={false}>
+          {verdictOpen && (
+            <motion.div
+              key="verdict-text"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <p className="text-base text-slate-200 leading-relaxed">
+                {narrativeOverride || defaultNarrative}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {(() => {
