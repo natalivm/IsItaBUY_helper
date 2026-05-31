@@ -60,4 +60,11 @@ export const KKR = defineStock({
 
   bbRate: [0.005, 0.01, 0.02],
   ebitdaProxy: [0.10, 0.18, 0.30],
+  debtSafety: {
+    netDebt: 9000,
+    ebitda: 4000,
+    capexToOcf: 0.02,
+    fy: 'FY25',
+    note: 'Framework partially N/A for alternative asset managers — the $46.1B cash and $55.1B debt are largely tied to Global Atlantic insurance operations (policyholder float). Fee-related earnings from the asset management business are highly cash-generative with minimal leverage risk. Real safety metric is balance sheet AUM coverage, not Net Debt/EBITDA.',
+  },
 });

@@ -65,4 +65,11 @@ export const JPM = defineStock({
 
   bbRate: [0.01, 0.02, 0.03],
   ebitdaProxy: [0.35, 0.46, 0.50],
+  debtSafety: {
+    netDebt: 370000,
+    ebitda: 65000,
+    capexToOcf: 0.03,
+    fy: 'FY25',
+    note: 'Standard Net Debt/EBITDA framework does not apply to banks — JPM funds ~$3.9T in assets via deposits and wholesale funding, which is operational leverage by design, not financial distress. Real safety metric is CET1 capital ratio (~15.4%), well above the 11.5% regulatory minimum. Panel shown for context only.',
+  },
 });

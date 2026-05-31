@@ -41,4 +41,13 @@ export const DE = defineStock({
 
   bbRate: [0.005, 0.015, 0.02],
   ebitdaProxy: [0.15, 0.22, 0.28],
+  debtSafety: {
+    netDebt: 60753,
+    ebitda: 8500,
+    capexToOcf: 0.27,
+    interestCoverage: 3.4,
+    altmanZ: 2.5,
+    fy: 'FY25',
+    note: '~$45B of gross debt sits in John Deere Financial (equipment financing arm), inflating the ratio vs pure machinery operations. Even adjusted, equipment-only leverage is elevated in a down-cycle. High leverage on a commodity-cycle business amplifies downside risk.',
+  },
 });

@@ -46,4 +46,10 @@ export const SPGI = defineStock({
   ],
 
   bullMaOptVal: 417 * 298.8 * 0.07,
+  debtSafety: {
+    netDebt: 9700,
+    ebitda: 7500,
+    fy: 'FY25',
+    note: 'Modest leverage on a near-monopoly ratings + data business with 35%+ FCF margins. Debt largely from the IHS Markit merger. 1.3× is well within safe bounds and deleveraging on autopilot.',
+  },
 });

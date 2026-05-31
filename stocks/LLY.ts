@@ -71,4 +71,10 @@ export const LLY = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.40, 0.45, 0.50],
+  debtSafety: {
+    netDebt: 26800,
+    ebitda: 24000,
+    fy: 'FY25',
+    note: 'GLP-1 revenue surge pushes EBITDA well past leverage — ratio barely above 1×. Debt largely from manufacturing buildout to meet Mounjaro/Zepbound demand. Deleveraging rapidly as GLP-1 cash flows compound.',
+  },
 });

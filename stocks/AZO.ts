@@ -57,4 +57,13 @@ export const AZO = defineStock({
   bbRate: [0.03, 0.04, 0.05],
   ebitdaProxy: [0.20, 0.22, 0.24],
   bullMaOptVal: false,
+  debtSafety: {
+    netDebt: 8150,
+    ebitda: 3500,
+    capexToOcf: 0.18,
+    interestCoverage: 6.5,
+    altmanZ: 3.6,
+    fy: 'FY25',
+    note: 'Intentional leverage — AZO has systematically borrowed to fund buybacks for 25+ years, retiring 90%+ of shares outstanding. At 2.3× EBITDA with strong interest coverage and predictable auto-parts cash flows, this is a capital allocation strategy, not distress.',
+  },
 });
