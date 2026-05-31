@@ -93,6 +93,7 @@ export interface TickerDefinition {
    * Display-only — does not feed the valuation model.
    */
   burry?: BurryData;
+  debtSafety?: DebtData;
 }
 
 export interface BurryData {
@@ -120,6 +121,27 @@ export interface BurryData {
    * from our own estimates so the UI can label appropriately.
    */
   overstatementSource?: 'burry-published' | 'estimated';
+}
+
+/**
+ * Debt safety check using the 3-step flowchart.
+ * Dollar values in millions ($M). Display-only — does not feed the valuation model.
+ */
+export interface DebtData {
+  /** Net Debt = total debt − cash, $M. Negative means net cash. */
+  netDebt: number;
+  /** EBITDA $M — used for the Net Debt / EBITDA leverage ratio. */
+  ebitda: number;
+  /** CapEx / Operating Cash Flow (0–1). Asset-light threshold: < 0.20. */
+  capexToOcf?: number;
+  /** Interest Coverage = EBIT / Interest Expense. Strong threshold: > 5.0. */
+  interestCoverage?: number;
+  /** Altman Z-Score. Safe zone: > 3.0. */
+  altmanZ?: number;
+  /** Fiscal year label, e.g. "FY25" */
+  fy?: string;
+  /** Optional one-line context shown in the indicator panel. */
+  note?: string;
 }
 
 export interface ProjectionData {

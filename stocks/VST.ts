@@ -55,4 +55,13 @@ export const VST = defineStock({
   ],
 
   bullMaOptVal: 158.00 * 339.0 * 0.07,
+  debtSafety: {
+    netDebt: 16880,
+    ebitda: 5000,
+    capexToOcf: 0.42,
+    interestCoverage: 3.5,
+    altmanZ: 2.1,
+    fy: 'FY25',
+    note: 'High leverage is structural for power generation — capital-intensive assets (nuclear, gas) are debt-financed against long-term contracted cash flows. CapEx/OCF fails the asset-light test by design. Monitor whether contracted PPA coverage remains sufficient to service debt through the data center ramp.',
+  },
 });

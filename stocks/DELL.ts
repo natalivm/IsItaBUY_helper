@@ -65,4 +65,13 @@ export const DELL = defineStock({
     overstatementSource: 'estimated',
     note: 'Critical — estimated. FY26 SBC $785M vs est. GAAP NI ~$4B = naive 20%. DELL stock ~6× over 3 years (from ~$50 in 2023 to $305 post-Q1-FY27 surge); MTM amplifier ~4×. Offset partially by ~$3.5B in estimated buybacks (4.5× SBC, 20% offset). Estimated overstatement ~55%. FY26 GAAP NI is an estimate pending full 10-K review.',
   },
+  debtSafety: {
+    netDebt: 19583,
+    ebitda: 7500,
+    capexToOcf: 0.12,
+    interestCoverage: 3.6,
+    altmanZ: 2.8,
+    fy: 'FY26',
+    note: 'Hardware distribution model keeps CapEx low (PASS), but interest coverage at 3.6× and Altman Z at 2.8 both fall short of thresholds. High leverage on a thin-margin business is the core risk.',
+  },
 });

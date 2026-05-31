@@ -89,4 +89,10 @@ export const PLTR = defineStock({
     overstatementSource: 'estimated',
     note: 'Naive SBC/NI is ~48% (FY25 SBC ~$700M on $1.45B GAAP NI). PLTR has compounded ~20× in 3 years ($7 → $137), which under full-SBC adjustment makes mark-to-market dilution cost on vested awards a multiple of the GAAP charge. No buyback to offset. Real owner economics materially below GAAP — Tragic tier.',
   },
+  debtSafety: {
+    netDebt: -7460,
+    ebitda: 900,
+    fy: 'FY25',
+    note: 'Net cash of $7.46B dwarfs $240M debt. Balance sheet is fortress-grade; no leverage risk.',
+  },
 });

@@ -78,4 +78,13 @@ export const ORCL = defineStock({
     overstatementSource: 'estimated',
     note: 'Estimated ~65% overstatement — naive SBC/NI already at 38% (well above 30% Critical), and AI capex has consumed buyback capacity to ~$150M (vs $4.7B SBC), so dilution is essentially unoffset. Under full-SBC adjustment with MTM at $196 share price (~2.5× 3yr), real owner earnings ~35% of GAAP. Switching baseEps from non-GAAP $6.03 to GAAP $4.34 alone would already trim valuation materially.',
   },
+  debtSafety: {
+    netDebt: 71000,
+    ebitda: 22000,
+    capexToOcf: 0.37,
+    interestCoverage: 3.7,
+    altmanZ: 2.4,
+    fy: 'FY25',
+    note: 'AI data center buildout has temporarily crushed FCF (CapEx surging from $7B → $21B+). Interest coverage weak at 3.7× on $88B debt. High leverage on a still-transitioning cloud business is the core risk — if OCI revenue ramp disappoints, this balance sheet is a trap.',
+  },
 });
