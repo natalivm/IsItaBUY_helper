@@ -6,7 +6,7 @@
 
 A React + TypeScript stock valuation app that calculates intrinsic fair value using DCF and EPS/PE models.
 
-Live: **https://natalivm.github.io/IsItaBUY_gemini/**
+Live: **https://natalivm.github.io/IsItaBUY_helper/**
 
 ## Run Locally
 
@@ -30,8 +30,8 @@ Deployments are automated via `.github/workflows/deploy-pages.yml` on every push
 
 The workflow:
 1. Installs dependencies (`npm ci`)
-2. Builds with `--base /IsItaBUY_gemini/` so all asset paths resolve correctly under the GitHub Pages subpath
+2. Builds with `--base /IsItaBUY_helper/` so all asset paths resolve correctly under the GitHub Pages subpath
 3. Copies `dist/index.html` → `dist/404.html` for SPA deep-link support
 4. Uploads the `dist/` directory and deploys to GitHub Pages
 
-`vite.config.ts` sets `base: '/IsItaBUY_gemini/'` unconditionally, so local builds and CI builds both produce correct asset URLs.
+`vite.config.ts` sets `base: '/IsItaBUY_helper/'` unconditionally, so local builds and CI builds both produce correct asset URLs.
