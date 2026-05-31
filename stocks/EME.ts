@@ -3,7 +3,8 @@ import { defineStock } from './defineStock';
 export const EME = defineStock({
   ticker: 'EME',
   name: 'EMCOR Group, Inc.',
-  updatedOn: '05/29',
+  updatedOn: '05/31',
+  lastReportTag: 'Q1 2026',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
   currentPrice: 826.82,
@@ -18,14 +19,12 @@ export const EME = defineStock({
   costDebt: 0.052,
   baseEps: 25.87,           // 2025A adj. EPS (record; +20% YoY); 2026E guided $27.25–29.25
   modelType: 'EPS_PE',
-  rsRating: 92,
+  rsRating: 76,
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "EMCOR is a B+ quality cyclical grower with a confirmed productivity moat — FY2025 actuals: $16.99B revenue (+18.5%), $25.87 adj. EPS (+20%), record 9.4% operating margin. " +
-    "RPOs hit a record $13.25B (+31% YoY, up from $10.1B), with network/communications alone at $4.46B (+60% YoY). " +
-    "AI data centers carry a 1.5–2x mechanical scope multiplier vs. cloud-era builds — an underappreciated tailwind baked into mechanical RPOs. Revenue grew 2x faster than headcount in FY2025. " +
-    "Management confirmed no change in hyperscaler CapEx plans and 2–3 year demand visibility. 2026 guided at $17.75–18.5B revenue, $27.25–29.25 EPS, 9.0–9.4% op. margins. " +
-    "At $726 (down from prior $811 model price), prob-weighted CAGR improves to ~9.5% — getting more interesting but still below the 15% BUY hurdle. Base case target ~$1,143 (57% upside); bear floor ~$653 (10% downside). Entry zone for a high-confidence BUY: ~$560–665. Holding here is defensible; adding on weakness below $700 is rational.",
+    "Q1 2026 (April 29): quarterly record — $4.63B revenue (+19.7% YoY, +16.8% organic), EPS $6.84 (+30%), operating margin 8.7% (up from 8.2%). RPO hit a new record $15.62B (+32.9% YoY). Guidance raised: FY2026 revenue $18.5–19.25B, EPS $28.25–29.75 (midpoint $29.00). " +
+    "AI data center mechanical scope multiplier (1.5–2× vs. cloud-era builds) continues to drive outsized RPO growth. 9 consecutive quarters of EPS acceleration. " +
+    "At $827, the stock is just below the IBD cup breakout point ($835, as of 05/15/2026) with RS 76 and Acc/Dist E — strong fundamentals but institutional distribution near the prior high is a caution flag. Base-case target ~$1,143 still implies 38% upside from current levels.",
 
   // ── Scenarios ──
   epsCagr: [7, 13, 17],        // bear: DC slows; base: DC normalizes; bull: DC high-teens + M&A
@@ -61,6 +60,24 @@ export const EME = defineStock({
       'Prefab/VDC/BIM productivity moat pushes margins toward 10%+. Acquisitions execute well from the strong M&A pipeline. The market pays a 28x premium for execution and visibility. ' +
       'Earnings compound at roughly 17% annually from the $25.87 FY2025 base, delivering about 14% annualized stock returns.',
   ],
+
+  debtSafety: {
+    netDebt: -300,
+    ebitda: 1750,
+    fy: 'FY25',
+    note: 'Net cash — $1.1B cash vs $800M debt. Strong FCF supports M&A pipeline and $500M+ annual buyback program.',
+  },
+
+  burry: {
+    sbc: 60,
+    gaapNi: 1100,
+    buyback: 580,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 10,
+    overstatementSource: 'estimated',
+    note: 'Pristine — SBC $60M is 5.5% of GAAP NI ~$1.1B. Construction companies structurally have minimal SBC vs. tech peers. Buybacks ($580M) are ~10× SBC — exceptional offset.',
+  },
 
   driverOverrides: [
     {
