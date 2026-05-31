@@ -62,6 +62,24 @@ export const EME = defineStock({
       'Earnings compound at roughly 17% annually from the $25.87 FY2025 base, delivering about 14% annualized stock returns.',
   ],
 
+  debtSafety: {
+    netDebt: -300,
+    ebitda: 1750,
+    fy: 'FY25',
+    note: 'Net cash — $1.1B cash vs $800M debt. Strong FCF supports M&A pipeline and $500M+ annual buyback program.',
+  },
+
+  burry: {
+    sbc: 60,
+    gaapNi: 1100,
+    buyback: 580,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY25',
+    overstatementPct: 10,
+    overstatementSource: 'estimated',
+    note: 'Pristine — SBC $60M is 5.5% of GAAP NI ~$1.1B. Construction companies structurally have minimal SBC vs. tech peers. Buybacks ($580M) are ~10× SBC — exceptional offset.',
+  },
+
   driverOverrides: [
     {
       revPrem: [0, 0, 0, 0, 0],
