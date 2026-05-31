@@ -5,7 +5,7 @@ export const LMT = defineStock({
   name: 'Lockheed Martin Corp.',
   sector: 'Aerospace & Defense',
   themeColor: '#4b8ef5',
-  currentPrice: 534.20,
+  currentPrice: 530.45,
   updatedOn: '05/31',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$455 - $830',
@@ -17,19 +17,19 @@ export const LMT = defineStock({
   debt: 18500,
   beta: 0.52,
   costDebt: 0.045,
-  rsRating: 79,
-  rsTrend: 'rising',
-  ratingOverride: 'BUY',
+  rsRating: 37,
+  rsTrend: 'falling',
+  ratingOverride: 'HOLD',
   aiImpact: 'NEUTRAL',
 
   strategicNarrative:
     "Lockheed Martin is the dominant defense prime contractor — F-35, missile defense, classified aerospace, hypersonics, and strategic weapons systems. Despite clear geopolitical tailwinds (NATO budget expansion, Indo-Pacific buildup, Middle East), LMT underperformed higher-growth defense names as F-35 procurement timing created near-term FCF pressure and capital rotated into missile suppliers, drone companies, and AI-defense plays. " +
-    "At $534, the setup is attractive: $6.2B FCF at 8.5% margin with ~17% base-case upside to ~$625 (in line with analyst consensus), and WACC of just 7.1% (beta 0.52) — one of the strongest structural discount-rate advantages in the defense sector. Unlike KRMN or speculative defense names, valuation is anchored in decades of entrenched government relationships and a backlog that stretches years forward. Pristine Burry profile (SBC 9% of NI, buybacks 5× SBC).",
+    "At $530, the fundamental case is intact — $6.2B FCF, 8.5% margin, WACC 7.1% (beta 0.52) — but the technical picture is clearly negative: RS 37 falling, D+ Acc/Dist, Up/Down Volume 0.44, and Industry Group Rank 86/142. The stock is down -23% from its 52-week high with institutions distributing. The business hasn't broken — earnings declined -12% last quarter and 3-year EPS trend is -11%. HOLD until RS recovers above 50 and distribution pressure eases.",
 
   verdictNarrative:
     "Lockheed Martin currently looks materially more attractive on a risk-adjusted basis than many speculative defense names that have rallied over the past year. Unlike KRMN or ONDS, the valuation is supported by enormous existing cash flows, entrenched defense programs, and decades-long government relationships. The company also benefits from some of the strongest geopolitical tailwinds in the industrial sector — NATO spending acceleration, Indo-Pacific buildup, and sustained US missile defense investment. " +
-    "The key difference vs. RTX is valuation. RTX already rerated significantly as commercial aerospace recovered, while LMT still trades at a relatively modest multiple despite improving defense spending visibility. Base-case target of ~$625 aligns with analyst consensus median ($610), with bull upside to ~$830 if NATO spending and hypersonics programs fully materialize. Low beta (0.52), Pristine SBC metrics, and a rising RS profile — LMT qualifies as a BUY under the framework. " +
-    "For investors seeking defense exposure without paying venture-style growth multiples, LMT is one of the strongest risk-adjusted setups in the sector right now. Add on weakness; the low beta means drawdowns are shallower than most defense names.",
+    "The fundamental case is solid — $6.2B FCF, low beta (0.52), Pristine SBC, and ~17% base-case upside to ~$625 in line with analyst consensus. But the technicals disqualify a BUY right now: RS 37 falling, D+ Acc/Dist, Up/Down Volume 0.44, and Industry Group Rank 86/142. Institutions are actively distributing — that is not a setup to buy into. " +
+    "HOLD. The valuation is reasonable and the geopolitical tailwinds are real, but wait for the distribution pressure to resolve. Upgrade trigger: RS above 50, Acc/Dist back to C or better, and Up/Down Volume above 1.0. At that point the low-beta, Pristine-SBC defense thesis becomes a clean BUY.",
 
   modelType: 'EPS_PE',
   baseEps: 27.2,       // LTM FCF/share ($6.2B / 228M shares)
