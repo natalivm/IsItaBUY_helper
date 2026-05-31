@@ -92,6 +92,13 @@ export const SHOP = defineStock({
     },
   ],
 
+  debtSafety: {
+    netDebt: -7400,
+    ebitda: 2200,
+    fy: 'FY25',
+    note: 'Net cash — $8.5B cash vs $1.1B debt = $7.4B net cash. Pristine balance sheet; no leverage concern.',
+  },
+
   burry: {
     sbc: 449,
     gaapNi: 1500,
