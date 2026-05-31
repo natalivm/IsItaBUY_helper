@@ -14,7 +14,7 @@ export const MU = defineStock({
   debt: 10798,
   beta: 1.7,
   costDebt: 0.05,
-  rsRating: 90,
+  rsRating: 99,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '31/05',

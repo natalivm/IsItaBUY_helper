@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const ROAD = defineStock({
-  updatedOn: '05/29',
-  lastReportTag: 'Q1 FY26',
+  updatedOn: '31/05',
+  lastReportTag: 'Q2 FY26',
   ticker: 'ROAD',
   name: 'Construction Partners, Inc.',
   sector: 'Infrastructure Construction · Road & Highway',
   themeColor: '#f59e0b',
-  currentPrice: 116.47,
+  currentPrice: 121.96,
   fairPriceRange: '$112 - $270',
   shares0: 56.5,               // ~56.5M shares (market cap $7.45B / $131.9)
   rev25: 2300,                 // FY 09/2025 revenue ($M)
@@ -99,4 +99,14 @@ export const ROAD = defineStock({
       fcfUplift: [0.008, 0.008, 0.010, 0.010, 0.012],
     },
   ],
+
+  debtSafety: {
+    netDebt: 1683,
+    ebitda: 558,
+    capexToOcf: 0.30,
+    interestCoverage: 4.2,
+    altmanZ: 2.1,
+    fy: 'Q2 FY26',
+    note: 'Leverage at 3.0× EBITDA after acquisition-driven buildout — management targeting 2.5× by year-end. Infrastructure construction cash flows are predictable (gov\'t-backed projects, $3.1B backlog) which mitigates headline ratio. Red on paper, but structural cash flow visibility reduces real risk.',
+  },
 });

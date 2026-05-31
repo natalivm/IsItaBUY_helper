@@ -5,9 +5,9 @@ export const ENVA = defineStock({
   name: 'Enova International',
   sector: 'FinTech / Lending',
   themeColor: '#3b82f6',
-  updatedOn: '05/29',
+  updatedOn: '31/05',
   lastReportTag: 'Q1 2026',
-  currentPrice: 161.51,
+  currentPrice: 157.51,
   fairPriceRange: '$160 - $250',
   shares0: 24.7,         // Q1 2026: ~110K shares repurchased; was 24.8M
   rev25: 3200,           // FY2025 net revenue ~$3.2B (Q4'25: $839M × annualized); Q1 2026 was record $875M
@@ -67,4 +67,11 @@ export const ENVA = defineStock({
       fcfUplift: [0.005, 0.01, 0.015, 0.015, 0.015],
     },
   ],
+
+  debtSafety: {
+    netDebt: 1730,
+    ebitda: 830,
+    fy: 'Q1 2026',
+    note: 'Framework partially N/A for consumer lenders — $3.79B of the $4.83B total debt is funding debt (loans to customers), not corporate leverage. True corporate debt is $1.73B at 8.82% avg rate. Net interest margin model makes traditional Debt/EBITDA misleading; real safety metric is equity-to-managed-receivables ratio (~24%) and liquidity ($1.1B available).',
+  },
 });

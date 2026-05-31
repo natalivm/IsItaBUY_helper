@@ -5,8 +5,8 @@ export const GXO = defineStock({
   name: 'GXO Logistics',
   sector: 'Contract Logistics · Supply Chain',
   themeColor: '#10b981',
-  currentPrice: 50.11,
-  updatedOn: '05/29',
+  currentPrice: 50.76,
+  updatedOn: '31/05',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$50 - $139',
   shares0: 114.3,
@@ -98,4 +98,14 @@ export const GXO = defineStock({
       bbRate: 0.015,
     },
   ],
+
+  debtSafety: {
+    netDebt: 2200,
+    ebitda: 881,
+    capexToOcf: 0.28,
+    interestCoverage: 3.8,
+    altmanZ: 1.9,
+    fy: 'FY25',
+    note: 'Net debt 2.5× EBITDA — elevated but typical for asset-light logistics after the XPO spinoff. 2026 EBITDA guidance $930-970M should bring leverage toward 2.2×. Long-term customer contracts (avg 3-5yr) provide cash flow visibility. Red on Altman Z but not a distress signal for contract logistics.',
+  },
 });

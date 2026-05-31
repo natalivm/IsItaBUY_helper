@@ -5,8 +5,8 @@ export const THM = defineStock({
   name: 'International Tower Hill Mines',
   sector: 'Gold Mining · Exploration & Development',
   themeColor: '#CA8A04',
-  updatedOn: '05/29',
-  currentPrice: 2.71,
+  updatedOn: '31/05',
+  currentPrice: 2.44,
   fairPriceRange: '$1 - $12',
   shares0: 245,
   rev25: 5,
@@ -89,4 +89,11 @@ export const THM = defineStock({
       bbRate: 0.005,
     },
   ],
+
+  debtSafety: {
+    netDebt: -115,
+    ebitda: 1,
+    fy: 'FY25',
+    note: 'Net cash — no debt, ~$115M cash funds Livengood development. Pre-revenue explorer; EBITDA framework not meaningful. Safety is entirely a function of cash runway vs. burn rate and permitting timeline. Watch cash balance quarterly.',
+  },
 });
