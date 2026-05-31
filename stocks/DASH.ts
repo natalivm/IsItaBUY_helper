@@ -6,7 +6,8 @@ export const DASH = defineStock({
   sector: 'Internet / Consumer Logistics',
   themeColor: '#ff3008',
   currentPrice: 159.29,
-  updatedOn: '05/29',
+  updatedOn: '05/31',
+  lastReportTag: 'Q1 2026',
   fairPriceRange: '$120 - $215',
   shares0: 430,
   rev25: 13700,
@@ -18,7 +19,7 @@ export const DASH = defineStock({
   costDebt: 0.048,
   rsRating: 16,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in 2025. Post Q4'25: NV unit economics positive 2H'26, ads scaling (2× advertisers, 3× spend), and tech stack consolidation (3→1) provide three EPS levers above consensus. Thesis is execution-driven earnings growth, not P/E rerating. ",
+  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in FY2025. Q1 2026 (reported May 6): revenue $4.0B (+33% YoY), GOV $31.6B (+37%), EPS $0.42 (beat est. $0.37 by 13.5%), record MAUs and memberships. Revenue missed consensus by ~3% but EPS beat on operating leverage. Three EPS levers above consensus: NV unit economics positive 2H'26, ads at 2× advertisers / 3× spend, and tech stack consolidation (3→1). Thesis is execution-driven earnings growth, not P/E rerating.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 222, targetMedian: 278, targetHigh: 360, numAnalysts: 33 },
@@ -55,13 +56,13 @@ export const DASH = defineStock({
   ],
 
   burry: {
-    sbc: 1200,
-    gaapNi: 935,
+    sbc: 1350,
+    gaapNi: 925,
     buyback: 400,
     epsBasis: 'GAAP',
-    fy: 'FY25',
+    fy: 'FY25 / Q1 2026',
     overstatementPct: 100,
     overstatementSource: 'estimated',
-    note: 'SBC $1.2B exceeds GAAP NI $935M (128% naive ratio) — reported earnings are effectively zero once stock compensation is treated as a real cash cost. MTM amplifier modest (~1.5×) but the ratio caps at 100%. Buybacks ($400M) are only 0.33× SBC — insufficient offset. Tragic tier: a Burry-framework investor sees no real earnings here.',
+    note: 'SBC $1.35B (2026 guidance midpoint) exceeds LTM GAAP NI ~$925M (146% naive ratio) — reported earnings are effectively zero once stock compensation is treated as a real cash cost. MTM amplifier modest (~1.5×) but the ratio caps at 100%. Buybacks ($400M) are only 0.30× SBC — insufficient offset. Tragic tier: a Burry-framework investor sees no real earnings here.',
   },
 });
