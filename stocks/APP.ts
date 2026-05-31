@@ -5,7 +5,7 @@ export const APP = defineStock({
   name: 'AppLovin Corporation',
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
-  updatedOn: '05/29',
+  updatedOn: '05/31',
   lastReportTag: 'Q1 2026',
   currentPrice: 613.09,
   fairPriceRange: '$310 - $836',
@@ -19,16 +19,14 @@ export const APP = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 14.50,       // FY2026 estimate: ~$6.3B EBITDA × 75% FCF conv ÷ 333M shares ≈ $14-15
-  rsRating: 21,
+  rsRating: 85,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "Q1 2026 beat across every metric: revenue $1.84B (+59% YoY, +11% QoQ), adj EBITDA $1.56B at 85% margin (new record, +400bps YoY), 86% incremental flow-through, FCF $1.29B. Q2 guided $1.915-1.945B (+52-55% YoY). " +
-    "Consumer vertical is the key acceleration: March exited ~25% above January, and April already exceeded any prior Q4 month — for a business that normally sees heavy Q1 vs Q4 seasonality, this is remarkable. 12 consecutive beats since AXON 2.0; model improvements are accelerating. " +
-    "Self-serve platform opens to the public in June — a structural shift from 14-year closed-platform model. >$70K/yr projected per new customer, <30-day marketing breakeven, near-zero churn once 30-day threshold passed. 100K customers × $70K = $7B in potential ad spend per cohort year. " +
-    "GenAI video creative tool is days from broad launch; interactive page generator already deployed — removes the biggest onboarding friction for consumer advertisers. Lead-gen model in testing (auto, health, fintech — next vertical expansion). CTV on long-term roadmap. " +
-    "At ~$478 / ~33x FY2026 adj EPS (~$14.50 est.), premium but defensible for a 59% grower at 85% EBITDA margins. " +
-    "Risk: margin expansion exhausted at 85% — revenue growth IS the story. RS 21 signals institutional distribution that has persisted. Self-serve June launch is the catalyst for re-accumulation or the next disappointment.",
+    "Q1 2026: revenue $1.84B (+59% YoY), adj EBITDA $1.56B at 85% margin (record), FCF $1.29B. Q2 guided $1.915–1.945B (+52–55% YoY). 12 consecutive beats since AXON 2.0. " +
+    "RS recovered from 21 → 85 with Acc/Dist A — IBD notes stock 'clears resistance around $500 after 51% sell-off.' The institutional distribution phase that drove RS to 21 is over; re-accumulation is underway with Up/Down Volume 1.38. " +
+    "Self-serve platform (June GA) is the structural catalyst: <30-day breakeven, near-zero churn, >$70K/yr per customer. 100K customers × $70K = $7B potential ad spend per cohort year. GenAI video creative tool removes the key onboarding bottleneck. Lead-gen (auto, health, fintech) is the next TAM expansion. " +
+    "At $613 / ~42x FY2026 adj EPS (~$14.50), premium but defensible for a 59% grower at 85% EBITDA margins. Risk: revenue growth IS the valuation — any deceleration compresses the multiple hard.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 465, targetMedian: 705, targetHigh: 860, numAnalysts: 26 },
