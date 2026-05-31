@@ -6,7 +6,7 @@ export const AZO = defineStock({
   sector: 'Specialty Retail',
   themeColor: '#e74c3c',
   updatedOn: '05/29',
-  lastReportTag: 'Q2 2026',
+  lastReportTag: 'Q2 FY26',
   currentPrice: 2935.19,
   shares0: 16.6,
   rev25: 17500,
