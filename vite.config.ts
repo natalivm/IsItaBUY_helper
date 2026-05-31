@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/IsItaBUY_gemini/',
+  base: '/IsItaBUY_helper/',
   server: {
     port: 3000,
     host: '0.0.0.0',
@@ -29,8 +29,8 @@ export default defineConfig({
         background_color: '#020617',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/IsItaBUY_gemini/',
-        start_url: '/IsItaBUY_gemini/',
+        scope: '/IsItaBUY_helper/',
+        start_url: '/IsItaBUY_helper/',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -57,7 +57,7 @@ export default defineConfig({
         // pick up the new build immediately on next visit. Increment when
         // shipping data changes (e.g. Burry indicator scope) that may otherwise
         // be masked by stale SW cache.
-        cacheId: 'isitabuy-v2',
+        cacheId: 'isitabuy-v3',
         cleanupOutdatedCaches: true,
         // Precache all static assets built by Vite (JS, CSS, HTML, fonts)
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
