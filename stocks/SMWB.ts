@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const SMWB = defineStock({
-  updatedOn: '05/29',
+  updatedOn: '05/31',
   ticker: 'SMWB',
   name: 'Similarweb Ltd.',
   sector: 'Web Analytics',
@@ -16,9 +16,10 @@ export const SMWB = defineStock({
   debt: 0,
   beta: 1.62,
   costDebt: 0.0,
-  rsRating: 3,
+  rsRating: 38,
+  rsTrend: 'rising',
   aiImpact: 'DISRUPTION_RISK',
-  strategicNarrative: "Terminal technical weakness. RS 3 signals total institutional abandonment. The existential threat to web traffic measurement in an LLM-first world is a heavy anchor. Avoid at all costs despite the low P/S ratio. ",
+  strategicNarrative: "RS recovered from 3 → 38 with Accumulation/Distribution A+ — institutions are quietly buying despite the stock being -61% off its 52-week high. Industry Group Rank 22/142 (top 16%) and 13 consecutive quarters of EPS acceleration signal improving fundamentals. Still loss-making (pre-tax margin -7%) and the LLM disruption thesis remains the core risk — if ChatGPT/Perplexity erode traditional URL-based web traffic measurement, the core data asset loses relevance. Watch for RS to push through 50 and fund ownership to stabilize before adding conviction.",
 
 
   analystConsensus: { rating: 'Hold', targetLow: 4, targetMedian: 8, targetHigh: 10, numAnalysts: 11 },
