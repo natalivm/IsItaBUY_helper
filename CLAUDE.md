@@ -148,3 +148,54 @@ Always cite specific FY when entering data. Useful sources for SBC + buybacks:
 - **financecharts.com** — buybacks + SBC quarterly/annual
 - Company 10-K filings (cash flow statement: "Stock-based compensation" line)
 - Quarterly press releases for buyback dollar amounts
+
+## Debt Safety Indicator
+
+Each stock can carry an optional `debtSafety` block in its `defineStock` call. When present, the detail page renders a **Debt Safety Check** panel below the Burry Indicator. Display-only — does not affect the model verdict or rating.
+
+### Schema
+
+```ts
+debtSafety: {
+  netDebt: number;          // Total debt − cash, $M. Negative = net cash.
+  ebitda: number;           // Annual EBITDA, $M (for leverage ratio).
+  capexToOcf?: number;      // CapEx / Operating Cash Flow (0–1). Only needed if netDebt/ebitda > 2.0.
+  interestCoverage?: number; // EBIT / Interest Expense. Only needed if netDebt/ebitda > 2.0.
+  altmanZ?: number;         // Altman Z-Score. Only needed if netDebt/ebitda > 2.0.
+  fy?: string;              // Fiscal year label, e.g. "FY25"
+  note?: string;            // One-line context shown in the panel
+}
+```
+
+### 3-Step Logic (tier thresholds must stay aligned with `services/debtTier.ts`)
+
+| Step | Condition | Tier |
+|---|---|---|
+| 1 | Net Debt ≤ 0 (net cash) | GREEN |
+| 2 | Net Debt / EBITDA ≤ 2.0 | GREEN |
+| 3a | All three pass: CapEx/OCF < 20%, Interest Coverage > 5×, Altman Z > 3.0 | YELLOW |
+| 3b | Any condition fails | RED |
+
+- **GREEN**: Financially safe — no further action needed.
+- **YELLOW**: Debt elevated but justified (e.g., MSCI). Can invest, monitor leverage trajectory.
+- **RED**: Dangerous — high default risk, skip or heavy discount.
+
+### When to add/update `debtSafety`
+
+Add it for **every new stock**. Update when:
+1. Company reports a new fiscal year (refresh `netDebt`, `ebitda`)
+2. A large acquisition or debt paydown materially changes leverage
+3. Interest coverage or Altman Z crosses a tier boundary
+
+### Setting Step-3 fields
+
+Step-3 fields (`capexToOcf`, `interestCoverage`, `altmanZ`) are only needed when `netDebt / ebitda > 2.0`. For net-cash or low-leverage stocks you can omit them entirely.
+
+**Altman Z-Score note**: the classic Z-Score was designed for manufacturing companies and can give misleading results for asset-light tech/SaaS businesses. For software/SaaS names, treat Z < 3.0 as a soft flag rather than a hard red — use `note` to document the caveat.
+
+### Sources
+
+- **macrotrends.net** — Net Debt time series, EBITDA
+- **wisesheets.io / stockanalysis.com** — Interest coverage, CapEx/OCF
+- Company 10-K filings — balance sheet (debt, cash), income statement (EBIT, interest expense), cash flow (CapEx, OCF)
+- Altman Z-Score calculators: **wisesheets.io**, **gurufocus.com**

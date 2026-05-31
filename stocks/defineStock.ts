@@ -1,4 +1,4 @@
-import { StockDefinition, ScenarioType, RsTrend, AnalystConsensus, BurryData } from '../types';
+import { StockDefinition, ScenarioType, RsTrend, AnalystConsensus, BurryData, DebtData } from '../types';
 
 /**
  * Simplified stock input format.
@@ -127,6 +127,9 @@ export interface SimpleStockInput {
 
   /** Burry SBC dilution indicator data (display-only). */
   burry?: BurryData;
+
+  /** 3-step debt safety indicator data (display-only). */
+  debtSafety?: DebtData;
 }
 
 // Standard driver templates (identical across almost all stocks)
@@ -187,6 +190,9 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
 
     // Burry indicator
     burry,
+
+    // Debt safety indicator
+    debtSafety,
   } = input;
 
   // Build drivers for each scenario
@@ -237,6 +243,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     updatedOn,
     lastReportTag,
     burry,
+    debtSafety,
     scenarios: {
       revGrowth: toRecord(revGrowth),
       fcfMargin: toRecord([
