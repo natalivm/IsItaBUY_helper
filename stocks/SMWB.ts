@@ -1,7 +1,8 @@
 import { defineStock } from './defineStock';
 
 export const SMWB = defineStock({
-  updatedOn: '05/29',
+  updatedOn: '05/31',
+  lastReportTag: 'Q1 2026',
   ticker: 'SMWB',
   name: 'Similarweb Ltd.',
   sector: 'Web Analytics',
@@ -16,9 +17,10 @@ export const SMWB = defineStock({
   debt: 0,
   beta: 1.62,
   costDebt: 0.0,
-  rsRating: 3,
+  rsRating: 38,
+  rsTrend: 'rising',
   aiImpact: 'DISRUPTION_RISK',
-  strategicNarrative: "Terminal technical weakness. RS 3 signals total institutional abandonment. The existential threat to web traffic measurement in an LLM-first world is a heavy anchor. Avoid at all costs despite the low P/S ratio. ",
+  strategicNarrative: "Q1 2026 (May 13): revenue $73.9M (+10% YoY, top of guidance), first non-GAAP operating profit ($2.4M, 3% margin) vs. a loss a year ago — 10th consecutive quarter of positive normalized FCF ($6.6M). NRR stabilized at 98% overall and 103% for $100K+ ARR customers; 64% of ARR now on multiyear contracts (up from 52%). FY2026 guidance: $307–315M revenue (+10%), non-GAAP operating profit $17–19M. CEO transition expected by mid-2027 adds management uncertainty. RS recovered from 3 → 38 with Acc/Dist A+ and Industry Group Rank 22/142. The LLM disruption risk remains structural — if AI-native search continues to erode URL-based traffic measurement, the core data asset degrades. But the path to GAAP profitability is real, the balance sheet is clean ($65M cash, no debt), and the enterprise customer base is stabilizing. Watch for RS above 50 and NRR inflection above 100% before adding size.",
 
 
   analystConsensus: { rating: 'Hold', targetLow: 4, targetMedian: 8, targetHigh: 10, numAnalysts: 11 },
