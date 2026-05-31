@@ -1,7 +1,7 @@
 
-import React, { useMemo, useRef } from 'react';
-import { motion } from 'motion/react';
-import { Info, LayoutDashboard } from 'lucide-react';
+import React, { useMemo, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Info, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { TickerDefinition, ProjectionData, ScenarioType } from '../types';
 import { computeStockMetrics, usd, pctFmt } from '../services/stockMetrics';
 import { AI_IMPACT_BADGE } from '../constants';
@@ -36,6 +36,8 @@ const StockDetailView: React.FC<Props> = ({
 }) => {
   const tc = tickerDef.themeColor;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [quantOpen, setQuantOpen] = useState(false);
+  const [alphaOpen, setAlphaOpen] = useState(false);
   useSwipeNavigation(containerRef, { onSwipeLeft: onBack, onSwipeRight: onNext });
 
   const metrics = useMemo(
@@ -123,27 +125,69 @@ const StockDetailView: React.FC<Props> = ({
 
                 <div className="h-px bg-slate-800/50 w-full" />
 
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <h3 className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2">
-                      <Info className="w-3 h-3" />
-                      Quant Narrative
-                    </h3>
-                    <p className="text-lg text-white font-bold leading-snug">{currentProjection.config.desc}</p>
+                <div className="space-y-3">
+                  {/* Quant Narrative */}
+                  <div className="rounded-xl border border-slate-800/60 overflow-hidden">
+                    <button
+                      onClick={() => setQuantOpen(o => !o)}
+                      className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-800/40 transition-colors min-h-[44px]"
+                    >
+                      <h3 className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2">
+                        <Info className="w-3 h-3" />
+                        Quant Narrative
+                      </h3>
+                      <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform duration-200", quantOpen && "rotate-180")} />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {quantOpen && (
+                        <motion.div
+                          key="quant"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-4 pb-4 pt-1">
+                            <p className="text-lg text-white font-bold leading-snug">{currentProjection.config.desc}</p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  <div className="h-px bg-slate-800/50 w-full" />
-                  <div className="space-y-4">
-                    <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-2">
-                      <LayoutDashboard className="w-3 h-3" />
-                      Alpha Strategic View
-                    </h3>
-                    <div className="space-y-3">
-                      {tickerDef.strategicNarrative.split('\n\n').map((para, i, arr) => (
-                        <p key={i} className="text-base text-slate-200 font-medium leading-relaxed italic">
-                          {i === 0 ? '\u201c' : ''}{para}{i === arr.length - 1 ? '\u201d' : ''}
-                        </p>
-                      ))}
-                    </div>
+
+                  {/* Alpha Strategic View */}
+                  <div className="rounded-xl border border-slate-800/60 overflow-hidden">
+                    <button
+                      onClick={() => setAlphaOpen(o => !o)}
+                      className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-800/40 transition-colors min-h-[44px]"
+                    >
+                      <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-2">
+                        <LayoutDashboard className="w-3 h-3" />
+                        Alpha Strategic View
+                      </h3>
+                      <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform duration-200", alphaOpen && "rotate-180")} />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {alphaOpen && (
+                        <motion.div
+                          key="alpha"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-4 pb-4 pt-1 space-y-3">
+                            {tickerDef.strategicNarrative.split('\n\n').map((para, i, arr) => (
+                              <p key={i} className="text-base text-slate-200 font-medium leading-relaxed italic">
+                                {i === 0 ? '\u201c' : ''}{para}{i === arr.length - 1 ? '\u201d' : ''}
+                              </p>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>

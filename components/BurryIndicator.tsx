@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { AlertTriangle, ShieldCheck, ShieldAlert, Skull } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { AlertTriangle, ShieldCheck, ShieldAlert, Skull, ChevronDown } from 'lucide-react';
 import { TickerDefinition } from '../types';
 import { cn } from '../utils';
 import { tierFromOverstatement, resolveOverstatementPct, BurryTierKey } from '../services/burryTier';
@@ -28,6 +28,7 @@ const fmt$M = (v: number) => {
 
 const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
   const b = tickerDef.burry;
+  const [open, setOpen] = useState(false);
   if (!b) return null;
 
   const niPositive = b.gaapNi > 0;
@@ -70,43 +71,48 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3 }}
       className={cn(
-        'p-6 rounded-2xl border bg-surface-card/80 shadow-2xl relative overflow-hidden',
+        'rounded-2xl border bg-surface-card/80 shadow-2xl relative overflow-hidden',
         tier.border
       )}
     >
       <div className={cn('absolute top-0 left-0 right-0 h-[2px]', tier.bgStrong)} />
 
-      <div className="flex items-start justify-between gap-4 mb-6">
-        <div>
-          <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2 mb-2">
+      {/* Collapsible header */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-800/30 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2">
             <AlertTriangle className="w-3 h-3" />
             Burry SBC Indicator
-            {usePublished && (
-              <span className="text-[10px] font-black uppercase tracking-widest text-amber-300/80 normal-case ml-2">
-                · {b.overstatementSource === 'estimated' ? 'estimated full-SBC adjustment' : 'Burry published value'}
-              </span>
-            )}
           </div>
-          <p className="text-xs text-slate-400 leading-relaxed max-w-xl">
-            {usePublished
-              ? (b.overstatementSource === 'estimated'
-                  ? 'Estimated using Burry\'s full-SBC-adjustment methodology — naive SBC/NI scaled by mark-to-market amplifier, payroll-tax adder, and buyback offset. Calibrated against Burry\'s published values for LRCX/NVDA/NFLX. Display-only.'
-                  : "Burry's full-SBC-adjustment methodology — includes payroll tax and mark-to-market dilution cost beyond the GAAP SBC line. Display-only.")
-              : 'Michael Burry\'s "Cassandra Unchained" check: how much of GAAP profit is consumed by stock-based compensation, and whether buybacks offset the resulting dilution. Display-only — does not feed the model.'}
-          </p>
+          <div className={cn('flex items-center gap-2 px-3 py-1.5 rounded-lg border ring-1', tier.bg, tier.border, tier.ring)}>
+            <Icon className={cn('w-3.5 h-3.5', tier.color)} />
+            <span className={cn('text-xs font-black tracking-wider', tier.color)}>{tier.label}</span>
+          </div>
         </div>
-        <div
-          className={cn(
-            'flex items-center gap-2 px-3 py-2 rounded-lg border ring-1',
-            tier.bg,
-            tier.border,
-            tier.ring
-          )}
-        >
-          <Icon className={cn('w-4 h-4', tier.color)} />
-          <span className={cn('text-sm font-black tracking-wider', tier.color)}>{tier.label}</span>
-        </div>
-      </div>
+        <ChevronDown className={cn('w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0', open && 'rotate-180')} />
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="burry-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6 space-y-6">
+              <p className="text-xs text-slate-400 leading-relaxed max-w-xl">
+                {usePublished
+                  ? (b.overstatementSource === 'estimated'
+                      ? 'Estimated using Burry\'s full-SBC-adjustment methodology — naive SBC/NI scaled by mark-to-market amplifier, payroll-tax adder, and buyback offset. Calibrated against Burry\'s published values for LRCX/NVDA/NFLX. Display-only.'
+                      : "Burry's full-SBC-adjustment methodology — includes payroll tax and mark-to-market dilution cost beyond the GAAP SBC line. Display-only.")
+                  : 'Michael Burry\'s "Cassandra Unchained" check: how much of GAAP profit is consumed by stock-based compensation, and whether buybacks offset the resulting dilution. Display-only — does not feed the model.'}
+              </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
         <div className="flex flex-col">
@@ -269,6 +275,10 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
           </p>
         )}
       </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
