@@ -41,4 +41,11 @@ export const SMWB = defineStock({
   ],
 
   bullMaOptVal: 3.98 * 83.5 * 0.07,
+
+  debtSafety: {
+    netDebt: -65,
+    ebitda: 25,
+    fy: 'LTM',
+    note: 'Net cash ~$65M, no financial debt. IBD D/E 148% reflects lease/deferred obligations, not funded debt. Balance sheet is clean for a small-cap SaaS.',
+  },
 });
