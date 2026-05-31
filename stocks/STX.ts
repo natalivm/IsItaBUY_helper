@@ -23,17 +23,11 @@ export const STX = defineStock({
   lastReportTag: 'Q3 FY26',
 
   strategicNarrative:
-    'STX has one of the strongest momentum profiles in the entire market right now — RS Rating 98 in leadership territory, powered by a genuinely transformative thesis: the AI boom creates an explosion in storage requirements for training datasets, inference databases, video data, and enterprise archives. The fundamental story is real. ' +
-    "Seagate's HAMR (Heat-Assisted Magnetic Recording) technology is creating a major capacity upgrade cycle. Hyperscalers are deploying exabyte-scale cold/warm storage where HDDs remain uniquely cost-effective vs. flash — AI workloads require vastly more raw storage per compute dollar than any prior generation. Recent quarters showed dramatic AI-driven storage demand acceleration with pricing power not seen in years. " +
-    'FY26 run-rate: ~$12.5B revenue, FCF ~$2.4B (19% margin), net debt ~$3.0B (0.86× EBITDA — well within safe range). Revenue growing faster than the HDD market confirms the AI tailwind and share gains at hyperscalers are real. ' +
-    "The problem is valuation. STX is up roughly 600%+ over the last year and trades near all-time highs. Unlike AMD — where some disconnect remains between current cash flows and future AI-compute optionality — STX is not wildly mispriced, but the base-case intrinsic value ($905) is only fractionally above today's price ($879.80). Upside to base: just +2.9%. The 5-year PW CAGR is only ~1.3%. " +
-    'Bear (~25%): storage demand disappoints as hyperscalers shift spend toward compute and flash; HAMR adoption slows; HDD cycle dynamics reassert; 8× exit multiple → $520. ' +
-    'Base (~50%): AI storage sustains moderate acceleration; HAMR upgrade cycle proceeds steadily; FCF grows to ~$3.8B by Year 5; 12× exit → $905. Market-fair valuation — business performs, stock already prices it. ' +
-    'Bull (~25%): HAMR becomes the definitive hyperscale cold-storage platform; AI data growth exceeds projections; pricing power and volume expand simultaneously; FCF margins reach 26%; 16× exit → $1,420. ' +
-    'Probability-weighted intrinsic value: $938. Current price: $879.80. Margin of safety: thin. ' +
-    'Multiple compression is a structural headwind embedded in every scenario. STX currently trades at ~83× FCF/share ($879.80 / $10.60). The model assigns exit P/FCF multiples of 41× (bear), 46× (base), and 54× (bull) — meaning even the most optimistic scenario requires the multiple to compress by ~35% from today. In the base case, the multiple compresses ~45%. FCF growth must not only deliver returns but first overcome this valuation drag. A 13% FCF CAGR over 5 years sounds impressive; after a 45% multiple haircut, it yields roughly flat stock performance. ' +
-    'HOLD. If STX were to pull back into the $650–750 range, the setup would likely shift into BUY territory. At nearly $880, most of the AI-storage upside appears already reflected in the stock. ' +
-    'Burry full-SBC adjustment (estimated): 45% overstatement (Critical) — SBC $520M vs. GAAP NI $1.3B = 40% naive ratio, amplified by >5× stock appreciation; Burry-adjusted blended target ~$516.',
+    'The AI storage thesis is real: HAMR technology gives Seagate a density edge that hyperscalers are paying for, and AI data creation requires orders of magnitude more raw storage per compute dollar than prior generations. FCF is genuine at $2.4B (19% margin) and growing. ' +
+    "The problem is that the market already knows all of this. After a 600%+ run, STX trades at ~83× FCF — pricing in years of hypercycle growth before it happens. The probability-weighted target is $938, only fractionally above today's price ($879.80). " +
+    'Multiple compression is the hidden risk in every scenario. The current P/FCF at $880 is ~83× — even the bull case assumes compression from 83× → 54× while FCF compounds at 20%/yr. That is actually a coherent and conservative framing of the AI hypercycle: the business grows fast, but the multiple normalizes as the narrative matures. In the base case, 13% FCF growth after a 45% multiple haircut yields roughly flat performance. Being right on the business does not guarantee being right on the investment. ' +
+    'HOLD. A pullback to $650–750 would materially improve the setup. At $880, you are already paying for the bull case. ' +
+    'Burry (estimated): 45% overstatement (Critical), adjusted target ~$516.',
 
   analystConsensus: { rating: 'Buy', targetLow: 545, targetMedian: 814, targetHigh: 1140, numAnalysts: 24 },
 
