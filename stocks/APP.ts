@@ -70,7 +70,7 @@ export const APP = defineStock({
       'Meta competition expands pie (bid density) rather than taking share.',
   ],
 
-  epsCagr: [15, 27, 37],
+  epsCagr: [15, 21, 37],
   exitPE: [18, 22, 25],
   prob: [20, 45, 35],
 
