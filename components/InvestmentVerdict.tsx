@@ -130,247 +130,235 @@ const InvestmentVerdict: React.FC<Props> = ({
 
   const metricsToShow = extraMetrics || defaultMetrics;
 
+  const ourLabel = activeStockData?.label || 'HOLD';
+  const rd = RATING_DEFS[ourLabel as RatingKey] || RATING_DEFS['HOLD'];
+  const verdictColor = rd.color;
+  const verdictText = rd.verdictText;
+
   return (
     <motion.div
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.5 }}
-      className="mt-16 p-8 rounded-2xl border border-slate-800 bg-surface-card/80 shadow-2xl relative overflow-hidden"
+      className="mt-16 rounded-2xl border border-slate-800 bg-surface-card/80 shadow-2xl relative overflow-hidden"
     >
       <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
 
-      <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] mb-8 flex items-center gap-3">
-        <span className="w-8 h-[2px] bg-amber-500/50" />
-        Investment Verdict
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center">
-        <div className="flex flex-col gap-2 shrink-0">
-          <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Is it a Buy?</span>
-          {(() => {
-            const ourLabel = activeStockData?.label || 'HOLD';
-            const rd = RATING_DEFS[ourLabel as RatingKey] || RATING_DEFS['HOLD'];
-            const v = { text: rd.verdictText, color: rd.color, subtextColor: rd.subtextColor };
-            const quantRating = tickerDef.ratingOverride
-              ? getInstitutionalRating(allProjections.base.pricePerShare, tickerDef.currentPrice)
-              : null;
-            const modelDiffers = quantRating && quantRating.label !== ourLabel;
-            return (
-              <>
-                <div className={cn("text-6xl lg:text-7xl font-black tracking-tighter leading-none", v.color)}>
-                  {v.text}
-                </div>
-                {/* Only show sub-label when it adds info (YES→BUY, NO→OVERVALUED); skip when same as big text (HOLD→HOLD) */}
-                {v.text !== ourLabel && (
-                  <div className={cn("text-xs font-black uppercase tracking-widest mt-1", v.subtextColor)}>
-                    {ourLabel}
-                  </div>
-                )}
-                {/* Only show model rating when it disagrees with our assessment */}
-                {modelDiffers && (
-                  <div className="text-xs font-medium text-slate-400 mt-1">
-                    Model: <span className={quantRating.color}>{quantRating.label}</span>
-                  </div>
-                )}
-              </>
-            );
-          })()}
+      {/* Always-visible header */}
+      <button
+        onClick={() => setVerdictOpen(o => !o)}
+        className="w-full flex items-center justify-between px-8 py-5 hover:bg-slate-800/30 transition-colors min-h-[44px]"
+      >
+        <div className="flex items-center gap-4">
+          <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-3">
+            <span className="w-6 h-[2px] bg-amber-500/50" />
+            Investment Verdict
+          </div>
+          <span className={cn('text-2xl font-black tracking-tighter leading-none', verdictColor)}>
+            {verdictText}
+          </span>
         </div>
+        <ChevronDown className={cn('w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0', verdictOpen && 'rotate-180')} />
+      </button>
 
-        <div className="w-px h-20 bg-slate-800 hidden lg:block" />
+      <AnimatePresence initial={false}>
+        {verdictOpen && (
+          <motion.div
+            key="verdict-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="px-8 pb-8 space-y-6">
 
-        {extraMetrics ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
-            {extraMetrics.map((m, i) => (
-              <div key={i} className="flex flex-col gap-1">
-                <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
-                {m.value}
-                <span className="text-xs text-slate-400">{m.subtext}</span>
+              {/* Rating + metrics */}
+              <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
+                <div className="flex flex-col gap-1 shrink-0">
+                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Is it a Buy?</span>
+                  {(() => {
+                    const quantRating = tickerDef.ratingOverride
+                      ? getInstitutionalRating(allProjections.base.pricePerShare, tickerDef.currentPrice)
+                      : null;
+                    const modelDiffers = quantRating && quantRating.label !== ourLabel;
+                    return (
+                      <>
+                        <div className={cn('text-6xl lg:text-7xl font-black tracking-tighter leading-none', verdictColor)}>
+                          {verdictText}
+                        </div>
+                        {verdictText !== ourLabel && (
+                          <div className={cn('text-xs font-black uppercase tracking-widest mt-1', rd.subtextColor)}>
+                            {ourLabel}
+                          </div>
+                        )}
+                        {modelDiffers && (
+                          <div className="text-xs font-medium text-slate-400 mt-1">
+                            Model: <span className={quantRating.color}>{quantRating.label}</span>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+
+                <div className="w-px h-20 bg-slate-800 hidden lg:block" />
+
+                {extraMetrics ? (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
+                    {extraMetrics.map((m, i) => (
+                      <div key={i} className="flex flex-col gap-1">
+                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
+                        {m.value}
+                        <span className="text-xs text-slate-400">{m.subtext}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3 flex-1">
+                    <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">5Y Base Target</span>
+                      <span className="text-2xl font-black" style={{ color: tc }}>{usd(allProjections.base.pricePerShare)}</span>
+                      <span className="text-xs text-slate-500">vs {usd(tickerDef.currentPrice)} spot</span>
+                      <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+                        <span className="text-[10px] text-slate-500 uppercase tracking-widest">PW Blended</span>
+                        <span className="text-xs font-black text-slate-300">{usd(investmentConclusion.pwAvg)}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Upside to Base</span>
+                      <span className={cn('text-2xl font-black', momentumUpside >= 0 ? 'text-emerald-400' : 'text-red-400')}>
+                        {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
+                      </span>
+                      <span className="text-xs text-slate-500">~{Math.max(0.5, timeToTarget).toFixed(1)}Y to target</span>
+                      <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+                        <span className="text-[10px] text-slate-500 uppercase tracking-widest">5Y CAGR</span>
+                        <span className="text-xs font-black text-slate-300">{pctFmt(investmentConclusion.cagr / 100)}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-3 flex-1">
-            {/* Tile 1: 5Y Base Target */}
-            <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">5Y Base Target</span>
-              <span className="text-2xl font-black" style={{ color: tc }}>{usd(allProjections.base.pricePerShare)}</span>
-              <span className="text-xs text-slate-500">vs {usd(tickerDef.currentPrice)} spot</span>
-              <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-slate-500 uppercase tracking-widest">PW Blended</span>
-                <span className="text-xs font-black text-slate-300">{usd(investmentConclusion.pwAvg)}</span>
+
+              {/* Verdict narrative */}
+              <div className="pt-4 border-t border-slate-800/80">
+                <p className="text-base text-slate-200 leading-relaxed">
+                  {narrativeOverride || defaultNarrative}
+                </p>
               </div>
+
+              {/* Burry-adjusted read */}
+              {(() => {
+                const b = tickerDef.burry;
+                if (!b || b.overstatementPct == null || b.overstatementPct < 30) return null;
+                const coef = 1 - b.overstatementPct / 100;
+                if (coef <= 0 || coef >= 1) return null;
+                const adjustedPw = investmentConclusion.pwAvg * coef;
+                const adjustedCagr = ((1 + investmentConclusion.cagr / 100) * Math.pow(coef, 1 / 5) - 1) * 100;
+                const tier = tierFromOverstatement(b.overstatementPct);
+                const sourceLabel = b.overstatementSource === 'burry-published' ? 'Burry-published' : 'estimated full-SBC adjustment';
+                return (
+                  <div className="pt-4 border-t border-slate-800/80">
+                    <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
+                      <AlertTriangle className="w-3 h-3 text-amber-400" />
+                      <span>Burry-Adjusted Read</span>
+                    </div>
+                    <div className={cn('p-4 rounded-lg border', tier.bg, tier.border)}>
+                      <p className="text-sm text-slate-200 leading-relaxed">
+                        Applying the {sourceLabel} overstatement of{' '}
+                        <span className={cn('font-black', tier.color)}>{b.overstatementPct}%</span>{' '}
+                        to the model's PW target trims it from{' '}
+                        <span className="font-black text-white">{usd(investmentConclusion.pwAvg)}</span> to{' '}
+                        <span className={cn('font-black', tier.color)}>{usd(adjustedPw)}</span>{' '}
+                        and the 5Y CAGR from{' '}
+                        <span className="font-black text-white">{pctFmt(investmentConclusion.cagr / 100)}</span> to{' '}
+                        <span className={cn('font-black', tier.color)}>{pctFmt(adjustedCagr / 100)}</span>.{' '}
+                        The model verdict above is unchanged — this is a parallel read, not a model override.
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Key takeaways */}
+              {tickerDef.keyTakeaways && tickerDef.keyTakeaways.length > 0 && (
+                <div className="pt-4 border-t border-slate-800/80">
+                  <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                    <Lightbulb className="w-3 h-3 text-amber-400" />
+                    <span>What This Means For You</span>
+                  </div>
+                  <ul className="space-y-3">
+                    {tickerDef.keyTakeaways.map((point, i) => (
+                      <li key={i} className="flex gap-3 text-sm text-slate-300 leading-relaxed">
+                        <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: tc }} />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Wall Street consensus */}
+              {tickerDef.analystConsensus && (() => {
+                const ac = tickerDef.analystConsensus;
+                const analystColor: Record<AnalystRating, string> = {
+                  'Strong Buy': 'text-green-600', 'Buy': 'text-emerald-600',
+                  'Hold': 'text-blue-400', 'Sell': 'text-orange-400', 'Strong Sell': 'text-red-400',
+                };
+                const analystBg: Record<AnalystRating, string> = {
+                  'Strong Buy': 'bg-green-600/10 border-green-600/30', 'Buy': 'bg-emerald-600/10 border-emerald-600/30',
+                  'Hold': 'bg-blue-400/10 border-blue-400/30', 'Sell': 'bg-orange-400/10 border-orange-400/30',
+                  'Strong Sell': 'bg-red-400/10 border-red-400/30',
+                };
+                const ourScale: Record<string, number> = { 'STRONG BUY': 5, 'BUY': 4, 'HOLD': 3, 'OVERVALUED': 1 };
+                const analystScale: Record<AnalystRating, number> = {
+                  'Strong Buy': 5, 'Buy': 4, 'Hold': 3, 'Sell': 2, 'Strong Sell': 1,
+                };
+                const diff = Math.abs((ourScale[ourLabel] || 3) - analystScale[ac.rating]);
+                const agreement = diff === 0 ? 'Aligned' : diff === 1 ? 'Close' : 'Divergent';
+                const agreementColor = diff === 0 ? 'text-green-600' : diff === 1 ? 'text-yellow-400' : 'text-red-400';
+                const spotMedianUpside = ((ac.targetMedian - tickerDef.currentPrice) / tickerDef.currentPrice * 100).toFixed(1);
+                return (
+                  <div className="pt-4 border-t border-slate-800/80">
+                    <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                      <span className="w-5 h-[2px] bg-slate-600" />
+                      Wall Street Consensus
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <div className={cn('px-4 py-2 rounded-lg border text-sm font-black', analystBg[ac.rating])}>
+                        <span className={analystColor[ac.rating]}>{ac.rating}</span>
+                        <span className="text-slate-500 font-medium ml-2">({ac.numAnalysts} analysts)</span>
+                      </div>
+                      <div className="w-px h-8 bg-slate-800 hidden sm:block" />
+                      <div className="flex gap-5 text-sm">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Low</span>
+                          <span className="text-slate-400 font-semibold">{usd(ac.targetLow)}</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Median</span>
+                          <span className="text-white font-black">{usd(ac.targetMedian)}</span>
+                          <span className="text-[10px] text-slate-500">{Number(spotMedianUpside) >= 0 ? '+' : ''}{spotMedianUpside}%</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">High</span>
+                          <span className="text-slate-400 font-semibold">{usd(ac.targetHigh)}</span>
+                        </div>
+                      </div>
+                      <div className="w-px h-8 bg-slate-800 hidden sm:block" />
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">vs Our Model</span>
+                        <span className={cn('text-sm font-black', agreementColor)}>{agreement}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
             </div>
-            {/* Tile 2: Upside */}
-            <div className="flex flex-col gap-0.5 bg-slate-900/50 rounded-xl px-4 py-3 border border-slate-800">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Upside to Base</span>
-              <span className={cn("text-2xl font-black", momentumUpside >= 0 ? 'text-emerald-400' : 'text-red-400')}>
-                {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
-              </span>
-              <span className="text-xs text-slate-500">~{Math.max(0.5, timeToTarget).toFixed(1)}Y to target</span>
-              <div className="mt-1.5 pt-1.5 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-slate-500 uppercase tracking-widest">5Y CAGR</span>
-                <span className="text-xs font-black text-slate-300">{pctFmt(investmentConclusion.cagr / 100)}</span>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         )}
-      </div>
-
-      <div className="mt-8 pt-8 border-t border-slate-800/80">
-        <button
-          onClick={() => setVerdictOpen(o => !o)}
-          className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-[0.3em] hover:text-slate-200 transition-colors mb-3"
-        >
-          <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', verdictOpen && 'rotate-180')} />
-          Verdict Narrative
-        </button>
-        <AnimatePresence initial={false}>
-          {verdictOpen && (
-            <motion.div
-              key="verdict-text"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="overflow-hidden"
-            >
-              <p className="text-base text-slate-200 leading-relaxed">
-                {narrativeOverride || defaultNarrative}
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {(() => {
-        const b = tickerDef.burry;
-        if (!b || b.overstatementPct == null || b.overstatementPct < 30) return null;
-        const coef = 1 - b.overstatementPct / 100;
-        if (coef <= 0 || coef >= 1) return null;
-        const adjustedPw = investmentConclusion.pwAvg * coef;
-        // 5y target shrinks by coef → new CAGR = (1 + pwCagr) × coef^(1/5) − 1
-        const adjustedCagr = ((1 + investmentConclusion.cagr / 100) * Math.pow(coef, 1 / 5) - 1) * 100;
-        const tier = tierFromOverstatement(b.overstatementPct);
-        const sourceLabel = b.overstatementSource === 'burry-published'
-          ? 'Burry-published'
-          : 'estimated full-SBC adjustment';
-        return (
-          <div className="mt-6 pt-6 border-t border-slate-800/80">
-            <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-3 h-3 text-amber-400" />
-              <span>Burry-Adjusted Read</span>
-            </div>
-            <div className={cn('p-4 rounded-lg border', tier.bg, tier.border)}>
-              <p className="text-sm text-slate-200 leading-relaxed">
-                Applying the {sourceLabel} overstatement of{' '}
-                <span className={cn('font-black', tier.color)}>{b.overstatementPct}%</span>{' '}
-                to the model's PW target trims it from{' '}
-                <span className="font-black text-white">{usd(investmentConclusion.pwAvg)}</span> to{' '}
-                <span className={cn('font-black', tier.color)}>{usd(adjustedPw)}</span>{' '}
-                and the 5Y CAGR from{' '}
-                <span className="font-black text-white">{pctFmt(investmentConclusion.cagr / 100)}</span> to{' '}
-                <span className={cn('font-black', tier.color)}>{pctFmt(adjustedCagr / 100)}</span>.{' '}
-                The model verdict above is unchanged — this is a parallel read, not a model override.
-              </p>
-            </div>
-          </div>
-        );
-      })()}
-
-      {tickerDef.keyTakeaways && tickerDef.keyTakeaways.length > 0 && (
-        <div className="mt-6 pt-6 border-t border-slate-800/80">
-          <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
-            <Lightbulb className="w-3 h-3 text-amber-400" />
-            <span>What This Means For You</span>
-          </div>
-          <ul className="space-y-3">
-            {tickerDef.keyTakeaways.map((point, i) => (
-              <li key={i} className="flex gap-3 text-sm text-slate-300 leading-relaxed">
-                <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: tc }} />
-                {point}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {tickerDef.analystConsensus && (() => {
-        const ac = tickerDef.analystConsensus;
-        const ourLabel = activeStockData?.label || 'HOLD';
-
-        const analystColor: Record<AnalystRating, string> = {
-          'Strong Buy': 'text-green-600',
-          'Buy': 'text-emerald-600',
-          'Hold': 'text-blue-400',
-          'Sell': 'text-orange-400',
-          'Strong Sell': 'text-red-400',
-        };
-
-        const analystBg: Record<AnalystRating, string> = {
-          'Strong Buy': 'bg-green-600/10 border-green-600/30',
-          'Buy': 'bg-emerald-600/10 border-emerald-600/30',
-          'Hold': 'bg-blue-400/10 border-blue-400/30',
-          'Sell': 'bg-orange-400/10 border-orange-400/30',
-          'Strong Sell': 'bg-red-400/10 border-red-400/30',
-        };
-
-        // Map both systems to a 1-5 scale for agreement comparison
-        const ourScale: Record<string, number> = { 'STRONG BUY': 5, 'BUY': 4, 'HOLD': 3, 'OVERVALUED': 1 };
-        const analystScale: Record<AnalystRating, number> = {
-          'Strong Buy': 5, 'Buy': 4, 'Hold': 3, 'Sell': 2, 'Strong Sell': 1,
-        };
-        const diff = Math.abs((ourScale[ourLabel] || 3) - analystScale[ac.rating]);
-        const agreement = diff === 0 ? 'Aligned' : diff === 1 ? 'Close' : 'Divergent';
-        const agreementColor = diff === 0 ? 'text-green-600' : diff === 1 ? 'text-yellow-400' : 'text-red-400';
-
-        const spotMedianUpside = ((ac.targetMedian - tickerDef.currentPrice) / tickerDef.currentPrice * 100).toFixed(1);
-
-        return (
-          <div className="mt-6 pt-6 border-t border-slate-800/80">
-            <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
-              <span className="w-5 h-[2px] bg-slate-600" />
-              Wall Street Consensus
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              {/* Analyst rating badge */}
-              <div className={cn("px-4 py-2 rounded-lg border text-sm font-black", analystBg[ac.rating])}>
-                <span className={analystColor[ac.rating]}>{ac.rating}</span>
-                <span className="text-slate-500 font-medium ml-2">({ac.numAnalysts} analysts)</span>
-              </div>
-
-              {/* Divider */}
-              <div className="w-px h-8 bg-slate-800 hidden sm:block" />
-
-              {/* Target range */}
-              <div className="flex gap-5 text-sm">
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Low</span>
-                  <span className="text-slate-400 font-semibold">{usd(ac.targetLow)}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Median</span>
-                  <span className="text-white font-black">{usd(ac.targetMedian)}</span>
-                  <span className="text-[10px] text-slate-500">{Number(spotMedianUpside) >= 0 ? '+' : ''}{spotMedianUpside}%</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">High</span>
-                  <span className="text-slate-400 font-semibold">{usd(ac.targetHigh)}</span>
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="w-px h-8 bg-slate-800 hidden sm:block" />
-
-              {/* Agreement indicator */}
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">vs Our Model</span>
-                <span className={cn("text-sm font-black", agreementColor)}>{agreement}</span>
-              </div>
-            </div>
-          </div>
-        );
-      })()}
+      </AnimatePresence>
     </motion.div>
   );
 };
