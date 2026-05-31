@@ -71,7 +71,7 @@ const App: React.FC = () => {
       const baseCaseUpside = (proj.pricePerShare - t.currentPrice) / t.currentPrice;
       const group = classifyStock(t, rating.label, t.rsRating, baseCaseUpside);
 
-      return { ticker: t.ticker, fairPriceRange: t.fairPriceRange || 'N/A', active: t.active, ...rating, aiImpact: t.aiImpact, group };
+      return { ticker: t.ticker, fairPriceRange: t.fairPriceRange || 'N/A', baseTarget: proj.pricePerShare, active: t.active, ...rating, aiImpact: t.aiImpact, group };
     }).sort((a, b) => a.ticker.localeCompare(b.ticker));
   }, [tickers]);
 

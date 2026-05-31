@@ -8,6 +8,7 @@ import BurryBadge from './BurryBadge';
 export interface StockRowData {
   ticker: string;
   fairPriceRange: string;
+  baseTarget: number;
   label: string;
   color: string;
   dot: string;
@@ -47,10 +48,10 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
         {isAvoid && <span className="hidden group-hover:inline text-xl text-red-400">{'\u26A0'}</span>}
         {stock.ticker}
       </span>
-      <div className="w-40 flex-shrink-0 flex flex-col gap-0.5">
+      <div className="w-44 flex-shrink-0 flex flex-col gap-0.5">
         <div className="flex items-baseline gap-2">
           <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>${tickerDef.currentPrice.toFixed(2)}</span>
-          <span className={cn("text-xs font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-400")}>{stock.fairPriceRange}</span>
+          <span className={cn("text-base font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>${stock.baseTarget.toFixed(0)}</span>
         </div>
         {tickerDef.updatedOn && (
           <span className="text-xs font-medium text-slate-500 border border-slate-700 rounded px-1.5 py-0.5 self-start">
