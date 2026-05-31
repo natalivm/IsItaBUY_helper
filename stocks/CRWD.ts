@@ -5,8 +5,8 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 731,
-  fairPriceRange: '$320 - $900',
+  currentPrice: 729.30,
+  fairPriceRange: '$340 - $1,000',
   shares0: 252,
   rev25: 4810,
   fcfMargin25: 0.258,
@@ -19,21 +19,19 @@ export const CRWD = defineStock({
   baseEps: 4.84,
   rsRating: 22,
   rsTrend: 'falling',
-  ratingOverride: 'BUY',
   aiImpact: 'TAILWIND',
   strategicNarrative:
     "FY26 (ended Jan 2026) is the inflection: ARR $5.25B (+24% YoY), Net New ARR re-accelerating to $1.01B (first $1B+ year, Q4 $331M +47% YoY). " +
     "Q4 turned GAAP-profitable ($38.7M NI), FY26 FCF $1.24B at ~26% margin, Rule of 40 = 47 — elite SaaS economics. " +
     "Platform moat compounding: 50% of customers run 6+ modules, 34% run 7+, 24% run 8+. Next-Gen SIEM +75%, Cloud +35%, Identity +34% YoY extend the growth runway. " +
     "FY27 guide: ARR $6.47–6.52B (+23–24%), revenue $5.87–5.93B, non-GAAP EPS $4.78–4.90 — durable, not decaying. " +
-    "Valuation reality at $526 / ~$133B mkt cap: forward P/S ~22×, EV/ARR ~20×, FCF yield <1%, FY27 P/E ~109× — pricing CRWD as 'the cybersecurity OS of the AI era,' a high bar. " +
-    "Operationally cleaner than PANW (faster growth) and on par with ZS, but PANW/FTNT offer better margin of safety today. " +
-    "Multiple-compression is the dominant risk: if growth steps from 24% → 18% and P/S re-rates 22× → 14×, the stock can drop ~30% while revenue still grows. " +
-    "FY26 GAAP NI still -$162M and SBC ~$1.1B (~22% of revenue) keeps Burry coefficient negative until earnings convert. " +
-    "Quality compounder transitioning out of story-stock phase, but no margin of safety at current price. BUY rating maintained for phased entry; full size below $400. " +
-    "Burry full-SBC adjustment (estimated): 100% overstatement (Tragic) — real owner economics ~0% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
+    "Valuation reality at $729 / ~$184B mkt cap: forward P/S ~31×, EV/ARR ~28×, FCF yield <1%, FY27 P/E ~150× non-GAAP — the stock has blown past every analyst consensus target (median $524, high $640). " +
+    "Prob-weighted 5yr model target is ~$650 — below current price. The base case no longer generates positive returns from here. " +
+    "Multiple-compression is the dominant risk: if growth steps from 24% → 18% and P/S re-rates 30× → 14×, the stock can drop 40-50% while revenue still grows. " +
+    "FY26 GAAP NI still -$162M and SBC ~$1.1B (~22% of revenue) keeps true owner FCF at ~$213M — a 6× distortion vs headline FCF. " +
+    "Quality compounder, but all near-term growth is now priced in. HOLD — no new entry at current levels; revisit below $550.",
 
-  updatedOn: '05/29',
+  updatedOn: '31/05',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
