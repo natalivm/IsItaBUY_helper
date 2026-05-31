@@ -33,19 +33,13 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: animationIndex * 0.02 }}
       onClick={() => onSelect(stock.ticker)}
-      className={cn(
-        "w-full flex items-end gap-4 py-3 px-4 group transition-all duration-300 border-b border-slate-800/50 hover:bg-white/5 text-left",
-        isAvoid && "opacity-60"
-      )}
+      className="w-full flex items-end gap-4 py-3 px-4 group transition-all duration-300 border-b border-slate-800/50 hover:bg-white/5 text-left"
     >
       {/* Dot */}
       <div className={cn("w-3 h-3 rounded-full flex-shrink-0 mb-1", stock.dot)} />
 
       {/* Ticker */}
-      <span className={cn(
-        "text-2xl lg:text-3xl font-black transition-colors tracking-tighter flex-shrink-0 flex items-center gap-1 w-28",
-        isAvoid ? "text-slate-600 group-hover:text-slate-500" : "text-white group-hover:text-[#ff007f]"
-      )}>
+      <span className="text-2xl lg:text-3xl font-black transition-colors tracking-tighter flex-shrink-0 flex items-center gap-1 w-28 text-white group-hover:text-[#ff007f]">
         {isAvoid && <span className="hidden group-hover:inline text-xl text-red-400">⚠</span>}
         {stock.ticker}
       </span>
@@ -53,11 +47,11 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       {/* Prices + upd tag */}
       <div className="flex-shrink-0 flex flex-col items-start w-48">
         <div className="flex items-baseline gap-3">
-          <span className={cn("text-base font-bold mono", isAvoid ? "text-blue-400/40" : "text-blue-400")}>
+          <span className="text-base font-bold mono text-blue-400">
             ${tickerDef.currentPrice.toFixed(2)}
           </span>
           <span className="text-slate-600 text-sm">→</span>
-          <span className={cn("text-base font-bold mono", isAvoid ? "text-slate-300/40" : "text-slate-300")}>
+          <span className="text-base font-bold mono text-slate-300">
             ${stock.baseTarget.toFixed(0)}
           </span>
         </div>
@@ -82,10 +76,10 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       </span>
 
       {/* Burry badge */}
-      <BurryBadge tickerDef={tickerDef} dimmed={isAvoid} />
+      <BurryBadge tickerDef={tickerDef} />
 
       {/* Sector */}
-      <span className={cn("text-sm font-medium truncate mb-0.5", isAvoid ? "text-slate-400/40" : "text-slate-400")}>
+      <span className="text-sm font-medium truncate mb-0.5 text-slate-400">
         {tickerDef.sector.split(/\s[·\/]\s/)[0]}
       </span>
 
