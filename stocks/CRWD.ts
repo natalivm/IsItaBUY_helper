@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 729.30,
+  currentPrice: 782.17,
   fairPriceRange: '$340 - $1,000',
   shares0: 252,
   rev25: 4810,
@@ -31,7 +31,7 @@ export const CRWD = defineStock({
     "FY26 GAAP NI still -$162M and SBC ~$1.1B (~22% of revenue) keeps true owner FCF at ~$213M — a 6× distortion vs headline FCF. " +
     "Quality compounder, but all near-term growth is now priced in. HOLD — no new entry at current levels; revisit below $550.",
 
-  updatedOn: '31/05',
+  updatedOn: '06/01',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
