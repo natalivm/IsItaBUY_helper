@@ -6,7 +6,7 @@ export const HPE = defineStock({
   sector: 'Networking / AI Infrastructure',
   themeColor: '#01A982',
 
-  currentPrice: 43.04,
+  currentPrice: 56.15,
   fairPriceRange: '$15 - $85',
   shares0: 1330,
   rev25: 34296,
