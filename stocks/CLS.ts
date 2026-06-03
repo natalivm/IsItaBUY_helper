@@ -5,33 +5,35 @@ export const CLS = defineStock({
   name: 'Celestica Inc.',
   sector: 'EMS',
   themeColor: '#f97316',
-  updatedOn: '06/02',
+  updatedOn: '06/03',
+  lastReportTag: 'Q1 2026',
   currentPrice: 472.4,
-  fairPriceRange: '$160 - $550',
+  fairPriceRange: '$200 - $680',
   shares0: 117.9,
   rev25: 12400,
   fcfMargin25: 0.037,
   taxRate: 0.18,
-  cash: 596,
-  debt: 724,
+  cash: 378,
+  debt: 719,
   beta: 1.35,
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 7.16,
+  baseEps: 8.75,
   rsRating: 93,
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "Celestica is a top-tier EMS play on AI infrastructure — 800G/1.6T rack-level solutions for hyperscalers, FY25 adj EPS $7.16 (+56%), guiding $8.75 for FY26 (+22%). " +
+    "Celestica is a top-tier EMS play on AI infrastructure — 800G/1.6T rack-level solutions for hyperscalers. " +
+    "FY25 adj EPS $7.16 (+56%); Q1 2026 beat: adj EPS $2.16 (+80% YoY), revenue $4.05B (+53%) — FY2026 guidance raised to $17B revenue and $8.75 adj EPS (+22%). " +
     "Unprecedented demand visibility into 2027-28 with 1.6T switching platform win at a third hyperscaler. " +
     "The tension: $1B CapEx in FY26 temporarily depresses FCF while earnings power accelerates — DCF undervalues this profile, so we use EPS × P/E. " +
-    "At ~41x trailing P/E, the stock prices in strong execution; risk is 63% top-3 client concentration and CapEx cycle duration. " +
-    "RS 94 confirms momentum. Risk/reward is balanced — upside if AI supercycle extends, but multiple compression risk if growth decelerates.",
+    "At ~54x forward P/E ($8.75 FY26E), the stock prices in strong execution; risk is high hyperscaler client concentration and CapEx cycle duration. " +
+    "RS 93 confirms momentum. Risk/reward is balanced — upside if AI supercycle extends, but multiple compression risk if growth decelerates.",
 
   epsCagr: [10, 18, 24],
   exitPE: [14, 22, 26],
   prob: [25, 50, 25],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 330, targetMedian: 387, targetHigh: 440, numAnalysts: 8 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 400, targetMedian: 450, targetHigh: 480, numAnalysts: 14 },
   revGrowth: [
     [0.30, 0.15, 0.05, 0.03, 0.02],
     [0.37, 0.35, 0.15, 0.10, 0.08],
@@ -52,4 +54,11 @@ export const CLS = defineStock({
   termGrowth: [0.02, 0.025, 0.03],
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.08, 0.10, 0.13],
+
+  debtSafety: {
+    netDebt: 341,
+    ebitda: 1200,
+    fy: 'Q1 2026',
+    note: 'Low leverage: net debt $341M (cash $378M, debt $719M), 0.6× TTM adj EBITDA. $2.5B credit facility upsized April 2026, $2B+ available liquidity.',
+  },
 });
