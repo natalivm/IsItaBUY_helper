@@ -1,0 +1,208 @@
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, ScrollText, Newspaper, Sparkles } from 'lucide-react';
+import { cn } from '../utils';
+
+export type PanelTab = 'notes' | 'news';
+
+// Bump this whenever a new release note / news item is added. The in-app
+// "What's New" toast and the unseen-badge dot fire whenever the user's stored
+// seen-version differs from this. (Not a real OS push — same in-app pop-up
+// system as the PWA install prompt.)
+export const UPDATES_VERSION = '2026-06-03';
+export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
+// One-line summary shown in the toast.
+export const LATEST_SUMMARY = 'CLS — Q1 2026 earnings, Debt Safety + Burry indicators added.';
+
+interface ReleaseNote {
+  date: string;
+  tickers: string[];
+  text: string;
+}
+
+// Stock-evaluation changes only — kept intentionally terse.
+const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 2026',
+    tickers: ['CLS'],
+    text: 'Added Burry SBC indicator — Tragic tier (~19× stock run amplifies dilution).',
+  },
+  {
+    date: 'Jun 2026',
+    tickers: ['CLS'],
+    text: 'Added Debt Safety check — GREEN (net debt 0.3× EBITDA).',
+  },
+  {
+    date: 'Jun 2026',
+    tickers: ['CLS'],
+    text: 'Q1 2026 earnings in: adj EPS $2.16 (+80% YoY), rev $4.05B (+53%). FY26 guide raised to $17B rev / $8.75 EPS.',
+  },
+];
+
+interface NewsItem {
+  date: string;
+  title: string;
+  image?: string;
+  text?: string;
+}
+
+// Chart updates get posted here.
+const NEWS_ITEMS: NewsItem[] = [];
+
+const TabButton: React.FC<{ active: boolean; onClick: () => void; icon: React.ReactNode; label: string }> = ({ active, onClick, icon, label }) => (
+  <button
+    onClick={onClick}
+    className={cn(
+      'flex items-center gap-1.5 px-3 py-2 text-xs font-black uppercase tracking-wide border-b-2 transition-colors',
+      active
+        ? 'border-amber-500 text-amber-400'
+        : 'border-transparent text-slate-500 hover:text-slate-300'
+    )}
+  >
+    {icon}
+    {label}
+  </button>
+);
+
+interface Props {
+  open: boolean;
+  tab: PanelTab;
+  onTabChange: (tab: PanelTab) => void;
+  onClose: () => void;
+}
+
+const ReleaseNotesPanel: React.FC<Props> = ({ open, tab, onTabChange, onClose }) => {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 bg-black/60 backdrop-blur-sm"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ y: -20, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: -20, opacity: 0, scale: 0.98 }}
+            transition={{ type: 'spring', damping: 26, stiffness: 320 }}
+            className="w-full max-w-lg bg-surface-deep border border-slate-700/60 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-slate-700/60 px-2 pr-3">
+              <div className="flex items-center">
+                <TabButton active={tab === 'notes'} onClick={() => onTabChange('notes')} icon={<ScrollText className="w-3.5 h-3.5" />} label="Release Notes" />
+                <TabButton active={tab === 'news'} onClick={() => onTabChange('news')} icon={<Newspaper className="w-3.5 h-3.5" />} label="News" />
+              </div>
+              <button onClick={onClose} className="p-1 text-slate-500 hover:text-slate-300 transition-colors" aria-label="Close">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="max-h-[60vh] overflow-y-auto p-4 scrollbar-hide">
+              {tab === 'notes' ? (
+                <ul className="space-y-3">
+                  {RELEASE_NOTES.map((note, i) => (
+                    <li key={i} className="flex gap-3">
+                      <div className="flex-shrink-0 flex flex-col items-center pt-0.5">
+                        <span className="text-[10px] font-bold text-slate-500 mono">{note.date}</span>
+                      </div>
+                      <div className="flex-1 border-l border-slate-700/50 pl-3">
+                        <div className="flex flex-wrap gap-1 mb-1">
+                          {note.tickers.map(t => (
+                            <span key={t} className="text-[10px] font-black mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400">{t}</span>
+                          ))}
+                        </div>
+                        <p className="text-sm text-slate-300 leading-relaxed">{note.text}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : NEWS_ITEMS.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-slate-500">
+                  <Newspaper className="w-8 h-8 mb-3 opacity-40" />
+                  <p className="text-sm">No news yet — chart updates will appear here.</p>
+                </div>
+              ) : (
+                <ul className="space-y-5">
+                  {NEWS_ITEMS.map((item, i) => (
+                    <li key={i}>
+                      <div className="flex items-baseline gap-2 mb-1.5">
+                        <span className="text-[10px] font-bold text-slate-500 mono">{item.date}</span>
+                        <h3 className="text-sm font-bold text-slate-200">{item.title}</h3>
+                      </div>
+                      {item.image && (
+                        <img src={item.image} alt={item.title} className="w-full rounded-lg border border-slate-700/50 mb-2" />
+                      )}
+                      {item.text && <p className="text-sm text-slate-300 leading-relaxed">{item.text}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default ReleaseNotesPanel;
+
+// ── "What's New" in-app toast ──
+// Mirrors the PWA InstallPrompt pattern: a non-blocking bottom pop-up that
+// surfaces when the stored seen-version is stale. Not an OS push notification.
+
+interface ToastProps {
+  onView: () => void;
+  onDismiss: () => void;
+}
+
+export const WhatsNewToast: React.FC<ToastProps> = ({ onView, onDismiss }) => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 100, opacity: 0 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        className="fixed bottom-4 left-4 right-4 z-50 max-w-md mx-auto"
+      >
+        <div className="bg-surface-deep/95 backdrop-blur-lg border border-slate-700/60 rounded-2xl p-4 shadow-2xl shadow-black/40">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-amber-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-slate-100">What's New</p>
+              <p className="text-xs text-slate-400 mt-1 leading-relaxed">{LATEST_SUMMARY}</p>
+            </div>
+            <button
+              onClick={onDismiss}
+              className="flex-shrink-0 p-1 -mt-1 -mr-1 text-slate-500 hover:text-slate-300 transition-colors"
+              aria-label="Dismiss"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <button
+            onClick={onView}
+            className="mt-3 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-500/90 text-slate-950 text-sm font-bold transition-colors"
+          >
+            See what changed
+          </button>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};

@@ -9,8 +9,10 @@ import LoadingSplash from './components/LoadingSplash';
 import StockRow from './components/StockRow';
 import ThemeToggle from './components/ThemeToggle';
 import InstallPrompt from './components/InstallPrompt';
+import ReleaseNotesPanel, { WhatsNewToast, PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY } from './components/ReleaseNotesPanel';
 
 import { motion, AnimatePresence } from 'motion/react';
+import { ScrollText, Newspaper } from 'lucide-react';
 
 // ── Main App ──
 
@@ -26,6 +28,30 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'default' | 'upside' | 'rs'>('default');
+
+  // Release Notes / News panel + in-app "What's New" notification (no OS push).
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [panelTab, setPanelTab] = useState<PanelTab>('notes');
+  const [updatesSeen, setUpdatesSeen] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(UPDATES_SEEN_KEY) === UPDATES_VERSION;
+    } catch {
+      return true;
+    }
+  });
+
+  const markUpdatesSeen = useCallback(() => {
+    setUpdatesSeen(true);
+    try {
+      localStorage.setItem(UPDATES_SEEN_KEY, UPDATES_VERSION);
+    } catch { /* storage unavailable — non-fatal */ }
+  }, []);
+
+  const openPanel = useCallback((tab: PanelTab) => {
+    setPanelTab(tab);
+    setPanelOpen(true);
+    markUpdatesSeen();
+  }, [markUpdatesSeen]);
 
   const navigateTo = useCallback((ticker: string) => {
     if (ticker === 'home') {
@@ -169,6 +195,24 @@ const App: React.FC = () => {
                         {opt === 'default' ? 'A–Z' : opt === 'upside' ? 'Upside %' : 'RS Rating'}
                       </button>
                     ))}
+                    <span className="w-px h-4 bg-slate-700 mx-1" />
+                    <button
+                      onClick={() => openPanel('notes')}
+                      className="relative flex items-center gap-1 text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
+                    >
+                      <ScrollText className="w-3 h-3" />
+                      Notes
+                      {!updatesSeen && (
+                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.9)]" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => openPanel('news')}
+                      className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
+                    >
+                      <Newspaper className="w-3 h-3" />
+                      News
+                    </button>
                   </div>
                   <ThemeToggle />
                 </div>
@@ -246,6 +290,18 @@ const App: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        <ReleaseNotesPanel
+          open={panelOpen}
+          tab={panelTab}
+          onTabChange={setPanelTab}
+          onClose={() => setPanelOpen(false)}
+        />
+        {!isLoading && !updatesSeen && !panelOpen && (
+          <WhatsNewToast
+            onView={() => openPanel('notes')}
+            onDismiss={markUpdatesSeen}
+          />
+        )}
         <InstallPrompt />
       </>
     );
