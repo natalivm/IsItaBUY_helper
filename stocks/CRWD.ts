@@ -9,29 +9,30 @@ export const CRWD = defineStock({
   fairPriceRange: '$340 - $1,000',
   shares0: 252,
   rev25: 4810,
-  fcfMargin25: 0.258,
+  fcfMargin25: 0.32,
   taxRate: 0.15,
   cash: 3800,
   debt: 750,
   beta: 1.15,
   costDebt: 0.04,
   modelType: 'EPS_PE',
-  baseEps: 4.84,
-  rsRating: 22,
-  rsTrend: 'falling',
+  baseEps: 4.92,
+  rsRating: 50,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "FY26 (ended Jan 2026) is the inflection: ARR $5.25B (+24% YoY), Net New ARR re-accelerating to $1.01B (first $1B+ year, Q4 $331M +47% YoY). " +
-    "Q4 turned GAAP-profitable ($38.7M NI), FY26 FCF $1.24B at ~26% margin, Rule of 40 = 47 — elite SaaS economics. " +
-    "Platform moat compounding: 50% of customers run 6+ modules, 34% run 7+, 24% run 8+. Next-Gen SIEM +75%, Cloud +35%, Identity +34% YoY extend the growth runway. " +
-    "FY27 guide: ARR $6.47–6.52B (+23–24%), revenue $5.87–5.93B, non-GAAP EPS $4.78–4.90 — durable, not decaying. " +
-    "Valuation reality at $729 / ~$184B mkt cap: forward P/S ~31×, EV/ARR ~28×, FCF yield <1%, FY27 P/E ~150× non-GAAP — the stock has blown past every analyst consensus target (median $524, high $640). " +
-    "Prob-weighted 5yr model target is ~$650 — below current price. The base case no longer generates positive returns from here. " +
-    "Multiple-compression is the dominant risk: if growth steps from 24% → 18% and P/S re-rates 30× → 14×, the stock can drop 40-50% while revenue still grows. " +
-    "FY26 GAAP NI still -$162M and SBC ~$1.1B (~22% of revenue) keeps true owner FCF at ~$213M — a 6× distortion vs headline FCF. " +
-    "Quality compounder, but all near-term growth is now priced in. HOLD — no new entry at current levels; revisit below $550.",
+    "Q1 FY27 (ended Apr 2026): first GAAP-profitable quarter in company history — NI +$27.8M vs -$104.3M prior year, as operating leverage decisively overtakes SBC. " +
+    "Revenue $1.39B (+26% YoY), ARR $5.51B (+24% YoY), record Q1 net new ARR $256M (+32%) — re-accelerating above FY26's exit pace while broader SaaS decelerates. " +
+    "FCF $468M at 33.7% margin (record Q1; FY26 full-year was 25.8%) — the leverage inflection is real and accelerating. Non-GAAP EPS $1.10 beat $0.88 estimate by 25%. " +
+    "FY27 full-year guidance raised: revenue $5.91–5.96B (+23%), non-GAAP EPS $4.88–4.96, NNArr growth +520bps to 27.7% midpoint — structural acceleration while peers decelerate. " +
+    "Board approved 4-for-1 stock split (record June 25, trading July 2, 2026). Platform moat: 50%+ customers at 6+ modules; identity (+34%), SIEM (+75%), cloud (+35%) each sustaining strong growth. " +
+    "Valuation reality at $769 close / est. ~$823 AH (+7%): EV/ARR ~36×, FY27 P/E ~160× non-GAAP — exceptional beat, but multiples already price perfection. Prob-weighted 5yr model target ~$650. " +
+    "Multiple compression remains the dominant risk: 26% growth decelerating to 15% with P/S re-rating 31× → 14× reprices the stock -40–50% while revenue still grows. " +
+    "GAAP profitable for the first time but SBC ~$1.1B annually (FY26 basis, ~22% of revenue) — true owner FCF remains distorted until SBC/revenue falls further. " +
+    "HOLD — no new entry at current levels; revisit below $550.",
 
-  updatedOn: '06/02',
+  updatedOn: '06/03',
+  lastReportTag: 'Q1 FY27',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
@@ -71,7 +72,7 @@ export const CRWD = defineStock({
 
   epsCagr: [15, 22, 28],
   exitPE: [35, 45, 60],
-  prob: [25, 45, 30],
+  prob: [20, 45, 35],
 
   bbRate: [0.00, 0.005, 0.01],
   ebitdaProxy: [0.25, 0.32, 0.38],
@@ -85,6 +86,6 @@ export const CRWD = defineStock({
     fy: 'FY26',
     overstatementPct: 100,
     overstatementSource: 'estimated',
-    note: 'Burry explicitly cites CRWD. TIKR LTM actuals: SBC $1,097M (22.8% of revenue — extreme), GAAP NI -$162M (loss), buybacks $0. The most damning single number: SBC = 83.7% of reported FCF. Headline FCF $1.31B drops to TRUE OWNER FCF of just $213M once you treat SBC as the real cash cost it is — a 6× distortion. Diluted shares +15% over 5 years (218M → 251M), zero buyback offset, so all dilution lands on shareholders directly. Loss-making stocks like CRWD break the overstatement % math; the 100% label is a placeholder meaning real owner economics are deeply negative.',
+    note: 'Burry explicitly cites CRWD. FY26 actuals (basis for this block): SBC $1,097M (22.8% of revenue — extreme), GAAP NI -$162M (loss), buybacks $0. Headline FCF $1.31B drops to TRUE OWNER FCF ~$213M treating SBC as real cost — a 6× distortion. Diluted shares +15% over 5 years (218M → 252M), zero buyback offset. Q1 FY27 UPDATE: GAAP NI turned positive (+$27.8M) for the first time — operating leverage is breaking through. Full FY27 SBC data needed before the Burry block can be updated; 100% overstatement is a placeholder until then.',
   },
 });
