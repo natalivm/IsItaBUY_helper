@@ -65,8 +65,15 @@ _BASE_EXIT_MULT  = 15
 
 # ── TypeScript file parsers ──
 
+def _strip_comments(text):
+    """Remove // line comments so stray numbers/commas in comments don't
+    corrupt numeric array parsing. Skips '//' that is part of a URL inside a
+    string (e.g. https://) by only stripping when not preceded by a ':'."""
+    return re.sub(r'(?<!:)//[^\n]*', '', text)
+
+
 def _num(text, key, default=None):
-    m = re.search(rf'{key}:\s*([\d.]+)', text)
+    m = re.search(rf'{key}:\s*(-?[\d.]+)', text)
     return float(m.group(1)) if m else default
 
 
@@ -76,8 +83,9 @@ def _str(text, key, default=None):
 
 
 def _flat_trio(text, key):
-    """Parse 'key: [a, b, c]' → [a, b, c] as floats. Returns None if not found."""
-    m = re.search(rf'{key}:\s*\[([\d.,\s]+)\]', text)
+    """Parse 'key: [a, b, c]' → [a, b, c] as floats. Returns None if not found.
+    Handles negative values (e.g. epsCagr: [-40, 5, 18], waccAdj: [..., -0.005])."""
+    m = re.search(rf'{key}:\s*\[([-\d.,\s]+)\]', text)
     if not m:
         return None
     return [float(x.strip()) for x in m.group(1).split(',') if x.strip()]
@@ -117,6 +125,53 @@ def _array_trio(text, key):
                 break
 
     return arrays if len(arrays) >= 3 else None
+
+
+def _mixed_trio_base(text, key):
+    """Parse a Trio<number | number[]> field (e.g. fcfMargin) and return the
+    base-case (index 1) element expanded to a 5-element list.
+
+    Each of the three top-level entries may independently be a scalar
+    (flat 5yr, e.g. `0.32`) or an array (`[0.40, 0.40, 0.40, 0.41, 0.41]`),
+    mirroring expandMargin() in defineStock.ts. Returns None if not found."""
+    idx = re.search(rf'\b{key}:', text)
+    if not idx:
+        return None
+    start = text.find('[', idx.end())
+    if start == -1:
+        return None
+
+    # Walk the outer array, splitting top-level elements on depth-1 commas.
+    depth = 0
+    elements = []
+    cur = ''
+    for i in range(start, min(len(text), start + 4000)):
+        ch = text[i]
+        if ch == '[':
+            depth += 1
+            if depth == 1:
+                cur = ''
+                continue
+        elif ch == ']':
+            depth -= 1
+            if depth == 0:
+                if cur.strip():
+                    elements.append(cur)
+                break
+        if depth == 1 and ch == ',':
+            elements.append(cur)
+            cur = ''
+        else:
+            cur += ch
+
+    if len(elements) < 2:
+        return None
+
+    base_el = elements[1].strip()
+    nums = [float(x.strip()) for x in re.findall(r'-?[\d.]+', base_el)]
+    if not nums:
+        return None
+    return nums if len(nums) >= 5 else [nums[0]] * 5
 
 
 def _driver_overrides(text, scenario_idx):
@@ -163,10 +218,17 @@ def _driver_overrides(text, scenario_idx):
         return overrides
 
     obj_text = objects[scenario_idx]
-    for key, dest in [('revPrem', 'revPrem'), ('fcfUplift', 'fcfUplift')]:
-        m = re.search(rf'{key}:\s*\[([\d.,\s]+)\]', obj_text)
+    # Array-valued overrides
+    for key in ('revPrem', 'fcfUplift'):
+        m = re.search(rf'{key}:\s*\[([-\d.,\s]+)\]', obj_text)
         if m:
-            overrides[dest] = [float(x.strip()) for x in m.group(1).split(',') if x.strip()]
+            overrides[key] = [float(x.strip()) for x in m.group(1).split(',') if x.strip()]
+    # Scalar-valued overrides (take precedence over top-level trios, mirroring
+    # Object.assign(base, driverOverrides[i]) in defineStock.ts)
+    for key in ('bbRate', 'ebitdaProxy', 'maOptVal'):
+        m = re.search(rf'{key}:\s*(-?[\d.]+)', obj_text)
+        if m:
+            overrides[key] = float(m.group(1))
 
     return overrides
 
@@ -176,18 +238,22 @@ def get_stock_params(path):
     with open(path) as f:
         content = f.read()
 
+    # Comment-stripped copy for numeric parsing (so stray numbers/commas in
+    # // comments don't corrupt array parsing). String fields use raw content.
+    nc = _strip_comments(content)
+
     p = {}
-    p['currentPrice'] = _num(content, 'currentPrice')
-    p['shares0']      = _num(content, 'shares0', 100)
-    p['rev25']        = _num(content, 'rev25', 0)
-    p['fcfMargin25']  = _num(content, 'fcfMargin25', 0.10)
-    p['taxRate']      = _num(content, 'taxRate', 0.25)
-    p['cash']         = _num(content, 'cash', 0)
-    p['debt']         = _num(content, 'debt', 0)
-    p['beta']         = _num(content, 'beta', 1.1)
-    p['costDebt']     = _num(content, 'costDebt', 0.05)
-    p['baseEps']      = _num(content, 'baseEps')
-    p['rsRating']     = _num(content, 'rsRating', 50)
+    p['currentPrice'] = _num(nc, 'currentPrice')
+    p['shares0']      = _num(nc, 'shares0', 100)
+    p['rev25']        = _num(nc, 'rev25', 0)
+    p['fcfMargin25']  = _num(nc, 'fcfMargin25', 0.10)
+    p['taxRate']      = _num(nc, 'taxRate', 0.25)
+    p['cash']         = _num(nc, 'cash', 0)
+    p['debt']         = _num(nc, 'debt', 0)
+    p['beta']         = _num(nc, 'beta', 1.1)
+    p['costDebt']     = _num(nc, 'costDebt', 0.05)
+    p['baseEps']      = _num(nc, 'baseEps')
+    p['rsRating']     = _num(nc, 'rsRating', 50)
     p['modelType']    = _str(content, 'modelType') or 'DCF_ADVANCED'
     p['aiImpact']     = _str(content, 'aiImpact')
     p['ratingOverride'] = _str(content, 'ratingOverride')
@@ -202,7 +268,7 @@ def get_stock_params(path):
         ('bbRate',       None),
         ('waccAdj',      0.0),
     ]:
-        trio = _flat_trio(content, key)
+        trio = _flat_trio(nc, key)
         if trio and len(trio) >= 2:
             p[f'{key}_base'] = trio[1]
         elif trio:
@@ -214,24 +280,27 @@ def get_stock_params(path):
         p['waccAdj_base'] = 0.0
 
     # 2D array fields — extract base-case row (index 1)
-    rg = _array_trio(content, 'revGrowth')
+    rg = _array_trio(nc, 'revGrowth')
     p['revGrowth_base'] = rg[1] if (rg and len(rg) >= 2) else [0.05] * 5
 
-    fm = _array_trio(content, 'fcfMargin')
-    if fm and len(fm) >= 2:
-        p['fcfMargin_base'] = fm[1]
-    else:
-        # Scalar trio fallback
-        fm_trio = _flat_trio(content, 'fcfMargin')
-        if fm_trio and len(fm_trio) >= 2:
-            p['fcfMargin_base'] = [fm_trio[1]] * 5
-        else:
-            p['fcfMargin_base'] = [p['fcfMargin25']] * 5
+    # fcfMargin is Trio<number | number[]> — each scenario may be a scalar
+    # (flat 5yr) or a 5-element array. _mixed_trio_base handles both.
+    fm_base = _mixed_trio_base(nc, 'fcfMargin')
+    p['fcfMargin_base'] = fm_base if fm_base else [p['fcfMargin25']] * 5
 
-    # Driver overrides for base scenario (index 1)
-    dov = _driver_overrides(content, 1)
+    # Driver overrides for base scenario (index 1). In defineStock.ts these are
+    # merged on top of the standard template / top-level trios via Object.assign,
+    # so an override value takes precedence over anything parsed above.
+    dov = _driver_overrides(nc, 1)
     p['revPrem_base']   = dov.get('revPrem',   _BASE_REV_PREM)
     p['fcfUplift_base'] = dov.get('fcfUplift', _BASE_FCF_UPLIFT)
+    if 'bbRate' in dov:
+        p['bbRate_base'] = dov['bbRate']
+    if 'ebitdaProxy' in dov:
+        p['ebitdaProxy_base'] = dov['ebitdaProxy']
+    # Base-case M&A optionality (rare — usually bull-only, but a stock can put
+    # maOptVal in driverOverrides[1], e.g. THM). Added to DCF equity value.
+    p['maOptVal_base'] = dov.get('maOptVal', 0.0)
 
     return p
 
@@ -249,6 +318,14 @@ def _wacc(p, price):
     return (eq_w * ke) + ((1 - eq_w) * kd) + wacc_adj
 
 
+def _pick(p, key, default):
+    """Return p[key] when present and non-None, else default.
+    Unlike `x or default`, this respects legitimate zero values (e.g. a
+    stock with bbRate [0,0,0] must keep 0, not silently get the default)."""
+    v = p.get(key)
+    return v if v is not None else default
+
+
 def _base_target(p, price):
     """Compute base-case 5-year target price. Returns None on failure."""
     try:
@@ -256,8 +333,8 @@ def _base_target(p, price):
             base_eps = p.get('baseEps')
             if not base_eps:
                 return None
-            cagr = (p.get('epsCagr_base') or 20) / 100
-            exit_pe = p.get('exitPE_base') or 25
+            cagr = _pick(p, 'epsCagr_base', 20.0) / 100
+            exit_pe = _pick(p, 'exitPE_base', 25.0)
             return base_eps * (1 + cagr) ** _HORIZON * exit_pe
 
         # DCF_ADVANCED
@@ -266,10 +343,10 @@ def _base_target(p, price):
         fcf_margin  = p.get('fcfMargin_base',  [0.10] * 5)
         rev_prem    = p.get('revPrem_base',    _BASE_REV_PREM)
         fcf_uplift  = p.get('fcfUplift_base',  _BASE_FCF_UPLIFT)
-        bb_rate     = p.get('bbRate_base')     or _BASE_BB_RATE
-        ebitda_prx  = p.get('ebitdaProxy_base') or _BASE_EBITDA
-        exit_mult   = p.get('exitMultiple_base') or _BASE_EXIT_MULT
-        term_growth = p.get('termGrowth_base') or _BASE_TERM_GROWTH
+        bb_rate     = _pick(p, 'bbRate_base',      _BASE_BB_RATE)
+        ebitda_prx  = _pick(p, 'ebitdaProxy_base', _BASE_EBITDA)
+        exit_mult   = _pick(p, 'exitMultiple_base', _BASE_EXIT_MULT)
+        term_growth = _pick(p, 'termGrowth_base',  _BASE_TERM_GROWTH)
 
         if w <= term_growth:
             return None
@@ -292,7 +369,8 @@ def _base_target(p, price):
         tv_exit = (revs[-1] * ebitda_prx) * exit_mult
         pv_tv = ((tv_perp + tv_exit) / 2) / (1 + w) ** 5
         net_debt = (p.get('debt', 0) or 0) - (p.get('cash', 0) or 0)
-        equity = sum(pv_fcfs) + pv_tv - net_debt
+        ma_opt = p.get('maOptVal_base', 0.0) or 0.0
+        equity = sum(pv_fcfs) + pv_tv - net_debt + ma_opt
         return equity / share_hist[-1]
 
     except (ZeroDivisionError, TypeError, ValueError):
@@ -348,14 +426,28 @@ def compute_ratings(tickers, price_map):
 
 
 def check_rating_changes(tickers, new_prices):
-    """Compare ratings at old prices vs new prices. Returns (all_new, changed)."""
-    old_price_map = {sym: info['old_price'] for sym, info in tickers.items()}
-    old_ratings   = {r['symbol']: r['eff'] for r in compute_ratings(tickers, old_price_map)}
-    new_rows      = compute_ratings(tickers, new_prices)
+    """Compare ratings at old prices vs new prices. Returns (all_new, changed).
 
-    changed = [r for r in new_rows if old_ratings.get(r['symbol']) != r['eff']]
-    for r in changed:
-        r['old_eff'] = old_ratings.get(r['symbol'], '?')
+    A stock is flagged if its EFFECTIVE rating changed, OR if its MODEL rating
+    changed (the latter catches stocks pinned by a ratingOverride whose model
+    has drifted — a signal that the manual override may need revisiting)."""
+    old_price_map = {sym: info['old_price'] for sym, info in tickers.items()}
+    old_rows = {r['symbol']: r for r in compute_ratings(tickers, old_price_map)}
+    new_rows = compute_ratings(tickers, new_prices)
+
+    changed = []
+    for r in new_rows:
+        old = old_rows.get(r['symbol'])
+        if not old:
+            continue
+        eff_changed = old['eff'] != r['eff']
+        model_changed = old['model'] != r['model']
+        if eff_changed or model_changed:
+            r['old_eff'] = old['eff']
+            r['old_model'] = old['model']
+            r['eff_changed'] = eff_changed
+            r['model_changed'] = model_changed
+            changed.append(r)
 
     return new_rows, changed
 
@@ -383,9 +475,15 @@ def print_rating_report(all_rows, changed):
         print(f"\n{'='*72}")
         print(f"  {len(changed)} RATING CHANGE(S) due to price action:\n")
         for r in changed:
-            arrow = f"{r['old_eff']}  →  {r['eff']}"
             price_str = f"${r['price']:,.2f}"
-            print(f"    {r['symbol']:<8}  {arrow:<32}  upside {r['upside']:+.1f}%  @{price_str}")
+            if r.get('eff_changed'):
+                arrow = f"{r['old_eff']}  →  {r['eff']}"
+                print(f"    {r['symbol']:<8}  {arrow:<30}  upside {r['upside']:+.1f}%  @{price_str}")
+            else:
+                # Effective pinned by override, but model drifted — revisit override
+                arrow = f"model {r['old_model']} → {r['model']}"
+                note = f"(pinned {r['override']})" if r.get('override') else ''
+                print(f"    {r['symbol']:<8}  {arrow:<30}  upside {r['upside']:+.1f}%  @{price_str}  {note}")
         print()
     else:
         print("\n  No rating changes.\n")
@@ -413,7 +511,11 @@ def git_commit_push(changed_files, changes, rating_changes):
         msg_parts.append("")
         msg_parts.append("Rating changes due to price action:")
         for r in rating_changes:
-            msg_parts.append(f"  {r['symbol']}: {r['old_eff']} → {r['eff']} (upside {r['upside']:+.1f}%)")
+            if r.get('eff_changed'):
+                msg_parts.append(f"  {r['symbol']}: {r['old_eff']} → {r['eff']} (upside {r['upside']:+.1f}%)")
+            else:
+                msg_parts.append(f"  {r['symbol']}: model {r['old_model']} → {r['model']}, "
+                                 f"pinned {r.get('override')} (upside {r['upside']:+.1f}%)")
 
     commit_msg = "\n".join(msg_parts)
     result = subprocess.run(['git', 'commit', '-m', commit_msg], capture_output=True, text=True)
