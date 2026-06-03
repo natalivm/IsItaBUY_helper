@@ -55,6 +55,17 @@ export const CLS = defineStock({
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.08, 0.10, 0.13],
 
+  burry: {
+    sbc: 172,
+    gaapNi: 833,
+    buyback: 56,
+    epsBasis: 'GAAP',
+    fy: 'FY25',
+    overstatementPct: 100,
+    overstatementSource: 'estimated',
+    note: 'Tragic: ~19× stock return (2023→2026) amplifies naive 21% SBC/NI to estimated 100% cap. Minimal buybacks ($56M NCIB, well below $172M SBC).',
+  },
+
   debtSafety: {
     netDebt: 341,
     ebitda: 1200,
