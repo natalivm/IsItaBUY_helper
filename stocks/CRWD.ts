@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 768.95,
+  currentPrice: 747.61,
   fairPriceRange: '$340 - $1,000',
   shares0: 252,
   rev25: 4810,
@@ -32,7 +32,6 @@ export const CRWD = defineStock({
     "HOLD at $664–685. STRONG BUY below $580 pre-split (~$145 post-split after July 2). Watch billings in Q2 — if AIDR pipeline >$50M converts to bookings and billings re-accelerate above 22-24%, thesis strengthens materially.",
 
   updatedOn: '06/03',
-  lastReportTag: 'Q1 FY27',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
