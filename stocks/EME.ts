@@ -3,11 +3,11 @@ import { defineStock } from './defineStock';
 export const EME = defineStock({
   ticker: 'EME',
   name: 'EMCOR Group, Inc.',
-  updatedOn: '06/03',
+  updatedOn: '06/04',
   lastReportTag: 'Q1 2026',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 839.54,
+  currentPrice: 845.43,
   fairPriceRange: '$560 - $1350',
   shares0: 44.7,
   rev25: 16990,             // Revenue 2025A ($M); FY2025 actual; +18.5% YoY (record)
