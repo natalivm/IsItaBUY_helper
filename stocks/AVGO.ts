@@ -21,39 +21,40 @@ export const AVGO = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "Q2 FY26 ($22.2B revenue, +48% YoY; AI semiconductor $10.8B, +143% YoY) and Q3 FY26 guidance ($29.4B, +84% YoY; AI semiconductor $16B, +200%+ YoY) define a pace of revenue expansion without precedent in semiconductor history at this scale. " +
-    "FY25 closed at $63.9B; FY26 is now tracking ~$102B (Q1 $19.3B + Q2 $22.2B + Q3 $29.4B guided + Q4 est ~$31B) — a ~60% revenue expansion in a single fiscal year driven by AI ASIC production ramps at Alphabet, Meta, and one undisclosed hyperscaler. " +
-    "Q2 EBITDA $15.2B (69% margin) and FCF $10.3B (46% margin) at $22B quarterly revenue are monopoly-tier economics in a hardware/software hybrid. Non-GAAP EPS $2.44 beat $2.40 estimate. " +
-    "VMware acquisition debt (~$69B at close) is deleveraging at ~$10B FCF/quarter — net debt est. ~$41B; Net Debt/EBITDA now ~0.67× vs 5×+ at deal close. One of the fastest debt paydowns in mega-cap history. " +
-    "The three AI ASIC customers are now in volume production; Q3's $16B guidance means this is not a trial ramp — it is infrastructure at scale. The debate is no longer 'will this happen' but 'how many new hyperscaler wins are in the pipeline.' " +
-    "Bear: an AI capex reversal (2022 Nvidia scenario at 4× the scale) collapses growth from 48%+ to sub-10% while the multiple compresses from 35× to 15× FCF simultaneously. " +
-    "Analyst consensus targets (median $454, high $525) are stale and expected to be significantly revised post-Q2. AH trading ~$495 (+2.8%). Model updated to ~$102B FY26 revenue base; run build to confirm updated fair value range.",
+    "Q2 FY26: revenue $22.2B (+48% YoY, beat $22.1B est), EBITDA $15.2B at 68.71% margin (+205bps YoY — expanding, not compressing despite AI mix shift), EBIT 67.28% (+201bps YoY), non-GAAP EPS $2.44 (beat $2.40), GAAP EPS $1.91 (beat $1.73 by 10.7%). " +
+    "One flag: FCF $10.26B missed $11.39B estimate by 9.9% despite lower capex ($231M vs $245M est) — CFO shortfall likely reflects working capital build ahead of H2 ramp. Q1 FY26 FCF was $8.01B (41.5% margin); Q2 at 46.3% is sequentially improving. " +
+    "The conference call detail is far more bullish than headlines: FY26 AI semiconductor total $56B (+180% from FY25), implying Q4 AI alone ~$20.8B (nearly 2× Q3's $16B). Bookings >$30B vs current shipments = order visibility into FY28. " +
+    "Customer contracts are binding commitments, not projections: Google (multi-generation TPU + networking); Anthropic (5GW next-gen TPU starting 2027); Meta (3GW through 2028, initial 1GW order received); OpenAI (1.3GW committed for FY27, production late 2026). " +
+    "Networking ~40% of Q2 AI revenue — industry's only 100Tb Ethernet switch for over a year, 200Tb launched this quarter. Durable moat within AI infrastructure, not a rounding error. " +
+    "FY27: AI semiconductor >$100B (+80% from $56B FY26), ~10GW compute shipping (back-half loaded), 'a lot more GW' flagged for FY28. Total FY27 revenue likely ~$148B ($100B AI + ~$48B non-AI/software). " +
+    "Post-call selloff (-5–14% AH, ~$415–454) triggered by: Q3 AI guide $16B vs $17.2B expected (quarterly split, not trajectory miss), and '$100B+ FY27 AI' maintained rather than raised. Both appear to be market overreaction. " +
+    "At $415–454 AH, base case model (committed order book, 45% Year 1 growth) likely shows the stock as BUY. Analyst consensus (median $454, high $525) stale — significant upward revision expected.",
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 335, targetMedian: 454, targetHigh: 525, numAnalysts: 30 },
   revGrowth: [
-    [0.10, 0.07, 0.05, 0.04, 0.03],  // Bear: AI capex reversal; growth collapses from 48%+ at $102B base
-    [0.20, 0.15, 0.12, 0.09, 0.07],  // Base: AI moderates, VMware stable, three-ASIC-customer base
-    [0.28, 0.22, 0.17, 0.13, 0.10],  // Bull: new hyperscaler ASIC wins, AI supercycle extends
+    [0.12, 0.07, 0.05, 0.04, 0.03],  // Bear: hyperscaler cancellation/delay; capex reversal
+    [0.45, 0.22, 0.15, 0.10, 0.08],  // Base: committed order book delivers ($100B+ FY27 AI)
+    [0.55, 0.28, 0.18, 0.13, 0.10],  // Bull: new wins + FY28 acceleration beyond 10GW
   ],
   fcfMargin: [
-    [0.42, 0.42, 0.41, 0.41, 0.40],
-    [0.49, 0.51, 0.52, 0.53, 0.54],
-    [0.55, 0.57, 0.58, 0.59, 0.60],
+    [0.40, 0.40, 0.40, 0.40, 0.40],  // Bear: AI mix + margin pressure; FCF stalls
+    [0.47, 0.49, 0.51, 0.52, 0.53],  // Base: improves as debt retires; Q2 actual 46.3%
+    [0.53, 0.55, 0.57, 0.58, 0.60],  // Bull: scale + debt paydown drives expansion
   ],
   exitMultiple: [16, 23, 26],
   desc: [
-    'AI capex cycle reverses as hyperscaler ROI disappoints — Alphabet and Meta reduce ASIC orders. Revenue growth collapses from 48%+ to sub-10% off the $102B FY26 base. ' +
-      'Multiple compresses from 35× → 15× FCF simultaneously with topline deceleration — the 2022 Nvidia scenario at 4× the scale. VMware churn accelerates as enterprise IT budgets tighten.',
-    'AI capex moderates to a sustainable pace; revenue grows 15-20% from the $102B FY26 base through FY31. VMware recurring revenue stabilizes margins at 50%+ FCF. ' +
-      'Current three ASIC hyperscaler customers sustain volume production. P/E naturally compresses from ~35× toward 22-25× through earnings growth — returns are fundamental, not multiple expansion.',
-    'A 4th+ hyperscaler (sovereign AI, Apple, or new US tech giant) awards volume ASIC production, expanding TAM well beyond current backlog. VMware cross-selling exceeds targets. ' +
-      'Revenue sustains 25-28% CAGR from $102B FY26 base. FCF margin reaches 58-60%. Broadcom becomes the dominant AI infrastructure platform at $3T+ market cap.',
+    'A hyperscaler (Google, Meta, Anthropic, or OpenAI) cancels or materially delays committed ASIC orders — the reverse of the signed agreements. Revenue growth from the $102B FY26 base collapses below 12%. ' +
+      'Multiple compresses from 35× → 15× FCF simultaneously — the 2022 Nvidia scenario at 4× the scale. FCF margin stalls at 40% as AI mix shift erodes gross margin without the volume to compensate.',
+    'Committed contracts execute: $100B+ AI semiconductor in FY27 (+80% from $56B FY26), ~10GW compute shipped. Total revenue ~$148B FY27. EBITDA margins hold at 65%+ (as Q2 demonstrated: 68.71% despite AI mix). ' +
+      'FCF improves gradually to 53% as VMware debt retires. Natural P/E compression from 35× toward 22-25× through earnings growth drives returns — execution, not multiple expansion.',
+    'Beyond the committed 10GW FY27, Broadcom wins additional sovereign AI or next hyperscaler ASIC volumes for FY28 (the "a lot more GW" management signaled). New 200-terabit networking switch gains outside AI clusters. ' +
+      'Revenue sustains 25-28% CAGR beyond $102B FY26 base. EBITDA margins reach 70%+ as software/networking mix improves. FCF reaches 58-60%. $3T+ market cap is the base in this scenario.',
   ],
 
   termGrowth: [0.020, 0.030, 0.035],
   bbRate: [0.005, 0.018, 0.025],
-  ebitdaProxy: [0.50, 0.62, 0.68],
+  ebitdaProxy: [0.55, 0.65, 0.70],
   bullMaOptVal: 335 * 4700 * 0.05,
 
   driverOverrides: [
