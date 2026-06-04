@@ -12,7 +12,7 @@ export type PanelTab = 'notes' | 'news';
 export const UPDATES_VERSION = '2026-06-03';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'CLS — Q1 2026 earnings, Debt Safety + Burry indicators added.';
+export const LATEST_SUMMARY = 'CRWD + AVGO earnings night: AIDR structural catalyst, AVGO $56B FY26 AI with committed contracts.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,26 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 2026',
+    tickers: ['CRWD'],
+    text: 'Q1 FY27: adj EPS $1.10 (+51% YoY), rev $1.39B (+26%), ARR $5.51B (+24%). First ever GAAP-profitable quarter ($0.11 EPS vs -$0.44 prior year). FCF $468M (+68% YoY). FY27 guide raised to $5.91–5.96B rev, EPS $4.88–4.96. 4-for-1 split Jul 2. AH -11–13% on billings miss (18% vs 24% ARR growth).',
+  },
+  {
+    date: 'Jun 2026',
+    tickers: ['CRWD'],
+    text: 'AIDR structural catalyst: exclusive Anthropic + OpenAI security partner after "Mythos moment" (AI models weaponizing vulnerability discovery). AIDR ARR +250% sequentially; Q2 pipeline >$50M. Management says will exceed EDR scale. 90 AI agents per employee = 90× attack surface vs 1 endpoint. Model: epsCagr/exitPE raised, bull prob 35%→43%.',
+  },
+  {
+    date: 'Jun 2026',
+    tickers: ['AVGO'],
+    text: 'Q2 FY26: rev $22.2B (+48%), AI semi $10.8B (+143%), EBITDA 68.71% margin (+205bps YoY — expanding). Non-GAAP EPS $2.44 beat $2.40. FCF $10.26B missed estimate by 9.9% (likely H2 working capital build). AH -5–14% on Q3 AI guide $16B vs $17.2B expected.',
+  },
+  {
+    date: 'Jun 2026',
+    tickers: ['AVGO'],
+    text: 'Call: FY26 AI semi total $56B (+180%), Q4 AI implied ~$20.8B (2× Q3). Signed contracts: Meta 1GW received, Anthropic 5GW for 2027, OpenAI 1.3GW committed, Google multi-gen agreement. Bookings >$30B vs shipments = FY28 visibility. Model: rev25 $73B→$102B, base revGrowth 20%→45%, ebitdaProxy raised to [0.55, 0.65, 0.70].',
+  },
   {
     date: 'Jun 2026',
     tickers: ['CLS'],
