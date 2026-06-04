@@ -21,15 +21,15 @@ export const CRWD = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   strategicNarrative:
-    "Q1 FY27 (ended Apr 2026): first GAAP-profitable quarter in company history — NI +$27.8M vs -$104.3M prior year, as operating leverage decisively overtakes SBC. " +
-    "Revenue $1.39B (+26% YoY), ARR $5.51B (+24% YoY), record Q1 net new ARR $256M (+32%) — re-accelerating above FY26's exit pace while broader SaaS decelerates. " +
-    "FCF $468M at 33.7% margin (record Q1; FY26 full-year was 25.8%) — the leverage inflection is real and accelerating. Non-GAAP EPS $1.10 beat $0.88 estimate by 25%. " +
-    "FY27 full-year guidance raised: revenue $5.91–5.96B (+23%), non-GAAP EPS $4.88–4.96, NNArr growth +520bps to 27.7% midpoint — structural acceleration while peers decelerate. " +
-    "Board approved 4-for-1 stock split (record June 25, trading July 2, 2026). Platform moat: 50%+ customers at 6+ modules; identity (+34%), SIEM (+75%), cloud (+35%) each sustaining strong growth. " +
-    "Valuation reality at $769 close / est. ~$823 AH (+7%): EV/ARR ~36×, FY27 P/E ~160× non-GAAP — exceptional beat, but multiples already price perfection. Prob-weighted 5yr model target ~$650. " +
-    "Multiple compression remains the dominant risk: 26% growth decelerating to 15% with P/S re-rating 31× → 14× reprices the stock -40–50% while revenue still grows. " +
-    "GAAP profitable for the first time but SBC ~$1.1B annually (FY26 basis, ~22% of revenue) — true owner FCF remains distorted until SBC/revenue falls further. " +
-    "HOLD — no new entry at current levels; revisit below $550.",
+    "Q1 FY27 inflection: first GAAP-profitable quarter (+$27.8M NI), ARR $5.51B (+24%), record NNArr $256M (+32%), FCF $468M (33.7% margin), non-GAAP EPS $1.10 beat $0.88 by 25%. FY27 guidance raised to $5.91–5.96B revenue, $4.88–4.96 EPS, NNArr growth +520bps to 27.7%. 4-for-1 split approved (record June 25, trading July 2). " +
+    "The call revealed a structural demand catalyst that changes the multi-year thesis: in April 2026, Anthropic and OpenAI released frontier models capable of weaponizing vulnerability discovery — management called this 'cybersecurity's Y2K moment.' CrowdStrike was selected as the exclusive security partner for both labs' launch programs. " +
+    "AIDR (AI Detection and Response) emerged as a new growth pillar: Q1 ending ARR +250% sequentially, Q2 pipeline >$50M. Management believes AIDR will become larger than EDR — the product that built CrowdStrike. The math: 90 AI agents per employee vs 1 endpoint per user = a 90× expansion of the attackable surface per enterprise. " +
+    "Platform breadth: next-gen SIEM + cloud + identity combined >$2B ARR (SIEM alone $600M+). SGNL acquisition targets nonhuman identity — a greenfield problem created by agentic workloads. Falcon Flex approaching $2B ARR (+99% YoY); 25% of Flex customers executing 'Reflex' expansions at avg 26% uplift. 8-figure federal win replacing legacy AV across 200,000+ hosts. " +
+    "Guidance signal: management now expects FY27 NNArr to accelerate OVER FY26. Q2 pipeline at a record. Seasonality shifted to 42%/58% H1/H2 — enterprises treating AI security as existential infrastructure, not discretionary spend. " +
+    "TIKR actuals: revenue $1,385.63M beat $1,362.99M (+1.66%), EBITDA margin 28.95% beat 27.60% (+135bps), EBIT $325.67M beat $309.37M (+5.27%), FCF $468.46M beat $446.82M (+4.84%). GAAP EPS $0.11 beat street estimate of -$0.02 (+573%). YoY margin expansion: EBITDA +561bps, EBIT +528bps — operating leverage intact. " +
+    "AH selloff -11–13% to ~$664–685: billings grew only 18% to $1.35B, below expectations. Billings lag ARR (24% growth), suggesting potential revenue deceleration in 2–4 quarters — the market's real concern. Stock had already run ~65% YTD before earnings. " +
+    "Valuation reality at ~$684 AH: prob-weighted 5yr model target raised to ~$680 (from $650 on improved AIDR/structural demand). The stock is essentially AT the revised model target even after the selloff. " +
+    "HOLD at $664–685. STRONG BUY below $580 pre-split (~$145 post-split after July 2). Watch billings in Q2 — if AIDR pipeline >$50M converts to bookings and billings re-accelerate above 22-24%, thesis strengthens materially.",
 
   updatedOn: '06/03',
   lastReportTag: 'Q1 FY27',
@@ -37,42 +37,39 @@ export const CRWD = defineStock({
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
   revGrowth: [
-    [0.15, 0.12, 0.10, 0.08, 0.08], // Bear: enterprise budget cuts, growth halves
-    [0.22, 0.19, 0.17, 0.15, 0.13], // Base: FY26E guide executes, natural deceleration
-    [0.25, 0.24, 0.22, 0.20, 0.18], // Bull: sustained platform expansion, new modules
+    [0.15, 0.12, 0.10, 0.08, 0.08], // Bear: billings slowdown persists, budget cuts
+    [0.24, 0.21, 0.19, 0.17, 0.14], // Base: AIDR adds growth on top of core platform
+    [0.30, 0.28, 0.25, 0.22, 0.20], // Bull: AIDR reaches EDR scale, 90× attack surface monetizes
   ],
 
   fcfMargin: [
-    [0.28, 0.28, 0.27, 0.27, 0.26], // Bear: margin stalls, growth investment continues
-    [0.35, 0.37, 0.38, 0.39, 0.40], // Base: operating leverage drives FCF expansion
-    [0.37, 0.39, 0.41, 0.43, 0.45], // Bull: scale economics, 30%+ EBIT margin
+    [0.28, 0.28, 0.27, 0.27, 0.26], // Bear: margin stalls, AIDR investment drag
+    [0.35, 0.37, 0.38, 0.39, 0.40], // Base: operating leverage continues; Q1 actual 33.8%
+    [0.38, 0.40, 0.42, 0.44, 0.46], // Bull: AIDR high-margin ARR compounds FCF
   ],
 
   exitMultiple: [18, 24, 30],
 
   desc: [
-    'Growth decelerates from 24% → 12-15% as enterprise cybersecurity budgets tighten and Microsoft/PANW pressure intensifies. EBIT margin stalls at 22-24% — operating leverage disappears without top-line acceleration. ' +
-      'Forward P/S re-rates from 22× toward 12-14×, P/E compresses from ~109× to 35×. EPS reaches $9-10 by FY30. 5yr price ~$320, roughly -3% to 0% annual return — multiple compression overwhelms revenue growth.',
-    'Revenue compounds at ~17% with EBIT margin expanding to 28-30%. Platform consolidation (endpoint → XDR → cloud → identity) drives net dollar retention above 120%. ' +
-      'EPS reaches ~$12 by FY30. P/E compresses naturally from 80x to 45x through earnings growth. 5yr price ~$540, ~6-7% CAGR.',
-    'Cybersecurity supercycle — AI threat acceleration drives structural budget increases. CrowdStrike wins consolidation as platform of choice. Revenue sustains 20%+ growth, ' +
-      'EBIT margin reaches 30%+. EPS reaches $14-15 by FY30. Market maintains premium at 60x P/E. 5yr price ~$900, ~18-20% CAGR.',
+    'Billings slowdown (Q1: 18% vs ARR 24%) persists, signaling pipeline weakness. AIDR monetizes as a bundled feature rather than a paid platform — enterprises treat it as included, not purchased. ' +
+      'Microsoft/Palo Alto replicate AIDR within existing suites. EPS ~$9 by FY31 at 15% CAGR from $4.92. P/E compresses 35×. 5yr price ~$315.',
+    'AIDR matures into a $1.5–2B ARR product over 5 years, stacking on top of the $5.5B ARR core. Q1 billings "miss" is a one-quarter blip as Falcon Flex timing shifts to H2. ' +
+      'Exclusive Anthropic/OpenAI partnerships open enterprise sales channels. EPS ~$14 by FY31 at 25% CAGR. P/E compresses naturally to 50×. 5yr price ~$700.',
+    'AIDR reaches EDR scale ($4B+ ARR) as the 90× AI agent attack surface materializes. The Mythos moment is cybersecurity\'s platform inflection — CRWD monopolizes AI workload security. ' +
+      'EPS ~$22 by FY31 at 32% CAGR. Market maintains 70× P/E for category-defining growth. 5yr price ~$1,540.',
   ],
 
   thesis: [
-    'Enterprise budget cuts + competition from Microsoft/Palo Alto erode growth. July 2024 outage residual trust issues persist. ' +
-      'At 80x P/E, any execution miss triggers severe multiple compression. Revenue growth halves to 10%, margin expansion stalls.',
-    'Cybersecurity is a structural necessity — 78% gross margin confirms pricing power and moat. Platform expansion drives ' +
-      'land-and-expand with 120%+ NDR. EBIT margin trajectory from 21% → 30% validates operating leverage thesis.',
-    'AI threat landscape accelerates cybersecurity spend structurally above GDP growth. CrowdStrike becomes the consolidation winner ' +
-      'in endpoint + XDR + cloud security. FCF compounds at 30%+ enabling M&A optionality and buyback initiation.',
+    'Billings deceleration (18% growth vs 24% ARR) is structural, not seasonal — deal duration shortening and budget pressure compound. AIDR pipeline >$50M is small relative to $5.5B ARR. At 160× P/E, any miss triggers severe multiple compression. SBC 22% of revenue still distorts true economics.',
+    'AIDR structurally broadens the TAM: 90 AI agents per employee vs 1 endpoint is a mathematical 90× expansion. Falcon Flex near $2B ARR (+99% YoY) with 26% Reflex uplift validates platform stickiness. First GAAP profitable Q1 confirms the leverage model works at scale.',
+    'The Mythos moment — AI models weaponizing vulnerability discovery — is cybersecurity\'s Y2K: a non-discretionary emergency. Exclusive Anthropic + OpenAI partnerships are the enterprise credentialing mechanism no competitor can replicate. AIDR becoming larger than EDR is management\'s base case, not bull case.',
   ],
 
   termGrowth: [0.015, 0.025, 0.03],
 
-  epsCagr: [15, 22, 28],
-  exitPE: [35, 45, 60],
-  prob: [20, 45, 35],
+  epsCagr: [15, 25, 32],
+  exitPE: [35, 50, 70],
+  prob: [15, 42, 43],
 
   bbRate: [0.00, 0.005, 0.01],
   ebitdaProxy: [0.25, 0.32, 0.38],
