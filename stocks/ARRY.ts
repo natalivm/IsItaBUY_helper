@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const ARRY = defineStock({
-  updatedOn: '06/04',
+  updatedOn: '06/05',
   ticker: 'ARRY',
   name: 'Array Technologies',
   sector: 'Solar / Industrial Equipment',
   themeColor: '#f59e0b',
-  currentPrice: 9.09,
+  currentPrice: 8.09,
   fairPriceRange: '$4 - $18',
   shares0: 153,
   rev25: 1280,
