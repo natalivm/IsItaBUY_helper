@@ -9,10 +9,10 @@ export type PanelTab = 'notes' | 'news';
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
 // seen-version differs from this. (Not a real OS push — same in-app pop-up
 // system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-03';
+export const UPDATES_VERSION = '2026-06-05';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'CRWD + AVGO earnings night: AIDR structural catalyst, AVGO $56B FY26 AI with committed contracts.';
+export const LATEST_SUMMARY = 'Broad tech selloff Jun 5 (Nasdaq -4.18%): prices refreshed, 4 rating changes — CLS & ORCL upgraded to BUY, NOW to STRONG BUY.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 5 2026',
+    tickers: ['CLS', 'ORCL', 'NOW', 'ARRY'],
+    text: 'Prices refreshed after broad tech selloff (Nasdaq -4.18%, S&P -2.64%) on strong jobs report pushing 10Y yield above 4.5%. Semis hit hardest: MRVL -16.7%, MU -13.3%, ALAB/SNDK -11.4%, AMD -10.9%. Rating changes: CLS HOLD→BUY (+18.5% upside), ORCL HOLD→BUY (+13.5%), NOW BUY→STRONG BUY (+29.2%), ARRY OVERVALUED→HOLD (-3%).',
+  },
   {
     date: 'Jun 2026',
     tickers: ['CRWD'],
