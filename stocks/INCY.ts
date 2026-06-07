@@ -44,14 +44,14 @@ export const INCY = defineStock({
   bbRate: [0.005, 0.01, 0.02],
   ebitdaProxy: [0.24, 0.28, 0.32],
   burry: {
-    sbc: 290,
+    sbc: 249,
     gaapNi: 1300,
-    buyback: 1700,
+    buyback: 0,
     epsBasis: 'GAAP',
     fy: 'FY25',
     overstatementPct: 25,
     overstatementSource: 'estimated',
-    note: 'Naive SBC/NI ~22% on FY25 GAAP NI of $1.3B — typical for biopharma. Range-bound stock keeps the MTM amplifier modest (~1.5×), and active buybacks (~$1.7B) more than offset dilution. Lands in the OK tier — owner profit ~75% of GAAP.',
+    note: 'FY25 SBC $249.3M (10-K) on GAAP NI ~$1.3B = naive SBC/NI ~19%, typical for biopharma. Range-bound/down stock keeps the MTM amplifier low (~1.3×) → ~25%. No buyback offset in FY25 — the $2.0B/$1.67B Dutch-auction tender was a 2024 event; in 2025 cash built from $2.2B to $3.6B with no material repurchases. OK tier — owner profit ~75% of GAAP.',
   },
   debtSafety: {
     netDebt: -3600,

@@ -22,7 +22,7 @@ export const ETN = defineStock({
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
   strategicNarrative:
-    "ETN is a best-in-class electrification and data-center-power compounder riding three secular megatrends at once: AI data center electrical buildout, grid modernization/reshoring, and the broad electrification of everything. FY25 revenue $27.4B (+10% organic momentum, TTM $28.5B as of Q1 2026) with EBITDA margins expanding past 23% on operating leverage (operational leverage ~0.96). Diluted EPS compounding ~9% (FY25 $10.45, +10% YoY) with a 41% payout ratio and steady buybacks (~0.7% yield). The Electrical Americas backlog and data-center order book give multi-year visibility, and the balance sheet is pristine (net debt/EBITDA ~1.5×, interest coverage >20×). The catch is valuation: at ~39× trailing earnings against a high-single-digit EPS CAGR, the market is already paying a full premium for the electrification story. The business quality is unimpeachable and momentum is strong (new highs, price ~21% above its 200-day), but the model fair value sits near or modestly below spot — most of the next several years of growth is priced in. Verdict: HOLD — own quality, but wait for a pullback or growth re-acceleration to add at these levels.",
+    "ETN is a best-in-class electrification and data-center-power compounder riding three secular megatrends at once: AI data center electrical buildout, grid modernization/reshoring, and the broad electrification of everything. Q1 2026 (reported May 5, 2026) was a record: sales $7.5B (+17% YoY — 10% organic, 4% acquisitions, 3% FX), adjusted EPS $2.81, and data-center orders up a staggering 240%. Management raised FY26 organic growth guidance to 9–11% (from 8%) and guided adjusted EPS to $13.05–13.50 (+10% midpoint); the Boyd Thermal acquisition (liquid cooling) closed in March and adds ~$1.7B of 2026 revenue, deepening the data-center thermal/power stack. FY25 revenue was $27.4B with EBITDA margins past 23% on operating leverage; the Electrical Americas backlog and data-center order book give multi-year visibility, and the balance sheet is pristine (net debt/EBITDA ~1.5×, interest coverage >20×, $1.9B of FY25 buybacks). A planned Mobility (Vehicle/eMobility) spin-off would further concentrate the portfolio on electrical/data-center power. The catch is valuation: ~39× trailing GAAP earnings (a friendlier ~30× on FY26 adjusted EPS) against a high-single/low-double-digit EPS CAGR — the market already pays a full premium for the story. Quality is unimpeachable and momentum is strong (new highs, price ~21% above its 200-day), but model fair value sits near or modestly below spot. One watch item: FY26 segment-margin guidance was trimmed 50 bps on input costs and Electrical Americas ramp. Verdict: HOLD — own the quality, but wait for a pullback or fresh growth re-acceleration to add here.",
   analystConsensus: { rating: 'Buy', targetLow: 321, targetMedian: 451, targetHigh: 534, numAnalysts: 19 },
   revGrowth: [
     [0.05, 0.04, 0.03, 0.03, 0.03],
@@ -44,14 +44,14 @@ export const ETN = defineStock({
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.22, 0.24, 0.26],
   burry: {
-    sbc: 170,
+    sbc: 155,
     gaapNi: 4087,
-    buyback: 1000,
+    buyback: 1900,
     epsBasis: 'GAAP',
     fy: 'FY25',
     overstatementPct: 10,
     overstatementSource: 'estimated',
-    note: 'Low SBC for a large-cap industrial — naive SBC/NI only ~4% on FY25 GAAP NI of $4,087M. Even with the MTM amplifier from a ~3× stock run, buybacks (~$1B/yr) more than cover dilution. Pristine tier — owner profit closely tracks GAAP.',
+    note: 'Low SBC for a large-cap industrial — naive SBC/NI only ~4% on FY25 GAAP NI of $4,087M (SBC ~$155M est.; total disclosed only in 10-K notes). FY25 buybacks of $1.9B (10-K, $7.6B left on a $9.0B authorization) dwarf dilution. Pristine tier — owner profit closely tracks GAAP.',
   },
   debtSafety: {
     netDebt: 10000,
