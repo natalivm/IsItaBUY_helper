@@ -154,10 +154,16 @@ const App: React.FC = () => {
 
   const investmentConclusion = useMemo(() => {
     if (!allProjections || !tickerDef) return null;
+    const { bear, base, bull } = allProjections;
+    const probWeights =
+      bear.config.prob != null && base.config.prob != null && bull.config.prob != null
+        ? { bear: bear.config.prob, base: base.config.prob, bull: bull.config.prob }
+        : undefined;
     const pwAvg = weightedScenarioAverage(
-      allProjections.bear.pricePerShare,
-      allProjections.base.pricePerShare,
-      allProjections.bull.pricePerShare,
+      bear.pricePerShare,
+      base.pricePerShare,
+      bull.pricePerShare,
+      probWeights,
     );
     const cagr = (Math.pow(pwAvg / tickerDef.currentPrice, 1 / 5) - 1) * 100;
     return { pwAvg, cagr };

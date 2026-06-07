@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Info, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { TickerDefinition, ProjectionData, ScenarioType } from '../types';
 import { computeStockMetrics, usd, pctFmt } from '../services/stockMetrics';
+import { applyNarrativeTokens, globalNarrativeTokens, scenarioNarrativeTokens } from '../services/narrative';
 import { AI_IMPACT_BADGE } from '../constants';
 import ScenarioMetricsCard from './ScenarioMetricsCard';
 import StockPageHeader from './StockPageHeader';
@@ -43,6 +44,18 @@ const StockDetailView: React.FC<Props> = ({
   const metrics = useMemo(
     () => computeStockMetrics(tickerDef, currentProjection, allProjections),
     [tickerDef, currentProjection, allProjections]
+  );
+
+  const isEpsPe = tickerDef.modelType === 'EPS_PE';
+  // Live-value tokens so narrative prose binds to the same projections the cards
+  // render — text can never drift from spot the way a baked-in $114.68 did.
+  const globalTokens = useMemo(
+    () => globalNarrativeTokens(tickerDef.currentPrice, allProjections, investmentConclusion.pwAvg),
+    [tickerDef.currentPrice, allProjections, investmentConclusion.pwAvg]
+  );
+  const baseScenarioTokens = useMemo(
+    () => scenarioNarrativeTokens(tickerDef.currentPrice, currentProjection),
+    [tickerDef.currentPrice, currentProjection]
   );
 
   return (
@@ -98,10 +111,17 @@ const StockDetailView: React.FC<Props> = ({
                     <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Target</span>
                     <span className="text-3xl font-black" style={{ color: tc }}>{usd(currentProjection.pricePerShare)}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">WACC</span>
-                    <span className="text-3xl font-black text-white">{pctFmt(currentProjection.w)}</span>
-                  </div>
+                  {isEpsPe && tickerDef.baseEps ? (
+                    <div className="flex flex-col">
+                      <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Fwd P/E</span>
+                      <span className="text-3xl font-black text-white">{(tickerDef.currentPrice / tickerDef.baseEps).toFixed(1)}x</span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col">
+                      <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">WACC</span>
+                      <span className="text-3xl font-black text-white">{pctFmt(currentProjection.w)}</span>
+                    </div>
+                  )}
                   <div className="flex flex-col">
                     <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">RS Rating</span>
                     <div className="flex items-end gap-1">
@@ -149,7 +169,7 @@ const StockDetailView: React.FC<Props> = ({
                           className="overflow-hidden"
                         >
                           <div className="px-4 pb-4 pt-1">
-                            <p className="text-lg text-white font-bold leading-snug">{currentProjection.config.desc}</p>
+                            <p className="text-lg text-white font-bold leading-snug">{applyNarrativeTokens(currentProjection.config.desc, baseScenarioTokens)}</p>
                           </div>
                         </motion.div>
                       )}
@@ -181,7 +201,7 @@ const StockDetailView: React.FC<Props> = ({
                           <div className="px-4 pb-4 pt-1 space-y-3">
                             {tickerDef.strategicNarrative.split('\n\n').map((para, i, arr) => (
                               <p key={i} className="text-base text-slate-200 font-medium leading-relaxed italic">
-                                {i === 0 ? '\u201c' : ''}{para}{i === arr.length - 1 ? '\u201d' : ''}
+                                {i === 0 ? '\u201c' : ''}{applyNarrativeTokens(para, globalTokens)}{i === arr.length - 1 ? '\u201d' : ''}
                               </p>
                             ))}
                           </div>
