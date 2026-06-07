@@ -67,6 +67,9 @@ const StockMetricCards: React.FC<Props> = ({ metrics, themeColor: tc }) => {
             style={{ width: `${probAcceleration}%`, background: tc }}
           />
         </div>
+        <div className="text-[10px] text-slate-500 mt-2 leading-tight">
+          Composite momentum signal (upside · RS · AI) — separate from the scenario probabilities that weight the blend.
+        </div>
       </motion.div>
     </div>
   );

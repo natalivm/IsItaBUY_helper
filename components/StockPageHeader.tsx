@@ -22,6 +22,13 @@ const StockPageHeader: React.FC<Props> = ({
 }) => {
   const tc = tickerDef.themeColor;
 
+  // EPS_PE produces a 5-year-forward price target (EPS × exit P/E, undiscounted),
+  // whereas DCF discounts back to a present intrinsic value. Label accordingly so
+  // a 5Y target is never mistaken for "overvalued right now".
+  const isEpsPe = tickerDef.modelType === 'EPS_PE';
+  const valueLabel = isEpsPe ? '5Y BASE TARGET' : 'FAIR VALUE';
+  const valueSub = isEpsPe ? '5Y fwd · base case' : 'present value';
+
   return (
     <>
       <motion.button
@@ -60,7 +67,7 @@ const StockPageHeader: React.FC<Props> = ({
             {[
               { label: 'SPOT', value: usd(tickerDef.currentPrice), icon: <TrendingUp className="w-4 h-4 text-amber-500" />, valueClass: 'text-white', subValue: tickerDef.updatedOn ? `upd ${tickerDef.updatedOn}` : undefined },
               { label: 'RATING', value: activeStockData?.label || 'HOLD', icon: <ShieldCheck className="w-4 h-4 text-amber-500" />, valueClass: activeStockData?.color || 'text-blue-400', subValue: undefined },
-              { label: 'FAIR VALUE', value: usd(currentProjection.pricePerShare), icon: <Zap className="w-4 h-4 text-amber-500" />, valueClass: 'text-white', subValue: undefined },
+              { label: valueLabel, value: usd(currentProjection.pricePerShare), icon: <Zap className="w-4 h-4 text-amber-500" />, valueClass: 'text-white', subValue: valueSub },
             ].map((m, i) => (
               <div
                 key={i}

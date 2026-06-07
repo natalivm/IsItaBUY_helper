@@ -336,7 +336,9 @@ const InvestmentVerdict: React.FC<Props> = ({
                         <div className="flex flex-col">
                           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Median</span>
                           <span className="text-white font-black">{usd(ac.targetMedian)}</span>
-                          <span className="text-[10px] text-slate-500">{Number(spotMedianUpside) >= 0 ? '+' : ''}{spotMedianUpside}%</span>
+                          <span className="text-[10px] text-slate-500" title="Median analyst price target vs current spot — not our model vs the Street.">
+                            {Number(spotMedianUpside) >= 0 ? '+' : ''}{spotMedianUpside}% vs spot
+                          </span>
                         </div>
                         <div className="flex flex-col">
                           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">High</span>
@@ -344,9 +346,13 @@ const InvestmentVerdict: React.FC<Props> = ({
                         </div>
                       </div>
                       <div className="w-px h-8 bg-slate-800 hidden sm:block" />
-                      <div className="flex flex-col">
+                      <div
+                        className="flex flex-col"
+                        title="Compares the rating only (Hold/Buy/etc.). Our model can share the Street's rating while being materially more bearish on the price target."
+                      >
                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">vs Our Model</span>
                         <span className={cn('text-sm font-black', agreementColor)}>{agreement}</span>
+                        <span className="text-[10px] text-slate-500 normal-case font-medium">on rating, not target</span>
                       </div>
                     </div>
                   </div>

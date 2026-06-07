@@ -3,6 +3,7 @@ import React from 'react';
 import { ProjectionData, ValuationModelType } from '../types';
 import { getInstitutionalRating } from '../services/projectionService';
 import { usd, pctFmt } from '../services/stockMetrics';
+import { applyNarrativeTokens, scenarioNarrativeTokens } from '../services/narrative';
 
 interface Props {
   data: ProjectionData;
@@ -23,7 +24,7 @@ const ScenarioMetricsCard: React.FC<Props> = ({ data, currentPrice, modelType })
         {config.label}
       </h3>
       <p className="text-slate-300 text-sm leading-relaxed mb-6 h-12 overflow-hidden line-clamp-2">
-        {config.thesis || config.desc}
+        {applyNarrativeTokens(config.thesis || config.desc, scenarioNarrativeTokens(currentPrice, data))}
       </p>
 
       <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8">

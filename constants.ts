@@ -127,8 +127,26 @@ export const GROUP_META: Record<StockGroup, { label: string; accent: string; bor
 
 export const SCENARIO_WEIGHTS = { BEAR: 0.25, BASE: 0.50, BULL: 0.25 } as const;
 
-export function weightedScenarioAverage(bear: number, base: number, bull: number): number {
-  return bear * SCENARIO_WEIGHTS.BEAR + base * SCENARIO_WEIGHTS.BASE + bull * SCENARIO_WEIGHTS.BULL;
+/**
+ * Probability-weighted blend of the three scenario values.
+ *
+ * When a stock supplies per-scenario `prob` weights (the analyst's own
+ * bear/base/bull probabilities, e.g. [20, 55, 25]), those drive the blend and
+ * are normalized to sum to 1. Otherwise it falls back to the default
+ * 25/50/25 split. Display-only — ratings and groupings use base-case upside.
+ */
+export function weightedScenarioAverage(
+  bear: number,
+  base: number,
+  bull: number,
+  weights?: { bear: number; base: number; bull: number },
+): number {
+  const w = weights ?? { bear: SCENARIO_WEIGHTS.BEAR, base: SCENARIO_WEIGHTS.BASE, bull: SCENARIO_WEIGHTS.BULL };
+  const total = w.bear + w.base + w.bull;
+  if (total <= 0) {
+    return bear * SCENARIO_WEIGHTS.BEAR + base * SCENARIO_WEIGHTS.BASE + bull * SCENARIO_WEIGHTS.BULL;
+  }
+  return (bear * w.bear + base * w.base + bull * w.bull) / total;
 }
 
 // ── Display Constants ──
