@@ -27,6 +27,21 @@ export const FTNT = defineStock({
     "Valuation: at $114.07 / $84.4B market cap on $3.42 forward EPS, forward P/E ~33×. Forward P/S ~12×. EV/EBITDA 35×. Premium multiple but on a 27% net margin business with $3.3B cash and a buyback engine. " +
     "Analyst median target $107 (Recom 2.71 = Hold/Buy boundary) implies the rally has run ahead of consensus targets — wait for a 10-15% pullback for a cleaner entry, or trim into strength.",
 
+  reasonsToBuy: [
+    'ASIC-driven SASE platform delivers a cost and performance edge that cloud-native peers cannot replicate',
+    'Extraordinary capital efficiency with industry-leading ROIC and consistent net share retirement over many years',
+    'Three durable growth vectors: SASE expansion, AI security across data centers, and OT industrial security',
+    'Pristine SBC profile — one of the cleanest shareholder economics in the entire cybersecurity sector',
+    'Strong institutional accumulation confirmed by high relative strength rating and rising RS trend',
+  ],
+
+  risksToBuy: [
+    'Stock has rallied sharply and trades well ahead of analyst consensus targets, limiting near-term upside',
+    'Cloud-native SASE competitors Zscaler and Palo Alto aggressively pursue enterprise platform consolidation deals',
+    'Firewall refresh cycle remains muted, and any deceleration in SASE adoption hits the growth narrative hard',
+    'Premium valuation leaves little room for execution misses or macro-driven IT budget cuts',
+    'Significant overbought technical condition increases the risk of a sharp pullback before the next leg up',
+  ],
 
   analystConsensus: { rating: 'Hold', targetLow: 85, targetMedian: 107, targetHigh: 130, numAnalysts: 25 },
   revGrowth: [

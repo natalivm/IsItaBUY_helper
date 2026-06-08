@@ -22,6 +22,21 @@ export const DASH = defineStock({
   aiImpact: 'TAILWIND',
   strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in FY2025. Q1 2026 (reported May 6): revenue $4.0B (+33% YoY), GOV $31.6B (+37%), EPS $0.42 (beat est. $0.37 by 13.5%), record MAUs and memberships. Revenue missed consensus by ~3% but EPS beat on operating leverage. Three EPS levers above consensus: NV unit economics positive 2H'26, ads at 2× advertisers / 3× spend, and tech stack consolidation (3→1). Thesis is execution-driven earnings growth, not P/E rerating.",
 
+  reasonsToBuy: [
+    'Dominant US delivery platform with record MAUs and memberships driving compounding network effects',
+    'International expansion into new verticals offers a long growth runway beyond food delivery',
+    'Ads business scaling rapidly with both advertiser count and spend growing at multiples of revenue',
+    'New Verticals unit economics turning positive, adding a profitable growth leg beyond restaurant orders',
+    'Tech stack consolidation from three platforms to one drives structural operating leverage ahead',
+  ],
+
+  risksToBuy: [
+    'SBC dramatically exceeds GAAP net income, meaning reported profits substantially overstate true owner earnings',
+    'RS Rating is exceptionally weak, signaling persistent institutional distribution despite strong operating results',
+    'Grocery and convenience delivery is intensely competitive with well-funded rivals including Instacart and Uber Eats',
+    'Revenue missed consensus in Q1 2026 even as EPS beat, raising questions about top-line durability',
+    'Thin delivery economics leave little margin buffer in a consumer spending slowdown or labor cost spike',
+  ],
 
   verdictNarrative:
     'The fundamental growth story is real — Q1 2026 revenue +33%, GOV +37%, EPS beat of 13.5%, record MAUs and memberships. Analyst consensus is Strong Buy with a median target of $278 (+75% from $159). ' +

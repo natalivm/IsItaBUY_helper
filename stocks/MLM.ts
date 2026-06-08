@@ -41,6 +41,22 @@ export const MLM = defineStock({
     "Probability of 15%+ CAGR: ~25-30%. Market prices MLM as compounder, but it's a well-managed cyclical business. " +
     "At P/E >30x you're betting the cycle stays strong for years. That is the core bet.",
 
+  reasonsToBuy: [
+    'Quarry and logistics oligopoly with near-impenetrable permitting barriers creating a lasting geographic moat',
+    'Infrastructure bill with half its funds still unspent provides a multi-year government demand runway',
+    'Data center and energy construction emerging as a fast-growing new demand driver beyond traditional infrastructure',
+    'Capital expenditure declining significantly drives free cash flow normalization as the investment cycle matures',
+    'Disciplined pricing with sustained positive price-to-cost spread demonstrates genuine aggregates pricing power',
+  ],
+
+  risksToBuy: [
+    'Premium valuation on trough-year earnings leaves substantial downside if the construction cycle disappoints',
+    'Housing remains a persistent drag and any broader economic slowdown would accelerate volume weakness',
+    'Data center and energy demand is still a small share of volume — too small to offset a broad cyclical turn',
+    'Net leverage limits financial flexibility compared to less-indebted aggregates peers',
+    'Cyclical business priced as a secular compounder — the multiple compresses sharply if growth stalls',
+  ],
+
   // ── EPS/PE Scenarios (updated post-earnings call) ──
   epsCagr: [5, 10, 14],        // bear: cycle stalls; base: moderate recovery; bull: infra boom + DC/energy
   exitPE: [20, 24, 28],        // bear: historical trough; base: quality cyclical; bull: premium for infra visibility

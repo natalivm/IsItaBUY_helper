@@ -30,6 +30,22 @@ export const FRSH = defineStock({
     "Key risk: EX decelerates toward 15% while CX never recovers, melting the premium. Key opportunity: EX crosses $1B ARR by 2028 and FCF compounds at 20%+/yr per management guidance — at which point 6× FCF is deeply mispriced. " +
     "Upgrade trigger: EX ARR sustains >25% growth and non-GAAP margin recovers above 22%. Downgrade trigger: EX growth falls below 15% or CX ARR turns negative. Watch Q2 2026 (est. July 27) for non-GAAP margin recovery above 20% post-restructuring.",
 
+  reasonsToBuy: [
+    'Freshservice is the credible affordable alternative to ServiceNow in enterprise ITSM, with net revenue retention above industry averages for multi-product customers',
+    'Net cash covers nearly a third of the entire market cap, providing exceptional downside protection and funding a large buyback at depressed prices',
+    'Substantial buyback authorization at current price retires a meaningful percentage of the float, directly compounding per-share free cash flow',
+    'EX business growing robustly with the first seven-figure ARR enterprise deal already closed, validating the upmarket pivot',
+    'Elite gross margins leave ample room for operating leverage once the deliberate EX investment cycle matures',
+  ],
+
+  risksToBuy: [
+    'CX business faces structural AI-driven headcount deflation, with ARR guided to grow only in low single digits as ticket volume erodes',
+    'Non-GAAP margin compressed sharply year-over-year and must recover in coming quarters to validate the restructuring thesis',
+    'RS Rating and trend are both deeply negative, reflecting persistent institutional exit well below the IPO price',
+    'If EX growth decelerates toward the mid-teens while CX continues to decline, the re-rating thesis collapses entirely',
+    'ServiceNow and Atlassian Jira Service Management are well-resourced incumbents that actively contest every enterprise ITSM deal',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 10, targetMedian: 13, targetHigh: 17, numAnalysts: 13 },
 
   // Bear: CX contracts; EX decelerates to 12%; AI disruption prices in — Rev CAGR ~8%, FCF margin 25%, 10× exit → $14.80

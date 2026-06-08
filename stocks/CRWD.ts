@@ -31,6 +31,22 @@ export const CRWD = defineStock({
     "Valuation reality at ~$684 AH: prob-weighted 5yr model target raised to ~$680 (from $650 on improved AIDR/structural demand). The stock is essentially AT the revised model target even after the selloff. " +
     "HOLD at $664–685. STRONG BUY below $580 pre-split (~$145 post-split after July 2). Watch billings in Q2 — if AIDR pipeline >$50M converts to bookings and billings re-accelerate above 22-24%, thesis strengthens materially.",
 
+  reasonsToBuy: [
+    'AIDR positions CrowdStrike to protect AI agents — a structural expansion of the attackable surface enterprises must defend',
+    'Exclusive security partnerships with leading AI labs provide unmatched enterprise credibility for the AI threat narrative',
+    'Platform breadth across endpoint, cloud, SIEM, and identity creates consolidation pull that is difficult for competitors to replicate',
+    'First GAAP-profitable quarter confirms the operating leverage model works at scale after years of skepticism',
+    'Falcon Flex drives significant upsell expansion inside the existing customer base without requiring new logo growth',
+  ],
+
+  risksToBuy: [
+    'Billings growth lagging ARR growth is a leading indicator of potential revenue deceleration in coming quarters',
+    'SBC represents a substantial portion of revenue, severely distorting true owner economics versus headline FCF',
+    'Microsoft and Palo Alto could replicate AIDR capabilities within existing enterprise suites, commoditizing the new product',
+    'Stock is near the prob-weighted model target even after the post-earnings selloff — limited upside margin of safety at current price',
+    'Premium valuation leaves no room for any execution stumble or softening in enterprise security spending',
+  ],
+
   updatedOn: '06/05',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },

@@ -20,6 +20,21 @@ export const ITT = defineStock({
   aiImpact: 'TAILWIND',
   strategicNarrative: "Strategically transformative SPX FLOW acquisition positions ITT as a global top-3 flow solutions provider. Strong exposure to energy transition (cryogenic pumps) and industrial AI (predictive maintenance). High margin aftermarket mix (43%) provides structural downside protection and margin upside.",
 
+  reasonsToBuy: [
+    'SPX FLOW acquisition creates a global top-three flow solutions position with meaningful cross-sell and scale advantages',
+    'High-margin aftermarket mix provides recurring revenue that cushions profitability through industrial cycle downturns',
+    'Cryogenic pump exposure ties ITT to structural energy transition demand in LNG and hydrogen infrastructure buildout',
+    'Industrial AI predictive maintenance integration expands the addressable market beyond legacy flow applications',
+    'Analyst consensus is firmly in the Buy camp with targets well above the current price, suggesting underappreciation',
+  ],
+
+  risksToBuy: [
+    'SPX FLOW integration could encounter margin dilution if cross-sell synergies take longer to materialize than expected',
+    'Acquisition debt limits capital flexibility and constrains the ability to return cash or pursue further deals',
+    'Industrial cycle sensitivity means earnings can decelerate sharply if global manufacturing activity contracts',
+    'Small analyst coverage universe means valuation can stay disconnected from fair value for extended periods',
+    'Bull case requires de-leveraging to unlock buyback capacity — that takes time and execution discipline',
+  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 215, targetMedian: 228, targetHigh: 245, numAnalysts: 9 },
   revGrowth: [

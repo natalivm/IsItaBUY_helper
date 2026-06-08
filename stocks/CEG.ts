@@ -31,6 +31,22 @@ export const CEG = defineStock({
     "~5,000 MW of new capacity (nuclear uprates, gas, storage) submitted into PJM queue. Barron's #1 Most Sustainable U.S. Company 2026. " +
     "Risks: ERCOT forward weakness, customer pauses awaiting PJM clarity, Calpine lockup overhang (25M shares unlock 6/30/26), capacity-price sustainability. At ~26× FY26 guide midpoint this remains a premium cyclical with a structural AI tailwind, not a cheap compounder. ",
 
+  reasonsToBuy: [
+    'America\'s largest clean-firm nuclear fleet uniquely positioned to meet AI data center around-the-clock power demand',
+    'Management guidance of strong base EPS growth through the decade is underpinned by long-term contracted generation',
+    'Calpine acquisition adds gas-fleet optionality and substantially expands the total megawatt footprint at accretive economics',
+    'PJM colocation precedents and FERC regulatory progress are unlocking hyperscaler power purchase agreements',
+    'Nuclear scarcity premium is durable — new build timelines are measured in decades, not years',
+  ],
+
+  risksToBuy: [
+    'ERCOT forward pricing weakness and merchant power exposure mean earnings are partly cyclical, not purely contracted',
+    'Calpine lockup expiration creates near-term share overhang and potential selling pressure',
+    'Nuclear infrastructure requires substantial ongoing capex, limiting near-term free cash flow conversion',
+    'Capacity price sustainability depends on PJM market design remaining supportive — regulatory changes are a real risk',
+    'Altman Z and debt metrics reflect the capital-intensive nature of the business, which scores poorly on traditional leverage screens',
+  ],
+
   epsCagr: [8, 15, 22],
   exitPE: [16, 22, 27],
   prob: [25, 50, 25],

@@ -32,6 +32,22 @@ export const CACI = defineStock({
     "Post-ARKA leverage is the real watch item: pre-acquisition net debt ~$3.1B (~3.2× FY2025 EBITDA), and ARKA adds ~$2.5B more. CACI must execute on a $700M+ FCF trajectory to deleverage — historical precedent is reassuring. " +
     "At $513 / ~19× FY2025 adj EPS, CACI trades at a substantial discount to defense peers. Analyst consensus target $645 (+26%), 28 analysts, 11 buys vs 3 holds, 0 sells. Do not buy into the falling knife — wait for RS to recover above 40–50 and price to reclaim the 50-day MA before establishing a position.",
 
+  reasonsToBuy: [
+    'National security and DoD revenue concentration provides a ring-fence that DOGE civilian cuts have consistently exempted',
+    'ARKA acquisition adds hypersonics, electronic warfare, and space capabilities receiving accelerated bipartisan funding',
+    'Massive contracted backlog and bid pipeline deliver multi-year revenue visibility well above typical defense IT peers',
+    'FCF set to leap dramatically as the software-defined strategy matures and ARKA integration normalizes',
+    'Pristine SBC profile and consistent share buybacks make CACI one of the cleanest cash-flow stories in defense tech',
+  ],
+
+  risksToBuy: [
+    'Post-ARKA leverage is substantial and requires sustained FCF execution to deleverage without financial strain',
+    'New interest expense from acquisition financing is diluting near-term EPS, creating institutional selling pressure',
+    'Technical picture is deteriorating — severe distribution, below key moving averages, and falling RS signal near-term risk',
+    'Integrating a multi-billion acquisition while managing an existing large backlog introduces meaningful operational complexity',
+    'Any DOGE-driven scope creep into national-security-adjacent IT contracts beyond the current exemption ring-fence would be a surprise negative',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 513, targetMedian: 645, targetHigh: 787, numAnalysts: 28 },
 
   revGrowth: [

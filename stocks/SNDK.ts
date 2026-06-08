@@ -24,6 +24,22 @@ export const SNDK = defineStock({
   strategicNarrative:
     'SanDisk emerged from Western Digital\'s February 2025 spinoff as the world\'s only pure-play publicly traded NAND flash company — combining the SanDisk brand (35+ years of flash dominance) with a world-class Kioxia manufacturing JV and near-zero reported CapEx via the fab-lite model. The spinoff timing was extraordinary: NAND pricing inflected from a historic trough (EBITDA -$847M in FY23) to a super-cycle driven by AI infrastructure demand. Model weight storage, inference caching, and vector database indexing require orders of magnitude more NAND per GPU cluster than prior computing generations — enterprise SSD is now a strategic input alongside GPUs for hyperscalers.\n\nThe structural bull case is a permanent demand floor that prior NAND cycles never had, with AI workloads sustaining 35-45% EBITDA margins even as client/consumer normalizes. SNDK\'s fab-lite structure amplifies FCF at cycle peaks while limiting downside capex exposure. The irreducible bear case is that NAND supply always responds: Samsung, SK Hynix, and Kioxia all have structural incentives to run fabs at full utilization regardless of price. FY23\'s negative EBITDA on $6B revenue is the template, not an outlier — the question is whether AI demand creates a floor or just raises the next trough by a few percentage points.',
 
+  reasonsToBuy: [
+    'World\'s only pure-play publicly traded NAND company — unique asset with no direct listed comps',
+    'AI infrastructure demand for enterprise SSD (model weights, inference caching, vector indexing) creates a structurally higher demand floor than prior cycles',
+    'Fab-lite model via Kioxia JV amplifies FCF at cycle peaks while limiting balance-sheet CapEx exposure',
+    'Net cash balance sheet inherited from spinoff — no legacy WD debt constraining capital allocation',
+    'Pristine Burry profile with extraordinarily low SBC relative to earnings, rare among large-cap technology names',
+  ],
+
+  risksToBuy: [
+    'NAND is inherently cyclical — Samsung, SK Hynix, and Kioxia all have incentives to run fabs regardless of price',
+    'FY23 negative EBITDA on billions in revenue proves how catastrophic a down-cycle can be for the business model',
+    'Enterprise SSD AI demand floor is unproven over a full cycle — prior AI-demand thesis cycles have disappointed',
+    'No direct CapEx control means SNDK cannot unilaterally cut supply to defend pricing in a downturn',
+    'Client and consumer NAND demand remains cyclically soft, and any AI capex pause amplifies the inventory correction risk',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 1000, targetMedian: 1460, targetHigh: 3250, numAnalysts: 22 },
 
   modelType: 'EPS_PE',

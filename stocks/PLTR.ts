@@ -32,6 +32,22 @@ export const PLTR = defineStock({
     "Risk is asymmetric and reflexive: PLTR trades on momentum + narrative more than fundamentals. RS faded from 99 to 72 with -22% YTD and -34% from highs; the unwind has started but the multiple is still nowhere near 'cheap.' " +
     "Quality is unimpeachable — wait for a real reset (sub-$110, P/S below 35×) before a full position. HOLD: own a starter, add aggressively only on multiple compression, not on price weakness alone.",
 
+  reasonsToBuy: [
+    'AIP is emerging as the operational AI layer for Fortune 500 enterprises with strong conversion from boot-camps',
+    'Government segment provides multi-decade structural moat through defense and intelligence contracts',
+    'Elite unit economics: best-in-class gross and FCF margins with net cash balance sheet and essentially no leverage',
+    'US Commercial revenue compounding at extraordinary rates as enterprise AI deployment accelerates broadly',
+    'Consensus EPS growth expectations are among the highest of any large-cap software company in the market',
+  ],
+
+  risksToBuy: [
+    'Multiple is priced for perfection — even strong execution in the base case produces only modest stock returns',
+    'RS has already faded materially from peak levels, signaling the momentum unwind has begun',
+    'Enterprise AI pilot-to-production conversion risk: boot-camps may not scale into full operational rollouts',
+    'No buyback program and substantial SBC create Tragic-tier dilution with no cash offset for shareholders',
+    'Bear case delivers roughly flat returns over five years despite strong absolute business growth — multiple compression dominates',
+  ],
+
   analystConsensus: { rating: 'Hold', targetLow: 95, targetMedian: 186, targetHigh: 280, numAnalysts: 24 },
 
   revGrowth: [

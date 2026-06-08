@@ -35,6 +35,22 @@ export const RTX = defineStock({
     'This is not an explosive AI-cycle trade — the 5-year CAGR to base case is ~5%. But unlike many high-multiple growth stocks, the downside is anchored by contracted defense backlog and EPS growth that does not require perfection. ' +
     'Burry SBC check (estimated): 8% overstatement (Pristine) — SBC $600M vs. GAAP NI $7.3B. Defense contractor compensation is structurally cleaner than software peers.',
 
+  reasonsToBuy: [
+    'Patriot, AMRAAM, and Stinger systems are in the critical procurement path of accelerating NATO and allied defense budgets',
+    'Pratt & Whitney GTF inspection program completing in FY26-27 converts a multi-year headwind into a meaningful aftermarket recovery tailwind',
+    'Pristine SBC structure and growing buyback program make RTX one of the cleanest capital return stories among large-cap industrials',
+    'Commercial aerospace aftermarket generates recurring high-margin revenue that compounds with every new engine delivered globally',
+    'Ultra-low beta and contracted backlog anchor the downside in ways that high-multiple growth stocks simply cannot match',
+  ],
+
+  risksToBuy: [
+    'GTF inspection scope could exceed guided estimates, extending the margin headwind and delaying the FCF inflection',
+    'Elevated merger debt limits financial flexibility and amplifies equity downside if earnings disappoint',
+    'Commercial aerospace is a hidden cyclical risk — nearly half of revenue is linked to flight hour volumes that contract in a recession',
+    'Defense budget sequestration or US fiscal austerity could pressure Raytheon\'s procurement pipeline in a political gridlock scenario',
+    'Base-case CAGR is modest — this is a capital-preservation compounder, not a high-return vehicle for aggressive growth mandates',
+  ],
+
   analystConsensus: { rating: 'Moderate Buy', targetLow: 160, targetMedian: 215, targetHigh: 242, numAnalysts: 24 },
 
   revGrowth: [

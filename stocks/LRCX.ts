@@ -40,6 +40,22 @@ export const LRCX = defineStock({
     "you're betting on sustained AI capex, no major WFE digestion cycle, and the market maintaining a premium multiple. " +
     "Burry full-SBC adjustment (Burry-published): 49% overstatement (Critical) — real owner profit ~51% of GAAP; apply discount when comparing multiples to peers.",
 
+  reasonsToBuy: [
+    'Dominant etch and deposition franchise with mid-to-high-thirty percent share of global wafer fab equipment',
+    'CSBG installed base of over a hundred thousand chambers provides sticky, recurring-like revenue through downturns',
+    'Structural content gains at each new node — GAA, backside power, and advanced packaging require more etch steps per wafer',
+    'WFE cycle raised above prior estimates with advanced packaging revenue growing rapidly year-over-year',
+    'Aggressive buyback program returning the majority of FCF annually, compounding EPS growth beyond revenue',
+  ],
+
+  risksToBuy: [
+    'China represents over a third of revenue — a single export-control policy shift could erase a quarter of sales overnight',
+    'Premium multiple prices in a sustained AI supercycle; historical mean reversion alone can erase years of EPS growth',
+    'WFE cycles typically pause after two to three strong years — memory capex normalization could create a sharp air pocket',
+    'Capital returns exceeding operating cash flow are compressing the net cash cushion ahead of a potential downturn',
+    'Burry-published SBC overstatement of nearly half means reported earnings materially overstate true owner economics',
+  ],
+
   epsCagr: [9, 15, 19],
   exitPE: [20, 28, 38],
   prob: [20, 45, 35],

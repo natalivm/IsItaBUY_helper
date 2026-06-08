@@ -1,10 +1,10 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Info, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Info, LayoutDashboard, ChevronDown, TrendingUp, AlertTriangle } from 'lucide-react';
 import { TickerDefinition, ProjectionData, ScenarioType } from '../types';
 import { computeStockMetrics, usd, pctFmt } from '../services/stockMetrics';
-import { applyNarrativeTokens, globalNarrativeTokens, scenarioNarrativeTokens } from '../services/narrative';
+import { applyNarrativeTokens, scenarioNarrativeTokens } from '../services/narrative';
 import { AI_IMPACT_BADGE } from '../constants';
 import ScenarioMetricsCard from './ScenarioMetricsCard';
 import StockPageHeader from './StockPageHeader';
@@ -38,7 +38,7 @@ const StockDetailView: React.FC<Props> = ({
   const tc = tickerDef.themeColor;
   const containerRef = useRef<HTMLDivElement>(null);
   const [quantOpen, setQuantOpen] = useState(false);
-  const [alphaOpen, setAlphaOpen] = useState(false);
+  const [alphaOpen, setAlphaOpen] = useState(true);
   useSwipeNavigation(containerRef, { onSwipeLeft: onBack, onSwipeRight: onNext });
 
   const metrics = useMemo(
@@ -47,12 +47,8 @@ const StockDetailView: React.FC<Props> = ({
   );
 
   const isEpsPe = tickerDef.modelType === 'EPS_PE';
-  // Live-value tokens so narrative prose binds to the same projections the cards
-  // render — text can never drift from spot the way a baked-in $114.68 did.
-  const globalTokens = useMemo(
-    () => globalNarrativeTokens(tickerDef.currentPrice, allProjections, investmentConclusion.pwAvg),
-    [tickerDef.currentPrice, allProjections, investmentConclusion.pwAvg]
-  );
+  // Live-value tokens so the quant/scenario prose binds to the same projections
+  // the cards render — text can never drift from spot the way a baked-in $114.68 did.
   const baseScenarioTokens = useMemo(
     () => scenarioNarrativeTokens(tickerDef.currentPrice, currentProjection),
     [tickerDef.currentPrice, currentProjection]
@@ -176,7 +172,7 @@ const StockDetailView: React.FC<Props> = ({
                     </AnimatePresence>
                   </div>
 
-                  {/* Alpha Strategic View */}
+                  {/* Alpha Strategic View \u2014 Why Buy / Risks */}
                   <div className="rounded-xl border border-slate-800/60 overflow-hidden">
                     <button
                       onClick={() => setAlphaOpen(o => !o)}
@@ -184,7 +180,7 @@ const StockDetailView: React.FC<Props> = ({
                     >
                       <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-2">
                         <LayoutDashboard className="w-3 h-3" />
-                        Alpha Strategic View
+                        Why Buy / Risks
                       </h3>
                       <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform duration-200", alphaOpen && "rotate-180")} />
                     </button>
@@ -198,12 +194,39 @@ const StockDetailView: React.FC<Props> = ({
                           transition={{ duration: 0.2, ease: 'easeInOut' }}
                           className="overflow-hidden"
                         >
-                          <div className="px-4 pb-4 pt-1 space-y-3">
-                            {tickerDef.strategicNarrative.split('\n\n').map((para, i, arr) => (
-                              <p key={i} className="text-base text-slate-200 font-medium leading-relaxed italic">
-                                {i === 0 ? '\u201c' : ''}{applyNarrativeTokens(para, globalTokens)}{i === arr.length - 1 ? '\u201d' : ''}
-                              </p>
-                            ))}
+                          <div className="px-4 pb-5 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {tickerDef.reasonsToBuy && tickerDef.reasonsToBuy.length > 0 && (
+                              <div>
+                                <div className="text-xs font-black uppercase tracking-[0.2em] text-emerald-500 mb-3 flex items-center gap-2">
+                                  <TrendingUp className="w-3.5 h-3.5" />
+                                  Why Buy
+                                </div>
+                                <ul className="space-y-2.5">
+                                  {tickerDef.reasonsToBuy.map((r, i) => (
+                                    <li key={i} className="flex gap-2.5 text-sm text-slate-200 leading-relaxed">
+                                      <span className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 bg-emerald-500" />
+                                      <span>{r}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {tickerDef.risksToBuy && tickerDef.risksToBuy.length > 0 && (
+                              <div>
+                                <div className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-3 flex items-center gap-2">
+                                  <AlertTriangle className="w-3.5 h-3.5" />
+                                  Risks
+                                </div>
+                                <ul className="space-y-2.5">
+                                  {tickerDef.risksToBuy.map((r, i) => (
+                                    <li key={i} className="flex gap-2.5 text-sm text-slate-200 leading-relaxed">
+                                      <span className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 bg-amber-500" />
+                                      <span>{r}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
                           </div>
                         </motion.div>
                       )}

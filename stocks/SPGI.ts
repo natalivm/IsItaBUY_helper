@@ -25,6 +25,21 @@ export const SPGI = defineStock({
     "If AI margin uplift + Mobility spin + index tailwinds compound, this is a 16-18% compounder. If credit cycle slows issuance, EPS growth halves and you own a 2-4% CAGR at current price. " +
     "35-40% probability of 15%+ CAGR — the highest-quality compounder in the portfolio, waiting for a better entry.",
 
+  reasonsToBuy: [
+    'Ratings and index businesses are regulatory-embedded monopolies — issuers and fund managers have no credible alternative',
+    'CapIQ and Platts are workflow systems-of-record that AI models augment rather than replace, deepening rather than disrupting the moat',
+    'AI-driven efficiency program targeting meaningful cost reduction creates a structural margin uplift not yet priced in',
+    'Over half a century of consecutive dividend increases reflects the earnings durability of a near-monopoly data franchise',
+    'Passive investing growth structurally benefits the index business as trillions in AUM track S&P-branded benchmarks',
+  ],
+
+  risksToBuy: [
+    'Credit cycle slowdown sharply reduces debt issuance volume, which directly compresses the ratings segment revenue',
+    'Antitrust and regulatory scrutiny on index monopoly power could constrain pricing or force structural changes',
+    'IHS Markit integration leverage creates a balance sheet overhang in a higher-rate environment',
+    'Weak institutional price momentum signals the market already fully values the quality, leaving little near-term catalyst',
+    'Mobility spin and AI margin benefits are years from full impact — current valuation leaves no margin of safety',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 480, targetMedian: 623, targetHigh: 698, numAnalysts: 26 },
   revGrowth: [

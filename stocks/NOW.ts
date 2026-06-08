@@ -30,6 +30,22 @@ export const NOW = defineStock({
     "So you're paying ~20× forward earnings for a 20%+ grower with great economics — historically cheap for this business. The honest catch: the de-rating isn't pure panic. Whether GenAI commoditizes ITSM is a real, unresolved question, and May's Analyst Day bull case ($30B+ 2030 subscription, Rule of 60) is management talking up a beaten-down stock, so we lean more cautious than consensus. " +
     "Net: a BUY, but a tempered one. The base case (~$150 in 5 years, near the analyst median) is a quality compounder at a fair price; the bear case (AI eats the moat, ~$90) is live enough that we weight it at 30%. Best capital allocation in the cohort and a decade-worst valuation for the same company — just not the slam-dunk it would have been without the AI overhang.",
 
+  reasonsToBuy: [
+    'Deeply embedded system-of-record for enterprise IT, employee, and customer workflows with genuine switching costs',
+    'Net retention above the most durable SaaS benchmarks reflects customers expanding usage organically quarter after quarter',
+    'Now Assist GenAI layer can deepen ARPU per customer rather than being displaced, if AI co-pilot adoption accelerates',
+    'Best capital allocation in the SaaS cohort — buybacks running well above SBC with nearly flat diluted share count over five years',
+    'Stock cut in half on AI-disruption fear while the underlying fundamentals continued accelerating — historically cheap valuation',
+  ],
+
+  risksToBuy: [
+    'Microsoft bundling Copilot and Power Platform with M365 at near-zero marginal cost is a real, unresolved commoditization threat',
+    'Salesforce Agentforce and SAP expansions directly target the ITSM and workflow automation territory ServiceNow owns',
+    'Bear case already has material probability weight — the AI disruption thesis is not a tail risk, it is a live debate',
+    'RS falling and institutions distributing signal ongoing technical weakness that could weigh on the stock near term',
+    'Burry flagged SBC overstatement as elevated; reported earnings overstate true owner economics relative to the multiple paid',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 75, targetMedian: 144, targetHigh: 180, numAnalysts: 40 },
 
   revGrowth: [

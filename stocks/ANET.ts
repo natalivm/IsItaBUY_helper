@@ -21,6 +21,21 @@ export const ANET = defineStock({
   aiImpact: 'TAILWIND',
   strategicNarrative: "Arista is the pure-play backbone of the AI cluster with an EOS moat and hyperscaler lock-in. Q1 2026 print raised the bar: revenue $2.71B (+35.1% YoY), FY26 guide lifted to $11.5B (+27.7%) with AI fabrics now $3.5B (more than doubling YoY). Jayshree calls demand 'the best I've ever seen' — supply, not demand, is the multi-year constraint, with purchase commitments stepping up to $8.9B. Quality is undeniable — 47% FCF margin, zero debt, $12.35B cash, scale-across (7800R) now a differentiated third leg alongside scale-out and a 2027+ scale-up opportunity tied to ESUN/XPO. Near-term GM pressure (62–63%) from memory/wafer costs is real but absorbed; pricing power remains intact. Key risk is P/E compression if AI capex decelerates, but sustained 20%+ growth and margin durability justify a premium exit multiple.",
 
+  reasonsToBuy: [
+    'EOS network operating system creates deep hyperscaler lock-in — switching costs compound with every incremental deployment.',
+    'AI fabric revenue more than doubling with supply, not demand, as the binding multi-year constraint.',
+    'Scale-across platform (7800R) opens a third growth leg beyond scale-out, expanding the addressable opportunity.',
+    'Fortress balance sheet — zero debt and billions in cash fund buybacks and R&D without any dilution risk.',
+    'ESUN and next-generation optics position Arista for the scale-up cluster opportunity beginning in 2027.',
+  ],
+
+  risksToBuy: [
+    'Valuation already reflects sustained premium growth — any AI capex deceleration would compress the multiple sharply.',
+    'Heavy concentration in two hyperscaler customers means a single spending pause can hit revenue disproportionately.',
+    'Near-term gross margin pressure from memory and wafer costs could persist longer than the market expects.',
+    'Campus and enterprise networking expansion is still unproven at scale and faces entrenched Cisco competition.',
+    'The law of large numbers bites quickly — sustaining above-market growth becomes harder as the revenue base compounds.',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 174, targetHigh: 200, numAnalysts: 15 },
   revGrowth: [

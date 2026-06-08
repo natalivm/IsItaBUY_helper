@@ -29,6 +29,22 @@ export const CLS = defineStock({
     "At ~54x forward P/E ($8.75 FY26E), the stock prices in strong execution; risk is high hyperscaler client concentration and CapEx cycle duration. " +
     "RS 93 confirms momentum. Risk/reward is balanced — upside if AI supercycle extends, but multiple compression risk if growth decelerates.",
 
+  reasonsToBuy: [
+    'Top-tier EMS partner for hyperscaler AI infrastructure with a third major win on the high-speed switching platform',
+    'Demand visibility extends well beyond the current year — backlog and design wins already covering future ramp periods',
+    'Earnings compounding at rapid rates as AI infrastructure buildout scales with the rack-level platform transition',
+    'Low leverage and substantial credit facility provide financial flexibility to fund the expansion CapEx cycle',
+    'Technical momentum confirms institutional accumulation aligned with the AI infrastructure supercycle narrative',
+  ],
+
+  risksToBuy: [
+    'Extreme hyperscaler client concentration means a single customer pause could collapse near-term revenue sharply',
+    'Large capital expenditure cycle temporarily depresses free cash flow, leaving limited margin for error on execution',
+    'EMS businesses carry structurally thin margins — any cost inflation or program mis-execution magnifies the impact on profits',
+    'The current premium multiple prices in multi-year execution that has yet to fully materialize at the guided rate',
+    'AI capex cycle duration is uncertain — a pullback in hyperscaler spending could end growth momentum abruptly',
+  ],
+
   epsCagr: [10, 18, 24],
   exitPE: [14, 22, 26],
   prob: [25, 50, 25],

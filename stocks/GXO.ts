@@ -53,6 +53,22 @@ export const GXO = defineStock({
     "If Wincanton synergies land + margins expand toward 5% EBIT + the cycle firms, this is a 15%+ compounder; if volumes stay flat it's ~8% with limited multiple support. " +
     "~40% probability of 15%+ CAGR — and at ~$50 the stock has dropped back into the entry zone where risk/reward flips favorably.",
 
+  reasonsToBuy: [
+    'Record pipeline and secured incremental revenue provide strong near-term earnings visibility',
+    'Wincanton integration synergies tracking on schedule, adding meaningful margin uplift through year-end',
+    'Amazon supply-chain overlap is narrow, and the vast majority of the market remains insourced and addressable',
+    'Low customer churn reflects long-term contracted revenue that cushions against near-term volume softness',
+    'Management raised guidance after Q1, signaling confidence in H2 organic acceleration from signed-but-unstarted wins',
+  ],
+
+  risksToBuy: [
+    'Amazon\'s expanding supply-chain offering created a sentiment overhang that could persist even if overlap is limited',
+    'Elevated leverage constrains capital flexibility; free cash flow is negative in seasonally weak quarters',
+    'Organic volume growth is modest and relies on conservative assumptions around existing-customer demand recovery',
+    'Business model is operationally intensive with thin margins, leaving earnings exposed to volume and cost surprises',
+    'Bull case requires strong macro environment and full pipeline conversion — execution risk remains the key swing factor',
+  ],
+
   epsCagr: [5, 11, 16],
   exitPE: [16, 19, 22],
   prob: [22, 45, 33],     // Modest nudge post-Q1 2026: guidance raise + record $2.7B pipeline + $870M secured strengthen base/bull; bear trimmed (25→22) because the ~24% Amazon-driven de-rating already priced much of the downside. Not a re-tune — execution still the swing factor.

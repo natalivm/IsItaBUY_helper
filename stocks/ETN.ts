@@ -23,6 +23,22 @@ export const ETN = defineStock({
   ratingOverride: 'HOLD',
   strategicNarrative:
     "ETN is a best-in-class electrification and data-center-power compounder riding three secular megatrends at once: AI data center electrical buildout, grid modernization/reshoring, and the broad electrification of everything. Q1 2026 (reported May 5, 2026) was a record: sales $7.5B (+17% YoY — 10% organic, 4% acquisitions, 3% FX), adjusted EPS $2.81, and data-center orders up a staggering 240%. Management raised FY26 organic growth guidance to 9–11% (from 8%) and guided adjusted EPS to $13.05–13.50 (+10% midpoint); the Boyd Thermal acquisition (liquid cooling) closed in March and adds ~$1.7B of 2026 revenue, deepening the data-center thermal/power stack. FY25 revenue was $27.4B with EBITDA margins past 23% on operating leverage; the Electrical Americas backlog and data-center order book give multi-year visibility, and the balance sheet is pristine (net debt/EBITDA ~1.5×, interest coverage >20×, $1.9B of FY25 buybacks). A planned Mobility (Vehicle/eMobility) spin-off would further concentrate the portfolio on electrical/data-center power. The catch is valuation: ~39× trailing GAAP earnings (a friendlier ~30× on FY26 adjusted EPS) against a high-single/low-double-digit EPS CAGR — the market already pays a full premium for the story. Quality is unimpeachable and momentum is strong (new highs, price ~21% above its 200-day), but model fair value sits near or modestly below spot. One watch item: FY26 segment-margin guidance was trimmed 50 bps on input costs and Electrical Americas ramp. Verdict: HOLD — own the quality, but wait for a pullback or fresh growth re-acceleration to add here.",
+  reasonsToBuy: [
+    'Three simultaneous secular megatrends — AI data center power, grid modernization, and broad electrification — underpin multi-year demand visibility',
+    'Data center orders growing at an extraordinary rate confirms Eaton\'s positioning at the critical power infrastructure layer',
+    'Best-in-class EBITDA margins and strong buyback program demonstrate the operational quality of a mature industrial compounder',
+    'Planned Mobility spin-off would concentrate the portfolio purely on high-growth electrification and data center power businesses',
+    'Boyd Thermal acquisition deepens the liquid-cooling stack, expanding content per data center rack as AI density rises',
+  ],
+
+  risksToBuy: [
+    'Valuation already reflects a full premium at roughly thirty-nine times trailing earnings with limited margin of safety',
+    'FY26 segment-margin guidance was trimmed due to input costs, suggesting operating leverage is not yet as smooth as projected',
+    'AI data center capex digestion could cause a sharp order deceleration after the current hyper-investment cycle peaks',
+    'Industrial business lines face cyclical headwinds if global manufacturing activity slows materially from current levels',
+    'Net debt of tens of billions limits financial flexibility if an acquisition or economic downturn requires rapid capital deployment',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 321, targetMedian: 451, targetHigh: 534, numAnalysts: 19 },
   revGrowth: [
     [0.05, 0.04, 0.03, 0.03, 0.03],

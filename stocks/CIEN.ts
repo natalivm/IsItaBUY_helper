@@ -21,6 +21,22 @@ export const CIEN = defineStock({
   aiImpact: 'TAILWIND',
   strategicNarrative: "Type B — cyclical growth on AI optical networking / data center interconnect wave. CIEN is the undisputed global leader in high-speed optical connectivity, benefiting from hyperscaler AI capex and 800G/1.6T upgrades. Q1 FY26 record: $1.43B revenue (+33% YoY), adj EPS $1.35 (2x YoY), gross margin 44.7%. FY26 guidance raised to $5.9B-$6.3B (+24-28% YoY). Backlog surged to $7B (+$2B in one quarter), with nearly all new orders for FY27 — providing multiyear visibility. Three hyperscalers deploying scale-across AI training solutions (early innings). Supply-constrained: demand outstripping supply for several quarters. New product inflections: Hyper-rail, Vesta 200 CPO, Nitro Redriver. Moat moderate — switching costs, vertical integration, deep hyperscaler collaboration, but faces Cisco/Nokia/Huawei competition in WAN. Forward P/E ~48x prices in significant cycle recovery. Key risk: telecom capex cyclicality — hardware revenue non-recurring, EPS historically volatile (2.91→1.90→2.72→1.82→0.85). RS 99 = massive momentum, not structural moat. Expected CAGR ~3-5% at current price. Probability of 15%+ CAGR: ~10-15%. Fair entry for 15% returns ~$150-$180. ",
 
+  reasonsToBuy: [
+    'Undisputed global leader in high-speed optical connectivity with deep hyperscaler design relationships',
+    'Massive backlog secured well into the future, providing unusually strong near-term revenue visibility',
+    'Next-generation product portfolio — Hyper-rail, CPO, Nitro Redriver — opens in-datacenter optical markets beyond WAN',
+    'Supply-constrained market means pricing power and gross margin hold near record levels while demand outpaces supply',
+    'AI data center interconnect is a structural multi-year buildout, not a one-quarter upgrade cycle',
+  ],
+
+  risksToBuy: [
+    'EPS has historically been highly volatile through telecom capex cycles — drawdowns have been severe and prolonged',
+    'Hardware-centric revenue model lacks a recurring software base to cushion when the upgrade cycle peaks',
+    'Current valuation prices in a sustained supercycle — any deceleration in hyperscaler AI spending would compress the multiple sharply',
+    'Cisco, Nokia, and Huawei compete aggressively on price in WAN and can replicate portions of the product roadmap',
+    'Momentum-driven RS rating inflates near-term sentiment; the structural moat is moderate, not best-in-class',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 180, targetMedian: 260, targetHigh: 320, numAnalysts: 20 },
   revGrowth: [
     [0.28, 0.08, 0.05, 0.04, 0.03],

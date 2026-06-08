@@ -23,6 +23,22 @@ export const FICO = defineStock({
   strategicNarrative: "Q2 FY2026 (Mar quarter) materially refuted the bear thesis: Revenue $691.7M (+38.7% YoY), Adj. EPS $12.50 (+60.1%), Operating margin 58.2% (+893bps YoY), FCF $214.3M (+227% YoY). Mgmt raised FY26 guide to $2.45B revenue (from $2.35B) and Non-GAAP EPS $40.45 (from $38.17). Scores segment $475M (+60% YoY) — driven by +72% B2B growth on mortgage origination pricing power and volume recovery. So far, VantageScore competitive threat has not materialized in the numbers — FICO's pricing power survived the regulatory overhang. Caveats: Software grew only +7.4% (non-platform ARR -8% — legacy erosion); Scores now 68.7% of revenue (concentration risk on mortgage cycle); long-term debt rose to $3.64B (from $2.66B at FY25-end), deepening stockholders' deficit to -$2.10B as debt-funded shareholder returns continue. RS 6 still reflects severe institutional distribution coming into the print — re-rating potential if momentum reverses. At $1,015, market is paying ~25x revised FY26 Non-GAAP EPS — discount remains for VantageScore/regulatory tail risk. Risks: mortgage cycle reversal, FHFA pricing caps, VantageScore GSE adoption inflection, debt service burden.",
 
 
+  reasonsToBuy: [
+    'Scores business functions as a near-monopoly in US mortgage origination, giving FICO unmatched pricing power over lenders',
+    'Mortgage cycle recovery is driving explosive B2B volume and pricing growth simultaneously, a rare double-compounding event',
+    'Exceptional free cash flow conversion well above most software peers, with margins at record highs and still expanding',
+    'Aggressive share buyback program has reduced share count materially over five years, creating powerful per-share earnings compounding',
+    'Platform software provides a durable second engine that could accelerate once AI-driven decisioning demand scales',
+  ],
+
+  risksToBuy: [
+    'Revenue is dangerously concentrated in mortgage-cycle volumes — any origination slowdown hits earnings disproportionately hard',
+    'VantageScore gaining GSE adoption or FHFA imposing pricing caps would permanently impair the Scores monopoly thesis',
+    'RS Rating reflects severe institutional distribution — the stock has dramatically underperformed the market despite exceptional fundamentals',
+    'Debt load has grown materially as the company finances buybacks with borrowed capital, adding financial risk to the model',
+    'Software segment\'s non-platform ARR is eroding, and legacy replacement risk grows if competitors land enterprise decisioning contracts',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 1600, targetMedian: 1556, targetHigh: 2661, numAnalysts: 12 },
   // FY26 guide raised to $2.45B = +23% off rev25 $1,990. Year 1 in all cases reflects guide is largely locked in (Q2 +38.7% already booked).
   revGrowth: [

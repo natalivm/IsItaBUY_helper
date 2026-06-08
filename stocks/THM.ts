@@ -29,6 +29,22 @@ export const THM = defineStock({
     "But this is pre-revenue, pre-production, no earnings, no operating cash flow — purely speculative. " +
     "Bull case ~$6 driven by gold reserve optionality; bear case ~$0.40 (cash floor minus burn). Size as speculation only. ",
 
+  reasonsToBuy: [
+    'One of the largest undeveloped gold reserves in a stable, Tier-1 Alaskan jurisdiction',
+    'At elevated gold prices the project margin per ounce is exceptional, creating huge NPV asymmetry',
+    'Paulson and Co. is a major and committed institutional backer with meaningful ownership',
+    'No debt and enough cash for multi-year feasibility and permitting work without near-term dilution',
+    'A streaming deal or major-producer JV at high gold prices could unlock reserve value rapidly',
+  ],
+
+  risksToBuy: [
+    'Pre-revenue and pre-production — entirely speculative with no operating cash flow to provide a floor',
+    'The capex requirement dwarfs current cash, requiring massive external financing or severe dilution',
+    'Gold price reversal would collapse project economics and make financing nearly impossible',
+    'Permitting in Alaska is a multi-year process with real regulatory and environmental risk',
+    'Equity value could fall to near zero if gold weakens and capital markets close for junior miners',
+  ],
+
   revGrowth: [
     [-0.10, -0.15, -0.20, -0.20, -0.20],
     [0.10, 0.15, 0.20, 0.15, 0.10],

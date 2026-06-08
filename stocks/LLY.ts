@@ -45,6 +45,22 @@ export const LLY = defineStock({
     "Probability of 15%+ CAGR: ~45%. Main risk is valuation / multiple compression, not business deterioration. " +
     "RS 80: strong relative strength in consolidation, not a fresh breakout leader.",
 
+  reasonsToBuy: [
+    'GLP-1 platform is a metabolic disease franchise comparable in scale and durability to NVDA in AI or ASML in lithography',
+    'Tiered therapy stack from oral mass-market to high-efficacy injections maximizes patient lifetime value across every segment',
+    'Orforglipron oral approval expands the total addressable market to the billions of patients who reject injectable therapy',
+    'Retatrutide triple-agonist targets severe obesity where payer willingness-to-pay is highest and competition is thinnest',
+    'Manufacturing moat and Lilly Direct channel create structural barriers that pipeline-only competitors cannot quickly replicate',
+  ],
+
+  risksToBuy: [
+    'Priced for near-perfect execution — even modest deceleration in GLP-1 penetration triggers significant multiple compression',
+    'Novo Nordisk, Amgen, and Pfizer are all aggressively developing competing GLP-1 and oral obesity therapies',
+    'Retatrutide triple-agonist Phase III could disappoint on side-effect profile, removing the highest-value pipeline asset',
+    'Payer and employer pushback on GLP-1 reimbursement at scale could suppress volume growth well below TAM estimates',
+    'Post-2030 patent cliff on tirzepatide creates a revenue overhang that weighs on long-duration valuation assumptions',
+  ],
+
   epsCagr: [12, 18, 22],
   exitPE: [22, 28, 35],
   prob: [20, 45, 35],

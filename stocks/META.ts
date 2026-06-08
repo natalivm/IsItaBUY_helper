@@ -32,6 +32,22 @@ export const META = defineStock({
     "AI capex risk is now baked into the BASE case, not just the bear: consensus (TIKR) models FCF margin collapsing to ~0.7% FY26E and recovering only to ~12% FY29 / ~17% FY30 as CapEx runs $133-189B/yr — the prior 25%+ FY29 FCF assumption was ~2× consensus and has been removed. " +
     "At ~$614 / forward P/E ~18.9× (on consensus FY26E EPS ~$32.5) / analyst median $820, META is still the cheapest Mag-7 on a quality-adjusted basis, but the de-rating is the market pricing real, unresolved capex-ROI risk — not pure overreaction. RS 42 falling reflects that anxiety.",
 
+  reasonsToBuy: [
+    'Dominant social platform with over three and a half billion daily active people and unmatched advertising data flywheel',
+    'Muse Spark frontier model signals Meta is now a credible AI lab capable of competing at the top of the capability curve',
+    'WhatsApp paid messaging and business AI tools represent a structurally new revenue stream compounding rapidly',
+    'Cheapest Mag-7 name on a quality-adjusted basis despite record operating margins and best-in-class gross margins',
+    'Declining share count and strong buyback history provide durable EPS tailwind as the AI build matures',
+  ],
+
+  risksToBuy: [
+    'Massive AI infrastructure capex commitments severely compress near-term free cash flow with uncertain return on investment',
+    'RS falling with institutions distributing — technical setup argues against buying into current price weakness',
+    'Reality Labs continues consuming billions in capital with no clear monetization timeline or platform success',
+    'Dependence on a single advertising revenue model leaves Meta exposed to any macro-driven ad spending slowdown',
+    'Regulatory and antitrust exposure across multiple jurisdictions could structurally constrain the platform\'s growth',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 600, targetMedian: 820, targetHigh: 1000, numAnalysts: 56 },
 
   // rev25 = FY2026 estimate; year-1 = FY2027 growth rate

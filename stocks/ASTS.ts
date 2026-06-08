@@ -30,6 +30,22 @@ export const ASTS = defineStock({
     "New partners: TELUS (Canada #2), Axian Telecom (pan-African, 11 countries). 3 new U.S. government awards through prime contractors (comms + non-comms). Golden Dome / Space Force budget request >$70B backdrop is favorable. 2027 revenue opportunity approaching $1B (contracted + highly recurring). " +
     "Bear case remains the same: Q1 miss creates pressure on a guide that requires the back 3 quarters to average $45-62M each. No guidance revision — that's the key signal to watch. RS falling to 90 reflects post-miss institutional caution. HOLD until launch milestones and H2 revenue ramp provide evidence.",
 
+  reasonsToBuy: [
+    'Only company building space-based broadband for unmodified standard smartphones — the technical moat is years wide.',
+    'Nearly sixty MNO partners covering billions of subscribers globally provides enormous distribution without building retail infrastructure.',
+    'Custom ASIC chip delivers a generational performance leap over FPGA satellites, dramatically improving unit economics at scale.',
+    'Government and defense contracts through prime contractors add a high-value recurring revenue stream beyond consumer mobile.',
+    'Cash-funded balance sheet provides runway to execute the constellation build without near-term dilutive financing pressure.',
+  ],
+
+  risksToBuy: [
+    'Revenue is still negligible for a company carrying a large market cap — execution must convert the guide each remaining quarter.',
+    'Satellite launch anomalies (BB7 loss) demonstrate irreversible single-point failures with no insurance on constellation assets.',
+    'Extreme share dilution history and ongoing capital intensity mean per-share returns depend on revenue scaling faster than the float.',
+    'Q1 revenue miss far below expectations raises legitimate questions about the pace of MNO monetization and subscriber activation.',
+    'Even in the base case, sustained profitability is years away and requires flawless execution across launches, ground integration, and partner ramp.',
+  ],
+
   analystConsensus: { rating: 'Hold', targetLow: 43, targetMedian: 70, targetHigh: 137, numAnalysts: 9 },
   revGrowth: [
     [0.97, 2.21, 1.44, 0.70, 0.45],

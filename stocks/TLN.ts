@@ -23,6 +23,21 @@ export const TLN = defineStock({
   aiImpact: 'TAILWIND',
   strategicNarrative: "Nuclear moat meets AI infrastructure premium. The January 2026 acquisition of 2.6 GW of PJM gas capacity from Energy Capital Partners at 6.6x EBITDA — well below peer comps of 9–11x — transforms TLN into a scale power platform with a compounding FCF engine. The trailing P/E of 77x is an accounting distortion from hedging; the real thesis is >15% annual adjusted FCF/share growth through 2030 as legacy hedges roll off and AI-driven electricity demand accelerates. The Amazon Susquehanna co-location deal is the template: 24/7 carbon-free nuclear baseload cannot be replicated at scale, and hyperscalers will pay a structural premium for it. TLN's low hedge ratios give it the highest leverage to rising power prices among peers — it's a leveraged bet on electricity pricing embedded in a nuclear moat. 12-analyst consensus rates it Strong Buy at a $435 average 12-month target; Scotiabank raised its target to $463 post-acquisition. Key risks: PJM concentration (no ERCOT diversification unlike peers), integration execution on the ECP gas plants, and regulatory exposure to FERC scrutiny on nuclear-to-data-center co-location. Any macro softening or policy setback could reprice this sharply given how much forward value is already baked in. For investors with conviction on the AI power supercycle, TLN is the purest nuclear moat play in the market — but it demands near-perfect execution. ",
 
+  reasonsToBuy: [
+    '24/7 carbon-free nuclear baseload is genuinely scarce and cannot be replicated at hyperscale',
+    'Amazon Susquehanna co-location deal proves hyperscalers will pay a structural premium for nuclear power',
+    'Gas plant acquisition was priced well below peer comps, providing immediate value accretion',
+    'Low hedge ratios give maximum exposure to rising electricity prices among power peers',
+    'AI-driven data center electricity demand represents a multi-decade structural tailwind for power generators',
+  ],
+
+  risksToBuy: [
+    'Most alarming leverage profile in the portfolio — interest coverage barely above one times',
+    'Entire investment thesis depends on AI power demand driving rapid EBITDA expansion to service debt',
+    'PJM geographic concentration with no ERCOT diversification unlike major peers',
+    'FERC regulatory scrutiny on nuclear-to-data-center co-location could delay or cap co-location deals',
+    'Gas plant integration execution risk on a complex multi-gigawatt acquisition at elevated leverage',
+  ],
 
   epsCagr: [8, 15, 22],
   exitPE: [13, 18, 24],

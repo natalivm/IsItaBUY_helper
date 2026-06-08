@@ -27,6 +27,22 @@ export const EME = defineStock({
     "AI data center mechanical scope multiplier (1.5–2× vs. cloud-era builds) continues to drive outsized RPO growth. 9 consecutive quarters of EPS acceleration. " +
     "At $827, the stock is just below the IBD cup breakout point ($835, as of 05/15/2026) with RS 76 and Acc/Dist E — strong fundamentals but institutional distribution near the prior high is a caution flag. Base-case target ~$1,143 still implies 38% upside from current levels.",
 
+  reasonsToBuy: [
+    'AI data center mechanical scope is structurally larger than prior cloud builds, driving outsized backlog growth for EMCOR\'s mechanical segment',
+    'Record remaining performance obligations provide exceptional multi-year revenue visibility for a construction-services business',
+    'Pristine capital allocation — buybacks vastly exceed SBC and a net-cash balance sheet funds an active M&A pipeline',
+    'Nine consecutive quarters of EPS acceleration demonstrate repeatable execution across complex, large-scale projects',
+    'Prefabrication and virtual design capabilities create a productivity moat that competitors cannot replicate quickly at scale',
+  ],
+
+  risksToBuy: [
+    'Data center capex digestion or hyperscaler spending slowdown could rapidly deflate the elevated backlog and growth premium',
+    'Institutional distribution near the prior high is a caution flag, with Acc/Dist at its weakest reading and a potential topping pattern forming',
+    'Construction services margins are thin and highly sensitive to labor cost inflation or union contract renegotiations',
+    'HOLD override reflects valuation at a full cyclical premium — fundamentals are strong but the entry price is demanding',
+    'Acquisition integration risk grows as EMCOR pursues larger M&A to sustain the data center growth trajectory',
+  ],
+
   verdictNarrative:
     'The fundamental case remains strong — Q1 2026 record revenue +19.7%, EPS +30%, RPO $15.62B (+33%), and raised FY2026 guidance. Long-term base-case target ~$1,143 implies 38% upside. ' +
     'However the chart is flashing warning signs that override the model rating. A potential head-and-shoulders pattern is forming: left shoulder ~$850, head ~$965, right shoulder currently building ~$827. MACD has crossed bearish with a widening red histogram (-11.98). Acc/Dist rated E — institutions were selling into the $950–965 head. ' +

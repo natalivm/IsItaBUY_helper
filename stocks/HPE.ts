@@ -34,6 +34,22 @@ export const HPE = defineStock({
 
     "At $43 post-surge, HPE trades at ~12.6× FY26 non-GAAP EPS ($3.40 midpoint) with 31% revenue growth — undemanding if Juniper synergies compound into FY27 and the $4.5B+ FCF framework holds. The structural concern is net debt of ~$16.8B (~2.9× FY26E EBITDA) from the Juniper acquisition; CapEx/OCF running ~34% (hardware model) and Altman Z ~2.5 flag elevated leverage. FCF of $3.5B+ covers interest at ~6× coverage, so this is a balance-sheet drag on upside, not an imminent risk. The FY27 revenue deceleration to 8–12% from 31% is the multiple governor — HPE re-rates networking premium only if the AI fabric thesis sustains beyond FY26. Rating: BUY — the transformation is proven at record margins, the AI networking thesis is early-stage with durable enterprise demand, and the 12.6× non-GAAP earnings multiple is reasonable despite the leverage.",
 
+  reasonsToBuy: [
+    'Juniper acquisition fundamentally transforms HPE from commodity hardware into a networking-led infrastructure platform',
+    'Record gross margin expansion confirms structural shift — synergies are executing ahead of schedule',
+    'Networks for AI (Ethernet fabrics, Aruba campus, sovereign AI) positions HPE at the center of enterprise AI buildout',
+    'Multi-year financial framework introduced for the first time gives investors unusual forward visibility into FY27',
+    'Undemanding valuation relative to revenue growth rate makes the risk-reward compelling if synergies compound',
+  ],
+
+  risksToBuy: [
+    'Heavy net debt from the Juniper acquisition constrains buyback capacity and amplifies downside in a downturn',
+    'Revenue growth is expected to decelerate sharply after FY26, limiting the case for a premium networking multiple',
+    'Hardware-heavy model keeps CapEx high and FCF margins well below software peers even in the bull case',
+    'AI capex normalization or enterprise budget fatigue could cut into networking orders faster than management expects',
+    'High SBC relative to GAAP earnings means reported profitability overstates true owner economics meaningfully',
+  ],
+
   revGrowth: [
     [0.25, 0.07, 0.05, 0.04, 0.03], // Bear: AI capex normalizes fast, Juniper synergies miss, server/storage declines
     [0.31, 0.10, 0.08, 0.07, 0.06], // Base: FY26 guidance delivers, FY27 framework holds

@@ -34,6 +34,22 @@ export const RKLB = defineStock({
     "Applying Burry's SBC lens reduces the PW target to ~$62. The dilution risk is real: up to $3B equity distribution program filed, SBC ~$120–150M on a GAAP-loss company. " +
     "Hold — do not short RS 98 momentum. Do not buy at 128× revenue. This is a stock you own if you bought under $30 and are following the 8-week hold rule, not a stock you initiate at current levels.",
 
+  reasonsToBuy: [
+    'Only publicly traded pure-play covering launch, satellites, and defense space infrastructure under one roof',
+    'Backlog growing rapidly with defense contracts providing durable, high-switching-cost revenue visibility',
+    'Neutron medium-lift vehicle would multiply addressable market by an order of magnitude if successfully fielded',
+    'Elite relative strength with accelerating fund ownership and top-grade accumulation signals broad institutional conviction',
+    'Anduril hypersonics deal and Space Force programs anchor the company in the fastest-growing defense segment',
+  ],
+
+  risksToBuy: [
+    'Valuation implies a SpaceX-level outcome — base-case DCF offers only modest upside from current levels',
+    'Neutron development carries substantial execution, cost overrun, and timeline risk for a capital-intensive vehicle',
+    'SBC on a GAAP-loss company plus a large equity distribution program create persistent dilution for shareholders',
+    'Bear case is severe: a single Neutron setback could reprice the stock dramatically from current extended levels',
+    'Price is extended far above the fifty-day moving average — initiating here offers poor risk-reward even in base case',
+  ],
+
   verdictNarrative:
     "If you own RKLB from a prior base entry: respect the IBD 8-week hold rule triggered at $93.10 — the stock has earned the right to be held. Do not sell into momentum, but also do not add at 60% above the 50-day MA. " +
     "If you are considering a new position: the entry risk at $143 is poor. The base-case DCF target ($158) is only 10% above current price — you are buying a 10% base-case return for a company burning cash, carrying 128× revenue multiple, and needing Neutron to succeed to justify the valuation. The bear case ($52) is -64% from here. " +

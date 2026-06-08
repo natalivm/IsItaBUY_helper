@@ -71,18 +71,28 @@ If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).
 
+## Alpha Strategic View — Why Buy / Risks
+
+The detail-page "Why Buy / Risks" panel (formerly the prose "Alpha Strategic View") renders two bulleted lists from each stock's `defineStock` call:
+
+```ts
+reasonsToBuy: ['…', '…'],  // qualitative case FOR owning the stock
+risksToBuy:   ['…', '…'],  // qualitative risks AGAINST
+```
+
+Rules (see INTC for the reference implementation):
+
+- **No precise numbers.** No price targets, percentages, valuation multiples, or specific revenue/EPS figures. Qualitative magnitude words are fine ("billions in revenue", "best-in-class margins", "years away"). The point is a fast, numbers-free read.
+- 4-5 bullets each, one line (~8-18 words), specific to *this* company — real catalysts/moats on the buy side, real execution/competition/valuation/balance-sheet concerns on the risk side.
+- `reasonsToBuy` = the bull drivers; `risksToBuy` = the bear factors. For loss-making/speculative names, risks should say so honestly.
+
+`strategicNarrative` is **deprecated and no longer rendered** (kept on existing stocks for back-compat / source history). New stocks only need `reasonsToBuy` + `risksToBuy`.
+
 ## Narrative Live-Value Tokens
 
-Any number in a narrative that is **relative to the live spot price** — scenario targets, "% from current", annualized CAGR, the probability-weighted blend — drifts the moment `currentPrice` is updated and silently contradicts the computed cards (e.g. a narrative quoting an old `$114.68` spot while the header shows `$99.17`). To prevent this, write those numbers as `{token}` placeholders that bind to the same projections the cards render from (`services/narrative.ts`). Plain prose and historical figures (YTD %, past revenue, EPS inputs, fixed entry zones) stay as literals — unknown tokens pass through untouched.
+The **scenario** prose still renders — Quant Narrative (`desc[]`) and the scenario cards (`thesis[]`) — and any number there that is **relative to the live spot price** (scenario target, "% from current", annualized CAGR) drifts the moment `currentPrice` updates and silently contradicts the computed cards. Write those as `{token}` placeholders that bind to the same projection the card renders from (`services/narrative.ts`). Plain prose and historical figures (YTD %, past revenue, EPS inputs) stay as literals — unknown tokens pass through untouched.
 
-**Where tokens resolve:**
-
-- `strategicNarrative` (Alpha Strategic View) → **global** tokens spanning all scenarios:
-  `{spot}` `{bearTarget}` `{baseTarget}` `{bullTarget}` `{blended}` `{bearReturn}` `{baseReturn}` `{bullReturn}` `{blendedReturn}` `{baseCagr}` `{blendedCagr}`
-- `desc[]` (Quant Narrative) and `thesis[]` (scenario cards) → **per-scenario** tokens for *that* path only:
-  `{spot}` `{target}` `{return}` `{cagr}`. Do **not** reference another scenario's number or `{blended}` inside a scenario string — it won't resolve there.
-
-`{...Return}` tokens are signed vs spot (e.g. `-32.7%`); `{...Target}`/`{spot}`/`{blended}` are formatted dollars; `{...Cagr}` are signed percentages. Prefer tokens over hand-typed numbers whenever the value depends on spot, so the text can never diverge from the cards again. INTC is the reference implementation.
+`desc[]` and `thesis[]` resolve **per-scenario** tokens for *that* path only: `{spot}` `{target}` `{return}` `{cagr}`. Do **not** reference another scenario's number or `{blended}` inside a scenario string — it won't resolve there. `{return}` is signed vs spot (e.g. `-32.7%`), `{target}`/`{spot}` are formatted dollars, `{cagr}` is a signed percentage. INTC is the reference implementation.
 
 ## Probability-Weighted Blend
 

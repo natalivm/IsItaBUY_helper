@@ -31,6 +31,22 @@ export const CAVA = defineStock({
     "Salmon launch adds ~100bps RLP margin headwind. At ~125x fwd P/E, the stock still prices in near-flawless execution " +
     "while same-store momentum is fading and margins are under pressure from reinvestment. OVERVALUED until valuation resets meaningfully. ",
 
+  reasonsToBuy: [
+    'Only national fast-casual Mediterranean brand with genuine whitespace to expand from hundreds to thousands of locations',
+    'Zero debt and substantial cash reserves eliminate financial risk and fund the unit expansion runway',
+    'New restaurant volumes consistently above brand-level averages signal the concept travels well to new markets',
+    'Loyalty and digital channels are early-stage, meaning a meaningful monetization layer has barely been tapped',
+    'Brand awareness still well below leading fast-casual peers, leaving a large organic growth opportunity ahead',
+  ],
+
+  risksToBuy: [
+    'Current valuation prices in near-flawless execution at a moment when same-store momentum is visibly fading',
+    'Tax rate normalization from a very low base will hit reported EPS hard even if operations execute on plan',
+    'Salmon menu addition adds margin headwind before traffic lift materializes, compressing near-term restaurant profitability',
+    'FCF already heavily consumed by expansion capex — the business generates minimal owner cash at this stage',
+    'Management cut new restaurant productivity assumptions, signaling lower confidence in new market performance',
+  ],
+
   epsCagr: [13, 27, 37],
   exitPE: [25, 35, 50],
   prob: [30, 40, 30],

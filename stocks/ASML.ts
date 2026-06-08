@@ -25,6 +25,22 @@ export const ASML = defineStock({
     "Fundamentals = top tier. Valuation = not cheap. Cycle = decides everything. " +
     "55-65% probability of 15%+ CAGR — best entry on cyclical dips or P/E <30x.",
 
+  reasonsToBuy: [
+    'Sole supplier of EUV lithography globally — no credible competitor exists, making this a structural monopoly for decades.',
+    'High-NA transition deepens the moat as the most advanced nodes below two nanometers require next-generation ASML machines.',
+    'Massive installed base generates a growing, high-margin service and upgrade revenue stream largely independent of new-tool cycles.',
+    'AI-driven advanced node buildout (two nanometer and below) is pulling forward chipmaker capex and filling the order backlog.',
+    'Multi-billion euro buyback program consistently reduces share count, compounding per-share earnings growth on top of revenue gains.',
+  ],
+
+  risksToBuy: [
+    'At a premium forward multiple, even a modest cycle pause or TSMC capex delay translates directly into painful downside.',
+    'Near-term product mix headwinds from dry DUV and EUV 3600 transitions create earnings noise before 2027 improves.',
+    'Export restrictions on China sales could remove a significant revenue chunk with little warning or offsetting volume.',
+    'High-NA ramp depends on Intel qualification proceeding on schedule — delays would defer a key multi-year growth driver.',
+    'Best risk-adjusted entry is materially below current levels — patience is required to achieve an attractive return from here.',
+  ],
+
   prob: [30, 40, 30],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 1150, targetMedian: 1476, targetHigh: 1911, numAnalysts: 12 },

@@ -26,6 +26,22 @@ export const NFLX = defineStock({
     "If ads ARM approaches parity and margin sustains +2.5pp/yr expansion, this is an 18%+ compounder. If ads cycle breaks or multiple compresses, returns are single-digit. " +
     "Prob-weighted return ~12-13% — WAIT for entry at ~$65-70 where expected CAGR crosses 15%.",
 
+  reasonsToBuy: [
+    'Unrivaled global streaming brand with deep content investment moat that new entrants cannot replicate quickly',
+    'Ads-supported tier still nascent with advertising revenue per member far below the monetization ceiling of comparable platforms',
+    'Sustained pricing power — multiple annual price increases absorbed with minimal churn demonstrates brand loyalty',
+    'Operating margin expansion trajectory of roughly two percentage points per year creates durable earnings compounding',
+    'Live sports and event content expansion opens a structurally new engagement and monetization surface',
+  ],
+
+  risksToBuy: [
+    'Valuation already reflects the base-case compounding story — entry at current price leaves limited margin of safety',
+    'Advertising revenue is cyclical; a macro slowdown disproportionately compresses the ads tier that drives the margin thesis',
+    'Content cost inflation and competitive bidding wars with deep-pocketed studios and tech giants could erode FCF margins',
+    'RS and institutional momentum signals are negative, suggesting near-term technical headwinds against a position',
+    'Subscriber saturation in high-ARPU English-language markets limits the geographic runway for premium pricing expansion',
+  ],
+
   // 2026E guide: ~$51B (+14% YoY). Drivers: membership + pricing + ads.
   // Ads ~$3B in 2026 (~6% of revenue). Content amortization +~10% YoY.
 

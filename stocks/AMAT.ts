@@ -29,6 +29,22 @@ export const AMAT = defineStock({
     "Probability-weighted 5-year return: ~6-7% CAGR. For 12% CAGR, you need the base case to work AND P/E to hold at 30x — or you need to buy at $270-290. " +
     "Probability of 15%+ CAGR from $366: ~30-35%. Strong business, full price. Best entry on cycle reset below $300.",
 
+  reasonsToBuy: [
+    'Dominant position in CVD, PVD, ALD, and etch — process steps required for every advanced node transition.',
+    'AGS services segment provides genuinely recurring revenue with multi-year contracts and a very high renewal rate.',
+    'AI-driven advanced packaging and gate-all-around transitions at the leading edge require more AMAT steps per wafer.',
+    'Multi-year EPS wave cycle with strong consensus visibility through the end of the decade, not a single-year spike.',
+    'EPIC capacity investments create a long-term supply advantage that could sustain equipment market share gains.',
+  ],
+
+  risksToBuy: [
+    'Valuation already prices the full EPS trajectory — multiple compression offsets earnings growth in the base case.',
+    'China revenue concentration means any incremental export restrictions would hit revenue and margins immediately.',
+    'WFE cycles historically pause for digestion after strong runs, and capex cleanroom constraints could amplify the downturn.',
+    'Near-term FCF is compressed by EPIC capacity investment, reducing the cash return cushion if the cycle softens early.',
+    'Best risk-adjusted entry is materially below current price — patience required for attractive CAGR from here.',
+  ],
+
   epsCagr: [4, 11, 17],
   exitPE: [17, 23, 29],
   prob: [30, 45, 25],

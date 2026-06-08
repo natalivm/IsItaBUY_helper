@@ -49,6 +49,22 @@ export const MRVL = defineStock({
     'Bull (~30%): Nvidia, Amazon, Google, Microsoft all ramp simultaneously in FY28-29; Celestial fabric captures $1B+ scale-up TAM; revenue ~$28B by FY31 with 40%+ FCF margins; exit 35× EBITDA; 5yr CAGR ~18%. ' +
     'BUY — the Q1 FY27 print confirms Marvell as the AI interconnect and custom silicon architect of the hyperscaler stack. At $208 / 32× FY28E non-GAAP EPS with $16.5B raised guidance, base case delivers ~9%/yr — solid for this quality and visibility. NVLink Fusion integration with Nvidia is the asymmetric option not yet fully priced.',
 
+  reasonsToBuy: [
+    'Custom-silicon flywheel scaling fast, with a multi-year Amazon partnership and Google inference-chip wins confirming hyperscaler diversification',
+    'Market-leading optical interconnect (800G/1.6T DSPs) riding relentless AI data-center bandwidth demand',
+    'Nvidia strategic investment and NVLink Fusion integration make Marvell an architectural dependency of the dominant AI stack, not just a supplier',
+    'Beat-and-raise momentum: management keeps lifting the revenue and operating-margin trajectory as data center dominates the mix',
+    'Broad design-win pipeline entering production over the next several years gives unusual revenue visibility',
+  ],
+
+  risksToBuy: [
+    'Richly valued after a massive run — much of the AI-interconnect optionality is already priced in',
+    'Heavy reliance on a handful of hyperscaler customers makes custom-silicon revenue lumpy and concentrated',
+    'Broadcom and other ASIC/optical rivals compete directly for the same hyperscaler sockets',
+    'GAAP earnings are thin relative to non-GAAP, weighed down by stock comp and acquisition charges',
+    'High beta and a leveraged AI-capex thesis mean sharp drawdowns if hyperscaler spending cools',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 175, targetMedian: 245, targetHigh: 350, numAnalysts: 39 },
 
   revGrowth: [

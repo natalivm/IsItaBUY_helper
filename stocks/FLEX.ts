@@ -33,6 +33,22 @@ export const FLEX = defineStock({
     "Verdict: HOLD. Quantitative base case shows >30% upside but quality of earnings is questionable, momentum is broken, and downside risk in a cyclical reversal is severe. " +
     "Wait for 3-month RS to recover above 60 and revenue reacceleration before upgrading.",
 
+  reasonsToBuy: [
+    'Embedded power and high-voltage DC expertise puts Flex in a narrow-moat position few EMS competitors can match for AI server builds',
+    'Aggressive buyback program has been the primary EPS driver, and at current price continues to compound per-share value efficiently',
+    'FY26 guidance raise signals the operating margin expansion cycle is intact despite a challenging revenue environment',
+    'AI server and EV content ramp represent two independent growth vectors that could simultaneously accelerate revenue recovery',
+    'Record adjusted operating margin in Q3 FY26 demonstrates management\'s ability to expand profitability even on flat revenue',
+  ],
+
+  risksToBuy: [
+    'The majority of EPS growth came from buybacks and margin expansion rather than organic revenue growth — a fragile earnings construction',
+    'Three-month price momentum has stalled, suggesting institutional accumulation has paused near current levels',
+    'In a cyclical downturn, a derating toward trough contract-manufacturing levels could produce a severe drawdown',
+    'Revenue declined meaningfully over recent years — demand recovery depends on external inventory restocking cycles, not internal execution',
+    'EMS is a thin-margin, capital-intensive business with intense competition from Asian players on cost and scale',
+  ],
+
   epsCagr: [6, 13, 17],
   exitPE: [13, 18, 22],
   prob: [25, 50, 25],
