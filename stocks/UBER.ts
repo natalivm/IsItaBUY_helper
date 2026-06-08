@@ -21,19 +21,6 @@ export const UBER = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
 
-  strategicNarrative:
-    "Uber delivered a near-perfect Q1 FY26 quarter: Gross Bookings $53.7B (+21% constant currency), Revenue $13.2B (+10% CC; headline +14% understated by 9pp UK tax law change), Non-GAAP EPS $0.72 (+44% YoY), GAAP Operating Income $1.9B (+57%), Trips 3.6B (+20%). " +
-    "FY2025 full-year: Revenue $52.0B (+18%), FCF $9.8B (+42%), Adjusted EBITDA $8.7B (+35%). Q1 FY26 capped with a record $3B single-quarter buyback — CEO Dara is backing the undervaluation with capital allocation. " +
-    "The business is genuinely exceptional. Uber One surpassed 50M members (+50% YoY from 30M at year-end 2024) and now accounts for >50% of gross bookings; members spend 3x more than non-members and show structurally higher retention. " +
-    "Insurance savings are the near-term P&L catalyst: 'hundreds of millions of dollars' expected this year, the first leverage on U.S. Mobility insurance since COVID. Lower prices → higher trip elasticity → L.A. and SF trip growth already accelerating. Q2 FY26 guidance: $56.25-57.75B gross bookings (+~20% YoY). " +
-    "Suburban/sparse market expansion is adding a second growth engine: trip growth in sparse markets runs 2× faster than urban core, globally. $15B run rate Delivery gross bookings come from the Mobility app; 30% of eligible Mobility users have never tried Uber Eats — cross-platform upside is enormous. " +
-    "GO-GET platform launch (hotel bookings via Expedia, 700K properties, 10% Uber One credits) is Uber's first explicit move into travel commerce — Reserve has grown consistently above the mainline business, proving the on-demand-to-planning transition works. " +
-    "The AV narrative has inverted: AV Mobility trips on Uber's network grew 10x YoY with 30+ partners across Mobility and Delivery. Target: 15 cities by year-end. In Waymo's core markets (SF, L.A.), Uber's category position is HIGHER today than 6 months ago. Insurance savings in L.A. are partly a structural dividend from improved safety data on the network. " +
-    "The market is pricing the opposite of reality. Stock at $70.40 is -31% from the $101.99 52-week high and near the $68.46 52-week low, despite five straight quarters of accelerating fundamentals. RS Rating 22 signals aggressive institutional distribution. " +
-    "The disconnect: AV disruption fear, personal-AI-agent disintermediation fear, and multiple compression from interest-rate sensitivity. All three are addressable — Uber IS the AV aggregator (not the disrupted), agent-API partnerships are being built directly, and FCF yield at $70 is ~14% (FY2025 $9.8B FCF / $148B market cap). " +
-    "45 analysts say Strong Buy with a $104.45 median price target (+48% from $70); model base case ~$104. STRONG BUY: this is a fundamental free cash flow machine at distressed-multiple prices. " +
-    "Key risk: RS 22 means the tape does not confirm the fundamental case yet — institutional momentum must reverse before the stock re-rates. Wait for RS to recover above 40-50 before sizing up aggressively; at current levels strategic accumulation is warranted.",
-
   reasonsToBuy: [
     'Uber One\'s loyalty ecosystem drives member spend multiples above non-members with rising retention',
     'Insurance savings are flowing through to lower prices and already accelerating trip growth in key markets',

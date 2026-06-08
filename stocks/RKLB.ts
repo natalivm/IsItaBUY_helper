@@ -23,17 +23,6 @@ export const RKLB = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 
-  strategicNarrative:
-    "Rocket Lab is no longer a small-launch company. It is increasingly valued as a SpaceX alternative, a defense-space contractor, a satellite systems integrator, and a future medium-launch operator through Neutron. " +
-    "The fundamentals are unambiguously improving: FY2025 revenue ~$602M, Q1 2026 +63.5% YoY, backlog ~$2.2B. Signed a record multi-launch contract, a $190M defense launch award, an Anduril hypersonics deal, and multiple Space Force programs. " +
-    "The IBD picture is extraordinary for a speculative name: RS 98 (top 2%), ACC/DIS A+, 8-week hold rule triggered from $93.10 handle entry, Up/Down Volume 1.63, +11% change in funds owning, 7 consecutive quarters of increasing fund ownership. Price is +60% above 50-day MA — extended but technically unbroken. " +
-    "The problem is valuation. At ~$143.50 / 534M shares, market cap is ~$77–83B against only $602M FY2025 revenue — over 128× trailing revenue. That is not a normal aerospace valuation by any standard. " +
-    "WACC is ~15% (beta 1.95 × 5.5% ERP + 4.25% rf). At that discount rate, even aggressive DCF assumptions produce a base-case intrinsic value a fraction of the current price — the model is not broken, it is correctly identifying that the stock prices in a SpaceX-level outcome. " +
-    "An independent DCF using revenue-multiple exits (bear 10×, base 18×, bull 28× at year 5) produces: bear $52, base $158, bull $340, probability-weighted $177. The 5-year PW CAGR is only ~4.3%. " +
-    "Neutron is the transformational catalyst: a medium-lift vehicle at ~$50-100M per mission would multiply RKLB's addressable market. Neutron first flight is the key event; until then the $77B market cap is a bet on that outcome. " +
-    "Applying Burry's SBC lens reduces the PW target to ~$62. The dilution risk is real: up to $3B equity distribution program filed, SBC ~$120–150M on a GAAP-loss company. " +
-    "Hold — do not short RS 98 momentum. Do not buy at 128× revenue. This is a stock you own if you bought under $30 and are following the 8-week hold rule, not a stock you initiate at current levels.",
-
   reasonsToBuy: [
     'Only publicly traded pure-play covering launch, satellites, and defense space infrastructure under one roof',
     'Backlog growing rapidly with defense contracts providing durable, high-switching-cost revenue visibility',

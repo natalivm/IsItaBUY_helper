@@ -24,18 +24,6 @@ export const STRL = defineStock({
   rsRating: 96,                 // Elite: $96→$477 52-wk range; 53% EPS growth supports elevated RS
   rsTrend: 'rising',            // Post-Q4 beat held $413-$442 range; ATH $477; FY26 guide $13.45-$14.05 well above Street $11.90
   aiImpact: 'TAILWIND',        // DC is ~70% of E-Infra revenue, +123% YoY segment growth; CEC adds turnkey electrical
-  strategicNarrative:
-    "Sterling is the undisputed AI data center infrastructure platform — and Q4/FY25 results prove it: " +
-    "$2.49B revenue (+32%), adj. EPS $10.95 (+53%), adj. EBITDA $503.8M, EBITDA margins >20% for the first time in company history. " +
-    "Fifth consecutive year of 35%+ adj. EPS growth. E-Infrastructure (~70% of revenue) grew 123% YoY; CEC integration adds turnkey electrical capability no competitor matches at scale. " +
-    "Record $3.01B backlog (+78% YoY), $3.3B combined pipeline, and FY26 guidance of $13.45-$14.05 adj. EPS crushed Street consensus of $11.90 — the beat-and-raise machine is accelerating, not decelerating. " +
-    "Transportation margin transformation (revenue +17%, adj. operating profit +66%) is underappreciated. " +
-    "The tension: at ~39x FY25 / ~31x FY26E adj. EPS, markets are pricing in sustained 25%+ compounding. " +
-    "If DC capex cycles down or CEC synergies plateau, both earnings AND multiple compress simultaneously — the classic double-whammy risk for high-multiple compounders. " +
-    "Building Solutions remains soft (housing affordability), IIJA expires Sept 2026, and skilled labor scarcity could pressure margins at scale. " +
-    "Net cash balance sheet, $400M buyback, and geographic expansion (Texas, Southeast, Midwest) provide downside support and optionality. " +
-    "BUY thesis intact: 14% EPS CAGR at 25x exit = $500+ base case; but entry at $428 offers thinner margin of safety than $200 — the stock has 5x'd and the next double requires flawless execution.",
-
   reasonsToBuy: [
     'CEC acquisition adds turnkey electrical capability, creating a site-development-plus-electrical bundle no competitor can match at scale',
     'Record backlog with strong book-to-burn ratio provides multi-year earnings visibility rare for a construction company',

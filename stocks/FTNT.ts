@@ -19,14 +19,6 @@ export const FTNT = defineStock({
   rsRating: 95,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Fortinet is the quality compounder of cybersecurity. FY25 revenue $6.80B (+14% YoY, TTM $7.11B), 80% gross margin, **31% GAAP operating margin**, 27% net margin, 131% ROIC — extraordinary capital efficiency. Net income $1.95B TTM. " +
-    "Real shareholder economics: diluted shares 839M (2017) → 734M (current) = **−12.5% net retirement over 8 years** thanks to consistent buybacks. EPS compounded from $0.38 (FY18) to $2.59 (TTM), a 6.8× in 7 years. " +
-    "ASIC-driven SASE platform creates a cost/performance edge that cloud-native peers can't match. Three growth vectors: SASE (40%+ billings growth), AI security across data centers + SecOps, and OT security (25%+ growth). " +
-    "Momentum confirmed: stock +43% YTD, +41% in the past month, RSI 84 (overbought near-term but RS 95 means institutional accumulation is real). Up +169% over 5 years, +1,683% over 10 years. " +
-    "Valuation: at $114.07 / $84.4B market cap on $3.42 forward EPS, forward P/E ~33×. Forward P/S ~12×. EV/EBITDA 35×. Premium multiple but on a 27% net margin business with $3.3B cash and a buyback engine. " +
-    "Analyst median target $107 (Recom 2.71 = Hold/Buy boundary) implies the rally has run ahead of consensus targets — wait for a 10-15% pullback for a cleaner entry, or trim into strength.",
-
   reasonsToBuy: [
     'ASIC-driven SASE platform delivers a cost and performance edge that cloud-native peers cannot replicate',
     'Extraordinary capital efficiency with industry-leading ROIC and consistent net share retirement over many years',

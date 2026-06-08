@@ -21,9 +21,6 @@ export const INCY = defineStock({
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'HOLD',
-  strategicNarrative:
-    "INCY is a profitable, debt-free biopharma trading cheaply (~12.5× forward EPS) because the entire investment debate hinges on one number: the Jakafi (ruxolitinib) loss-of-exclusivity around 2028. Jakafi still drives the bulk of revenue, so the central question is whether the diversified pipeline can offset the cliff. FY25 revenue grew 21% to $5.14B with ~25% net margin ($1.3B NI) and $3.6B of cash/securities against zero long-term debt — a fortress balance sheet that funds R&D and buybacks through the transition. The bull case rests on Opzelura (ruxolitinib cream, vitiligo/atopic dermatitis growth), Niktimvo (chronic GVHD), Monjuvi, povorcitinib, and the MRGPRX2/early oncology pipeline plus a recent positive late-stage trial readout. EPS is forecast to step up to ~$8 in 2026, but the post-2028 trajectory is genuinely uncertain. At $101 the stock prices in a meaningful Jakafi decline; analyst median ~$108 implies only modest upside, with bulls to $120s. The cheap multiple is the margin of safety and a standing M&A/optionality kicker, but pipeline execution is unproven against the cliff. Verdict: HOLD — attractively valued with real optionality, but wait for pipeline de-risking (or a pullback) before sizing up.",
-
   reasonsToBuy: [
     'Cheap valuation relative to earnings power reflects overstated fear about the Jakafi patent cliff',
     'Fortress balance sheet with substantial net cash and zero long-term debt funds the R&D transition with no dilution risk',

@@ -86,7 +86,7 @@ Rules (see INTC for the reference implementation):
 - 4-5 bullets each, one line (~8-18 words), specific to *this* company — real catalysts/moats on the buy side, real execution/competition/valuation/balance-sheet concerns on the risk side.
 - `reasonsToBuy` = the bull drivers; `risksToBuy` = the bear factors. For loss-making/speculative names, risks should say so honestly.
 
-`strategicNarrative` is **deprecated and no longer rendered** (kept on existing stocks for back-compat / source history). New stocks only need `reasonsToBuy` + `risksToBuy`.
+`strategicNarrative` is **deprecated and removed** from stock files — it's no longer rendered. The field remains optional in the schema only for back-compat. New stocks only need `reasonsToBuy` + `risksToBuy`.
 
 ## Narrative Live-Value Tokens
 

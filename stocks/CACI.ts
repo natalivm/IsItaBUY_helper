@@ -23,15 +23,6 @@ export const CACI = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
 
-  strategicNarrative:
-    "CACI is the quiet compounder of defense IT: $8.63B FY2025 revenue (+13% YoY), 12–14% multi-year organic CAGR, $31.4B backlog (+9.8% YoY), and FY2026 guidance of $9.55B revenue + $710M+ FCF (60%+ growth). " +
-    "The ARKA Group acquisition ($2.6B, closed March 2026) is the biggest strategic move in a decade — ARKA deepens CACI's position in hypersonics, EW, and space, areas receiving accelerated DoD funding regardless of broader DOGE debates. " +
-    "Software-defined strategy is yielding results: EBITDA margin guiding 11.8–11.9% in FY2026, and FCF margin set to leap from 5.4% to 7.4%+ as ARKA integration normalizes. " +
-    "The DOGE risk is overstated for CACI specifically: ~80%+ of revenue comes from DoD and IC — the national security ring-fence DOGE has consistently exempted. Civilian agency exposure is limited. " +
-    "Technical picture is the problem: RS 29 (severe distribution), stock -24.87% off 52-week highs, below both 50-day and 200-day MAs, ACC/DIS C-. FY2026 EPS estimates revised down -13% — likely ARKA near-term EPS dilution from ~$130M in new interest expense. EPS Rating 90 confirms earnings quality is intact; institutions are selling the multiple, not the business. " +
-    "Post-ARKA leverage is the real watch item: pre-acquisition net debt ~$3.1B (~3.2× FY2025 EBITDA), and ARKA adds ~$2.5B more. CACI must execute on a $700M+ FCF trajectory to deleverage — historical precedent is reassuring. " +
-    "At $513 / ~19× FY2025 adj EPS, CACI trades at a substantial discount to defense peers. Analyst consensus target $645 (+26%), 28 analysts, 11 buys vs 3 holds, 0 sells. Do not buy into the falling knife — wait for RS to recover above 40–50 and price to reclaim the 50-day MA before establishing a position.",
-
   reasonsToBuy: [
     'National security and DoD revenue concentration provides a ring-fence that DOGE civilian cuts have consistently exempted',
     'ARKA acquisition adds hypersonics, electronic warfare, and space capabilities receiving accelerated bipartisan funding',

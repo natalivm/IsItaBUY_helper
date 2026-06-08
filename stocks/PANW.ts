@@ -19,8 +19,6 @@ export const PANW = defineStock({
   costDebt: 0.05,
   rsRating: 21,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "Q2 FY2026 beat (NGS ARR +33% to $6.3B, EPS $1.03 vs $0.94 est.), but FY2026 EPS guidance cut to $3.65–3.70 (from $3.80) on CyberArk + Chronosphere integration costs. CyberArk (closed Feb 11) adds Identity as 4th pillar. 1,550 platformized customers, 119% NRR, SASE ARR >$1.5B. At $280, stock trades above analyst consensus high ($260) and well above the model's fair value range — the integration cost overhang hasn't cleared and RS ~21 confirms institutional skepticism. HOLD — no new entry until integration digests and RS recovers above 40.",
-
   reasonsToBuy: [
     'Four-pillar platform strategy drives customer consolidation with best-in-class net revenue retention',
     'SASE and Identity acquisitions meaningfully expand addressable budget and deepen switching costs',

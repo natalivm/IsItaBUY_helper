@@ -23,13 +23,6 @@ export const ROAD = defineStock({
 
   rsRating: 77,
   aiImpact: 'NEUTRAL',
-  strategicNarrative:
-    "Construction Partners is a compounding-through-M&A infrastructure play — revenue +44% YoY, record EBITDA margins, $3.09B backlog with 80-85% coverage, and Road 2030 targeting >$6B revenue / 17% EBITDA margin (doubling the business). " +
-    "M&A pipeline is 'most active in 25 years' with Houston platform build-out creating local operational moats via HMA vertical integration. " +
-    "The problem: at ~44x forward P/E, the stock prices in near-perfect execution while organic growth floats quarterly (Q1 only 3.5% vs 7-8% guide) and operating leverage amplifies both ways. " +
-    "If infra cycle extends (Sunbelt + reshoring + data centers) and Road 2030 delivers, this looks like a compounder. If P/E compresses to 25x, it's -45% downside regardless of EPS growth. " +
-    "40-50% probability of 15%+ CAGR — a bet on execution + infra cycle, not eternal moat.",
-
   reasonsToBuy: [
     'Road 2030 plan targets a doubling of the business with a credible M&A pipeline described as the most active in a quarter-century',
     'HMA vertical integration and Houston platform create durable local operational moats in Sunbelt markets',

@@ -22,12 +22,6 @@ export const STX = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q3 FY26',
 
-  strategicNarrative:
-    'The AI storage thesis is real: HAMR technology gives Seagate a density edge that hyperscalers are paying for, and AI data creation requires orders of magnitude more raw storage per compute dollar than prior generations. FCF is genuine at $2.4B (19% margin) and growing. ' +
-    "The problem is that the market already knows all of this. After a 600%+ run, STX trades at ~83× FCF — pricing in years of hypercycle growth before it happens. The probability-weighted target is $938, only fractionally above today's price ($879.80). " +
-    'HOLD. A pullback to $650–750 would materially improve the setup. At $880, you are already paying for the bull case. ' +
-    'Burry (estimated): 45% overstatement (Critical), adjusted target ~$516.',
-
   reasonsToBuy: [
     'HAMR technology gives Seagate a hard-disk density edge no rival can yet match at scale',
     'AI data creation demands orders of magnitude more raw storage per compute dollar than prior eras',

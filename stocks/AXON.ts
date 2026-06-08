@@ -24,12 +24,6 @@ export const AXON = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 
-  strategicNarrative:
-    "Q1 2026 was the kind of quarter that resets the conversation. Revenue grew 34% — the ninth straight quarter above 30% — and software is now driving the bus. AI product revenue jumped 700% year-over-year. International doubled and already accounts for 20% of the business. Dedrone bookings exploded 500%, quietly opening a defense vertical nobody had in their model. A $40M telco deal (Fusus + Body Mini + Outpost) is the first serious crack outside law enforcement.\n\n" +
-    "The signal that matters most: future contracted bookings hit $14.3B, up 44% YoY. That's not pipeline — it's signed, multi-year revenue waiting to be recognized. ARR is $1.5B at 125% net retention. Every department that adopts Axon's evidence + records + AI stack adds modules and never leaves. This is a moat compounding in real time.\n\n" +
-    "Management raised FY26 guidance to 30–32% growth with FCF inflecting to ~$450M — 12.5% of revenue versus FY25's ~7%. After years of skeptics arguing the cash flow would never show up, it's showing up. The catch, and it's a big one, is SBC: guided at $590–620M, or roughly 16% of revenue. Burry called Axon out by name. Management's new commitment to <2.5% annual dilution means buybacks finally have to absorb SBC instead of letting share count drift higher. That's the bet.\n\n" +
-    "The verdict: this is the best government-tech moat in our coverage paired with one of the worst cash-flow-quality profiles. At ~56× FY26 non-GAAP EPS, the premium prices in execution that hasn't fully happened yet. We HOLD until SBC dilution actually compresses — but the trajectory is finally pointing the right way.",
-
   reasonsToBuy: [
     'Future contracted backlog of billions represents signed, multi-year revenue — not speculative pipeline',
     'Net revenue retention above market benchmarks confirms agencies expand usage after adopting the platform',

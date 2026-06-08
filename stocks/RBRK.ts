@@ -18,13 +18,6 @@ export const RBRK = defineStock({
   rsRating: 10,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Rubrik is a platform-shaped data security play — subscription ARR $1.35B (+34%), NRR >120%, record FCF, with security modules driving >40% NRR and Identity adding net-new CISO budget access. " +
-    "Moat is in integrated execution: high switching costs (resilience + identity + telemetry), regulatory tailwind (DORA/NIS2/SEC disclosure), and cloud ARR at 87% of subscription (+53% YoY). " +
-    "The problem: RS 10 signals zero institutional momentum, FY27 material-rights headwind creates headline slowdown risk, and at current price prob-weighted CAGR is ~14.5% nominal / ~11-12% risk-adjusted. " +
-    "If ARR sustains >20% and market pays >25x FCF, this is a cyber resilience compounder. If NRR normalizes and FY27 GAAP noise triggers a sell-off, there's -30-50% path risk to ~$27. " +
-    "Best entry likely after a compression event — bet on execution + structural cyber trend, not current momentum. ",
-
   reasonsToBuy: [
     'Subscription ARR and high net revenue retention demonstrate a sticky, compounding recurring revenue base',
     'Security modules driving outsized NRR expansion into CISO budgets that are structurally growing year over year',

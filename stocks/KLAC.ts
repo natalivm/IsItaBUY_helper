@@ -20,14 +20,6 @@ export const KLAC = defineStock({
   rsRating: 94,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "KLAC is the dominant leader in semiconductor process control and inspection — a critical, monopolistic position in yield management with extremely high switching costs and a real data/analytics 'network effect' moat. Customers include TSMC, Samsung, and Intel. " +
-    "Earnings call confirms structural demand: WFE 2026 total mid-$130B (core low $120B + AP ~$12B), 1H26 virtually sold out with growing lead times, 2H26 acceleration. HBM intensity, advanced packaging (facility-constrained), and EUV layers all drive process control intensity higher. " +
-    "Revenue CAGR ~13.6% (FY25–30E) with EPS growing faster at ~14–16% CAGR via margin expansion, buybacks, and operating leverage. Service business targets 12–14% long-term growth (upper end). GM ~62% in 2026, long-term 63%+. " +
-    "Near-term headwinds: DRAM chip costs (~75–100 bps) and tariffs (~50–100 bps) pressure 2026 gross margins. China exposure mid/high-20% of revenue — any tightening of restrictions is a material risk. " +
-    "At ~50x trailing P/E and ~41x forward, the stock prices in the strong phase of the semicap cycle. Expected total return ~8–10% CAGR. Probability of 15%+ CAGR: ~20%. " +
-    "High-quality cyclical champion at full price. Best entry on cycle correction below $1,100. ",
-
   reasonsToBuy: [
     'Monopolistic process control position means yield management is the last thing fabs cut in any downturn',
     'Data and analytics network effect creates switching costs that go far beyond hardware replacement costs alone',

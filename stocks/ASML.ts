@@ -18,13 +18,6 @@ export const ASML = defineStock({
   costDebt: 0.025,
   rsRating: 94,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "ASML is the highest-quality company in semiconductors — sole EUV supplier with a structural monopoly that's deepening (High-NA, multi-beam inspection, installed base upgrades). " +
-    "Record Q4 bookings €13.2B, €38.8B backlog, AI-driven advanced node demand (4nm→2nm), and €12B buyback provide multi-year visibility. " +
-    "The tension: at ~42x forward P/E, margin of safety is limited — 2026 mix headwinds (dry DUV, EUV 3600) create near-term noise even as 2027+ looks better. " +
-    "Fundamentals = top tier. Valuation = not cheap. Cycle = decides everything. " +
-    "55-65% probability of 15%+ CAGR — best entry on cyclical dips or P/E <30x.",
-
   reasonsToBuy: [
     'Sole supplier of EUV lithography globally — no credible competitor exists, making this a structural monopoly for decades.',
     'High-NA transition deepens the moat as the most advanced nodes below two nanometers require next-generation ASML machines.',

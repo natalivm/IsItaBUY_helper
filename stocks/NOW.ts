@@ -23,13 +23,6 @@ export const NOW = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 
-  strategicNarrative:
-    "The stock has been cut in half — down ~53% in a year, from $211 to the low $90s — and the reason is one big fear: that AI lets Microsoft and others bundle workflow tools for free and commoditize what ServiceNow sells. That fear is doing the pricing here, not the fundamentals. " +
-    "Because the fundamentals didn't break. Q1 2026 actually accelerated: revenue +22%, subscription +19%, FCF margin 44%, and management raised the full-year guide. Net retention is still north of 120%, and once NOW becomes the system of record for a company's IT, employee and customer workflows, ripping it out is genuinely hard. This is still a high-quality, sticky, growing business. " +
-    "Capital allocation is the cleanest part of the story — and it matters here because Burry explicitly flagged NOW on his Cassandra Unchained list. At a ~0.65 coefficient it lands in his 'real-earnings haircut' zone, where the rule is to discount the multiple for inflated reported earnings. But NOW is the rare name that earns a pass: it buys back ~2.3× what it pays out in stock comp, diluted share count has barely moved in five years (+0.6%/yr vs +24–34% for PLTR/AXON), and a fresh $5B authorization landed in January. The 35% haircut already credits that offset; an OK-tier read is defensible, and NOW deserves to be ranked apart from the broken-SBC cohort. " +
-    "So you're paying ~20× forward earnings for a 20%+ grower with great economics — historically cheap for this business. The honest catch: the de-rating isn't pure panic. Whether GenAI commoditizes ITSM is a real, unresolved question, and May's Analyst Day bull case ($30B+ 2030 subscription, Rule of 60) is management talking up a beaten-down stock, so we lean more cautious than consensus. " +
-    "Net: a BUY, but a tempered one. The base case (~$150 in 5 years, near the analyst median) is a quality compounder at a fair price; the bear case (AI eats the moat, ~$90) is live enough that we weight it at 30%. Best capital allocation in the cohort and a decade-worst valuation for the same company — just not the slam-dunk it would have been without the AI overhang.",
-
   reasonsToBuy: [
     'Deeply embedded system-of-record for enterprise IT, employee, and customer workflows with genuine switching costs',
     'Net retention above the most durable SaaS benchmarks reflects customers expanding usage organically quarter after quarter',

@@ -21,16 +21,6 @@ export const CEG = defineStock({
   baseEps: 11.50,
   rsRating: 49,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Q1 2026 print: adj operating EPS $2.74 (+$0.60 YoY), GAAP $4.49 — in line with plan. FY26 guidance affirmed at $11–$12 (midpoint $11.50). Calpine accretion tracking to ~$2/share for the year. " +
-    "Management reiterated >20% base EPS growth through 2029 and a long-term 10%+ rolling EPS growth target. " +
-    "FCF before growth: $8.4B for 2026–27 and $11.5–13B for 2028–29 — a ~45% step-up at the midpoint, with optionality levers (data center offtakes, gas-fleet utilization, nuclear PTC inflation gearing, capital returns) on top. " +
-    "Capital allocation activated: $335M buyback (1.2M shares @ ~$285 avg) executed shortly after the business update, with $5B authorization in place. Dividend growth target maintained at 10%/yr. " +
-    "Operational wins: Pastoria Solar (105 MW) and Pin Oak Creek gas peaker (460 MW) brought online; PUCT approved CyrusOne/Freestone net-metering — first major signal for PJM-style colocation precedent. " +
-    "PJM moving fast on the backstop framework with a FERC filing targeted for June; PJM also published a white paper revisiting market design (energy/reserve co-optimization). Crane CIR transfer (Eddystone → Crane) under FERC review for a 2027 capacity credit — meaningfully ahead of the 2031 baseline. " +
-    "~5,000 MW of new capacity (nuclear uprates, gas, storage) submitted into PJM queue. Barron's #1 Most Sustainable U.S. Company 2026. " +
-    "Risks: ERCOT forward weakness, customer pauses awaiting PJM clarity, Calpine lockup overhang (25M shares unlock 6/30/26), capacity-price sustainability. At ~26× FY26 guide midpoint this remains a premium cyclical with a structural AI tailwind, not a cheap compounder. ",
-
   reasonsToBuy: [
     'America\'s largest clean-firm nuclear fleet uniquely positioned to meet AI data center around-the-clock power demand',
     'Management guidance of strong base EPS growth through the decade is underpinned by long-term contracted generation',

@@ -23,14 +23,6 @@ export const SHOP = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 
-  strategicNarrative:
-    "Q1 2026 confirmed Shopify's acceleration: $3.2B revenue (+34% YoY), GMV $101B (+35%) — second consecutive $100B+ quarter, fastest US growth rate in 4 years. Four straight quarters of 30%+ revenue growth alongside mid-to-high-teens FCF margins ($476M FCF, 15% margin in Q1). " +
-    "Commerce velocity is broad: B2B GMV +80%, Shop Pay GMV +59% to $35B, offline +33%, international +45% (Europe +48%). AI is no longer a feature — it's the operating system: Sidekick weekly active shops 4× YoY, AI writes 50%+ of Shopify code, AI-driven traffic to merchant stores 8× YoY, orders from AI searches 13× YoY. " +
-    "Platform lock-in is structural: Shopify co-developed UCP (Universal Commerce Protocol) with Google, now adopted by Amazon, Meta, Microsoft, Salesforce and Stripe. Shopify is the only platform powering selling inside ChatGPT, Copilot and Google from one system. Q2 guidance: high-20s revenue growth, mid-teens FCF margin. " +
-    "Capital allocation profile (FY25 basis): SBC $449M = 3.8% of revenue — the lowest of any Burry-cited name. Buybacks $491M LTM already exceed SBC. Diluted shares 1,274M (FY21) → 1,307M (LTM) = +2.6% cumulative over 5y. GAAP operating margin 17.1% (up from -8.5% in FY22). Real operating leverage. " +
-    "At ~$103 / ~$135B market cap on ~$1.68 FY2026 non-GAAP EPS, forward P/E ~61×. Premium, but Q1 momentum suggests the high-28% base EPS CAGR is achievable. " +
-    "BUY-leaning HOLD: reformed compounder (low SBC, net buybacks, GAAP profitable) now layered with a defensible AI infrastructure moat via UCP. The deceleration to 'high 20s' in Q2 from 34% Q1 is the principal near-term risk to multiple.",
-
   reasonsToBuy: [
     'Universal Commerce Protocol co-developed with Google and adopted by Amazon, Meta, and Microsoft creates near-unbreakable platform lock-in',
     'Only commerce platform powering selling inside ChatGPT, Copilot, and Google from a single system',

@@ -23,16 +23,6 @@ export const INTU = defineStock({
   ratingOverride: 'HOLD',
   updatedOn: '06/05',
 
-  strategicNarrative:
-    "Intuit is the dominant SMB-finance + consumer-tax platform (TurboTax, QuickBooks, Credit Karma, Mailchimp) — FY25 revenue $18.8B (+16% YoY), GAAP EPS $13.67 (+31%), GAAP operating margin 26%, non-GAAP EPS $20.15 (+19%). " +
-    "FY26 guide: revenue $20.997-21.186B (+12-13%), GAAP EPS $15.49-15.69 (+13-15%) — durable double-digit compounding. " +
-    "The catch: stock is -38% over the past year (peak $814 → $396), 52-wk range bottoms at $342. RS 18 / SMA200 negative reflects AI-disruption fear: ChatGPT-era tax filing, generative SMB accounting, and Block + competitors threatening the moat. Intuit's response (Agentic AI, Intuit Assist) is real but unproven monetization. " +
-    "Capital allocation supportive: $2.8B FY25 buyback (+39% YoY), $5.3B remaining authorization. SBC ~$2B vs $3.9B GAAP NI is high for a mature software franchise. " +
-    "Bull (~25%): Agentic AI cements switching costs, growth re-accelerates to 15%+, multiple re-rates to 30× → $700+. " +
-    "Base (~50%): Mid-teens EPS growth holds, multiple settles 24× → $480. " +
-    "Bear (~25%): AI-native challengers chip away at TurboTax/QuickBooks moat, growth decelerates to single digits, multiple compresses to 18× → $300. " +
-    "Burry indicator flags 32% overstatement (Critical, Burry-published). Quality franchise at a multi-year drawdown — wait for stabilization above $420 before adding.",
-
   reasonsToBuy: [
     'Dominant SMB finance and tax platform with deeply embedded workflows that create high switching costs for customers',
     'Agentic AI initiative positions Intuit as the autonomous financial back-office for small businesses if it monetizes successfully',

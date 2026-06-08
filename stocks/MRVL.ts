@@ -39,16 +39,6 @@ export const MRVL = defineStock({
   // Stock +4.8% post-earnings to $208.26; +145% YTD entering the print.
   // ─────────────────────────────────────────────────────────────────────────
 
-  strategicNarrative:
-    'Marvell delivered a clean beat-and-raise in Q1 FY27: revenue $2.418B record (+28% YoY), non-GAAP EPS $0.80 (+29% YoY), non-GAAP operating margin 35.0%. The real signal is the raised trajectory — Q2 guided to $2.7B (+35% YoY), FY27 raised to ~$11.5B (+40%), FY28 raised to ~$16.5B (+43%), management committed Q4 FY27 >$3B, and FY28 non-GAAP operating margin targeted 38-40%. Data center drove 76% of revenue. ' +
-    'Three flywheels compounding: (1) Custom silicon — zero to $1.5B in FY26, +20% FY27, with 20+ design wins entering production FY28-FY29; the Amazon 5-year processor + networking IC partnership and Google April 2026 deal (two specialized AI inference chips) confirm hyperscaler diversification is real and deepening. (2) Optical interconnect — 70-80% share of 800G/1.6T DSPs; guided >70% YoY revenue growth in FY27; Celestial AI photonic fabric targeting $500M run-rate by Q4 FY28. (3) Switching/CXL — 51.2T in volume, 100T introduced, XConn CXL acquisition adds memory-disaggregation depth. ' +
-    'The Nvidia $2B strategic investment (March 2026) and NVLink Fusion integration are the most important context for the bull case. Nvidia is embedding Marvell\'s custom silicon and optical networking into its rack-scale AI platform — MRVL is now an architectural dependency of the dominant AI training stack, not merely a supplier. This is the structural differentiation from every other custom silicon or optical vendor. ' +
-    'The GAAP/non-GAAP gap is widening: Q1 SBC rose to $207.6M (+46% YoY from $142.1M), annualizing to ~$830M in FY27 (up from FY26 $591M, 7.2% → ~8.5% of revenue). A $331.8M non-cash contingent consideration charge distorted Q1 GAAP EPS to $0.04. Buybacks running ~$2.3B/yr (2.4× SBC coverage) materially offset dilution — structurally different from zero-buyback SaaS peers. ' +
-    'Bear (~20%): AI capex peaks in FY27; custom silicon programs delay FY28 ramp; Broadcom closes optical gap; revenue ~$15B by FY31 with stalling margins; exit 18× EBITDA; 5yr CAGR ~-4%. ' +
-    'Base (~50%): FY27 $11.5B and FY28 $16.5B deliver per guidance; custom re-accelerates in FY28 on 20+ new programs; op margin expands to 40%+; exit 28× EBITDA; 5yr CAGR ~9%. ' +
-    'Bull (~30%): Nvidia, Amazon, Google, Microsoft all ramp simultaneously in FY28-29; Celestial fabric captures $1B+ scale-up TAM; revenue ~$28B by FY31 with 40%+ FCF margins; exit 35× EBITDA; 5yr CAGR ~18%. ' +
-    'BUY — the Q1 FY27 print confirms Marvell as the AI interconnect and custom silicon architect of the hyperscaler stack. At $208 / 32× FY28E non-GAAP EPS with $16.5B raised guidance, base case delivers ~9%/yr — solid for this quality and visibility. NVLink Fusion integration with Nvidia is the asymmetric option not yet fully priced.',
-
   reasonsToBuy: [
     'Custom-silicon flywheel scaling fast, with a multi-year Amazon partnership and Google inference-chip wins confirming hyperscaler diversification',
     'Market-leading optical interconnect (800G/1.6T DSPs) riding relentless AI data-center bandwidth demand',

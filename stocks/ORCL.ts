@@ -22,21 +22,6 @@ export const ORCL = defineStock({
   rsRating: 16,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Strong enterprise moat business entering AI-fueled cyclical/secular acceleration phase, paying for it with very heavy capex. " +
-    "Q3 FY26 was the first quarter in 15+ years where both organic revenue and organic non-GAAP EPS grew 20%+ in USD — real acceleration, not just narrative. " +
-    "OCI breakout: cloud infra revenue +84% to $4.9B (accelerating from +68%), multicloud DB revenue +531% YoY, AI infra revenue +243% YoY. RPO = $130B. FY27 revenue guidance raised to $90B. " +
-    "Moat expanding beyond legacy DB: (1) Oracle Database lock-in — mission-critical enterprise data, extremely expensive migration; (2) enterprise contracts with massive switching costs; " +
-    "(3) OCI cost advantage — 30-40% cheaper GPU clusters than AWS, bare-metal architecture ideal for AI training; (4) NEW: multicloud database@Azure/AWS/Google + AI Data Platform + agent layer near system of record. " +
-    "Supply-side execution improving: 10+ GW power/DC capacity secured for next 3 years, 90% capacity funded by partners, rack-to-revenue time reduced 60%, $29B contracts under new financing model. " +
-    "Revenue: $57B → $226B by 2030E (~21% CAGR). EPS: 6.03 → 20.78E (TIKR consensus ~28% CAGR, realistic base ~15%). " +
-    "BUT: FCF temporarily destroyed by AI capex ($21B → $71B by 2030E). Same capex pattern as Amazon (2013), Microsoft (2016), Google (2017) during hyperscale buildout. " +
-    "Partner-funded model helps but this is NOT asset-light compounder. Need to prove capex converts to large recurring cash flow in 2-4 years. " +
-    "Key risks: (1) AI capex may not convert if OCI stays 4th behind AWS/Azure/GCP; (2) gross margin compression 71% → 55%; (3) RS 16 — market aggressively selling, -51% from $346 ATH. " +
-    "P(15% CAGR) ≈ 45-55% post-Q3 call (raised from ~45% pre-call). Bet decomposition: 50% execution, 35% structural AI/cloud trend, 15% cycle/sentiment. " +
-    "Not a structural compounder yet, but no longer a mature dinosaur. One of the most serious 'non-obvious AI infrastructure + enterprise software' bets in the market. " +
-    "Burry full-SBC adjustment (estimated): 65% overstatement (Critical) — real owner profit ~35% of GAAP; apply discount when comparing multiples to peers.",
-
   reasonsToBuy: [
     'Oracle Database lock-in is among the deepest moats in enterprise software — migration cost is prohibitive',
     'OCI bare-metal architecture offers a structural cost advantage for large-scale AI training workloads',

@@ -24,16 +24,6 @@ export const AMD = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 FY26',
 
-  strategicNarrative:
-    "AMD is no longer a turnaround story — it is a high-expectation AI infrastructure bet. Q1 FY26 delivered $10.3B revenue (+38% YoY), GAAP EPS $0.84 (+91%), non-GAAP $1.37 (+43%), record FCF $2.6B, gross margin 53% GAAP / 55% non-GAAP — operating leverage finally working. " +
-    "Data Center is now the engine: $5.8B (+57% YoY), driven by Instinct MI300/MI450 ramp, EPYC server CPU share gains, and hyperscaler adoption (AWS, Azure, Google, Meta partnership). " +
-    "Client + Gaming $3.6B (+23%) is healthy but secondary; Embedded $873M (+6%) is stable. Q2'26 guide: $11.2B revenue, ~56% gross margin — momentum holding. " +
-    "The catch: stock is +112% YTD / +347% 1Y, RSI ~80, forward P/E ~35× on FY27E EPS ~$13 (Bernstein bull-target $525) — market is pricing high-base + partial-bull. Operating expenses +34% YoY signal aggressive AI spend; if growth slows, margins get hit fast. " +
-    "Single-engine concentration risk: ~56% of revenue is data center; the entire AI-capex cycle pause scenario hits AMD harder than diversified peers. NVDA still dominates margins, ecosystem (CUDA), and scale — AMD share gains have to be real and durable, not pilot-program one-offs. " +
-    "Bull (~30%): DC +50% sustains, MI300/450 ramps clean, share from NVDA, margins 58-60%, EPS $5-6 forward → $550-650. Base (~50%): DC +30-40%, margins 55-57%, EPS $4-5, multiple compresses 25-30× → $400-520. Bear (~20%): AI digestion, NVDA software moat widens, multiple compresses to 20-25× → $280-380. " +
-    "Risk/reward no longer asymmetric in your favor at $455. Quality AI bet, but valuation already reflects continued perfection. HOLD; full-size add only on a >25% pullback or fresh data-center inflection. " +
-    "Burry full-SBC adjustment (Burry-published): 32% overstatement (Critical) — real owner profit ~68% of GAAP; apply discount when comparing multiples to peers.",
-
   reasonsToBuy: [
     'Instinct MI300/MI450 GPU ramp is winning real hyperscaler deployments at AWS, Azure, Google, and Meta — not just pilots.',
     'EPYC server CPU is taking durable share from Intel across cloud and enterprise, adding a structural revenue leg.',

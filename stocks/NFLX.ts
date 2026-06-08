@@ -19,13 +19,6 @@ export const NFLX = defineStock({
   modelType: 'EPS_PE',
   rsRating: 29,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Netflix is a structural compounder — scale, brand, global distribution, and a nascent ads business doubling to ~$3B in 2026 give it compounding levers few media companies possess. " +
-    "2026E guide: $51B revenue (+14%), 31.5% op margin (+2pp YoY), with pricing power and ads scaling as the dual margin engines. " +
-    "The problem: at current price, base DCF roughly equals fair value (~6% upside) and RS 13 signals no institutional momentum — quality business at fair price, not asymmetric opportunity. " +
-    "If ads ARM approaches parity and margin sustains +2.5pp/yr expansion, this is an 18%+ compounder. If ads cycle breaks or multiple compresses, returns are single-digit. " +
-    "Prob-weighted return ~12-13% — WAIT for entry at ~$65-70 where expected CAGR crosses 15%.",
-
   reasonsToBuy: [
     'Unrivaled global streaming brand with deep content investment moat that new entrants cannot replicate quickly',
     'Ads-supported tier still nascent with advertising revenue per member far below the monetization ceiling of comparable platforms',

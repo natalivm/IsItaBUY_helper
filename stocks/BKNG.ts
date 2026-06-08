@@ -21,17 +21,6 @@ export const BKNG = defineStock({
   rsRating: 18,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
-  strategicNarrative:
-    "BKNG is a high-quality travel compounder with a dominant two-sided marketplace moat. " +
-    "Q1 2026 actuals: Revenue $5.5B (+16% YoY), Gross bookings $53.8B (+15%), Room nights 338M (+6%), Adj. EBITDA $1.3B (+19%, margin 23.3%), FCF $3.1B. Expenses +15% vs revenue +16% — operating leverage intact. " +
-    "Critical insight: revenue growing 16% vs. room nights only +6% → pricing power and merchant/payments mix are doing the heavy lifting, not volume. This is a quality signal. " +
-    "Q2 2026 guide: 4–6% revenue/booking growth. Soft, but mgmt explicitly cited ~2pt Middle East headwind on room nights; structural demand is intact. FY2026 guide maintained: HSD revenue, HSD–LDD bookings, low-mid teens EPS growth. " +
-    "Buyback acceleration: $3.6B repurchased in Q1 alone, $18.2B authorization remaining. At ~$135B market cap, Q1 pace implies ~11% annualized gross buyback yield — among the highest in large-cap. " +
-    "Transformation Program: $550M annual savings self-fund $700M reinvestment. EBITDA margin guide of +50bps intact. Capital return: 2025 FCF ~$9.1B, returned $8.2B (~90%). Since 2022: $29B buybacks, -22% net share count. " +
-    "LLM/AI risk: merchant-of-record, supply integrations, payments, compliance = deep moat at transaction layer. LLMs more likely a new paid traffic channel (like Google) than existential threat. " +
-    "At ~15-16x forward P/E — below historical 16-30x — market is pricing geopolitical/macro risk, not business quality. FCF yield ~9% at current price provides downside cushion. " +
-    "RS 18 = no momentum — value entry, not breakout. Risks: Middle East conflict, airline disruption, EU regulation, Google distribution, travel macro.",
-
   reasonsToBuy: [
     'Revenue growing far faster than room nights signals pricing power and merchant payments mix doing the heavy lifting',
     'Aggressive share repurchase program at scale — billions returned quarterly — is compounding per-share value rapidly',

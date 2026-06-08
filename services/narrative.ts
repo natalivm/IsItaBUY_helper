@@ -23,33 +23,6 @@ export function applyNarrativeTokens(text: string, tokens: NarrativeTokens): str
 }
 
 /**
- * Spot-relative tokens spanning all three scenarios — for the strategic narrative,
- * which discusses bear/base/bull and the probability-weighted blend together.
- */
-export function globalNarrativeTokens(
-  spot: number,
-  allProjections: Record<ScenarioType, ProjectionData>,
-  blended: number,
-): NarrativeTokens {
-  const bear = allProjections[ScenarioType.BEAR].pricePerShare;
-  const base = allProjections[ScenarioType.BASE].pricePerShare;
-  const bull = allProjections[ScenarioType.BULL].pricePerShare;
-  return {
-    spot: usd(spot),
-    bearTarget: usd(bear),
-    baseTarget: usd(base),
-    bullTarget: usd(bull),
-    blended: usd(blended),
-    bearReturn: signedPct(bear / spot - 1),
-    baseReturn: signedPct(base / spot - 1),
-    bullReturn: signedPct(bull / spot - 1),
-    blendedReturn: signedPct(blended / spot - 1),
-    baseCagr: pctFmt(allProjections[ScenarioType.BASE].cagrs[4] / 100),
-    blendedCagr: pctFmt(Math.pow(blended / spot, 1 / 5) - 1),
-  };
-}
-
-/**
  * Tokens scoped to a single scenario — for that scenario's own desc/thesis,
  * where `{target}`, `{return}` and `{cagr}` refer to this path specifically.
  */

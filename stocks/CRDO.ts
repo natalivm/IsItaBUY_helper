@@ -22,17 +22,6 @@ export const CRDO = defineStock({
   rsRating: 85,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Credo delivered a blowout Q3 FY26 — $407M revenue (+52% QoQ, +200% YoY), 68.6% gross margin, $209M non-GAAP net income. " +
-    "FY26 tracks to ~$1.3B (3x YoY). April 14, 2026: announced definitive agreement to acquire DustPhotonics (Silicon Photonics PIC leader), closing Q2 CY26. " +
-    "Deal lifts FY27 growth guide from 50% to >75% YoY, with combined optical revenue (oDSP + ZeroFlap + SiPho PICs) expected to exceed $500M in FY27 — accretive in FY27. " +
-    "Strategic logic: owning the PIC alongside the optical DSP delivers a more optimized ZeroFlap stack, eliminates merchant margin stack, and adds a stand-alone PIC business with hyperscaler design wins, roadmap to 3.2T, and a $6B TAM by 2030. " +
-    "DustPhotonics also complements Credo's micro-LED CPO/NPO bet with a laser-based path — covering any architecture customers choose. " +
-    "ZeroFlap Optics already shipping production units (pulled forward 6 months to Q1 FY27); Dust integration into the platform takes ~1 year. " +
-    "The thesis is intact: AECs are de facto standard for intra-rack connectivity, 5th hyperscaler added, and 4 multi-billion TAM expansions (ZeroFlap Optics, ALCs, OmniConnect, SiPho PICs) layer in FY27-28. " +
-    "Risks: top-3 customer concentration remains 88%, GM guided 64–66%, FY27 H1 only mid-single-digit sequential growth (back-half loaded ramp), 2-year earnout creates dilution risk if Dust hits metrics, integration execution risk. High beta (2.58) means sharp drawdowns in risk-off. " +
-    "RS at 85 — momentum rebuilding, but position sizing still warrants caution. ",
-
   reasonsToBuy: [
     'AEC chips are the de facto standard for intra-rack connectivity, giving Credo an entrenched position as AI clusters scale',
     'DustPhotonics acquisition vertically integrates the silicon photonics PIC layer, expanding addressable revenue per deployment',
