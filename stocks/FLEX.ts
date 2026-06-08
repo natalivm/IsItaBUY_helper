@@ -44,7 +44,7 @@ export const FLEX = defineStock({
   risksToBuy: [
     'The majority of EPS growth came from buybacks and margin expansion rather than organic revenue growth — a fragile earnings construction',
     'Three-month price momentum has stalled, suggesting institutional accumulation has paused near current levels',
-    'In a cyclical downturn, P/E compression to trough EMS multiples could produce a severe drawdown from current levels',
+    'In a cyclical downturn, a derating toward trough contract-manufacturing levels could produce a severe drawdown',
     'Revenue declined meaningfully over recent years — demand recovery depends on external inventory restocking cycles, not internal execution',
     'EMS is a thin-margin, capital-intensive business with intense competition from Asian players on cost and scale',
   ],

@@ -27,7 +27,7 @@ export const PINS = defineStock({
   ],
 
   risksToBuy: [
-    'RS 10 signals that institutional money is actively rotating out — the market is voting against the thesis',
+    'Deeply negative relative strength signals institutional money actively rotating out — the market is voting against the thesis',
     'GenAI-powered search directly threatens the visual discovery moat that anchors Pinterest\'s advertising model',
     'Revenue growth in a disruption scenario could deteriorate to low single digits with multiple compression to follow',
     'The platform has struggled to fully convert discovery intent into measurable direct-response advertiser ROI',

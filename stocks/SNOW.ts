@@ -53,7 +53,7 @@ export const SNOW = defineStock({
 
   reasonsToBuy: [
     'Enterprise data gravity makes migration away from Snowflake prohibitively expensive for petabyte-scale customers',
-    'The $6B multi-year AWS agreement signals hyperscalers are expanding the partnership rather than competing against it',
+    'A major multi-year AWS agreement signals hyperscalers are expanding the partnership rather than competing against it',
     'AI product adoption accelerating — Snowflake Intelligence, Cortex Code, and Natoma governance platform all showing rapid uptake',
     'RPO growing well ahead of revenue, providing exceptional multi-year forward visibility and contracted backlog',
     'NRR inflecting higher with large-customer additions accelerating, signaling the enterprise expansion motion is intact',

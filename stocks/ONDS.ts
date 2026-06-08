@@ -36,7 +36,7 @@ export const ONDS = defineStock({
   reasonsToBuy: [
     'Positioned at the intersection of three converging defense megatrends: drones, counter-UAS, and AI-enabled ISR',
     'American Robotics subsidiary provides a real operational platform for autonomous military and industrial deployment',
-    'RS Rating of 99 reflects explosive institutional accumulation and broad momentum across the defense-drone theme',
+    'Top-tier relative strength reflects explosive institutional accumulation and broad momentum across the defense-drone theme',
     'Potential for Tier-1 DoD contract wins that could multiply revenue many times from the current tiny base',
   ],
 

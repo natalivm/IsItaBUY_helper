@@ -38,7 +38,7 @@ export const RKLB = defineStock({
     'Only publicly traded pure-play covering launch, satellites, and defense space infrastructure under one roof',
     'Backlog growing rapidly with defense contracts providing durable, high-switching-cost revenue visibility',
     'Neutron medium-lift vehicle would multiply addressable market by an order of magnitude if successfully fielded',
-    'RS 98 with accelerating fund ownership and A+ accumulation signal broad institutional conviction in the thesis',
+    'Elite relative strength with accelerating fund ownership and top-grade accumulation signals broad institutional conviction',
     'Anduril hypersonics deal and Space Force programs anchor the company in the fastest-growing defense segment',
   ],
 
