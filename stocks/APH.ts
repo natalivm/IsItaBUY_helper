@@ -21,14 +21,6 @@ export const APH = defineStock({
   baseEps: 4.40,
   rsRating: 89,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Amphenol delivered a blockbuster Q1 2026: $7.6B revenue (+58% YoY, +33% organic), adj EPS $1.06 (+68%), book-to-bill 1.24x with all end markets positive. " +
-    "IT Datacom is now 41% of sales with 81% organic growth driven by AI infrastructure; Q2 guided to $8.1–8.2B (+43–45% YoY). " +
-    "CommScope (CCS) closed January 2026, adding ~$4.1B in annual revenue and a unique fiber/building-connectivity platform — the combination gives Amphenol the broadest high-speed copper + power + optics suite in the industry. " +
-    "Defense adds a second structural tailwind (+25% organic YoY, all geographies). " +
-    "At ~$122, the stock trades at roughly 28x FY2026 adj EPS (~$4.40) — a meaningful discount to the 38–40x it commanded at peak. " +
-    "Key risk: 41% IT Datacom concentration means an AI-capex pause hits hard, and CommScope margins are still dilutive until integration matures.",
-
   reasonsToBuy: [
     'Broadest high-speed copper, power, and optics connector suite in the industry after the CommScope acquisition.',
     'AI infrastructure tailwind is driving record organic growth in IT Datacom, now the dominant revenue segment.',

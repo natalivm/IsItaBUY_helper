@@ -21,14 +21,6 @@ export const THM = defineStock({
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   analystConsensus: { rating: 'Strong Buy', targetLow: 2, targetMedian: 2, targetHigh: 2, numAnalysts: 1 },
-  strategicNarrative:
-    "THM is a long-dated call option on gold staying above ~$2,000/oz. The Livengood project holds 9.0M oz P+P reserves at 0.65 g/t — 317k oz/yr over a 20.3-year mine life with AISC of $1,068/oz. " +
-    "At today's $5,226 gold, margin is $4,158/oz and project NPV (5%) is $7-10B vs ~$860M market cap — massive asymmetry if gold holds. " +
-    "However, $1.93B capex is the mountain: $115M raised covers only 6% of needs, requiring a major JV or streaming deal. " +
-    "RS 99, Paulson & Co. backing ($40M private placement, ~38% ownership), and Alaska Tier-1 jurisdiction are positives. " +
-    "But this is pre-revenue, pre-production, no earnings, no operating cash flow — purely speculative. " +
-    "Bull case ~$6 driven by gold reserve optionality; bear case ~$0.40 (cash floor minus burn). Size as speculation only. ",
-
   reasonsToBuy: [
     'One of the largest undeveloped gold reserves in a stable, Tier-1 Alaskan jurisdiction',
     'At elevated gold prices the project margin per ounce is exceptional, creating huge NPV asymmetry',

@@ -20,16 +20,6 @@ export const DUOL = defineStock({
   baseEps: 3.40,
   rsRating: 3,
   aiImpact: 'DISRUPTION_RISK',
-  strategicNarrative:
-    "Post-earnings WAIT — 2025 was elite ($1.04B revenue +39%, 52.7M DAUs +30%, $360M FCF, $1.04B cash, zero debt) but that's not the story anymore. " +
-    "Management is deliberately stepping off the gas: 2026 guides only 15-18% revenue growth with EBITDA margins compressing from 29.5% to ~25% as they spend ~$50M reducing friction to chase 100M DAUs by 2028. " +
-    "Key nuance: $414M reported 2025 net income includes a $256.7M one-time tax benefit — recurring EPS is ~$3.40. " +
-    "At $91.63 (down 79% from ATH), EV/FCF is ~9x on 2025 actuals — priced for zero growth. " +
-    "Near-term: expect analyst estimate cuts, multiple compression, and continued volatility as the market digests a growth-to-reinvestment narrative shift. " +
-    "The binary bet: 100M DAUs by 2028 unlocks a monetization base that justifies massive re-rating — or the strategy fails and slow growth + declining margins gets punished hard. " +
-    "AI disruption risk is real but DUOL is also AI-first (Video Call, Max tier, 18x content acceleration). WAIT for 2026 guidance stabilization or first evidence of DAU re-acceleration before adding aggressively. " +
-    "Burry full-SBC adjustment (estimated): 75% overstatement (Tragic) — real owner economics ~25% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
-
   reasonsToBuy: [
     'Dominant language-learning network with tens of millions of daily active users and deep habit-forming engagement loops',
     'Zero-debt balance sheet with substantial cash reserves provides a durable runway for the growth reinvestment phase',

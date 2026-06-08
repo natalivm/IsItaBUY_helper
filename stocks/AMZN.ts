@@ -23,15 +23,6 @@ export const AMZN = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 
-  strategicNarrative:
-    "Q1 2026: revenue $181.5B (+17% YoY), operating income $23.9B at 13.1% margin — the highest operating margin in Amazon history. Three engines firing: AWS +28% (fastest growth rate in 15 quarters, $150B annualized), Ads +22% ($17.2B), retail units +15% (best since COVID peak). " +
-    "AWS backlog $364B (excludes $100B+ Anthropic commitment). AI revenue run rate >$15B — in 3 years of AI wave, AWS AI grew 260× faster than AWS itself did in its first 3 years. Bedrock: 125,000+ customers, 170% QoQ customer spend growth, tokens processed in Q1 > all prior years combined. " +
-    "Trainium is now a top-3 data center chip business: ~40% QoQ growth, >$20B annualized run rate, triple-digit YoY %, $225B+ revenue commitments. T2 ~30% better price/performance than GPUs (largely sold out); T3 started shipping early 2026 (30-40% better than T2, nearly fully subscribed). Implied $50B standalone run rate if sold externally like peers. Graviton chosen by Meta for tens of millions of CPU cores for agentic AI workloads. " +
-    "Amazon Leo: >250 satellites in orbit, commercial service launching Q3 2026. Delta Airlines committed half their fleet from 2028. Acquiring Globalstar for direct-to-device spectrum; Apple partnership for iPhones/Apple Watches. >20 launches planned in 2026. " +
-    "Rufus: MAU +115%, engagement +400% YoY. Amazon Now (30-min delivery) in 9 countries. Grocery business #2 in U.S., perishables 40× YoY growth. Q1 CapEx $43.2B — massive AI infrastructure build. " +
-    "Q2 guided $194-199B revenue, $20-24B OI (lower than Q1 from seasonal SBC step-up + ~$1B Leo launch costs). FCF compressed in FY2026 as CapEx front-loads infrastructure; management explicitly expects FCF recovery in medium term as capacity monetizes. " +
-    "Note: Q1 GAAP EPS $2.78 was lifted by a one-time $16.8B pre-tax mark-up on the Anthropic stake (vs $1.64 expected); normalized FY2026 EPS ~$7.85 (Street consensus) anchors the valuation, not the headline print.",
-
   reasonsToBuy: [
     'AWS is the dominant global cloud platform with AI demand accelerating its growth to the fastest pace in over a decade.',
     'Trainium custom silicon positions Amazon as a credible competitor to NVIDIA in AI compute at hyperscale economics.',

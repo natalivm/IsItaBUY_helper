@@ -23,14 +23,6 @@ export const SNPS = defineStock({
   ratingOverride: 'HOLD',
   updatedOn: '06/05',
 
-  strategicNarrative:
-    "Synopsys is the dominant EDA + IP supplier (TCAD, simulation, verification, libraries) — FY25 (ended Oct 2025) revenue $7.054B (+15% YoY), GAAP EPS $8.07, non-GAAP EPS $12.91, record $11.4B backlog. " +
-    "AI-chip design demand is structural: every NVDA Rubin, AMD MI450, Trainium-3, Maia, TPUv6, and custom ASIC requires Synopsys EDA + IP. Ansys acquisition (closed 2024) adds multiphysics simulation = full 'silicon-to-system' platform. " +
-    "But: at $516 / 40× FY26 non-GAAP EPS, the stock prices flawless execution. RS 38 reflects 2026 underperformance amid concerns about (1) Cadence competitive pressure on AI-design wins, (2) Ansys integration friction, (3) export-control risk on China revenue (~10% of total). " +
-    "Capital allocation: ~$170M LTM buybacks per share (~$0.9 × 192M shares) — modest, mostly offsetting SBC dilution rather than retiring float. No dividend. " +
-    "Bull (~30%): AI super-cycle extends, Ansys synergies deliver, EPS CAGR 22% → $620+. Base (~50%): EDA cycle steady, EPS CAGR 15%, multiple compresses 40× → 27× → $480. Bear (~20%): China + Cadence pressure, EPS CAGR 9%, multiple to 20× → $370. " +
-    "Burry indicator flags 31% overstatement (Critical, Burry-published). Quality franchise but full price; wait for $400 entry where margin of safety improves.",
-
   reasonsToBuy: [
     'Dominant EDA market share means every advanced AI chip — NVIDIA, AMD, custom hyperscaler silicon — requires Synopsys tools',
     'Ansys acquisition creates a full silicon-to-system simulation platform no competitor can match at scale',

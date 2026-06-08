@@ -45,14 +45,6 @@ export const GXO = defineStock({
   // strategy + SG&A glide path). Net: thesis tracking slightly ahead; the
   // de-rating restored the favorable risk/reward the prior thesis flagged.
   // ─────────────────────────────────────────────────────────────────────────
-  strategicNarrative:
-    "GXO is a cyclical contract-logistics operator playing an execution + margin-expansion story — not a secular megatrend bet. " +
-    "Q1 2026 beat: revenue $3.3B (+10.8%, organic +4.1%), adj EBITDA $200M (+22.7%, margin 6.1% +60bps), adj EPS $0.50 (+72%) — though part of the beat was contract-termination-cost timing shifting into later quarters. " +
-    "Management RAISED FY26 guide: adj EBITDA $935-975M, adj EPS $2.90-$3.20 (+22% mid, prior +20%/$3.00), organic 4-5% maintained on conservative ~flat-volume assumptions; record $2.7B pipeline (+20% QoQ), $870M 2026 revenue secured (+19% YoY), Wincanton $60M synergies on track. " +
-    "Amazon's expanded supply-chain offering knocked the stock from ~$66 to ~$50, but the overlap is narrow (GXO Direct ~6% of revenue) — GXO sells bespoke, data-secure, contract-driven solutions with <5% churn into a ~$0.5T market still ~70% insourced. " +
-    "If Wincanton synergies land + margins expand toward 5% EBIT + the cycle firms, this is a 15%+ compounder; if volumes stay flat it's ~8% with limited multiple support. " +
-    "~40% probability of 15%+ CAGR — and at ~$50 the stock has dropped back into the entry zone where risk/reward flips favorably.",
-
   reasonsToBuy: [
     'Record pipeline and secured incremental revenue provide strong near-term earnings visibility',
     'Wincanton integration synergies tracking on schedule, adding meaningful margin uplift through year-end',

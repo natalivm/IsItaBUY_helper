@@ -22,17 +22,6 @@ export const FLEX = defineStock({
   rsRating: 91,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Flex is a top-5 global EMS player riding AI server and EV content tailwinds, but the underlying story is more complex than headline EPS suggests. " +
-    "FY2025 EPS of $2.65 grew at ~24% CAGR from $1.43, yet revenue declined from $30.3B to $25.8B — ~80% of EPS growth came from margin expansion and aggressive buybacks, not organic business growth. " +
-    "This is a fragile construction, though Q3 FY26 shows adjusted operating margin at 6.5% (record) — management cites power mix and industrial improvement with further expansion expected. " +
-    "FY26 guidance raised to $27.2-27.5B revenue and $3.21-3.27 EPS. Embedded power (800V DC) has very few competitors — a potential narrow moat. " +
-    "RS Rating 86 looks strong on the surface, but 3-month RS of 38 signals broken momentum — institutional accumulation has stalled. " +
-    "The thesis depends on cyclical recovery (inventory restocking + AI server buildout) rather than durable competitive advantage. " +
-    "Stress-test: in recession, P/E compression to 11-12x yields $29-32 — a potential -55% drawdown. " +
-    "Verdict: HOLD. Quantitative base case shows >30% upside but quality of earnings is questionable, momentum is broken, and downside risk in a cyclical reversal is severe. " +
-    "Wait for 3-month RS to recover above 60 and revenue reacceleration before upgrading.",
-
   reasonsToBuy: [
     'Embedded power and high-voltage DC expertise puts Flex in a narrow-moat position few EMS competitors can match for AI server builds',
     'Aggressive buyback program has been the primary EPS driver, and at current price continues to compound per-share value efficiently',

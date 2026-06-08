@@ -21,13 +21,6 @@ export const WWD = defineStock({
   baseEps: 9.30,        // FY26 mid-guide adj EPS ($9.15–$9.45, raised from $8.20–$8.60)
   rsRating: 94,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Woodward crossed $1B in quarterly sales for the first time in Q2 FY2026 — revenue $1.1B (+23% YoY), adj EPS $2.27 (+34%), record results in both Aerospace ($703M, +25%) and Industrial ($387M, +20%). " +
-    "Management raised FY2026 guidance sharply to 20-23% sales growth and adj EPS $9.15-$9.45 (was $8.20-$8.60). Commercial Services +36% (LEAP/GTF + legacy), Commercial OEM +30%, Defense OEM +9%. " +
-    "New catalyst: data center power gen demand is accelerating beyond prior capacity plans — multiple OEM customers sent capacity-study requests for 2030+; Woodward previously said existing facilities were sufficient and is now reconsidering expansion. Glatten expansion (diesel injectors for backup power) just completed. " +
-    "Portfolio quality improving: China on-highway wind-down ($30M Q3, minimal Q4), acquired VRM solenoids (next-gen single-aisle content), sold pilot controls line. New LEAP/GTF MRO partnerships with Lufthansa Technik, Air France KLM, and AAR add service network scale. " +
-    "At ~$370 / ~40x FY2026 guided EPS ($9.30 mid), valuation is still demanding. FCF guide $300-350M unchanged despite higher earnings — $290M capex + inventory build constrain conversion. RS 94 near elite; bull case requires sustained aero supercycle + data center capacity expansion.",
-
   reasonsToBuy: [
     'LEAP and GTF aftermarket is a long-duration, high-margin annuity as the installed base matures',
     'New Lufthansa Technik, Air France KLM, and AAR MRO partnerships expand the services franchise globally',

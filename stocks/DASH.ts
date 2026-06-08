@@ -20,8 +20,6 @@ export const DASH = defineStock({
   rsRating: 16,
   ratingOverride: 'BUY',
   aiImpact: 'TAILWIND',
-  strategicNarrative: "DoorDash is an execution compounder — $13.7B revenue and $935M GAAP net income in FY2025. Q1 2026 (reported May 6): revenue $4.0B (+33% YoY), GOV $31.6B (+37%), EPS $0.42 (beat est. $0.37 by 13.5%), record MAUs and memberships. Revenue missed consensus by ~3% but EPS beat on operating leverage. Three EPS levers above consensus: NV unit economics positive 2H'26, ads at 2× advertisers / 3× spend, and tech stack consolidation (3→1). Thesis is execution-driven earnings growth, not P/E rerating.",
-
   reasonsToBuy: [
     'Dominant US delivery platform with record MAUs and memberships driving compounding network effects',
     'International expansion into new verticals offers a long growth runway beyond food delivery',

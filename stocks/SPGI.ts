@@ -18,13 +18,6 @@ export const SPGI = defineStock({
   costDebt: 0.05,
   rsRating: 21,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "S&P Global is a structural compounder with a triple-layer moat — regulatory embedded (ratings/indices), workflow lock-in (CapIQ/Platts as system-of-record that LLMs work on top of, not replace), and data control (95% revenue tied to proprietary benchmarks). " +
-    "Execution is clean: FCF $5.48B (35% margin), 113% of FCF returned via buybacks, 53rd consecutive dividend raise, and AI as a structural tailwind (20% cost reduction by 2027 via EDO). " +
-    "The problem: RS 16 signals no institutional momentum, and at current valuation the base case delivers only ~11-13% CAGR — premium quality but not explosive growth. " +
-    "If AI margin uplift + Mobility spin + index tailwinds compound, this is a 16-18% compounder. If credit cycle slows issuance, EPS growth halves and you own a 2-4% CAGR at current price. " +
-    "35-40% probability of 15%+ CAGR — the highest-quality compounder in the portfolio, waiting for a better entry.",
-
   reasonsToBuy: [
     'Ratings and index businesses are regulatory-embedded monopolies — issuers and fund managers have no credible alternative',
     'CapIQ and Platts are workflow systems-of-record that AI models augment rather than replace, deepening rather than disrupting the moat',

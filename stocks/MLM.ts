@@ -22,25 +22,6 @@ export const MLM = defineStock({
 
   rsRating: 60,
   aiImpact: 'NEUTRAL',
-  strategicNarrative:
-    "Type B — Cyclical Growth (confirmed post-earnings). Quality infrastructure player with real geographic + " +
-    "vertical integration moat (quarries + logistics oligopoly, high permitting barriers).\n\n" +
-    "Earnings call update: Aggregates 2025 — +6.9% pricing, +3.8% volume, +239 bps price/cost spread, " +
-    "gross margin 34%. 2026 guide: volume +1-3%, pricing ~5%, COGS ~3%, low double-digit gross profit growth, " +
-    "EBITDA ~$2.49B (incl disc ops). Capex down 29% → strong FCF uplift.\n\n" +
-    "Three new structural positives: (1) Data centers growing ~60%, warehousing ~40% — new demand driver " +
-    "(currently ~3% of volume but accelerating); (2) IIJA peak reimbursements in 2026, 50% of funds still unspent; " +
-    "(3) Network optimization potential for COGS reduction (not in guidance = upside).\n\n" +
-    "However, classification unchanged: this is cyclical growth, not a compounder. " +
-    "Trailing P/E ~36-37x on trough-year EPS (2025A: $18.77 vs 2024A peak: $32.41, -42%). " +
-    "Forward P/E 2026E ~32-33x, 2027E ~28-29x. Revenue CAGR 5-8% long-term but cyclical. " +
-    "EBIT margin ~23% (cycles 19-28%), EBITDA margin ~33-36%. Housing remains weak drag. " +
-    "Even with data center + energy tailwinds, Revenue CAGR ~7-8%, EPS CAGR ~10-13% — not 18-20% secular engine. " +
-    "RS 77 — above average but not momentum leader, confirms not a momentum phase.\n\n" +
-    "Stress test: P/E 22x × EPS $21 = $462 (-33% downside). If volume growth 0% → EPS CAGR ~6-7%, fair P/E 22-24x, IRR ~0-4%. " +
-    "Probability of 15%+ CAGR: ~25-30%. Market prices MLM as compounder, but it's a well-managed cyclical business. " +
-    "At P/E >30x you're betting the cycle stays strong for years. That is the core bet.",
-
   reasonsToBuy: [
     'Quarry and logistics oligopoly with near-impenetrable permitting barriers creating a lasting geographic moat',
     'Infrastructure bill with half its funds still unspent provides a multi-year government demand runway',

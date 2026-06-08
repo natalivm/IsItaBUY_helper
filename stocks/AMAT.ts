@@ -21,14 +21,6 @@ export const AMAT = defineStock({
   baseEps: 11.09,         // FY26E consensus (TIKR); Q1 actual $2.38 + Q2 guide $2.64 mid + "2H stronger"
   rsRating: 95,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "AMAT is the largest semiconductor equipment company by revenue — dominant in CVD, PVD, ALD, and etch with 49% gross margins and an AGS services segment (~25% of revenue) that is genuinely recurring: 2/3 under multi-year contracts (~2.9yr avg), ~90% renewal rate, growing 12-15% YoY. " +
-    "Q1 FY26: $2.38 EPS actual; Q2 guided $2.64 mid. Equipment segment growing >20% in CY2026 (2H-weighted), momentum into 2027. Equipment GM ~54% disclosed separately. " +
-    "TIKR consensus EPS trajectory: $11.09 (2026E) → $13.78 (2027E) → $15.38 (2028E) → $18.84 (2029E) → $21.02 (2030E). This is a wave-like supercycle, not a one-year spike. " +
-    "But the market already prices the full trajectory — implied P/E compresses from 33x (2026) → 27x → 24x → 19.6x → 17.6x (2030). EPS grows, multiple falls. " +
-    "Probability-weighted 5-year return: ~6-7% CAGR. For 12% CAGR, you need the base case to work AND P/E to hold at 30x — or you need to buy at $270-290. " +
-    "Probability of 15%+ CAGR from $366: ~30-35%. Strong business, full price. Best entry on cycle reset below $300.",
-
   reasonsToBuy: [
     'Dominant position in CVD, PVD, ALD, and etch — process steps required for every advanced node transition.',
     'AGS services segment provides genuinely recurring revenue with multi-year contracts and a very high renewal rate.',

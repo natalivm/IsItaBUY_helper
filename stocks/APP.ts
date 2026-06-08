@@ -22,12 +22,6 @@ export const APP = defineStock({
   rsRating: 85,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Q1 2026: revenue $1.84B (+59% YoY), adj EBITDA $1.56B at 85% margin (record), FCF $1.29B. Q2 guided $1.915–1.945B (+52–55% YoY). 12 consecutive beats since AXON 2.0. " +
-    "RS recovered from 21 → 85 with Acc/Dist A — IBD notes stock 'clears resistance around $500 after 51% sell-off.' The institutional distribution phase that drove RS to 21 is over; re-accumulation is underway with Up/Down Volume 1.38. " +
-    "Self-serve platform (June GA) is the structural catalyst: <30-day breakeven, near-zero churn, >$70K/yr per customer. 100K customers × $70K = $7B potential ad spend per cohort year. GenAI video creative tool removes the key onboarding bottleneck. Lead-gen (auto, health, fintech) is the next TAM expansion. " +
-    "At $613 / ~42x FY2026 adj EPS (~$14.50), premium but defensible for a 59% grower at 85% EBITDA margins. Risk: revenue growth IS the valuation — any deceleration compresses the multiple hard.",
-
   reasonsToBuy: [
     'AXON AI engine delivers mobile advertisers measurably better ROAS, creating compounding lock-in as spend scales up.',
     'Best-in-class EBITDA margins with a high-fixed-cost model mean every incremental revenue dollar is nearly pure profit.',

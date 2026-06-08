@@ -23,14 +23,6 @@ export const CAVA = defineStock({
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'OVERVALUED',
-  strategicNarrative:
-    "Downgraded to OVERVALUED after Q4 FY2025 showed weakening same-store economics: SSS decelerated to just +0.5% (full year +4%), " +
-    "RLP margin compressed to 21.4% with food costs +50bps (tariffs) and other opex +60bps (delivery mix, KDS costs). " +
-    "FCF dropped to $26M from $53M prior year on heavy capex. Tax rate jumping from 10% to 25-30% in FY2026 will hit EPS hard. " +
-    "Management guiding conservative 3-5% SSS and cutting NRO productivity assumption to 90% (from 100%+). " +
-    "Salmon launch adds ~100bps RLP margin headwind. At ~125x fwd P/E, the stock still prices in near-flawless execution " +
-    "while same-store momentum is fading and margins are under pressure from reinvestment. OVERVALUED until valuation resets meaningfully. ",
-
   reasonsToBuy: [
     'Only national fast-casual Mediterranean brand with genuine whitespace to expand from hundreds to thousands of locations',
     'Zero debt and substantial cash reserves eliminate financial risk and fund the unit expansion runway',

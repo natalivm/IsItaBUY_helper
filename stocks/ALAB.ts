@@ -19,13 +19,6 @@ export const ALAB = defineStock({
   rsRating: 80,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Astera is building the connectivity control plane for AI scale-up — not GPUs, not memory, but the fabric layer between them. " +
-    "$6.5B Amazon warrant + Scorpio X (2027 volume ramp) + protocol-agnostic positioning (UALink + NVLink Fusion) make the bull case structural, not just cyclical. " +
-    "The problem: revenue decelerating fast (85% 3Y CAGR → +8% by 2028E), margins peak 2029E then compress, and at ~53x forward P/E the market already prices the optimistic path. " +
-    "If Scorpio X becomes standard in 2–3 hyperscalers, this transitions from cycle play to architectural moat (type B → A). If not, it's another AI silicon story with a semiconductor downturn ahead. " +
-    "35–40% probability of 15%+ CAGR — a tactical bet on AI infrastructure positioning, not a compounder. ",
-
   reasonsToBuy: [
     'Scorpio X positions Astera as the fabric layer between GPUs and memory — a critical choke point in AI scale-up clusters.',
     'Amazon warrant and strategic partnership provide deep hyperscaler validation and near-term revenue visibility.',

@@ -22,10 +22,6 @@ export const LMT = defineStock({
   ratingOverride: 'HOLD',
   aiImpact: 'NEUTRAL',
 
-  strategicNarrative:
-    "Lockheed Martin is the dominant defense prime contractor — F-35, missile defense, classified aerospace, hypersonics, and strategic weapons systems. Despite clear geopolitical tailwinds (NATO budget expansion, Indo-Pacific buildup, Middle East), LMT underperformed higher-growth defense names as F-35 procurement timing created near-term FCF pressure and capital rotated into missile suppliers, drone companies, and AI-defense plays. " +
-    "At $530, the fundamental case is intact — $6.2B FCF, 8.5% margin, WACC 7.1% (beta 0.52) — but the technical picture is clearly negative: RS 37 falling, D+ Acc/Dist, Up/Down Volume 0.44, and Industry Group Rank 86/142. The stock is down -23% from its 52-week high with institutions distributing. The business hasn't broken — earnings declined -12% last quarter and 3-year EPS trend is -11%. HOLD until RS recovers above 50 and distribution pressure eases.",
-
   verdictNarrative:
     "Lockheed Martin currently looks materially more attractive on a risk-adjusted basis than many speculative defense names that have rallied over the past year. Unlike KRMN or ONDS, the valuation is supported by enormous existing cash flows, entrenched defense programs, and decades-long government relationships. The company also benefits from some of the strongest geopolitical tailwinds in the industrial sector — NATO spending acceleration, Indo-Pacific buildup, and sustained US missile defense investment. " +
     "The fundamental case is solid — $6.2B FCF, low beta (0.52), Pristine SBC, and ~17% base-case upside to ~$625 in line with analyst consensus. But the technicals disqualify a BUY right now: RS 37 falling, D+ Acc/Dist, Up/Down Volume 0.44, and Industry Group Rank 86/142. Institutions are actively distributing — that is not a setup to buy into. " +

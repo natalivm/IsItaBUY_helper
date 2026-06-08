@@ -21,15 +21,6 @@ export const FRSH = defineStock({
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
 
-  strategicNarrative:
-    "Freshworks is executing a deliberate pivot away from its SMB helpdesk roots toward mid-market and enterprise ITSM, where it positions Freshservice as the \"affordable ServiceNow.\" " +
-    "The EX business ($540M+ ARR, growing 27%) is now the primary growth engine — NRR 119% for multi-product customers, first $1M+ ARR deal closed, and management targets $1B+ Freshservice ARR by 2028. " +
-    "CX (Freshdesk, ~55% of ARR) faces structural AI headwinds: ARR guided to grow only low single digits as AI agents deflect tier-1 ticket volume, even as the Omni replatform is 80% complete. " +
-    "The financial picture is distorted: FY2025 GAAP net income of $183M includes a $130M deferred-tax asset benefit; normalized NI ex-DTA is closer to $50M. Non-GAAP op margin compressed from 23.6% to 17.9% YoY in Q1 2026 as EX investment accelerates. " +
-    "At $8.50, the stock trades at ~6× 2026E adj. FCF of $265M — a near-distressed multiple for a business with 85% gross margins, $741M net cash (31% of market cap), 14–16% revenue growth, and a $400M buyback authorization that at current price retires ~17% of the float. " +
-    "Key risk: EX decelerates toward 15% while CX never recovers, melting the premium. Key opportunity: EX crosses $1B ARR by 2028 and FCF compounds at 20%+/yr per management guidance — at which point 6× FCF is deeply mispriced. " +
-    "Upgrade trigger: EX ARR sustains >25% growth and non-GAAP margin recovers above 22%. Downgrade trigger: EX growth falls below 15% or CX ARR turns negative. Watch Q2 2026 (est. July 27) for non-GAAP margin recovery above 20% post-restructuring.",
-
   reasonsToBuy: [
     'Freshservice is the credible affordable alternative to ServiceNow in enterprise ITSM, with net revenue retention above industry averages for multi-product customers',
     'Net cash covers nearly a third of the entire market cap, providing exceptional downside protection and funding a large buyback at depressed prices',

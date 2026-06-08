@@ -20,17 +20,6 @@ export const CRWD = defineStock({
   rsRating: 50,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Q1 FY27 inflection: first GAAP-profitable quarter (+$27.8M NI), ARR $5.51B (+24%), record NNArr $256M (+32%), FCF $468M (33.7% margin), non-GAAP EPS $1.10 beat $0.88 by 25%. FY27 guidance raised to $5.91–5.96B revenue, $4.88–4.96 EPS, NNArr growth +520bps to 27.7%. 4-for-1 split approved (record June 25, trading July 2). " +
-    "The call revealed a structural demand catalyst that changes the multi-year thesis: in April 2026, Anthropic and OpenAI released frontier models capable of weaponizing vulnerability discovery — management called this 'cybersecurity's Y2K moment.' CrowdStrike was selected as the exclusive security partner for both labs' launch programs. " +
-    "AIDR (AI Detection and Response) emerged as a new growth pillar: Q1 ending ARR +250% sequentially, Q2 pipeline >$50M. Management believes AIDR will become larger than EDR — the product that built CrowdStrike. The math: 90 AI agents per employee vs 1 endpoint per user = a 90× expansion of the attackable surface per enterprise. " +
-    "Platform breadth: next-gen SIEM + cloud + identity combined >$2B ARR (SIEM alone $600M+). SGNL acquisition targets nonhuman identity — a greenfield problem created by agentic workloads. Falcon Flex approaching $2B ARR (+99% YoY); 25% of Flex customers executing 'Reflex' expansions at avg 26% uplift. 8-figure federal win replacing legacy AV across 200,000+ hosts. " +
-    "Guidance signal: management now expects FY27 NNArr to accelerate OVER FY26. Q2 pipeline at a record. Seasonality shifted to 42%/58% H1/H2 — enterprises treating AI security as existential infrastructure, not discretionary spend. " +
-    "TIKR actuals: revenue $1,385.63M beat $1,362.99M (+1.66%), EBITDA margin 28.95% beat 27.60% (+135bps), EBIT $325.67M beat $309.37M (+5.27%), FCF $468.46M beat $446.82M (+4.84%). GAAP EPS $0.11 beat street estimate of -$0.02 (+573%). YoY margin expansion: EBITDA +561bps, EBIT +528bps — operating leverage intact. " +
-    "AH selloff -11–13% to ~$664–685: billings grew only 18% to $1.35B, below expectations. Billings lag ARR (24% growth), suggesting potential revenue deceleration in 2–4 quarters — the market's real concern. Stock had already run ~65% YTD before earnings. " +
-    "Valuation reality at ~$684 AH: prob-weighted 5yr model target raised to ~$680 (from $650 on improved AIDR/structural demand). The stock is essentially AT the revised model target even after the selloff. " +
-    "HOLD at $664–685. STRONG BUY below $580 pre-split (~$145 post-split after July 2). Watch billings in Q2 — if AIDR pipeline >$50M converts to bookings and billings re-accelerate above 22-24%, thesis strengthens materially.",
-
   reasonsToBuy: [
     'AIDR positions CrowdStrike to protect AI agents — a structural expansion of the attackable surface enterprises must defend',
     'Exclusive security partnerships with leading AI labs provide unmatched enterprise credibility for the AI threat narrative',

@@ -21,18 +21,6 @@ export const JPM = defineStock({
   rsRating: 51,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
-  strategicNarrative:
-    "D+ quality financial ecosystem compounder — best bank in the world, but still a bank. " +
-    "2025 actual: Revenue $182B, Net income $56B, EPS $20.02. Forward: EPS 2026E $21.9 → 2030E $29.8 (~7-8% CAGR). " +
-    "CFO confirmed through-cycle ROTCE ≈ 17% (sometimes 20%+, sometimes below) — this caps long-term EPS growth at 7-9%. " +
-    "Incremental investments may yield ~14% ROE (below 17%), rational vs buybacks at 3x TBV but ROE won't expand. " +
-    "Structural tailwinds: markets wallet structurally larger post-COVID (more volatility, derivatives, hedging, financing); " +
-    "payments ($12T daily) + custody ($4.8T AUM) = stable but mid-single-digit growth. Private credit target $50B (ecosystem defense, not mega growth). " +
-    "AI: ~400 CIB projects, ~40% cost reduction in some ops, but 'cannot charge clients for AI advantage' — margin support, not revenue explosion. " +
-    "Tech spend $19.8B (+10% YoY), partly defensive. Card charge-offs ~3.4%, credit clean but late-cycle stress expected in private credit. " +
-    "Dimon: 'asset prices high increases risk, my anxiety is high.' Capital markets cycle (M&A boom possible but not guaranteed) is main upside catalyst. " +
-    "RS 51 falling, below 50MA. Prob 15%+ CAGR: ~20-25%. Realistic total return: earnings 7-9% + dividends/buybacks 3-4% = 10-13% long-term ceiling without multiple expansion.",
-
   reasonsToBuy: [
     'Best-in-class banking franchise with a structurally larger markets wallet post-COVID and a dominant payments network',
     'Through-cycle ROTCE consistency provides reliable EPS compounding regardless of short-term rate environment',

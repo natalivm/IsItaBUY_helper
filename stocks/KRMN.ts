@@ -21,15 +21,6 @@ export const KRMN = defineStock({
   rsTrend: 'falling',
   ratingOverride: 'BUY',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Karman is a real-revenue, real-contract defense growth company that got caught in a classic post-IPO momentum unwind. " +
-    "The stock ran from ~$30 IPO to $110+ on defense-drone and hypersonics enthusiasm, then fell to the high $50s — not because the business broke, but because investors stopped paying 80–100× forward earnings for it. " +
-    "At $57.50, the setup is materially more interesting: FY2025 revenue of $471.5M grew +51% YoY, management raised FY2026 guidance to $720–735M (+53% at midpoint), and Karman sits at the intersection of three structurally-funded defense themes: hypersonic propulsion, missile systems, and space launch infrastructure. " +
-    "The 'priced for perfection' dynamic explains the selloff: a slight EPS miss alongside a beat-and-raise quarter was enough to trigger a sharp re-rating when expectations were sky-high. An upsized secondary offering added to the pressure — investors interpreted it as insiders monetizing, not a sign of fundamental weakness. " +
-    "WACC is a manageable 11.2% (beta 1.27) — far more DCF-friendly than speculative defense names. Base case projects $92 at 16× exit; even the bear case ($42) reflects a decelerated-but-profitable scenario. Bull case ($32 is the bear; $155 is the bull) requires sustained 20–50% growth with FCF margins expanding to 22% — consistent with a scaled defense systems integrator. " +
-    "Key risks: concentration in a small number of large defense programs, continued dilution risk (no buybacks, moderate SBC), and dependency on DoD budget cycle. Debt at ~$400M (net leverage ~1.3×) is manageable given normalized EBITDA well above $150M. " +
-    "Rating: BUY. The selloff created a buying opportunity in one of the most compelling new defense growth platforms. Model would say STRONG BUY at 60% base upside; we temper to BUY reflecting IPO-stock uncertainty, still-elevated multiples, and execution risk in a complex defense manufacturing backlog. Add in tranches — do not chase a gap-up.",
-
   reasonsToBuy: [
     'Sits at the intersection of three structurally-funded defense themes: hypersonic propulsion, missile systems, and space launch',
     'Revenue growing at exceptional rates with management raising guidance alongside the beat, not cutting it',

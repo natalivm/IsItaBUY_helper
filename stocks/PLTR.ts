@@ -22,16 +22,6 @@ export const PLTR = defineStock({
   rsTrend: 'falling',
   ratingOverride: 'HOLD',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Palantir is the highest-quality, highest-multiple AI software story in the market. " +
-    "FY25 revenue $4.48B (+56% YoY, accelerating), 84% gross margin, 38% operating margin, 43% net margin, ~45% FCF margin, $7.7B net cash, debt/equity 0.03 — pristine. " +
-    "US Commercial revenue compounding 70%+ as AIP becomes the operational layer for Fortune 500 enterprise AI; Government remains a structural moat with multi-decade contract durability. " +
-    "Consensus 5Y EPS CAGR 56.7%, FY26 EPS expected to roughly double from $0.89 TTM to ~$1.70-$2.00 — the growth is real and the unit economics are elite. " +
-    "Valuation reality at $137.80 / ~$330B mkt cap: trailing P/E 155×, forward P/E 68×, P/S 63×, EV/Sales 62×, P/FCF 123× — pricing PLTR as the operating system for enterprise AI, the highest bar in software. " +
-    "Even on bull-case execution (50%+ rev growth, 60% exit P/E on FY30 EPS ~$8) the math compounds at ~25% — but the bear case (deceleration to 25%, multiple compression to 30×) goes to ~$120 even with strong execution. " +
-    "Risk is asymmetric and reflexive: PLTR trades on momentum + narrative more than fundamentals. RS faded from 99 to 72 with -22% YTD and -34% from highs; the unwind has started but the multiple is still nowhere near 'cheap.' " +
-    "Quality is unimpeachable — wait for a real reset (sub-$110, P/S below 35×) before a full position. HOLD: own a starter, add aggressively only on multiple compression, not on price weakness alone.",
-
   reasonsToBuy: [
     'AIP is emerging as the operational AI layer for Fortune 500 enterprises with strong conversion from boot-camps',
     'Government segment provides multi-decade structural moat through defense and intelligence contracts',

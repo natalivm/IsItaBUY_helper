@@ -25,13 +25,6 @@ export const DELL = defineStock({
 
   analystConsensus: { rating: 'Buy', targetLow: 110, targetMedian: 212, targetHigh: 290, numAnalysts: 27 },
 
-  strategicNarrative:
-    'Q1 FY27 (May 2026): Revenue $43.8B (+88% YoY) · ISG $29.0B (+181%) · AI-Optimized Servers $16.1B (+757%) · GAAP EPS $5.24 (+282%) · Non-GAAP EPS $4.86 (+214%) · Op CF $4.1B (record Q1). Dell booked $24.4B in AI orders in Q1 alone; FY27 guidance raised to $167B midpoint (+47% YoY) with $60B AI server revenue target — backed by $43B of AI backlog entering the year.\n\n' +
-
-    "Dell's moat is distribution, not silicon. Relationships with 98% of Fortune 500 and deep Nvidia Blackwell integration give Dell a reach that pure-play ODMs can't replicate at enterprise scale. The real margin opportunity is in the attach: PowerStore/PowerScale storage, networking, and ProSupport services carry 15–20%+ margins vs ~5% on server hardware. As AI projects mature from pilots to production, services and storage become recurring revenue and the FCF engine improves materially. At ~15× FY27 annualized EPS run-rate on 47% revenue growth, valuation is undemanding for a cyclical infrastructure leader with multi-quarter backlog visibility.\n\n" +
-
-    'Risks: AI servers are thin-margin pass-through — FCF leverage to revenue growth is modest (~10% margin). Hyperscaler AI capex could normalize in FY28–29 faster than Dell\'s supply commitments, creating inventory risk. PC segment (~25% of rev) faces secular headwinds. Debt of $31B limits financial flexibility. Supermicro and HPE compete aggressively on AI server configs. Rating: STRONG BUY. The Q1 earnings quality — 88% revenue growth, $4.1B operating cash flow, and $43B backlog — represents a structural step-change, not a one-quarter beat. The services attach optionality is not in the current multiple.',
-
   reasonsToBuy: [
     'Unmatched Fortune 500 distribution reach that pure-play ODMs cannot replicate at enterprise scale',
     'Massive multi-quarter AI server backlog gives rare revenue visibility for a hardware business',

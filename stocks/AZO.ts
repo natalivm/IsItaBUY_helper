@@ -21,14 +21,6 @@ export const AZO = defineStock({
   rsRating: 52,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
-  strategicNarrative:
-    "Q2 FY26 earnings reframe AZO: this is no longer just a mature cash machine — it's a structural compounder in an active investment phase. " +
-    "Sales +8.1%, commercial +9.8%, with 10 of 12 quarter weeks tracking ~12% before a weather-driven dip. Management guided top-line and EBIT to accelerate in FY27–28 as Mega-Hub density pays off. " +
-    "The $277M LIFO charge and $1.6B CapEx are FY26-specific — not structural margin degradation. Ex-LIFO EBIT grew +7.2%. " +
-    "FY26 is the investment year; FY27–28 are the operating leverage years. " +
-    "Key risks: over-investment diluting returns, commercial mix pressuring gross margin, Mexico weakness, traffic -3.6%. " +
-    "RS Rating 28 — the market isn't buying the acceleration story yet. Either early accumulation zone or value trap; breakout not confirmed.",
-
   reasonsToBuy: [
     'Mega-Hub density investment is a deliberate operating leverage setup — management guides EBIT acceleration in coming years',
     'Commercial segment gaining consistent market share with durable above-market growth rates',

@@ -22,29 +22,6 @@ export const LLY = defineStock({
   rsRating: 69,
   rsTrend: 'flat',
   aiImpact: 'NEUTRAL',
-  strategicNarrative:
-    "LLY is a structural compounder driven by the GLP-1 revolution (obesity + diabetes). " +
-    "Q4 2025 earnings + TD Cowen call confirmed a broader thesis: not a one-drug obesity winner but a metabolic disease platform " +
-    "(like NVDA in AI or ASML in lithography) with manufacturing moat, direct-to-patient channel via Lilly Direct, " +
-    "and multi-layered pipeline: tirzepatide (foundation), orforglipron (oral mass market, FDA approval expected early Q2, " +
-    "instant launch readiness, $149–399 pricing for mass adoption), retatrutide (28–29% weight loss, severe obesity BMI>37–40), " +
-    "and amylin drugs (low side effects). TD Cowen confirmed: $1.5B pre-launch inventory ready, no oral/injectable cannibalization — " +
-    "oral expands TAM. Two-stage market emerging: injections for weight loss → oral for maintenance, increasing patient LTV. " +
-    "FY26 guide strong: revenue $80–83B (+25% YoY), EPS $33.5–35.0 (+38–45% YoY). Volume is the driver — price headwinds " +
-    "(low-to-mid teens) offset by scale. Global TAM: ~1B potential patients (100M US, 900M ex-US), current penetration only ~2–3%. " +
-    "Consensus models $100–150B GLP-1 market by 2030, but penetration math suggests $250–300B+ is possible " +
-    "(400–500M addressable × 15–20% penetration × $3–4k ARPU). GLP-1s expanding beyond weight loss into CV, kidney, sleep apnea, " +
-    "fatty liver, addiction — becoming metabolic platform therapy. Retatrutide (triple agonist: GLP-1 + GIP + glucagon) could be " +
-    "most valuable asset — 24–29% weight loss approaches bariatric surgery levels, targeting severe obesity (BMI>37–40), " +
-    "a $60–80B segment where payer willingness-to-pay is highest. Phase III critical — triple agonists may have more GI side effects. " +
-    "LLY builds tiered therapy stack: orforglipron (mass oral) → tirzepatide (core) → retatrutide (high-efficacy) → amylin (low side effects). " +
-    "If TAM reaches $250B+ with LLY at 35–40% share, GLP-1 revenue alone could be $90–120B vs $65B total today. " +
-    "Pipeline beyond GLP-1: cardiovascular (LPA), oncology (oral SERDs), Alzheimer (Kisunla, remternetug). " +
-    "However, at ~41x trailing P/E the stock is priced for near-perfect execution. " +
-    "Fair value ~$750–850 on base case; valuation looks reasonable only if TAM is $250B+. " +
-    "Probability of 15%+ CAGR: ~45%. Main risk is valuation / multiple compression, not business deterioration. " +
-    "RS 80: strong relative strength in consolidation, not a fresh breakout leader.",
-
   reasonsToBuy: [
     'GLP-1 platform is a metabolic disease franchise comparable in scale and durability to NVDA in AI or ASML in lithography',
     'Tiered therapy stack from oral mass-market to high-efficacy injections maximizes patient lifetime value across every segment',

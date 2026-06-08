@@ -19,15 +19,6 @@ export const RVLV = defineStock({
   rsRating: 59,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Q4 2025 blowout: +10% revenue, +58% net income, +63% EPS beat vs consensus, EBITDA +44%. Early Q1 2026 tracking +16% YoY — acceleration is real. " +
-    "FCF surged 157% to $46M; cash reached $303M with zero debt ($4+/share net cash). The story has upgraded from 'margin recovery' to 'multi-lever growth.' " +
-    "Five compounding drivers: owned brands scaling toward 35%+ penetration (currently 20%), FWRD gaining share after Farfetch bankruptcy, China accelerating at ~2x international average, " +
-    "physical retail expanding (Aspen + The Grove, more planned for 2026), and AI monetization — 'several million in annualized revenue gains' with agentic AI in development. " +
-    "2026 marketing spend intentionally stepped up (+125bps) to fuel 'most impactful owned brand launches ever' — near-term EPS headwind but long-term brand investment. " +
-    "At $24 with $4+/share cash and analysts targeting $28-$40 post-earnings, risk/reward has shifted materially from HOLD territory. " +
-    "Main risk: stock ran to $31.68 post-earnings then sold off — market not fully buying the acceleration yet. RS 47 with price below 50-day MA reflects that skepticism.",
-
   reasonsToBuy: [
     'Q1 2026 revenue acceleration validated by the strongest quarterly beat in years',
     'Zero-debt balance sheet with substantial net-cash cushion provides rare downside protection',

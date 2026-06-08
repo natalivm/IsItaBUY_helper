@@ -20,19 +20,6 @@ export const TER = defineStock({
   baseEps: 6.43,
   rsRating: 99,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Type B — cyclical growth on AI capex wave, not a structural compounder. CEO conference (post-earnings) was the most candid signal: " +
-    "'We're in the middle of a 4-quarter boom (Q3'25→Q2'26) … then there'll be a digestion.' This is textbook semicap mini-cycle language. " +
-    "AI raised test intensity structurally (HBM, AI accelerators, networking = expensive/complex/high-power chips → more testers). " +
-    "BUT critical insight: ATE growth = derivative of chip revenue GROWTH rate, not revenue. As soon as AI growth slows, ATE spending drops sharply even if AI revenue still grows. " +
-    "AI wave broader than mobile boom (data centers + HBM + networking + co-packaged optics + edge AI = longer cycle with multiple waves). " +
-    "GPU opportunity: 2026 qualification → 2H26 production → targeting 30% share (3+ year process, currently near-zero vs Advantest dominance). " +
-    "HBM: >50% share in stack/performance test, TAM structurally rising (8→12-high stacks, HBM3→HBM4E). " +
-    "VIP compute: only 2 hyperscaler ASIC programs at scale = extreme concentration risk. " +
-    "Mgmt target model: ATE TAM $12-14B, TER ~$6B rev, EPS $9.5-11, op margin 30-34%. " +
-    "Current phase: 'earnings expansion' — typical semicap pattern: earnings explode → investors extrapolate → multiple expands → digestion → correction. " +
-    "Amazing business, amazing cycle, expensive stock. Probability of 15%+ CAGR: ~25-30%. Fair entry: $180-$200. Deep cycle buy: $140-$160.",
-
   reasonsToBuy: [
     'AI chips require far more testing per die, structurally raising the value of each tester sold',
     'HBM memory test is a dominant share position and grows as stack height and complexity increase',

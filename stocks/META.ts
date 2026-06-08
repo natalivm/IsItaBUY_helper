@@ -23,15 +23,6 @@ export const META = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 
-  strategicNarrative:
-    "Q1 2026: revenue $56.3B (+33% YoY), 41% operating margin (record), normalized EPS $7.31 ($10.44 reported includes $8.03B one-time tax benefit). Q2 guided $58-61B. 3.56B daily active people — slight QoQ dip from Iran/Russia disruptions; underlying trends positive. " +
-    "AI product moment arrived: Muse Spark from Meta Superintelligence Labs — first frontier model from a 10-month-old lab; business AIs now 10M weekly conversations (10× since January); AI glasses daily users tripling YoY; Meta AI sessions per user up double-digit % post-Spark. " +
-    "Monetization flywheel: ad impressions +19%, price per ad +12%. Value optimization suite >$20B annual run rate (doubled YoY). Partnership ads $10B run rate (doubled YoY). 8M+ advertisers using Gen AI creative tools (+3% conversion lift). WhatsApp paid messaging $885M (+74%). " +
-    "Capital intensity is the central debate: CapEx raised to $125-145B FY2026 (from $115-135B) — $107B in new cloud/infrastructure contractual commitments added in Q1 alone. Cash $81.2B; debt $58.7B (up from ~$30B). FY2026 FCF will be severely compressed vs LTM's $48B. FY2026 expense guide unchanged at $162-169B; 10% workforce reduction in May to offset infrastructure spend. " +
-    "LTM quality: revenue $215B, 82% gross margin, 41% operating margin, 33% net margin, FCF $48B. Shares outstanding declining: 2,859M (FY21) → 2,567M (LTM) = -10.2% over 5 years. " +
-    "AI capex risk is now baked into the BASE case, not just the bear: consensus (TIKR) models FCF margin collapsing to ~0.7% FY26E and recovering only to ~12% FY29 / ~17% FY30 as CapEx runs $133-189B/yr — the prior 25%+ FY29 FCF assumption was ~2× consensus and has been removed. " +
-    "At ~$614 / forward P/E ~18.9× (on consensus FY26E EPS ~$32.5) / analyst median $820, META is still the cheapest Mag-7 on a quality-adjusted basis, but the de-rating is the market pricing real, unresolved capex-ROI risk — not pure overreaction. RS 42 falling reflects that anxiety.",
-
   reasonsToBuy: [
     'Dominant social platform with over three and a half billion daily active people and unmatched advertising data flywheel',
     'Muse Spark frontier model signals Meta is now a credible AI lab capable of competing at the top of the capability curve',

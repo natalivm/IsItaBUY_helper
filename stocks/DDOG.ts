@@ -52,17 +52,6 @@ export const DDOG = defineStock({
   // valuation/SBC call, not an execution doubt — stock above fair range.
   // ─────────────────────────────────────────────────────────────────────────
 
-  strategicNarrative:
-    "Datadog is the dominant observability platform. Q1 2026 was exceptional: revenue $1.01B (+32% YoY, ACCELERATING from 29% and 25%; first $1B quarter), total ARR >$4B, NRR back up to low-120s, record new-logo bookings (>2x y/y). Critically, non-AI revenue also re-accelerated to mid-20s% — strength is broad-based, not just AI. " +
-    "AI tailwind is real and widening: a NEW training/GPU-monitoring market is opening — DDOG landed 7- and 8-figure annualized deals with the AI research divisions of two of the world's largest tech companies (hyperscaler super-intelligence labs), a category it explicitly did not serve a year ago. Picks-and-shovels for the AI cloud build-out. " +
-    "The Burry problem is unchanged: SBC ~$780M LTM (~21% of revenue, ~3/4 of reported FCF). Reported FCF is mostly an accounting addback of stock comp, not owner cash. GAAP operating margin hovers near breakeven; non-GAAP op margin actually slipped to 22% (from 24% QoQ) on +31% OpEx — no operating-leverage inflection yet. " +
-    "Zero buybacks — DDOG has never meaningfully offset its SBC issuance. Diluted shares 309M (FY21) → ~372M (FY26E) ≈ +20% cumulative, ~3.7%/yr. " +
-    "Valuation is the binding constraint: at ~$203 / ~$75B market cap on FY26 revenue ~$4.32B, forward P/S ~17×; on FY26 non-GAAP EPS $2.40, forward P/E ~85×. The stock has re-rated well above the $95–200 fair range — priced for sustained 25-30% growth AND a margin inflection that has not started. " +
-    "Bull (~35%): AI super-cycle + training TAM; DDOG captures disproportionate new spend; attach drives leverage to 20%+ margins; multiple holds 55× → ~$530 (5yr). " +
-    "Base (~45%): growth decelerates to 22-25% as base scales; margins inflect slowly; multiple compresses to 40× → ~$260 (~5%/yr). " +
-    "Bear (~20%): OpenTelemetry/Splunk-Cisco/Elastic competition + persistent non-GAAP-only profitability triggers re-rating to 25× → ~$97 (~-14%/yr). " +
-    "HOLD — operationally the thesis is now validated, but SBC dependence overstates owner economics ~3-4× and the post-run valuation removes any margin of safety. Burry-cited name; Tragic on a strict accounting view. Wait for a meaningful pullback for real margin of safety.",
-
   reasonsToBuy: [
     'Dominant observability platform with accelerating revenue growth and record new-logo bookings across broad enterprise base',
     'AI training and GPU-monitoring is a brand-new TAM where DDOG is landing landmark hyperscaler deals',

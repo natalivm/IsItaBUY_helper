@@ -20,16 +20,6 @@ export const AVGO = defineStock({
   rsRating: 90,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Q2 FY26: revenue $22.2B (+48% YoY, beat $22.1B est), EBITDA $15.2B at 68.71% margin (+205bps YoY — expanding, not compressing despite AI mix shift), EBIT 67.28% (+201bps YoY), non-GAAP EPS $2.44 (beat $2.40), GAAP EPS $1.91 (beat $1.73 by 10.7%). " +
-    "One flag: FCF $10.26B missed $11.39B estimate by 9.9% despite lower capex ($231M vs $245M est) — CFO shortfall likely reflects working capital build ahead of H2 ramp. Q1 FY26 FCF was $8.01B (41.5% margin); Q2 at 46.3% is sequentially improving. " +
-    "The conference call detail is far more bullish than headlines: FY26 AI semiconductor total $56B (+180% from FY25), implying Q4 AI alone ~$20.8B (nearly 2× Q3's $16B). Bookings >$30B vs current shipments = order visibility into FY28. " +
-    "Customer contracts are binding commitments, not projections: Google (multi-generation TPU + networking); Anthropic (5GW next-gen TPU starting 2027); Meta (3GW through 2028, initial 1GW order received); OpenAI (1.3GW committed for FY27, production late 2026). " +
-    "Networking ~40% of Q2 AI revenue — industry's only 100Tb Ethernet switch for over a year, 200Tb launched this quarter. Durable moat within AI infrastructure, not a rounding error. " +
-    "FY27: AI semiconductor >$100B (+80% from $56B FY26), ~10GW compute shipping (back-half loaded), 'a lot more GW' flagged for FY28. Total FY27 revenue likely ~$148B ($100B AI + ~$48B non-AI/software). " +
-    "Post-call selloff (-5–14% AH, ~$415–454) triggered by: Q3 AI guide $16B vs $17.2B expected (quarterly split, not trajectory miss), and '$100B+ FY27 AI' maintained rather than raised. Both appear to be market overreaction. " +
-    "At $415–454 AH, base case model (committed order book, 45% Year 1 growth) likely shows the stock as BUY. Analyst consensus (median $454, high $525) stale — significant upward revision expected.",
-
   reasonsToBuy: [
     'Binding multi-year contracts with Google, Meta, Anthropic, and OpenAI underpin AI semiconductor revenue visibility into FY28',
     'Industry\'s only high-capacity Ethernet switch for AI clusters — durable networking moat within hyperscaler infrastructure',

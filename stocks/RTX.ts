@@ -24,17 +24,6 @@ export const RTX = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 
-  strategicNarrative:
-    'RTX has quietly become one of the more compelling large-cap industrials in the current market. ' +
-    'The company operates two structural growth engines that are largely independent of AI-cycle speculation: (1) commercial aerospace recovery, where Pratt & Whitney engines generate recurring high-margin aftermarket revenue as global flight hours compound, and (2) rising global defense spending, where RTX\'s missile systems (Patriot, AMRAAM, Stinger), radar, and cyber capabilities sit directly in the critical path of accelerating NATO procurement budgets. ' +
-    'Neither driver requires a narrative leap — both are backed by contractual backlog and visible multi-year spending commitments. Revenue LTM ~$90.4B, FCF ~$7.2B (8% margin), GAAP NI ~$7.3B. ' +
-    'WACC of ~6.0% (beta = 0.30, one of the lowest among large-cap industrials) reflects RTX\'s contract-backed, cash-generative business model. Unlike AI infrastructure names, this is a company being valued on real, contracted cash flows. ' +
-    'The GTF (Geared Turbofan) Pratt & Whitney engine inspection program — disclosed 2023, charge ~$6B — has been a multi-year margin headwind. As the inspection program completes in FY26-27, it converts from headwind to tailwind: deferred aftermarket revenue recovers, margin trajectory inflects. ' +
-    'Balance sheet is elevated from the 2020 Raytheon-UTC merger ($38.9B gross debt, $32.1B net, ~3.1× EBITDA) but is investment-grade and deleveraging. $10B+ cumulative buybacks since the merger demonstrate capital return commitment alongside debt reduction. ' +
-    'Rating: BUY. With roughly +27% base-case upside to $228, rising RS above 80, clean SBC structure (Pristine tier), and a compounding FCF recovery story, risk/reward is materially favorable at $179. ' +
-    'This is not an explosive AI-cycle trade — the 5-year CAGR to base case is ~5%. But unlike many high-multiple growth stocks, the downside is anchored by contracted defense backlog and EPS growth that does not require perfection. ' +
-    'Burry SBC check (estimated): 8% overstatement (Pristine) — SBC $600M vs. GAAP NI $7.3B. Defense contractor compensation is structurally cleaner than software peers.',
-
   reasonsToBuy: [
     'Patriot, AMRAAM, and Stinger systems are in the critical procurement path of accelerating NATO and allied defense budgets',
     'Pratt & Whitney GTF inspection program completing in FY26-27 converts a multi-year headwind into a meaningful aftermarket recovery tailwind',

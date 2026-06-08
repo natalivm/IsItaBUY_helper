@@ -47,8 +47,6 @@ export const AGCO = defineStock({
   // bigger tariff hit) but the cycle turn is still a 2027+ timing bet —
   // thesis confirmed, not inflected.
   // ─────────────────────────────────────────────────────────────────────────
-  strategicNarrative: "Higher-quality cyclical, not a compounder. Q1 2026 confirmed the thesis: adj EPS $0.94 (>2x YoY, partly a low 24% Q1 tax rate) beat by ~$0.50, EME op margin >16% carrying the company while North America and Latin America both ran below breakeven on tariffs and weak Brazil demand. FY26 adj EPS guide nudged to ~$6 (from ~$5.75 mid) — but the raise is buyback + Q1 timing offsetting a bigger ~$135M tariff hit, softer LatAm and higher freight, not a cycle inflection. Structural floor genuinely higher than 2016 (~7.7% vs 3–4% op margin; adj op-margin guide held 7.5–8% through the larger tariff drag), with restructuring run-rate now >$200M and increased capital returns ($190M JV-stake sale, +$350M buyback, dividend +3.4%). DCF base ~$142 (~4% CAGR over 5y) and analyst consensus Hold both say flat. RS 82 reflects cycle-turn momentum. Core bet: 2025/26 is the trough and 2027–2029 normalises. 15% CAGR probability ~35% — a timing bet, not a structural compounder.",
-
   reasonsToBuy: [
     'Global ag equipment cycle is near trough with fleet age at a multi-year peak, setting up a recovery tailwind.',
     'European operations are a genuine profit engine running well above mid-cycle margins in a downturn.',

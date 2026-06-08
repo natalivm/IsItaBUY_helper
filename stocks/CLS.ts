@@ -21,14 +21,6 @@ export const CLS = defineStock({
   baseEps: 8.75,
   rsRating: 93,
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Celestica is a top-tier EMS play on AI infrastructure — 800G/1.6T rack-level solutions for hyperscalers. " +
-    "FY25 adj EPS $7.16 (+56%); Q1 2026 beat: adj EPS $2.16 (+80% YoY), revenue $4.05B (+53%) — FY2026 guidance raised to $17B revenue and $8.75 adj EPS (+22%). " +
-    "Unprecedented demand visibility into 2027-28 with 1.6T switching platform win at a third hyperscaler. " +
-    "The tension: $1B CapEx in FY26 temporarily depresses FCF while earnings power accelerates — DCF undervalues this profile, so we use EPS × P/E. " +
-    "At ~54x forward P/E ($8.75 FY26E), the stock prices in strong execution; risk is high hyperscaler client concentration and CapEx cycle duration. " +
-    "RS 93 confirms momentum. Risk/reward is balanced — upside if AI supercycle extends, but multiple compression risk if growth decelerates.",
-
   reasonsToBuy: [
     'Top-tier EMS partner for hyperscaler AI infrastructure with a third major win on the high-speed switching platform',
     'Demand visibility extends well beyond the current year — backlog and design wins already covering future ramp periods',

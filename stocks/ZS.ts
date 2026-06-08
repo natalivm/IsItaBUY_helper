@@ -23,19 +23,6 @@ export const ZS = defineStock({
   updatedOn: '06/05',
   lastReportTag: 'Q3 FY26',
 
-  strategicNarrative:
-    "Q3 FY26: Rev $850M (+25%) · ARR $3.525B (+25%) · Op margin 23% (record) · FCF $136M (16%) · EPS $1.08. Beat every metric.\n\n" +
-
-    "Guide: FY26 raised to $3.33B rev / $4.10 EPS. FY27 preliminary 16–17% — the deceleration risk. Ex-Red Canary net new ARR only +14% in Q3.\n\n" +
-
-    "FCF cut: FY26 margin 22.8–23.3% (from 26.5–27%). Capex pull-forward ahead of tariffs; FY27 capex +200bps.\n\n" +
-
-    "AI traction: AI Protect TTM bookings $100M+ · Data Security ARR $500M+ (+30%) · Zero Trust Everywhere 700+ enterprises (vs 210+ a year ago) · Z-Flex Q3 TCV $480M (+60% QoQ).\n\n" +
-
-    "Burry: SBC $828M = 25% of revenue, growing faster than rev. GAAP Q3 net loss $13.9M. Zero buybacks ever. True owner FCF near zero after SBC.\n\n" +
-
-    "Valuation @ $144.70: Forward P/E ~32× on FY27 $4.50 EPS · P/ARR 5.2× · Consensus target $265 (+83%).",
-
   reasonsToBuy: [
     'Zero Trust architecture is uniquely suited to securing AI agents, the fastest-growing enterprise attack surface',
     'Z-Flex multi-year agreements deepen customer lock-in and reduce the churn risk inherent in annual renewals',

@@ -17,8 +17,6 @@ export const NVDA = defineStock({
   costDebt: 0.035,
   rsRating: 82,
   aiImpact: 'TAILWIND',
-  strategicNarrative: "NVDA is a structural AI infrastructure monopolist still compounding at hypergrowth scale. Q1 FY27 (May 2026) revenue $81.6B (+85% YoY) beat guide; Data Center $75.2B (+92% YoY) — Hyperscale $37.9B (+115%) and ACIE $37.4B (+74%) — with Data Center networking alone +199% YoY to $14.8B. Every major hyperscaler, cloud provider, and model builder is on Blackwell, with Blackwell 300 ramping. GAAP gross margin rebounded to 74.9% (vs 60.5% YoY, lapping the $4.5B H20 China inventory charge); Q1 FCF $48.6B (vs $26.1B YoY) — though aided by DSO dropping 51→45 days, with cash taxes rising in Q2. Q2 FY27 guided to $91B ±2% at ~75% GM, assuming ZERO China DC compute revenue (Q1 already had $0 vs $4.6B prior year). Supply-related commitments of $119B + $30B multi-year cloud commitments signal visibility well beyond next several quarters. Vera Rubin on track for H2 FY27 (Q3 start); inference + sovereign + enterprise AI broadening the buyer base. Capital return inflecting: ~$20B returned in Q1, new $80B buyback authorization, dividend raised 25× ($0.01 → $0.25/qtr). FY27 tax rate guided 16–18% (vs prior ~12% benefit from SBC). Beginning Q1 FY27, non-GAAP no longer excludes SBC — conservative optics shift, no model impact (Burry uses GAAP basis).",
-
   reasonsToBuy: [
     'De facto monopoly on AI training infrastructure with every major hyperscaler locked into the Blackwell platform',
     'Data center networking growing faster than compute — a second structural growth engine emerging',

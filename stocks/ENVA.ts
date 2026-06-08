@@ -22,13 +22,6 @@ export const ENVA = defineStock({
   rsRating: 89,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Q1 2026 record quarter: adj EPS $3.87 (+30% YoY), originations +33% to $2.3B, portfolio $5.3B (+28%), SMB now 70% at 4.6% NCO vs 14.3% consumer — best consolidated NCO since 2023. " +
-    "Management raised FY2026 guidance to at least 25% adj EPS growth and ~20% revenue growth. Cost of funds down to 8.2%; $1.1B liquidity. " +
-    "Grasshopper Bank on track for 2H 2026 close with >25% EPS accretion once synergies are fully realized. " +
-    "At ~11x FY2026 forward P/E (guided ≥$14.40), still undemanding for a platform delivering 30%+ earnings growth with structural quality mix shift to SMB. " +
-    "If Grasshopper closes and deposit funding materializes, this re-rates from subprime lender to fintech bank. Recession is the key bear risk — though consumer and SMB demand remained resilient despite Iran war energy price spike.",
-
   reasonsToBuy: [
     'Structural mix shift toward small-business lending dramatically improves credit quality and reduces the cyclicality of the portfolio',
     'Grasshopper Bank acquisition, once closed, could re-rate ENVA from a subprime lender to a fintech bank with deposit funding',

@@ -23,20 +23,6 @@ export const INTC = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 
-  strategicNarrative:
-    "Intel is 2026's most dramatic semiconductor comeback story — the stock +225% YTD, April alone +114% (best month in the company's 55-year Nasdaq history), driven by a perfect storm of narrative catalysts. " +
-    "(1) CHIPS Act anchoring: in August 2025, the Trump administration took a 10% equity stake via $8.9B in grants, with NVIDIA and SoftBank following with strategic equity investments — validating the foundry thesis at the highest institutional level. " +
-    "(2) Apple-Intel foundry deal: a preliminary agreement for Intel to manufacture Apple device chips in US fabs. If completed at scale, Apple's chip volumes would rival TSMC's entire top-5 customer base combined — potentially $20-30B in annual foundry revenue. " +
-    "(3) Data center CPU recovery: Q1 FY26 DC revenue +22% YoY to $5.1B on AI server demand; Q2 FY26 guidance $13.8-14.8B; EPS Est % Chg current quarter +309% (from very low base). " +
-    "IBD technical picture is near-perfect: RS Rating 99, Acc/Dist A-, Industry Group Rank #8/142 (A+), Up/Down Volume 1.73, funds owning +4% over 3 consecutive quarters of increasing institutional accumulation. 10 straight quarters of EPS acceleration. " +
-    "But the fundamentals behind the story remain challenged: Annual Pre-Tax Margin -29, ROE -3, 3-yr Sales Growth -1.0%, SMR Rating D. FY2025 GAAP EPS $(0.06), non-GAAP just $0.42. " +
-    "Q1 FY26 non-GAAP $0.29, Q2 FY26 guide only $0.20 — Intel Foundry loses $7-12B/year at operating line, crushing the product segment's economics. The entire thesis hinges on foundry achieving scale and breakeven by 2028-2030. " +
-    "At {spot} the stock has pulled back from its 2026 highs but still prices in near-perfect execution of a multi-year foundry transformation. " +
-    "EPS model (baseEps $0.90 FY26E non-GAAP): bear ($1.45 × 12x = {bearTarget}), base ($2.75 × 18x = {baseTarget}), bull ($5.77 × 25x = {bullTarget}) — probability-weighted {blended}, implying {blendedReturn} from current levels. " +
-    "Only the bull scenario — Apple at full production scale by 2028, additional hyperscaler wins, foundry breakeven, 45% EPS CAGR for 5 years — justifies paying near today's {spot}. " +
-    "HOLD: the foundry narrative is real, government-backed, and institutionally validated, but buying at {spot} ({blendedReturn} to the probability-weighted blend) offers no fundamental margin of safety. " +
-    "Best entry zone $70-85, where the base-case EPS path approaches fair value. Strong momentum argues against shorting; the key downside triggers are Apple deal delays/downsizing or a foundry margin update below expectations.",
-
   reasonsToBuy: [
     'Government-backed foundry thesis — US took a strategic equity stake, with NVIDIA and SoftBank adding strategic investments',
     'Potential Apple deal to manufacture chips in US fabs — transformational revenue if it reaches scale',

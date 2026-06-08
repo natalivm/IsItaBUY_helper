@@ -25,15 +25,6 @@ export const HPE = defineStock({
 
   analystConsensus: { rating: 'Buy', targetLow: 32, targetMedian: 50, targetHigh: 68, numAnalysts: 25 },
 
-  strategicNarrative:
-    'Q2 FY26 (Apr 2026): Revenue $10.678B (+40% YoY, +15% QoQ) · Non-GAAP EPS $0.79 vs $0.53 est. (49% beat, +108% YoY) · GAAP EPS $0.44 · Non-GAAP gross margin 36.9% (record, +750 bps YoY) · OCF $1.4B (+$1.9B YoY) · FCF $0.9B (record Q2, +$1.8B YoY) · Networks for AI orders on track for $1.7–$1.9B cumulative by FY26 year-end.\n\n' +
-
-    'FY26 guidance raised: revenue +29–33% YoY (~$44–46B), GAAP EPS $2.42–$2.52, non-GAAP EPS $3.35–$3.45, FCF ≥$3.5B. FY27 financial framework introduced for the first time: revenue +8–12%, non-GAAP EPS +12–16%, FCF ≥$4.5B — multi-year visibility management has not previously offered.\n\n' +
-
-    "HPE's core thesis is the Juniper Networks integration repricing. The $14B acquisition (closed Feb 2024) is executing ahead of schedule on $600M+ synergy targets, and the margin proof is unambiguous: non-GAAP gross margin expanded from the mid-20s to 36.9% — a structural shift, not a one-quarter beat. Juniper (Aruba, Mist AI, cloud-native switching) transforms HPE from a commodity server/storage vendor into a networking-led infrastructure platform. Networks for AI — Ethernet fabrics for AI clusters, campus AI networking, sovereign AI — is the new demand vector, with $1.7–1.9B in cumulative orders expected by FY26 year-end as enterprises begin the build-out cycle. Dell's Q1 FY27 print confirmed AI server demand; tonight's HPE print confirms the networking side of the same buildout.\n\n" +
-
-    "At $43 post-surge, HPE trades at ~12.6× FY26 non-GAAP EPS ($3.40 midpoint) with 31% revenue growth — undemanding if Juniper synergies compound into FY27 and the $4.5B+ FCF framework holds. The structural concern is net debt of ~$16.8B (~2.9× FY26E EBITDA) from the Juniper acquisition; CapEx/OCF running ~34% (hardware model) and Altman Z ~2.5 flag elevated leverage. FCF of $3.5B+ covers interest at ~6× coverage, so this is a balance-sheet drag on upside, not an imminent risk. The FY27 revenue deceleration to 8–12% from 31% is the multiple governor — HPE re-rates networking premium only if the AI fabric thesis sustains beyond FY26. Rating: BUY — the transformation is proven at record margins, the AI networking thesis is early-stage with durable enterprise demand, and the 12.6× non-GAAP earnings multiple is reasonable despite the leverage.",
-
   reasonsToBuy: [
     'Juniper acquisition fundamentally transforms HPE from commodity hardware into a networking-led infrastructure platform',
     'Record gross margin expansion confirms structural shift — synergies are executing ahead of schedule',

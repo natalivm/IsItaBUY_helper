@@ -22,24 +22,6 @@ export const LRCX = defineStock({
   rsRating: 96,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  strategicNarrative:
-    "Lam Research is the dominant etch & deposition equipment supplier, with SAM share at mid-30% of WFE and targeting high-30% — " +
-    "structural content gains (GAA, backside power, advanced packaging, high-performance materials) mean etch/dep intensity rises with each new node. " +
-    "CSBG installed base >100,000 chambers with Equipment Intelligence + Dextro (autonomous fab) provides a sticky, recurring-like revenue component growing faster than the installed base — " +
-    "MarQ26 CSBG hit $2.11B, first ever $2B+ quarter. Revenue mix is now ~36% services (Systems $3.73B / CSBG $2.11B) — meaningfully reducing earnings cyclicality. " +
-    "MarQ26 print: rev $5.84B (+9% QoQ), EPS $1.47 (+15% QoQ), OPM expanded to ~35% (op income $2.05B vs $1.81B QoQ), net income $1.83B — growth + margin expansion simultaneously, rare for semi equipment. " +
-    "JunQ guide rev $6.6B ± $400M, EPS $1.65 ± $0.15 — 2H26 > 1H26. " +
-    "WFE 2026 now guided ~$140B (bias to upside) vs prior $135B, advanced packaging revenue >50% growth in CY26 (vs prior +40%). " +
-    "Capital returns aggressive: MarQ26 buybacks $1.16B + dividends $326M = $1.49B vs op CF $1.14B / FCF ~$800M — net cash position compressing (cash $6.2B → $4.77B over a year), deliberate but reduces cushion. " +
-    "Geographic concentration: China 34%, Korea+Taiwan ~46% — Asia is overwhelming, China remains the single largest policy risk. " +
-    "Buybacks aggressive: 85% of FCF returned, ~39M shares repurchased in FY25 at avg ~$104, contributing 2-4% annually to EPS CAGR. " +
-    "The tension: at ~44x forward P/E, the stock prices in a multi-year AI supercycle with no margin of safety for WFE normalization. " +
-    "Historical P/E range is 15-35x — multiple compression to 25-30x alone erases 3-5 years of EPS growth. " +
-    "Probability of 15%+ CAGR from current levels: ~40-50% (upgraded post earnings call due to strong WFE guide, share gains, and CSBG stickiness). " +
-    "This is a quality cyclical growth business with real structural tailwinds, but not a cheap compounder — " +
-    "you're betting on sustained AI capex, no major WFE digestion cycle, and the market maintaining a premium multiple. " +
-    "Burry full-SBC adjustment (Burry-published): 49% overstatement (Critical) — real owner profit ~51% of GAAP; apply discount when comparing multiples to peers.",
-
   reasonsToBuy: [
     'Dominant etch and deposition franchise with mid-to-high-thirty percent share of global wafer fab equipment',
     'CSBG installed base of over a hundred thousand chambers provides sticky, recurring-like revenue through downturns',
