@@ -27,6 +27,21 @@ export const KKR = defineStock({
     "If exit markets normalize and insurance/private wealth channels accelerate, IRR reaches 18%+. If carry stays depressed, it's 7% dead money with a soft moat. " +
     "30-35% probability of 15%+ CAGR — a cycle bet on capital markets recovery, not a structural compounder. ",
 
+  reasonsToBuy: [
+    'Distributable earnings trajectory is visible and growing as fee-related earnings compound with AUM growth',
+    'Insurance integration via Global Atlantic provides a durable, recurring accrued income stream independent of carry cycles',
+    'Private wealth and retail channel expansion opens a massive new source of capital inflows beyond institutional allocators',
+    'Capital markets cycle recovery would unlock carried interest that is currently depressed, creating significant earnings upside',
+    'Analyst consensus is firmly Strong Buy with targets well above current price, reflecting broad underappreciation',
+  ],
+
+  risksToBuy: [
+    'Carry is deeply cyclical — if exit markets stay weak, distributable earnings flatten and the thesis becomes dead money',
+    'Low relative strength signals that institutional momentum has completely abandoned the stock near-term',
+    'Post-2028 earnings trajectory is highly uncertain and depends on sustained capital markets normalization',
+    'Soft moat relative to peers like Blackstone and Apollo means AUM growth could disappoint in a crowded fundraising market',
+    'Insurance operations at Global Atlantic add balance-sheet complexity that makes earnings quality harder to assess',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 112, targetMedian: 153, targetHigh: 187, numAnalysts: 15 },
   revGrowth: [

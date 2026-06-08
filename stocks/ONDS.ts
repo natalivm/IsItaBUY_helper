@@ -33,6 +33,21 @@ export const ONDS = defineStock({
     "Analyst consensus is Strong Buy ($16–$25 range, 9 analysts) — our base case ($15.50) and PW target ($16.88) sit near the low end, consistent with fundamental discipline. " +
     "Rating: HOLD (Speculative). This is a venture-style public equity bet on autonomous warfare adoption. Size it for total-loss tolerance. Do not add on weakness without fresh contract catalysts — downside to the bear case is severe.",
 
+  reasonsToBuy: [
+    'Positioned at the intersection of three converging defense megatrends: drones, counter-UAS, and AI-enabled ISR',
+    'American Robotics subsidiary provides a real operational platform for autonomous military and industrial deployment',
+    'RS Rating of 99 reflects explosive institutional accumulation and broad momentum across the defense-drone theme',
+    'Potential for Tier-1 DoD contract wins that could multiply revenue many times from the current tiny base',
+  ],
+
+  risksToBuy: [
+    'Valuation prices in a full autonomous warfare adoption scenario that has no fundamental revenue support today',
+    'Repeated share issuances and GAAP losses create structural dilution risk with no buyback offset',
+    'Contract cadence is lumpy and unpredictable — a single dry quarter can trigger severe re-rating',
+    'Defense budget pressure or a shift in procurement priorities could indefinitely delay material contract wins',
+    'Bear case reflects a realistic re-rating toward fundamentals that would erase the vast majority of market cap',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 16, targetMedian: 20, targetHigh: 25, numAnalysts: 9 },
 
   revGrowth: [

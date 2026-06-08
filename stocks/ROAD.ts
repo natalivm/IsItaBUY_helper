@@ -30,6 +30,22 @@ export const ROAD = defineStock({
     "If infra cycle extends (Sunbelt + reshoring + data centers) and Road 2030 delivers, this looks like a compounder. If P/E compresses to 25x, it's -45% downside regardless of EPS growth. " +
     "40-50% probability of 15%+ CAGR — a bet on execution + infra cycle, not eternal moat.",
 
+  reasonsToBuy: [
+    'Road 2030 plan targets a doubling of the business with a credible M&A pipeline described as the most active in a quarter-century',
+    'HMA vertical integration and Houston platform create durable local operational moats in Sunbelt markets',
+    'Record backlog with strong coverage ratio provides exceptional near-term revenue visibility for a cyclical business',
+    'Sunbelt population migration, reshoring, and data center construction create a multi-year demand floor beyond federal highway spend',
+    'EBITDA margins expanding toward best-in-class levels as scale and vertical integration benefits compound',
+  ],
+
+  risksToBuy: [
+    'Valuation already prices near-perfect execution — multiple compression alone could erase gains even with solid EPS growth',
+    'Organic growth has been volatile quarter-to-quarter, exposing operating leverage risk on the downside',
+    'Leverage elevated from acquisition-driven buildout, constraining flexibility if the infrastructure cycle turns',
+    'Infrastructure budgets are politically vulnerable to austerity, partisan gridlock, or reauthorization delays',
+    'No recurring revenue or durable moat outside execution quality — the thesis is entirely cycle-dependent',
+  ],
+
   // ── EPS/PE Scenarios (updated post Q1 FY26 call) ──
   epsCagr: [10, 16, 21],       // bear 8-12% mid / base 15-17% mid / bull 20-22% mid
   exitPE: [23, 30, 36],        // bear 22-25x / base 28-32x / bull 35-38x

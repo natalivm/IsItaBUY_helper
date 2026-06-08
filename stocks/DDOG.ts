@@ -63,6 +63,22 @@ export const DDOG = defineStock({
     "Bear (~20%): OpenTelemetry/Splunk-Cisco/Elastic competition + persistent non-GAAP-only profitability triggers re-rating to 25× → ~$97 (~-14%/yr). " +
     "HOLD — operationally the thesis is now validated, but SBC dependence overstates owner economics ~3-4× and the post-run valuation removes any margin of safety. Burry-cited name; Tragic on a strict accounting view. Wait for a meaningful pullback for real margin of safety.",
 
+  reasonsToBuy: [
+    'Dominant observability platform with accelerating revenue growth and record new-logo bookings across broad enterprise base',
+    'AI training and GPU-monitoring is a brand-new TAM where DDOG is landing landmark hyperscaler deals',
+    'Multi-product platform attach deepening — majority of enterprise customers now use many products simultaneously',
+    'Net revenue retention recovering above prior levels, confirming durable expansion within the installed base',
+    'Picks-and-shovels positioning means DDOG benefits from AI infrastructure spend regardless of which model wins',
+  ],
+
+  risksToBuy: [
+    'Stock trades well above the model fair-value range, offering no margin of safety at current levels',
+    'SBC consumes roughly three-quarters of reported free cash flow, so owner economics are far worse than headline FCF',
+    'GAAP operating profitability is barely positive with no clear inflection in sight despite years of rapid growth',
+    'OpenTelemetry standardization and aggressive pricing from Elastic and Cisco-Splunk threaten the premium positioning',
+    'Zero buyback history means continuous share dilution erodes per-share value at a steady multi-percent annual rate',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 110, targetMedian: 170, targetHigh: 230, numAnalysts: 38 },
 
   revGrowth: [

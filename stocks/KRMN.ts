@@ -30,6 +30,22 @@ export const KRMN = defineStock({
     "Key risks: concentration in a small number of large defense programs, continued dilution risk (no buybacks, moderate SBC), and dependency on DoD budget cycle. Debt at ~$400M (net leverage ~1.3×) is manageable given normalized EBITDA well above $150M. " +
     "Rating: BUY. The selloff created a buying opportunity in one of the most compelling new defense growth platforms. Model would say STRONG BUY at 60% base upside; we temper to BUY reflecting IPO-stock uncertainty, still-elevated multiples, and execution risk in a complex defense manufacturing backlog. Add in tranches — do not chase a gap-up.",
 
+  reasonsToBuy: [
+    'Sits at the intersection of three structurally-funded defense themes: hypersonic propulsion, missile systems, and space launch',
+    'Revenue growing at exceptional rates with management raising guidance alongside the beat, not cutting it',
+    'Post-IPO momentum unwind created a materially cheaper entry into an unchanged and accelerating business',
+    'Defense contracts provide long-duration revenue visibility that typical growth companies cannot offer investors',
+    'WACC is far more DCF-friendly than speculative defense names, anchoring the base-case valuation above current price',
+  ],
+
+  risksToBuy: [
+    'Concentration in a small number of large defense programs makes revenue highly sensitive to individual contract delays',
+    'No buybacks and ongoing dilution from SBC means shareholders bear the cost of growth without capital return offset',
+    'IPO-stage stock with limited public track record raises execution uncertainty in a complex defense manufacturing backlog',
+    'DoD budget cycle dependency means any sequestration or continuing resolution could abruptly slow program funding',
+    'Still-elevated multiples relative to the defense sector mean any earnings miss triggers outsized re-rating risk',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 80, targetMedian: 103, targetHigh: 125, numAnalysts: 9 },
 
   revGrowth: [

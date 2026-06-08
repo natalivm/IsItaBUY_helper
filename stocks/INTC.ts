@@ -37,6 +37,22 @@ export const INTC = defineStock({
     "HOLD: the foundry narrative is real, government-backed, and institutionally validated, but buying at {spot} ({blendedReturn} to the probability-weighted blend) offers no fundamental margin of safety. " +
     "Best entry zone $70-85, where the base-case EPS path approaches fair value. Strong momentum argues against shorting; the key downside triggers are Apple deal delays/downsizing or a foundry margin update below expectations.",
 
+  reasonsToBuy: [
+    'Government-backed foundry thesis — US took a strategic equity stake, with NVIDIA and SoftBank adding strategic investments',
+    'Potential Apple deal to manufacture chips in US fabs — transformational revenue if it reaches scale',
+    'Data-center CPU recovery underway on AI server demand, with earnings accelerating off a low base',
+    'Best-in-class relative strength and heavy institutional accumulation — momentum is firmly behind the stock',
+    'Respected turnaround CEO (Lip-Bu Tan) executing a credible restructuring',
+  ],
+
+  risksToBuy: [
+    'Entire thesis hinges on the foundry reaching scale and breakeven years out — and the 18A node has a history of delays',
+    'Apple deal is still preliminary, with no confirmed start date or volume; it could be scoped down or fall through',
+    'Foundry loses billions a year at the operating line and free cash flow is negative, straining financial flexibility',
+    'Weak underlying fundamentals: negative margins and ROE, flat multi-year sales, and GAAP losses',
+    'Stock has re-rated sharply on narrative — valuation prices in near-perfect execution, leaving little margin of safety as ARM pressures client/data-center share',
+  ],
+
   analystConsensus: { rating: 'Hold', targetLow: 20, targetMedian: 88, targetHigh: 150, numAnalysts: 48 },
 
   epsCagr: [10, 25, 45],

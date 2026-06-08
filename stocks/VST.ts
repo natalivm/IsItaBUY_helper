@@ -24,6 +24,21 @@ export const VST = defineStock({
   lastReportTag: 'Q1 2026',
   strategicNarrative: "Q1 2026 print: record Q1 adj EBITDA of $1.494B (+20% YoY, +85% vs Q1 24) — $1.426B generation + $68M retail. 2026 guidance ($6.8–7.6B EBITDA) and 2027 midpoint reaffirmed, and neither includes Cogentrix or the Meta PPA uplift. Generation team executed flawlessly through Winter Storm Fern (gas fleet 97% commercial availability, nuclear 100%); Martin Lake Unit 1 back online late Q1.\n\nDeal flow accelerating: 5,500 MW Cogentrix gas portfolio acquisition tracking to close 2H 26; long-term Meta PPAs at PJM nuclear sites (~2,600 MW) signed. Customer engagement remains 'as high as we've ever seen' per Jim Burke — diverging from CEG's PJM-pause commentary. Bilateral discussions continue in parallel with PJM rulemaking; ~3.2 GW of nuclear at Beaver Valley + Comanche Peak still available for long-term contracts. 4,500 MW of organic development in flight (renewables, coal-to-gas conversions, Permian gas, PJM nuclear uprates with Meta), majority online by 2028. Uprate optionality: >200 MW Comanche Peak + ~300 MW at PJM gas sites.\n\nCapital allocation firing: $525M buybacks in first 4 months of 26 + $75M dividend = ~$600M returned YTD. $1.475B authorization remaining; 169M shares retired since Nov 21 at ~$37 avg. Fitch upgrade to IG (joining S&P) triggered fallaway provisions, releasing liens on senior secured debt. $10B+ cash through 27 → ~$3B to equity, ~$4B to growth (Cogentrix, Permian, PJM nuclear uprate, Oak Hill 2), ~$3B unallocated. Mid-teens levered return threshold maintained.\n\nLoad-growth thesis intact: ERCOT 5–6% annual through 2030, PJM 2–3% — Vistra's view is below ISO forecasts but realistic about physical pace. Risk: ~50% of earnings still market-price dependent; Cogentrix integration; ERCOT forwards softened on mild Q1 weather; data center load impact on markets not meaningful until late 27/early 28. Verdict: BUY — improved earnings quality, signed long-term contracts, accelerated capital returns, and IG balance sheet justify premium framework.",
 
+  reasonsToBuy: [
+    'Signed long-term Meta and Amazon nuclear PPAs lock in contracted cash flows at premium prices',
+    'Cogentrix gas acquisition adds scale and was priced well below comparable asset transactions',
+    'Fitch investment-grade upgrade unlocks better financing terms and signals improving balance-sheet quality',
+    'Vistra\'s nuclear and gas fleet is well-positioned for AI data center electricity demand over the next decade',
+    'Aggressive buyback program at historically low average cost is compounding per-share value rapidly',
+  ],
+
+  risksToBuy: [
+    'About half of earnings remain exposed to merchant power prices with no contracted floor',
+    'Cogentrix integration execution risk on a large multi-gigawatt gas portfolio at elevated leverage',
+    'ERCOT forward prices softened on mild weather — commodity exposure can reprice the stock sharply',
+    'High structural debt load typical of capital-intensive power generation requires sustained EBITDA growth',
+    'Data center load growth impact on markets may not be material for years, delaying the re-rating',
+  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 97, targetMedian: 230, targetHigh: 293, numAnalysts: 10 },
   revGrowth: [

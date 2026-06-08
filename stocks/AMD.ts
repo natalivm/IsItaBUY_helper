@@ -34,6 +34,22 @@ export const AMD = defineStock({
     "Risk/reward no longer asymmetric in your favor at $455. Quality AI bet, but valuation already reflects continued perfection. HOLD; full-size add only on a >25% pullback or fresh data-center inflection. " +
     "Burry full-SBC adjustment (Burry-published): 32% overstatement (Critical) — real owner profit ~68% of GAAP; apply discount when comparing multiples to peers.",
 
+  reasonsToBuy: [
+    'Instinct MI300/MI450 GPU ramp is winning real hyperscaler deployments at AWS, Azure, Google, and Meta — not just pilots.',
+    'EPYC server CPU is taking durable share from Intel across cloud and enterprise, adding a structural revenue leg.',
+    'Operating leverage is finally materializing — gross margins expanding and record FCF proving the model works at scale.',
+    'Net cash position and no meaningful debt give AMD full financial flexibility to invest through any cycle.',
+    'As the credible alternative AI accelerator platform, AMD benefits from hyperscalers\' strategic desire to avoid NVIDIA dependency.',
+  ],
+
+  risksToBuy: [
+    'Data center concentration means an AI capex digestion cycle hits AMD disproportionately hard versus diversified peers.',
+    'NVIDIA\'s CUDA software ecosystem remains a deep moat that ROCm has not yet credibly displaced at scale.',
+    'Operating expense growth is running at a pace that would compress margins rapidly if revenue growth decelerates.',
+    'Valuation already reflects near-perfect execution — even modest disappointment risks severe multiple compression.',
+    'Share gains must be durable repeat orders, not one-time pilots, to justify the premium the market is assigning today.',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 265, targetMedian: 478, targetHigh: 650, numAnalysts: 38 },
 
   revGrowth: [

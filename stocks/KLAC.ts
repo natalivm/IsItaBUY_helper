@@ -28,6 +28,22 @@ export const KLAC = defineStock({
     "At ~50x trailing P/E and ~41x forward, the stock prices in the strong phase of the semicap cycle. Expected total return ~8–10% CAGR. Probability of 15%+ CAGR: ~20%. " +
     "High-quality cyclical champion at full price. Best entry on cycle correction below $1,100. ",
 
+  reasonsToBuy: [
+    'Monopolistic process control position means yield management is the last thing fabs cut in any downturn',
+    'Data and analytics network effect creates switching costs that go far beyond hardware replacement costs alone',
+    'Process control intensity is structurally rising with HBM, advanced packaging, and EUV layers at leading-edge nodes',
+    'Service business growing at the high end of its long-term target, adding recurring revenue that smooths cycle volatility',
+    'EPS outgrows revenue via operating leverage and buybacks, compounding shareholder returns above the already-strong revenue CAGR',
+  ],
+
+  risksToBuy: [
+    'Elevated forward multiple means even a normal mid-cycle pause delivers significant multiple compression and double-digit losses',
+    'China exposure in the mid-to-high twenties of revenue is a material risk if export restrictions tighten further',
+    'Current supply constraints and sold-out lead times are classic peak-cycle signals that often precede demand disappointments',
+    'DRAM cost headwinds and tariff pressures are compressing gross margins in the near term with limited offset',
+    'Bull case requires both the AI supercycle to extend and the premium multiple to hold — a dual dependency that rarely persists',
+  ],
+
   epsCagr: [10, 14, 22],
   exitPE: [25, 28, 40],
   prob: [25, 55, 20],

@@ -19,6 +19,20 @@ export const PINS = defineStock({
   aiImpact: 'DISRUPTION_RISK',
   strategicNarrative: "Existential uncertainty. RS 10 signals that the market views GenAI search as a serious threat to Pinterest's discovery moat. Despite fundamental improvements, the technicals suggest big money is looking elsewhere for AI winners. ",
 
+  reasonsToBuy: [
+    'High-intent visual shopping signals are difficult for LLMs to replicate, sustaining advertiser value proposition',
+    'Zero debt and substantial cash provide optionality for buybacks, M&A, or AI-platform investment',
+    'Monthly active user growth in international markets remains a meaningful untapped monetization opportunity',
+    'If GenAI integration enhances personalization, Pinterest could accelerate its social commerce conversion rates',
+  ],
+
+  risksToBuy: [
+    'RS 10 signals that institutional money is actively rotating out — the market is voting against the thesis',
+    'GenAI-powered search directly threatens the visual discovery moat that anchors Pinterest\'s advertising model',
+    'Revenue growth in a disruption scenario could deteriorate to low single digits with multiple compression to follow',
+    'The platform has struggled to fully convert discovery intent into measurable direct-response advertiser ROI',
+    'AI disruption risk is flagged as severe — the bear case is structural decline, not a temporary cyclical setback',
+  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 15, targetMedian: 28, targetHigh: 50, numAnalysts: 26 },
   revGrowth: [

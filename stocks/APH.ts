@@ -29,6 +29,22 @@ export const APH = defineStock({
     "At ~$122, the stock trades at roughly 28x FY2026 adj EPS (~$4.40) — a meaningful discount to the 38–40x it commanded at peak. " +
     "Key risk: 41% IT Datacom concentration means an AI-capex pause hits hard, and CommScope margins are still dilutive until integration matures.",
 
+  reasonsToBuy: [
+    'Broadest high-speed copper, power, and optics connector suite in the industry after the CommScope acquisition.',
+    'AI infrastructure tailwind is driving record organic growth in IT Datacom, now the dominant revenue segment.',
+    'Defense electronics exposure adds a durable second growth driver uncorrelated with the tech capex cycle.',
+    'Decentralized acquisition model has compounded shareholder value across decades with disciplined bolt-on M&A.',
+    'Book-to-bill above one with all end markets positive signals revenue momentum well into the next several quarters.',
+  ],
+
+  risksToBuy: [
+    'IT Datacom concentration means an AI capex pause would hit revenue and earnings disproportionately hard.',
+    'CommScope integration is still maturing and margins remain dilutive until the combination fully absorbs.',
+    'Elevated debt load from acquisitions reduces financial flexibility if the cycle softens unexpectedly.',
+    'Premium connector hardware faces commoditization risk as hyperscalers develop custom in-house interconnect solutions.',
+    'Multiple has de-rated from peak but remains demanding relative to trough earnings power in a downcycle.',
+  ],
+
   epsCagr: [3, 13, 22],
   exitPE: [22, 30, 38],
   prob: [25, 50, 25],

@@ -21,6 +21,21 @@ export const MNST = defineStock({
   aiImpact: 'NEUTRAL',
   strategicNarrative: "Monster is a rare, high-quality structural compounder. Q3 2025 confirmed the margin recovery thesis: record quarterly net sales of $2.20B (+16.8%), operating income +40.7%, net income +41.4%, with EBITDA margins recovering sharply from 26.8% in 2024 toward a street-projected 31.9% in 2025. Business quality is not in question — 56% gross margins, 21.5% FCF margins, Coke relationship deepening, and international runway (APAC $33B TAM, 158 countries). Analyst targets cluster $79–$98 (JP Morgan $79, Morgan Stanley $96, HSBC $98), and the stock's 64% run from its 52-week low reflects the market pricing in the bull case. At $80, MNST trades at ~41x forward P/E on a 12-13% EPS grower — you're paying compounder prices for above-average but not elite growth. Q4 2025 earnings (Feb 26) are a near-term binary: sustained margin expansion and constructive guidance could push toward $95–100; any guidance disappointment has $60–70 to fall through. HOLD with a materially better entry near $72–76.",
 
+  reasonsToBuy: [
+    'Best-in-class energy drink brand with dominant shelf positioning and deep Coca-Cola distribution partnership',
+    'International runway still vast — APAC and emerging market penetration remains far below North American levels',
+    'Margin recovery well underway with EBITDA margins inflecting sharply back toward historical levels from a trough',
+    'Zero-sugar and functional beverage tailwinds structurally favor Monster\'s core portfolio over sugary alternatives',
+    'Foodservice channel significantly underpenetrated relative to traditional retail, offering a durable long-term growth vector',
+  ],
+
+  risksToBuy: [
+    'Valuation prices in sustained compounder execution on earnings growth that is above-average but not elite',
+    'GLP-1 drug adoption and rising health consciousness create a structural behavioral headwind for energy drink volumes',
+    'Intensifying competition from Red Bull, Celsius, and emerging functional beverage brands pressures shelf space',
+    'A single disappointing earnings print or guidance cut can rapidly unwind the multiple from elevated levels',
+    'Concentration in a single beverage category limits diversification if consumer tastes shift away from energy drinks',
+  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 60, targetMedian: 79, targetHigh: 96, numAnalysts: 24 },
   revGrowth: [

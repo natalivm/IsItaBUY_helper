@@ -59,6 +59,21 @@ export const NU = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
   strategicNarrative: "Type A- Structural Compounder: LatAm digital banking platform compounding through its scale inflection. Q1 2026 — first-ever $5.0B revenue quarter, Q1-record net income $871M (+41% YoY FX-neutral), record-low efficiency ratio 17.6% / 16.6% core. 135M+ customers (Brazil 115M+, Mexico 15M+, Colombia ~5M). Mexico hit its FIRST quarter of IFRS profitability ahead of internal plan — the second S-curve is inflecting. AI is now in production, not pilots: nuFormer models live for card decisioning (Brazil+Mexico) and Brazil unsecured lending, real-time sub-second loan valuation, engineering throughput +50% YoY. Higher Q1 CLA (+33% QoQ) and NPL 15-90 (5.0%) are seasonality + growth + mix, not credit degradation — risk-adjusted NIM (9.5%) reverts toward 2H'25 as Q1 normalizes; 90+ NPL eased to 6.5%. Structural IFRS ETR drop (8.7%, guided 15-20%) offsets deliberate investment-year OpEx; FY2026 efficiency still ~20%. US treated as a bounded call option (<100bps efficiency headwind, fully absorbable). A confirming quarter — thesis and STRONG BUY model rating intact. Risks: Brazil macro/SELIC, household debt-service, credit cycle, Mexico regulation, FX.",
 
+  reasonsToBuy: [
+    'Most efficient digital bank in the world by cost — record-low efficiency ratio achieved at massive and growing scale',
+    'Mexico second S-curve hit IFRS profitability ahead of plan, validating the multi-country expansion playbook',
+    'Massive Brazilian financial inclusion runway — over a hundred million customers yet still deepening ARPU through credit and services',
+    'nuFormer AI now in production for credit decisioning and loan valuation, improving underwriting economics structurally',
+    'Pristine SBC profile with near-zero dilution from operations — owner earnings essentially equal GAAP earnings',
+  ],
+
+  risksToBuy: [
+    'Brazil macro shock — elevated SELIC rates and household debt-service stress could trigger a sharp delinquency cycle',
+    'Rapid credit-book expansion into unsecured lending increases sensitivity to any deterioration in Brazilian consumer credit',
+    'Mexico banking regulation could impose capital requirements or product restrictions that slow the second S-curve',
+    'FX volatility across Brazil, Mexico, and Colombia directly compresses dollar-reported earnings without any operational change',
+    'Valuation reflects compounding expectations already — any growth deceleration or credit scare would re-rate the multiple sharply',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 16, targetMedian: 19, targetHigh: 22, numAnalysts: 9 },
   revGrowth: [

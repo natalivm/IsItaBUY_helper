@@ -31,6 +31,22 @@ export const SHOP = defineStock({
     "At ~$103 / ~$135B market cap on ~$1.68 FY2026 non-GAAP EPS, forward P/E ~61×. Premium, but Q1 momentum suggests the high-28% base EPS CAGR is achievable. " +
     "BUY-leaning HOLD: reformed compounder (low SBC, net buybacks, GAAP profitable) now layered with a defensible AI infrastructure moat via UCP. The deceleration to 'high 20s' in Q2 from 34% Q1 is the principal near-term risk to multiple.",
 
+  reasonsToBuy: [
+    'Universal Commerce Protocol co-developed with Google and adopted by Amazon, Meta, and Microsoft creates near-unbreakable platform lock-in',
+    'Only commerce platform powering selling inside ChatGPT, Copilot, and Google from a single system',
+    'B2B GMV growing at roughly double the headline rate, opening a massive underpenetrated market',
+    'SBC dramatically reformed — buybacks now exceed SBC issuance, with minimal net dilution over five years',
+    'GAAP profitable with genuine operating leverage, unlike most high-growth software peers',
+  ],
+
+  risksToBuy: [
+    'Revenue deceleration from Q1\'s exceptional growth rate could trigger severe multiple compression at current valuation',
+    'Amazon, Walmart Marketplace, and TikTok Shop intensify direct competition for SMB merchant acquisition',
+    'Stripe, Adyen, and Meta-native checkout compete on Shopify Payments take-rate, compressing merchant solutions margins',
+    'Premium valuation leaves no margin of safety — the entire stock price is justified by sustained high growth',
+    'Agentic AI tools from competing platforms could commoditize the AI commerce edge Shopify currently enjoys',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 90, targetMedian: 135, targetHigh: 175, numAnalysts: 45 },
 
   revGrowth: [

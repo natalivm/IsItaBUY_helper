@@ -33,6 +33,21 @@ export const CRDO = defineStock({
     "Risks: top-3 customer concentration remains 88%, GM guided 64–66%, FY27 H1 only mid-single-digit sequential growth (back-half loaded ramp), 2-year earnout creates dilution risk if Dust hits metrics, integration execution risk. High beta (2.58) means sharp drawdowns in risk-off. " +
     "RS at 85 — momentum rebuilding, but position sizing still warrants caution. ",
 
+  reasonsToBuy: [
+    'AEC chips are the de facto standard for intra-rack connectivity, giving Credo an entrenched position as AI clusters scale',
+    'DustPhotonics acquisition vertically integrates the silicon photonics PIC layer, expanding addressable revenue per deployment',
+    'ZeroFlap Optics pulled forward into production validates a new reliability-first optical category with multiple hyperscaler customers',
+    'Best-in-class gross margins at scale signal genuine semiconductor IP differentiation rather than commodity assembly value',
+    'Four distinct product expansions — ALCs, OmniConnect, ZeroFlap, SiPho PICs — stagger future growth vectors into the next decade',
+  ],
+
+  risksToBuy: [
+    'Top-three customers represent the vast majority of revenue — a single hyperscaler pause would be severely damaging',
+    'Earnout-based DustPhotonics deal creates meaningful dilution risk if silicon photonics integration hits design-win milestones',
+    'SBC as a share of revenue is structurally high, and true owner cash flow is a fraction of the headline FCF figure',
+    'Extreme beta means the stock experiences sharp drawdowns in any risk-off or AI-spending-doubt environment',
+    'FY27 is back-half loaded — near-term sequential growth is modest, leaving little cushion if early quarters disappoint',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 72, targetMedian: 193, targetHigh: 260, numAnalysts: 16 },
   revGrowth: [

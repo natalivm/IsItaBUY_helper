@@ -30,6 +30,22 @@ export const AXON = defineStock({
     "Management raised FY26 guidance to 30–32% growth with FCF inflecting to ~$450M — 12.5% of revenue versus FY25's ~7%. After years of skeptics arguing the cash flow would never show up, it's showing up. The catch, and it's a big one, is SBC: guided at $590–620M, or roughly 16% of revenue. Burry called Axon out by name. Management's new commitment to <2.5% annual dilution means buybacks finally have to absorb SBC instead of letting share count drift higher. That's the bet.\n\n" +
     "The verdict: this is the best government-tech moat in our coverage paired with one of the worst cash-flow-quality profiles. At ~56× FY26 non-GAAP EPS, the premium prices in execution that hasn't fully happened yet. We HOLD until SBC dilution actually compresses — but the trajectory is finally pointing the right way.",
 
+  reasonsToBuy: [
+    'Future contracted backlog of billions represents signed, multi-year revenue — not speculative pipeline',
+    'Net revenue retention above market benchmarks confirms agencies expand usage after adopting the platform',
+    'International revenue doubled and Dedrone\'s defense bookings opened a structural new market nobody had modeled',
+    'AI product revenue inflecting rapidly as Draft One, BriefOne, and Assistant expand the monetizable surface per customer',
+    'FCF margin inflecting sharply in one year signals the operating leverage skeptics doubted is finally materializing',
+  ],
+
+  risksToBuy: [
+    'SBC running near a fifth of revenue — cash-flow quality is among the worst in the coverage universe',
+    'The dilution target requires buybacks to fully absorb SBC, which has never been achieved in practice',
+    'Government IT budgets are vulnerable to macro-driven cuts that could slow the backlog conversion rate',
+    'Microsoft and Google could replicate AI tools within existing enterprise suites, commoditizing Draft One and Assistant',
+    'Premium multiple leaves no margin for error if any single growth metric misses expectations',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 450, targetMedian: 770, targetHigh: 1000, numAnalysts: 18 },
 
   revGrowth: [

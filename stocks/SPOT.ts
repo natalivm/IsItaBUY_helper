@@ -20,6 +20,21 @@ export const SPOT = defineStock({
   aiImpact: 'DISRUPTION_RISK',
   strategicNarrative: "At $496: Spotify is a legitimate ~12% CAGR cash compounder — market-beating, but not enough margin of safety for a full-conviction position. The FCF story (CAGR ~20%, margin 17%→23%) is real, but you're paying ~35x for it. At $400–420 it becomes a comfortable accumulate (implied P/FCF ~28x fwd, CAGR 14–15% at 25x exit). Below $380 it's aggressive buy territory — 15%+ returns even with conservative multiple. Risk: if SPOT converges to Netflix-like 20–25x FCF as it matures, $496 delivers only ~7%. RS 14 confirms the market isn't in a hurry to reprice higher. ",
 
+  reasonsToBuy: [
+    'Dominant global audio platform with a listener base and content library that is nearly impossible to replicate from scratch',
+    'FCF margin expansion from low-teens toward the mid-twenties is a multi-year structural story with clear operating leverage',
+    'Podcast and audiobook verticals diversify beyond music, reducing label dependency and expanding the monetizable content surface',
+    'Advertising business provides a second revenue engine that scales with DAUs without requiring incremental content spend',
+    'Pricing power demonstrated through multiple successful premium tier increases with minimal subscriber churn',
+  ],
+
+  risksToBuy: [
+    'Apple Music, YouTube Music, and Amazon Music are deeply integrated into their respective hardware ecosystems, making switching frictionless for users',
+    'Record labels retain disproportionate bargaining power over music licensing costs, capping gross margin expansion potential',
+    'Podcast advertising market is more cyclical than subscription revenue, creating earnings volatility in ad-softness periods',
+    'AI-generated music could commoditize content costs but also disrupts the catalog relationships that underpin the platform\'s appeal',
+    'Current valuation already prices in the FCF compounding story — a multiple re-rate toward mature-media levels would offset earnings growth',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 420, targetMedian: 667, targetHigh: 900, numAnalysts: 27 },
   revGrowth: [

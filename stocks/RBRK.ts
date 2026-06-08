@@ -25,6 +25,21 @@ export const RBRK = defineStock({
     "If ARR sustains >20% and market pays >25x FCF, this is a cyber resilience compounder. If NRR normalizes and FY27 GAAP noise triggers a sell-off, there's -30-50% path risk to ~$27. " +
     "Best entry likely after a compression event — bet on execution + structural cyber trend, not current momentum. ",
 
+  reasonsToBuy: [
+    'Subscription ARR and high net revenue retention demonstrate a sticky, compounding recurring revenue base',
+    'Security modules driving outsized NRR expansion into CISO budgets that are structurally growing year over year',
+    'Regulatory tailwinds from DORA, NIS2, and SEC disclosure rules create a durable demand floor for cyber resilience',
+    'Cloud ARR growing rapidly and now representing the vast majority of subscription revenue',
+  ],
+
+  risksToBuy: [
+    'RS deeply negative with zero institutional momentum — the market is not yet sponsoring this story',
+    'FY27 material-rights accounting headwind creates real headline revenue slowdown risk that could trigger a sell-off',
+    'Adjusted FCF after SBC is actually negative — the cash flow positive headline is entirely accounting-driven',
+    'SBC as a share of revenue is among the highest in our entire coverage universe, creating severe dilution',
+    'Bear case downside is substantial even without a fundamental business breakdown — multiple compression alone does damage',
+  ],
+
   // Revenue growth: starts elevated (ARR +34% momentum) then decelerates
   // Bear CAGR ~12%, Base ~18%, Bull ~24%
 

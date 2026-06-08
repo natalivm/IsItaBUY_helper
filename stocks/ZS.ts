@@ -36,6 +36,22 @@ export const ZS = defineStock({
 
     "Valuation @ $144.70: Forward P/E ~32× on FY27 $4.50 EPS · P/ARR 5.2× · Consensus target $265 (+83%).",
 
+  reasonsToBuy: [
+    'Zero Trust architecture is uniquely suited to securing AI agents, the fastest-growing enterprise attack surface',
+    'Z-Flex multi-year agreements deepen customer lock-in and reduce the churn risk inherent in annual renewals',
+    'AI Protect and Data Security are crossing meaningful ARR thresholds with rapid enterprise adoption',
+    'Record non-GAAP operating margin expansion shows genuine platform operating leverage kicking in',
+    'Consensus price target is far above current levels, reflecting strong analyst conviction in the growth runway',
+  ],
+
+  risksToBuy: [
+    'SBC exceeds annual revenue from a meaningful portion of business, making true owner FCF deeply negative',
+    'FY27 preliminary guidance implies a material deceleration from the current growth rate',
+    'PANW Cortex bundling and MSFT Entra are compressing pricing power in the mid-market segment',
+    'Red Canary MDR churn is structurally higher than core ZS business and weighs on net new ARR',
+    'Capex pulled forward ahead of tariffs may prove stickier than guided, permanently capping FCF margins',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 130, targetMedian: 265, targetHigh: 320, numAnalysts: 36 },
 
   revGrowth: [

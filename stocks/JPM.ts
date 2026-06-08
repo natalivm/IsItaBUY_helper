@@ -33,6 +33,22 @@ export const JPM = defineStock({
     "Dimon: 'asset prices high increases risk, my anxiety is high.' Capital markets cycle (M&A boom possible but not guaranteed) is main upside catalyst. " +
     "RS 51 falling, below 50MA. Prob 15%+ CAGR: ~20-25%. Realistic total return: earnings 7-9% + dividends/buybacks 3-4% = 10-13% long-term ceiling without multiple expansion.",
 
+  reasonsToBuy: [
+    'Best-in-class banking franchise with a structurally larger markets wallet post-COVID and a dominant payments network',
+    'Through-cycle ROTCE consistency provides reliable EPS compounding regardless of short-term rate environment',
+    'Private credit expansion and AI-driven cost reduction support margin defense in a competitive lending environment',
+    'Dividends plus buybacks provide a durable total-return floor even in a scenario with no multiple expansion',
+    'Capital markets recovery (M&A boom, IPO cycle) is a meaningful upside catalyst if deal activity re-accelerates',
+  ],
+
+  risksToBuy: [
+    'Bank earnings are inherently cyclical — a credit-cycle turn or rate decline compresses both revenue and multiple simultaneously',
+    'Through-cycle ROTCE cap structurally limits EPS CAGR, making it very difficult to clear a meaningful return hurdle',
+    'Dimon himself has flagged elevated macro anxiety and high asset prices as risks to the current earnings environment',
+    'AI delivers cost savings but management explicitly cannot charge clients for it, so margins improve modestly at best',
+    'Late-cycle private credit stress could spread beyond the segment, creating incremental credit losses across the portfolio',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 220, targetMedian: 300, targetHigh: 380, numAnalysts: 20 },
   revGrowth: [
     [0.03, 0.02, 0.02, 0.01, 0.01],

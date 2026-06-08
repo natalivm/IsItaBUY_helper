@@ -30,6 +30,21 @@ export const DUOL = defineStock({
     "AI disruption risk is real but DUOL is also AI-first (Video Call, Max tier, 18x content acceleration). WAIT for 2026 guidance stabilization or first evidence of DAU re-acceleration before adding aggressively. " +
     "Burry full-SBC adjustment (estimated): 75% overstatement (Tragic) — real owner economics ~25% of GAAP after MTM dilution; non-GAAP optics flatter the picture significantly.",
 
+  reasonsToBuy: [
+    'Dominant language-learning network with tens of millions of daily active users and deep habit-forming engagement loops',
+    'Zero-debt balance sheet with substantial cash reserves provides a durable runway for the growth reinvestment phase',
+    'AI-first product suite — Max tier, Video Call, and rapid content generation — positions DUOL as a beneficiary rather than a victim of AI',
+    'Reaching a hundred million DAUs would unlock a monetization base that could justify a major re-rating of the stock',
+    'Deliberate friction-removal strategy is a rare case of management sacrificing near-term profits to compound the long-term user base',
+  ],
+
+  risksToBuy: [
+    'Management is deliberately compressing margins to reinvest, so near-term earnings momentum is intentionally soft',
+    'RS Rating is extremely weak, signaling persistent institutional selling pressure since the all-time high',
+    'AI-native tutors from large tech platforms represent a genuine substitution threat for casual language learners',
+    'The binary DAU growth bet either justifies the reinvestment or leaves shareholders with slow growth and depressed margins',
+    'Reported net income is materially inflated by a one-time tax benefit, obscuring the true earnings baseline',
+  ],
 
   epsCagr: [5, 15, 25],
   exitPE: [12, 22, 30],

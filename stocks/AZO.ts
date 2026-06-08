@@ -29,6 +29,22 @@ export const AZO = defineStock({
     "Key risks: over-investment diluting returns, commercial mix pressuring gross margin, Mexico weakness, traffic -3.6%. " +
     "RS Rating 28 — the market isn't buying the acceleration story yet. Either early accumulation zone or value trap; breakout not confirmed.",
 
+  reasonsToBuy: [
+    'Mega-Hub density investment is a deliberate operating leverage setup — management guides EBIT acceleration in coming years',
+    'Commercial segment gaining consistent market share with durable above-market growth rates',
+    'Decades-long buyback program has retired the vast majority of shares outstanding, compounding per-share value structurally',
+    'Auto parts demand is highly recession-resistant — older vehicle fleet and DIY maintenance insulate revenue in downturns',
+    'Pricing power and inventory breadth create a distribution moat that newer entrants cannot quickly replicate',
+  ],
+
+  risksToBuy: [
+    'Heavy capital expenditure in the current investment cycle is depressing near-term FCF and earnings visibility',
+    'Same-store traffic declined recently, raising questions about whether the demand acceleration thesis will materialize',
+    'Commercial mix shift toward professional installers compresses gross margin relative to the higher-margin DIY segment',
+    'Significant structural debt load from systematic leveraged buybacks could become a constraint if rates stay elevated',
+    'RS rating shows severe institutional distribution — the market is not yet rewarding the long-term thesis',
+  ],
+
   epsCagr: [7, 12, 15],
   exitPE: [18, 22, 24],
   prob: [20, 45, 35],

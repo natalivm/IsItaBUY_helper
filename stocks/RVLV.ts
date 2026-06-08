@@ -28,6 +28,22 @@ export const RVLV = defineStock({
     "At $24 with $4+/share cash and analysts targeting $28-$40 post-earnings, risk/reward has shifted materially from HOLD territory. " +
     "Main risk: stock ran to $31.68 post-earnings then sold off — market not fully buying the acceleration yet. RS 47 with price below 50-day MA reflects that skepticism.",
 
+  reasonsToBuy: [
+    'Q1 2026 revenue acceleration validated by the strongest quarterly beat in years',
+    'Zero-debt balance sheet with substantial net-cash cushion provides rare downside protection',
+    'Owned brand penetration still in early innings with room to more than double mix share',
+    'FWRD positioned to capture luxury market abandoned by Farfetch bankruptcy at a global scale',
+    'AI-powered personalization and agentic shopping experience driving measurable incremental revenue',
+  ],
+
+  risksToBuy: [
+    'Elevated marketing investment may fail to convert — brand launches could disappoint after heavy spend',
+    'Gen Z loyalty to TikTok Shop, Shein, and resale platforms poses a secular demand threat',
+    'Tariff exposure on sourced inventory could reverse recent gross margin progress',
+    'Stock sold off sharply from post-earnings highs, signaling institutional skepticism of the acceleration',
+    'Physical retail expansion is unproven at scale and adds execution risk to an already crowded strategy',
+  ],
+
   updatedOn: '06/05',
   lastReportTag: 'Q1 2026',
 

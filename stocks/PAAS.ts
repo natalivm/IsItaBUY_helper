@@ -30,6 +30,22 @@ export const PAAS = defineStock({
     "If silver hits $40+, this is a 2.5-3x multi-bagger. If metals correct, the unhedged exposure amplifies downside to -50%. " +
     "30-40% probability of 15%+ CAGR — a macro/metals momentum bet, not execution or structural moat.",
 
+  reasonsToBuy: [
+    'Fully unhedged silver and gold exposure provides maximum leverage to a continuing precious metals bull market',
+    'Juanicipio is a world-class low-cost silver operation delivering strong free cash flow at current metal prices',
+    'Escobal restart represents substantial optionality — a large, permitted mine that could add meaningful EPS uplift',
+    'Record free cash flow and net cash balance sheet provide financial strength to pursue growth and return capital',
+    'RS confirming strong institutional momentum consistent with a sustained metals cycle',
+  ],
+
+  risksToBuy: [
+    'No hedging means operating leverage works brutally in reverse if silver corrects even moderately from highs',
+    'Commodity stocks with RS at extreme levels frequently precede volatile mean-reverting phases',
+    'Escobal restart depends on Guatemalan regulatory and community approvals entirely outside management control',
+    'No pricing power, no moat, no recurring revenue — the entire thesis rests on macro metal prices staying elevated',
+    'A silver price correction to prior-cycle norms could cut the stock roughly in half from current levels',
+  ],
+
   epsCagr: [-10, 8, 18],
   exitPE: [14, 17, 22],
   prob: [30, 40, 30],

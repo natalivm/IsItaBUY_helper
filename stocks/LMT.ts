@@ -31,6 +31,22 @@ export const LMT = defineStock({
     "The fundamental case is solid — $6.2B FCF, low beta (0.52), Pristine SBC, and ~17% base-case upside to ~$625 in line with analyst consensus. But the technicals disqualify a BUY right now: RS 37 falling, D+ Acc/Dist, Up/Down Volume 0.44, and Industry Group Rank 86/142. Institutions are actively distributing — that is not a setup to buy into. " +
     "HOLD. The valuation is reasonable and the geopolitical tailwinds are real, but wait for the distribution pressure to resolve. Upgrade trigger: RS above 50, Acc/Dist back to C or better, and Up/Down Volume above 1.0. At that point the low-beta, Pristine-SBC defense thesis becomes a clean BUY.",
 
+  reasonsToBuy: [
+    'Dominant defense prime with unmatched entrenchment across F-35, missile defense, and classified programs',
+    'Sustained geopolitical tailwinds — NATO expansion and Indo-Pacific buildup drive multi-decade budget growth',
+    'Best-in-class SBC profile among large-cap defense primes with minimal earnings dilution',
+    'Low beta and highly visible multi-year government contract cash flows offer defensive positioning',
+    'Hypersonics and next-generation interceptor programs add durable long-term growth vectors',
+  ],
+
+  risksToBuy: [
+    'F-35 procurement timing delays and Pentagon cost scrutiny create near-term FCF headwinds',
+    'Institutions actively distributing with RS falling — technical picture disqualifies a buy today',
+    'Capital rotating into faster-growing missile, drone, and AI-defense names ahead of LMT',
+    'Three-year EPS trend in decline as program-timing headwinds weigh on reported earnings',
+    'Elevated debt load relative to peers limits financial flexibility if defense budgets shift',
+  ],
+
   modelType: 'EPS_PE',
   baseEps: 27.2,       // LTM FCF/share ($6.2B / 228M shares)
   epsCagr: [2, 5, 10],

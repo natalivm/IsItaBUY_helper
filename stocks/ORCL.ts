@@ -37,6 +37,22 @@ export const ORCL = defineStock({
     "Not a structural compounder yet, but no longer a mature dinosaur. One of the most serious 'non-obvious AI infrastructure + enterprise software' bets in the market. " +
     "Burry full-SBC adjustment (estimated): 65% overstatement (Critical) — real owner profit ~35% of GAAP; apply discount when comparing multiples to peers.",
 
+  reasonsToBuy: [
+    'Oracle Database lock-in is among the deepest moats in enterprise software — migration cost is prohibitive',
+    'OCI bare-metal architecture offers a structural cost advantage for large-scale AI training workloads',
+    'Multicloud database strategy embeds Oracle directly inside AWS, Azure, and Google ecosystems',
+    'RPO of record magnitude provides multi-year revenue visibility that few infrastructure players can match',
+    'Q3 FY26 marked the first genuine dual-acceleration quarter in over a decade — the inflection appears real',
+  ],
+
+  risksToBuy: [
+    'Heavy AI capex has temporarily destroyed free cash flow and may not convert if OCI stays fourth in cloud',
+    'Gross margin compression from infrastructure buildout could persist well beyond the near term',
+    'Balance sheet carries substantial debt accumulated through years of buybacks and now capex spending',
+    'RS at deeply oversold levels reflects institutional skepticism about OCI\'s ability to close the gap on AWS and Azure',
+    'SBC overstatement is among the highest in our coverage — real owner earnings are a fraction of reported GAAP',
+  ],
+
   epsCagr: [9, 15, 21],
   exitPE: [15, 20, 24],
   prob: [20, 50, 30],

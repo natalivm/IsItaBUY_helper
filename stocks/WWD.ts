@@ -28,6 +28,22 @@ export const WWD = defineStock({
     "Portfolio quality improving: China on-highway wind-down ($30M Q3, minimal Q4), acquired VRM solenoids (next-gen single-aisle content), sold pilot controls line. New LEAP/GTF MRO partnerships with Lufthansa Technik, Air France KLM, and AAR add service network scale. " +
     "At ~$370 / ~40x FY2026 guided EPS ($9.30 mid), valuation is still demanding. FCF guide $300-350M unchanged despite higher earnings — $290M capex + inventory build constrain conversion. RS 94 near elite; bull case requires sustained aero supercycle + data center capacity expansion.",
 
+  reasonsToBuy: [
+    'LEAP and GTF aftermarket is a long-duration, high-margin annuity as the installed base matures',
+    'New Lufthansa Technik, Air France KLM, and AAR MRO partnerships expand the services franchise globally',
+    'Data center power-gen demand is pulling OEM capacity-study requests beyond prior facility plans',
+    'VRM solenoid acquisition deepens next-generation single-aisle content across the Airbus and Boeing programs',
+    'RS rating near elite levels reflects strong institutional conviction in the aerospace supercycle thesis',
+  ],
+
+  risksToBuy: [
+    'Valuation at roughly forty times current-year earnings leaves little margin for any guidance miss',
+    'FCF conversion is constrained by heavy capital expenditure and a large inventory build',
+    'Airline capacity reductions from fuel price spikes could sharply slow the aftermarket growth rate',
+    'Data center capacity expansion is still at the study phase — it may not materialize on expected timelines',
+    'China on-highway wind-down removes a revenue stream while integration of VRM solenoids is still early',
+  ],
+
   // EPS_PE model: epsCagr and exitPE are the primary valuation drivers.
   // revGrowth and fcfMargin are kept for display/yield calculations.
   epsCagr: [7, 13, 20],

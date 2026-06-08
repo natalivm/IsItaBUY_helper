@@ -33,6 +33,22 @@ export const INTU = defineStock({
     "Bear (~25%): AI-native challengers chip away at TurboTax/QuickBooks moat, growth decelerates to single digits, multiple compresses to 18× → $300. " +
     "Burry indicator flags 32% overstatement (Critical, Burry-published). Quality franchise at a multi-year drawdown — wait for stabilization above $420 before adding.",
 
+  reasonsToBuy: [
+    'Dominant SMB finance and tax platform with deeply embedded workflows that create high switching costs for customers',
+    'Agentic AI initiative positions Intuit as the autonomous financial back-office for small businesses if it monetizes successfully',
+    'Durable double-digit revenue compounding driven by QuickBooks ecosystem lock-in and recurring subscription model',
+    'Ongoing buyback program and remaining authorization provide meaningful EPS accretion support through the drawdown',
+    'Multi-year selloff from peak has reset the entry price to a level that prices in significant AI disruption already',
+  ],
+
+  risksToBuy: [
+    'AI-native tax and accounting tools from ChatGPT-era competitors could erode TurboTax and QuickBooks pricing power',
+    'Stock is in a prolonged downtrend with low relative strength, suggesting institutional distribution, not accumulation',
+    'Heavy SBC burden means non-GAAP earnings significantly flatter the true owner economics of the business',
+    'IRS Direct File expansion and free alternatives directly threaten the consumer tax segment that anchors the brand',
+    'Mailchimp cross-sell has underdelivered and Credit Karma growth has slowed, dimming the platform narrative',
+  ],
+
   analystConsensus: { rating: 'Buy', targetLow: 425, targetMedian: 636, targetHigh: 916, numAnalysts: 35 },
 
   revGrowth: [

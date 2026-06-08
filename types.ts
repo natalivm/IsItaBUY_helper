@@ -73,7 +73,12 @@ export interface TickerDefinition {
   rsTrend?: RsTrend;
   aiImpact: 'TAILWIND' | 'DISRUPTION_RISK' | 'NEUTRAL';
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
-  strategicNarrative: string;
+  /** @deprecated No longer rendered — replaced by reasonsToBuy / risksToBuy. Kept for back-compat. */
+  strategicNarrative?: string;
+  /** Alpha Strategic View — concise, qualitative reasons to own the stock (no precise numbers). */
+  reasonsToBuy?: string[];
+  /** Alpha Strategic View — concise, qualitative risks of owning the stock (no precise numbers). */
+  risksToBuy?: string[];
   verdictNarrative?: string;
   cash?: number;
   debt?: number;

@@ -20,6 +20,22 @@ export const ARRY = defineStock({
   aiImpact: 'NEUTRAL',
   strategicNarrative: "Cyclical growth (Type B) solar tracker — post-earnings update. 2025 actual: revenue ~$1.28B (+40% YoY), tracker volume +35%, record order book $2.2B (book-to-bill 2x), 95% domestic backlog, >50% Tier 1 customers. APA already EBITDA-accretive. 2026 guide: revenue $1.4–1.5B, adj. EBITDA $200–230M, adj. EPS $0.65–0.75. What improved: backlog quality, Tier 1 mix, share gains, APA/SG&A leverage, software/services recurring layer. What stayed weak: gross margin ceiling (mgmt admits pricing competition), FCF conversion weak ($80M on $188M EBITDA, 2026 'similar to 2025'), international selective due to price war risk. Moat weak-to-medium: DuraTrack tech, terrain-following, wind-stow, integrated foundation+tracker, but mgmt itself admits pricing pressure. Growth driver split: revenue expansion > margin expansion (SG&A leverage from ~15% to ~10%) > financial engineering (minimal buybacks). Not a compounder — execution + cycle story with better visibility post-call. Prob-weighted expected CAGR ~9.4% at current price. Fair entry for 15% CAGR: ~$5.3–5.7. Probability of 15%+: ~40–45%. RS 24 = market not yet buying recovery narrative — watchlist / tactical position, not high-conviction leader. ",
 
+  reasonsToBuy: [
+    'Record order backlog with high Tier 1 customer concentration provides multi-quarter revenue visibility from a strong position.',
+    'Domestic manufacturing orientation insulates ARRY from tariff and supply-chain risk hitting overseas competitors.',
+    'DuraTrack terrain-following technology and integrated foundation-plus-tracker offer a differentiated product for complex sites.',
+    'Emerging software and services layer adds a recurring revenue stream that could improve FCF conversion over time.',
+    'Solar build-out secular tailwind driven by data center power demand creates a multi-year industry growth backdrop.',
+  ],
+
+  risksToBuy: [
+    'Management openly admits pricing competition caps gross margin expansion — the moat is weak relative to the growth multiple.',
+    'FCF conversion is chronically weak relative to reported EBITDA, limiting real cash returns to shareholders.',
+    'Meaningful debt load against thin FCF creates balance-sheet fragility if the solar cycle turns or projects are delayed.',
+    'International expansion is being avoided precisely because of price-war risk, capping the long-term addressable market.',
+    'RS reflects the market\'s skepticism — this is a watchlist name, not a high-conviction leader with institutional sponsorship.',
+  ],
+
   analystConsensus: { rating: 'Hold', targetLow: 6, targetMedian: 10, targetHigh: 16, numAnalysts: 10 },
   revGrowth: [
     [0.05, 0.03, 0.01, 0.00, -0.02],

@@ -30,6 +30,21 @@ export const AVGO = defineStock({
     "Post-call selloff (-5–14% AH, ~$415–454) triggered by: Q3 AI guide $16B vs $17.2B expected (quarterly split, not trajectory miss), and '$100B+ FY27 AI' maintained rather than raised. Both appear to be market overreaction. " +
     "At $415–454 AH, base case model (committed order book, 45% Year 1 growth) likely shows the stock as BUY. Analyst consensus (median $454, high $525) stale — significant upward revision expected.",
 
+  reasonsToBuy: [
+    'Binding multi-year contracts with Google, Meta, Anthropic, and OpenAI underpin AI semiconductor revenue visibility into FY28',
+    'Industry\'s only high-capacity Ethernet switch for AI clusters — durable networking moat within hyperscaler infrastructure',
+    'AI semiconductor revenue growing rapidly as hyperscaler compute buildout accelerates well beyond current run rate',
+    'VMware integration driving software-defined recurring revenue, transforming the business mix toward higher-margin streams',
+    'EBITDA margins expanding despite AI mix shift, demonstrating pricing power and operational discipline at scale',
+  ],
+
+  risksToBuy: [
+    'Single-quarter billings shortfalls can trigger outsized selloffs given elevated valuation expectations',
+    'Heavy VMware acquisition debt requires sustained FCF execution to deleverage on schedule',
+    'Hyperscaler capex reversal or ASIC order cancellation would collapse the AI revenue trajectory',
+    'Customer concentration — a handful of hyperscalers represent the vast majority of AI semiconductor demand',
+    'Any slowdown in AI infrastructure spending would expose the stock\'s premium multiple to sharp compression',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 335, targetMedian: 454, targetHigh: 525, numAnalysts: 30 },
   revGrowth: [

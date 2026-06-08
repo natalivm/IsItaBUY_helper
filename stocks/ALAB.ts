@@ -26,6 +26,20 @@ export const ALAB = defineStock({
     "If Scorpio X becomes standard in 2–3 hyperscalers, this transitions from cycle play to architectural moat (type B → A). If not, it's another AI silicon story with a semiconductor downturn ahead. " +
     "35–40% probability of 15%+ CAGR — a tactical bet on AI infrastructure positioning, not a compounder. ",
 
+  reasonsToBuy: [
+    'Scorpio X positions Astera as the fabric layer between GPUs and memory — a critical choke point in AI scale-up clusters.',
+    'Amazon warrant and strategic partnership provide deep hyperscaler validation and near-term revenue visibility.',
+    'Protocol-agnostic design (UALink, NVLink Fusion, CXL) means Astera benefits regardless of which interconnect standard wins.',
+    'Elite gross margins and a rapidly scaling FCF base give the business genuine financial quality beneath the growth story.',
+  ],
+
+  risksToBuy: [
+    'Revenue growth is decelerating sharply from hypergrowth toward single digits, compressing the multiple over time.',
+    'Hyperscalers could internalize connectivity solutions, eliminating the need for a dedicated fabric vendor.',
+    'Concentrated customer risk — the Amazon warrant is both the bull case and the ceiling if other hyperscalers don\'t adopt.',
+    'Extraordinary share dilution from post-IPO RSU vesting is running well ahead of any buyback offset.',
+    'Valuation already prices the optimistic path, leaving little margin of safety if Scorpio X ramp disappoints.',
+  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 80, targetMedian: 192, targetHigh: 225, numAnalysts: 16 },
   revGrowth: [

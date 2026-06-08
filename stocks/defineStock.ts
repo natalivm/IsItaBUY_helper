@@ -56,7 +56,12 @@ export interface SimpleStockInput {
    * "Model: X" in the Investment Verdict for monitoring.
    */
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
-  strategicNarrative: string;
+  /** @deprecated No longer rendered — replaced by reasonsToBuy / risksToBuy. Kept for back-compat. */
+  strategicNarrative?: string;
+  /** Alpha Strategic View: concise, qualitative reasons to own the stock (no precise numbers). 3-5 bullets. */
+  reasonsToBuy?: string[];
+  /** Alpha Strategic View: concise, qualitative risks of owning the stock (no precise numbers). 3-5 bullets. */
+  risksToBuy?: string[];
   verdictNarrative?: string;
 
   // ── Model type (default: DCF_ADVANCED) ──
@@ -165,7 +170,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     ticker, name, sector, themeColor, currentPrice, shares0,
     rev25, fcfMargin25, taxRate, cash, debt, beta, costDebt,
     fairPriceRange, active = true,
-    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative, verdictNarrative,
+    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative, reasonsToBuy, risksToBuy, verdictNarrative,
     modelType = 'DCF_ADVANCED',
 
     // Scenarios
@@ -239,6 +244,8 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     aiImpact,
     ratingOverride,
     strategicNarrative,
+    reasonsToBuy,
+    risksToBuy,
     verdictNarrative,
     baseEps,
     analystConsensus,

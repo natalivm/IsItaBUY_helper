@@ -34,6 +34,22 @@ export const UBER = defineStock({
     "45 analysts say Strong Buy with a $104.45 median price target (+48% from $70); model base case ~$104. STRONG BUY: this is a fundamental free cash flow machine at distressed-multiple prices. " +
     "Key risk: RS 22 means the tape does not confirm the fundamental case yet — institutional momentum must reverse before the stock re-rates. Wait for RS to recover above 40-50 before sizing up aggressively; at current levels strategic accumulation is warranted.",
 
+  reasonsToBuy: [
+    'Uber One\'s loyalty ecosystem drives member spend multiples above non-members with rising retention',
+    'Insurance savings are flowing through to lower prices and already accelerating trip growth in key markets',
+    'AV partnerships make Uber the aggregator beneficiary of autonomous vehicles rather than their victim',
+    'Suburban and sparse-market expansion adds a fast-growing second engine beyond the mature urban core',
+    'FCF yield at current prices is exceptional for a platform compounding gross bookings at twenty-plus percent',
+  ],
+
+  risksToBuy: [
+    'RS rating in the low twenties signals aggressive institutional distribution that must reverse first',
+    'AV players like Waymo could bypass the aggregator model with direct consumer apps at scale',
+    'Personal AI agents could abstract away the Uber app through direct API integrations with rivals',
+    'UK tax-law-style regulatory changes could structurally suppress revenue growth vs gross bookings globally',
+    'Elevated AI and headcount spend could compress margins during any revenue growth deceleration',
+  ],
+
   analystConsensus: { rating: 'Strong Buy', targetLow: 70, targetMedian: 104, targetHigh: 150, numAnalysts: 45 },
 
   revGrowth: [

@@ -33,6 +33,22 @@ export const TER = defineStock({
     "Current phase: 'earnings expansion' — typical semicap pattern: earnings explode → investors extrapolate → multiple expands → digestion → correction. " +
     "Amazing business, amazing cycle, expensive stock. Probability of 15%+ CAGR: ~25-30%. Fair entry: $180-$200. Deep cycle buy: $140-$160.",
 
+  reasonsToBuy: [
+    'AI chips require far more testing per die, structurally raising the value of each tester sold',
+    'HBM memory test is a dominant share position and grows as stack height and complexity increase',
+    'Multiple overlapping AI demand waves — accelerators, memory, optics, edge — elongate the cycle',
+    'GPU qualification in 2026 opens a large addressable market currently owned by a single rival',
+    'Operating leverage is strong as the fixed-cost base absorbs revenue growth at expanding margins',
+  ],
+
+  risksToBuy: [
+    'CEO explicitly flagged a post-boom digestion period following the current growth phase',
+    'ATE spending tracks the growth rate of chip revenue, not the level — any deceleration hits hard',
+    'VIP compute revenue is dangerously concentrated in only two hyperscaler ASIC programs',
+    'GPU market penetration is a multi-year ramp against an entrenched and dominant competitor',
+    'Stock trades at a demanding multiple during the earnings-expansion phase of a semicap mini-cycle',
+  ],
+
   epsCagr: [2, 9, 14],
   exitPE: [18, 22, 28],
   prob: [20, 50, 30],

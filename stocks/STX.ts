@@ -28,6 +28,22 @@ export const STX = defineStock({
     'HOLD. A pullback to $650–750 would materially improve the setup. At $880, you are already paying for the bull case. ' +
     'Burry (estimated): 45% overstatement (Critical), adjusted target ~$516.',
 
+  reasonsToBuy: [
+    'HAMR technology gives Seagate a hard-disk density edge no rival can yet match at scale',
+    'AI data creation demands orders of magnitude more raw storage per compute dollar than prior eras',
+    'Hyperscalers are locked in to HDD for cold storage — flash parity is many years away',
+    'FCF is genuine and growing, backed by real cash conversion at scale',
+    'Lean balance sheet with net debt well below one times EBITDA, limiting financial risk',
+  ],
+
+  risksToBuy: [
+    'Stock already priced for years of hypercycle growth after a massive multi-year run',
+    'ATE demand is a derivative of growth rates — any AI slowdown hits HDD capex sharply',
+    'Flash / NAND cost-per-bit improvement could encroach on warm-storage use cases faster than expected',
+    'High beta means the stock falls harder than the market in any risk-off environment',
+    'Multiple compression is a structural headwind even if the underlying business executes well',
+  ],
+
   verdictNarrative:
     'STX trades at ~83× FCF — the market is already pricing in years of AI-storage hypercycle growth. The probability-weighted target of $938 is only fractionally above today\'s price, leaving almost no margin of safety. ' +
     'Multiple compression is a structural headwind in every scenario. The current P/FCF at $880 is ~83× — even the bull case assumes compression from 83× → 54× while FCF compounds at 20%/yr. That is actually a coherent and conservative framing of the AI hypercycle: the business grows fast, but the multiple normalizes as the narrative matures. In the base case, 13% FCF growth after a 45% multiple haircut yields roughly flat stock performance. Being right on the business does not guarantee being right on the investment. ' +

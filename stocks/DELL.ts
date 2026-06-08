@@ -32,6 +32,22 @@ export const DELL = defineStock({
 
     'Risks: AI servers are thin-margin pass-through — FCF leverage to revenue growth is modest (~10% margin). Hyperscaler AI capex could normalize in FY28–29 faster than Dell\'s supply commitments, creating inventory risk. PC segment (~25% of rev) faces secular headwinds. Debt of $31B limits financial flexibility. Supermicro and HPE compete aggressively on AI server configs. Rating: STRONG BUY. The Q1 earnings quality — 88% revenue growth, $4.1B operating cash flow, and $43B backlog — represents a structural step-change, not a one-quarter beat. The services attach optionality is not in the current multiple.',
 
+  reasonsToBuy: [
+    'Unmatched Fortune 500 distribution reach that pure-play ODMs cannot replicate at enterprise scale',
+    'Massive multi-quarter AI server backlog gives rare revenue visibility for a hardware business',
+    'High-margin services and storage attach to AI deployments is an underpriced earnings-quality upgrade',
+    'Deep Nvidia Blackwell integration positions Dell as the default on-prem AI infrastructure vendor',
+    'Valuation remains undemanding relative to the scale of revenue and cash flow growth being delivered',
+  ],
+
+  risksToBuy: [
+    'AI server hardware is a thin-margin pass-through, so explosive revenue growth does not translate equally to free cash flow',
+    'Hyperscaler capex normalization in coming years could unwind backlog faster than supply commitments allow',
+    'PC segment faces ongoing secular decline and contributes meaningfully to overall revenue mix',
+    'Debt load of tens of billions limits financial flexibility and amplifies cyclical downside risk',
+    'Supermicro and HPE compete aggressively on liquid-cooled Blackwell configurations, pressuring share',
+  ],
+
   revGrowth: [
     [0.33, 0.10, 0.07, 0.05, 0.04], // Bear: FY27 partial miss, AI capex normalizes fast in FY28
     [0.47, 0.18, 0.12, 0.09, 0.07], // Base: FY27 guide delivers, services attach grows
