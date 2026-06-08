@@ -6,7 +6,7 @@ export const HPE = defineStock({
   sector: 'Networking / AI Infrastructure',
   themeColor: '#01A982',
 
-  currentPrice: 49.2,
+  currentPrice: 49.87,
   fairPriceRange: '$15 - $85',
   shares0: 1330,
   rev25: 34296,
@@ -20,7 +20,7 @@ export const HPE = defineStock({
   rsRating: 93,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/05',
+  updatedOn: '06/08',
   lastReportTag: 'Q2 FY26',
 
   analystConsensus: { rating: 'Buy', targetLow: 32, targetMedian: 50, targetHigh: 68, numAnalysts: 25 },

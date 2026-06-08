@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const SPOT = defineStock({
-  updatedOn: '06/05',
+  updatedOn: '06/08',
   ticker: 'SPOT',
   name: 'Spotify Technology S.A.',
   sector: 'Interactive Media / Audio',
   themeColor: '#C5A572',
-  currentPrice: 496.95,
+  currentPrice: 503.13,
   fairPriceRange: '$430 - $660',
   shares0: 206,
   rev25: 17186,
