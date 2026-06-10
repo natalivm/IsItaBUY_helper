@@ -5,7 +5,7 @@ export const VST = defineStock({
   name: 'Vistra Corp',
   sector: 'Utilities / Power',
   themeColor: '#facc15',
-  currentPrice: 146.22,
+  currentPrice: 138.54,
   fairPriceRange: '$180 - $460',
   shares0: 339.0,
   rev25: 19600,
@@ -20,7 +20,7 @@ export const VST = defineStock({
   rsRating: 38,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/09',
+  updatedOn: '06/10',
   lastReportTag: 'Q1 2026',
   reasonsToBuy: [
     'Signed long-term Meta and Amazon nuclear PPAs lock in contracted cash flows at premium prices',
