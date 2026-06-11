@@ -5,7 +5,7 @@ export const SNPS = defineStock({
   name: 'Synopsys',
   sector: 'EDA Software / Chip Design',
   themeColor: '#7b2cbf',
-  currentPrice: 460.54,
+  currentPrice: 456.29,
   fairPriceRange: '$420 - $720',
   shares0: 192,
   rev25: 7054,
@@ -21,7 +21,7 @@ export const SNPS = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',
-  updatedOn: '06/10',
+  updatedOn: '06/11',
 
   reasonsToBuy: [
     'Dominant EDA market share means every advanced AI chip — NVIDIA, AMD, custom hyperscaler silicon — requires Synopsys tools',

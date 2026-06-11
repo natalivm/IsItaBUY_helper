@@ -5,7 +5,7 @@ export const SHOP = defineStock({
   name: 'Shopify',
   sector: 'E-commerce Infrastructure / Payments',
   themeColor: '#95BF47',
-  currentPrice: 108.2,
+  currentPrice: 110.47,
   fairPriceRange: '$85 - $155',
   shares0: 1307,
   rev25: 11600,
@@ -20,7 +20,7 @@ export const SHOP = defineStock({
   rsRating: 58,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/10',
+  updatedOn: '06/11',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [
