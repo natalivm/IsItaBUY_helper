@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const PINS = defineStock({
-  updatedOn: '06/11',
+  updatedOn: '06/12',
   ticker: 'PINS',
   name: 'Pinterest',
   sector: 'Social Commerce',
   themeColor: '#e60023',
-  currentPrice: 21.5,
+  currentPrice: 20.21,
   fairPriceRange: '$15 - $32',
   shares0: 676.0,
   rev25: 4222,
