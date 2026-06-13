@@ -6,6 +6,12 @@ on:
     paths-ignore:
       - '**.md'
       - '.gitignore'
+  # The price bot pushes with GITHUB_TOKEN, which does NOT trigger the push
+  # event above (GitHub recursion prevention). Chain off the price workflow's
+  # completion instead so updated prices actually deploy.
+  workflow_run:
+    workflows: ["Update Stock Prices"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
