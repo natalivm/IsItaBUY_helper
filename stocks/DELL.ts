@@ -43,18 +43,18 @@ export const DELL = defineStock({
 
   revGrowth: [
     [0.33, 0.10, 0.07, 0.05, 0.04], // Bear: FY27 partial miss, AI capex normalizes fast in FY28
-    [0.47, 0.18, 0.12, 0.09, 0.07], // Base: FY27 guide delivers, services attach grows
+    [0.47, 0.15, 0.10, 0.07, 0.06], // Base: FY27 guide delivers Y1, growth tapers as backlog ships
     [0.55, 0.28, 0.22, 0.16, 0.12], // Bull: AI super-cycle, enterprise + sovereign AI adds new leg
   ],
 
   fcfMargin: [
     [0.08, 0.08, 0.08, 0.09, 0.09], // Bear: server mix pressure, capex stays elevated
-    [0.10, 0.11, 0.12, 0.12, 0.13], // Base: gradual improvement as services mix grows
+    [0.09, 0.09, 0.10, 0.10, 0.11], // Base: thin AI-server mix keeps FCF margin modest
     [0.12, 0.14, 0.16, 0.17, 0.18], // Bull: services attach accelerates, operating leverage
   ],
 
-  exitMultiple: [8, 11, 15],
-  ebitdaProxy: [0.09, 0.12, 0.16],
+  exitMultiple: [8, 9, 15],
+  ebitdaProxy: [0.09, 0.10, 0.16],
   termGrowth: [0.015, 0.025, 0.030],
   bbRate: [0.005, 0.015, 0.025],
 
