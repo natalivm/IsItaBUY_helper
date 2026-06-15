@@ -5,7 +5,7 @@ export const RTX = defineStock({
   name: 'RTX Corporation',
   sector: 'Aerospace & Defense',
   themeColor: '#003087',
-  currentPrice: 183.53,
+  currentPrice: 183.64,
   fairPriceRange: '$145 - $315',
   shares0: 1350,
   rev25: 90400,
@@ -21,7 +21,7 @@ export const RTX = defineStock({
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'BUY',
-  updatedOn: '06/12',
+  updatedOn: '06/15',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [

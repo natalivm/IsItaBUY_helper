@@ -5,7 +5,7 @@ export const INTU = defineStock({
   name: 'Intuit Inc.',
   sector: 'Software / SMB Finance & Tax',
   themeColor: '#0077c5',
-  currentPrice: 276.73,
+  currentPrice: 281.77,
   fairPriceRange: '$340 - $640',
   shares0: 280,
   rev25: 18800,
@@ -21,7 +21,7 @@ export const INTU = defineStock({
   rsTrend: 'falling',
   aiImpact: 'DISRUPTION_RISK',
   ratingOverride: 'HOLD',
-  updatedOn: '06/12',
+  updatedOn: '06/15',
 
   reasonsToBuy: [
     'Dominant SMB finance and tax platform with deeply embedded workflows that create high switching costs for customers',
