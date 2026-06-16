@@ -19,7 +19,7 @@ export const LMT = defineStock({
   costDebt: 0.045,
   rsRating: 37,
   rsTrend: 'falling',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Model BUY (~+18%) but F-35 program/margin overhang + weak/falling RS; consensus Buy. HOLD on program timing.
   aiImpact: 'NEUTRAL',
 
   verdictNarrative:

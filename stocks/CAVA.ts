@@ -22,7 +22,7 @@ export const CAVA = defineStock({
   rsRating: 87,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'OVERVALUED',
+  ratingOverride: 'OVERVALUED',  // Spot sits ~30% above base case; the RS-quality boost would otherwise mask that as HOLD, so forcing OVERVALUED to be honest. (Group is AVOID either way.)
   reasonsToBuy: [
     'Only national fast-casual Mediterranean brand with genuine whitespace to expand from hundreds to thousands of locations',
     'Zero debt and substantial cash reserves eliminate financial risk and fund the unit expansion runway',

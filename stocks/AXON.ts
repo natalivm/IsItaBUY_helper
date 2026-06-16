@@ -20,7 +20,7 @@ export const AXON = defineStock({
   rsRating: 92,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Model STRONG BUY (~+93%) is exit-multiple/RS-inflated on a premium-valued name; consensus is only Buy. Capping to HOLD until valuation/upside normalizes. (Strong RS 92 — revisit if the multiple compresses.)
   updatedOn: '06/15',
   lastReportTag: 'Q1 2026',
 

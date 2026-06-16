@@ -20,7 +20,7 @@ export const DDOG = defineStock({
   rsRating: 45,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // Valuation + SBC-quality driven, NOT operational. Stock re-rated ~$140 → ~$203 (above $95-200 fair range); model would say STRONG BUY on baseEps $2.40 (+28% cumulative + quality boost) so the override is MORE necessary post-Q1, not less.
+  ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. Stock re-rated above its fair range, so model upside has compressed to ~+11% (model now HOLD); the override matches the model and pins HOLD against a re-acceleration back to STRONG BUY.
   updatedOn: '06/15',
   lastReportTag: 'Q1 2026',
 

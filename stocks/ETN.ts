@@ -20,7 +20,7 @@ export const ETN = defineStock({
   rsRating: 88,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Floors ETN at HOLD: base DCF deeply negative on a high-multiple electrical name (RS 88), but OVERVALUED overstates a quality compounder. Matches RS-boosted model today.
   reasonsToBuy: [
     'Three simultaneous secular megatrends — AI data center power, grid modernization, and broad electrification — underpin multi-year demand visibility',
     'Data center orders growing at an extraordinary rate confirms Eaton\'s positioning at the critical power infrastructure layer',

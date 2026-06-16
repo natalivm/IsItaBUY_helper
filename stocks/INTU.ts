@@ -20,7 +20,7 @@ export const INTU = defineStock({
   rsRating: 18,
   rsTrend: 'falling',
   aiImpact: 'DISRUPTION_RISK',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Model STRONG BUY (~+156%) is implausible — inflated by a depressed spot; AI disruption to TurboTax + weak/falling RS argue caution. HOLD.
   updatedOn: '06/15',
 
   reasonsToBuy: [

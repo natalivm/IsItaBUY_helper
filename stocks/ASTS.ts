@@ -19,7 +19,7 @@ export const ASTS = defineStock({
   costDebt: 0.03,
   rsRating: 90,
   rsTrend: 'falling',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Pins HOLD: speculative pre-revenue satellite name with falling RS — keep at HOLD regardless of model drift. (Model already HOLD.)
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Only company building space-based broadband for unmodified standard smartphones — the technical moat is years wide.',

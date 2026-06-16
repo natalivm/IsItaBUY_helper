@@ -20,7 +20,7 @@ export const RTX = defineStock({
   rsRating: 84,
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'BUY',
+  ratingOverride: 'BUY',  // Caps RTX at BUY: prevents the model flipping to STRONG BUY on spot dips — a steady defense compounder, consensus Buy. (Matches model today.)
   updatedOn: '06/15',
   lastReportTag: 'Q1 2026',
 
