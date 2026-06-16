@@ -19,6 +19,7 @@ export const KKR = defineStock({
   baseEps: 6.74,
   modelType: 'EPS_PE',
   rsRating: 10,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Distributable earnings trajectory is visible and growing as fee-related earnings compound with AUM growth',
