@@ -17,9 +17,9 @@ export const KRMN = defineStock({
   debt: 400,
   beta: 1.27,
   costDebt: 0.060,
-  rsRating: 88,
+  rsRating: 14,
   rsTrend: 'falling',
-  ratingOverride: 'BUY',  // Model STRONG BUY (~+90%) but a recent IPO with falling RS; softening to BUY for one cycle. (Street consensus Strong Buy — stays TURBO_GROWTH either way.)
+  ratingOverride: 'HOLD',  // Downgraded BUY→HOLD: model STRONG BUY (+90%, ~14% CAGR) is a deep-value read on a stock in freefall — RS 14, -59% off highs, ACC/DIS distribution, D/E 222%, recent IPO with no track record. Real bull case (street Strong Buy, +113% to $103 median) but no margin of safety yet; HOLD until it stabilizes.
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Sits at the intersection of three structurally-funded defense themes: hypersonic propulsion, missile systems, and space launch',

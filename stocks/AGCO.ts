@@ -17,7 +17,8 @@ export const AGCO = defineStock({
   debt: 2800,
   beta: 1.16,
   costDebt: 0.06,
-  rsRating: 82,
+  rsRating: 40,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Narrative + analyst consensus (Hold) say flat/timing-bet; DCF base ~$142 vs $117 = +21% cumulative but only ~4% CAGR over 5y → documented "model BUY but sub-15% CAGR" mismatch. Q1 2026 reaffirms the HOLD thesis (confirming quarter, not a cycle inflection).
   // Q1 2026 CALL UPDATE (May 5, 2026)

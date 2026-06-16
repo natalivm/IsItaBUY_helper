@@ -17,8 +17,8 @@ export const THM = defineStock({
   beta: 0.71,
   costDebt: 0.05,
 
-  rsRating: 98,
-  rsTrend: 'rising',
+  rsRating: 59,
+  rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   analystConsensus: { rating: 'Strong Buy', targetLow: 2, targetMedian: 2, targetHigh: 2, numAnalysts: 1 },
   reasonsToBuy: [

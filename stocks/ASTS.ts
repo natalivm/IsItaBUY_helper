@@ -17,7 +17,7 @@ export const ASTS = defineStock({
   debt: 2500,
   beta: 1.46,
   costDebt: 0.03,
-  rsRating: 90,
+  rsRating: 73,
   rsTrend: 'falling',
   ratingOverride: 'HOLD',  // Pins HOLD: speculative pre-revenue satellite name with falling RS — keep at HOLD regardless of model drift. (Model already HOLD.)
   aiImpact: 'TAILWIND',

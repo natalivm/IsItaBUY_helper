@@ -17,7 +17,7 @@ export const CRWD = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 4.92,
-  rsRating: 50,
+  rsRating: 90,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
