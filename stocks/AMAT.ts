@@ -5,9 +5,9 @@ export const AMAT = defineStock({
   name: 'Applied Materials, Inc.',
   sector: 'Semiconductor Equipment · Deposition & Etch',
   themeColor: '#1a5f7a',
-  updatedOn: '06/15',
+  updatedOn: '06/16',
   lastReportTag: 'Q1 FY26',
-  currentPrice: 585.78,
+  currentPrice: 568.23,
   fairPriceRange: '$210 - $750',
   shares0: 800,           // ~800M diluted shares (market cap ~$293B / $366)
   rev25: 28370,           // FY25 revenue $28.37B
