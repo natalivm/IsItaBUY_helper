@@ -18,7 +18,7 @@ export const STX = defineStock({
   rsRating: 98,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Pins HOLD: cyclical HDD name; base DCF modestly negative but RS 98 strong — HOLD until the upside case re-emerges. (Matches model today.)
   updatedOn: '06/15',
   lastReportTag: 'Q3 FY26',
 

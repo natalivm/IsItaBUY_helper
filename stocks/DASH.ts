@@ -18,7 +18,7 @@ export const DASH = defineStock({
   beta: 1.60,
   costDebt: 0.048,
   rsRating: 16,
-  ratingOverride: 'BUY',
+  ratingOverride: 'BUY',  // Model STRONG BUY (~+28%, quality-boosted) but very weak RS (16); softening to BUY despite a Strong Buy street consensus.
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Dominant US delivery platform with record MAUs and memberships driving compounding network effects',

@@ -20,7 +20,7 @@ export const SNPS = defineStock({
   rsRating: 38,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Model STRONG BUY (~+85%) but a rich EDA multiple with deteriorating RS (falling); consensus Buy. HOLD pending momentum stabilization.
   updatedOn: '06/15',
 
   reasonsToBuy: [

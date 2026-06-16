@@ -19,7 +19,7 @@ export const KRMN = defineStock({
   costDebt: 0.060,
   rsRating: 88,
   rsTrend: 'falling',
-  ratingOverride: 'BUY',
+  ratingOverride: 'BUY',  // Model STRONG BUY (~+90%) but a recent IPO with falling RS; softening to BUY for one cycle. (Street consensus Strong Buy — stays TURBO_GROWTH either way.)
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Sits at the intersection of three structurally-funded defense themes: hypersonic propulsion, missile systems, and space launch',

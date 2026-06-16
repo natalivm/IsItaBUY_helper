@@ -19,7 +19,7 @@ export const SMWB = defineStock({
   costDebt: 0.0,
   rsRating: 38,
   rsTrend: 'rising',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Model STRONG BUY (~+86%) but a small-cap with AI-disruption risk and weak RS; external consensus is Hold. HOLD.
   aiImpact: 'DISRUPTION_RISK',
   reasonsToBuy: [
     'First non-GAAP operating profit marks a genuine inflection after years of losses, validating the path to profitability',

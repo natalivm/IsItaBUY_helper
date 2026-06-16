@@ -17,7 +17,7 @@ export const RKLB = defineStock({
   debt: 200,              // minimal; Debt/Equity ~15% per IBD
   beta: 1.95,
   costDebt: 0.05,
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Pins HOLD: pre-profit space name where the DCF is deeply negative but RS 98 momentum is extreme — HOLD splits the difference.
 
   rsRating: 98,
   rsTrend: 'rising',

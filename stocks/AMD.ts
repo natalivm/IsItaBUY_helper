@@ -20,7 +20,7 @@ export const AMD = defineStock({
   rsRating: 97,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Floors AMD at HOLD: base DCF is deeply negative (momentum-rich, RS 97), but tagging a category leader OVERVALUED overstates it. Matches the RS-boosted model today; pins HOLD if the boost is lost.
   updatedOn: '06/15',
   lastReportTag: 'Q1 FY26',
 

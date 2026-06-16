@@ -19,7 +19,7 @@ export const ONDS = defineStock({
   costDebt: 0.065,
   rsRating: 99,
   rsTrend: 'rising',
-  ratingOverride: 'HOLD',
+  ratingOverride: 'HOLD',  // Pins HOLD: highly speculative momentum name (RS 99) where the DCF is meaningless — HOLD avoids both the STRONG BUY and OVERVALUED extremes.
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Positioned at the intersection of three converging defense megatrends: drones, counter-UAS, and AI-enabled ISR',
