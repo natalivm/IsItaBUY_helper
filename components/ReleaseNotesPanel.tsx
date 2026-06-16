@@ -9,10 +9,10 @@ export type PanelTab = 'notes' | 'news';
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
 // seen-version differs from this. (Not a real OS push — same in-app pop-up
 // system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-05';
+export const UPDATES_VERSION = '2026-06-16';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Broad tech selloff Jun 5 (Nasdaq -4.18%): prices refreshed, 4 rating changes — CLS & ORCL upgraded to BUY, NOW to STRONG BUY.';
+export const LATEST_SUMMARY = 'RS/momentum review: AXON upgraded HOLD→BUY and LLY promoted to Prime Growth; KLAC split-adjusted (10-for-1).';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 16 2026',
+    tickers: ['AXON', 'LLY', 'KLAC'],
+    text: 'Relative-strength review across the coverage list. Rating/group changes: AXON HOLD→BUY (street median +74%, RS rising, spot near the low end of its fair range) — moves to Prime Growth; LLY promoted to Prime Growth on a fresh RS upgrade (near 52-week highs). KLAC re-based for its 10-for-1 split. Minor RS refresh on CEG, MLM, KKR, JPM and RVLV — no rating changes.',
+  },
   {
     date: 'Jun 5 2026',
     tickers: ['CLS', 'ORCL', 'NOW', 'ARRY'],
