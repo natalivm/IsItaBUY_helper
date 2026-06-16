@@ -15,6 +15,10 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      // We register the SW manually in index.tsx so we can poll for new
+      // deploys while a tab/installed app stays open. Disable auto-injection
+      // to avoid registering the service worker twice.
+      injectRegister: false,
       includeAssets: [
         'favicon.svg',
         'favicon-32x32.png',
@@ -57,7 +61,7 @@ export default defineConfig({
         // pick up the new build immediately on next visit. Increment when
         // shipping data changes (e.g. Burry indicator scope) that may otherwise
         // be masked by stale SW cache.
-        cacheId: 'isitabuy-v5',
+        cacheId: 'isitabuy-v6',
         cleanupOutdatedCaches: true,
         // Precache all static assets built by Vite (JS, CSS, HTML, fonts)
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
