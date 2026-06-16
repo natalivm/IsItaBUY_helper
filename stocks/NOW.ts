@@ -17,7 +17,7 @@ export const NOW = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 4.85,         // FY2026 non-GAAP EPS estimate (Q1 2026 $0.97, +20% YoY)
-  rsRating: 18,
+  rsRating: 12,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   updatedOn: '06/15',

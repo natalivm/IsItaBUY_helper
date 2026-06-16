@@ -17,7 +17,7 @@ export const INCY = defineStock({
   debt: 0,
   beta: 0.65,
   costDebt: 0.04,
-  rsRating: 48,
+  rsRating: 65,
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'HOLD',  // Model STRONG BUY (~+31%, just over threshold) but Jakafi loss-of-exclusivity overhang caps the multiple; consensus Buy. HOLD.

@@ -20,7 +20,7 @@ export const MLM = defineStock({
   modelType: 'EPS_PE',
   baseEps: 18.77,              // Trailing EPS 2025A GAAP (down -42% from 2024A peak $32.41)
 
-  rsRating: 45,
+  rsRating: 38,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [

@@ -19,7 +19,7 @@ export const ORCL = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 6.03,
-  rsRating: 16,
+  rsRating: 47,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

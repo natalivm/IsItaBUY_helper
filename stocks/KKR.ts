@@ -18,7 +18,7 @@ export const KKR = defineStock({
   costDebt: 0.052,
   baseEps: 6.74,
   modelType: 'EPS_PE',
-  rsRating: 10,
+  rsRating: 36,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

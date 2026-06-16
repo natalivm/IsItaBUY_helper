@@ -18,7 +18,7 @@ export const JPM = defineStock({
   costDebt: 0.045,
   baseEps: 21.9,
   modelType: 'EPS_PE',
-  rsRating: 55,
+  rsRating: 59,
   rsTrend: 'flat',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
