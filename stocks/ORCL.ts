@@ -20,7 +20,7 @@ export const ORCL = defineStock({
   modelType: 'EPS_PE',
   baseEps: 6.03,
   rsRating: 47,
-  rsTrend: 'falling',
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Oracle Database lock-in is among the deepest moats in enterprise software — migration cost is prohibitive',

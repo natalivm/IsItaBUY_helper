@@ -18,7 +18,7 @@ export const DDOG = defineStock({
   modelType: 'EPS_PE',
   baseEps: 2.40,       // 2026E EPS = FY26 non-GAAP EPS guide midpoint $2.36-$2.44 (prior FY25 basis $2.10). Q1 2026 revenue +32% accelerating; FY26 revenue guide 25-27%. Still non-GAAP — GAAP EPS far lower (SBC); P/E haircut applies (see burry).
   rsRating: 94,
-  rsTrend: 'flat',
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. Stock re-rated above its fair range, so model upside has compressed to ~+11% (model now HOLD); the override matches the model and pins HOLD against a re-acceleration back to STRONG BUY.
   updatedOn: '06/15',

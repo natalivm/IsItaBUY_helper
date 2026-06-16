@@ -18,7 +18,7 @@ export const FICO = defineStock({
   beta: 1.24,
   costDebt: 0.055,
   rsRating: 27,
-  rsTrend: 'falling',
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
 
   reasonsToBuy: [
