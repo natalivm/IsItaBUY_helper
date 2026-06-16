@@ -18,8 +18,8 @@ export const NU = defineStock({
   debt: 3200,
   beta: 1.55,
   costDebt: 0.07,      // EM premium
-  rsRating: 58,
-  rsTrend: 'rising',
+  rsRating: 21,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',  // nuFormer: in production for credit decisioning Brazil; expanding to lending + Mexico credit cards 2026
   modelType: 'EPS_PE',
   baseEps: 0.72,       // 2026E EPS — held post Q1 2026: Q1 NI $871M (Q1 record, +41% YoY FX-neutral) annualizes ~$0.66; came in BELOW Q4's $895M on seasonally-peak CLA, and Q1 ETR 8.7% rises to 15-20% IFRS for rest of year. Recovering risk-adj NIM + revenue growth offset tax normalization → FY2026 ~$0.68-0.74. Confirming quarter, not an upgrade.

@@ -19,7 +19,7 @@ export const CLS = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 8.75,
-  rsRating: 93,
+  rsRating: 92,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Top-tier EMS partner for hyperscaler AI infrastructure with a third major win on the high-speed switching platform',

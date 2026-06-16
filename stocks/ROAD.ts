@@ -21,7 +21,8 @@ export const ROAD = defineStock({
   modelType: 'EPS_PE',
   baseEps: 2.21,               // Trailing EPS FY 09/2025
 
-  rsRating: 77,
+  rsRating: 52,
+  rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
     'Road 2030 plan targets a doubling of the business with a credible M&A pipeline described as the most active in a quarter-century',

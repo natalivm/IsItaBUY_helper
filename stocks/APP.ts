@@ -19,8 +19,8 @@ export const APP = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 14.50,       // FY2026 estimate: ~$6.3B EBITDA × 75% FCF conv ÷ 333M shares ≈ $14-15
-  rsRating: 85,
-  rsTrend: 'rising',
+  rsRating: 58,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'AXON AI engine delivers mobile advertisers measurably better ROAS, creating compounding lock-in as spend scales up.',

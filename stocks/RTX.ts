@@ -17,8 +17,8 @@ export const RTX = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 5.41,
-  rsRating: 84,
-  rsTrend: 'rising',
+  rsRating: 43,
+  rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'BUY',  // Caps RTX at BUY: prevents the model flipping to STRONG BUY on spot dips — a steady defense compounder, consensus Buy. (Matches model today.)
   updatedOn: '06/15',

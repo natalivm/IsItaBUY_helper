@@ -17,7 +17,7 @@ export const HPE = defineStock({
   beta: 1.30,
   costDebt: 0.045,
 
-  rsRating: 93,
+  rsRating: 97,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '06/15',

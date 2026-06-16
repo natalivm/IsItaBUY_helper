@@ -17,10 +17,10 @@ export const AXON = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 7.00,         // FY2026 estimate: 25.5% adj EBITDA on $3.6B → ~$600M NI / 85M shares
-  rsRating: 92,
-  rsTrend: 'rising',
+  rsRating: 13,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'BUY',  // Softened from model STRONG BUY: +93% is cumulative (~14% CAGR — BUY-tier, not a moonshot), but street median is +74% (Buy), spot sits near the bottom of the $420-900 fair range, and RS 92 is rising — too strong for HOLD. Capped one notch at BUY for the Burry-Tragic SBC quality (~16% of rev, thin GAAP NI) and a 56x multiple with no margin for error.
+  ratingOverride: 'HOLD',  // RS collapsed to 13 (was 92) — the momentum that argued against HOLD is gone. Model STRONG BUY (+93%) is cumulative ~14% CAGR on a Burry-Tragic SBC name (~16% of rev, thin GAAP NI) at a 56x multiple with no margin for error; with no momentum support, HOLD until quality/momentum turns. (Street median +74%.)
   updatedOn: '06/15',
   lastReportTag: 'Q1 2026',
 

@@ -17,7 +17,7 @@ export const AMZN = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 7.85,         // FY2026 Street consensus (~$7.75-7.96). Q1 GAAP $2.78 included a $16.8B one-time pre-tax Anthropic mark-up — excluded from recurring earnings power here
-  rsRating: 52,
+  rsRating: 64,
   rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   updatedOn: '06/15',

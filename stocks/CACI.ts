@@ -19,7 +19,7 @@ export const CACI = defineStock({
   costDebt: 0.045,
   ratingOverride: 'BUY',  // Model STRONG BUY (~+131%) overshoots for a low-growth gov-IT name with weak/falling RS; consensus Buy. Softening to BUY.
 
-  rsRating: 29,
+  rsRating: 28,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
 

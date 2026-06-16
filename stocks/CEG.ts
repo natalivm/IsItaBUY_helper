@@ -19,7 +19,7 @@ export const CEG = defineStock({
   costDebt: 0.0525,
   modelType: 'EPS_PE',
   baseEps: 11.50,
-  rsRating: 42,
+  rsRating: 17,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

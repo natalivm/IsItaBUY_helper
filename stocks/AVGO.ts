@@ -17,8 +17,8 @@ export const AVGO = defineStock({
   debt: 69000,
   beta: 0.80,
   costDebt: 0.035,
-  rsRating: 90,
-  rsTrend: 'rising',
+  rsRating: 74,
+  rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Binding multi-year contracts with Google, Meta, Anthropic, and OpenAI underpin AI semiconductor revenue visibility into FY28',

@@ -19,7 +19,7 @@ export const WWD = defineStock({
   costDebt: 0.052,
   modelType: 'EPS_PE',
   baseEps: 9.30,        // FY26 mid-guide adj EPS ($9.15–$9.45, raised from $8.20–$8.60)
-  rsRating: 94,
+  rsRating: 80,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'LEAP and GTF aftermarket is a long-duration, high-margin annuity as the installed base matures',

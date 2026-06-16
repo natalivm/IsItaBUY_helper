@@ -18,7 +18,7 @@ export const BKNG = defineStock({
   debt: 17500,
   beta: 1.15,
   costDebt: 0.04,
-  rsRating: 18,
+  rsRating: 29,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [

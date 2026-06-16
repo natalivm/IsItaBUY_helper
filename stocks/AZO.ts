@@ -18,7 +18,7 @@ export const AZO = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 144.9,
-  rsRating: 52,
+  rsRating: 16,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
