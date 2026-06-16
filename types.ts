@@ -80,6 +80,8 @@ export interface TickerDefinition {
   /** Alpha Strategic View — concise, qualitative risks of owning the stock (no precise numbers). */
   risksToBuy?: string[];
   verdictNarrative?: string;
+  /** Optional "what this quarter's numbers mean" bullets, rendered in the Investment Verdict. */
+  keyTakeaways?: string[];
   cash?: number;
   debt?: number;
   beta?: number;

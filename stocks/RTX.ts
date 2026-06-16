@@ -40,7 +40,7 @@ export const RTX = defineStock({
     'Base-case CAGR is modest — this is a capital-preservation compounder, not a high-return vehicle for aggressive growth mandates',
   ],
 
-  analystConsensus: { rating: 'Moderate Buy', targetLow: 160, targetMedian: 215, targetHigh: 242, numAnalysts: 24 },
+  analystConsensus: { rating: 'Buy', targetLow: 160, targetMedian: 215, targetHigh: 242, numAnalysts: 24 },
 
   revGrowth: [
     [0.03, 0.03, 0.02, 0.02, 0.02],  // Bear: defense budget headwinds, GTF drag extends, commercial softness
