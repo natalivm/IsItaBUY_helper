@@ -17,7 +17,7 @@ export const NFLX = defineStock({
   beta: 1.10,
   costDebt: 0.052,
   modelType: 'EPS_PE',
-  rsRating: 29,
+  rsRating: 13,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Unrivaled global streaming brand with deep content investment moat that new entrants cannot replicate quickly',

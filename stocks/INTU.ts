@@ -17,7 +17,7 @@ export const INTU = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 15.59,
-  rsRating: 18,
+  rsRating: 3,
   rsTrend: 'falling',
   aiImpact: 'DISRUPTION_RISK',
   ratingOverride: 'HOLD',  // Model STRONG BUY (~+156%) is implausible — inflated by a depressed spot; AI disruption to TurboTax + weak/falling RS argue caution. HOLD.

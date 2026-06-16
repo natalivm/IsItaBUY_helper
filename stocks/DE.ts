@@ -16,7 +16,7 @@ export const DE = defineStock({
   debt: 65953,
   beta: 0.78,
   costDebt: 0.0497,
-  rsRating: 85,
+  rsRating: 53,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Number-one global agricultural equipment brand with deep dealer network and high switching costs',

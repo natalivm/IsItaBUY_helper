@@ -16,7 +16,7 @@ export const ALAB = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 1.84,
-  rsRating: 80,
+  rsRating: 98,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

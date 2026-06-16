@@ -18,7 +18,7 @@ export const PLTR = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 0.89,
-  rsRating: 72,
+  rsRating: 19,
   rsTrend: 'falling',
   ratingOverride: 'HOLD',  // Model STRONG BUY (~+91%) but PLTR trades at an extreme multiple and momentum is rolling over (RS falling); external consensus is Hold. HOLD.
   aiImpact: 'TAILWIND',

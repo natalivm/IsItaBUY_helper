@@ -15,7 +15,7 @@ export const NVDA = defineStock({
   debt: 10800,
   beta: 1.65,
   costDebt: 0.035,
-  rsRating: 82,
+  rsRating: 76,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'De facto monopoly on AI training infrastructure with every major hyperscaler locked into the Blackwell platform',

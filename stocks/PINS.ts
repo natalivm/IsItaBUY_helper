@@ -15,7 +15,7 @@ export const PINS = defineStock({
   cash: 2500,
   debt: 0,
   beta: 1.58,
-  rsRating: 10,
+  rsRating: 33,
   aiImpact: 'DISRUPTION_RISK',
   reasonsToBuy: [
     'High-intent visual shopping signals are difficult for LLMs to replicate, sustaining advertiser value proposition',

@@ -19,7 +19,7 @@ export const CAVA = defineStock({
   costDebt: 0,
   modelType: 'EPS_PE',
   baseEps: 0.54,
-  rsRating: 87,
+  rsRating: 76,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'OVERVALUED',  // Spot sits ~30% above base case; the RS-quality boost would otherwise mask that as HOLD, so forcing OVERVALUED to be honest. (Group is AVOID either way.)

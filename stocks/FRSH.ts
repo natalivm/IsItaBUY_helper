@@ -17,7 +17,7 @@ export const FRSH = defineStock({
   debt: 38.8,
   beta: 1.40,
   costDebt: 0.05,
-  rsRating: 32,
+  rsRating: 35,
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
 

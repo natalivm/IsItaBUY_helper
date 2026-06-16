@@ -18,7 +18,7 @@ export const TLN = defineStock({
   costDebt: 0.07,
   modelType: 'EPS_PE',
   baseEps: 10.50,   // Adjusted earnings power (~FCF/share); GAAP P/E of 77x is hedging distortion
-  rsRating: 64,
+  rsRating: 72,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

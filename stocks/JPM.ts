@@ -18,8 +18,8 @@ export const JPM = defineStock({
   costDebt: 0.045,
   baseEps: 21.9,
   modelType: 'EPS_PE',
-  rsRating: 55,
-  rsTrend: 'flat',
+  rsRating: 59,
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
     'Best-in-class banking franchise with a structurally larger markets wallet post-COVID and a dominant payments network',

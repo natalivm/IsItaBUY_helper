@@ -17,7 +17,7 @@ export const VST = defineStock({
   costDebt: 0.056,
   modelType: 'EPS_PE',
   baseEps: 10.0,
-  rsRating: 38,
+  rsRating: 26,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   updatedOn: '06/15',

@@ -17,7 +17,7 @@ export const META = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 32.50,
-  rsRating: 42,
+  rsRating: 22,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   updatedOn: '06/15',

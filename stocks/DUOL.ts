@@ -18,7 +18,7 @@ export const DUOL = defineStock({
   costDebt: 0,
   modelType: 'EPS_PE',
   baseEps: 3.40,
-  rsRating: 3,
+  rsRating: 33,
   aiImpact: 'DISRUPTION_RISK',
   reasonsToBuy: [
     'Dominant language-learning network with tens of millions of daily active users and deep habit-forming engagement loops',

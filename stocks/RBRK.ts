@@ -15,8 +15,8 @@ export const RBRK = defineStock({
   cash: 1600,
   debt: 1100,
   beta: 1.25,
-  rsRating: 10,
-  rsTrend: 'falling',
+  rsRating: 45,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Subscription ARR and high net revenue retention demonstrate a sticky, compounding recurring revenue base',

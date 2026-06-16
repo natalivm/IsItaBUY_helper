@@ -19,7 +19,7 @@ export const EME = defineStock({
   costDebt: 0.052,
   baseEps: 25.87,           // 2025A adj. EPS (record; +20% YoY); 2026E guided $27.25–29.25
   modelType: 'EPS_PE',
-  rsRating: 76,
+  rsRating: 83,
   ratingOverride: 'HOLD',  // Model STRONG BUY (~+36%) but a cyclical electrical contractor near peak margins on the data-center build; consensus Buy. HOLD on cycle/valuation risk.
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
