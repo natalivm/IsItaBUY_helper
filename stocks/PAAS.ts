@@ -20,8 +20,8 @@ export const PAAS = defineStock({
   modelType: 'EPS_PE',
   baseEps: 3.89,
 
-  rsRating: 96,
-  rsTrend: 'rising',
+  rsRating: 54,
+  rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
     'Fully unhedged silver and gold exposure provides maximum leverage to a continuing precious metals bull market',

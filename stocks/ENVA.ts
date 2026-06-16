@@ -19,7 +19,7 @@ export const ENVA = defineStock({
   costDebt: 0.082,      // Q1 2026 cost of funds 8.2% (down from 8.3% Q4 2025)
   modelType: 'EPS_PE',
   baseEps: 11.52,       // FY2025 adj EPS; DCF distorted by $3.95B securitization debt treated as corporate leverage
-  rsRating: 89,
+  rsRating: 91,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

@@ -19,7 +19,7 @@ export const APH = defineStock({
   costDebt: 0.055,
   modelType: 'EPS_PE',
   baseEps: 4.40,
-  rsRating: 89,
+  rsRating: 80,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Broadest high-speed copper, power, and optics connector suite in the industry after the CommScope acquisition.',

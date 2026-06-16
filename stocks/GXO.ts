@@ -19,8 +19,10 @@ export const GXO = defineStock({
   costDebt: 0.055,
   modelType: 'EPS_PE',
   baseEps: 3.05,       // 2026E EPS = raised FY26 guide midpoint $2.90-$3.20 (+22% YoY mid; prior guide $2.85-$3.15 / +20% → $3.00). Q1 2026 adj EPS $0.50 (+72% YoY) beat, but part was contract-termination-cost timing shifting into later quarters — anchor to guide midpoint, not annualized Q1.
-  rsRating: 83,
+  rsRating: 37,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  ratingOverride: 'HOLD',  // Model STRONG BUY (+94%) overstates: the +94% is cumulative ~14% CAGR, and GXO's own base case (desc[base]) pegs returns at "~8% annualized — below the 15% hurdle absent multiple expansion." Weak quality confirms HOLD: RS 37, distribution (ACC/DIS), ~-1% 3yr EPS growth, elevated leverage (Altman Z 1.9, ~2.5x net debt). Street is Strong Buy (+39% median) — revisit if momentum/quality turns.
   // Q1 2026 CALL UPDATE (May 6, 2026)
   // ─────────────────────────────────────────────────────────────────────────
   // Revenue $3.3B (+10.8% YoY; organic +4.1%, every region positive). Adj

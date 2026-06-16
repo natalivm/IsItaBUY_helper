@@ -12,7 +12,7 @@ export type PanelTab = 'notes' | 'news';
 export const UPDATES_VERSION = '2026-06-16';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'RS/momentum review: AXON upgraded HOLD→BUY and LLY promoted to Prime Growth; KLAC split-adjusted (10-for-1).';
+export const LATEST_SUMMARY = 'RS refresh: momentum cooled — APP, NU, PAAS, RTX, SHOP, ZS, AXON & GXO drop to Watch List; AXON HOLD→BUY; GXO downgraded STRONG BUY→HOLD.';
 
 interface ReleaseNote {
   date: string;
@@ -24,8 +24,8 @@ interface ReleaseNote {
 const RELEASE_NOTES: ReleaseNote[] = [
   {
     date: 'Jun 16 2026',
-    tickers: ['AXON', 'LLY', 'KLAC'],
-    text: 'Relative-strength review across the coverage list. Rating/group changes: AXON HOLD→BUY (street median +74%, RS rising, spot near the low end of its fair range) — moves to Prime Growth; LLY promoted to Prime Growth on a fresh RS upgrade (near 52-week highs). KLAC re-based for its 10-for-1 split. Minor RS refresh on CEG, MLM, KKR, JPM and RVLV — no rating changes.',
+    tickers: ['AXON', 'GXO', 'APP', 'NU', 'PAAS', 'RTX', 'SHOP', 'ZS'],
+    text: 'Relative-strength refresh from the latest market data — momentum broadly cooled. Several names keep their buy ratings but dropped out of the growth tiers into Watch List on weak RS: APP, NU, PAAS, RTX, SHOP and ZS. Rating changes: AXON HOLD→BUY (valuation case holds — street +74%, spot near the low end of its fair range — but RS collapsed, so no momentum support); GXO STRONG BUY→HOLD (the +94% model upside overstates a below-hurdle base case with weak fundamentals — RS 37, distribution, ~-1% 3yr EPS growth, elevated leverage). LLY, AVGO, APH, HPE, WWD and ENVA retain their growth ratings. KLAC re-based for its 10-for-1 split.',
   },
   {
     date: 'Jun 5 2026',
