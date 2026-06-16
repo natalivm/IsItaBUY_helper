@@ -72,7 +72,7 @@ export const LMT = defineStock({
     'Defense budget acceleration and prime contract consolidation drives 10% FCF CAGR. Hypersonics, next-gen interceptors, and multi-domain classified programs push FCF margins toward 12%. Multiple expands to 19×. Bull target ~$830.',
   ],
 
-  analystConsensus: { rating: 'Moderate Buy', targetLow: 480, targetMedian: 610, targetHigh: 700, numAnalysts: 19 },
+  analystConsensus: { rating: 'Buy', targetLow: 480, targetMedian: 610, targetHigh: 700, numAnalysts: 19 },
 
   burry: {
     sbc: 600,

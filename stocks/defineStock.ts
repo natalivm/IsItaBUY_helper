@@ -63,6 +63,8 @@ export interface SimpleStockInput {
   /** Alpha Strategic View: concise, qualitative risks of owning the stock (no precise numbers). 3-5 bullets. */
   risksToBuy?: string[];
   verdictNarrative?: string;
+  /** Optional "what this quarter's numbers mean" bullets, rendered in the Investment Verdict. */
+  keyTakeaways?: string[];
 
   // ── Model type (default: DCF_ADVANCED) ──
   modelType?: 'DCF_ADVANCED' | 'EPS_PE';
@@ -170,7 +172,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     ticker, name, sector, themeColor, currentPrice, shares0,
     rev25, fcfMargin25, taxRate, cash, debt, beta, costDebt,
     fairPriceRange, active = true,
-    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative, reasonsToBuy, risksToBuy, verdictNarrative,
+    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative, reasonsToBuy, risksToBuy, verdictNarrative, keyTakeaways,
     modelType = 'DCF_ADVANCED',
 
     // Scenarios
@@ -200,6 +202,24 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     // Debt safety indicator
     debtSafety,
   } = input;
+
+  // ── Fail-loud input validation ──
+  // The projection engine reads sc.revGrowth[i] for i=0..4; a short array would
+  // silently produce NaN targets. Catch malformed inputs at definition time.
+  const SCENARIO_LABELS = ['bear', 'base', 'bull'] as const;
+  revGrowth.forEach((arr, i) => {
+    if (!Array.isArray(arr) || arr.length !== 5 || arr.some(x => typeof x !== 'number' || Number.isNaN(x))) {
+      throw new Error(`defineStock(${ticker}): revGrowth.${SCENARIO_LABELS[i]} must be 5 valid numbers, got ${JSON.stringify(arr)}`);
+    }
+  });
+  fcfMargin.forEach((m, i) => {
+    if (Array.isArray(m) && m.length !== 5) {
+      throw new Error(`defineStock(${ticker}): fcfMargin.${SCENARIO_LABELS[i]} array must have 5 entries, got ${m.length}`);
+    }
+  });
+  if (modelType === 'EPS_PE' && !(typeof baseEps === 'number' && baseEps > 0)) {
+    throw new Error(`defineStock(${ticker}): modelType 'EPS_PE' requires a positive baseEps, got ${baseEps}`);
+  }
 
   // Build drivers for each scenario
   const maOptVal = bullMaOptVal === true
@@ -247,6 +267,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     reasonsToBuy,
     risksToBuy,
     verdictNarrative,
+    keyTakeaways,
     baseEps,
     analystConsensus,
     updatedOn,

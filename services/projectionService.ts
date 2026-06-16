@@ -170,7 +170,10 @@ const calculateDCF = (t: TickerDefinition, sc: ScenarioConfig, showEnhancements:
   const sumPVFCF = pvFCFs.reduce((a, b) => a + b, 0);
   const tg = sc.termGrowth || DEFAULT_TERMINAL_GROWTH;
   const lastFcf = fcfs[4];
-  const tvPerp = (lastFcf * (1 + tg)) / (w - tg);
+  // Guard the Gordon-growth denominator: if WACC ever sits at/below terminal
+  // growth, (w - tg) would flip negative/explode. Floor it to a sane spread.
+  const tvSpread = Math.max(w - tg, 0.01);
+  const tvPerp = (lastFcf * (1 + tg)) / tvSpread;
   const lastRev = revs[4];
   const tvExit = (lastRev * ebitdaMargin) * (sc.exitMultiple || DEFAULT_EXIT_MULTIPLE);
   const blendedTV = (tvPerp + tvExit) / 2;

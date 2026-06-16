@@ -19,8 +19,8 @@ export const LLY = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 24.21,
-  rsRating: 69,
-  rsTrend: 'flat',
+  rsRating: 82,
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
     'GLP-1 platform is a metabolic disease franchise comparable in scale and durability to NVDA in AI or ASML in lithography',

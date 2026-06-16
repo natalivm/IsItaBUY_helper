@@ -6,8 +6,8 @@ export const KLAC = defineStock({
   sector: 'Semiconductor Equipment · Process Control & Inspection',
   themeColor: '#00539b',
   currentPrice: 256.42,
-  fairPriceRange: '$1,200 - $3,300',
-  shares0: 132,              // ~132M diluted shares (market cap ~$199.8B)
+  fairPriceRange: '$120 - $330',
+  shares0: 1320,             // ~1,320M diluted shares post 10:1 split (Jun 2026)
   rev25: 11100,              // FY25 revenue ~$11.1B
   fcfMargin25: 0.34,         // FCF $3.75B / rev $11.1B ≈ 34%
   taxRate: 0.12,
@@ -16,7 +16,7 @@ export const KLAC = defineStock({
   beta: 1.25,
   costDebt: 0.035,
   modelType: 'EPS_PE',
-  baseEps: 36.45,            // FY26E forward EPS
+  baseEps: 3.645,            // FY26E forward EPS (post 10:1 split, Jun 2026)
   rsRating: 94,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
@@ -40,7 +40,7 @@ export const KLAC = defineStock({
   exitPE: [25, 28, 40],
   prob: [25, 55, 20],
 
-  analystConsensus: { rating: 'Buy', targetLow: 1200, targetMedian: 1600, targetHigh: 2000, numAnalysts: 20 },
+  analystConsensus: { rating: 'Buy', targetLow: 120, targetMedian: 160, targetHigh: 200, numAnalysts: 20 },
   revGrowth: [
     [0.06, 0.05, 0.04, 0.04, 0.03],  // bear: cycle breaks, ~7% CAGR (half of base)
     [0.18, 0.15, 0.12, 0.11, 0.10],  // base: AI + EUV sustain, ~13% CAGR
@@ -57,17 +57,17 @@ export const KLAC = defineStock({
       'Supply constraints that currently limit 1H26 delivery shift from tailwind to demand destruction as orders get cancelled or deferred. ' +
       'China restrictions tighten further, cutting mid/high-20% revenue exposure. Tariff + DRAM cost headwinds persist beyond 2026. ' +
       'Revenue growth halves to ~7% CAGR. EPS grows at only 10% annually vs 20% consensus. ' +
-      'P/E compresses to historical average of 25x. Target: ~$49 × 25 = $1,225 — roughly −4% annualized. ' +
-      'Stress test: FY26 EPS $36.45 × 22x = $802 — a −48% drawdown from a normal cycle pause.',
+      'P/E compresses to historical average of 25x. Target: ~$4.90 × 25 = $123 — roughly −4% annualized. ' +
+      'Stress test: FY26 EPS $3.65 × 22x = $80 — a −48% drawdown from a normal cycle pause.',
     'Normal semicap cycle plays out: WFE grows to mid-$130B in 2026 per management guidance, with 2H26 acceleration. ' +
       'Memory WFE (DRAM) grows 15–20%, Foundry/Logic 10–15%. HBM + advanced packaging drive process control intensity higher. ' +
       'EBIT margins expand from 43% toward 47–49% by 2030. GM headwinds from DRAM costs and tariffs normalize by mid-2027. ' +
-      'Blended scenario: EPS compounds at ~14% annually to ~$62–70 by 2030. At 28x exit, target ~$1,750–1,960. ' +
+      'Blended scenario: EPS compounds at ~14% annually to ~$6.2–7.0 by 2030. At 28x exit, target ~$175–196. ' +
       'Multiple compression from 41x to 28–30x limits total return to ~5–8% annualized. The market already prices most of the earnings trajectory.',
     'AI supercycle extends through 2028–2029: EUV, advanced packaging (facility-constrained per call), and HBM drive disproportionate inspection demand. ' +
       'Service business grows at upper end of 12–14% target, share gains in reticle, e-beam, AP, and BBP segments. ' +
       'EBIT margins expand aggressively toward 49%+, buybacks accelerate EPS growth beyond revenue. Long-term GM reaches 63%+. ' +
-      'EPS compounds at 22% to ~$83 by 2030. At 40x premium multiple, target $3,320 — roughly 17–18% annualized. ' +
+      'EPS compounds at 22% to ~$8.30 by 2030. At 40x premium multiple, target $332 — roughly 17–18% annualized. ' +
       'This is the only scenario that clears the 15% CAGR hurdle from current entry.',
   ],
 
@@ -83,7 +83,7 @@ export const KLAC = defineStock({
       'Revenue CAGR ~13.6% supported by WFE growing to mid-$130B in 2026 (Memory 15–20%, Foundry/Logic 10–15%). ' +
       'EPS outgrows revenue at ~14–16% via operating leverage + buybacks. GM ~62% targeting 63%+ long-term, EBIT ~43%, ROE >100%. ' +
       'But the market prices this trajectory: forward P/E compresses from 41x (FY26) to 28x (FY30). ' +
-      'Returns limited by multiple compression. Expected total return ~8–10% CAGR, P(15%+) ~20%. For 12% CAGR, entry below $1,200 needed.',
+      'Returns limited by multiple compression. Expected total return ~8–10% CAGR, P(15%+) ~20%. For 12% CAGR, entry below $120 needed.',
     'AI capex extends beyond 2028: HBM intensity (less redundancy, more metallization, EUV layers), advanced packaging ' +
       '(facility-constrained per call — demand > supply), and 2nm/below create entirely new inspection TAM. ' +
       'Share gains confirmed in reticle, e-beam, AP, and BBP. Service business targets upper end of 12–14% growth. ' +
@@ -107,5 +107,5 @@ export const KLAC = defineStock({
     },
   ],
 
-  updatedOn: '06/15',
+  updatedOn: '06/16',
 });
