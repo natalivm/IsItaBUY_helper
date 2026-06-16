@@ -20,7 +20,7 @@ export const AXON = defineStock({
   rsRating: 92,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // Model STRONG BUY (~+93%) is exit-multiple/RS-inflated on a premium-valued name; consensus is only Buy. Capping to HOLD until valuation/upside normalizes. (Strong RS 92 — revisit if the multiple compresses.)
+  ratingOverride: 'BUY',  // Softened from model STRONG BUY: +93% is cumulative (~14% CAGR — BUY-tier, not a moonshot), but street median is +74% (Buy), spot sits near the bottom of the $420-900 fair range, and RS 92 is rising — too strong for HOLD. Capped one notch at BUY for the Burry-Tragic SBC quality (~16% of rev, thin GAAP NI) and a 56x multiple with no margin for error.
   updatedOn: '06/15',
   lastReportTag: 'Q1 2026',
 
