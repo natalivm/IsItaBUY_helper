@@ -17,7 +17,7 @@ export const SNOW = defineStock({
   costDebt: 0.035,
   modelType: 'EPS_PE',
   baseEps: 2.20,          // FY27E non-GAAP EPS post-Q1 beat. Q1 actuals $0.39 vs $0.32 (+22% beat). FY27 guided $5.84B product revenue + 13.5% non-GAAP op margin (raised from 12.5%); at ~20% non-GAAP tax + ~$180M interest income on $4B liquid ÷ ~348M diluted shares ≈ $2.20 full year.
-  rsRating: 50,
+  rsRating: 72,
   rsTrend: 'rising',      // Stock +24% post-Q1 FY27 earnings; recovering from -20% YTD trough
   aiImpact: 'TAILWIND',
   updatedOn: '06/15',

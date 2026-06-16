@@ -15,7 +15,7 @@ export const RBRK = defineStock({
   cash: 1600,
   debt: 1100,
   beta: 1.25,
-  rsRating: 10,
+  rsRating: 45,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [

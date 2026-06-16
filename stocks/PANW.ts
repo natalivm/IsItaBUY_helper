@@ -17,7 +17,7 @@ export const PANW = defineStock({
   debt: 600,
   beta: 1.20,
   costDebt: 0.05,
-  rsRating: 21,
+  rsRating: 90,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Four-pillar platform strategy drives customer consolidation with best-in-class net revenue retention',

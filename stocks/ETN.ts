@@ -17,7 +17,7 @@ export const ETN = defineStock({
   debt: 12000,
   beta: 1.16,
   costDebt: 0.045,
-  rsRating: 88,
+  rsRating: 73,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Floors ETN at HOLD: base DCF deeply negative on a high-multiple electrical name (RS 88), but OVERVALUED overstates a quality compounder. Matches RS-boosted model today.
