@@ -5,7 +5,7 @@ export const SNOW = defineStock({
   name: 'Snowflake',
   sector: 'Cloud Data Platform / AI Analytics',
   themeColor: '#29B5E8',
-  currentPrice: 234.52,
+  currentPrice: 232.29,
   fairPriceRange: '$135 - $215',
   shares0: 344,           // 343.9M shares outstanding at Jan 31, 2026 (10-K)
   rev25: 4684,            // FY26 total revenue ($4.684B, ended Jan 31, 2026)
@@ -20,7 +20,7 @@ export const SNOW = defineStock({
   rsRating: 72,
   rsTrend: 'rising',      // Stock +24% post-Q1 FY27 earnings; recovering from -20% YTD trough
   aiImpact: 'TAILWIND',
-  updatedOn: '06/17',
+  updatedOn: '06/18',
   lastReportTag: 'Q1 FY27',
 
   // Q1 FY27 EARNINGS (May 27, 2026 AMC)
