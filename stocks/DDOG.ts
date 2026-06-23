@@ -5,7 +5,7 @@ export const DDOG = defineStock({
   name: 'Datadog',
   sector: 'Observability / Cloud Monitoring',
   themeColor: '#632CA6',
-  currentPrice: 221.37,
+  currentPrice: 220.57,
   fairPriceRange: '$95 - $200',
   shares0: 372,        // FY26 guide: ~372M weighted-avg diluted shares
   rev25: 3427,
@@ -21,7 +21,7 @@ export const DDOG = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. Stock re-rated above its fair range, so model upside has compressed to ~+11% (model now HOLD); the override matches the model and pins HOLD against a re-acceleration back to STRONG BUY.
-  updatedOn: '06/22',
+  updatedOn: '06/23',
   lastReportTag: 'Q1 2026',
 
   // Q1 2026 CALL UPDATE (May 7, 2026)

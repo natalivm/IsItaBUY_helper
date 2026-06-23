@@ -5,8 +5,8 @@ export const NU = defineStock({
   name: 'Nu Holdings',
   sector: 'FinTech / Digital Banking · LatAm',
   themeColor: '#8b5cf6',
-  currentPrice: 12.79,
-  updatedOn: '06/22',
+  currentPrice: 12.59,
+  updatedOn: '06/23',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$26 - $80',
   // ~$84.9B market cap / $16.15 = ~5,254M shares
