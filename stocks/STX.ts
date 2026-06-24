@@ -5,7 +5,7 @@ export const STX = defineStock({
   name: 'Seagate Technology Holdings',
   sector: 'Data Storage / AI Infrastructure',
   themeColor: '#00a651',
-  currentPrice: 1038.59,
+  currentPrice: 993.25,
   fairPriceRange: '$520 - $1,420',
   shares0: 224,
   rev25: 12500,
@@ -19,7 +19,7 @@ export const STX = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Pins HOLD: cyclical HDD name; base DCF modestly negative but RS 98 strong — HOLD until the upside case re-emerges. (Matches model today.)
-  updatedOn: '06/23',
+  updatedOn: '06/24',
   lastReportTag: 'Q3 FY26',
 
   reasonsToBuy: [

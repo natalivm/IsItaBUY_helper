@@ -5,7 +5,7 @@ export const RTX = defineStock({
   name: 'RTX Corporation',
   sector: 'Aerospace & Defense',
   themeColor: '#003087',
-  currentPrice: 186.39,
+  currentPrice: 185.06,
   fairPriceRange: '$145 - $315',
   shares0: 1350,
   rev25: 90400,
@@ -21,7 +21,7 @@ export const RTX = defineStock({
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'BUY',  // Caps RTX at BUY: prevents the model flipping to STRONG BUY on spot dips — a steady defense compounder, consensus Buy. (Matches model today.)
-  updatedOn: '06/23',
+  updatedOn: '06/24',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [
