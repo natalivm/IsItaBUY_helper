@@ -5,7 +5,7 @@ export const MU = defineStock({
   name: 'Micron Technology',
   sector: 'DRAM / NAND Flash Memory',
   themeColor: '#1a73e8',
-  currentPrice: 1048.51,
+  currentPrice: 1213.56,
   shares0: 1127,
   rev25: 95440,
   fcfMargin25: 0.20,
@@ -17,7 +17,7 @@ export const MU = defineStock({
   rsRating: 99,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/24',
+  updatedOn: '06/25',
   lastReportTag: 'Q2 FY26',
   fairPriceRange: '$500 - $1,800',
 
