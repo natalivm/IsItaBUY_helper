@@ -12,7 +12,7 @@ export type PanelTab = 'notes' | 'news';
 export const UPDATES_VERSION = '2026-06-26';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Evaluation revalidation: EPS_PE fundamentals refreshed to the latest reports (NU, ZS, MELI, SHOP); DDOG stays Watch List despite its RS spike (base case only ~3% annualized). No tier changes.';
+export const LATEST_SUMMARY = 'Revalidation + model stress-test: EPS_PE fundamentals refreshed (NU, ZS, MELI, SHOP); RVLV & SPGI ease to BUY (weak-RS quality-boost guard); bear targets floored at 0. No home-group changes.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 26 2026',
+    tickers: ['RVLV', 'SPGI'],
+    text: 'Model engine hardening from a stress-test pass (no home-group changes). Weak-momentum names (RS<30) no longer receive the quality-boost rating bump, so RVLV and SPGI ease STRONG BUY→BUY. Also fixed under the hood: bear-case targets can no longer render negative (floored at 0 when net debt exceeds discounted value), and a legitimate 0% growth/margin year is no longer silently swapped for a default in the EPS×P/E revenue display. The unused fcfMargin25 input was marked deprecated.',
+  },
   {
     date: 'Jun 26 2026',
     tickers: ['NU', 'ZS', 'MELI', 'SHOP', 'DDOG'],

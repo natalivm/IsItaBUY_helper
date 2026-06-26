@@ -66,6 +66,7 @@ export interface TickerDefinition {
   active?: boolean;
   shares0: number;
   rev25: number;
+  /** @deprecated Stored but NOT read by the projection engine — the per-year scenario `fcfMargin` arrays are used instead. Kept for back-compat. */
   fcfMargin25: number;
   taxRate: number;
   modelType: ValuationModelType;
