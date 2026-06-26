@@ -58,6 +58,10 @@ export interface QualitySignals {
 
 function hasQualityBoost(signals?: QualitySignals): boolean {
   if (!signals) return false;
+  // Very weak momentum disqualifies the quality boost entirely: a sub-30 RS name
+  // shouldn't earn a soft-threshold STRONG BUY/BUY bump, nor have an OVERVALUED
+  // read masked into HOLD. (Implements the documented RS_OVERVALUED_THRESHOLD.)
+  if (signals.rsRating !== undefined && signals.rsRating < RS_OVERVALUED_THRESHOLD) return false;
   return (signals.rsRating !== undefined && signals.rsRating >= RS_QUALITY_THRESHOLD)
     || signals.aiImpact === 'TAILWIND';
 }
@@ -181,7 +185,9 @@ const calculateDCF = (t: TickerDefinition, sc: ScenarioConfig, showEnhancements:
 
   const netDebt = (t.debt || 0) - (t.cash || 0);
   const equityVal = sumPVFCF + pvTV - netDebt + maOptionality;
-  const pricePerShare = equityVal / shareHistory[4];
+  // Floor at 0: a deeply negative bear case (net debt > discounted value) means
+  // equity is wiped, not worth a negative price. Don't render a sub-zero target.
+  const pricePerShare = Math.max(0, equityVal / shareHistory[4]);
   const priceTrajectory = shareHistory.map((_, i) => pricePerShare * (0.85 + 0.03 * i));
 
   return buildProjectionData({
@@ -229,10 +235,10 @@ const calculateEPS_PE = (t: TickerDefinition, sc: ScenarioConfig, showEnhancemen
     const yearEps = baseEps * Math.pow(1 + epsCagrRate, i + 1);
     epsArr.push(yearEps);
 
-    currentRev *= (1 + (sc.revGrowth[i] || epsCagrRate));
+    currentRev *= (1 + (sc.revGrowth[i] ?? epsCagrRate));  // ?? not || — a legit 0% growth year must not fall back to epsCagr
     revs.push(currentRev);
 
-    fcfs.push(currentRev * (sc.fcfMargin[i] || DEFAULT_FCF_MARGIN));
+    fcfs.push(currentRev * (sc.fcfMargin[i] ?? DEFAULT_FCF_MARGIN));  // ?? not || — preserve a legit 0 margin
 
     if (buybackRate > 0) currentShares *= (1 - buybackRate);
     shareHistory.push(currentShares);

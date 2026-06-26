@@ -36,6 +36,7 @@ export interface SimpleStockInput {
   currentPrice: number;
   shares0: number;
   rev25: number;
+  /** @deprecated Stored but NOT read by the projection engine — the per-year scenario `fcfMargin` arrays drive the model. Kept for back-compat. */
   fcfMargin25: number;
   taxRate: number;
   cash?: number;
