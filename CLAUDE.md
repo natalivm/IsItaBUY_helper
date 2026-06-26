@@ -71,6 +71,22 @@ If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).
 
+## Data Freshness Tracking
+
+Prices auto-refresh daily, but everything else (fundamentals, RS, overrides, Burry/debt blocks) is hand-curated and goes stale silently. **`updatedOn` is NOT a freshness signal** — `update_prices.py` resets it to today on every price run. The real signal is **`dataReviewedOn`** (`'YYYY-MM-DD'`), which the price bot never touches.
+
+**Whenever you refresh a stock's fundamentals / RS / override after checking its latest earnings, set `dataReviewedOn` to that date.**
+
+Run the review-queue report any time (it only reads — never changes values):
+
+```bash
+python3 review_status.py                # full report
+python3 review_status.py --days 75      # flag reviews older than 75 days (default 90)
+python3 review_status.py --strict       # exit 1 if anything needs review (CI gate)
+```
+
+It flags stocks that are stale (review older than the threshold), never reviewed (no `dataReviewedOn`), or missing `lastReportTag` / `debtSafety` / `burry`. Use `lastReportTag` (e.g. `'Q1 2026'`) to record which earnings the data reflects — keep the convention consistent (calendar `Q# YYYY` or fiscal `Q# FY##`, but don't mix within a stock).
+
 ## Alpha Strategic View — Why Buy / Risks
 
 The detail-page "Why Buy / Risks" panel (formerly the prose "Alpha Strategic View") renders two bulleted lists from each stock's `defineStock` call:

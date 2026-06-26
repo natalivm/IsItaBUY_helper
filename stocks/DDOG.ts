@@ -23,6 +23,7 @@ export const DDOG = defineStock({
   ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. EPS_PE model now screens a weak BUY (~+17% over 5y ≈ ~3% CAGR — a low-bar threshold artifact, not genuine undervaluation) on a name re-rated above its fair range. HOLD stands on the rich multiple + high SBC despite RS re-accelerating to 94 (rising); the override deliberately keeps it out of PRIME_GROWTH.
   updatedOn: '06/25',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-06-26',
 
   // Q1 2026 CALL UPDATE (May 7, 2026)
   // ─────────────────────────────────────────────────────────────────────────

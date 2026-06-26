@@ -129,10 +129,12 @@ export interface SimpleStockInput {
   // ── Analyst consensus (optional) ──
   analystConsensus?: AnalystConsensus;
 
-  /** Date of last manual data refresh, e.g. '26/02' */
+  /** Last price-touch date (MM/DD) — auto-stamped by update_prices.py; not a fundamentals-freshness signal. */
   updatedOn?: string;
   /** Earnings report last used to refresh this stock, e.g. 'Q1 2026' */
   lastReportTag?: string;
+  /** Date fundamentals/RS/overrides were last manually reviewed (YYYY-MM-DD). The price bot never touches it. See review_status.py. */
+  dataReviewedOn?: string;
 
   /** Burry SBC dilution indicator data (display-only). */
   burry?: BurryData;
@@ -196,6 +198,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     // Updated date
     updatedOn,
     lastReportTag,
+    dataReviewedOn,
 
     // Burry indicator
     burry,
@@ -273,6 +276,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     analystConsensus,
     updatedOn,
     lastReportTag,
+    dataReviewedOn,
     burry,
     debtSafety,
     scenarios: {

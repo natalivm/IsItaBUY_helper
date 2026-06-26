@@ -22,6 +22,7 @@ export const ZS = defineStock({
   aiImpact: 'TAILWIND',
   updatedOn: '06/26',
   lastReportTag: 'Q3 FY26',
+  dataReviewedOn: '2026-06-26',
 
   reasonsToBuy: [
     'Zero Trust architecture is uniquely suited to securing AI agents, the fastest-growing enterprise attack surface',

@@ -3,6 +3,7 @@ import { defineStock } from './defineStock';
 export const MELI = defineStock({
   updatedOn: '06/26',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-06-26',
   ticker: 'MELI',
   name: 'MercadoLibre',
   sector: 'E-Commerce / Fintech',
