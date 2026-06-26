@@ -5,7 +5,7 @@ export const INTU = defineStock({
   name: 'Intuit Inc.',
   sector: 'Software / SMB Finance & Tax',
   themeColor: '#0077c5',
-  currentPrice: 255.07,
+  currentPrice: 267.72,
   fairPriceRange: '$340 - $640',
   shares0: 280,
   rev25: 18800,
@@ -21,7 +21,7 @@ export const INTU = defineStock({
   rsTrend: 'falling',
   aiImpact: 'DISRUPTION_RISK',
   ratingOverride: 'HOLD',  // Model STRONG BUY is implausibly large — inflated by a depressed spot (EPS_PE 5y-forward on a low threshold); AI disruption to TurboTax + very weak/falling RS argue caution. HOLD.
-  updatedOn: '06/25',
+  updatedOn: '06/26',
 
   reasonsToBuy: [
     'Dominant SMB finance and tax platform with deeply embedded workflows that create high switching costs for customers',
