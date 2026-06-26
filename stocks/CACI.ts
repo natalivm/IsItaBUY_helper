@@ -17,7 +17,7 @@ export const CACI = defineStock({
   debt: 3200,            // Q2 FY2026 (Sep 2025); ARKA acquisition (Mar 2026, $2.6B) raises this further
   beta: 0.58,
   costDebt: 0.045,
-  ratingOverride: 'BUY',  // Model STRONG BUY (~+131%) overshoots for a low-growth gov-IT name with weak/falling RS; consensus Buy. Softening to BUY.
+  ratingOverride: 'BUY',  // Model STRONG BUY overshoots for a low-growth gov-IT name with weak/falling RS; consensus Buy. Softening to BUY.
 
   rsRating: 28,
   rsTrend: 'falling',

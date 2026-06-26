@@ -16,11 +16,11 @@ export const ZS = defineStock({
   beta: 0.98,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 4.50,
+  baseEps: 4.40,       // Forward non-GAAP EPS — trimmed 06/26 spot-check toward FY26 guide ($4.10-$4.11). Q3 FY26 (reported May 26): rev $850.5M +25% YoY, non-GAAP EPS $1.08, ARR $3.525B +25%.
   rsRating: 8,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/25',
+  updatedOn: '06/26',
   lastReportTag: 'Q3 FY26',
 
   reasonsToBuy: [
@@ -84,8 +84,8 @@ export const ZS = defineStock({
   ebitdaProxy: [0.18, 0.27, 0.37],
   bullMaOptVal: false,
 
-  epsCagr: [8, 18, 25],
-  exitPE: [22, 38, 52],
+  epsCagr: [8, 15, 25],   // Base trimmed 18→15 on 06/26: mgmt guided FY27 ARR/revenue growth to 16-17% (explicit deceleration) + rising capex pressures margin leverage.
+  exitPE: [22, 35, 52],   // Base trimmed 38→35 — slightly rich for ~16% decelerating growth.
   prob: [28, 45, 27],
 
   driverOverrides: [

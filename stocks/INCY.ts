@@ -20,7 +20,7 @@ export const INCY = defineStock({
   rsRating: 65,
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'HOLD',  // Model STRONG BUY (~+31%, just over threshold) but Jakafi loss-of-exclusivity overhang caps the multiple; consensus Buy. HOLD.
+  ratingOverride: 'HOLD',  // Model now screens BUY (eased below the STRONG BUY threshold as spot recovered) but the Jakafi loss-of-exclusivity overhang caps the multiple; consensus Buy. HOLD.
   reasonsToBuy: [
     'Cheap valuation relative to earnings power reflects overstated fear about the Jakafi patent cliff',
     'Fortress balance sheet with substantial net cash and zero long-term debt funds the R&D transition with no dilution risk',

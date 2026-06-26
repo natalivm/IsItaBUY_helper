@@ -1,8 +1,8 @@
 import { defineStock } from './defineStock';
 
 export const MELI = defineStock({
-  updatedOn: '06/25',
-  lastReportTag: 'Q4 2025',
+  updatedOn: '06/26',
+  lastReportTag: 'Q1 2026',
   ticker: 'MELI',
   name: 'MercadoLibre',
   sector: 'E-Commerce / Fintech',
@@ -18,7 +18,7 @@ export const MELI = defineStock({
   beta: 1.35,
   costDebt: 0.065,
   modelType: 'EPS_PE',
-  baseEps: 36.69,
+  baseEps: 41.42,      // FY2026E EPS — raised to Street consensus on 06/26 spot-check (cut from ~$48 to ~$41 after Q1 2026's NIMAL margin compression to 17.8% + heavier Brazil loan-loss provisions). Q1 2026 (reported May 7): rev $8.85B +49% YoY, EPS $8.23 (down YoY), TPV $87.2B +50%.
   rsRating: 20,
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
@@ -63,7 +63,7 @@ export const MELI = defineStock({
   termGrowth: [0.02, 0.03, 0.035],
   waccAdj: [0.015, 0, -0.01],
 
-  epsCagr: [14, 22, 27],
+  epsCagr: [14, 20, 27],  // Base trimmed 22→20 on 06/26 to reflect near-term margin drag (FY26 ~flat on the Q1 reset; growth back-loaded). NI still forecast +24% next year.
   exitPE: [30, 38, 45],
   prob: [30, 45, 25],
 
