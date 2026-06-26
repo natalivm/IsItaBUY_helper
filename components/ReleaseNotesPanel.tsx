@@ -9,10 +9,10 @@ export type PanelTab = 'notes' | 'news';
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
 // seen-version differs from this. (Not a real OS push — same in-app pop-up
 // system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-16';
+export const UPDATES_VERSION = '2026-06-26';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'RS refresh: momentum cooled — APP, NU, PAAS, RTX, SHOP, ZS, ROAD, THM drop to Watch List; GXO & KRMN downgraded to HOLD.';
+export const LATEST_SUMMARY = 'Evaluation revalidation: EPS_PE fundamentals refreshed to the latest reports (NU, ZS, MELI, SHOP); DDOG stays Watch List despite its RS spike (base case only ~3% annualized). No tier changes.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 26 2026',
+    tickers: ['NU', 'ZS', 'MELI', 'SHOP', 'DDOG'],
+    text: 'Evaluation revalidation against current prices. EPS_PE fundamentals refreshed to the latest reported quarters: NU FY26E EPS to ~$0.88 (Street consensus, up from a conservative $0.72); ZS trimmed for management’s FY27 16–17% deceleration (EPS CAGR 18→15, exit P/E 38→35); MELI rolled to Q1 2026 with EPS to ~$41 after the Q1 margin reset (CAGR 22→20); SHOP FY26E EPS to ~$1.82. DDOG keeps its HOLD override and stays in Watch List despite RS spiking to 94 — its EPS×P/E base case is only ~3% annualized, so momentum alone doesn’t earn a growth tier. Stale override-rationale comments also cleaned up (DASH, INCY, PLTR, INTU, CACI, LMT). No rating-tier or home-group changes.',
+  },
   {
     date: 'Jun 16 2026',
     tickers: ['GXO', 'KRMN', 'APP', 'NU', 'PAAS', 'RTX', 'SHOP', 'ZS', 'ROAD', 'THM'],

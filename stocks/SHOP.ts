@@ -16,11 +16,11 @@ export const SHOP = defineStock({
   beta: 2.10,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 1.68,
+  baseEps: 1.82,       // FY2026E non-GAAP EPS — raised to Street consensus (~$1.82) on 06/26 spot-check. Q1 2026 (qtr end Mar 31): rev $3.17B +34% YoY, adj EPS $0.36 (beat), GMV $101B +35%, FCF ~15% margin. Base CAGR (28%) + exit P/E (45) unchanged — already aligned with consensus.
   rsRating: 20,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/25',
+  updatedOn: '06/26',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [

@@ -20,7 +20,7 @@ export const PLTR = defineStock({
   baseEps: 0.89,
   rsRating: 19,
   rsTrend: 'falling',
-  ratingOverride: 'HOLD',  // Model STRONG BUY (~+91%) but PLTR trades at an extreme multiple and momentum is rolling over (RS falling); external consensus is Hold. HOLD.
+  ratingOverride: 'HOLD',  // Model screens STRONG BUY (EPS_PE 5y-forward, flattered by a low threshold) but PLTR trades at an extreme multiple and momentum keeps rolling over (RS now ~19, falling); external consensus is Hold. HOLD.
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'AIP is emerging as the operational AI layer for Fortune 500 enterprises with strong conversion from boot-camps',

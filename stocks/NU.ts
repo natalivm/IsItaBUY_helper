@@ -6,7 +6,7 @@ export const NU = defineStock({
   sector: 'FinTech / Digital Banking · LatAm',
   themeColor: '#8b5cf6',
   currentPrice: 12.46,
-  updatedOn: '06/24',
+  updatedOn: '06/26',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$26 - $80',
   // ~$84.9B market cap / $16.15 = ~5,254M shares
@@ -22,7 +22,7 @@ export const NU = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',  // nuFormer: in production for credit decisioning Brazil; expanding to lending + Mexico credit cards 2026
   modelType: 'EPS_PE',
-  baseEps: 0.72,       // 2026E EPS — held post Q1 2026: Q1 NI $871M (Q1 record, +41% YoY FX-neutral) annualizes ~$0.66; came in BELOW Q4's $895M on seasonally-peak CLA, and Q1 ETR 8.7% rises to 15-20% IFRS for rest of year. Recovering risk-adj NIM + revenue growth offset tax normalization → FY2026 ~$0.68-0.74. Confirming quarter, not an upgrade.
+  baseEps: 0.88,       // FY2026E EPS — raised to Street consensus (~$0.88-0.89) on 06/26 spot-check; prior $0.72 was set conservatively below consensus. Q1 2026 (reported May 14) NI $871M (Q1 record, +41% YoY FX-neutral), $0.18 EPS; guided ~$0.22-0.27/qtr Q2-Q3 → FY26 ~$0.85-0.95. IFRS/GAAP basis; ETR normalizes 15-20% through 2026.
   // Q1 2026 CALL UPDATE (May 2026)
   // ─────────────────────────────────────────────────────────────────────────
   // Operational snapshot: 135M+ customers (Brazil 115M+, Mexico 15M+, Colombia
@@ -92,7 +92,7 @@ export const NU = defineStock({
     'nuFormer AI proves structurally transformative across all geographies — $29B unused credit limit pool converts to IBB at meaningfully lower loss rates, driving ARPAC beyond $20+. Mexico banking license clears, LDR expands rapidly to rival Brazil. Super-core growing 100% YoY compounds into material P&L. US fintech launch captures a profitable niche. ROE sustains 35%+, P/E re-rates toward premium global digital bank comps. NU graduates to undisputed type A structural compounder.',
   ],
 
-  epsCagr: [19, 27, 34],  // Bear $1.72 / Base $2.43 / Bull $3.37 in 2031E (from 2026E base of $0.72)
+  epsCagr: [19, 25, 34],  // Base trimmed 27→25 on 06/26 (Street long-run ~21-25%; file's own "25-28%" language). Bear $2.10 / Base $2.69 / Bull $3.80 in 2031E (from 2026E base of $0.88)
   exitPE: [15, 20, 25],
   prob: [15, 45, 40],     // Held post-Q1 2026 — Mexico's first IFRS-profitable quarter + AI in production confirm the bull S-curve, but YoY NI decel (50%→41%) and seasonal CLA cap further upgrade; quarter confirms the existing distribution
 
