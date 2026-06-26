@@ -8,6 +8,7 @@ export const NU = defineStock({
   currentPrice: 12.46,
   updatedOn: '06/26',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-06-26',
   fairPriceRange: '$26 - $80',
   // ~$84.9B market cap / $16.15 = ~5,254M shares
   shares0: 5254,

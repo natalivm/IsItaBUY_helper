@@ -22,6 +22,7 @@ export const SHOP = defineStock({
   aiImpact: 'TAILWIND',
   updatedOn: '06/26',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-06-26',
 
   reasonsToBuy: [
     'Universal Commerce Protocol co-developed with Google and adopted by Amazon, Meta, and Microsoft creates near-unbreakable platform lock-in',

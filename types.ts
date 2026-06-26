@@ -91,10 +91,12 @@ export interface TickerDefinition {
   baseEps?: number;
   // Analyst consensus
   analystConsensus?: AnalystConsensus;
-  /** Date of last manual data refresh, e.g. '26/02' */
+  /** Last price-touch date (MM/DD) — auto-stamped by update_prices.py on every price run, so NOT a fundamentals-freshness signal. */
   updatedOn?: string;
   /** Earnings report that was last used to update this stock, e.g. 'Q1 2026' */
   lastReportTag?: string;
+  /** Date fundamentals/RS/overrides were last manually reviewed (YYYY-MM-DD). The price bot never touches this — it's the real staleness signal. See review_status.py. */
+  dataReviewedOn?: string;
   /**
    * Michael Burry "Cassandra Unchained" SBC dilution check.
    * Dollar values in millions ($M).
