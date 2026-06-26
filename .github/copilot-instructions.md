@@ -174,25 +174,27 @@ Use `DCF_ADVANCED` (default) when:
 
 ## Rating Logic
 
-Rating is determined automatically in `getInstitutionalRating()` (`services/projectionService.ts`) based on base-case upside and quality signals.
+Rating is determined automatically in `getInstitutionalRating()` (`services/projectionService.ts`) based on the **expected 5-year CAGR** and quality signals.
 
-### Thresholds
+Both model types feed a **5-year-forward target** into the rating: `EPS_PE` = `terminalEps × exitPE`, and `DCF` = present fair value compounded at WACC (`presentValue × (1+w)^5`). The rating then annualizes that target into a CAGR — `cagr = (target/spot)^(1/5) − 1` — so DCF and EPS_PE names are judged on the same expected-return basis. (Before June 2026 the threshold compared raw upside, which mixed DCF present values with EPS_PE forward prices and made EPS_PE ratings systematically inflated.)
+
+### Thresholds (expected 5-year CAGR)
 
 | Condition | Rating |
 |-----------|--------|
-| Base-case upside > 30% | **STRONG BUY** |
-| Upside > 25% + quality boost | **STRONG BUY** |
-| Base-case upside > 15% | **BUY** |
-| Upside > 12% + quality boost | **BUY** |
-| Target < 96% of spot (overvalued) + **no** quality boost | **OVERVALUED** |
-| Target < 96% of spot (overvalued) + quality boost | **HOLD** |
-| Everything else | **HOLD** |
+| CAGR > 16% | **STRONG BUY** |
+| CAGR > 13% + quality boost | **STRONG BUY** |
+| CAGR > 10% | **BUY** |
+| CAGR > 8% + quality boost | **BUY** |
+| CAGR < 3% + **no** quality boost | **OVERVALUED** |
+| CAGR < 3% + quality boost | **HOLD** |
+| Everything else (3–10%) | **HOLD** |
 
 ### Quality boost
 
-A stock has a "quality boost" when RS rating >= 80 **or** aiImpact is TAILWIND. This softens thresholds in two ways:
-- **Lowers the BUY/STRONG BUY entry points** (12% instead of 15%, 25% instead of 30%)
-- **Prevents OVERVALUED when model says overvalued** — stocks with strong fundamentals and institutional momentum that trade above model fair value get HOLD, not OVERVALUED
+A stock has a "quality boost" when RS rating >= 80 **or** aiImpact is TAILWIND — **unless RS < 30**, in which case the boost is disabled entirely (very weak momentum disqualifies it). The boost softens thresholds in two ways:
+- **Lowers the BUY/STRONG BUY entry points** (8% instead of 10% CAGR, 13% instead of 16% CAGR)
+- **Prevents OVERVALUED when model says overvalued** — stocks with strong fundamentals and institutional momentum whose expected CAGR is below the hurdle get HOLD, not OVERVALUED
 
 ### Why we use OVERVALUED instead of AVOID
 
@@ -209,7 +211,7 @@ The narrative assessment in `strategicNarrative` is the **authoritative rating**
 ### Rules for every stock addition or update:
 
 1. **Write the `strategicNarrative` first** — it must include a clear verdict (BUY, HOLD, WAIT, OVERVALUED) with reasoning
-2. **Compare the narrative verdict to the quantitative model output** (base-case upside thresholds: >30% STRONG BUY, >15% BUY, <96% OVERVALUED, else HOLD)
+2. **Compare the narrative verdict to the quantitative model output** (expected 5-year CAGR thresholds: >16% STRONG BUY, >10% BUY, <3% OVERVALUED, else HOLD)
 3. **If they disagree, set `ratingOverride`** to match the narrative assessment:
    ```typescript
    ratingOverride: 'HOLD',  // narrative says WAIT, model says STRONG BUY
@@ -218,7 +220,7 @@ The narrative assessment in `strategicNarrative` is the **authoritative rating**
 5. **The quantitative model rating is always preserved** and shown as "Model: X" in the Investment Verdict section when an override is active, so changes in conditions can be monitored
 
 ### Common mismatch patterns:
-- Model says STRONG BUY/BUY but CAGR is below 15% threshold → override to HOLD
+- Model says STRONG BUY/BUY but the qualitative case is weak → override to HOLD
 - Model says OVERVALUED but narrative is bullish on structural thesis → override to BUY
 - Model says STRONG BUY but narrative flags existential risk → override to HOLD or OVERVALUED
 

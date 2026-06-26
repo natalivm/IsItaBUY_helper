@@ -12,7 +12,7 @@ export type PanelTab = 'notes' | 'news';
 export const UPDATES_VERSION = '2026-06-26';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Revalidation + model stress-test: EPS_PE fundamentals refreshed (NU, ZS, MELI, SHOP); RVLV & SPGI ease to BUY (weak-RS quality-boost guard); bear targets floored at 0. No home-group changes.';
+export const LATEST_SUMMARY = 'Ratings now run on one consistent measure — expected 5-year CAGR — fixing a long-standing inflation in EPS×P/E names. NVDA → STRONG BUY; ANET & DELL join the top tier; JPM, CLS, WWD & LLY ease out. 28 names re-rate.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 26 2026',
+    tickers: ['NVDA', 'ANET', 'DELL', 'ORCL', 'JPM', 'CLS', 'WWD', 'LLY'],
+    text: 'Major rating-engine upgrade: every rating now runs on one consistent measure — expected 5-year CAGR. Previously EPS×P/E names were scored on an undiscounted 5-year-forward price while DCF names used present fair value, which systematically inflated the EPS×P/E ratings. Both now express a 5-year-forward target (DCF compounds fair value at its cost of equity) and rate on annualized return: >16% STRONG BUY, >10% BUY, <3% OVERVALUED. Net effect (28 names re-rate): NVDA → STRONG BUY and ANET & DELL join the top tier (their genuine undervaluation was previously masked); the high-flyers ease to honest CAGRs (AMZN, META, NFLX, NOW, CEG, AZO, VST → BUY); JPM, CLS, WWD, LLY and ENVA step out of the growth tiers, and MLM/ROAD read OVERVALUED. PRIME GROWTH is now AVGO, HPE, NVDA, ORCL, APH, ANET, DELL.',
+  },
   {
     date: 'Jun 26 2026',
     tickers: ['RVLV', 'SPGI'],

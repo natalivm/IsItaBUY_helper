@@ -32,12 +32,15 @@ const EBITDA_MARGIN_FALLBACK_MULT = 1.5;
 // Margin of safety
 const MOS_DISCOUNT = 0.75;
 
-// Rating thresholds (percentage-based)
-const STRONG_BUY_UPSIDE = 0.30;        // >30% upside → automatic STRONG BUY
-const STRONG_BUY_SOFT_UPSIDE = 0.25;   // 25-30% upside → STRONG BUY if quality signals present
-const BUY_UPSIDE = 0.15;               // >15% upside → automatic BUY
-const BUY_SOFT_UPSIDE = 0.12;          // 12-15% upside → BUY if quality signals present
-const AVOID_DOWNSIDE_RATIO = 0.96;     // <96% of spot = overvalued
+// Rating thresholds — expected 5-year CAGR (annualized).
+// Both model types feed a 5-year-forward target into getInstitutionalRating
+// (EPS_PE = terminalEps×exitPE; DCF = fair value compounded at WACC), so a
+// single annualized-return hurdle applies uniformly. See CLAUDE.md "Rating Logic".
+const STRONG_BUY_CAGR = 0.16;          // >16%/yr → automatic STRONG BUY
+const STRONG_BUY_SOFT_CAGR = 0.13;     // 13-16%/yr → STRONG BUY if quality signals present
+const BUY_CAGR = 0.10;                 // >10%/yr → automatic BUY
+const BUY_SOFT_CAGR = 0.08;            // 8-10%/yr → BUY if quality signals present
+const OVERVALUED_CAGR = 0.03;          // <3%/yr expected return → overvalued (HOLD if quality-boosted)
 const RS_QUALITY_THRESHOLD = 80;       // RS rating considered "high"
 const RS_OVERVALUED_THRESHOLD = 30;    // RS rating below this → skip quality boost
 
@@ -71,15 +74,17 @@ export const getInstitutionalRating = (target: number, spot: number, ratingOverr
     return ratingResult(ratingOverride as RatingKey);
   }
 
-  const upsidePct = (target - spot) / spot;
-  const downsideRatio = target / spot;
+  // `target` is the 5-year-forward price for both model types, so rate on the
+  // implied annualized return (CAGR). Math.pow(0, 1/H) === 0 → cagr = -1 for a
+  // floored/zero target, which correctly lands in OVERVALUED.
+  const cagr = Math.pow(target / spot, 1 / HORIZON) - 1;
   const boosted = hasQualityBoost(signals);
 
-  if (upsidePct > STRONG_BUY_UPSIDE) return ratingResult('STRONG BUY');
-  if (boosted && upsidePct > STRONG_BUY_SOFT_UPSIDE) return ratingResult('STRONG BUY');
-  if (upsidePct > BUY_UPSIDE) return ratingResult('BUY');
-  if (boosted && upsidePct > BUY_SOFT_UPSIDE) return ratingResult('BUY');
-  if (downsideRatio < AVOID_DOWNSIDE_RATIO) return ratingResult(boosted ? 'HOLD' : 'OVERVALUED');
+  if (cagr > STRONG_BUY_CAGR) return ratingResult('STRONG BUY');
+  if (boosted && cagr > STRONG_BUY_SOFT_CAGR) return ratingResult('STRONG BUY');
+  if (cagr > BUY_CAGR) return ratingResult('BUY');
+  if (boosted && cagr > BUY_SOFT_CAGR) return ratingResult('BUY');
+  if (cagr < OVERVALUED_CAGR) return ratingResult(boosted ? 'HOLD' : 'OVERVALUED');
   return ratingResult('HOLD');
 };
 
@@ -187,7 +192,10 @@ const calculateDCF = (t: TickerDefinition, sc: ScenarioConfig, showEnhancements:
   const equityVal = sumPVFCF + pvTV - netDebt + maOptionality;
   // Floor at 0: a deeply negative bear case (net debt > discounted value) means
   // equity is wiped, not worth a negative price. Don't render a sub-zero target.
-  const pricePerShare = Math.max(0, equityVal / shareHistory[4]);
+  const presentValue = Math.max(0, equityVal / shareHistory[4]);
+  // Express as a 5-year-forward target (fair value compounding at the cost of
+  // equity) so DCF and EPS_PE names rate on the same expected-CAGR basis.
+  const pricePerShare = presentValue * Math.pow(1 + w, HORIZON);
   const priceTrajectory = shareHistory.map((_, i) => pricePerShare * (0.85 + 0.03 * i));
 
   return buildProjectionData({

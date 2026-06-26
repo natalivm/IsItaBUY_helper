@@ -22,12 +22,13 @@ const StockPageHeader: React.FC<Props> = ({
 }) => {
   const tc = tickerDef.themeColor;
 
-  // EPS_PE produces a 5-year-forward price target (EPS × exit P/E, undiscounted),
-  // whereas DCF discounts back to a present intrinsic value. Label accordingly so
-  // a 5Y target is never mistaken for "overvalued right now".
+  // Both model types now express a 5-year-forward base-case target so they rate on
+  // the same expected-CAGR basis: EPS_PE = EPS × exit P/E; DCF = present fair value
+  // compounded at WACC. Labelled as a 5Y target (DCF methodology noted) so it's
+  // never mistaken for a present-day fair value.
   const isEpsPe = tickerDef.modelType === 'EPS_PE';
-  const valueLabel = isEpsPe ? '5Y BASE TARGET' : 'FAIR VALUE';
-  const valueSub = isEpsPe ? '5Y fwd · base case' : 'present value';
+  const valueLabel = '5Y BASE TARGET';
+  const valueSub = isEpsPe ? '5Y fwd · base case' : '5Y fwd @ WACC · base case';
 
   return (
     <>
