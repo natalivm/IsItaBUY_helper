@@ -62,7 +62,7 @@ Review tiering impact — check if any stocks changed their rating (STRONG BUY /
 ```bash
 npm run build
 ```
-Rating thresholds (base-case upside): >30% STRONG BUY, >15% BUY, <96% OVERVALUED (only if no quality boost, otherwise HOLD), else HOLD. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
+Rating thresholds (expected 5-year CAGR — both DCF and EPS_PE feed a 5y-forward target, annualized to a CAGR): >16% STRONG BUY, >10% BUY, <3% OVERVALUED (only if no quality boost, otherwise HOLD), else HOLD. Quality boost is disabled for RS < 30. See `.github/copilot-instructions.md` "Rating Logic" for full rules.
 Group assignment depends on rating + market cap + RS rating + RS trend (see `classifyStock()` in `App.tsx`).
 
 If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.

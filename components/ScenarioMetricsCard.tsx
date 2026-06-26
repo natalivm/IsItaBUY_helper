@@ -29,7 +29,7 @@ const ScenarioMetricsCard: React.FC<Props> = ({ data, currentPrice, modelType })
 
       <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8">
         <div className="flex flex-col">
-          <span className="text-xs text-slate-400 uppercase font-black tracking-widest">{isEpsPe ? 'EPS×PE Value:' : 'DCF Value:'}</span>
+          <span className="text-xs text-slate-400 uppercase font-black tracking-widest">{isEpsPe ? 'EPS×PE 5Y Tgt:' : 'DCF 5Y Tgt:'}</span>
           <span className="text-base font-black text-white">{usd(pricePerShare)}</span>
         </div>
         <div className="flex flex-col">
