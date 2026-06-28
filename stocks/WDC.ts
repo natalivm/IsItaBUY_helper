@@ -20,7 +20,7 @@ export const WDC = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 13.00,         // Q4 FY26 guide $3.25/qtr -> ~$13 annualized exit run-rate. FY26E full-year ~$9.94 normalized (Q3 $2.72, +97% YoY). TIKR models a steep AI-storage ramp: FY27E ~$18 -> FY30E ~$52 normalized — a super-cycle the price already embeds.
-  rsRating: 92,           // Massive RS leader (+250% YTD), though -13% on the day and ~-27% off its 52wk high
+  rsRating: 99,           // IBD RS 99 (Composite 87) — top-of-market RS leader in a #1-ranked group (Industry Group Rank 3/142, Group RS A+); but EPS Rating 68 and ACC/DIS E flag distribution, and it's -13% on the day / ~-27% off its 52wk high
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD', // Pins HOLD (like STX/SIMO): the AI-storage up-cycle is real and arguably structural, but the stock has gone parabolic (~8x off lows), trades ABOVE the $554 analyst median target, and prices in a permanent super-cycle at a cyclical-peak-trajectory multiple. Don't chase; wait for a pullback.
