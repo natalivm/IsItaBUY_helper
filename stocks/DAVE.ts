@@ -10,12 +10,12 @@ export const DAVE = defineStock({
   dataReviewedOn: '2026-06-28',
   currentPrice: 348.71,   // Jun 26 2026 (+8% on the day)
   fairPriceRange: '$290 - $400',
-  shares0: 12.0,          // ~11-12.7M shares and falling fast — ~$195M buyback in Q1 2026 (~7% of shares); float only ~9.8M; $300M authorization
-  rev25: 554.18,          // FY2025 total revenue $554.2M (+60% YoY); TTM $604.6M
-  fcfMargin25: 0.30,      // FY2025 net margin ~35% (NI $195.9M / rev $554.2M); held conservative (FY25 had a one-time tax benefit)
-  taxRate: 0.25,          // Normalizing UP — FY2025 booked a tax BENEFIT (DTA release); a full cash-tax rate resumes as DTAs exhaust
-  cash: 158,             // ~$158M cash (cash/sh $13.84)
-  debt: 241,            // ~$241M total (Debt/Eq 1.32) incl a $175M 0% convertible note + the advance-funding facility; net debt ~$90M (EV $4.53B − cap $4.43B)
+  shares0: 12.7,          // ~12.7M shares (TIKR LTM) and falling fast — $231.73M repurchased LTM ($195M in Q1 2026 alone); float only ~9.8M; $300M authorization
+  rev25: 554.18,          // FY2025 total revenue $554.18M (+60% YoY); TTM $604.62M (TIKR)
+  fcfMargin25: 0.30,      // FY2025 net margin ~35% (NI $195.87M / rev $554.18M); FY25 FCF margin actually ~52% — held conservative
+  taxRate: 0.25,          // Normalizing UP — FY2025 booked a tax BENEFIT (eff. rate −16.6%, DTA release); a full cash-tax rate resumes as DTAs exhaust
+  cash: 180,             // ~$180M cash + investments (TIKR LTM)
+  debt: 268,            // ~$268M total (TIKR LTM) incl a $175M 0% convertible note + the advance-funding facility; net debt ~$88M LTM (was net CASH $46M at YE2025 before the convertible raise)
   beta: 2.8,            // Modeled; trailing Finviz beta 3.81 (artifact of the parabolic +6,700% 3-yr move)
   costDebt: 0.04,       // Blended low — the largest tranche is a 0% coupon convertible
   modelType: 'EPS_PE',
@@ -87,23 +87,23 @@ export const DAVE = defineStock({
   ],
 
   burry: {
-    sbc: 23.62,
+    sbc: 29.90,
     gaapNi: 195.87,
-    buyback: 195,
+    buyback: 57.05,
     epsBasis: 'GAAP',
     fy: 'FY25',
-    overstatementPct: 50,
+    overstatementPct: 55,
     overstatementSource: 'estimated',
-    note: 'FY25 stock-comp $23.62M (verified, from FY25 financials) vs $195.87M GAAP NI = ~12% naive. The extreme MTM amplifier (stock +~6,700% over 3 years off SPAC lows) drives the Burry overstatement to the Critical tier despite low absolute SBC. Dave is a strong net share REDUCER — ~$195M repurchased in Q1 2026 alone (~7% of shares; $300M authorization) dwarfs SBC ~8:1 — which materially offsets real per-share dilution. Pct estimated via the MTM heuristic.',
+    note: 'FY25 stock-based comp $29.90M (TIKR cash-flow line; higher than the $23.62M Finviz "options only" figure) vs $195.87M GAAP NI = ~15% naive. The extreme MTM amplifier (stock +~6,700% over 3 years off SPAC lows) would push the mechanical estimate toward the Tragic tier, but two factors keep it Critical: modern SBC is mostly RSUs granted near market (not deep-ITM legacy options), and Dave is an aggressive net share REDUCER — $57M repurchased in FY25, $231.73M over the LTM ($195M in Q1 2026 alone, ~7% of shares; $300M authorization) — so share count is actually FALLING and real per-share dilution is negative. Pct estimated.',
   },
 
   debtSafety: {
-    netDebt: 90,
-    ebitda: 200,
+    netDebt: 88,
+    ebitda: 205,
     capexToOcf: 0.05,
     interestCoverage: 30,
     altmanZ: 8,
     fy: 'FY25',
-    note: 'Framework partially N/A for a neobank — the advance-funding facility supports member cash advances, and the largest debt tranche is a $175M 0% convertible (no cash interest). Net debt ~$90M (EV $4.53B − cap $4.43B) vs EBITDA ~$200M (FY25 $194M / TTM $219M) => leverage ~0.45x, GREEN. Quick & current ratios 3.86; real risk metric is advance credit quality (28-day DPD ~1.69%, a record low) and regulatory exposure, not leverage.',
+    note: 'Framework partially N/A for a neobank — the advance-funding facility supports member cash advances, and the largest debt tranche is a $175M 0% convertible (no cash interest). Net debt $88M LTM (TIKR) — was net CASH $46M at YE2025 before the convertible raise — vs EBITDA ~$205M (FY25 $192M / LTM $217M) => leverage ~0.4x, GREEN. Backed by very strong FCF (~52% margin, FY25 $290M). Quick & current ratios 3.86; real risk metric is advance credit quality (28-day DPD ~1.69%, a record low) and regulatory exposure, not leverage.',
   },
 });
