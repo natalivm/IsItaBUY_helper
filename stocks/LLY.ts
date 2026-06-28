@@ -6,7 +6,8 @@ export const LLY = defineStock({
   sector: 'Pharmaceuticals / GLP-1',
   themeColor: '#e01933',
   updatedOn: '06/26',
-  lastReportTag: 'Q4 2025',
+  lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-06-28',
   currentPrice: 1208.12,
   fairPriceRange: '$750 - $1800',
   shares0: 947,
@@ -18,16 +19,16 @@ export const LLY = defineStock({
   beta: 0.8,
   costDebt: 0.04,
   modelType: 'EPS_PE',
-  baseEps: 24.21,
+  baseEps: 36.25,        // FY2026E non-GAAP EPS — guide RAISED to $35.50-$37 at Q1 2026 (was using stale ~FY2025 $24.21). Q1 2026 non-GAAP EPS $8.55, rev +56%; FY26 rev guide $82-85B (+28%).
   rsRating: 76,
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   reasonsToBuy: [
     'GLP-1 platform is a metabolic disease franchise comparable in scale and durability to NVDA in AI or ASML in lithography',
     'Tiered therapy stack from oral mass-market to high-efficacy injections maximizes patient lifetime value across every segment',
-    'Orforglipron oral approval expands the total addressable market to the billions of patients who reject injectable therapy',
-    'Retatrutide triple-agonist targets severe obesity where payer willingness-to-pay is highest and competition is thinnest',
-    'Manufacturing moat and Lilly Direct channel create structural barriers that pipeline-only competitors cannot quickly replicate',
+    'Foundayo (oral orforglipron) now FDA-approved and launching — a hyperscalable pill opening the needle-free mass market (~3/4 of starts are new-to-class)',
+    'Retatrutide triple-agonist now has positive Phase III data (up to ~30% weight loss; strong T2D) — a likely third obesity drug launching 2027, expanding the franchise rather than just cannibalizing it',
+    'Manufacturing moat (~$50B committed) and LillyDirect channel create structural barriers that pipeline-only competitors cannot quickly replicate',
   ],
 
   risksToBuy: [

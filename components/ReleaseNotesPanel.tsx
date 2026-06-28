@@ -9,10 +9,10 @@ export type PanelTab = 'notes' | 'news';
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
 // seen-version differs from this. (Not a real OS push — same in-app pop-up
 // system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-26';
+export const UPDATES_VERSION = '2026-06-28';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Ratings now run on one consistent measure — expected 5-year CAGR — fixing a long-standing inflation in EPS×P/E names. NVDA → STRONG BUY; ANET & DELL join the top tier; JPM, CLS, WWD & LLY ease out. 28 names re-rate.';
+export const LATEST_SUMMARY = 'LLY re-rates to BUY on a guidance-driven EPS rebase; three new names added — SEZL (HOLD), DAVE (BUY), NVO (HOLD); plus a new quarterly-earnings badge showing each row\'s latest reported quarter and how fresh the data is.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,21 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 28 2026',
+    tickers: ['SEZL', 'DAVE', 'NVO'],
+    text: 'Three new names added, all on the EPS×P/E model off their latest quarter. SEZL (Sezzle) HOLD — best-in-class, highly profitable BNPL lender, but it trades above the analyst target range after a parabolic run (Pristine Burry; pursuing an ILC bank charter). DAVE (Dave Inc.) BUY — profitable neobank / cash-advance fintech at a sub-1 PEG, ~22× earnings on ~22% EPS growth with aggressive buybacks shrinking a tiny float (FTC fee-model scrutiny is the lead risk). NVO (Novo Nordisk) HOLD — fallen-angel GLP-1 leader down ~60% from its highs; 2026 adjusted earnings are guided to decline (−4% to −12%) on US "Most Favoured Nations" pricing and Lilly competition, offset by a record oral-Wegovy-pill launch and a deep pipeline.',
+  },
+  {
+    date: 'Jun 28 2026',
+    tickers: ['LLY'],
+    text: 'LLY re-rated HOLD → BUY on a data correction. The EPS base was rolled from a stale ~FY2025 $24 to the FY2026E ~$36.25 after Lilly RAISED full-year non-GAAP EPS guidance to $35.50-$37 (Q1 2026 EPS $8.55, revenue +56%, FY26 revenue guide $82-85B). Foundayo (oral orforglipron) is now approved and launching, retatrutide posted up to ~30% weight-loss Phase III data (a likely third obesity drug in 2027), and BD/pipeline cadence stays torrid. The prior HOLD reflected the understated trailing EPS base, not the business.',
+  },
+  {
+    date: 'Jun 28 2026',
+    tickers: [],
+    text: 'New quarterly-earnings badge on each stock row, showing the latest reported quarter the data reflects. It lights up green when the fundamentals were reviewed within the last ~45 days and stays muted when the read is older — a quick freshness cue for how current each evaluation is.',
+  },
   {
     date: 'Jun 26 2026',
     tickers: ['NVDA', 'ANET', 'DELL', 'ORCL', 'JPM', 'CLS', 'WWD', 'LLY'],
