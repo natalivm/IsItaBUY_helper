@@ -87,14 +87,14 @@ export const DAVE = defineStock({
   ],
 
   burry: {
-    sbc: 24,
+    sbc: 23.62,
     gaapNi: 195.87,
     buyback: 195,
     epsBasis: 'GAAP',
     fy: 'FY25',
-    overstatementPct: 45,
+    overstatementPct: 50,
     overstatementSource: 'estimated',
-    note: 'FY25 stock-comp ~$23.6M vs $195.9M GAAP NI = ~12% naive. The enormous MTM amplifier (stock +~6,700% over 3 years off SPAC lows) lifts the Burry overstatement, but Dave is a strong net share REDUCER: ~$195M repurchased in Q1 2026 alone (~7% of shares; $300M authorization) dwarfs SBC ~8:1, so real per-share dilution is sharply negative. Estimated.',
+    note: 'FY25 stock-comp $23.62M (verified, from FY25 financials) vs $195.87M GAAP NI = ~12% naive. The extreme MTM amplifier (stock +~6,700% over 3 years off SPAC lows) drives the Burry overstatement to the Critical tier despite low absolute SBC. Dave is a strong net share REDUCER — ~$195M repurchased in Q1 2026 alone (~7% of shares; $300M authorization) dwarfs SBC ~8:1 — which materially offsets real per-share dilution. Pct estimated via the MTM heuristic.',
   },
 
   debtSafety: {
