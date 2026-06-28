@@ -20,7 +20,7 @@ export const RDDT = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 5.00,          // FY2026E GAAP EPS ~$4.97 (TIKR) — conservative vs normalized ~$7.10 given heavy-ish SBC. Q1 2026 GAAP EPS $1.01 (+7x YoY). GAAP path: ~$5.0->$6.5->$8.3->$10.6->$13.1 (FY26-30), ~27% CAGR as operating leverage builds.
-  rsRating: 62,           // Strong long-term (IPO'd 2024) but cooled — off ~27% from its Dec high before a bounce; momentum mixed
+  rsRating: 45,           // IBD RS 45 (Composite 65, EPS 84, SMR A) — momentum has cooled hard, off ~27% from its Dec high; its internet group is weak too (Group Rank 131/142, Group RS E)
   rsTrend: 'flat',
   aiImpact: 'NEUTRAL',    // Two-sided: data-licensing + "most-cited AI source" + human-perspective demand are tailwinds, while AI answer-engines threaten referral traffic
 
