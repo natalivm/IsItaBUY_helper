@@ -22,8 +22,10 @@ export const DELL = defineStock({
   aiImpact: 'TAILWIND',
   updatedOn: '06/26',
   lastReportTag: 'Q1 FY27',
+  dataReviewedOn: '2026-06-28',
 
-  analystConsensus: { rating: 'Buy', targetLow: 110, targetMedian: 212, targetHigh: 290, numAnalysts: 27 },
+  // Refreshed post-Q1-FY27 surge (S&P Global, 27 analysts): avg ~$484, high $700 (Susquehanna), low $213. Prior block (median $212) was pre-surge and stale.
+  analystConsensus: { rating: 'Buy', targetLow: 213, targetMedian: 484, targetHigh: 700, numAnalysts: 27 },
 
   reasonsToBuy: [
     'Unmatched Fortune 500 distribution reach that pure-play ODMs cannot replicate at enterprise scale',
@@ -66,21 +68,18 @@ export const DELL = defineStock({
 
   burry: {
     sbc: 785,
-    gaapNi: 4000,
+    gaapNi: 5936,
     buyback: 3500,
     epsBasis: 'GAAP',
     fy: 'FY26',
-    overstatementPct: 55,
+    overstatementPct: 50,
     overstatementSource: 'estimated',
-    note: 'Critical — estimated. FY26 SBC $785M vs est. GAAP NI ~$4B = naive 20%. DELL stock ~6× over 3 years (from ~$50 in 2023 to $305 post-Q1-FY27 surge); MTM amplifier ~4×. Offset partially by ~$3.5B in estimated buybacks (4.5× SBC, 20% offset). Estimated overstatement ~55%. FY26 GAAP NI is an estimate pending full 10-K review.',
+    note: 'Critical — estimated. FY26 SBC $785M vs GAAP NI ~$5.9B = naive 13%. DELL stock ~8× over 3 years (~$50 in 2023 to ~$399, ATH $469 on the post-Q1-FY27 AI surge); MTM amplifier ~5×. Offset partially by ~$3.5B buybacks (4.5× SBC, 20% offset). Estimated overstatement ~50%.',
   },
   debtSafety: {
     netDebt: 19583,
-    ebitda: 7500,
-    capexToOcf: 0.12,
-    interestCoverage: 3.6,
-    altmanZ: 2.8,
+    ebitda: 12523,
     fy: 'FY26',
-    note: 'Hardware distribution model keeps CapEx low (PASS), but interest coverage at 3.6× and Altman Z at 2.8 both fall short of thresholds. High leverage on a thin-margin business is the core risk.',
+    note: 'Net Debt/EBITDA ~1.6× (GREEN, Step 2) on FY26 EBITDA ~$12.5B — a prior value of $7.5B understated EBITDA and wrongly flagged RED. AI-server cash generation is deleveraging fast: consensus has leverage falling to ~0.9× (FY27) toward net cash by FY30. Much of the ~$31B gross debt is DFS financing debt matched by financing receivables.',
   },
 });
