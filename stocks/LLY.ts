@@ -39,8 +39,10 @@ export const LLY = defineStock({
     'Post-2030 patent cliff on tirzepatide creates a revenue overhang that weighs on long-duration valuation assumptions',
   ],
 
-  epsCagr: [12, 18, 22],
-  exitPE: [22, 28, 35],
+  // Base 12% lands the 5y terminal EPS on Street consensus 2030E (~$63.8 vs prior 18%→$82.9, +30% over Street). Bear/bull bracket the decelerating consensus path (2027 +23% → 2030 +11%).
+  epsCagr: [8, 12, 16],
+  // Trimmed from [22,28,35]: mega-cap pharma facing the post-2030 tirzepatide patent cliff de-rates ahead of it. Base 22x = premium-pharma norm (AZO 22x, AMZN 27x); GLP-1 peer NVO sits at 15x. 28x bull = today's multiple holding.
+  exitPE: [18, 22, 28],
   prob: [20, 45, 35],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 700, targetMedian: 1230, targetHigh: 1500, numAnalysts: 30 },
@@ -57,9 +59,9 @@ export const LLY = defineStock({
   ],
   exitMultiple: [14, 18, 22],
   desc: [
-    'Price erosion stronger than expected, oral GLP-1 launch underwhelms, market growth decelerates. EPS compounds at ~12% as competition from Novo Nordisk, Amgen, and Pfizer intensifies. P/E compresses to 22x toward historical norms. Patent cliff concerns post-2030 weigh on sentiment.',
-    'Strong structural growth continues — GLP-1 market expands to $100B+, Zepbound/Mounjaro maintain leadership, orforglipron adds oral optionality. EPS grows ~18% as revenue scales and EBIT margin expands to high-40s. Moderate P/E compression to 28x reflects maturing growth phase.',
-    'GLP-1 market reaches $250B+ as penetration rises to 15–20% of addressable population. Orforglipron at $149–399 drives mass-market oral adoption, retatrutide (24–29% weight loss) captures $60–80B severe obesity segment as pharma alternative to bariatric surgery. Tiered therapy stack covers full patient spectrum. Two-stage model (inject → oral maintenance) maximizes patient LTV. LLY at 35–40% share = $90–120B GLP-1 revenue alone. EPS compounds at ~22%, premium 35x multiple holds on metabolic disease platform leadership.',
+    'Price erosion stronger than expected, oral GLP-1 launch underwhelms, market growth decelerates. EPS compounds at ~8% as competition from Novo Nordisk, Amgen, and Pfizer intensifies. P/E compresses to 18x toward historical norms. Patent cliff concerns post-2030 weigh on sentiment.',
+    'Strong structural growth continues — GLP-1 market expands to $100B+, Zepbound/Mounjaro maintain leadership, orforglipron adds oral optionality. EPS grows ~12%, in line with Street consensus, as revenue scales and EBIT margin expands to high-40s. Moderate P/E compression to 22x reflects maturing growth phase.',
+    'GLP-1 market reaches $250B+ as penetration rises to 15–20% of addressable population. Orforglipron at $149–399 drives mass-market oral adoption, retatrutide (24–29% weight loss) captures $60–80B severe obesity segment as pharma alternative to bariatric surgery. Tiered therapy stack covers full patient spectrum. Two-stage model (inject → oral maintenance) maximizes patient LTV. LLY at 35–40% share = $90–120B GLP-1 revenue alone. EPS compounds at ~16%, premium 28x multiple holds on metabolic disease platform leadership.',
   ],
 
   termGrowth: [0.02, 0.025, 0.03],
