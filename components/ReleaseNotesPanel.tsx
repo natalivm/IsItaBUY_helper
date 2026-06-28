@@ -9,10 +9,10 @@ export type PanelTab = 'notes' | 'news';
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
 // seen-version differs from this. (Not a real OS push — same in-app pop-up
 // system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-28.2';
+export const UPDATES_VERSION = '2026-06-28.3';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Deep-dive refresh of VRT, Q, HPE & SIMO against verified TIKR financials, the latest earnings-call / Investor-Day transcripts and IBD relative-strength ratings. HPE moves to the EPS×P/E model and holds BUY; VRT holds BUY; Q & SIMO hold HOLD. No home-group changes.';
+export const LATEST_SUMMARY = 'Deep-dive refresh of WDC & RDDT against verified TIKR financials and the latest earnings-call / conference transcripts. WDC holds HOLD (parabolic, above target); RDDT holds BUY (below target, AI-search traffic the key risk). No home-group changes.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 28 2026',
+    tickers: ['WDC', 'RDDT'],
+    text: 'Deep-dive refinement of two names against verified TIKR financials and the latest earnings-call / conference transcripts (no rating-tier or home-group changes). WDC (Western Digital) HOLD — confirmed the parabolic ~8x run off the lows is real (AI-storage nearline HDD super-cycle, a disciplined duopoly adding no unit capacity, gross margin above 50%, ~30% FCF margin, and a balance sheet transformed to net cash / investment-grade after the SanDisk-stake monetization); base EPS rolled to the ~$13 Q4-FY26 exit run-rate, but every scenario lands below spot — the stock trades above its ~$554 analyst target at a cyclical-peak multiple, so the HOLD override stands. RDDT (Reddit) BUY — revenue/EPS reset to actuals (FY25 $2.2B +69%, FY26E GAAP ~$5.00) with best-in-class ~40% EBITDA / ~47% FCF margins on a $1M-CapEx model, a high-margin AI data-licensing annuity, Reddit Search scaling ~1M→~15M users, net cash ~$2.8B and an active buyback; trades well below the ~$230 target so it stays a clean BUY (no override). Burry SBC overstatement corrected to ~38% (SBC ~12% of revenue, modest dilution).',
+  },
   {
     date: 'Jun 28 2026',
     tickers: ['VRT', 'Q', 'HPE', 'SIMO'],
