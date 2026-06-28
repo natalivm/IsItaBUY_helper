@@ -88,14 +88,14 @@ export const SEZL = defineStock({
   ],
 
   burry: {
-    sbc: 20,
+    sbc: 5.2,
     gaapNi: 133.13,
     buyback: 50,
     epsBasis: 'GAAP',
     fy: 'FY25',
-    overstatementPct: 40,
+    overstatementPct: 10,
     overstatementSource: 'estimated',
-    note: 'Estimated — exact FY25 SBC not confirmed (~$20M assumed vs $133.13M GAAP NI = ~15% naive). The large MTM amplifier (stock up many-fold since the 2023 IPO; +169% YTD 2026) lifts the Burry overstatement, but Sezzle is a net share REDUCER: $50M buyback completed in 2025 (+$100M newly authorized) far exceeds SBC, insiders own ~51%, and share count is flat-to-down. Real per-share dilution is negative. Refresh once the 10-K SBC line is verified.',
+    note: 'Pristine. FY25 equity-based comp is only ~$5.2M vs $133.13M GAAP NI = ~3.9% naive — Sezzle is capital-efficient and founder-led (insiders own ~51%). Even applying a large MTM amplifier for the multi-fold stock run, the $50M buyback completed in 2025 (+$100M authorized) exceeds SBC ~10:1, so real per-share dilution is negative and owner earnings ≈ GAAP earnings. SBC from the FY25 cash-flow reconciliation; pct estimated. (Corrected down from an earlier ~$20M placeholder.)',
   },
 
   debtSafety: {
