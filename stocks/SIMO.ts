@@ -14,31 +14,31 @@ export const SIMO = defineStock({
   rev25: 886,             // FY2025 revenue $885.6M (+10.2%); LTM $1,061M as the AI/enterprise-SSD surge ramps
   fcfMargin25: 0.08,      // FY25 FCF margin just 0.7% ($6.3M) and LTM negative — heavy inventory build for the ramp; normalizes ~12-15%
   taxRate: 0.14,          // ~12-15% effective
-  cash: 280,             // ~$280M cash; net cash, minimal debt (fabless)
+  cash: 211,             // ~$211M cash at Q1 2026 (down from $277M on a dividend + inventory build for the ramp); net cash, minimal debt (fabless)
   debt: 0,
   beta: 1.4,
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 8.71,          // FY2026E normalized EPS (TIKR) — a +145% surge year off FY25 ~$3.55 on the AI/enterprise-SSD controller wave. Path: $8.71->$10.22->$11.73 (FY26-28) then TIKR models a cyclical roll-over (rev declines FY29-30).
-  rsRating: 90,           // Ran ~4x off the memory trough on the AI-storage controller surge; near highs
+  rsRating: 99,           // IBD RS 99 (Composite 99, industry group rank 3); ran ~4x off the memory trough on the AI-storage surge
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD', // Pins HOLD (like STX/WDC): explosive growth is real but this is a small-cap cyclical semi at ~35x peak-cycle earnings, trading ABOVE the analyst consensus target ($274 median vs ~$305). Own the franchise on a pullback.
 
   reasonsToBuy: [
-    'Explosive revenue and earnings growth as AI and enterprise demand lifts the NAND-controller cycle off its trough',
-    'Fabless, capital-light model with a strong net-cash balance sheet and high incremental margins',
-    'Designed-in across SSD and UFS controllers for major NAND makers and device OEMs — a sticky franchise',
-    'Enterprise/data-center SSD controllers open a higher-value market beyond consumer flash',
-    'Recovery from a deep memory downturn delivers huge year-over-year earnings leverage',
+    'Structural share gains as NAND makers outsource more controllers and exit the consumer/edge segment, leaning on Silicon Motion to serve it',
+    'MonTitan enterprise/AI controllers ramping fast — CMX/KV-cache compute SSD for AI inference, scaling from 2 to ~7 Tier-1 CSP customers (3 Asia, 2 US) this year',
+    'Boot-drive storage ramping into AI GPU platforms (NVIDIA DPU, plus next-gen NVLink/Ethernet switches) with content density up 2-4x',
+    'Unmatched NAND-maker partnerships — the only controller maker with active projects across all 7 NAND makers — secure scarce supply, a real moat in a constrained market',
+    'Fabless, capital-light, net-cash model with record revenue, expanding margins (50% gross margin targeted) and huge year-over-year leverage',
   ],
 
   risksToBuy: [
-    'Small-cap cyclical semiconductor — earnings swing hard with the NAND/flash pricing cycle, and estimates roll over after the surge',
+    'Small-cap cyclical semiconductor — earnings swing hard with the NAND/flash pricing cycle, and consensus already models a roll-over after the surge',
     'Richly valued at ~35x peak-cycle earnings, trading above the analyst consensus target',
-    'Customer concentration among a handful of NAND makers and OEMs amplifies order volatility',
-    'A NAND down-cycle or AI-capex digestion would reverse the current earnings surge quickly',
-    'China/Taiwan geopolitical and export-control exposure adds tail risk',
+    'NAND/DRAM scarcity and tight BGA-substrate supply can cap how much demand converts to revenue, even with secured allocation',
+    'Smartphone and PC unit volumes are declining 10%+ in 2026 on high memory costs — share gains must keep outrunning end-market weakness',
+    'Customer concentration plus China/Taiwan geopolitical and export-control exposure adds tail risk',
   ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 145, targetMedian: 274, targetHigh: 450, numAnalysts: 10 },
@@ -75,7 +75,7 @@ export const SIMO = defineStock({
   thesis: [
     'Bear mechanics: SIMO is a small-cap fabless semi whose earnings swing violently with the NAND pricing cycle. The current revenue surge is cycle-driven, not structural — TIKR estimates already model a roll-over after FY28 — and customer concentration amplifies order volatility. ' +
       'At ~35x peak-cycle earnings, any NAND rollover or AI-capex digestion compresses both earnings and the multiple. At {spot}, above the Street target, the downside is asymmetric.',
-    'The franchise is genuinely good: capital-light, net-cash, sticky controller design-wins, and a real move up-market into enterprise/AI SSD controllers, with huge year-over-year leverage off the memory trough. ' +
+    'The franchise is genuinely good — and the story is more than just the cycle: NAND makers are structurally outsourcing controllers and exiting consumer/edge, handing Silicon Motion durable share, while MonTitan enterprise/AI (CMX/KV-cache) scales from 2 to ~7 CSP customers and boot drives ramp into NVIDIA AI-GPU platforms, all backed by a rare multi-NAND-maker sourcing moat. Record revenue, sequential growth all year, and a 50% gross-margin target. ' +
       'But the stock has roughly quadrupled off its lows to ~35x peak earnings and trades above the consensus target ($274), pricing in much of the up-cycle. Verdict: HOLD — own the franchise on a pullback, not at a cyclical-peak multiple.',
     'The bull case: enterprise and AI SSD-controller demand turns the surge structural, SIMO compounds revenue and margins off a fabless cost base, and the market sustains a premium multiple. ' +
       '{target} is achievable if the cycle stays strong for years. Probability 20% — high reward, but cyclical and concentrated at a rich entry.',
@@ -93,9 +93,9 @@ export const SIMO = defineStock({
   },
 
   debtSafety: {
-    netDebt: -280,
+    netDebt: -211,
     ebitda: 150,
     fy: 'FY25',
-    note: 'GREEN by Step 1 — net cash. Fabless model carries ~$280M cash and minimal debt (LTM EBITDA ~$167M). The real risk is NAND cyclicality and customer concentration, not leverage.',
+    note: 'GREEN by Step 1 — net cash. Fabless model carries ~$211M cash at Q1 2026 (down from $277M on a dividend + inventory build) and minimal debt (LTM EBITDA ~$167M). The real risk is NAND cyclicality and customer concentration, not leverage.',
   },
 });

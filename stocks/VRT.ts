@@ -20,7 +20,7 @@ export const VRT = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 6.49,          // FY2026E consensus adj EPS (TIKR) ≈ mgmt guide $6.35 (raised +51% at Q1 2026). TTM GAAP EPS $3.98; adj excludes heavy intangible amortization. Analyst path: $6.49→$8.85→$11.29→$13.62→$17.25 (FY26-30, ~27% CAGR).
-  rsRating: 90,           // Strong long-term (Perf 3Y +1196%) but cooling near-term (RSI ~46, below SMA20/50 after a pullback)
+  rsRating: 86,           // IBD RS 86 (Composite 92, EPS 99); retook its 10-week line, though ACC/DIS at E flags recent distribution
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 

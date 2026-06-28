@@ -8,7 +8,7 @@ export const HPE = defineStock({
   updatedOn: '06/28',
   lastReportTag: 'Q2 FY26',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 43.60,    // Jun 28 2026 (FY ends Oct 31); ran off ~$14 lows on the Juniper/AI re-rate
+  currentPrice: 43.71,    // Jun 26 2026 close (FY ends Oct 31); ran off ~$14 lows on the Juniper/AI re-rate
   fairPriceRange: '$40 - $125',
   shares0: 1340,          // ~1,342M diluted post-Juniper (preferred issued for the deal); mkt cap ~$58B
   rev25: 34296,           // FY2025 (Oct) revenue $34,296M (+13.8%, partial-year Juniper); LTM $38,794M. Q2 FY26 rev $10.7B (+40%)
@@ -20,7 +20,7 @@ export const HPE = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 3.40,          // FY2026E non-GAAP EPS — mgmt guide midpoint $3.35-$3.45 (raised 40%+ at Q2, 2 yrs ahead of plan). FY25 was a GAAP loss on a $1.6B Juniper writedown/restructuring. FY27 framework: 12-16% EPS growth. TIKR path: $3.40->$4.00->$4.25->$5.03->$5.61 (FY26-30, ~13% CAGR).
-  rsRating: 97,           // Very strong — multi-year uptrend, near highs after the Q2 FY26 earnings beat
+  rsRating: 96,           // IBD RS 96 (Composite 82); strong individual RS, though its industry group ranks weak (group RS E)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 
