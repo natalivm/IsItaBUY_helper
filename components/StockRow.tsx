@@ -4,6 +4,7 @@ import { TickerDefinition } from '../types';
 import { StockGroup } from '../constants';
 import { cn, rsRatingStyle } from '../utils';
 import BurryBadge from './BurryBadge';
+import EarningsBadge from './EarningsBadge';
 
 export interface StockRowData {
   ticker: string;
@@ -92,11 +93,11 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
         {tickerDef.sector.split(/\s[·\/]\s/)[0]}
       </span>
 
-      {/* Report tag */}
+      {/* Quarterly earnings badge */}
       {tickerDef.lastReportTag && (
-        <span className="text-sm font-bold text-white border border-emerald-700/60 bg-emerald-950/70 rounded px-1.5 py-0.5 flex-shrink-0 ml-auto">
-          {tickerDef.lastReportTag}
-        </span>
+        <div className="ml-auto flex-shrink-0">
+          <EarningsBadge tickerDef={tickerDef} dimmed={isAvoid} />
+        </div>
       )}
     </motion.button>
   );
