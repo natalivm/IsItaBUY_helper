@@ -8,19 +8,19 @@ export const VRT = defineStock({
   updatedOn: '06/28',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 305,
+  currentPrice: 303.95,   // Jun 26 2026 close
   fairPriceRange: '$300 - $500',
-  shares0: 385,           // ~381M shares + dilution; mkt cap ~$118B
-  rev25: 10200,           // FY2025 revenue $10.2B (+28% YoY)
+  shares0: 384,           // 383.95M shares (Finviz); mkt cap ~$116.75B
+  rev25: 10230,           // FY2025 revenue $10,229.9M (+27.7% YoY); TTM $10,843M
   fcfMargin25: 0.12,
-  taxRate: 0.20,
-  cash: 1500,
-  debt: 3000,
-  beta: 1.6,
+  taxRate: 0.23,          // FY2025 effective tax ~23.5% ($409.1M / $1,741.9M pretax)
+  cash: 2540,            // ~$2.54B cash (cash/sh $6.62)
+  debt: 3270,           // ~$3.27B total debt (Debt/Eq 0.77); net debt ~$0.7B (EV $117.47B − cap $116.75B)
+  beta: 2.0,
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 6.35,          // FY2026E adjusted EPS guidance midpoint ($6.30-$6.40, raised at Q1 2026)
-  rsRating: 96,           // Estimated — stock tripled over the past year, near highs
+  baseEps: 6.35,          // FY2026E adjusted EPS guidance midpoint ($6.30-$6.40, raised at Q1 2026). TTM GAAP EPS $3.98; adj excludes heavy intangible amortization. Finviz "EPS next Y" $8.79 = FY2027E adj.
+  rsRating: 90,           // Strong long-term (Perf 3Y +1196%) but cooling near-term (RSI ~46, below SMA20/50 after a pullback)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 
@@ -40,9 +40,9 @@ export const VRT = defineStock({
     'High beta — the stock falls harder than the market in any AI-capex scare',
   ],
 
-  analystConsensus: { rating: 'Buy', targetLow: 300, targetMedian: 377, targetHigh: 500, numAnalysts: 26 },
+  analystConsensus: { rating: 'Buy', targetLow: 300, targetMedian: 378, targetHigh: 500, numAnalysts: 26 },
 
-  epsCagr: [12, 20, 28],
+  epsCagr: [12, 22, 30],
   exitPE: [22, 30, 40],
   prob: [25, 50, 25],
 
@@ -67,7 +67,7 @@ export const VRT = defineStock({
       'EPS compounds ~12% from the FY2026E $6.35 base and the rich multiple re-rates toward ~22x. ' +
       '5-yr target: {target} ({return} from current), roughly {cagr} annualized. Probability: 25%.',
     'Vertiv delivers on its raised FY2026 guidance (~33% revenue growth, ~$6.35 adjusted EPS) and decelerates gracefully as the backlog converts. Liquid cooling and high-density power scale with GPU deployments; margins keep expanding. ' +
-      'EPS compounds ~20% from the $6.35 base while the multiple normalizes toward ~30x as growth matures. ' +
+      'EPS compounds ~22% from the $6.35 base while the multiple normalizes toward ~30x as growth matures. ' +
       '5-yr target: {target} ({return} from current), roughly {cagr} annualized. A premier AI-infrastructure compounder — already priced for a lot, but the backlog backs it.',
     'Liquid-cooling becomes the default for GPU racks and Vertiv captures the thermal-management standard; backlog compounds faster than expected and operating leverage drives margins higher. ' +
       'EPS compounds ~28% from the $6.35 base and the market sustains a premium ~40x multiple. ' +
@@ -84,20 +84,20 @@ export const VRT = defineStock({
   ],
 
   burry: {
-    sbc: 150,
-    gaapNi: 1330,
+    sbc: 36,
+    gaapNi: 1332.8,
     buyback: 0,
     epsBasis: 'NON_GAAP',
     fy: 'FY25',
-    overstatementPct: 40,
+    overstatementPct: 18,
     overstatementSource: 'estimated',
-    note: 'Estimated. SBC ~$150M vs FY25 GAAP NI ~$1.33B = ~11% naive, but the ~3x stock run over the past year amplifies the MTM owner-earnings cost into the Critical tier. Vertiv pays a small dividend and is not yet a meaningful net share reducer. Refresh with the 10-K SBC line.',
+    note: 'OK tier (near Pristine). FY25 stock-comp just $36.26M vs $1,332.8M GAAP NI = ~2.7% naive (TIKR) — genuinely small. The extreme ~12x stock run over 3 years adds a large MTM amplifier (~6x), lifting the estimate to ~18%, but absolute SBC is tiny. Vertiv pays a token dividend and is not a meaningful net share reducer.',
   },
 
   debtSafety: {
-    netDebt: 1500,
-    ebitda: 3400,
+    netDebt: 720,
+    ebitda: 2400,
     fy: 'FY25',
-    note: 'GREEN. Net debt ~$1.5B vs EBITDA ~$3.4B (FY26E op margin 23.3% on ~$13.75B) => leverage ~0.4x. Strong and growing cash generation; balance sheet is not the risk — AI-capex cyclicality is.',
+    note: 'GREEN. Net debt ~$0.72B (EV $117.47B − cap $116.75B; debt $3.27B vs cash $2.54B) vs EBITDA ~$2.4B (TTM $2,409M) => leverage ~0.3x. Strong and growing cash generation; balance sheet is not the risk — AI-capex cyclicality is.',
   },
 });
