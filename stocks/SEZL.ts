@@ -20,7 +20,7 @@ export const SEZL = defineStock({
   costDebt: 0.10,
   modelType: 'EPS_PE',
   baseEps: 5.12,        // FY2026E GAAP consensus (Jun 23 2026 revision; ≈ mgmt adjusted-EPS guidance $5.10). DCF distorted because the warehouse facility funds receivables, not corporate operations — lender => EPS_PE.
-  rsRating: 97,
+  rsRating: 90,        // IBD Relative Strength Rating (Jun 2026); composite 99, EPS rating 97
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',  // AI assists underwriting, but BNPL is fundamentally a consumer-credit business, not an AI beneficiary
 

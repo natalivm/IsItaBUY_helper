@@ -20,7 +20,7 @@ export const DAVE = defineStock({
   costDebt: 0.04,       // Blended low — the largest tranche is a 0% coupon convertible
   modelType: 'EPS_PE',
   baseEps: 16.00,       // FY2026E — GAAP consensus ~$15.93 ≈ mgmt adjusted-EPS guidance $16.25-$16.75. DCF distorted because the facility funds member cash advances, not corporate operations — neobank/lender => EPS_PE.
-  rsRating: 96,
+  rsRating: 92,        // IBD Relative Strength Rating (Jun 2026); composite 94, EPS rating 80
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',  // CashAI powers underwriting, but the business is consumer cash advances, not an AI beneficiary
 
