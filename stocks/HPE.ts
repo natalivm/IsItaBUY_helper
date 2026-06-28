@@ -5,83 +5,96 @@ export const HPE = defineStock({
   name: 'Hewlett Packard Enterprise Company',
   sector: 'Networking / AI Infrastructure',
   themeColor: '#01A982',
-
-  currentPrice: 43.71,
-  fairPriceRange: '$15 - $85',
-  shares0: 1330,
-  rev25: 34296,
-  fcfMargin25: 0.06,
-  taxRate: 0.16,
-  cash: 4840,
-  debt: 21660,
+  updatedOn: '06/28',
+  lastReportTag: 'Q2 FY26',
+  dataReviewedOn: '2026-06-28',
+  currentPrice: 43.60,    // Jun 28 2026 (FY ends Oct 31); ran off ~$14 lows on the Juniper/AI re-rate
+  fairPriceRange: '$40 - $125',
+  shares0: 1340,          // ~1,342M diluted post-Juniper (preferred issued for the deal); mkt cap ~$58B
+  rev25: 34296,           // FY2025 (Oct) revenue $34,296M (+13.8%, partial-year Juniper); LTM $38,794M. Q2 FY26 rev $10.7B (+40%)
+  fcfMargin25: 0.07,      // FY25 reported FCF margin 1.8% (Juniper integration drag); normalized ~7-9%; FY26 FCF guide >=$3.5B
+  taxRate: 0.15,          // ~15% effective (TIKR forward)
+  cash: 5400,             // ~$5.4B cash (FY25 $5,859M); LTM $5,354M
+  debt: 21000,           // ~$21B total debt post-Juniper; net debt de-levering toward the 2.0x target
   beta: 1.30,
   costDebt: 0.045,
-
-  rsRating: 97,
+  modelType: 'EPS_PE',
+  baseEps: 3.40,          // FY2026E non-GAAP EPS — mgmt guide midpoint $3.35-$3.45 (raised 40%+ at Q2, 2 yrs ahead of plan). FY25 was a GAAP loss on a $1.6B Juniper writedown/restructuring. FY27 framework: 12-16% EPS growth. TIKR path: $3.40->$4.00->$4.25->$5.03->$5.61 (FY26-30, ~13% CAGR).
+  rsRating: 97,           // Very strong — multi-year uptrend, near highs after the Q2 FY26 earnings beat
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/26',
-  lastReportTag: 'Q2 FY26',
-
-  analystConsensus: { rating: 'Buy', targetLow: 32, targetMedian: 50, targetHigh: 68, numAnalysts: 25 },
 
   reasonsToBuy: [
-    'Juniper acquisition fundamentally transforms HPE from commodity hardware into a networking-led infrastructure platform',
-    'Record gross margin expansion confirms structural shift — synergies are executing ahead of schedule',
-    'Networks for AI (Ethernet fabrics, Aruba campus, sovereign AI) positions HPE at the center of enterprise AI buildout',
-    'Multi-year financial framework introduced for the first time gives investors unusual forward visibility into FY27',
-    'Undemanding valuation relative to revenue growth rate makes the risk-reward compelling if synergies compound',
+    'Juniper acquisition transforms HPE into a networking-led platform — integration and synergies are running ahead of schedule, lifting the margin mix',
+    'Networks for AI plus AI-native "self-driving" networking (Aruba/Mist, owned routing and campus silicon) puts HPE at the center of the enterprise AI buildout',
+    'Record orders and backlog, with rare six-quarter guidance, signal durable demand into FY2027 — management calls AI networking demand "untouchable"',
+    'Undemanding low-teens forward P/E for a double-digit earnings grower leaves clear room to re-rate toward networking peers',
+    'De-levering to its 2.0x net-leverage target a year early unlocks a plan to return at least 75% of free cash flow via dividends and buybacks',
   ],
 
   risksToBuy: [
-    'Heavy net debt from the Juniper acquisition constrains buyback capacity and amplifies downside in a downturn',
-    'Revenue growth is expected to decelerate sharply after FY26, limiting the case for a premium networking multiple',
-    'Hardware-heavy model keeps CapEx high and FCF margins well below software peers even in the bull case',
-    'AI capex normalization or enterprise budget fatigue could cut into networking orders faster than management expects',
-    'High SBC relative to GAAP earnings means reported profitability overstates true owner economics meaningfully',
+    'Heavy net debt from the Juniper deal still sits above target and amplifies downside in a downturn — the balance sheet is the key watch-item',
+    'Memory and component (DDR) supply is the gating factor — strong orders can outrun the company\'s ability to convert backlog to revenue',
+    'Revenue growth decelerates after the FY26 Juniper step-up, limiting the case for a premium networking multiple',
+    'Hardware-heavy model (plus GreenLake leasing) keeps CapEx high and FCF margins well below software peers even in the bull case',
+    'AI-capex normalization or enterprise budget fatigue could cut server and networking orders faster than management expects',
   ],
+
+  analystConsensus: { rating: 'Buy', targetLow: 24, targetMedian: 62, targetHigh: 80, numAnalysts: 23 },
+
+  epsCagr: [7, 13, 18],   // Base mid of mgmt's 12-16% FY27 EPS framework / TIKR ~13% path; bull adds networking-mix acceleration
+  exitPE: [9, 12, 16],
+  prob: [30, 45, 25],
 
   revGrowth: [
-    [0.25, 0.07, 0.05, 0.04, 0.03], // Bear: AI capex normalizes fast, Juniper synergies miss, server/storage declines
-    [0.31, 0.10, 0.08, 0.07, 0.06], // Base: FY26 guidance delivers, FY27 framework holds
-    [0.33, 0.15, 0.12, 0.10, 0.08], // Bull: AI fabric becomes dominant enterprise infrastructure layer
+    [0.28, 0.06, 0.03, 0.04, 0.03],   // Bear: AI-capex normalizes fast, synergies miss, legacy declines
+    [0.31, 0.11, 0.06, 0.08, 0.05],   // Base: full-year Juniper + FY27 framework holds (TIKR path)
+    [0.33, 0.15, 0.10, 0.12, 0.08],   // Bull: AI fabric becomes the dominant enterprise infrastructure layer
   ],
-
   fcfMargin: [
-    [0.06, 0.07, 0.07, 0.08, 0.08], // Bear: synergy disappointment, hardware mix drag
-    [0.08, 0.09, 0.10, 0.11, 0.12], // Base: FCF guidance delivers, margin expands per FY27 framework
-    [0.10, 0.13, 0.15, 0.17, 0.18], // Bull: networking mix shift drives software-like FCF leverage
+    [0.06, 0.07, 0.07, 0.08, 0.08],
+    [0.08, 0.09, 0.10, 0.10, 0.10],
+    [0.10, 0.12, 0.13, 0.14, 0.15],
   ],
-
-  exitMultiple: [7, 12, 16],
-  ebitdaProxy: [0.10, 0.14, 0.18],
+  exitMultiple: [7, 11, 15],
   termGrowth: [0.015, 0.025, 0.030],
   bbRate: [0.003, 0.010, 0.015],
+  ebitdaProxy: [0.15, 0.19, 0.21],
+  bullMaOptVal: false,
 
   desc: [
-    'AI capex normalizes faster than HPE\'s integration model assumed. Juniper synergies come in below the $600M target; legacy server and storage revenue declines offset networking gains. Net debt ($16.8B) becomes a FCF burden as margins stall. Multiple compresses to 7× as market re-rates HPE as cyclical IT hardware. Bear-case 5yr target ~$12–18.',
-    'HPE delivers on FY26 guidance (+31% revenue, FCF ≥$3.5B) and the FY27 framework proves durable (+8–12% growth, FCF ≥$4.5B). Juniper synergies hit the $600M target by FY27. Networks for AI orders expand as enterprise AI buildout moves from pilots to production. FCF margin improves from 8% to 12% on operating leverage and networking mix. Multiple holds at 12× as the networking premium is partially earned. Base-case 5yr target ~$48–55.',
-    'AI networking becomes the dominant enterprise infrastructure layer and HPE is the distribution platform for it. Sovereign AI programs, on-prem model hosting, and edge inference drive a second wave of AI fabric demand in FY28–30. Juniper\'s Mist AI becomes the de facto campus AI platform. FCF margin reaches 17–18% as networking mix exceeds 50% of revenue. Multiple expands to 16× as earnings quality justifies a Cisco-tier premium. Bull-case 5yr target ~$80–100.',
+    'AI capex normalizes faster than HPE\'s integration model assumed; Juniper synergies disappoint and legacy server/storage declines offset networking gains. The acquisition debt becomes a free-cash-flow burden, and the market re-rates HPE back to a cyclical hardware multiple (~9x). ' +
+      'EPS compounds only ~7% from the FY2026E $3.40 base. 5-yr target: {target} ({return} from current), roughly {cagr} annualized. Probability: 30%.',
+    'Full-year Juniper consolidation and synergies deliver the FY26 step-up (EPS raised 40%+, two years ahead of plan), and HPE compounds earnings ~13% as Networks for AI and record backlog convert through FY2027. Free cash flow funds the dividend while the debt de-levers to its 2.0x target a year early, unlocking 75%+ FCF returns. EPS compounds ~13% from the $3.40 base while the low-teens multiple holds (~12x) — the networking re-rate is optional upside, not a requirement. ' +
+      '5-yr target: {target} ({return} from current), roughly {cagr} annualized. Cheap for the growth, with real optionality — but leverage and hardware cyclicality keep it from being a pound-the-table name.',
+    'AI networking becomes the dominant enterprise infrastructure layer and HPE is a primary distribution platform — sovereign AI, on-prem inference and edge demand drive a second wave of fabric and server demand, and Juniper\'s Mist/Marvis becomes the de facto self-driving network. EPS compounds ~18% from the $3.40 base and the market awards a networking-peer ~16x as earnings quality re-rates. ' +
+      '5-yr target: {target} ({return} from current), roughly {cagr} annualized. Probability: 25%.',
+  ],
+
+  thesis: [
+    'Bear mechanics: HPE is still a hardware-heavy, cyclical IT vendor carrying large acquisition debt. If AI capex digests or Juniper synergies slip, earnings stall while interest and CapEx eat the cash flow, and the multiple sinks back to high-single digits. ' +
+      'At {spot} the valuation is low, but a levered balance sheet means the equity takes the hit if the cycle turns.',
+    'The setup is unusually strong: a blowout Q2 (revenue +40%, EPS +108%, orders more than doubled to a record backlog) let management raise FY26 EPS 40%+ — two years ahead of plan — and hand out a rare six-quarter guide. HPE trades at a low-teens forward multiple while full-year Juniper, ahead-of-schedule synergies and durable AI-networking demand drive a low-teens EPS CAGR, with free cash flow de-levering the balance sheet to 2.0x a year early and then funding 75%+ capital returns. ' +
+      'You are paying a hardware multiple for a business shifting toward higher-margin networking, with owned routing/campus silicon giving a supply edge — the re-rate toward Cisco/Arista-tier multiples is upside you are not forced to pay for. The catch remains the balance sheet and the memory/component supply that gates how fast the record backlog converts. Verdict: BUY — cheap, improving and levered to enterprise AI, but size for the leverage.',
+    'The bull case: enterprise AI networking compounds for years, HPE/Juniper owns the fabric and self-driving campus standard, the legacy mix shrinks as a share of profit, and the market finally pays a networking multiple for the combined franchise. ' +
+      '{target} is achievable if synergies compound, supply loosens and the networking re-rate plays out. Probability 25% — requires durable AI-infrastructure demand and clean execution.',
   ],
 
   burry: {
-    sbc: 1400,
+    sbc: 850,
     gaapNi: 3300,
-    buyback: 200,
-    epsBasis: 'GAAP',
-    fy: 'FY26',
-    overstatementPct: 95,
+    buyback: 300,
+    epsBasis: 'NON_GAAP',
+    fy: 'FY26E',
+    overstatementPct: 50,
     overstatementSource: 'estimated',
-    note: 'FY26E SBC ~$1.4B vs GAAP NI ~$3.3B = 42% naive; 2.7× stock rise (2023–2026) → 2.5× MTM amplifier → ~105% pre-cap. Set at 95% (profitable, unlike GAAP-loss peers).',
+    note: 'Critical. SBC ~$850M (FY25 $643M, rising with Juniper) vs FY26E GAAP NI ~$3.3B (GAAP EPS guide $2.42-$2.52) = ~26% naive; the ~3x stock move over 3 years adds a meaningful MTM amplifier, and buybacks are paused until the 2.0x leverage target so there is little offset for now. Reported non-GAAP profitability overstates true owner economics. (FY25 GAAP was a loss on a $1.6B Juniper writedown/restructuring.)',
   },
 
   debtSafety: {
-    netDebt: 16820,
-    ebitda: 5800,
-    capexToOcf: 0.34,
-    interestCoverage: 6.0,
-    altmanZ: 2.5,
-    fy: 'FY26',
-    note: 'Juniper acquisition ($14B, Feb 2024) drives leverage. Net debt ~2.9× EBITDA. CapEx/OCF 34% (hardware model); interest coverage 6× PASSES; Altman Z ~2.5 soft-flag for asset-heavy model.',
+    netDebt: 13500,
+    ebitda: 6800,
+    fy: 'FY26E',
+    note: 'GREEN (de-levering through the line). Net leverage was 2.3x at Q2 FY26 (down from 2.6x) and management now expects to hit its 2.0x net-leverage target by end of FY2026 — a year early — on strong FCF (>=$3.5B FY26 guide) and the full divestiture of the H3C stake. Once at 2.0x, HPE plans to return >=75% of FCF via dividends and buybacks. Investment-grade credit; post-Juniper leverage is the watch-item but is coming down fast. CapEx/OCF runs ~35-40% (hardware + GreenLake leasing).',
   },
 });
