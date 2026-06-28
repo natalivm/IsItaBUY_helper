@@ -12,7 +12,7 @@ export type PanelTab = 'notes' | 'news';
 export const UPDATES_VERSION = '2026-06-28';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'LLY re-rates to BUY on a guidance-driven EPS rebase; three new names added — SEZL (HOLD), DAVE (BUY), NVO (HOLD); plus a new quarterly-earnings badge showing each row\'s latest reported quarter and how fresh the data is.';
+export const LATEST_SUMMARY = 'Seven new names — VRT & RDDT (BUY), WDC & SIMO (HOLD), SEZL & NVO (HOLD), DAVE (BUY); LLY re-rates to BUY on a guidance-driven EPS rebase; plus a new quarterly-earnings badge showing each row\'s latest reported quarter and how fresh the data is.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,11 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 28 2026',
+    tickers: ['VRT', 'RDDT', 'WDC', 'SIMO'],
+    text: 'Four new AI-infrastructure / storage names added (EPS×P/E model). VRT (Vertiv) BUY — data-center power & cooling pure-play with a huge AI backlog; rich but the Street target sits above the price. RDDT (Reddit) BUY — fast-growing ad platform plus a high-margin AI data-licensing annuity, with upside to target (AI-search traffic risk is the offset). WDC (Western Digital) HOLD — HDD up-cycle is real but the stock ran to an all-time high and trades above its analyst target at a cyclical-peak multiple (HOLD override, mirroring Seagate). SIMO (Silicon Motion) HOLD — explosive NAND-controller growth, but a small-cap cyclical trading above target after a big run.',
+  },
   {
     date: 'Jun 28 2026',
     tickers: ['SEZL', 'DAVE', 'NVO'],
