@@ -9,10 +9,10 @@ export type PanelTab = 'notes' | 'news';
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
 // seen-version differs from this. (Not a real OS push — same in-app pop-up
 // system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-28';
+export const UPDATES_VERSION = '2026-06-28.2';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'LLY re-rates to BUY on a guidance-driven EPS rebase; three new names added — SEZL (HOLD), DAVE (BUY), NVO (HOLD); plus a new quarterly-earnings badge showing each row\'s latest reported quarter and how fresh the data is.';
+export const LATEST_SUMMARY = 'Deep-dive refresh of VRT, Q, HPE & SIMO against verified TIKR financials, the latest earnings-call / Investor-Day transcripts and IBD relative-strength ratings. HPE moves to the EPS×P/E model and holds BUY; VRT holds BUY; Q & SIMO hold HOLD. No home-group changes.';
 
 interface ReleaseNote {
   date: string;
@@ -22,6 +22,16 @@ interface ReleaseNote {
 
 // Stock-evaluation changes only — kept intentionally terse.
 const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    date: 'Jun 28 2026',
+    tickers: ['VRT', 'Q', 'HPE', 'SIMO'],
+    text: 'Deep-dive refinement of four names against verified TIKR financials, the latest earnings-call / Investor-Day transcripts and IBD relative-strength ratings (no rating-tier or home-group changes). VRT (Vertiv) BUY — base EPS rolled to the raised FY2026E guide and growth set toward the Street\'s ~27% FY26-30 path; verified SBC is tiny (Pristine/OK) and net leverage is ~0.2x exiting Q1. Q (Qnity) HOLD — revenue/EPS reset to actuals (FY25 $4.75B, raised FY26E ~$3.97); a badly overstated SBC estimate corrected to Pristine (~3% naïve, buybacks exceed comp); still ~40x forward, above no clear margin of safety. HPE moved from DCF to the EPS×P/E model and HOLDS BUY — FY26 EPS guidance raised 40%+ (two years ahead of plan), an 8-12% revenue / 12-16% EPS FY27 framework, de-levering to its 2.0x target a year early then returning ≥75% of FCF; the prior estimate had overstated SBC ~2x. SIMO (Silicon Motion) HOLD — confirmed the ~4x run is real (record quarters, structural NAND-controller share gains, MonTitan CMX/KV-cache and boot drives ramping into NVIDIA platforms), but at ~35x peak-cycle earnings it trades above the $274 analyst target. IBD RS synced: SIMO 99, HPE 96, VRT 86.',
+  },
+  {
+    date: 'Jun 28 2026',
+    tickers: ['VRT', 'RDDT', 'WDC', 'SIMO', 'Q'],
+    text: 'Five new AI-infrastructure / semiconductor names added (EPS×P/E model). VRT (Vertiv) BUY — data-center power & cooling pure-play with a huge AI backlog; rich but the Street target sits above the price. RDDT (Reddit) BUY — fast-growing ad platform plus a high-margin AI data-licensing annuity, with upside to target (AI-search traffic risk is the offset). WDC (Western Digital) HOLD — HDD up-cycle is real but the stock ran to an all-time high and trades above its analyst target at a cyclical-peak multiple (HOLD override, mirroring Seagate). SIMO (Silicon Motion) HOLD — explosive NAND-controller growth, but a small-cap cyclical trading above target after a big run. Q (Qnity Electronics) HOLD — high-quality DuPont semiconductor-materials spin-off, but ~42x forward earnings for a mid-teens grower after a ~65% post-debut run.',
+  },
   {
     date: 'Jun 28 2026',
     tickers: ['SEZL', 'DAVE', 'NVO'],
