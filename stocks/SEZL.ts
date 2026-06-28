@@ -13,22 +13,22 @@ export const SEZL = defineStock({
   shares0: 33.59,         // Finviz Shs Outstand 33.59M (float only 16.74M; insiders own ~51%)
   rev25: 450.28,          // FY2025 total revenue $450.28M (+66% YoY); TTM $480.91M
   fcfMargin25: 0.308,     // FY2025 profit margin ~30.8% (NI $133.13M / rev $450.28M)
-  taxRate: 0.20,          // FY2025 effective tax ~18.3% ($29.76M / $162.89M pretax); normalizing higher
-  cash: 125,             // ~$125M (cash/sh $3.72 × 33.59M); warehouse line funds the receivables
-  debt: 146,            // ~$146M (Debt/Eq 0.74 × ~$197M equity) — revolving facility funding consumer receivables; net debt ~$21M (EV $5.76B − cap $5.74B)
+  taxRate: 0.22,          // FY2025 effective tax 18.3% actual; consensus forward ~22-23% (TIKR 26E 22.5%, 27E 23%)
+  cash: 103,             // $102.6M cash at YE2025 (TIKR); warehouse line funds the receivables
+  debt: 134,            // ~$134M revolving facility funding consumer receivables; net debt $31.17M at YE2025 (TIKR, 0.12x EBITDA)
   beta: 2.8,            // Modeled high-vol beta; trailing Finviz beta is an extreme 6.49 (artifact of the parabolic +169% YTD move)
   costDebt: 0.10,
   modelType: 'EPS_PE',
   baseEps: 5.12,        // FY2026E GAAP consensus (Jun 23 2026 revision; ≈ mgmt adjusted-EPS guidance $5.10). DCF distorted because the warehouse facility funds receivables, not corporate operations — lender => EPS_PE.
-  rsRating: 97,
+  rsRating: 90,        // IBD Relative Strength Rating (Jun 2026); composite 99, EPS rating 97
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',  // AI assists underwriting, but BNPL is fundamentally a consumer-credit business, not an AI beneficiary
 
   reasonsToBuy: [
     'Best-in-class BNPL economics — high operating margins and exceptional returns on equity, while many peers still lose money',
     'Relentless execution: beat both EPS and revenue estimates every quarter for two years, repeatedly raising full-year guidance',
-    'Reasonably priced for the growth — a sub-1 PEG despite a high headline multiple, reflecting fast forward-earnings expansion',
-    'New growth vectors layering on — Pay-in-5, long-term lending, a virtual card, and an AT&T mobile plan widen the funnel',
+    'Expanding from BNPL toward an all-in-one money app — Pay-in-5, virtual card, AT&T mobile plan, plus deposit accounts and a cash-flow/advance tool on the 2026-27 roadmap',
+    'Pursuing an ILC bank charter (application mid-2026) — would swap WebBank variable fees for a fixed cost base and add regulatory defensibility',
     'Founder-aligned with heavy insider ownership and disciplined buybacks that more than offset stock compensation',
   ],
 
@@ -42,7 +42,7 @@ export const SEZL = defineStock({
 
   analystConsensus: { rating: 'Buy', targetLow: 100, targetMedian: 138, targetHigh: 165, numAnalysts: 7 },
 
-  epsCagr: [13, 24, 31],
+  epsCagr: [13, 22, 30],   // Base trimmed to reflect TIKR consensus deceleration (GAAP NI +35% 26E → +28% 27E → +11% 28E), plus ~3%/yr buyback tailwind
   exitPE: [11, 15, 21],
   prob: [30, 50, 20],
 
@@ -68,7 +68,7 @@ export const SEZL = defineStock({
       'BNPL regulation adds disclosure and underwriting friction. EPS compounds at only ~13% from the FY2026E $5.12 base to ~$9.40 by FY31, and the market reprices Sezzle as a cyclical subprime lender at ~11x. ' +
       '5-yr target: {target} ({return} from current), roughly {cagr} annualized. Probability: 30% — elevated given the stock already trades above the analyst target range.',
     'Sezzle delivers on its raised FY2026 guidance (30-35% revenue growth, ~$5.10 adjusted EPS) and growth decelerates gracefully thereafter. Pay-in-5, long-term lending, the virtual card, and the AT&T mobile plan keep GMV compounding while operating margins hold near 40%. ' +
-      'EPS compounds ~24% from the $5.12 base to ~$15 by FY31, but the rich multiple normalizes toward ~15x as growth matures — the same dynamic behind a Street price target ($138) that sits below the current price. ' +
+      'EPS compounds ~22% from the $5.12 base to ~$14 by FY31, but the rich multiple normalizes toward ~15x as growth matures — the same dynamic behind a Street price target ($138) that sits below the current price. ' +
       '5-yr target: {target} ({return} from current), roughly {cagr} annualized. Excellent business — but the entry price already discounts much of the growth.',
     'New products and the mobile-carrier channel scale faster than expected, purchase frequency keeps climbing, and operating leverage drives margins higher. Sezzle takes durable share as a profitable BNPL leader. ' +
       'EPS compounds ~31% from the $5.12 base to ~$20 by FY31, and the market awards ~21x on proven, profitable hypergrowth. ' +
@@ -82,26 +82,26 @@ export const SEZL = defineStock({
     'The operating story is exceptional: revenue and EPS have beaten estimates every quarter for two years, margins are best-in-class (~40% operating, ~92% ROE), guidance keeps rising, and the PEG is below 1. ' +
       'Yet the stock has run ~169% YTD and trades above the consensus price target ($138), with extreme volatility and a ~28% short float on a tiny ~17M-share float. ' +
       'The probability-weighted target sits below {spot}: the business is firing, but the price already pays for it. Verdict: HOLD — own the execution, wait for a better entry.',
-    'The bull case needs the new product suite (Pay-in-5, long-term lending, virtual card, mobile) to compound GMV while frequency and margins keep rising. ' +
+    'The bull case needs the all-in-one platform push (Pay-in-5, virtual card, deposit accounts, a cash-flow/advance tool) to compound GMV while frequency and margins keep rising, with the ILC bank charter (applying mid-2026) lowering funding/processing costs and hardening the regulatory moat. ' +
       'If Sezzle sustains ~30% EPS growth and holds best-in-class margins, it earns a premium multiple as a profitable BNPL compounder, and {target} is achievable. ' +
       'The risk: BNPL is cyclical and crowded, and the market is unforgiving of any deceleration at this valuation. Probability 20% — real optionality, but not a margin-of-safety entry at {spot}.',
   ],
 
   burry: {
-    sbc: 5.2,
+    sbc: 6.52,
     gaapNi: 133.13,
-    buyback: 50,
+    buyback: 64.66,
     epsBasis: 'GAAP',
     fy: 'FY25',
     overstatementPct: 10,
     overstatementSource: 'estimated',
-    note: 'Pristine. FY25 equity-based comp is only ~$5.2M vs $133.13M GAAP NI = ~3.9% naive — Sezzle is capital-efficient and founder-led (insiders own ~51%). Even applying a large MTM amplifier for the multi-fold stock run, the $50M buyback completed in 2025 (+$100M authorized) exceeds SBC ~10:1, so real per-share dilution is negative and owner earnings ≈ GAAP earnings. SBC from the FY25 cash-flow reconciliation; pct estimated. (Corrected down from an earlier ~$20M placeholder.)',
+    note: 'Pristine. FY25 stock-based comp is only $6.52M vs $133.13M GAAP NI = ~4.9% naive (TIKR cash-flow statement) — Sezzle is capital-efficient and founder-led (insiders own ~51%), with SBC actually falling YoY ($10.3M FY22 → $6.5M FY25). Even applying a large MTM amplifier for the multi-fold stock run, FY25 buybacks of $64.66M exceed SBC ~10:1, so real per-share dilution is negative and owner earnings ≈ GAAP earnings. SBC/buyback verified; pct estimated via MTM heuristic.',
   },
 
   debtSafety: {
-    netDebt: 21,
+    netDebt: 31,
     ebitda: 185,
     fy: 'FY25',
-    note: 'Framework partially N/A for a BNPL lender — the ~$146M facility is warehouse/revolving debt funding consumer receivables, not corporate leverage. Net debt ~$21M (EV $5.76B − market cap $5.74B) vs EBITDA ~$185M (FY25 $178M / TTM $197M) => leverage ~0.1x, comfortably GREEN. Quick & current ratios 3.65. Real risk metric is receivables credit quality and charge-off rates, not the leverage ratio.',
+    note: 'Framework partially N/A for a BNPL lender — the ~$134M facility is warehouse/revolving debt funding consumer receivables, not corporate leverage. Net debt $31.17M at YE2025 (TIKR) vs EBITDA ~$185M => leverage ~0.12-0.17x, comfortably GREEN. Strong cash generation reinforces it: FY25 FCF ~$209M (~46% margin); quick & current ratios 3.65. Real risk metric is receivables credit quality and charge-off rates, not the leverage ratio.',
   },
 });
