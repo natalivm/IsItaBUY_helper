@@ -12,7 +12,7 @@ export type PanelTab = 'notes' | 'news';
 export const UPDATES_VERSION = '2026-06-28';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
 // One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Three new fintech/pharma names — SEZL (HOLD), DAVE (BUY) and NVO (HOLD) — plus a new quarterly-earnings badge on every row showing the latest reported quarter and how fresh the data is.';
+export const LATEST_SUMMARY = 'LLY re-rates to BUY on a guidance-driven EPS rebase; three new names added — SEZL (HOLD), DAVE (BUY), NVO (HOLD); plus a new quarterly-earnings badge showing each row\'s latest reported quarter and how fresh the data is.';
 
 interface ReleaseNote {
   date: string;
@@ -26,6 +26,11 @@ const RELEASE_NOTES: ReleaseNote[] = [
     date: 'Jun 28 2026',
     tickers: ['SEZL', 'DAVE', 'NVO'],
     text: 'Three new names added, all on the EPS×P/E model off their latest quarter. SEZL (Sezzle) HOLD — best-in-class, highly profitable BNPL lender, but it trades above the analyst target range after a parabolic run (Pristine Burry; pursuing an ILC bank charter). DAVE (Dave Inc.) BUY — profitable neobank / cash-advance fintech at a sub-1 PEG, ~22× earnings on ~22% EPS growth with aggressive buybacks shrinking a tiny float (FTC fee-model scrutiny is the lead risk). NVO (Novo Nordisk) HOLD — fallen-angel GLP-1 leader down ~60% from its highs; 2026 adjusted earnings are guided to decline (−4% to −12%) on US "Most Favoured Nations" pricing and Lilly competition, offset by a record oral-Wegovy-pill launch and a deep pipeline.',
+  },
+  {
+    date: 'Jun 28 2026',
+    tickers: ['LLY'],
+    text: 'LLY re-rated HOLD → BUY on a data correction. The EPS base was rolled from a stale ~FY2025 $24 to the FY2026E ~$36.25 after Lilly RAISED full-year non-GAAP EPS guidance to $35.50-$37 (Q1 2026 EPS $8.55, revenue +56%, FY26 revenue guide $82-85B). Foundayo (oral orforglipron) is now approved and launching, retatrutide posted up to ~30% weight-loss Phase III data (a likely third obesity drug in 2027), and BD/pipeline cadence stays torrid. The prior HOLD reflected the understated trailing EPS base, not the business.',
   },
   {
     date: 'Jun 28 2026',
