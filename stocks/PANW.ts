@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const PANW = defineStock({
-  updatedOn: '06/26',
+  updatedOn: '06/29',
   lastReportTag: 'Q2 FY26',
   ticker: 'PANW',
   name: 'Palo Alto Networks',
   sector: 'Cybersecurity',
   themeColor: '#00a3e0',
-  currentPrice: 304.2,
+  currentPrice: 332,
   fairPriceRange: '$160 - $260',
   shares0: 770.0,
   rev25: 9200,
