@@ -5,7 +5,7 @@ export const NOW = defineStock({
   name: 'ServiceNow',
   sector: 'Enterprise SaaS / Workflow Platform',
   themeColor: '#62D84E',
-  currentPrice: 99.28,
+  currentPrice: 105.8,
   fairPriceRange: '$85 - $185',
   shares0: 1030,
   rev25: 14000,          // LTM total revenue after Q1 2026 ($3.8B Q1, +22% YoY)
@@ -20,7 +20,7 @@ export const NOW = defineStock({
   rsRating: 12,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '06/30',
+  updatedOn: '07/01',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [
