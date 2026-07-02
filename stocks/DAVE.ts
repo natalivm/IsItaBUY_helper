@@ -5,10 +5,10 @@ export const DAVE = defineStock({
   name: 'Dave Inc.',
   sector: 'FinTech / Neobank & Cash Advance',
   themeColor: '#16a34a',
-  updatedOn: '07/01',
+  updatedOn: '07/02',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 383.13,   // Jun 26 2026 (+8% on the day)
+  currentPrice: 387.36,   // Jun 26 2026 (+8% on the day)
   fairPriceRange: '$290 - $400',
   shares0: 12.7,          // ~12.7M shares (TIKR LTM) and falling fast — $231.73M repurchased LTM ($195M in Q1 2026 alone); float only ~9.8M; $300M authorization
   rev25: 554.18,          // FY2025 total revenue $554.18M (+60% YoY); TTM $604.62M (TIKR)

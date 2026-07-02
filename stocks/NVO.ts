@@ -7,10 +7,10 @@ export const NVO = defineStock({
   name: 'Novo Nordisk A/S',
   sector: 'Pharmaceuticals / GLP-1 & Obesity',
   themeColor: '#001f5b',
-  updatedOn: '07/01',
+  updatedOn: '07/02',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 48.77,    // NVO ADR, Jun 26 2026 close (down ~33% from 52-wk high, ~60% off 2024 peak)
+  currentPrice: 50.43,    // NVO ADR, Jun 26 2026 close (down ~33% from 52-wk high, ~60% off 2024 peak)
   fairPriceRange: '$45 - $120',
   shares0: 4470,          // ~4.47B shares (mkt cap $214.9B / $48.07)
   rev25: 48300,           // FY2025 revenue DKK 309,064M ≈ $48.3B (+6.4% YoY — sharp decel from +25%)
