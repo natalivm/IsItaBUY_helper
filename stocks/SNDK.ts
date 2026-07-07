@@ -54,12 +54,12 @@ export const SNDK = defineStock({
   ],
   exitMultiple: [9, 14, 22],
 
-  epsCagr: [-15, 5, 14],
-  exitPE: [7, 11, 14],
+  epsCagr: [-10, 5, 14],
+  exitPE: [8, 11, 14],
   prob: [25, 50, 25],
 
   desc: [
-    'NAND oversupply returns as Samsung/SK Hynix/Kioxia accelerate bit output through 2027-28. ASPs collapse toward variable cost — EBITDA margin reverts to near-zero as in FY23. EPS mean-reverts sharply. Stock re-rates to trough multiple (7×). Bear-case target ~$400-550.',
+    'NAND oversupply returns as Samsung/SK Hynix/Kioxia accelerate bit output through 2027-28. ASPs fall sharply toward variable cost and margins compress hard — though the AI enterprise-SSD mix cushions the collapse short of the FY23 near-zero-EBITDA trough. EPS gives back roughly 40% off the peak and the stock de-rates to a trough ~8× multiple. Bear-case target ~$700-850.',
     'AI storage provides a structural demand floor, moderating the typical NAND cycle severity. Enterprise SSD mix-shift sustains above-trough margins. EPS compounds modestly on volume growth. Market assigns mid-cycle 11× on normalized earnings. Target ~$1,800-2,400.',
     'AI infrastructure becomes the dominant NAND demand driver — persistent supply/demand tightness sustains 35%+ EBITDA margins through the decade. SNDK captures premium enterprise SSD pricing as hyperscalers treat NAND as strategic. EPS compounds in the low-teens; market re-rates only modestly to ~14× — a disciplined premium to the current multiple rather than a full peak-on-peak re-rating, since even a durable AI floor leaves memory a cyclical. Target ~$4,000-4,600.',
   ],
