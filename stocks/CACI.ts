@@ -17,7 +17,8 @@ export const CACI = defineStock({
   debt: 3200,            // Q2 FY2026 (Sep 2025); ARKA acquisition (Mar 2026, $2.6B) raises this further
   beta: 0.58,
   costDebt: 0.045,
-  ratingOverride: 'BUY',  // Model STRONG BUY overshoots for a low-growth gov-IT name with weak/falling RS; consensus Buy. Softening to BUY.
+  modelType: 'EPS_PE',    // Converted from DCF: low beta (0.58) made the Gordon perpetuity explode (base ~$1,616 vs ~$620 prose). Defense-IT has clean, stable adjusted EPS — EPS×P/E is the right frame and lands targets on the street.
+  ratingOverride: 'BUY',  // EPS_PE model now reads HOLD (base ~4.7% 5yr CAGR) — reasonable for a low-growth gov-IT name, and weak/falling RS (28, <30) disables the quality boost. Held at BUY to match consensus Buy + the constructive defense ring-fence / ARKA case; revisit if momentum stays weak.
 
   rsRating: 28,
   rsTrend: 'falling',
@@ -56,10 +57,17 @@ export const CACI = defineStock({
   exitMultiple: [8, 12, 16],
   ebitdaProxy: [0.10, 0.12, 0.14],
 
+  // EPS_PE model — baseEps is FY26E adjusted EPS (~$27; current price ~19× fwd, matching the desc).
+  // Bear ~$405 (0.79× street low), Base ~$635 (~street median $645), Bull ~$855 (~1.09× street high).
+  baseEps: 27,
+  epsCagr: [3, 8, 12],
+  exitPE: [13, 16, 18],
+  prob: [25, 50, 25],
+
   desc: [
-    'DOGE budget pressure reaches national-security-adjacent IT contracts. ARKA integration runs over schedule. Revenue growth decelerates to ~4% annually. Post-ARKA leverage becomes a concern as FCF growth disappoints. Multiple compresses from 19× to ~14× adj EPS. Bear target ~$400.',
-    'National security contracts remain ring-fenced. ARKA on track — $150M FY2026 revenue contribution, hypersonics/EW prime work accelerating. Revenue grows 7–10% annually, FCF margins expand from 7.4% to 10% as software mix rises. 12× EBITDA exit on FY2030 earnings. Base target ~$620.',
-    'DoD cyber, AI, and hypersonics budgets accelerate. CACI wins flagship AI-enabled intelligence contracts and expands ARKA platform internationally. Revenue grows 9–14% annually, FCF margins reach 13%. Rapid deleveraging frees capital for buybacks. Bull target ~$840.',
+    'DOGE budget pressure reaches national-security-adjacent IT contracts. ARKA integration runs over schedule. Revenue growth decelerates to ~4% annually and adjusted EPS barely grows (~3%/yr). Post-ARKA leverage becomes a concern as FCF disappoints. Multiple compresses from ~19× to ~13× adj EPS. Bear target ~$405.',
+    'National security contracts remain ring-fenced. ARKA on track — $150M FY2026 revenue contribution, hypersonics/EW prime work accelerating. Revenue grows 7–10% annually, FCF margins expand from 7.4% to 10% as software mix rises. Adjusted EPS compounds ~8%/yr and the multiple holds near 16×. Base target ~$635 (right on the street median).',
+    'DoD cyber, AI, and hypersonics budgets accelerate. CACI wins flagship AI-enabled intelligence contracts and expands ARKA platform internationally. Revenue grows 9–14% annually, FCF margins reach 13%. Rapid deleveraging frees capital for buybacks; adjusted EPS compounds ~12%/yr and the market pays ~18×. Bull target ~$855.',
   ],
 
   thesis: [
@@ -75,7 +83,7 @@ export const CACI = defineStock({
     sbc: 59,
     gaapNi: 500,
     buyback: 240,
-    epsBasis: 'GAAP',
+    epsBasis: 'NON_GAAP',   // baseEps is now FY26E adjusted EPS, so the multiple-haircut tile uses the non-GAAP basis
     fy: 'FY25',
     overstatementPct: 10,
     overstatementSource: 'estimated',

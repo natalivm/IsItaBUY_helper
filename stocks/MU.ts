@@ -56,12 +56,12 @@ export const MU = defineStock({
 
   // baseEps: FY26 annualized estimate (~$12.20 Q2 + $19.15 Q3 guidance trajectory = ~$55-60 FY26E)
   // Q2 FY26 actual: $12.20 EPS (+41.86% beat). Q3 FY26 guidance: $19.15 EPS, $33.5B rev, 81% GM.
-  epsCagr: [-40, 5, 18],
-  exitPE: [6, 12, 18],
+  epsCagr: [-8, 5, 18],
+  exitPE: [8, 12, 18],
   prob: [25, 50, 25],
 
   desc: [
-    'HBM oversupply hits in 2027 as Samsung regains packaging yield; commodity DRAM follows. Revenue collapses 30% from the $95B+ run-rate. EPS craters toward $5-10 range (FY23 analog). Stock re-rates to trough multiple (6×). Bear-case target ~$300-500.',
+    'HBM oversupply hits in 2027 as Samsung regains packaging yield and commodity DRAM follows — blended ASPs fall hard and margins compress. But the HBM oligopoly and a net-cash balance sheet keep MU well short of the FY23 loss trough: earnings retrace off the ~$55 peak base rather than collapsing outright. EPS grinds down toward the mid-$30s and the stock de-rates to a trough ~8× multiple. Bear-case target ~$290.',
     'HBM maintains oligopoly discipline through 2028; MU holds ~30% share. Revenue normalizes around $90-100B with mid-cycle margins. EPS stabilizes near $45-55 on a 5yr view as the cycle moderates. Market assigns 12× on normalized earnings. Target ~$900-1,400.',
     'HBM pricing power persists — 81%+ gross margins sustained as AI compute buildout structurally lifts memory content per server. MU reaches 35%+ HBM share, CHIPS Act fabs cut costs, domestic premium pricing locked in. EPS compounds at 18%+ from $55 base; market re-rates to 18× as cyclicality is structurally impaired. Target ~$2,000-3,000.',
   ],
