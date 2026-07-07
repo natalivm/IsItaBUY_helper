@@ -5,9 +5,9 @@ export const INTC = defineStock({
   name: 'Intel Corporation',
   sector: 'Semiconductors / CPU & Foundry',
   themeColor: '#0071c5',
-  updatedOn: '07/06',
+  updatedOn: '07/07',
   lastReportTag: 'Q1 FY26',
-  currentPrice: 122.2,
+  currentPrice: 110.39,
   fairPriceRange: '$20 - $145',
   shares0: 5080,          // ~5.08B diluted shares (Q1 FY26)
   rev25: 52500,           // FY2025 revenue ~$52.5B
