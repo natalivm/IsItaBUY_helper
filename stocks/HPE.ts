@@ -5,10 +5,10 @@ export const HPE = defineStock({
   name: 'Hewlett Packard Enterprise Company',
   sector: 'Networking / AI Infrastructure',
   themeColor: '#01A982',
-  updatedOn: '07/07',
+  updatedOn: '07/08',
   lastReportTag: 'Q2 FY26',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 43.47,    // Jun 26 2026 close (FY ends Oct 31); ran off ~$14 lows on the Juniper/AI re-rate
+  currentPrice: 44.67,    // Jun 26 2026 close (FY ends Oct 31); ran off ~$14 lows on the Juniper/AI re-rate
   fairPriceRange: '$40 - $125',
   shares0: 1340,          // ~1,342M diluted post-Juniper (preferred issued for the deal); mkt cap ~$58B
   rev25: 34296,           // FY2025 (Oct) revenue $34,296M (+13.8%, partial-year Juniper); LTM $38,794M. Q2 FY26 rev $10.7B (+40%)
