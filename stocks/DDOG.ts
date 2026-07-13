@@ -5,7 +5,7 @@ export const DDOG = defineStock({
   name: 'Datadog',
   sector: 'Observability / Cloud Monitoring',
   themeColor: '#632CA6',
-  currentPrice: 257.54,
+  currentPrice: 260.24,
   fairPriceRange: '$95 - $200',
   shares0: 372,        // FY26 guide: ~372M weighted-avg diluted shares
   rev25: 3427,
@@ -21,7 +21,7 @@ export const DDOG = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. EPS_PE model now screens a weak BUY (~+17% over 5y ≈ ~3% CAGR — a low-bar threshold artifact, not genuine undervaluation) on a name re-rated above its fair range. HOLD stands on the rich multiple + high SBC despite RS re-accelerating to 94 (rising); the override deliberately keeps it out of PRIME_GROWTH.
-  updatedOn: '07/10',
+  updatedOn: '07/13',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-26',
 

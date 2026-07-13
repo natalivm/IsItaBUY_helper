@@ -5,7 +5,7 @@ export const NVDA = defineStock({
   name: 'NVIDIA Corporation',
   sector: 'Semiconductors / AI Infrastructure',
   themeColor: '#76b900',
-  currentPrice: 210.96,
+  currentPrice: 203.53,
   fairPriceRange: '$210 - $400',
   shares0: 24400,
   rev25: 215900,
@@ -33,7 +33,7 @@ export const NVDA = defineStock({
     'Cyclicality risk: the market re-rates NVDA as a chip company, not a software-moat compounder, on any miss',
   ],
 
-  updatedOn: '07/10',
+  updatedOn: '07/13',
   lastReportTag: 'Q1 FY27',
   analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 254, targetHigh: 352, numAnalysts: 37 },
   revGrowth: [
