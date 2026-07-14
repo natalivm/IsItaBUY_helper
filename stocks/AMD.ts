@@ -5,7 +5,7 @@ export const AMD = defineStock({
   name: 'Advanced Micro Devices',
   sector: 'Semiconductors / AI Compute',
   themeColor: '#ed1c24',
-  currentPrice: 534.39,
+  currentPrice: 548.13,
   fairPriceRange: '$280 - $650',
   shares0: 1620,
   rev25: 34600,
@@ -21,7 +21,7 @@ export const AMD = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Floors AMD at HOLD: base DCF is deeply negative (momentum-rich, RS 97), but tagging a category leader OVERVALUED overstates it. Matches the RS-boosted model today; pins HOLD if the boost is lost.
-  updatedOn: '07/13',
+  updatedOn: '07/14',
   lastReportTag: 'Q1 FY26',
 
   reasonsToBuy: [
