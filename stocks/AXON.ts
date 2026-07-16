@@ -5,7 +5,7 @@ export const AXON = defineStock({
   name: 'Axon Enterprise',
   sector: 'Public Safety Tech / Government Platform',
   themeColor: '#FFC72C',
-  currentPrice: 541.12,
+  currentPrice: 541.75,
   fairPriceRange: '$420 - $900',
   shares0: 85,
   rev25: 3600,           // FY2026 estimate: $2.78B FY25 × guided 30-32% growth
@@ -21,7 +21,7 @@ export const AXON = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // RS collapsed to 13 (was 92) — the momentum that argued against HOLD is gone. Model STRONG BUY (+93%) is cumulative ~14% CAGR on a Burry-Tragic SBC name (~16% of rev, thin GAAP NI) at a 56x multiple with no margin for error; with no momentum support, HOLD until quality/momentum turns. (Street median +74%.)
-  updatedOn: '07/15',
+  updatedOn: '07/16',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [
