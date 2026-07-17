@@ -3,6 +3,7 @@ import { defineStock } from './defineStock';
 export const MRVL = defineStock({
   updatedOn: '07/16',
   lastReportTag: 'Q1 FY27',
+  dataReviewedOn: '2026-07-17',
   ticker: 'MRVL',
   name: 'Marvell Technology',
   sector: 'Semiconductors',
@@ -17,7 +18,7 @@ export const MRVL = defineStock({
   debt: 4470,
   beta: 2.29,
   costDebt: 0.055,
-  rsRating: 87,           // 52W high $217.45 hit post-earnings; +176% 52W performance
+  rsRating: 97,           // 52W high $217.45 hit post-earnings; +176% 52W performance — momentum intact through the 2wk pullback
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 

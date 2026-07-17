@@ -7,6 +7,7 @@ export const INTC = defineStock({
   themeColor: '#0071c5',
   updatedOn: '07/16',
   lastReportTag: 'Q1 FY26',
+  dataReviewedOn: '2026-07-17',
   currentPrice: 96.98,
   fairPriceRange: '$20 - $145',
   shares0: 5080,          // ~5.08B diluted shares (Q1 FY26)
@@ -19,7 +20,7 @@ export const INTC = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 0.90,          // FY2026E non-GAAP EPS estimate (Q1 $0.29 + Q2 guide $0.20 + H2 ~$0.41)
-  rsRating: 99,
+  rsRating: 98,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 

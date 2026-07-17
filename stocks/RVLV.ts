@@ -16,8 +16,8 @@ export const RVLV = defineStock({
   beta: 1.60,
   modelType: 'EPS_PE',
   baseEps: 0.83,
-  rsRating: 24,
-  rsTrend: 'falling',
+  rsRating: 46,
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Q1 2026 revenue acceleration validated by the strongest quarterly beat in years',
@@ -37,6 +37,7 @@ export const RVLV = defineStock({
 
   updatedOn: '07/16',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-07-17',
 
   epsCagr: [5, 14, 22],
   exitPE: [13, 18, 22],

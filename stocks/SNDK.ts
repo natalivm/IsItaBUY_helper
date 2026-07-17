@@ -19,6 +19,7 @@ export const SNDK = defineStock({
   aiImpact: 'TAILWIND',
   updatedOn: '07/16',
   lastReportTag: 'Q3 FY26',
+  dataReviewedOn: '2026-07-17',
   fairPriceRange: '$1,500 - $4,500',
 
   reasonsToBuy: [

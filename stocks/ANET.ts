@@ -7,6 +7,7 @@ export const ANET = defineStock({
   themeColor: '#6366f1',
   updatedOn: '07/16',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-07-17',
   currentPrice: 168.56,
   fairPriceRange: '$145',
   shares0: 1270,
@@ -17,7 +18,8 @@ export const ANET = defineStock({
   debt: 0,
   beta: 1.10,
   costDebt: 0.045,
-  rsRating: 83,
+  rsRating: 76,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'EOS network operating system creates deep hyperscaler lock-in — switching costs compound with every incremental deployment.',

@@ -7,6 +7,7 @@ export const ORCL = defineStock({
   themeColor: '#c74634',
   updatedOn: '07/16',
   lastReportTag: 'Q3 FY26',
+  dataReviewedOn: '2026-07-17',
   currentPrice: 124.21,
   fairPriceRange: '$140 - $380',
   shares0: 2870,
@@ -19,9 +20,10 @@ export const ORCL = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 6.03,
-  rsRating: 47,
-  rsTrend: 'rising',
+  rsRating: 9,
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  ratingOverride: 'HOLD',   // DCF reads BUY after the −11% drop, but RS 9 = no institutional support; don't flag a BUY on a stock the market is actively deserting.
   reasonsToBuy: [
     'Oracle Database lock-in is among the deepest moats in enterprise software — migration cost is prohibitive',
     'OCI bare-metal architecture offers a structural cost advantage for large-scale AI training workloads',
