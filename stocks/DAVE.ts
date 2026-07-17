@@ -7,7 +7,7 @@ export const DAVE = defineStock({
   themeColor: '#16a34a',
   updatedOn: '07/16',
   lastReportTag: 'Q1 2026',
-  dataReviewedOn: '2026-06-28',
+  dataReviewedOn: '2026-07-17',
   currentPrice: 442.53,   // Jun 26 2026 (+8% on the day)
   fairPriceRange: '$290 - $400',
   shares0: 12.7,          // ~12.7M shares (TIKR LTM) and falling fast — $231.73M repurchased LTM ($195M in Q1 2026 alone); float only ~9.8M; $300M authorization
@@ -20,9 +20,10 @@ export const DAVE = defineStock({
   costDebt: 0.04,       // Blended low — the largest tranche is a 0% coupon convertible
   modelType: 'EPS_PE',
   baseEps: 16.00,       // FY2026E — GAAP consensus ~$15.93 ≈ mgmt adjusted-EPS guidance $16.25-$16.75. DCF distorted because the facility funds member cash advances, not corporate operations — neobank/lender => EPS_PE.
-  rsRating: 92,        // IBD Relative Strength Rating (Jun 2026); composite 94, EPS rating 80
+  rsRating: 99,        // IBD Relative Strength Rating (Jul 2026); momentum still strongest-in-class after +14% 2wk run
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',  // CashAI powers underwriting, but the business is consumer cash advances, not an AI beneficiary
+  ratingOverride: 'BUY',   // +14% 2wk run compressed base-case upside to ~6% → model reads HOLD, but RS 99 & rising (best-in-class momentum) keeps this a BUY / TURBO_GROWTH.
 
   reasonsToBuy: [
     'Genuinely cheap for the growth — a sub-1 PEG and ~22x earnings against ~20%+ EPS growth, rare among profitable fintech',

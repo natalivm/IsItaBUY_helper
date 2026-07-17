@@ -7,6 +7,7 @@ export const APP = defineStock({
   themeColor: '#f97316',
   updatedOn: '07/16',
   lastReportTag: 'Q1 2026',
+  dataReviewedOn: '2026-07-17',
   currentPrice: 434.48,
   fairPriceRange: '$310 - $836',
   shares0: 336,
@@ -19,9 +20,10 @@ export const APP = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 14.50,       // FY2026 estimate: ~$6.3B EBITDA × 75% FCF conv ÷ 333M shares ≈ $14-15
-  rsRating: 58,
+  rsRating: 34,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  ratingOverride: 'BUY',   // Soft-band STRONG BUY came only from the AI-tailwind boost; RS 34 & falling doesn't support it after the −18% selloff — hold at BUY.
   reasonsToBuy: [
     'AXON AI engine delivers mobile advertisers measurably better ROAS, creating compounding lock-in as spend scales up.',
     'Best-in-class EBITDA margins with a high-fixed-cost model mean every incremental revenue dollar is nearly pure profit.',
