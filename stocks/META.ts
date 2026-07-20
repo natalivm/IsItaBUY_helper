@@ -5,7 +5,7 @@ export const META = defineStock({
   name: 'Meta Platforms',
   sector: 'Social Media / Digital Advertising / AI',
   themeColor: '#1877F2',
-  currentPrice: 646.01,
+  currentPrice: 645.85,
   fairPriceRange: '$520 - $900',
   shares0: 2560,
   rev25: 245000,         // FY2026 estimate: Q1 $56.3B + Q2 mid $59.5B + H2 ~$130B
@@ -20,7 +20,7 @@ export const META = defineStock({
   rsRating: 22,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '07/17',
+  updatedOn: '07/20',
   lastReportTag: 'Q1 2026',
 
   reasonsToBuy: [
