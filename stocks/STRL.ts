@@ -5,9 +5,9 @@ export const STRL = defineStock({
   name: 'Sterling Infrastructure, Inc.',
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
-  updatedOn: '07/20',
+  updatedOn: '07/21',
   lastReportTag: 'Q4 2025',
-  currentPrice: 650.22,
+  currentPrice: 694.4,
   fairPriceRange: '$320 - $800',
   shares0: 30.7,               // ~30.7M diluted shares outstanding (declining via buybacks)
   rev25: 2490,                 // FY2025 actual: $2.49B revenue (+32% YoY adj.)
