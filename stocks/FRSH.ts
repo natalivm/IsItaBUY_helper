@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const FRSH = defineStock({
-  updatedOn: '07/22',
+  updatedOn: '07/23',
   lastReportTag: 'Q1 2026',
   ticker: 'FRSH',
   name: 'Freshworks Inc.',
   sector: 'Enterprise SaaS / ITSM & CX',
   themeColor: '#00B89C',
-  currentPrice: 10.06,
+  currentPrice: 9.77,
   fairPriceRange: '$15 - $53',
   shares0: 276.4,
   rev25: 838.8,
