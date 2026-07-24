@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const ROAD = defineStock({
-  updatedOn: '07/23',
+  updatedOn: '07/24',
   lastReportTag: 'Q2 FY26',
   ticker: 'ROAD',
   name: 'Construction Partners, Inc.',
   sector: 'Infrastructure Construction · Road & Highway',
   themeColor: '#f59e0b',
-  currentPrice: 104.04,
+  currentPrice: 103.29,
   fairPriceRange: '$112 - $270',
   shares0: 56.5,               // ~56.5M shares (market cap $7.45B / $131.9)
   rev25: 2300,                 // FY 09/2025 revenue ($M)

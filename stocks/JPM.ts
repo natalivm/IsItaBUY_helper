@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const JPM = defineStock({
-  updatedOn: '07/23',
+  updatedOn: '07/24',
   ticker: 'JPM',
   name: 'JPMorgan Chase & Co.',
   sector: 'Diversified Banking',
   themeColor: '#065f46',
-  currentPrice: 349.9,
+  currentPrice: 353.21,
   fairPriceRange: '$250 - $555',
   shares0: 2674,
   rev25: 182400,
