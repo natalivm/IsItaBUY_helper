@@ -5,7 +5,7 @@ export const RVLV = defineStock({
   name: 'Revolve Group, Inc.',
   sector: 'Consumer Discretionary · Fashion E-Commerce',
   themeColor: '#c2185b',
-  currentPrice: 25.74,
+  currentPrice: 26.83,
   fairPriceRange: '$14 - $49',
   shares0: 73,
   rev25: 1230,
@@ -35,7 +35,7 @@ export const RVLV = defineStock({
     'Physical retail expansion is unproven at scale and adds execution risk to an already crowded strategy',
   ],
 
-  updatedOn: '07/27',
+  updatedOn: '07/28',
   lastReportTag: 'Q1 2026',
 
   epsCagr: [5, 14, 22],
