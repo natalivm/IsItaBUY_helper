@@ -5,10 +5,10 @@ export const VRT = defineStock({
   name: 'Vertiv Holdings Co',
   sector: 'Electrical Equipment / Data Center Power & Cooling',
   themeColor: '#0a9396',
-  updatedOn: '08/03',
+  updatedOn: '08/04',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 263.05,   // Jun 26 2026 close
+  currentPrice: 269.93,   // Jun 26 2026 close
   fairPriceRange: '$300 - $500',
   shares0: 384,           // 383.95M shares (Finviz); mkt cap ~$116.75B
   rev25: 10230,           // FY2025 revenue $10,229.9M (+27.7% YoY); TTM $10,843M
