@@ -5,7 +5,7 @@ export const SNPS = defineStock({
   name: 'Synopsys',
   sector: 'EDA Software / Chip Design',
   themeColor: '#7b2cbf',
-  currentPrice: 405.98,
+  currentPrice: 415.99,
   fairPriceRange: '$420 - $720',
   shares0: 192,
   rev25: 7054,

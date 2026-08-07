@@ -7,7 +7,7 @@ export const UBER = defineStock({
   name: 'Uber Technologies',
   sector: 'Mobility & Delivery Platform',
   themeColor: '#22c55e',
-  currentPrice: 70.47,
+  currentPrice: 75.02,
   fairPriceRange: '$45 - $200',
   shares0: 2080,           // ~2.08B diluted shares post Q1 FY26 $3B buyback
   rev25: 52000,            // FY2025 actual revenue $52.0B (+18% YoY)

@@ -7,7 +7,7 @@ export const APH = defineStock({
   themeColor: '#38bdf8',
   updatedOn: '08/07',
   lastReportTag: 'Q1 2026',
-  currentPrice: 170.61,
+  currentPrice: 169.18,
   fairPriceRange: '$77 - $290',
   shares0: 1278,
   rev25: 31000,

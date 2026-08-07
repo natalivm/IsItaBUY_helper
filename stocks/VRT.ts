@@ -8,7 +8,7 @@ export const VRT = defineStock({
   updatedOn: '08/07',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 275.17,   // Jun 26 2026 close
+  currentPrice: 272.4,   // Jun 26 2026 close
   fairPriceRange: '$300 - $500',
   shares0: 384,           // 383.95M shares (Finviz); mkt cap ~$116.75B
   rev25: 10230,           // FY2025 revenue $10,229.9M (+27.7% YoY); TTM $10,843M

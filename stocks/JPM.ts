@@ -6,7 +6,7 @@ export const JPM = defineStock({
   name: 'JPMorgan Chase & Co.',
   sector: 'Diversified Banking',
   themeColor: '#065f46',
-  currentPrice: 356.3,
+  currentPrice: 357.52,
   fairPriceRange: '$250 - $555',
   shares0: 2674,
   rev25: 182400,

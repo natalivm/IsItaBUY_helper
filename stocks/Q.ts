@@ -8,7 +8,7 @@ export const Q = defineStock({
   updatedOn: '08/07',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 133.37,   // Jun 27 2026 close (52wk range $70.50-$177.28); DuPont electronics spin-off, listed Nov 2025
+  currentPrice: 138,   // Jun 27 2026 close (52wk range $70.50-$177.28); DuPont electronics spin-off, listed Nov 2025
   fairPriceRange: '$130 - $250',
   shares0: 209,           // ~209.6M shares (1 Qnity per 2 DuPont); mkt cap ~$33B
   rev25: 4754,            // FY2025 revenue $4,754M (+9.7% YoY); Q1 2026 sales $1.315B (+18% YoY, +17% organic)

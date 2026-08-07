@@ -6,7 +6,7 @@ export const PLTR = defineStock({
   sector: 'AI / Data Analytics Software',
   themeColor: '#0ea5e9',
   updatedOn: '08/07',
-  currentPrice: 155.92,
+  currentPrice: 172.01,
   fairPriceRange: '$95 - $230',
   shares0: 2300,
   rev25: 4480,

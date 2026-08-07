@@ -8,7 +8,7 @@ export const RDDT = defineStock({
   updatedOn: '08/07',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 150.87,   // Jun 26 2026 close (+5.6% that day); pulled back ~27% from the Dec-25 close ($229.87), still well below the ~$230 analyst target
+  currentPrice: 161.7,   // Jun 26 2026 close (+5.6% that day); pulled back ~27% from the Dec-25 close ($229.87), still well below the ~$230 analyst target
   fairPriceRange: '$140 - $475',
   shares0: 206,           // ~206.4M diluted shares (Q1 2026); modest dilution (+0.2% YoY); mkt cap ~$34B
   rev25: 2202,            // FY2025 revenue $2,202.5M (+69.4%); Q1 2026 $663M (+69% YoY), 7th straight quarter >60%; Q2 guide $715-725M (+44%)

@@ -5,7 +5,7 @@ export const DUOL = defineStock({
   name: 'Duolingo',
   sector: 'EdTech · Language Learning · AI Platform',
   themeColor: '#58cc02',
-  currentPrice: 122.58,
+  currentPrice: 130.9,
   updatedOn: '08/07',
   fairPriceRange: '$52 - $311',
   shares0: 46.23,

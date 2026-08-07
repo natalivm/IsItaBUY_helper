@@ -7,7 +7,7 @@ export const LRCX = defineStock({
   name: 'Lam Research Corporation',
   sector: 'Semiconductor Equipment · Etch & Deposition',
   themeColor: '#005baa',
-  currentPrice: 305.77,
+  currentPrice: 311.35,
   fairPriceRange: '$165 - $485',
   shares0: 1260,           // ~1.26B diluted shares post 10:1 split (Oct 2024); market cap ~$298B
   rev25: 18400,            // FY25 revenue ~$18.4B

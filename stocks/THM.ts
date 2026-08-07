@@ -6,7 +6,7 @@ export const THM = defineStock({
   sector: 'Gold Mining · Exploration & Development',
   themeColor: '#CA8A04',
   updatedOn: '08/07',
-  currentPrice: 2.11,
+  currentPrice: 2.31,
   fairPriceRange: '$1 - $12',
   shares0: 245,
   rev25: 5,

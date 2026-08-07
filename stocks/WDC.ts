@@ -8,7 +8,7 @@ export const WDC = defineStock({
   updatedOn: '08/07',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 451.52,   // Jun 26 2026 close (-13% that day); 52wk $62.65-$799.87 — up ~8x off lows / +250% YTD on the AI-storage HDD super-cycle
+  currentPrice: 434.3,   // Jun 26 2026 close (-13% that day); 52wk $62.65-$799.87 — up ~8x off lows / +250% YTD on the AI-storage HDD super-cycle
   fairPriceRange: '$125 - $490',
   shares0: 385,           // ~385M diluted (Q3 FY26); HDD-only post-Sandisk spin; mkt cap ~$226B
   rev25: 12900,           // FY2026E run-rate (~$12.9B); FY25 actual (HDD-only) $9,520M; Q4 FY26 guide $3.65B (~$14.6B annualized exit)
