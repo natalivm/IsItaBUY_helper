@@ -5,9 +5,9 @@ export const RKLB = defineStock({
   name: 'Rocket Lab USA, Inc.',
   sector: 'Space Launch / Defense Space Infrastructure',
   themeColor: '#a855f7',
-  updatedOn: '08/05',
+  updatedOn: '08/07',
   lastReportTag: 'Q1 2026',
-  currentPrice: 74.82,
+  currentPrice: 75.67,
   fairPriceRange: '$52 - $340',  // from independent DCF using revenue-multiple exit; see narrative
   shares0: 534,
   rev25: 602,             // FY2025 actual revenue

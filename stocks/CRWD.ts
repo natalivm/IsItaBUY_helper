@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 209.86,
+  currentPrice: 207.39,
   fairPriceRange: '$340 - $1,000',
   shares0: 252,
   rev25: 4810,
@@ -36,7 +36,7 @@ export const CRWD = defineStock({
     'Premium valuation leaves no room for any execution stumble or softening in enterprise security spending',
   ],
 
-  updatedOn: '08/05',
+  updatedOn: '08/07',
 
   analystConsensus: { rating: 'Buy', targetLow: 353, targetMedian: 524, targetHigh: 640, numAnalysts: 40 },
 
