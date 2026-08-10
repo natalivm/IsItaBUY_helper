@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const MNST = defineStock({
-  updatedOn: '08/07',
+  updatedOn: '08/10',
   lastReportTag: 'Q4 2025',
   ticker: 'MNST',
   name: 'Monster Beverage Corp',
   sector: 'Consumer Staples / Beverages',
   themeColor: '#22c55e',
-  currentPrice: 90.36,
+  currentPrice: 91.43,
   fairPriceRange: '$60 - $100',
   shares0: 967,
   rev25: 8200,
