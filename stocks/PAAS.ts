@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const PAAS = defineStock({
-  updatedOn: '08/12',
+  updatedOn: '08/13',
   ticker: 'PAAS',
   name: 'Pan American Silver Corp',
   sector: 'Precious Metals Mining · Silver & Gold',
   themeColor: '#94A3B8',
-  currentPrice: 52.38,
+  currentPrice: 47.3,
   fairPriceRange: '$32 - $196',
   shares0: 422.6,
   rev25: 3620,
