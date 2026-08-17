@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const MRVL = defineStock({
-  updatedOn: '08/14',
+  updatedOn: '08/17',
   lastReportTag: 'Q1 FY27',
   ticker: 'MRVL',
   name: 'Marvell Technology',
   sector: 'Semiconductors',
   themeColor: '#22d3ee',
-  currentPrice: 222.02,
+  currentPrice: 234.33,
   fairPriceRange: '$130 - $250',
   shares0: 870,
   rev25: 8195,            // FY26 annual revenue ($8.195B, ended Feb 1, 2026)
