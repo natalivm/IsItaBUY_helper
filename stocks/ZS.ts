@@ -5,7 +5,7 @@ export const ZS = defineStock({
   name: 'Zscaler',
   sector: 'Cybersecurity / Zero Trust',
   themeColor: '#0067D9',
-  currentPrice: 184.44,
+  currentPrice: 185.7,
   fairPriceRange: '$125 - $310',
   shares0: 165,
   rev25: 3330,
@@ -20,7 +20,7 @@ export const ZS = defineStock({
   rsRating: 8,
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '08/17',
+  updatedOn: '08/18',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-06-26',
 
