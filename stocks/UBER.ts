@@ -1,13 +1,13 @@
 import { defineStock } from './defineStock';
 
 export const UBER = defineStock({
-  updatedOn: '08/19',
+  updatedOn: '08/20',
   lastReportTag: 'Q1 FY26',
   ticker: 'UBER',
   name: 'Uber Technologies',
   sector: 'Mobility & Delivery Platform',
   themeColor: '#22c55e',
-  currentPrice: 78.04,
+  currentPrice: 78.55,
   fairPriceRange: '$45 - $200',
   shares0: 2080,           // ~2.08B diluted shares post Q1 FY26 $3B buyback
   rev25: 52000,            // FY2025 actual revenue $52.0B (+18% YoY)
