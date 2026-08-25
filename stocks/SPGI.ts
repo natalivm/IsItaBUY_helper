@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const SPGI = defineStock({
-  updatedOn: '08/24',
+  updatedOn: '08/25',
   ticker: 'SPGI',
   name: 'S&P Global',
   sector: 'Financial Data',
   themeColor: '#c5a44e',
-  currentPrice: 435.42,
+  currentPrice: 432.99,
   fairPriceRange: '$250 - $800',
   shares0: 298.8,
   rev25: 15340,

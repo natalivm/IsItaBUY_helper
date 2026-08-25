@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const MLM = defineStock({
-  updatedOn: '08/24',
+  updatedOn: '08/25',
   ticker: 'MLM',
   name: 'Martin Marietta Materials',
   sector: 'Building Materials · Aggregates & Heavy Construction Materials',
   themeColor: '#5b7f3b',
-  currentPrice: 533.11,
+  currentPrice: 531.74,
   fairPriceRange: '$420 - $1120',
   shares0: 60.3,               // ~60.3M shares (market cap $41.4B / $686)
   rev25: 6150,                 // Revenue 2025A ($M)
