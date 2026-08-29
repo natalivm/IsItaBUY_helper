@@ -5,7 +5,7 @@ export const SNDK = defineStock({
   name: 'SanDisk Corporation',
   sector: 'NAND Flash Memory / AI Storage',
   themeColor: '#c0392b',
-  currentPrice: 1484.95,
+  currentPrice: 1484.98,
   shares0: 148,
   rev25: 13200,
   fcfMargin25: 0.25,
@@ -17,7 +17,7 @@ export const SNDK = defineStock({
   rsRating: 99,
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '08/28',
+  updatedOn: '08/29',
   lastReportTag: 'Q3 FY26',
   fairPriceRange: '$1,500 - $4,500',
 
