@@ -5,9 +5,9 @@ export const ENVA = defineStock({
   name: 'Enova International',
   sector: 'FinTech / Lending',
   themeColor: '#3b82f6',
-  updatedOn: '09/09',
+  updatedOn: '09/10',
   lastReportTag: 'Q1 2026',
-  currentPrice: 224.03,
+  currentPrice: 223.06,
   fairPriceRange: '$160 - $250',
   shares0: 24.7,         // Q1 2026: ~110K shares repurchased; was 24.8M
   rev25: 3200,           // FY2025 net revenue ~$3.2B (Q4'25: $839M × annualized); Q1 2026 was record $875M
