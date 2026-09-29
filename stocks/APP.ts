@@ -7,7 +7,7 @@ export const APP = defineStock({
   themeColor: '#f97316',
   updatedOn: '09/29',
   lastReportTag: 'Q1 2026',
-  currentPrice: 308.24,
+  currentPrice: 305.66,
   fairPriceRange: '$310 - $836',
   shares0: 336,
   rev25: 7500,          // FY2026 estimate: Q1 $1.84B + Q2 guide $1.93B + H2 ~$3.8B

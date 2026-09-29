@@ -6,7 +6,7 @@ export const SPGI = defineStock({
   name: 'S&P Global',
   sector: 'Financial Data',
   themeColor: '#c5a44e',
-  currentPrice: 395.92,
+  currentPrice: 392.45,
   fairPriceRange: '$250 - $800',
   shares0: 298.8,
   rev25: 15340,

@@ -6,7 +6,7 @@ export const DELL = defineStock({
   sector: 'Hardware / AI Infrastructure',
   themeColor: '#007DB8',
 
-  currentPrice: 543.43,
+  currentPrice: 539.59,
   fairPriceRange: '$230 - $460',
   shares0: 650,
   rev25: 113500,

@@ -7,7 +7,7 @@ export const AZO = defineStock({
   themeColor: '#e74c3c',
   updatedOn: '09/29',
   lastReportTag: 'Q2 FY26',
-  currentPrice: 2913.28,
+  currentPrice: 2875.97,
   shares0: 16.6,
   rev25: 17500,
   fcfMargin25: 0.10,

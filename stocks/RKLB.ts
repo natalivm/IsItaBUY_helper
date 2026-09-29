@@ -7,7 +7,7 @@ export const RKLB = defineStock({
   themeColor: '#a855f7',
   updatedOn: '09/29',
   lastReportTag: 'Q1 2026',
-  currentPrice: 72.19,
+  currentPrice: 69.7,
   fairPriceRange: '$52 - $340',  // from independent DCF using revenue-multiple exit; see narrative
   shares0: 534,
   rev25: 602,             // FY2025 actual revenue

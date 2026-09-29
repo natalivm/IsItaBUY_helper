@@ -5,7 +5,7 @@ export const STX = defineStock({
   name: 'Seagate Technology Holdings',
   sector: 'Data Storage / AI Infrastructure',
   themeColor: '#00a651',
-  currentPrice: 921.51,
+  currentPrice: 913.45,
   fairPriceRange: '$520 - $1,420',
   shares0: 224,
   rev25: 12500,

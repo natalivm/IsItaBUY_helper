@@ -7,7 +7,7 @@ export const AVGO = defineStock({
   themeColor: '#7c4dff',
   updatedOn: '09/29',
   lastReportTag: 'Q1 FY26',
-  currentPrice: 349.57,
+  currentPrice: 355.1,
   fairPriceRange: '$330 - $540',
   shares0: 4700,
   rev25: 102000,

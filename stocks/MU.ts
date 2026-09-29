@@ -5,7 +5,7 @@ export const MU = defineStock({
   name: 'Micron Technology',
   sector: 'DRAM / NAND Flash Memory',
   themeColor: '#1a73e8',
-  currentPrice: 1053.98,
+  currentPrice: 1065.08,
   shares0: 1127,
   rev25: 95440,
   fcfMargin25: 0.20,

@@ -7,7 +7,7 @@ export const AMAT = defineStock({
   themeColor: '#1a5f7a',
   updatedOn: '09/29',
   lastReportTag: 'Q1 FY26',
-  currentPrice: 486.76,
+  currentPrice: 512.01,
   fairPriceRange: '$210 - $750',
   shares0: 800,           // ~800M diluted shares (market cap ~$293B / $366)
   rev25: 28370,           // FY25 revenue $28.37B

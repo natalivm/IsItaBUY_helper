@@ -7,7 +7,7 @@ export const EME = defineStock({
   lastReportTag: 'Q1 2026',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 765.52,
+  currentPrice: 762.03,
   fairPriceRange: '$560 - $1350',
   shares0: 44.7,
   rev25: 16990,             // Revenue 2025A ($M); FY2025 actual; +18.5% YoY (record)

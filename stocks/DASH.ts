@@ -5,7 +5,7 @@ export const DASH = defineStock({
   name: 'DoorDash, Inc.',
   sector: 'Internet / Consumer Logistics',
   themeColor: '#ff3008',
-  currentPrice: 178.39,
+  currentPrice: 187.1,
   updatedOn: '09/29',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$120 - $215',

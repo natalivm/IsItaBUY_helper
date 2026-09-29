@@ -6,7 +6,7 @@ export const TLN = defineStock({
   sector: 'Power',
   themeColor: '#3b82f6',
   updatedOn: '09/29',
-  currentPrice: 303.5,
+  currentPrice: 314.84,
   fairPriceRange: '$230 - $690',
   shares0: 45.96,
   rev25: 2430,

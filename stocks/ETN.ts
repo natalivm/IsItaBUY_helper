@@ -5,7 +5,7 @@ export const ETN = defineStock({
   name: 'Eaton Corporation plc',
   sector: 'Electrical Equipment / Electrification & Data Center Power',
   themeColor: '#0072ce',
-  currentPrice: 431.41,
+  currentPrice: 433.27,
   updatedOn: '09/29',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$330 - $520',
