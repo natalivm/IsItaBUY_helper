@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const RBRK = defineStock({
-  updatedOn: '09/29',
+  updatedOn: '09/30',
   ticker: 'RBRK',
   name: 'Rubrik',
   sector: 'Data Security',
   themeColor: '#22d3ee',
-  currentPrice: 114.77,
+  currentPrice: 114.47,
   fairPriceRange: '$35 - $100',
   shares0: 201.0,
   rev25: 1281,
