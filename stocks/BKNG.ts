@@ -7,7 +7,7 @@ export const BKNG = defineStock({
   themeColor: '#003580',
   updatedOn: '10/06',
   lastReportTag: 'Q1 2026',
-  currentPrice: 158.33,
+  currentPrice: 157.63,
   fairPriceRange: '$150 - $440',
   // 25-for-1 forward split effective 04/06/2026: 30.6M × 25 = 765M shares
   shares0: 765,

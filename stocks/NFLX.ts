@@ -6,7 +6,7 @@ export const NFLX = defineStock({
   name: 'Netflix',
   sector: 'Entertainment',
   themeColor: '#ff007f',
-  currentPrice: 67.5,
+  currentPrice: 68.69,
   fairPriceRange: '$56 - $200',
   shares0: 4222.0,
   rev25: 45180,

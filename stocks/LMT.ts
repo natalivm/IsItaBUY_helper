@@ -5,7 +5,7 @@ export const LMT = defineStock({
   name: 'Lockheed Martin Corp.',
   sector: 'Aerospace & Defense',
   themeColor: '#4b8ef5',
-  currentPrice: 506.63,
+  currentPrice: 510.12,
   updatedOn: '10/06',
   lastReportTag: 'Q1 2026',
   fairPriceRange: '$455 - $830',

@@ -7,7 +7,7 @@ export const STRL = defineStock({
   themeColor: '#e67e22',
   updatedOn: '10/06',
   lastReportTag: 'Q4 2025',
-  currentPrice: 523.33,
+  currentPrice: 563.69,
   fairPriceRange: '$320 - $800',
   shares0: 30.7,               // ~30.7M diluted shares outstanding (declining via buybacks)
   rev25: 2490,                 // FY2025 actual: $2.49B revenue (+32% YoY adj.)

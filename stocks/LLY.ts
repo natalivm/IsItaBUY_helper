@@ -8,7 +8,7 @@ export const LLY = defineStock({
   updatedOn: '10/06',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 1143.12,
+  currentPrice: 1157.49,
   fairPriceRange: '$750 - $1800',
   shares0: 947,
   rev25: 65200,

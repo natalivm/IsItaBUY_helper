@@ -7,7 +7,7 @@ export const CIEN = defineStock({
   name: 'Ciena Corporation',
   sector: 'Optical Networking / Telecom Infrastructure',
   themeColor: '#0ea5e9',
-  currentPrice: 389.69,
+  currentPrice: 443.65,
   fairPriceRange: '$70 - $350',
   shares0: 141,
   rev25: 4770,

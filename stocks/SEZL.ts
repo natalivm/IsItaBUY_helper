@@ -8,7 +8,7 @@ export const SEZL = defineStock({
   updatedOn: '10/06',
   lastReportTag: 'Q1 2026',
   dataReviewedOn: '2026-06-28',
-  currentPrice: 110.85,   // Jun 26 2026 close
+  currentPrice: 112.84,   // Jun 26 2026 close
   fairPriceRange: '$120 - $185',
   shares0: 33.59,         // Finviz Shs Outstand 33.59M (float only 16.74M; insiders own ~51%)
   rev25: 450.28,          // FY2025 total revenue $450.28M (+66% YoY); TTM $480.91M
