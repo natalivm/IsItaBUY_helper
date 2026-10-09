@@ -5,7 +5,7 @@ export const AMD = defineStock({
   name: 'Advanced Micro Devices',
   sector: 'Semiconductors / AI Compute',
   themeColor: '#ed1c24',
-  currentPrice: 620.68,
+  currentPrice: 608.1,
   fairPriceRange: '$280 - $650',
   shares0: 1620,
   rev25: 34600,

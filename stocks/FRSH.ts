@@ -7,7 +7,7 @@ export const FRSH = defineStock({
   name: 'Freshworks Inc.',
   sector: 'Enterprise SaaS / ITSM & CX',
   themeColor: '#00B89C',
-  currentPrice: 13.64,
+  currentPrice: 13.92,
   fairPriceRange: '$15 - $53',
   shares0: 276.4,
   rev25: 838.8,

@@ -7,7 +7,7 @@ export const AGCO = defineStock({
   themeColor: '#00d4aa',
   updatedOn: '10/09',
   lastReportTag: 'Q1 2026',
-  currentPrice: 108.13,
+  currentPrice: 103.28,
   fairPriceRange: '$54 - $225',
   shares0: 72.4,
   rev25: 10080,

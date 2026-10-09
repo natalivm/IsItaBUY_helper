@@ -7,7 +7,7 @@ export const ORCL = defineStock({
   themeColor: '#c74634',
   updatedOn: '10/09',
   lastReportTag: 'Q3 FY26',
-  currentPrice: 135.69,
+  currentPrice: 141.4,
   fairPriceRange: '$140 - $380',
   shares0: 2870,
   rev25: 57400,

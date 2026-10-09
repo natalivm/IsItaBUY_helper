@@ -7,7 +7,7 @@ export const INTC = defineStock({
   themeColor: '#0071c5',
   updatedOn: '10/09',
   lastReportTag: 'Q1 FY26',
-  currentPrice: 107.08,
+  currentPrice: 104.7,
   fairPriceRange: '$20 - $145',
   shares0: 5080,          // ~5.08B diluted shares (Q1 FY26)
   rev25: 52500,           // FY2025 revenue ~$52.5B

@@ -5,7 +5,7 @@ export const INTU = defineStock({
   name: 'Intuit Inc.',
   sector: 'Software / SMB Finance & Tax',
   themeColor: '#0077c5',
-  currentPrice: 303.88,
+  currentPrice: 302.75,
   fairPriceRange: '$340 - $640',
   shares0: 280,
   rev25: 18800,

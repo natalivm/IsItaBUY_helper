@@ -5,7 +5,7 @@ export const ONDS = defineStock({
   name: 'Ondas Inc.',
   sector: 'Defense Drones / Autonomous Systems',
   themeColor: '#6366f1',
-  currentPrice: 6.85,
+  currentPrice: 6.73,
   updatedOn: '10/09',
   lastReportTag: 'FY2025',
   fairPriceRange: '$4 - $32',

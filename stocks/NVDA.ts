@@ -5,7 +5,7 @@ export const NVDA = defineStock({
   name: 'NVIDIA Corporation',
   sector: 'Semiconductors / AI Infrastructure',
   themeColor: '#76b900',
-  currentPrice: 230.48,
+  currentPrice: 229.28,
   fairPriceRange: '$210 - $400',
   shares0: 24400,
   rev25: 215900,

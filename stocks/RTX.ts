@@ -5,7 +5,7 @@ export const RTX = defineStock({
   name: 'RTX Corporation',
   sector: 'Aerospace & Defense',
   themeColor: '#003087',
-  currentPrice: 184.32,
+  currentPrice: 185.97,
   fairPriceRange: '$145 - $315',
   shares0: 1350,
   rev25: 90400,

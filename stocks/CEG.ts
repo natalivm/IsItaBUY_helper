@@ -7,7 +7,7 @@ export const CEG = defineStock({
   themeColor: '#3b82f6',
   updatedOn: '10/09',
   lastReportTag: 'Q1 2026',
-  currentPrice: 285.07,
+  currentPrice: 298.07,
   fairPriceRange: '$200 - $540',
   shares0: 358,
   rev25: 25200,
