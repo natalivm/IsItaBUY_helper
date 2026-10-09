@@ -1,12 +1,12 @@
 import { defineStock } from './defineStock';
 
 export const KKR = defineStock({
-  updatedOn: '10/07',
+  updatedOn: '10/09',
   ticker: 'KKR',
   name: 'KKR & Co. Inc.',
   sector: 'Alternative Asset Mgmt',
   themeColor: '#7c3aed',
-  currentPrice: 89.67,
+  currentPrice: 89.56,
   fairPriceRange: '$100 - $186',
   shares0: 897,
   rev25: 7650,
