@@ -2,12 +2,14 @@ import { defineStock } from './defineStock';
 
 export const NFLX = defineStock({
   updatedOn: '10/09',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-10',
   ticker: 'NFLX',
   name: 'Netflix',
   sector: 'Entertainment',
   themeColor: '#ff007f',
   currentPrice: 70.3,
-  fairPriceRange: '$56 - $200',
+  fairPriceRange: '$57 - $135',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 4222.0,
   rev25: 45180,
   fcfMargin25: 0.209,
@@ -17,8 +19,22 @@ export const NFLX = defineStock({
   beta: 1.10,
   costDebt: 0.052,
   modelType: 'EPS_PE',
-  rsRating: 13,
+  rsRating: 52,         // IBD RS per user, 10/10/2026 (was 13)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Jul 16, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $12.56B (+13.4%, +12% FX-neutral), in line with guide (ads ~7%
+  // below consensus — slower ad ramp). Op income $4.2B (+11%), margin 33.4%
+  // (vs 34.1%). FCF $1.53B (-33%). Record $4.7B buyback. FY26 guide narrowed
+  // to $51.0-51.4B revenue, 31.5% op margin; Q3 revenue $12.86B, margin
+  // 33.2%. Stock -8-10% on the print. WBD: Warner Bros. Discovery
+  // terminated the Netflix merger agreement Feb 27 2026 (to merge with
+  // Paramount Skydance); Netflix received a $2.8B termination fee — a
+  // one-time boost to 2026 EPS. Street: Buy (51), PT $57-135 (median $90);
+  // FY26E EPS $3.59 / rev $51.2B, FY27E $3.81 / $57.0B (the small FY27 EPS
+  // step-up is consistent with lapping the fee).
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Unrivaled global streaming brand with deep content investment moat that new entrants cannot replicate quickly',
     'Ads-supported tier still nascent with advertising revenue per member far below the monetization ceiling of comparable platforms',
@@ -31,18 +47,17 @@ export const NFLX = defineStock({
     'Valuation already reflects the base-case compounding story — entry at current price leaves limited margin of safety',
     'Advertising revenue is cyclical; a macro slowdown disproportionately compresses the ads tier that drives the margin thesis',
     'Content cost inflation and competitive bidding wars with deep-pocketed studios and tech giants could erode FCF margins',
-    'RS and institutional momentum signals are negative, suggesting near-term technical headwinds against a position',
+    'The advertising ramp is running slower than expected, delaying the margin story the bull case depends on',
     'Subscriber saturation in high-ARPU English-language markets limits the geographic runway for premium pricing expansion',
   ],
 
-  // 2026E guide: ~$51B (+14% YoY). Drivers: membership + pricing + ads.
-  // Ads ~$3B in 2026 (~6% of revenue). Content amortization +~10% YoY.
+  // 2026 guide narrowed to $51.0-51.4B (+13%), op margin 31.5%. Ads ~$3B (ramp slower than planned).
 
-  analystConsensus: { rating: 'Buy', targetLow: 94, targetMedian: 119, targetHigh: 151, numAnalysts: 34 },
+  analystConsensus: { rating: 'Buy', targetLow: 57, targetMedian: 90, targetHigh: 135, numAnalysts: 51 },  // stockanalysis.com, Oct 8 2026
   revGrowth: [
-    [0.07, 0.06, 0.05, 0.05, 0.04], // Bear: revenue growth halved from guide, ads cyclical hit
-    [0.14, 0.12, 0.10, 0.09, 0.08], // Base: 2026 guide $51B, then natural deceleration
-    [0.16, 0.15, 0.14, 0.13, 0.12], // Bull: sustained execution + ads momentum + pricing
+    [0.12, 0.05, 0.05, 0.05, 0.04], // Bear: FY26 ~locked at guide; growth halves after, ads cyclical hit
+    [0.134, 0.11, 0.10, 0.09, 0.08], // Base: FY26 ≈ $51.2B guide/consensus, FY27 ≈ $57.0B, natural deceleration
+    [0.14, 0.15, 0.14, 0.13, 0.12], // Bull: ads momentum + pricing + live
   ],
 
   // Op margin 31.5% in 2026, expanding +2pp/yr (core +2.5pp ex-M&A drag).
@@ -58,30 +73,27 @@ export const NFLX = defineStock({
   exitMultiple: [14, 18, 22],
 
   desc: [
-    'Ads cyclicality + subscription slowdown. Revenue growth ~7%, margin plateau, P/E compresses to ~18x. M&A integration risk.',
-    'Executes 2026E guide: $51B rev, 31.5% op margin. Ads scale to $3B+. 15% EPS CAGR. DCF ≈ fair value.',
-    'Structural cash compounder. Ads ARM near parity, margin +2.5pp/yr sustained. 18% EPS CAGR, premium multiple.',
+    'Ads cyclicality + subscription slowdown. Revenue growth falls to ~5%, margin plateaus, P/E compresses to ~18x. 5yr target {target} ({cagr} annualized).',
+    'Executes 2026 guide ($51.2B revenue, 31.5% op margin); ads scale despite the slower ramp. EPS compounds ~15% from the ~$3.05 underlying FY26 base at a ~23x exit. 5yr target {target} ({cagr} annualized).',
+    'Structural cash compounder. Ads ARM near parity, margin +2.5pp/yr sustained. 18% EPS CAGR, premium ~28x multiple. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'Revenue falls to ~7% growth, ads hit by cycle, multiple to 18x. FCF CAGR ~10%. 5yr price ~$83, ~1% annual return.',
-    'Management executes guide. Revenue 10-12% post-2027, margin expands via ads + leverage. 5yr price ~$145, ~13% CAGR.',
-    'Ads ARM gap closes, 35%+ op margin sustained. Revenue 12-16%. 5yr price ~$200, ~20.6% CAGR.',
+    'Revenue falls to ~5% growth, ads hit by cycle, multiple to 18x. 5yr price {target} ({cagr} annualized).',
+    'Management executes guide. Revenue ~10-11% post-2026, margin expands via ads + leverage. At ~23x underlying FY26 EPS after the post-Q2 sell-off, 5yr price {target} ({cagr} annualized).',
+    'Ads ARM gap closes, 35%+ op margin sustained. Revenue 12-15%. 5yr price {target} ({cagr} annualized).',
   ],
 
   // Terminal growth aligned with DCF analysis: conservative 2%, base 3%, bull 3.5%
   termGrowth: [0.02, 0.03, 0.035],
 
-  // Probability-weighted expected return: (0.30×20.6%) + (0.45×13%) + (0.25×1%) = 12.3%
-  // Expected 5yr price: (0.30×200) + (0.45×145) + (0.25×83) = $146
-  baseEps: 3.13,
+  baseEps: 3.05,        // FY26E UNDERLYING EPS (est.): stockanalysis consensus $3.59 less ~$0.54/sh for the one-time $2.8B WBD termination fee (after tax, ~4.2B shares). FY27E $3.81 ≈ +25% on this base. Prior: $3.13.
   epsCagr: [8, 15, 18],
   exitPE: [18, 23, 28],
   prob: [25, 45, 30],
 
-  // M&A optionality: WB/HBO transaction pending but no deal parameters available.
-  // Standalone valuation is base; M&A case kept as separate layer.
-  bullMaOptVal: 78.67 * 4222.0 * 0.07,
+  // WBD deal terminated Feb 27 2026 (Netflix received a $2.8B fee) — M&A optionality removed.
+  bullMaOptVal: false,
 
   burry: {
     sbc: 368,

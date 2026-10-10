@@ -6,22 +6,32 @@ export const CEG = defineStock({
   sector: 'Power',
   themeColor: '#3b82f6',
   updatedOn: '10/09',
-  lastReportTag: 'Q1 2026',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-10',
   currentPrice: 298.07,
-  fairPriceRange: '$200 - $540',
+  fairPriceRange: '$290 - $395',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 358,
-  rev25: 25200,
+  rev25: 25200,        // FY2025; FY26E consensus $35.5B (+41% with Calpine), FY27E $36.7B
   fcfMargin25: 0.051,
   taxRate: 0.255,
   cash: 4500,
-  debt: 19900,
+  debt: 19900,         // pre-Calpine-close figure — NOT refreshed (debt rose with the $21.8B Calpine deal; EPS_PE model ignores it)
   beta: 1.83,
   costDebt: 0.0525,
   modelType: 'EPS_PE',
-  baseEps: 11.50,
-  rsRating: 17,
-  rsTrend: 'falling',
+  baseEps: 12.00,      // FY26E adjusted operating EPS = guide midpoint $11.50-12.50 (raised at Q2 2026 from ~$11-12; consensus $12.14, FY27E $13.32 +10%). Q2 $2.55 (vs $1.91). Prior: $11.50.
+  rsRating: 90,         // IBD RS per user, 10/10/2026 (was 17)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Aug 6, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Adj. operating EPS $2.55 (vs $1.91; beat ~$2.36); GAAP $1.42 (vs $2.67).
+  // Calpine ($21.8B) closed — +23 GW generation and a large retail platform;
+  // required divestitures underway. Nuclear outages and Illinois ZEC timing
+  // weighed on the quarter (not on the full year). FY26 adj. EPS guide raised
+  // to $11.50-12.50. Street: Buy (22), PT $290-395 (median $345.50); FY26E
+  // EPS $12.14 / rev $35.5B, FY27E $13.32 / $36.7B. ~25× FY26E.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'America\'s largest clean-firm nuclear fleet uniquely positioned to meet AI data center around-the-clock power demand',
     'Management guidance of strong base EPS growth through the decade is underpinned by long-term contracted generation',
@@ -32,21 +42,21 @@ export const CEG = defineStock({
 
   risksToBuy: [
     'ERCOT forward pricing weakness and merchant power exposure mean earnings are partly cyclical, not purely contracted',
-    'Calpine lockup expiration creates near-term share overhang and potential selling pressure',
+    'Street expects only modest earnings growth next year after the Calpine step-up, short of the long-term framework',
     'Nuclear infrastructure requires substantial ongoing capex, limiting near-term free cash flow conversion',
     'Capacity price sustainability depends on PJM market design remaining supportive — regulatory changes are a real risk',
     'Altman Z and debt metrics reflect the capital-intensive nature of the business, which scores poorly on traditional leverage screens',
   ],
 
-  epsCagr: [8, 15, 22],
+  epsCagr: [8, 13, 20],   // Q2 2026: base 15→13, bull 22→20 — FY27E consensus is only +10% after the Calpine step-up
   exitPE: [16, 22, 27],
   prob: [25, 50, 25],
 
-  analystConsensus: { rating: 'Buy', targetLow: 347, targetMedian: 403, targetHigh: 462, numAnalysts: 14 },
+  analystConsensus: { rating: 'Buy', targetLow: 290, targetMedian: 345.5, targetHigh: 395, numAnalysts: 22 },  // stockanalysis.com, Oct 7 2026
   revGrowth: [
-    [0.05, 0.04, 0.04, 0.04, 0.03],
-    [0.12, 0.11, 0.10, 0.09, 0.08],
-    [0.18, 0.16, 0.14, 0.13, 0.12],
+    [0.35, 0.00, 0.03, 0.03, 0.03],   // Bear: Calpine step-up only; power prices soften
+    [0.41, 0.04, 0.08, 0.08, 0.07],   // Base: FY26/FY27 ≈ consensus $35.5B / $36.7B (Calpine consolidated), then organic
+    [0.45, 0.10, 0.12, 0.12, 0.11],   // Bull: hyperscaler PPAs + uprates + gas utilization
   ],
   fcfMargin: [
     [0.040, 0.045, 0.050, 0.055, 0.060],
@@ -55,9 +65,9 @@ export const CEG = defineStock({
   ],
   exitMultiple: [13, 17, 21],
   desc: [
-    'PJM regulatory clarity arrives slower than promised and customer pauses extend. ERCOT forward weakness persists through 2028. Calpine integration friction and capacity-price normalization from elevated 2025 levels compress merchant margins. EPS growth lands at ~8% — below the >20% base-case management framework. Market reprices to 16× as cyclicality reasserts.',
-    'Management hits the guided framework: FY26 lands in the $11–$12 range, Calpine delivers ~$2/sh of accretion, PJM backstop framework finalizes per the June FERC submission timeline. Powered-land deals close at Crane (CIR transfer approved for 2027 credit) and at additional sites in PJM and ERCOT. Capacity prices stabilize at structurally higher levels but do not surge further. EPS compounds at ~15% — short of the >20% base case but well above utility peers. P/E settles at 22× reflecting durable premium clean-firm status.',
-    'Full execution on all levers — Byron/Braidwood uprates plus Calvert/Limerick path, Crane on 2027 capacity timeline, multiple hyperscaler PPAs across PJM and ERCOT, optionality on additional uprates, gas-fleet utilization rises with around-the-clock demand. Nuclear PTC inflation gearing kicks in. FCF before growth reaches the high end of the $11.5–13B 2028–29 range, funding aggressive buybacks and dividend at 10%/yr. EPS compounds at 22%+; business reclassifies as contracted infrastructure compounder at 27×.',
+    'PJM regulatory clarity arrives slower than promised and customer pauses extend. ERCOT forward weakness persists through 2028. Calpine integration friction and capacity-price normalization from elevated 2025 levels compress merchant margins. EPS growth lands at ~8% from the $12.00 FY26E base. Market reprices to 16× as cyclicality reasserts. 5yr target {target} ({cagr} annualized).',
+    'Management hits the raised framework: FY26 lands in the $11.50–$12.50 range with Calpine now closed, PJM backstop framework finalizes per the June FERC submission timeline. Powered-land deals close at Crane (CIR transfer approved for 2027 credit) and at additional sites in PJM and ERCOT. Capacity prices stabilize at structurally higher levels but do not surge further. EPS compounds at ~13% — above utility peers. P/E settles at 22× reflecting durable premium clean-firm status. 5yr target {target} ({cagr} annualized).',
+    'Full execution on all levers — Byron/Braidwood uprates plus Calvert/Limerick path, Crane on 2027 capacity timeline, multiple hyperscaler PPAs across PJM and ERCOT, optionality on additional uprates, gas-fleet utilization rises with around-the-clock demand. Nuclear PTC inflation gearing kicks in. FCF before growth reaches the high end of the $11.5–13B 2028–29 range, funding aggressive buybacks and dividend at 10%/yr. EPS compounds at ~20%; business reclassifies as contracted infrastructure compounder at 27×. 5yr target {target} ({cagr} annualized).',
   ],
 
   bbRate: [0.01, 0.018, 0.030],

@@ -6,22 +6,37 @@ export const APP = defineStock({
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
   updatedOn: '10/09',
-  lastReportTag: 'Q1 2026',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-10',
   currentPrice: 277.04,
-  fairPriceRange: '$310 - $836',
-  shares0: 336,
-  rev25: 7500,          // FY2026 estimate: Q1 $1.84B + Q2 guide $1.93B + H2 ~$3.8B
+  fairPriceRange: '$325 - $790',  // stockanalysis.com analyst target range, Oct 9 2026
+  shares0: 337,         // Q2 2026 diluted 337.0M (335M outstanding)
+  rev25: 8090,          // FY2026E consensus $8.09B (Q1 $1.84B + Q2 $1.92B + Q3 guide $2.07B) — base year; revGrowth[0] = FY27 (consensus $10.23B, +26%)
   fcfMargin25: 0.68,    // FY2026: FCF guide ~75% of EBITDA (84-85%) ≈ 63-64% of revenue
   taxRate: 0.127,
-  cash: 2760,           // Q1 2026 end: $2.76B
-  debt: 3500,
+  cash: 3053,           // Jun 30 2026
+  debt: 3515,           // Jun 30 2026 long-term debt
   beta: 2.22,
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 14.50,       // FY2026 estimate: ~$6.3B EBITDA × 75% FCF conv ÷ 333M shares ≈ $14-15
-  rsRating: 58,
+  baseEps: 16.67,       // FY2026E EPS — stockanalysis consensus (Oct 9 2026; range $15.65-17.78; FY27E $20.78, +25%). Q2 diluted EPS $3.76. Prior: $14.50 (EBITDA × FCF-conversion estimate).
+  rsRating: 41,         // IBD RS per user, 10/10/2026 (was 58)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Aug 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // A rare miss. Revenue $1,924M (+53%) — just under the $1,915-1,945M guide
+  // midpoint; adj. EBITDA $1,614M (+58%, 84% margin) — just BELOW the
+  // $1,615-1,645M range. Mgmt blamed timing of model improvements, not
+  // demand/competition. Net income $1,267M, EPS $3.76. Q2 OCF/FCF only
+  // ~$0.87B (vs $1.6B EBITDA — tax/working-capital timing). Buybacks $551M
+  // (1.1M shares). SBC $86M. Cash $3.05B vs debt $3.52B. Q3 GUIDE: revenue
+  // $2,055-2,085M (~0.6% below consensus), adj. EBITDA $1,710-1,740M (83%).
+  // Stock fell as much as ~21% on the print and kept sliding: ~$396 (Jul 31)
+  // → $277 (Oct 9). Street: Buy (33), PT $325-790 (median $470) — stock now
+  // below the LOW target; ~17× FY26E / ~13× FY27E EPS. Net: fundamentals
+  // still elite, but the "never misses" premium is gone and momentum broke.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'AXON AI engine delivers mobile advertisers measurably better ROAS, creating compounding lock-in as spend scales up.',
     'Best-in-class EBITDA margins with a high-fixed-cost model mean every incremental revenue dollar is nearly pure profit.',
@@ -38,10 +53,10 @@ export const APP = defineStock({
     'Ad spend is highly cyclical — a macro slowdown or consumer pullback would hit revenue with no cost cushion to absorb it.',
   ],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 465, targetMedian: 705, targetHigh: 860, numAnalysts: 26 },
+  analystConsensus: { rating: 'Buy', targetLow: 325, targetMedian: 470, targetHigh: 790, numAnalysts: 33 },  // stockanalysis.com, Oct 9 2026
   revGrowth: [
-    [0.15, 0.12, 0.10, 0.10, 0.08],  // Bear: self-serve disappoints, consumer stalls
-    [0.22, 0.18, 0.16, 0.15, 0.14],  // Base: self-serve ramps, consumer + lead-gen expand
+    [0.12, 0.08, 0.06, 0.05, 0.05],  // Bear: Q2 miss was the start of a slowdown; self-serve disappoints, consumer stalls
+    [0.26, 0.18, 0.16, 0.15, 0.14],  // Base: FY27 ≈ consensus +26%; self-serve ramps, consumer + lead-gen expand
     [0.30, 0.27, 0.23, 0.20, 0.18],  // Bull: consumer + lead-gen + CTV all scale
   ],
   fcfMargin: [
@@ -52,19 +67,19 @@ export const APP = defineStock({
   exitMultiple: [16, 22, 28],
   desc: [
     'June self-serve launch stalls — onboarding friction persists despite video creative tools. The consumer vertical loses momentum as macro cuts e-commerce ad budgets. ' +
-      'Revenue growth decelerates from 59% to low-mid teens within 2 years. At 85% EBITDA margins there is zero cushion — every revenue miss flows straight through. ' +
-      'Multiple compresses from 33x to 18x. Earnings grow at ~15% from $14.50 base; modest returns from current entry.',
+      'Revenue growth decelerates from ~50% to single digits within 2 years (the Q2 2026 miss as the first crack). At ~84% EBITDA margins there is zero cushion — every revenue miss flows straight through. ' +
+      'Multiple compresses from ~17x to 12x. Earnings grow only ~5% from the $16.67 FY26E base. 5yr target {target} ({cagr} annualized).',
     'June self-serve launch ramps efficiently: <30-day breakeven and near-zero churn confirm the cohort economics. Consumer vertical sustains April record momentum through 2026. ' +
       'Lead-gen model (auto/health/fintech) rolls out in 2027 as the next TAM expansion. Revenue compounds at ~22% annually; 85% EBITDA margins hold. ' +
-      'EPS grows at ~27% from $14.50 base; multiple settles to 22x through earnings growth, delivering ~15% annualized returns.',
+      'EPS grows ~21% from the $16.67 base; the multiple recovers toward 22x as execution resumes. 5yr target {target} ({cagr} annualized).',
     'Self-serve + consumer + lead-gen + CTV all compound simultaneously. 100K+ new advertisers per year at $70K+ LTV creates a flywheel where more demand density raises publisher ROAS, which attracts more supply. ' +
       'Revenue sustains 28-30% growth for 3+ years. Buybacks accelerate on $5B+ FCF. ' +
-      'EPS grows at ~37% from $14.50 base; market re-rates from cyclical to structural at 25x; 20%+ annualized returns.',
+      'EPS grows ~37% from the $16.67 base; market re-rates from cyclical to structural at 25x. 5yr target {target} ({cagr} annualized).',
   ],
   thesis: [
     'Ad cycle turns down — macro cuts budgets. Meta captures no-ID traffic, TikTok takes share. ' +
       'Margin at 82-84% EBITDA has zero room to expand — revenue miss flows straight to EPS. ' +
-      '"Black box" narrative keeps institutional discount. At $460, stock already prices strong execution. ' +
+      '"Black box" narrative keeps an institutional discount, and the Q2 2026 miss broke the "never misses" premium. ' +
       'Self-serve qualified leads → go-live at 57% shows conversion bottleneck (lack of creatives for format).',
     'Q1 guide (+5-7% QoQ despite seasonality) validates growth engine intact. ' +
       'Self-serve GA 1H26 broadens advertiser base. CAC/LTV 30-day breakeven = scalable growth loop. ' +
@@ -77,8 +92,8 @@ export const APP = defineStock({
       'Meta competition expands pie (bid density) rather than taking share.',
   ],
 
-  epsCagr: [15, 21, 37],
-  exitPE: [18, 22, 25],
+  epsCagr: [5, 21, 37],   // Bear 15→5 at Q2 2026 review: the old bear (15% at 18x) still returned ~17%/yr — not a bear case
+  exitPE: [12, 22, 25],   // Bear 18→12 to match a de-rating on decelerating growth
   prob: [20, 45, 35],
 
   bbRate: [0.01, 0.02, 0.03],
@@ -97,9 +112,9 @@ export const APP = defineStock({
   },
 
   debtSafety: {
-    netDebt: 740,        // Q1 2026: debt $3,500M − cash $2,760M
-    ebitda: 6300,        // FY2026E: ~85% adj EBITDA margin × $7.5B rev guide
+    netDebt: 462,        // Jun 30 2026: debt $3,515M − cash $3,053M
+    ebitda: 6800,        // FY2026E: ~84% adj EBITDA margin × ~$8.1B revenue
     fy: 'FY26E',
-    note: 'Net leverage 0.12× — effectively debt-free relative to earnings power. $5B+ annual FCF rapidly deleverages; $3.28B buyback authorization provides capital return floor.',
+    note: 'Net leverage ~0.07× — effectively debt-free relative to earnings power. $5B+ annual FCF rapidly deleverages; $3.28B buyback authorization provides capital return floor.',
   },
 });
