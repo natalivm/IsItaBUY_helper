@@ -6,21 +6,40 @@ export const AMAT = defineStock({
   sector: 'Semiconductor Equipment · Deposition & Etch',
   themeColor: '#1a5f7a',
   updatedOn: '10/09',
-  lastReportTag: 'Q1 FY26',
+  lastReportTag: 'Q3 FY26',
+  dataReviewedOn: '2026-10-10',
   currentPrice: 507.03,
-  fairPriceRange: '$210 - $750',
-  shares0: 800,           // ~800M diluted shares (market cap ~$293B / $366)
-  rev25: 28370,           // FY25 revenue $28.37B
+  fairPriceRange: '$358 - $900',  // stockanalysis.com analyst target range (Sep 28 2026)
+  shares0: 800,           // Q3 FY26 diluted 800M; mkt cap ~$406B
+  rev25: 28370,           // FY25 revenue $28.37B; FY26E (Oct) consensus $34.25B (+21%), FY27E $46.2B (+35%)
   fcfMargin25: 0.20,      // FCF $5.7B / rev $28.37B ≈ 20%
   taxRate: 0.12,
-  cash: 6500,
-  debt: 5000,
+  cash: 14501,          // Jul 26 2026: $7.04B cash + $2.20B ST + $5.27B LT investments
+  debt: 6544,           // Jul 26 2026: $1.30B ST + $5.25B LT
   beta: 1.25,
   costDebt: 0.035,
   modelType: 'EPS_PE',
-  baseEps: 11.09,         // FY26E consensus (TIKR); Q1 actual $2.38 + Q2 guide $2.64 mid + "2H stronger"
-  rsRating: 95,
+  baseEps: 12.79,         // FY26E (Oct) non-GAAP EPS — stockanalysis consensus (Sep 28 2026; FY27E $18.48, +44%). Q3 FY26 $3.50 (record) + Q4 guide $4.02 ±0.20. Prior: $11.09 (TIKR, Q1 FY26).
+  rsRating: 89,           // IBD RS per user, 10/10/2026 (was 95) — stock well off its peak after the Aug print
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  // Q3 FY26 UPDATE (Aug 13, 2026) — first data review since Q1 FY26
+  // ─────────────────────────────────────────────────────────────────────────
+  // Records across the board. Revenue $9.12B (+25%): Semiconductor Systems
+  // $7.04B (+27%; mix foundry/logic 67%, DRAM 26%, flash 7%), AGS $1.78B
+  // (+22%), Display/other $294M. Non-GAAP GM 50.4% (+150bps), op margin
+  // 34.0% (+330bps). Non-GAAP EPS $3.50 (+41%), GAAP $3.17. FCF $2.33B (9M
+  // $3.58B, flat on EPIC capex). China 28% of revenue (from 35%). Cash +
+  // investments $14.5B vs debt $6.5B. Q3 buybacks $440M + dividends $420M.
+  // Q4 GUIDE: revenue $10.25B ±$0.5B (first $10B quarter), non-GAAP EPS
+  // $4.02 ±$0.20 — above consensus. CEO raised CY26 Semi Systems view and
+  // expects "another strong growth year in 2027"; capacity investments to
+  // support demand through decade-end. Stock sold off on the print anyway
+  // ("not impressive enough") and is well off its peak. Street: Strong Buy
+  // (40), PT $358-900 (median $645.5); FY26E EPS $12.79, FY27E $18.48.
+  // ~40× FY26E / ~27× FY27E. Net: the WFE up-cycle is bigger and longer than
+  // the Q1 file assumed; valuation still prices most of it — HOLD.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Dominant position in CVD, PVD, ALD, and etch — process steps required for every advanced node transition.',
     'AGS services segment provides genuinely recurring revenue with multi-year contracts and a very high renewal rate.',
@@ -34,19 +53,19 @@ export const AMAT = defineStock({
     'China revenue concentration means any incremental export restrictions would hit revenue and margins immediately.',
     'WFE cycles historically pause for digestion after strong runs, and capex cleanroom constraints could amplify the downturn.',
     'Near-term FCF is compressed by EPIC capacity investment, reducing the cash return cushion if the cycle softens early.',
-    'Best risk-adjusted entry is materially below current price — patience required for attractive CAGR from here.',
+    'At a premium multiple on up-cycle earnings, the stock needs the cycle to run for years to deliver attractive returns.',
   ],
 
-  epsCagr: [4, 11, 17],
+  epsCagr: [4, 13, 19],   // Q3 FY26: base 11→13, bull 17→19 — consensus FY27E +44% then ~6%/yr still compounds to ~13% from the FY26 base (below AMAT's long-run ~10%+/yr after FY27)
   exitPE: [17, 23, 29],
   prob: [30, 45, 25],
 
 
-  analystConsensus: { rating: 'Buy', targetLow: 380, targetMedian: 428, targetHigh: 470, numAnalysts: 27 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 358, targetMedian: 645.5, targetHigh: 900, numAnalysts: 40 },  // stockanalysis.com (Sep 28 2026)
   revGrowth: [
-    [0.04, 0.02, 0.03, 0.04, 0.04],  // bear: cycle breaks early, ICAPS/NAND drag
-    [0.12, 0.11, 0.09, 0.08, 0.07],  // base: CY26-27 strong, normalization after
-    [0.20, 0.18, 0.15, 0.13, 0.11],  // bull: AI supercycle, cleanroom capacity added
+    [0.19, 0.02, -0.05, 0.03, 0.04], // bear: FY26 ~locked (Q4 guided); WFE digestion hits FY28
+    [0.197, 0.25, 0.07, 0.06, 0.06], // base (+1%/yr revPrem): FY26 ≈ consensus $34.25B, FY27 +26% (haircut vs +35% consensus), normalization after
+    [0.20, 0.33, 0.15, 0.13, 0.11],  // bull (+2%/yr revPrem): AI supercycle, cleanroom capacity added
   ],
   fcfMargin: [
     [0.17, 0.17, 0.18, 0.18, 0.19],  // bear: capex drag persists, margin pressure
@@ -55,43 +74,39 @@ export const AMAT = defineStock({
   ],
   exitMultiple: [14, 21, 27],
   desc: [
-    'The WFE cycle breaks ahead of schedule — capex digestion arrives before FY27, NAND stays sub-10% of WFE, and China mix (30% of revenue) drags margins without offsetting volume. ' +
-      'FY26 EPS lands near ~$10.2 (Q2 at the guidance floor of $2.44, Q3 ~$2.60, Q4 ~$2.75). ' +
-      'EPS grows at only 4% annually from this base; the multiple reverts toward 17x as cycle visibility shrinks. ' +
-      'Stress-test: $11.09 × 18x = ~$200. At P/E 20, even the bear EPS path gives ~$210. Roughly -7% to -10% annualized from $366.',
-    'The next two years play out as management guided — equipment revenue grows over 20% (back-half loaded), and the services business keeps compounding at 12–13% per year with 90% of customers renewing. ' +
-      'FY26 EPS lands around $10.80 per share. FY27 jumps 24% to ~$13.78, then growth gradually slows: ~$15.38 in 2028, ~$21 by 2030. ' +
-      'The problem: the stock already reflects all of this. Today you pay 33× this year\'s earnings, and by 2030 the market would only pay ~23× — the valuation steadily shrinks even as earnings grow. ' +
-      'Earnings compound at ~11% per year, but the shrinking multiple eats into returns. Net result: ~5–6% annual return. Earnings grow to ~$18.70 by 2030, at 23× that\'s a ~$430 stock — decent but not exciting from $348.',
-    'AI supercycle extends to 2028-2029: GAA at 2nm and below, HBM memory buildout, and advanced packaging (CoWoS, 3D-IC) all require disproportionately more AMAT deposition and etch steps per wafer. ' +
-      'FY26 EPS lands ~$11.4 (Q2 at $2.84 guidance top, Q3 ~$2.95, Q4 ~$3.20 — a clear exit-rate into FY27). ' +
-      'FY27 run-rate implies $14+ EPS; with +10% expansion FY27 hits $14-14.5. Cleanroom constraints get solved, AGS attaches at 30%+ of revenue. ' +
-      'EPS compounds at 17% from FY26 base with a 29x exit multiple — stock returns approach 12-16% annualized. The only scenario that clears the 15% hurdle.',
+    'The WFE cycle breaks after the FY27 surge — capex digestion arrives in FY28, NAND stays a small slice of WFE, and China mix drags margins. ' +
+      'EPS grows only ~4% annually from the $12.79 FY26E base and the multiple reverts toward 17x as cycle visibility shrinks. ' +
+      '5yr target {target} ({cagr} annualized).',
+    'Management\'s view plays out: a record FY26 (~$34B revenue), "another strong growth year" in FY27 (consensus EPS +44% to ~$18.5), then normalization as the cycle matures. ' +
+      'AGS keeps compounding as a recurring anchor. EPS compounds ~13% from the $12.79 base, but the multiple compresses from ~40x FY26E toward ~23x — the shrinking multiple eats most of the return. ' +
+      '5yr target {target} ({cagr} annualized).',
+    'AI supercycle extends to 2029-2030: GAA at 2nm and below, HBM/DRAM buildout and advanced packaging all require disproportionately more AMAT deposition and etch steps per wafer. ' +
+      'Cleanroom constraints get solved and AGS attach rises. EPS compounds ~19% from the $12.79 base with a 29x exit multiple. ' +
+      '5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'Bear mechanics: capex cycles historically run 2-3 strong years before digestion. ICAPS already flat, NAND sub-10% of WFE. ' +
-      'Physical constraints cited on the Q1 call (cleanroom, supply chain, service engineers) can become bottlenecks that limit upside AND become magnified on the downside. ' +
-      'EPIC capacity capex compresses near-term FCF — if the cycle softens before FCF recovers, the setup deteriorates fast. ' +
-      'Multiple sensitivity dominates: at P/E 20 (historical zone), bear EPS ~$13 → price ~$260 (-29%); at P/E 18 → ~$230 (-37%). ' +
-      'No macro shock needed — a normal WFE pause is sufficient to deliver -30% to -45% from current valuation.',
-    'Post Q1\'26, the base case has more concrete support: equipment >20% CY2026, 2H-weighted, momentum into 2027 per management. ' +
-      'TIKR consensus: FY26E $11.09, FY27E $13.78 (+24%), FY28E $15.38 (+12%), FY29E $18.84 (+22%), FY30E $21.02 (+12%). A wave-cycle, not a spike. ' +
-      'AGS is a genuine recurring anchor: 2/3 under contract, ~2.9yr avg duration, ~90% renewal, growing 12-15% YoY. ' +
-      'The problem: the market already prices this. Implied P/E by year: 33x (2026) → 27x (2027) → 24x (2028) → 19.6x (2029) → 17.6x (2030). ' +
-      'EPS grows robustly, but multiple compression offsets returns. Probability-weighted CAGR: ~6-7%. ' +
-      'For 12% CAGR in the base case, fair entry is $270-290 (base target $483 / 1.76 ≈ $274).',
-    'Bull case requires two things to be true simultaneously: EPS trajectory exceeds consensus AND the multiple holds. ' +
-      'Q4\'26 exit-rate ~$3.20 → FY27 run-rate ~$12.8, +10-15% expansion → FY27 $14-14.5 EPS. ' +
-      'At 29x exit on $11.09 × (1.17)^5 ≈ $24.3, target price ≈ $705. Around 14-15% CAGR — near the 15% hurdle. ' +
-      'For 15%+ CAGR at $366: need either ~20% EPS CAGR (very aggressive for a WFE business) or P/E to stay at 36-37x in 2031 (unlikely). ' +
-      'The cleaner path to 15%: enter at $270-290 where the base-case EPS trajectory already gets you there at 23x exit. ' +
-      'At $366, this is an AI-cycle bet with limited margin of safety — strong execution at full price.',
+    'Bear mechanics: capex cycles historically run 2-3 strong years before digestion. The FY26-27 surge pulls demand forward; physical constraints (cleanroom, supply chain, service engineers) that cap upside also magnify the downside. ' +
+      'EPIC capacity capex keeps FCF flat even as EPS rises — if the cycle softens before FCF recovers, the setup deteriorates fast. ' +
+      'At ~40x FY26E, a normal WFE pause plus multiple reversion is enough to deliver steep losses from {spot}.',
+    'Post Q3 FY26, the up-cycle is stronger and longer than assumed in Q1: record revenue (+25%), 34% operating margin, Q4 guided to the first $10B quarter, DRAM and leading-edge logic accelerating, and management calling for another strong 2027. ' +
+      'AGS is a genuine recurring anchor (2/3 under contract, ~90% renewal, growing ~20%). ' +
+      'The problem: the market already prices this — ~40x FY26E and ~27x FY27E consensus. EPS grows robustly, but multiple compression offsets most of it. Verdict: HOLD — strong execution at a full price; better entries come in WFE digestion phases.',
+    'Bull case requires two things simultaneously: EPS beats the consensus trajectory beyond FY27 AND the multiple holds near 29x. ' +
+      'If the AI-driven WFE cycle runs through 2030 and AGS attach rises, {target} is achievable from {spot}. ' +
+      'For a WFE business, sustaining ~19% EPS growth for five years is aggressive — this is an AI-cycle bet with limited margin of safety at the current price.',
   ],
 
   termGrowth: [0.015, 0.025, 0.03],
   bbRate: [0.005, 0.015, 0.025],
   ebitdaProxy: [0.28, 0.35, 0.42],
+
+  debtSafety: {
+    netDebt: -7957,        // Jul 26 2026: $6.54B debt − $14.50B cash & investments
+    ebitda: 12500,         // FY26E: non-GAAP op margin ~33% × $34.25B + D&A — approximate
+    fy: 'FY26E',
+    note: 'GREEN by Step 1 — net cash (~$8B). Balance sheet is not the risk; WFE cyclicality and China export controls are.',
+  },
 
   driverOverrides: [
     {},
