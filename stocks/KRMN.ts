@@ -18,7 +18,7 @@ export const KRMN = defineStock({
   debt: 400,
   beta: 1.27,
   costDebt: 0.060,
-  rsRating: 14,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 19,         // IBD RS per user, 10/10/2026 (was 14)
   rsTrend: 'falling',
   ratingOverride: 'HOLD',  // Kept at Q2 2026: fundamentals are strong (rev +58%, record $1.3B backlog, guide raised) and the model screens BUY, but the stock kept sliding ($48 → $33) on space-launch concerns with RS in the teens — HOLD until price action stabilizes. Revisit with a fresh RS.
   aiImpact: 'TAILWIND',
