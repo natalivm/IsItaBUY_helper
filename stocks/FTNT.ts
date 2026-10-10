@@ -18,7 +18,7 @@ export const FTNT = defineStock({
   debt: 995,           // stale figure — not refreshed
   beta: 0.96,
   costDebt: 0.048,
-  rsRating: 95,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 95)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 29, 2026) — first data review
