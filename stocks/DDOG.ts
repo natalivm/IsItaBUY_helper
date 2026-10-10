@@ -17,7 +17,7 @@ export const DDOG = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 2.52,       // 2026E EPS = FY26 non-GAAP EPS guide midpoint $2.50-$2.54 (raised at Q2 2026 from $2.36-$2.44; FY25 basis $2.10). Q2 2026 revenue +36% (4th straight quarter of acceleration); FY26 revenue guide $4.45-4.47B (~30%). Still non-GAAP — GAAP EPS far lower (SBC); P/E haircut applies (see burry).
-  rsRating: 94,
+  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 94)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. Post-Q2 2026 the EPS_PE base case lands ~at spot (~0% 5y CAGR) — model itself reads HOLD only via the TAILWIND quality boost. Stock ran ~$215 → ~$293 in Sep-Oct on accelerating growth, ~116× 2026E non-GAAP EPS. HOLD stands on the rich multiple + high SBC despite RS 94 (rising); the override keeps it out of PRIME_GROWTH if the model ever flips to BUY on a pullback.
