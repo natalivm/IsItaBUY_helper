@@ -41,7 +41,8 @@ export const MELI = defineStock({
   costDebt: 0.065,
   modelType: 'EPS_PE',
   baseEps: 38.41,      // FY2026E EPS — stockanalysis.com consensus (Oct 6 2026, range $34.11-45.36), cut from $41.42 after Q2 2026's 3rd straight y/y NI decline (H1 EPS $17.42 vs $20.05). FY27E consensus $56.16 (+46% recovery). Prior: cut from ~$48 to ~$41 after Q1 2026's NIMAL compression + Brazil provisions. Q1 2026 (reported May 7): rev $8.85B +49% YoY, EPS $8.23 (down YoY), TPV $87.2B +50%. Q2 2026 (Aug 5): rev $10.17B +50% (+43% FXN), EPS $9.19 (beat ~$8.7-9.0, but -11% YoY), op margin 6.7%.
-  rsRating: 20,
+  rsRating: 87,         // IBD RS per user, 10/10/2026 (was 20)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Dominant LATAM e-commerce and fintech infrastructure with deep network effects across payments, lending, and logistics',
