@@ -96,6 +96,6 @@ export const DELL = defineStock({
     netDebt: 22897,        // Jul 31 2026: $34.5B total debt − $11.6B cash
     ebitda: 17000,         // LTM EBITDA ≈ $17B after Q1-Q2 FY27 surge — approximate
     fy: 'LTM Q2 FY27',
-    note: 'Net Debt/EBITDA ~1.3× (GREEN, Step 2) on LTM EBITDA ~$17B (FY26 was ~1.6× on $12.5B). Gross debt rose to $34.5B as AI working capital + record buybacks absorbed cash (Q2 FCF just $1.0B). Earlier: — a prior value of $7.5B understated EBITDA and wrongly flagged RED. AI-server cash generation is deleveraging fast: consensus has leverage falling to ~0.9× (FY27) toward net cash by FY30. Much of the ~$31B gross debt is DFS financing debt matched by financing receivables.',
+    note: 'Net Debt/EBITDA ~1.3× (GREEN, Step 2) on LTM EBITDA ~$17B (FY26 was ~1.6× on $12.5B). Gross debt rose to $34.5B as AI working capital + record buybacks absorbed cash (Q2 FCF just $1.0B). An old $7.5B EBITDA value had wrongly flagged RED. Much of the gross debt is DFS financing debt matched by financing receivables.',
   },
 });
