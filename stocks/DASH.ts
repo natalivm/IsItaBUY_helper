@@ -7,19 +7,31 @@ export const DASH = defineStock({
   themeColor: '#ff3008',
   currentPrice: 196.5,
   updatedOn: '10/09',
-  lastReportTag: 'Q1 2026',
-  fairPriceRange: '$120 - $215',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-10',
+  fairPriceRange: '$172 - $350',  // stockanalysis.com analyst target range, Oct 5 2026
   shares0: 430,
-  rev25: 13700,
+  rev25: 13700,        // FY2025; FY26E consensus $17.8B (+30%, incl. Deliveroo), FY27E $21.5B (+21%)
   fcfMargin25: 0.131,
   taxRate: 0.18,
-  cash: 4400,
-  debt: 2700,
+  cash: 4400,          // FY25-era — NOT refreshed after the Deliveroo acquisition
+  debt: 2700,          // FY25-era — NOT refreshed
   beta: 1.60,
   costDebt: 0.048,
-  rsRating: 24,
-  ratingOverride: 'BUY',  // Caps at BUY: model sits around BUY on its own now (was a quality-boosted STRONG BUY on a more depressed spot); RS has recovered off its lows but stays soft. Prevents a flip back to STRONG BUY on spot dips; matches the Strong-Buy-leaning street consensus at a BUY.
+  rsRating: 52,         // IBD RS per user, 10/10/2026 (was 24)
+  rsTrend: 'rising',
+  ratingOverride: 'BUY',  // Caps at BUY (kept at Q2 2026): the model reads BUY (~11% base CAGR) today, but a price dip would push it over the soft STRONG BUY line; SBC still exceeds GAAP NI (Tragic Burry tier) and GAAP profit fell 30% y/y, so BUY rather than STRONG BUY.
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Aug 5, 2026) — first data review since Q1
+  // ─────────────────────────────────────────────────────────────────────────
+  // Orders 970M (+27%); Marketplace GOV $33.1B (+36%, incl. Deliveroo).
+  // Adj. EBITDA $914M (+40%; 2.8% of GOV) vs $770-870M guide — better unit
+  // economics + Deliveroo contribution. GAAP NI to common $200M (-30% y/y).
+  // Q3 GUIDE: GOV $33.0-34.0B, adj. EBITDA $950M-1.1B. Q4 take rate to dip
+  // on higher Dasher costs. FY26 SBC $1.2-1.3B, D&A $1.1-1.2B. Street: Buy
+  // (45), PT $172-350 (median $260); FY26E EPS $5.87 / rev $17.8B, FY27E
+  // $8.25 / $21.5B.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Dominant US delivery platform with record MAUs and memberships driving compounding network effects',
     'International expansion into new verticals offers a long growth runway beyond food delivery',
@@ -30,23 +42,23 @@ export const DASH = defineStock({
 
   risksToBuy: [
     'SBC dramatically exceeds GAAP net income, meaning reported profits substantially overstate true owner earnings',
-    'RS Rating is exceptionally weak, signaling persistent institutional distribution despite strong operating results',
+    'GAAP profit fell sharply year over year even as volumes surged, and take rates face pressure from higher courier costs',
     'Grocery and convenience delivery is intensely competitive with well-funded rivals including Instacart and Uber Eats',
-    'Revenue missed consensus in Q1 2026 even as EPS beat, raising questions about top-line durability',
+    'Integrating the Deliveroo acquisition adds execution risk across new European markets',
     'Thin delivery economics leave little margin buffer in a consumer spending slowdown or labor cost spike',
   ],
 
   verdictNarrative:
-    'The fundamental growth story is real — Q1 2026 revenue +33%, GOV +37%, EPS beat of 13.5%, record MAUs and memberships. Analyst consensus is Strong Buy with a median target of $278 (+75% from $159). ' +
-    'Two structural concerns temper the conviction. First, RS Rating of 16 is exceptionally weak — the stock has been a significant underperformer even as the business accelerates. Price momentum this weak often signals institutional distribution or macro headwinds that the income statement does not yet show. ' +
+    'The fundamental growth story is real — Q2 2026 orders +27%, GOV +36% (incl. Deliveroo), adjusted EBITDA +40% and above guidance. Analyst consensus is Buy with a median target of $260 vs ~$197 today. ' +
+    'Two structural concerns temper the conviction. First, momentum has only partly recovered (RS 52, up from the teens) and GAAP profit fell 30% y/y as the company invests and absorbs Deliveroo. ' +
     'Second, the Burry flag is Tragic: SBC of $1.35B exceeds GAAP NI of ~$925M. Shareholders are funding growth through dilution. Until buybacks scale to meaningfully offset SBC, reported earnings overstate true per-share value. ' +
-    'BUY with conditions. The entry price of $159 sits in the middle of the $120–$215 fair range, and the 23.8% base-case revenue CAGR supports meaningful upside. Add in tranches — do not chase strength. A sustained RS recovery above 50 would significantly increase conviction.',
+    'BUY with conditions. At ~$197 the stock sits below the $260 median target and the base case supports meaningful upside. RS has now recovered above 50, as previously required for higher conviction — add in tranches, sized for the SBC drag.',
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 222, targetMedian: 278, targetHigh: 360, numAnalysts: 33 },
+  analystConsensus: { rating: 'Buy', targetLow: 172, targetMedian: 260, targetHigh: 350, numAnalysts: 45 },  // stockanalysis.com, Oct 5 2026
   revGrowth: [
-    [0.14, 0.13, 0.13, 0.12, 0.12],
-    [0.238, 0.238, 0.238, 0.238, 0.238],
-    [0.25, 0.24, 0.23, 0.22, 0.20],
+    [0.27, 0.12, 0.12, 0.11, 0.10],   // Bear: FY26 ~locked (incl. Deliveroo); competition + consumer slowdown after
+    [0.30, 0.21, 0.18, 0.16, 0.14],   // Base: FY26/FY27 ≈ consensus $17.8B / $21.5B, then decelerating
+    [0.31, 0.23, 0.22, 0.21, 0.19],   // Bull (+1%/yr revPrem): ads + new verticals + international scale
   ],
   fcfMargin: [
     [0.045, 0.055, 0.065, 0.075, 0.087],
@@ -55,9 +67,9 @@ export const DASH = defineStock({
   ],
   exitMultiple: [18, 25, 30],
   desc: [
-    'Revenue growth slows to 12-14%, margin stalls ~12% EBIT. Multiple compresses to 20x. EPS ~$8.5.',
-    'TIKR consensus: 23.8% revenue CAGR, margin ramp to ~20% EBIT by 2030. EPS ~$13.7 at 25x.',
-    'All three levers fire: NV margin ≥8%, ads ≥6% of revenue, tech stack savings. EPS ≥$17.5.',
+    'Revenue growth slows to ~11-12% after the Deliveroo step-up, margin stalls ~12% EBIT, multiple compresses. 5yr target {target} ({cagr} annualized).',
+    'Consensus path: revenue +30% in 2026 (incl. Deliveroo) and ~21% in 2027, then mid-teens; margin ramps toward ~20% EBIT by 2030. 5yr target {target} ({cagr} annualized).',
+    'All three levers fire: new-vertical margins ≥8%, ads ≥6% of revenue, tech-stack savings. 5yr target {target} ({cagr} annualized).',
   ],
 
   termGrowth: [0.025, 0.035, 0.04],
@@ -83,7 +95,7 @@ export const DASH = defineStock({
   },
 
   burry: {
-    sbc: 1350,
+    sbc: 1250,          // FY26 SBC guide $1.2-1.3B (Q2 2026)
     gaapNi: 925,
     buyback: 400,
     epsBasis: 'GAAP',
