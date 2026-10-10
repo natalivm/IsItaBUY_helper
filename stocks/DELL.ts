@@ -7,25 +7,41 @@ export const DELL = defineStock({
   themeColor: '#007DB8',
 
   currentPrice: 586.06,
-  fairPriceRange: '$230 - $460',
+  fairPriceRange: '$480 - $735',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 650,
   rev25: 113500,
   fcfMargin25: 0.10,
   taxRate: 0.20,
-  cash: 11578,
-  debt: 31161,
+  cash: 11569,         // Jul 31 2026 cash & equivalents (+$2.7B long-term investments not counted)
+  debt: 34466,         // Jul 31 2026 total debt ($8.5B ST + $26.0B LT) — a large share is DFS financing debt matched by receivables
   beta: 1.35,
   costDebt: 0.045,
 
-  rsRating: 92,
+  rsRating: 97,         // IBD RS per user, 10/10/2026 (was 92)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
-  lastReportTag: 'Q1 FY27',
-  dataReviewedOn: '2026-06-28',
+  lastReportTag: 'Q2 FY27',
+  dataReviewedOn: '2026-10-10',
 
-  // Refreshed post-Q1-FY27 surge (S&P Global, 27 analysts): avg ~$484, high $700 (Susquehanna), low $213. Prior block (median $212) was pre-surge and stale.
-  analystConsensus: { rating: 'Buy', targetLow: 213, targetMedian: 484, targetHigh: 700, numAnalysts: 27 },
+  // Q2 FY27 UPDATE (Sep 1, 2026)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Blowout. Revenue $47.0B (+58%), record. ISG $31.8B (+89%): AI servers
+  // $16.4B (+100%), traditional servers & networking $10.5B (+122%), storage
+  // $4.85B (+26%); ISG op margin 15.0%. CSG $15.0B (+20%), 7.6% margin. AI
+  // orders $60.9B (record), backlog $95B (record). Non-GAAP op margin 12.6%;
+  // non-GAAP EPS $7.04 (+203%), GAAP $6.34. BUT Q2 FCF only $986M (-47%) as
+  // AI working capital soaks up cash (YTD FCF $4.1B flat; "adjusted" FCF
+  // $11.3B YTD). Returned ~$4.2B in Q2 ($3.8B buybacks + $0.4B dividends);
+  // diluted shares 652M (-5% y/y). Total debt $34.5B vs cash $11.6B.
+  // FY27 GUIDE RAISED: revenue $167B → $192B (+69%), AI servers $60B → $74B
+  // (+200%), non-GAAP EPS $17.90 → $25.50 (+148%), GAAP EPS $24.37. Q3:
+  // revenue $49.0B (+81%), non-GAAP EPS $6.50. Street (stockanalysis): FY27E
+  // EPS $25.90, FY28E $29.12; revenue $193.4B / $225.4B. Stock $586 ≈ analyst
+  // mean target, ~23× FY27E / ~20× FY28E EPS. Net: earnings power reset far
+  // higher; the debate is now peak-cycle risk and cash conversion, not demand.
+  // ─────────────────────────────────────────────────────────────────────────
+  analystConsensus: { rating: 'Buy', targetLow: 480, targetMedian: 600, targetHigh: 735, numAnalysts: 29 },  // stockanalysis.com, Oct 9 2026
 
   reasonsToBuy: [
     'Unmatched Fortune 500 distribution reach that pure-play ODMs cannot replicate at enterprise scale',
@@ -44,9 +60,9 @@ export const DELL = defineStock({
   ],
 
   revGrowth: [
-    [0.33, 0.10, 0.07, 0.05, 0.04], // Bear: FY27 partial miss, AI capex normalizes fast in FY28
-    [0.47, 0.15, 0.10, 0.07, 0.06], // Base: FY27 guide delivers Y1, growth tapers as backlog ships
-    [0.55, 0.28, 0.22, 0.16, 0.12], // Bull: AI super-cycle, enterprise + sovereign AI adds new leg
+    [0.62, -0.05, 0.00, 0.03, 0.03], // Bear: FY27 lands ~4% under the $192B guide (H1 + Q3 guide ≈ locked), then AI capex normalizes and revenue dips in FY28
+    [0.69, 0.16, 0.07, 0.05, 0.04],  // Base: FY27 at raised $192B guide (+69%), FY28 ≈ consensus $225B, growth tapers as the $95B backlog ships
+    [0.72, 0.25, 0.18, 0.14, 0.10],  // Bull: AI super-cycle, enterprise + sovereign AI adds new leg
   ],
 
   fcfMargin: [
@@ -56,14 +72,14 @@ export const DELL = defineStock({
   ],
 
   exitMultiple: [8, 9, 15],
-  ebitdaProxy: [0.09, 0.10, 0.16],
+  ebitdaProxy: [0.09, 0.115, 0.16],  // Base 0.10→0.115 at Q2 FY27 review: FY26A EBITDA margin ~11% ($12.5B/$113.5B) and Q2 FY27 non-GAAP op margin 12.6% — 0.10 sat below actuals
   termGrowth: [0.015, 0.025, 0.030],
   bbRate: [0.005, 0.015, 0.025],
 
   desc: [
-    'FY27 disappoints against the $167B guide — AI server backlog slips as hyperscaler CapEx normalizes faster than expected. Supermicro captures share on liquid-cooled Blackwell configs. PC segment contracts further. Server mix keeps FCF margins at 8%. Multiple compresses to 8–9× EBITDA as market re-rates Dell as cyclical hardware. Bear-case 5yr target ~$180–210.',
-    'Dell delivers on FY27 guidance and the $60B AI server target. Services attach rates improve as enterprise deployments scale from PoC to production infrastructure; storage and networking mix rises. FCF margin expands from 10% to 12–13% by FY30 on operating leverage. Multiple holds at 11× as Dell earns a partial infrastructure premium. Base-case 5yr target ~$380–430.',
-    'AI becomes the dominant enterprise infrastructure layer and Dell is the distribution channel. Sovereign AI programs, on-prem model hosting, and edge inference drive a second AI server wave in FY29–30. Services ARR grows 20%+/yr. FCF margin reaches 17–18%. Multiple expands to 14–15× as earnings quality improves. Bull-case 5yr target ~$560–650.',
+    'FY27 lands short of the $192B guide and the $95B AI backlog slips as hyperscaler CapEx normalizes faster than expected; FY28 revenue declines. Supermicro captures share on liquid-cooled Blackwell configs. PC segment contracts further. Server mix keeps FCF margins at 8%. Multiple compresses to 8× EBITDA as market re-rates Dell as cyclical hardware at peak earnings. Bear-case 5yr target {target} ({cagr} annualized).',
+    'Dell delivers on its raised FY27 guidance ($192B revenue, $74B AI servers, $25.50 EPS) and FY28 tracks consensus. Services attach rates improve as enterprise deployments scale from PoC to production infrastructure; storage and networking mix rises. FCF margin expands from 10% to 12–13% by FY30 on operating leverage. Growth tapers to mid-single digits as the backlog ships; multiple holds ~9× EBITDA. Base-case 5yr target {target} ({cagr} annualized) — the re-rating already prices most of the reset.',
+    'AI becomes the dominant enterprise infrastructure layer and Dell is the distribution channel. Sovereign AI programs, on-prem model hosting, and edge inference drive a second AI server wave in FY29–30. Services ARR grows 20%+/yr. FCF margin reaches 17–18%. Multiple expands to ~15× as earnings quality improves. Bull-case 5yr target {target} ({cagr} annualized).',
   ],
 
   burry: {
@@ -74,12 +90,12 @@ export const DELL = defineStock({
     fy: 'FY26',
     overstatementPct: 50,
     overstatementSource: 'estimated',
-    note: 'Critical — estimated. FY26 SBC $785M vs GAAP NI ~$5.9B = naive 13%. DELL stock ~8× over 3 years (~$50 in 2023 to ~$399, ATH $469 on the post-Q1-FY27 AI surge); MTM amplifier ~5×. Offset partially by ~$3.5B buybacks (4.5× SBC, 20% offset). Estimated overstatement ~50%.',
+    note: 'Critical — estimated. FY26 SBC $785M vs GAAP NI ~$5.9B = naive 13%. DELL stock ~8-10× over 3 years (~$50 in 2023 to ~$586 by Oct 2026 after the Q2 FY27 guide raise); MTM amplifier ~5×. Q2 FY27 SBC $184M/qtr (flat y/y) vs non-GAAP NI $4.6B — the naive ratio is collapsing as earnings explode; refresh at FY27 close. Offset partially by ~$3.5B buybacks (4.5× SBC, 20% offset). Estimated overstatement ~50%.',
   },
   debtSafety: {
-    netDebt: 19583,
-    ebitda: 12523,
-    fy: 'FY26',
-    note: 'Net Debt/EBITDA ~1.6× (GREEN, Step 2) on FY26 EBITDA ~$12.5B — a prior value of $7.5B understated EBITDA and wrongly flagged RED. AI-server cash generation is deleveraging fast: consensus has leverage falling to ~0.9× (FY27) toward net cash by FY30. Much of the ~$31B gross debt is DFS financing debt matched by financing receivables.',
+    netDebt: 22897,        // Jul 31 2026: $34.5B total debt − $11.6B cash
+    ebitda: 17000,         // LTM EBITDA ≈ $17B after Q1-Q2 FY27 surge — approximate
+    fy: 'LTM Q2 FY27',
+    note: 'Net Debt/EBITDA ~1.3× (GREEN, Step 2) on LTM EBITDA ~$17B (FY26 was ~1.6× on $12.5B). Gross debt rose to $34.5B as AI working capital + record buybacks absorbed cash (Q2 FCF just $1.0B). Earlier: — a prior value of $7.5B understated EBITDA and wrongly flagged RED. AI-server cash generation is deleveraging fast: consensus has leverage falling to ~0.9× (FY27) toward net cash by FY30. Much of the ~$31B gross debt is DFS financing debt matched by financing receivables.',
   },
 });
