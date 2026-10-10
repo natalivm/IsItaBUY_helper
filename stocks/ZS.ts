@@ -17,8 +17,9 @@ export const ZS = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 4.88,       // FY27E non-GAAP EPS = FY27 guide midpoint $4.86-$4.90 (Sep 3 2026; consensus $4.91, FY28E $5.62). FY26A $4.21. Prior: $4.40 forward (06/26 spot-check). Q3 FY26 (reported May 26): rev $850.5M +25% YoY, non-GAAP EPS $1.08, ARR $3.525B +25%.
-  rsRating: 8,
-  rsTrend: 'falling',
+  rsRating: 97,         // IBD RS per user, 10/10/2026 (was 8)
+  rsTrend: 'rising',
+  ratingOverride: 'HOLD',  // Post-Q4 FY26 the base case sits at ~8.0% CAGR — a hair over the 8% soft-BUY line (TAILWIND/RS boost), so the model flips BUY↔HOLD on ~$1 price moves. HOLD is the real read: stock at the analyst mean target, ~48× FY27E EPS, growth guided down from 25% to ~17%, SBC > FCF. Revisit on a pullback or an FY27 beat-and-raise.
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
   lastReportTag: 'Q4 FY26',
