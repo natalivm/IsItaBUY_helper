@@ -6,16 +6,17 @@ export const NVDA = defineStock({
   sector: 'Semiconductors / AI Infrastructure',
   themeColor: '#76b900',
   currentPrice: 229.28,
-  fairPriceRange: '$210 - $400',
+  fairPriceRange: '$180 - $515',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 24400,
-  rev25: 215900,
+  rev25: 215900,       // FY26A (Jan 2026); FY27E consensus $411.7B (+91%), FY28E $692.2B (+68%; CFO reportedly guided ~70%)
   fcfMargin25: 0.41,
   taxRate: 0.17,
   cash: 60600,
   debt: 10800,
   beta: 1.65,
   costDebt: 0.035,
-  rsRating: 76,
+  rsRating: 96,         // IBD RS per user, 10/10/2026 (was 76)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'De facto monopoly on AI training infrastructure with every major hyperscaler locked into the Blackwell platform',
@@ -34,12 +35,25 @@ export const NVDA = defineStock({
   ],
 
   updatedOn: '10/09',
-  lastReportTag: 'Q1 FY27',
-  analystConsensus: { rating: 'Strong Buy', targetLow: 140, targetMedian: 254, targetHigh: 352, numAnalysts: 37 },
+  lastReportTag: 'Q2 FY27',
+  dataReviewedOn: '2026-10-10',
+
+  // Q2 FY27 UPDATE (Aug 26, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $96.2B (+106% y/y, +18% q/q) vs ~$92.1B consensus. Data Center
+  // $89.0B (+117%): hyperscalers ~$48.7B, AI cloud/industrial/enterprise
+  // ~$40.3B. GM 75.0%. Non-GAAP EPS $2.22 (vs ~$2.09), GAAP $2.46. Q3 GUIDE:
+  // revenue $108.0B ±2%, GM ~74%, no China data-center compute assumed. CFO
+  // reportedly pointed to ~70% FY28 revenue growth (single source). Vera
+  // Rubin in full production (CoreWeave, Google Cloud, Azure, OCI, Nebius).
+  // Street: Strong Buy (62), PT $180-515 (median $315); FY27E EPS $9.31 /
+  // rev $411.7B, FY28E $15.91 / $692.2B. Stock $229 — ~25× FY27E, ~14× FY28E.
+  // ─────────────────────────────────────────────────────────────────────────
+  analystConsensus: { rating: 'Strong Buy', targetLow: 180, targetMedian: 315, targetHigh: 515, numAnalysts: 62 },  // stockanalysis.com, Oct 9 2026
   revGrowth: [
-    [0.55, 0.05, 0.02, 0.02, 0.01],
-    [0.75, 0.25, 0.17, 0.12, 0.09],
-    [0.85, 0.32, 0.24, 0.18, 0.13],
+    [0.85, 0.05, -0.05, 0.02, 0.01],  // Bear: FY27 ~locked (H1 + Q3 guide); AI capex digests from FY28
+    [0.88, 0.48, 0.15, 0.10, 0.08],   // Base (+2%/yr revPrem): FY27 ≈ consensus $411B, FY28 +50% (haircut vs +68%), then normalizes
+    [0.88, 0.65, 0.24, 0.18, 0.13],   // Bull (+2-3%/yr revPrem): FY28 at/above consensus, Rubin super-cycle
   ],
   fcfMargin: [
     [0.42, 0.38, 0.34, 0.32, 0.30],
@@ -48,9 +62,9 @@ export const NVDA = defineStock({
   ],
   exitMultiple: [16, 24, 30],
   desc: [
-    'AI capex digestion lands in late FY27 — even with H1 FY27 already locked at ~$172.6B, hyperscaler spend plateaus into FY28, sovereign/enterprise AI fails to compensate, and multiple compresses to 20x as market re-rates NVDA as cyclical.',
-    'Q1 FY27 actuals + Q2 guide put FY27 on a ~$370–400B path ex-China — FCF margin holds near 50% on operating leverage, Vera Rubin Q3 ramp extends content/GW expansion, EPS compounds at 25%+ CAGR, P/E naturally compresses through earnings growth while structural AI capex cycle persists 5-7 years.',
-    'Rubin super-cycle in H2 FY27 accelerates content/GW expansion, sovereign AI + inference wave broadens TAM beyond hyperscalers, agentic AI / RL drive new CPU (Grace) growth, networking becomes second growth engine — FCF exceeds $200B by FY28.',
+    'FY27 delivers (~$410B), but hyperscaler AI capex digests from FY28, sovereign/enterprise AI fails to compensate, and the market re-rates NVDA as cyclical at ~16× EBITDA. 5yr target {target} ({cagr} annualized).',
+    'FY27 lands near the ~$411B consensus (Q3 guided to $108B ex-China) and FY28 grows ~50% on the Vera Rubin ramp; FCF margin holds near 50%, then growth normalizes. P/E compresses through earnings growth. 5yr target {target} ({cagr} annualized).',
+    'Rubin super-cycle in H2 FY27 accelerates content/GW expansion, sovereign AI + inference wave broadens TAM beyond hyperscalers, agentic AI / RL drive new CPU (Grace) growth, networking becomes second growth engine — FCF far exceeds $200B by FY28. 5yr target {target} ({cagr} annualized).',
   ],
 
   termGrowth: [0.020, 0.030, 0.035],
