@@ -2,24 +2,37 @@ import { defineStock } from './defineStock';
 
 export const MRVL = defineStock({
   updatedOn: '10/09',
-  lastReportTag: 'Q1 FY27',
+  lastReportTag: 'Q2 FY27',
+  dataReviewedOn: '2026-10-10',
   ticker: 'MRVL',
   name: 'Marvell Technology',
   sector: 'Semiconductors',
   themeColor: '#22d3ee',
   currentPrice: 275.28,
-  fairPriceRange: '$130 - $250',
+  fairPriceRange: '$210 - $450',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 870,
-  rev25: 8195,            // FY26 annual revenue ($8.195B, ended Feb 1, 2026)
+  rev25: 8195,            // FY26 annual revenue ($8.195B, ended Feb 1, 2026); FY27E consensus $12.07B (+47%), FY28E $19.69B (+63%)
   fcfMargin25: 0.27,      // Updated: Q1 FY27 non-GAAP op margin 35.0%; FCF lags by ~5pp; trajectory to 32%+ in FY27
   taxRate: 0.15,
   cash: 2640,
   debt: 4470,
   beta: 2.29,
   costDebt: 0.055,
-  rsRating: 87,           // 52W high $217.45 hit post-earnings; +176% 52W performance
+  rsRating: 87,           // NOT refreshed — awaiting user RS (10/10/2026)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
+
+  // Q2 FY27 EARNINGS (Aug 27, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Record revenue $2.739B (+37% y/y; $39M above guide midpoint). Data
+  // center +46% (accelerating). Non-GAAP EPS $0.94, GAAP $0.33. FY27 and FY28
+  // revenue outlooks raised again on strong AI bookings; custom business to
+  // accelerate significantly from H2 FY27. Q3 GUIDE: revenue $3.15B ±5%
+  // (~+50% y/y; ahead of the ">$3B by Q4" commitment), non-GAAP GM
+  // 57.5-58.5%. Investor Day held Oct 6 2026 (not yet reflected here).
+  // Street: Strong Buy (46), PT $210-450 (median $350); FY27E EPS $4.22 /
+  // rev $12.07B, FY28E $7.28 / $19.69B. Stock $275 (~65× FY27E / ~38× FY28E).
+  // ─────────────────────────────────────────────────────────────────────────
 
   // Q1 FY27 EARNINGS (May 27, 2026 AMC)
   // ─────────────────────────────────────────────────────────────────────────
@@ -55,12 +68,12 @@ export const MRVL = defineStock({
     'High beta and a leveraged AI-capex thesis mean sharp drawdowns if hyperscaler spending cools',
   ],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 175, targetMedian: 245, targetHigh: 350, numAnalysts: 39 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 210, targetMedian: 350, targetHigh: 450, numAnalysts: 46 },  // stockanalysis.com, Oct 7 2026
 
   revGrowth: [
-    [0.32, 0.15, 0.08, 0.06, 0.05], // Bear: AI capex peaks FY27; custom silicon FY28 delay; Broadcom optical share gain
-    [0.40, 0.43, 0.18, 0.12, 0.08], // Base: follows FY27 $11.5B and FY28 $16.5B management outlook raises
-    [0.40, 0.50, 0.25, 0.18, 0.12], // Bull: Nvidia + Amazon + Google + new wins all ramp; Celestial fabric scales
+    [0.42, 0.15, 0.08, 0.06, 0.05], // Bear: FY27 ~locked (H1 + Q3 guide); custom silicon FY28 delay; Broadcom optical share gain
+    [0.47, 0.50, 0.18, 0.12, 0.08], // Base: FY27 ≈ consensus $12.07B, FY28 +50% (haircut vs +63% consensus / raised mgmt outlook)
+    [0.47, 0.60, 0.25, 0.18, 0.12], // Bull (+revPrem): Nvidia + Amazon + Google + new wins all ramp; Celestial fabric scales
   ],
 
   fcfMargin: [
@@ -73,22 +86,22 @@ export const MRVL = defineStock({
 
   desc: [
     'AI capex peaks in FY27 and hyperscaler custom silicon programs delay their FY28 ramp. Broadcom closes the optical DSP gap with integrated switching+optics bundles. Celestial AI photonic fabric slips to FY29+. ' +
-      'Revenue growth decelerates sharply after FY27; FY31 reaches ~$15B but FCF margins plateau at 27%. Multiple compresses 65× → 18× EBITDA as the market reprices MRVL as a semiconductor cyclical. 5yr CAGR ~-4% from $208.',
-    'FY27 $11.5B and FY28 $16.5B deliver per management guidance raises. Custom silicon grows +20% in FY27, re-accelerates in FY28 as 20+ design wins enter production. Optical interconnect holds 70%+ share. ' +
-      'Non-GAAP operating margin expands from 35% to 40%+ by FY30 (per 38-40% FY28 target). Revenue reaches ~$23.4B by FY31 with 36% FCF margin. Exit at 28× EBITDA (42% proxy). 5yr CAGR ~9% from $208.',
+      'Revenue growth decelerates sharply after FY27; FY31 reaches ~$15B but FCF margins plateau at 27%. Multiple compresses to ~18× EBITDA as the market reprices MRVL as a semiconductor cyclical. 5yr target {target} ({cagr} annualized).',
+    'FY27 (~$12.1B) and FY28 (~$18B, below the raised ~$19.7B consensus) deliver on the twice-raised outlook. Custom silicon grows +20% in FY27, re-accelerates in FY28 as 20+ design wins enter production. Optical interconnect holds 70%+ share. ' +
+      'Non-GAAP operating margin expands from 35% to 40%+ by FY30 (per 38-40% FY28 target). Revenue reaches ~$23.4B by FY31 with 36% FCF margin. Exit at 28× EBITDA (42% proxy). 5yr target {target} ({cagr} annualized).',
     'Nvidia NVLink Fusion, Amazon, Google, and new hyperscaler programs all ramp simultaneously in FY28-29. Celestial AI photonic fabric achieves $1B+ run-rate by FY30, opening a new TAM. CXL/switching adds a third $1B+ growth vector. ' +
-      'Revenue approaches $28B by FY31 with 42% FCF margin. FY28 $16.5B guide proves conservative. Exit at 35× EBITDA (47% proxy). 5yr CAGR ~18% from $208.',
+      'Revenue approaches $28B by FY31 with 42% FCF margin. The raised FY28 outlook proves conservative. Exit at 35× EBITDA (47% proxy). 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'AI capex cycles historically run 2-3 years before rationalization. With MRVL up 145% YTD and trading at premium multiples, the market is pricing perfection. Customer concentration risk: a single Amazon or Google custom silicon program delay cascades through FY28 estimates. ' +
+    'AI capex cycles historically run 2-3 years before rationalization. At ~65× FY27E non-GAAP EPS, the market is pricing perfection. Customer concentration risk: a single Amazon or Google custom silicon program delay cascades through FY28 estimates. ' +
       'Broadcom threatens optical DSP share by bundling with Tomahawk switching (dominant franchise) — end-to-end portfolio discounts vs Marvell point-solution pricing. ' +
       'Celestial AI photonic fabric at scale has never shipped; integration complexity and latency requirements create significant execution risk. ' +
       'Revenue growth decelerates to mid-single-digits post-FY28 as the initial hyperscaler build-out matures. Multiple compresses to semiconductor-cyclical 18× EBITDA, erasing the AI premium.',
     'Marvell\'s thesis rests on structural, multi-year AI infrastructure investment: hyperscalers are committing $500B+/year in AI capex through at least 2028. Custom silicon is the most defensible franchise — once an XPU design is taped out with Marvell IPs, switching costs are prohibitive for 3-5 years (new tape-outs cost $500M+). ' +
       'Amazon, Google, and Microsoft all have multi-year programs in flight; 20+ new design wins entering FY28-29 production give unprecedented forward revenue visibility for a semiconductor company. ' +
       'Optical interconnect\'s 70%+ share in 800G/1.6T is extending into 200G/lane PAM4 and 1.6T next-gen. The NVLink Fusion integration locks MRVL into the Nvidia ecosystem structurally. ' +
-      'Buybacks at $2.3B/yr (2.4× SBC) + expanding margins create durable EPS leverage. FY28 at 38-40% non-GAAP op margin on $16.5B revenue implies $5.60+ non-GAAP EPS — stock at 37× FY28E is reasonable for a semi growing 43% with this architecture.',
+      'Buybacks at $2.3B/yr (2.4× SBC) + expanding margins create durable EPS leverage. Street FY28E is now ~$7.28 non-GAAP EPS on ~$19.7B revenue — at {spot} that is ~38× FY28E for a semi growing 60%+, reasonable if the ramp holds.',
     'The Nvidia $2B investment and NVLink Fusion integration signal architectural dependency, not vendor relationship: Nvidia is standardizing on Marvell\'s optical and custom silicon as a long-term platform requirement. If Nvidia\'s infrastructure scales 50%+/year, MRVL\'s embedded position compounds revenue beyond the current $16.5B FY28 guide. ' +
       'Celestial AI photonic fabric represents the true asymmetric option: a potential $10B+ TAM for scale-up AI interconnect (intra-pod vs inter-rack); adoption would structurally re-rate MRVL from data center supplier to AI networking platform. ' +
       'Amazon and Google custom programs are in early innings — FY29 ramps are likely materially larger than FY28 production starts, with next-gen XPU generations already in design. The 20+ new design wins represent a multi-year compounding flywheel: each successful program wins the subsequent generation.',
