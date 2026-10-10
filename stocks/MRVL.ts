@@ -18,7 +18,7 @@ export const MRVL = defineStock({
   debt: 4470,
   beta: 2.29,
   costDebt: 0.055,
-  rsRating: 87,           // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 93,           // IBD RS per user, 10/10/2026 (was 87)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
 

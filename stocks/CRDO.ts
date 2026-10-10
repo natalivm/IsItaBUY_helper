@@ -20,7 +20,7 @@ export const CRDO = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 6.31,       // FY27E (Apr 2027) non-GAAP EPS — stockanalysis consensus (Oct 5 2026; FY28E $9.69, +54%). Q1 FY27 $1.20. Prior $3.12 was the FY26 basis.
-  rsRating: 85,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 93,         // IBD RS per user, 10/10/2026 (was 85)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q1 FY27 UPDATE (Sep 1, 2026) — first data review
