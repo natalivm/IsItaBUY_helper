@@ -18,7 +18,7 @@ export const ONDS = defineStock({
   debt: 41,
   beta: 2.56,
   costDebt: 0.065,
-  rsRating: 62,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 8,          // IBD RS per user, 10/10/2026 (was 62)
   rsTrend: 'falling',
   ratingOverride: 'HOLD',  // Pins HOLD: speculative, pre-profit roll-up (adj. EBITDA loss still widening in Q2 2026) where the DCF is highly sensitive to margin assumptions — HOLD avoids both extremes.
   aiImpact: 'TAILWIND',
