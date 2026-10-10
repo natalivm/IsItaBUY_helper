@@ -9,7 +9,7 @@ export const NU = defineStock({
   updatedOn: '10/09',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  fairPriceRange: '$26 - $80',
+  fairPriceRange: '$16 - $54',  // bear-to-base 5y model range (post Q2 2026 bear fix)
   // ~$84.9B market cap / $16.15 = ~5,254M shares
   shares0: 5254,
   rev25: 16500,        // $16.5B 2025A (Q4 revenue $4.9B; full-year ~$16.5B). FY26E consensus $22.8B, FY27E $28.2B (stockanalysis, Oct 2026)
@@ -114,8 +114,8 @@ export const NU = defineStock({
     'nuFormer AI proves structurally transformative across all geographies — $29B unused credit limit pool converts to IBB at meaningfully lower loss rates, driving ARPAC beyond $20+. Mexico banking license clears, LDR expands rapidly to rival Brazil. Super-core growing 100% YoY compounds into material P&L. US fintech launch captures a profitable niche. ROE sustains 35%+, P/E re-rates toward premium global digital bank comps. NU graduates to undisputed type A structural compounder.',
   ],
 
-  epsCagr: [19, 25, 34],  // Base trimmed 27→25 on 06/26 (Street long-run ~21-25%; file's own "25-28%" language). Bear $2.10 / Base $2.69 / Bull $3.80 in 2031E (from 2026E base of $0.88)
-  exitPE: [15, 20, 25],
+  epsCagr: [12, 25, 34],  // Bear 19→12 at Q2 2026 review so the inputs match the bear narrative (credit shock + EM-bank re-rate); 19% EPS growth was not a bear case. Base trimmed 27→25 on 06/26 (Street long-run ~21-25%; file's own "25-28%" language). Bear $1.57 / Base $2.72 / Bull $3.86 in 2031E (from 2026E base of $0.89)
+  exitPE: [11, 20, 25],   // Bear 15→11: narrative re-rates to traditional EM bank comps (10-12×)
   prob: [15, 45, 40],     // Held post-Q2 2026 too (record quarter vs 90+ NPL uptick + Brazil election risk). Held post-Q1 2026 — Mexico's first IFRS-profitable quarter + AI in production confirm the bull S-curve, but YoY NI decel (50%→41%) and seasonal CLA cap further upgrade; quarter confirms the existing distribution
 
   termGrowth: [0.020, 0.030, 0.035],
