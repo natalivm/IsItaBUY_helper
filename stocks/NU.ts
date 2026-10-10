@@ -19,7 +19,7 @@ export const NU = defineStock({
   debt: 3200,
   beta: 1.55,
   costDebt: 0.07,      // EM premium
-  rsRating: 35,         // Estimated 10/10 (no IBD print): ~flat vs a year ago, but sharp recovery $12.66 (Sep 30) → $16.12 (Oct 9) after Q2 beat (+11% on print) + $1B buyback
+  rsRating: 98,         // IBD RS per user, 10/10/2026 (was 21)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',  // nuFormer: in production for credit decisioning Brazil; expanding to lending + Mexico credit cards 2026
   modelType: 'EPS_PE',
