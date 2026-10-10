@@ -17,8 +17,8 @@ export const SHOP = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 1.91,       // FY2026E non-GAAP EPS — stockanalysis.com consensus (Oct 8 2026, range $1.71-2.16; FY27E $2.45, +28% — matches base epsCagr). Raised from $1.82 after Q2 2026 beat. Prior: ~$1.82 on 06/26 spot-check. Q1 2026 (qtr end Mar 31): rev $3.17B +34% YoY, adj EPS $0.36 (beat), GMV $101B +35%, FCF ~15% margin. Base CAGR (28%) + exit P/E (45) unchanged — already aligned with consensus.
-  rsRating: 20,
-  rsTrend: 'falling',
+  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 20)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
   lastReportTag: 'Q2 2026',
