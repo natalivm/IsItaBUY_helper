@@ -20,7 +20,8 @@ export const DUOL = defineStock({
   costDebt: 0,
   modelType: 'EPS_PE',
   baseEps: 3.40,       // FY26E GAAP-equivalent recurring EPS (~$320M adj. EBITDA less ~$150M SBC, D&A, tax ≈ $3.30-3.40). Street non-GAAP FY26E $6.61 adds back SBC; FY25 GAAP $11.77 was inflated by a one-time tax benefit.
-  rsRating: 33,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 69,        // IBD RS per user, 10/11/2026 (was 33)
+  rsTrend: 'rising',
   aiImpact: 'DISRUPTION_RISK',
   // Q2 2026 UPDATE (Aug 5, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

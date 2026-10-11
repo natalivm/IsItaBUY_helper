@@ -18,8 +18,8 @@ export const FRSH = defineStock({
   debt: 34.6,
   beta: 1.40,
   costDebt: 0.05,
-  rsRating: 35,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 96,        // IBD RS per user, 10/11/2026 (was 35)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -42,7 +42,7 @@ export const FRSH = defineStock({
   risksToBuy: [
     'CX business faces structural AI-driven headcount deflation, with ARR guided to grow only in low single digits as ticket volume erodes',
     'Free cash flow margin slipped year-over-year in the latest quarter, so the restructuring payoff still has to show up in cash',
-    'RS Rating and trend are both deeply negative, reflecting persistent institutional exit well below the IPO price',
+    'The stock still trades well below its IPO price, and the momentum rebound has yet to prove durable',
     'If EX growth decelerates toward the mid-teens while CX continues to decline, the re-rating thesis collapses entirely',
     'ServiceNow and Atlassian Jira Service Management are well-resourced incumbents that actively contest every enterprise ITSM deal',
   ],

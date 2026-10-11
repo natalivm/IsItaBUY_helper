@@ -20,10 +20,10 @@ export const GXO = defineStock({
   costDebt: 0.055,
   modelType: 'EPS_PE',
   baseEps: 3.05,       // 2026E EPS = FY26 guide midpoint (narrowed at Q2 to $2.95-3.15, midpoint held; consensus $3.02, FY27E $3.54 +17%).
-  rsRating: 37,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 48,        // IBD RS per user, 10/11/2026 (was 37)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // Model STRONG BUY (~14% base CAGR from a ~15× P/E) overstates a thin-margin, levered (~2.5× net debt, Altman Z ~1.9) contract logistician with weak RS (37) and an Amazon sentiment overhang. Street is Strong Buy (+40% median) — revisit after the Nov 16 Investor Day or if momentum/quality turns.
+  ratingOverride: 'HOLD',  // Model STRONG BUY (~14% base CAGR from a ~15× P/E) overstates a thin-margin, levered (~2.5× net debt, Altman Z ~1.9) contract logistician with only middling RS (48, recovering from 37) and an Amazon sentiment overhang. Street is Strong Buy (+40% median) — revisit after the Nov 16 Investor Day or if momentum/quality turns.
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
   // Revenue $3.4B (+4.3%; organic +3.4%), adj. EBITDA $219M (vs $212M),

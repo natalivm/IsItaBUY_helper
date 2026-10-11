@@ -18,7 +18,7 @@ export const ASTS = defineStock({
   debt: 2990,           // convertible notes
   beta: 1.46,
   costDebt: 0.03,
-  rsRating: 73,         // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 3,         // IBD RS per user, 10/11/2026 (was 73)
   rsTrend: 'falling',
   ratingOverride: 'HOLD',  // Pins HOLD: speculative pre-revenue satellite name with falling RS — keep at HOLD regardless of model drift (model reads STRONG BUY on a 2029-30 ramp it cannot yet underwrite).
   aiImpact: 'TAILWIND',

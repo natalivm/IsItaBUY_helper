@@ -19,8 +19,8 @@ export const BKNG = defineStock({
   debt: 20920,
   beta: 1.15,
   costDebt: 0.04,
-  rsRating: 29,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 55,        // IBD RS per user, 10/11/2026 (was 29)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

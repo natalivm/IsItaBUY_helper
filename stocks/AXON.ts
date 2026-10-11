@@ -17,10 +17,10 @@ export const AXON = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 7.65,         // FY2026E adj. EPS consensus (Sep 29 2026; range $6.32-8.80; FY27E $10.54 +38%). Prior: $7.00.
-  rsRating: 13,          // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 45,          // IBD RS per user, 10/11/2026 (was 13)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // RS collapsed to 13 (was 92) and the stock is down ~42% in a year. Model STRONG BUY (~17% base CAGR) rests on 25% EPS compounding for a Burry-Tragic SBC name (~16% of rev, thin GAAP NI) at ~55× FY26E with no margin for error; with no momentum support, HOLD until quality/momentum turns. (Street median +65%.)
+  ratingOverride: 'HOLD',  // RS collapsed to 13 (from 92), now recovering (45, Oct 2026) but not yet strong; the stock is down ~42% in a year. Model STRONG BUY (~17% base CAGR) rests on 25% EPS compounding for a Burry-Tragic SBC name (~16% of rev, thin GAAP NI) at ~55× FY26E with no margin for error; HOLD until momentum confirms (RS 70+). (Street median +65%.)
   updatedOn: '10/09',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',

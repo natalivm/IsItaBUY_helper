@@ -19,10 +19,10 @@ export const CACI = defineStock({
   beta: 0.58,
   costDebt: 0.045,
   modelType: 'EPS_PE',    // Converted from DCF: low beta (0.58) made the Gordon perpetuity explode (base ~$1,616 vs ~$620 prose). Defense-IT has clean, stable adjusted EPS — EPS×P/E is the right frame and lands targets on the street.
-  ratingOverride: 'BUY',  // EPS_PE model reads HOLD (base ~7% 5yr CAGR at 16× exit) and weak RS (<30) disables the quality boost. Held at BUY to match consensus Buy (11 of 16 Strong Buy) + a beat-and-raise FY26/FY27 and the ARKA case; revisit if momentum stays weak.
+  ratingOverride: 'BUY',  // EPS_PE model reads HOLD (base ~6% 5yr CAGR at 16× exit — below the 8% soft-BUY line even with the RS 92 quality boost). Held at BUY to match consensus Buy (11 of 16 Strong Buy), a beat-and-raise FY26/FY27, the ARKA case and RS that has turned strong (28 → 92).
 
-  rsRating: 28,          // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 92,          // IBD RS per user, 10/11/2026 (was 28)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q4 FY26 UPDATE (Aug 5, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ export const CACI = defineStock({
   risksToBuy: [
     'Post-ARKA leverage is substantial and requires sustained FCF execution to deleverage without financial strain',
     'New interest expense from acquisition financing is diluting near-term EPS, creating institutional selling pressure',
-    'Relative strength remains weak, so the market has not yet rewarded the beat-and-raise execution',
+    'The stock has re-rated with momentum, so the valuation now leans on execution against a higher bar',
     'Integrating a multi-billion acquisition while managing an existing large backlog introduces meaningful operational complexity',
     'Any DOGE-driven scope creep into national-security-adjacent IT contracts beyond the current exemption ring-fence would be a surprise negative',
   ],

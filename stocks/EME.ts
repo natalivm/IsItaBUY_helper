@@ -20,7 +20,8 @@ export const EME = defineStock({
   costDebt: 0.052,
   baseEps: 32.86,           // FY26E EPS consensus (guide raised at Q2 to $32.00-33.25; FY25A $25.87; FY27E $36.75 +12%)
   modelType: 'EPS_PE',
-  rsRating: 83,             // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 88,             // IBD RS per user, 10/11/2026 (was 83)
+  rsTrend: 'rising',
   ratingOverride: 'HOLD',  // Model BUY (~9% base CAGR, quality-boosted) but a cyclical contractor at record margins on the data-center build; HOLD on cycle/valuation risk.
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 30, 2026) — first data review

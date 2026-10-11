@@ -18,7 +18,7 @@ export const ETN = defineStock({
   debt: 21330,         // up sharply with the Boyd Thermal acquisition
   beta: 1.16,
   costDebt: 0.045,
-  rsRating: 73,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 88,        // IBD RS per user, 10/11/2026 (was 73)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Floors ETN at HOLD: base DCF reads below spot on a high-multiple electrical name, but OVERVALUED overstates a quality compounder. Matches the TAILWIND-boosted model today.
