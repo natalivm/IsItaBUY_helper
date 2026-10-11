@@ -18,7 +18,7 @@ export const CIEN = defineStock({
   debt: 100,
   beta: 1.30,
   costDebt: 0.045,
-  rsRating: 99,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 96,         // IBD RS per user, 10/11/2026 (was 99)
   aiImpact: 'TAILWIND',
   // Q3 FY26 UPDATE (Sep 3, 2026) — first data review since Q1
   // ─────────────────────────────────────────────────────────────────────────

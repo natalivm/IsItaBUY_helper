@@ -20,8 +20,8 @@ export const AZO = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 170.78,     // FY27E (Aug 2027) EPS — stockanalysis consensus (Oct 9 2026; FY28E $192.37). FY26A $152.55 (Q4 $56.05, helped ~145bps of GM by tariff refunds + 105bps LIFO). Prior $144.9 was an FY26 estimate.
-  rsRating: 16,         // NOT refreshed — awaiting user RS (10/10/2026)
-  rsTrend: 'falling',
+  rsRating: 44,         // IBD RS per user, 10/11/2026 (was 16)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // Q4 FY26 UPDATE (Sep 22, 2026) — first data review since Q2
   // ─────────────────────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ export const AZO = defineStock({
     'Same-store traffic declined recently, raising questions about whether the demand acceleration thesis will materialize',
     'Commercial mix shift toward professional installers compresses gross margin relative to the higher-margin DIY segment',
     'Significant structural debt load from systematic leveraged buybacks could become a constraint if rates stay elevated',
-    'RS rating shows severe institutional distribution — the market is not yet rewarding the long-term thesis',
+    'Relative strength is only middling — the market has started to recover but is not yet fully rewarding the long-term thesis',
   ],
 
   epsCagr: [4, 12, 15],   // Bear 7→4: the old bear (7% at 18x) still returned ~5%/yr
