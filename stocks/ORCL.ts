@@ -53,8 +53,8 @@ export const ORCL = defineStock({
     'SBC overstatement is among the highest in our coverage — real owner earnings are a fraction of reported GAAP',
   ],
 
-  epsCagr: [9, 15, 21],
-  exitPE: [15, 20, 24],
+  epsCagr: [4, 15, 21],   // Bear 9→4 (10/11/2026): the old bear (9% at 15×) still returned ~6%/yr — not a bear case
+  exitPE: [12, 20, 24],   // Bear 15→12
   prob: [20, 50, 30],
 
   analystConsensus: { rating: 'Buy', targetLow: 110, targetMedian: 240, targetHigh: 400, numAnalysts: 43 },  // stockanalysis.com, Oct 7 2026
@@ -70,7 +70,7 @@ export const ORCL = defineStock({
   ],
   exitMultiple: [12, 18, 22],
   desc: [
-    'AI infra cycle cools — OCI stays 4th behind AWS/Azure/GCP. Heavy capex ($21B→$71B) converts poorly to revenue. FCF stays depressed through 2028+. Gross margin compresses to 55% without revenue scale to compensate. EPS growth ~9% CAGR from the $8.10 FY27E base. Market reprices to 15× historical range. 5yr target {target} ({cagr} annualized). Key trigger: AI capex rationalization or OCI contract losses.',
+    'AI infra cycle cools — OCI stays 4th behind AWS/Azure/GCP. Heavy capex ($21B→$71B) converts poorly to revenue. FCF stays depressed through 2028+. Gross margin compresses to 55% without revenue scale to compensate. Depreciation on the capex wave and interest on the debt hold EPS growth to ~4% a year from the $8.10 FY27E base. Market reprices to ~12×. 5yr target {target} ({cagr} annualized). Key trigger: AI capex rationalization or OCI contract losses.',
     'Solid execution on the Q1 FY27 momentum (OCI +121%, RPO $664B) — OCI captures meaningful AI workload share, multicloud DB adoption sustains. Revenue hits ≥$90B FY27 per guidance. RPO converts to revenue on schedule. Capex peaks FY28 then moderates, FCF inflects positive FY28-29. EPS compounds ~15% from the $8.10 base on operating leverage + scale. Partner-funded capacity model works. P/E stabilizes at 20× as market reclassifies Oracle from legacy to AI-enabled enterprise platform. 5yr target {target} ({cagr} annualized).',
     'AI infrastructure boom extends multi-year. Oracle wins 3-4 major AI lab training contracts ($1-10B each). OCI bare-metal architecture becomes standard for large-scale training. Multicloud DB revenue sustains 100%+ growth. Revenue approaches $226B by 2030E. Sovereign/regulated cloud wins add durability. EPS ~21% CAGR on massive operating leverage. Market awards 24× as Oracle enters top-3 cloud. 5yr target {target} ({cagr} annualized).',
   ],

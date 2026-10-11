@@ -75,13 +75,13 @@ export const SHOP = defineStock({
   desc: [
     '2026 momentum fades as macro headwinds dampen SMB formation and Amazon intensifies competition. ' +
       'GenAI agents commoditize Shopify\'s AI edge as competing platforms close the gap. GMV growth slows to low teens; Shopify Payments take-rate compresses. ' +
-      'Revenue decelerates sharply from 2027; multiple compresses from ~89× to ~28× as market reprices SHOP toward mature-platform status. EPS growth ~14% from $1.91 base. 5yr target {target} ({cagr} annualized).',
+      'Revenue decelerates sharply from 2027; multiple compresses from ~89× to ~25× as market reprices SHOP toward mature-platform status. EPS growth ~14% from $1.91 base. 5yr target {target} ({cagr} annualized).',
     'Shopify sustains the 2026 trajectory (Q1 +34%, Q2 +34%): FY2026 revenue ~31% growth followed by gradual normalization. B2B, offline and international each add durable growth vectors. ' +
       'UCP becomes the de-facto agentic commerce standard; Shopify Payments penetration climbs past 70%. Operating margins expand from ~17% toward 24% by FY30. ' +
-      'EPS compounds at ~28% from the $1.91 FY2026 base. Multiple de-rates ~89× → 45× through earnings growth. 5yr target {target}, {cagr} annualized — solid but valuation-dependent.',
+      'EPS compounds at ~25% from the $1.91 FY2026 base (revenue plus margin expansion). Multiple de-rates ~89× → 40× through earnings growth. 5yr target {target}, {cagr} annualized — the business compounds but the price already discounts most of it.',
     'Agentic commerce inflects growth above 30% for multiple years. UCP network effects lock in merchants across ChatGPT, Copilot and Google surfaces. ' +
       'B2B scales to $2B+ revenue, Shop Pay becomes the Internet\'s default checkout outside the US, international sustains 45%+ GMV growth. ' +
-      'FCF margin reaches 30%+ by FY30. EPS compounds at ~35% from $1.91 base. Multiple holds 60× given platform position. 5yr target {target}, {cagr} annualized.',
+      'FCF margin reaches 30%+ by FY30. EPS compounds at ~32% from $1.91 base. Multiple holds 50× given platform position. 5yr target {target}, {cagr} annualized.',
   ],
 
   thesis: [
@@ -101,9 +101,12 @@ export const SHOP = defineStock({
   ebitdaProxy: [0.18, 0.25, 0.32],
   bullMaOptVal: false,
 
-  epsCagr: [14, 28, 35],
-  exitPE: [28, 45, 60],
-  prob: [20, 45, 35],
+  // Recalibrated 10/11/2026 (targets too high): was [14,28,35] / [28,45,60] / prob [20,45,35] → base $295, above the highest
+  // analyst target ($220). EPS can outgrow ~19% revenue on margin expansion, but not by 9pts for five years; and a 45×
+  // (bull 60×) exit five years out assumes growth is still ~25%+ then.
+  epsCagr: [14, 25, 32],
+  exitPE: [25, 40, 50],
+  prob: [25, 50, 25],
 
   driverOverrides: [
     {},

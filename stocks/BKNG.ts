@@ -54,7 +54,7 @@ export const BKNG = defineStock({
 
   // Revenue growth: Q1'26 +16%, Q2'26 +8%, Q3 guide +4-6% (Middle East drag), FY'26 guide HSD.
   revGrowth: [
-    [0.07, 0.05, 0.05, 0.04, 0.04],   // Bear: H2 softness becomes new normal, Middle East+macro persist
+    [0.06, 0.02, 0.01, 0.02, 0.02],   // Bear (deepened 10/11/2026): AI agents disintermediate top-of-funnel + macro/Middle East drag
     [0.087, 0.09, 0.08, 0.08, 0.07],  // Base: FY26 ≈ $29.25B consensus, FY27 ≈ +9%, gradual deceleration
     [0.11, 0.10, 0.10, 0.09, 0.09],   // Bull: above guide, H2 recovery + merchant mix acceleration
   ],
@@ -68,7 +68,7 @@ export const BKNG = defineStock({
   ],
 
   // EBITDA exit multiples: historical EV/EBITDA ~14-22x, using conservative end for mature travel biz
-  exitMultiple: [10, 14, 16],
+  exitMultiple: [8, 12, 15],   // Was [10, 14, 16] (10/11/2026): EV/EBITDA is ~12× today — base no longer assumes a re-rating; the old bear still earned ~9%/yr
 
   desc: [
     'The Q3 slowdown (+4-6%) becomes the run-rate as Middle East tensions, macro fears and airline capacity cuts spread. Volume growth stays near 3-5% and pricing can\'t fill the gap. ' +
