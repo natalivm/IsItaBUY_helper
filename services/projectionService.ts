@@ -154,12 +154,16 @@ const calculateDCF = (t: TickerDefinition, sc: ScenarioConfig, showEnhancements:
 
   const revPremium = (showEnhancements && sc.drivers?.revPrem as number[]) || ZERO_ARRAY;
   const fcfUplift = (showEnhancements && sc.drivers?.fcfUplift as number[]) || ZERO_ARRAY;
-  const buybackRate = (showEnhancements && (sc.drivers?.bbRate as number)) || 0;
+  // Buybacks are deliberately NOT applied in the DCF. Every dollar of FCF is
+  // already counted in equity value (PV of FCF + terminal value); shrinking the
+  // share count as well would count the cash that funds the buybacks twice.
+  // Repurchases at fair value are value-neutral, so per-share value uses a flat
+  // share count. (`bbRate` still drives the EPS_PE share-count display.)
   const maOptionality = (showEnhancements ? (sc.drivers?.maOptVal as number || 0) : 0);
   const ebitdaMargin = sc.drivers?.ebitdaProxy as number || sc.fcfMargin[4] * EBITDA_MARGIN_FALLBACK_MULT;
 
   let currentRev = t.rev25;
-  let currentShares = t.shares0;
+  const currentShares = t.shares0;
 
   const revs: number[] = [];
   const fcfs: number[] = [];
@@ -172,7 +176,6 @@ const calculateDCF = (t: TickerDefinition, sc: ScenarioConfig, showEnhancements:
     revs.push(currentRev);
     fcfs.push(currentFcf);
     pvFCFs.push(currentFcf / Math.pow(1 + w, i + 1));
-    if (buybackRate > 0) currentShares *= (1 - buybackRate);
     shareHistory.push(currentShares);
   }
 

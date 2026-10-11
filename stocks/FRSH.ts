@@ -59,10 +59,13 @@ export const FRSH = defineStock({
     [0.15, 0.19, 0.18, 0.17, 0.16],
   ],
 
+  // Recalibrated 10/11/2026 (targets too high): adjusted FCF (~27.5% margin) adds back ~15% of revenue in stock-based pay
+  // (SBC ~$139M LTM vs ~$265M FY26 adj. FCF), so the DCF now uses SBC-adjusted FCF. Was [0.24→0.21, 0.276→0.30, 0.28→0.35]
+  // → base $34-40, ~1.6× the highest analyst target, with a bear above today's price.
   fcfMargin: [
-    [0.24, 0.23, 0.22, 0.21, 0.21],
-    [0.276, 0.28, 0.29, 0.29, 0.30],
-    [0.28, 0.30, 0.32, 0.34, 0.35],
+    [0.10, 0.09, 0.08, 0.08, 0.08],   // Bear: CX erodes, EX investment outruns cash
+    [0.13, 0.14, 0.16, 0.18, 0.20],   // Base: ~27.5% adj. FCF less ~15% SBC, SBC intensity falls as revenue scales
+    [0.14, 0.17, 0.20, 0.23, 0.25],   // Bull: platform scale + falling SBC intensity
   ],
 
   exitMultiple: [6, 14, 18],
@@ -71,13 +74,13 @@ export const FRSH = defineStock({
 
   desc: [
     'CX (Freshdesk) ARR declines outright — worse than the prudent low-single-digit growth guide — as AI agents deflect tier-1 tickets, and EX decelerates below the guided mid-20s as ServiceNow and Jira contest every enterprise ITSM deal. ' +
-      'Revenue CAGR slows to ~5% and FCF margin slips toward ~21% as continued EX investment outruns eroding CX cash. Critically, the market never re-rates the stock — the multiple stays distressed at ~6× FCF. ' +
+      'Revenue CAGR slows to ~5% and FCF after stock-based pay slips toward ~8% as continued EX investment outruns eroding CX cash. The market never re-rates the stock — the multiple stays distressed at ~6× EBITDA. ' +
       'Target ~{target} ({cagr} CAGR from {spot}); even this is floored mostly by ~$630M net cash (roughly a sixth of the market cap) plus five years of FCF, not by any re-rating.',
     'EX sustains mid-20s ARR growth toward $1B ARR while CX grows low single digits, with the Freshdesk Omni platform lifting ARPA ~2.5× on new customers. ' +
-      'Restructuring (11% headcount cut + AI-assisted code generation) holds FCF margin near 28–30%, and the $400M buyback at ~{spot} retires a meaningful slice of the float. ' +
-      'Revenue CAGR ~13%; exit at 14× FCF. Target ~{target} ({cagr} CAGR) — in line with management\'s guide to compound adjusted FCF/share 20%+ annually over the next 3 years.',
+      'Restructuring (11% headcount cut + AI-assisted code generation) holds adjusted FCF near 28–30%, and FCF after stock-based pay climbs from ~13% toward ~20% as SBC intensity falls; buybacks offset dilution. ' +
+      'Revenue CAGR ~13%; exit at 14× EBITDA. Target ~{target} ({cagr} CAGR).',
     'Freshservice emerges as the genuine "affordable ServiceNow" — enterprise ITSM wins accelerate, Copilot and agentic AI (Agent Studio, MCP Gateway) scale into real monetization, and EX net dollar retention holds ~111%. ' +
-      'Adjusted FCF/share compounds well above the 20%/yr management floor as the investment cycle matures and non-GAAP operating margin expands. Revenue CAGR ~18%; 18× exit on platform premium. ' +
+      'Adjusted FCF/share compounds well above the 20%/yr management floor as the investment cycle matures and non-GAAP operating margin expands. Revenue CAGR ~18%; FCF after stock-based pay reaches the mid-20s; 18× exit on platform premium. ' +
       'Target ~{target} ({cagr} CAGR), with ~$630M net cash cushioning the downside throughout.',
   ],
 
@@ -91,7 +94,7 @@ export const FRSH = defineStock({
   ],
 
   bbRate: [0.01, 0.025, 0.04],
-  ebitdaProxy: [0.16, 0.27, 0.35],
+  ebitdaProxy: [0.10, 0.18, 0.25],    // EBITDA after SBC (non-GAAP op margin ~23% less ~15% SBC, rising with scale); was [0.16, 0.27, 0.35]
   bullMaOptVal: true,
 
   debtSafety: {

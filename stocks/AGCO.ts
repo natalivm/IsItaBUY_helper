@@ -114,13 +114,11 @@ export const AGCO = defineStock({
   },
   bullMaOptVal: 123.88 * 72.4 * 0.07,
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {
       bbRate: 0.005,
     },
     {
-      revPrem: [0.01, 0.01, 0.01, 0.01, 0.01],
-      fcfUplift: [0.005, 0.005, 0.01, 0.01, 0.01],
       bbRate: 0.015,
     },
     {

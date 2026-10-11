@@ -161,6 +161,8 @@ Use `DCF_ADVANCED` (default) when:
 - The balance sheet is not distorted (debt < 2x market cap)
 - The investment thesis is about cash flow generation and intrinsic value
 
+**No hidden base-case boosts (Oct 2026)**: the base case is exactly the stated `revGrowth` / `fcfMargin` path — the driver template adds no revenue or FCF-margin premium to bear or base (only the bull keeps one), and `driverOverrides` must not add one to the base. The DCF also ignores `bbRate`: FCF already funds buybacks, so shrinking the share count too would count that cash twice; per-share value uses a flat `shares0`. Put any buyback or growth view you want into the stated paths.
+
 **Important**: When using `DCF_ADVANCED`, always set `ebitdaProxy` explicitly. The defaults `[0.15, 0.22, 0.35]` are too low for high-margin businesses (SaaS, cybersecurity, software). Check the company's actual EBITDA margin and set accordingly.
 
 ### Validation checklist for new stocks:

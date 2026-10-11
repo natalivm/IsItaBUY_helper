@@ -72,12 +72,9 @@ export const NVDA = defineStock({
   ebitdaProxy: [0.55, 0.62, 0.66],
   bullMaOptVal: 187 * 24400 * 0.04,
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {},
-    {
-      revPrem: [0.02, 0.02, 0.02, 0.02, 0.02],
-      fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
-    },
+    {},
     {
       revPrem: [0.03, 0.03, 0.02, 0.02, 0.02],
       fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],

@@ -93,13 +93,11 @@ export const THM = defineStock({
   ebitdaProxy: [0, 0.05, 0.15],
   bullMaOptVal: 1280,
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {
       bbRate: 0,
     },
     {
-      revPrem: [0.01, 0.02, 0.03, 0.03, 0.03],
-      fcfUplift: [0, 0, 0.005, 0.01, 0.015],
       bbRate: 0.002,
       maOptVal: 988,
     },

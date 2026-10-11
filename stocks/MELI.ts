@@ -73,9 +73,9 @@ export const MELI = defineStock({
   ],
   exitMultiple: [12, 16, 20],
   desc: [
-    'Deceleration + multiple compression. Revenue growth halves, P/E re-rates to 30x on extended margin investment period.',
-    'Execution holds, margin delay. Revenue growth follows TIKR consensus curve, credit card cohort maturation begins showing in 2027.',
-    'Margin inflection + re-rating. Fintech and logistics flywheel accelerates, cost/shipment efficiencies compound, P/E expands on earnings beats.',
+    'Deceleration + multiple compression. Revenue growth halves, credit losses and margin investment keep EPS growth near 6% a year, and the P/E re-rates to 22x. 5yr target {target} ({cagr} annualized).',
+    'Execution holds, margin delay. Revenue growth follows the consensus curve, credit-card cohort maturation shows from 2027 and EPS compounds ~20% from the FY26E $38.41; P/E settles at 34x. 5yr target {target} ({cagr} annualized).',
+    'Margin inflection + re-rating. Fintech and logistics flywheel accelerates, cost/shipment efficiencies compound and the P/E holds 45x on earnings beats. 5yr target {target} ({cagr} annualized).',
   ],
   thesis: [
     'Extended investment mode depresses EPS for 4-8 more quarters while competition intensifies in Brazil. Market loses patience.',
@@ -86,8 +86,8 @@ export const MELI = defineStock({
   termGrowth: [0.02, 0.03, 0.035],
   waccAdj: [0.015, 0, -0.01],
 
-  epsCagr: [14, 20, 27],  // Kept at Q2 2026 review: base 20% from the lower $38.41 FY26 base is below the +46% FY27 consensus rebound, leaving room for slower out-years. Base trimmed 22→20 on 06/26 to reflect near-term margin drag (FY26 ~flat on the Q1 reset; growth back-loaded). NI still forecast +24% next year.
-  exitPE: [30, 38, 45],
+  epsCagr: [6, 20, 27],   // Bear 14→6 (10/11/2026) so the bear is an actual bear case. Base kept at Q2 2026 review: base 20% from the lower $38.41 FY26 base is below the +46% FY27 consensus rebound, leaving room for slower out-years. Base trimmed 22→20 on 06/26 to reflect near-term margin drag (FY26 ~flat on the Q1 reset; growth back-loaded). NI still forecast +24% next year.
+  exitPE: [22, 34, 45],   // 10/11/2026: bear 30→22 and base 38→34 — the old bear (14% EPS at 30×) still returned ~3%/yr
   prob: [30, 45, 25],
 
   bbRate: [0.005, 0.01, 0.015],
