@@ -20,7 +20,7 @@ export const AMD = defineStock({
   rsRating: 99,         // IBD RS per user, 10/10/2026 (was 97)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // Floors AMD at HOLD. Post-Q2 2026 the base case lands ~at spot (~1% CAGR) even with FY27E EPS doubling — the stock (~80× FY26E / ~39× FY27E) prices the Helios ramp. Model reads HOLD only via the RS/TAILWIND boost; tagging the AI #2 platform OVERVALUED would overstate it if the boost is lost.
+  // ratingOverride 'HOLD' removed Oct 11 2026: it floored a ~1% base CAGR; after calibrating to the InvestAnswers 2030 targets the base case reads STRONG BUY on its own.
   updatedOn: '10/09',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
@@ -58,30 +58,33 @@ export const AMD = defineStock({
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 365, targetMedian: 635.5, targetHigh: 1250, numAnalysts: 55 },  // stockanalysis.com, Oct 6 2026
 
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $750 / expected $1,500 /
+  // bull $2,300. Model now: ~$760 / ~$1,480 / ~$2,310.
   revGrowth: [
-    [0.40, 0.20, 0.10, 0.08, 0.07],   // Bear: FY26 ~locked (H1 + Q3 guide); Helios ramp disappoints, AI digestion
-    [0.455, 0.60, 0.18, 0.15, 0.12],  // Base (+1.5%/yr revPrem): FY26 ≈ consensus $51B, FY27 +62% (haircut vs +75% consensus), then normalizes
-    [0.45, 0.72, 0.25, 0.20, 0.15],   // Bull (+2-2.5%/yr revPrem): FY27 at/above consensus, share gains accelerate
+    [0.44, 0.60, 0.25, 0.18, 0.14],   // Bear: FY26 ~locked (H1 + Q3 guide); FY27 Helios ramp below consensus, then AI digestion
+    [0.47, 0.72, 0.35, 0.28, 0.22],   // Base: FY26 ≈ consensus $51B, FY27 ≈ consensus $89B, MI450/MI500 share gains sustain 20%+
+    [0.47, 0.80, 0.42, 0.35, 0.28],   // Bull: FY27 above consensus, durable #2 platform share gains accelerate
   ],
 
   fcfMargin: [
-    [0.13, 0.14, 0.15, 0.16, 0.17],   // Bear: opex growth stalls margin expansion
-    [0.16, 0.19, 0.22, 0.24, 0.26],   // Base: gradual mix shift to high-margin AI
-    [0.20, 0.24, 0.28, 0.31, 0.34],   // Bull: AI mix dominates, margins toward NVDA territory
+    [0.14, 0.17, 0.20, 0.22, 0.24],   // Bear: opex growth slows margin expansion
+    [0.16, 0.22, 0.26, 0.28, 0.30],   // Base: mix shift to high-margin AI
+    [0.20, 0.26, 0.30, 0.33, 0.36],   // Bull: AI mix dominates, margins toward NVDA territory
   ],
 
-  exitMultiple: [14, 20, 26],
+  exitMultiple: [20, 26, 30],         // Display-only under EPS_PE
 
   desc: [
     'AI capex pauses for digestion as hyperscalers slow deployments. NVDA software moat (CUDA) widens; AMD MI300/450 ramps disappoint. ' +
       'Data center growth drops to <25%, margins stall at 50-52%, opex creep (+34% YoY current) eats into profit. ' +
-      'The FY27 Helios step-up comes in far below the doubling consensus expects; EPS compounds only ~15% from the $7.59 FY26E base and the multiple compresses to ~20×. 5yr target {target} ({cagr} annualized).',
-    'The Helios/MI450 ramp roughly doubles EPS in FY27, then data center growth normalizes to mid-teens. AMD wins meaningful AI share but NVDA still dominates training. ' +
-      'Margins improve but cap near 57% — gap to NVDA persists. EPS compounds ~28% from the $7.59 base. ' +
-      'Multiple compresses ~80× FY26E → 25× as the cycle matures. 5yr target {target} ({cagr} annualized) — business performs, stock already prices it.',
+      'The FY27 Helios step-up comes in below the doubling consensus expects; EPS compounds ~32% from the $7.59 FY26E base and the multiple compresses to ~25×. 5yr target {target} ({cagr} annualized).',
+    'The Helios/MI450 ramp roughly doubles EPS in FY27, then data center growth stays in the 20s as MI500 follows. AMD wins meaningful AI share but NVDA still dominates training. ' +
+      'Margins improve but cap near 57% — gap to NVDA persists. EPS compounds ~41% from the $7.59 base. ' +
+      'Multiple compresses ~80× FY26E → 35× as the cycle matures. 5yr target {target} ({cagr} annualized).',
     'AI super-cycle extends 2027-2029. AMD captures durable hyperscaler share with MI450/Helios, OpenAI partnership scales, Meta deal expands. ' +
-      'Margins push toward 58-60% (mix shift to AI dominance). EPS compounds ~36% from the $7.59 base. ' +
-      'Market maintains a premium ~30× given structural AI position. 5yr target {target} ({cagr} annualized) — requires near-perfect execution.',
+      'Margins push toward 58-60% (mix shift to AI dominance). EPS compounds ~50% from the $7.59 base. ' +
+      'Market maintains a premium ~40× given structural AI position. 5yr target {target} ({cagr} annualized) — requires near-perfect execution.',
   ],
 
   thesis: [
@@ -94,11 +97,11 @@ export const AMD = defineStock({
       'EPYC server CPU continues taking share from Intel — that part is structural, not cyclical. ' +
       'MI300/MI450 ramps cleanly but the ecosystem gap means premium pricing stays compressed vs NVDA. ' +
       'Margins improve to 55-57% via mix shift, but the 5-7pt gap to NVDA persists due to software moat. ' +
-      'EPS compounds healthily, but the {spot} entry already prices most of this — returns come from EPS growth while the multiple compresses.',
+      'EPS growth far outruns the multiple compression from the {spot} entry — returns come from earnings, not re-rating.',
     'AI super-cycle extends through 2028-2029 and AMD becomes a durable #2 platform with real software ecosystem (ROCm matures, AMD-native frameworks). ' +
       'MI450/Helios delivers competitive performance at attractive pricing → repeat orders, not pilots. ' +
       'OpenAI partnership scales to multi-billion-dollar revenue, Meta partnership expands. Custom silicon (Pensando, Xilinx) cross-sells. ' +
-      'Margins push toward NVDA-like 58-60% on AI mix dominance. EPS compounds at 32%+, market awards a sustained 30× premium. ' +
+      'Margins push toward NVDA-like 58-60% on AI mix dominance. EPS compounds at ~50%, market awards a sustained 40× premium. ' +
       'Probability: ~30% — requires both execution + AI hype to hold simultaneously.',
   ],
 
@@ -107,8 +110,8 @@ export const AMD = defineStock({
   ebitdaProxy: [0.20, 0.28, 0.36],
   bullMaOptVal: false,
 
-  epsCagr: [15, 28, 36],   // Q2 2026: raised (was 10/22/32) — consensus FY27E EPS +107% on the Helios ramp; base 28% = FY27 doubling then ~10-20%/yr
-  exitPE: [20, 25, 30],
+  epsCagr: [32, 41, 50],   // Oct 2026 calibration (was 15/28/36): FY26E $7.59 → FY31 EPS ≈ $30 / $42 / $58; consensus FY27E is +107% on the Helios ramp
+  exitPE: [25, 35, 40],
   prob: [25, 50, 25],
 
   driverOverrides: [

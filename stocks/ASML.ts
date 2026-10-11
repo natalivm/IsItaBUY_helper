@@ -50,27 +50,30 @@ export const ASML = defineStock({
   prob: [30, 40, 30],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 868, targetMedian: 2158, targetHigh: 2902, numAnalysts: 42 },  // stockanalysis.com (Oct 9 2026)
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $2,000 / expected
+  // $3,000 / bull $4,200. Model now: ~$2,000 / ~$3,000 / ~$4,200.
   revGrowth: [
-    [0.28, 0.02, -0.05, 0.04, 0.04],  // Bear: FY26 at low end of guide, then a memory/logic capex digestion
-    [0.33, 0.22, 0.10, 0.09, 0.08],   // Base: FY26 ≈ €43.5B, FY27 ~€53B (haircut vs €54.7B consensus), then normal cycle
+    [0.33, 0.18, 0.08, 0.08, 0.07],   // Bear: FY26 ≈ guide, FY27 short of consensus, then a shallow capex digestion (no outright decline)
+    [0.34, 0.26, 0.14, 0.12, 0.10],   // Base: FY26 ≈ €43.5B, FY27 ≈ €54.7B consensus, then High-NA keeps growth double-digit
     [0.36, 0.28, 0.16, 0.13, 0.11],   // Bull: AI + DRAM EUV intensity sustain a multi-year supercycle
   ],
   fcfMargin: [
-    [0.24, 0.22, 0.22, 0.24, 0.24],
+    [0.28, 0.29, 0.30, 0.30, 0.31],
     [0.29, 0.30, 0.31, 0.31, 0.32],
     [0.31, 0.33, 0.34, 0.35, 0.36],
   ],
-  exitMultiple: [20, 25, 30],
+  exitMultiple: [29, 31, 31],
   desc: [
-    'After the FY26 step-up, TSMC, Samsung and memory makers pause and orders fall; revenue drifts lower into FY28 before recovering. ' +
-      'Margins slip back toward the low-50s gross margin range and the multiple compresses toward its historical floor. 5yr target {target} ({cagr} annualized).',
-    'FY26 lands near the raised €43-45B guide and FY27 grows ~20%+ on AI accelerator and DRAM EUV demand, then growth normalizes to high single digits. ' +
+    'After the FY26 step-up, FY27 falls short of consensus and TSMC, Samsung and memory makers slow orders; growth settles in the high single digits. ' +
+      'Margins hold near the mid-50s gross margin range, but the multiple drifts down from today\'s premium. 5yr target {target} ({cagr} annualized).',
+    'FY26 lands near the raised €43-45B guide and FY27 grows ~25% on AI accelerator and DRAM EUV demand, then growth settles in the low double digits. ' +
       'High-NA ramps on schedule and the installed base keeps compounding; buybacks add to per-share growth. 5yr target {target} ({cagr} annualized).',
     'An AI capex supercycle drives sustained advanced-logic and DRAM buildout, High-NA becomes standard at 2nm and below, and EUV layer counts keep rising. ' +
       'Revenue compounds well past the long-term plan and margins expand toward the high-50s. 5yr target {target} ({cagr} annualized).',
   ],
 
-  ebitdaProxy: [0.35, 0.45, 0.55],
+  ebitdaProxy: [0.45, 0.48, 0.55],
   bbRate: [0.01, 0.02, 0.025],
   debtSafety: {
     netDebt: -6390,        // Oct 2026: ~$2.26B debt − ~$8.65B cash (stockanalysis)

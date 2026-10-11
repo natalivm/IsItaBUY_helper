@@ -50,26 +50,29 @@ export const NVDA = defineStock({
   // rev $411.7B, FY28E $15.91 / $692.2B. Stock $229 — ~25× FY27E, ~14× FY28E.
   // ─────────────────────────────────────────────────────────────────────────
   analystConsensus: { rating: 'Strong Buy', targetLow: 180, targetMedian: 315, targetHigh: 515, numAnalysts: 62 },  // stockanalysis.com, Oct 9 2026
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $350 / expected $575 /
+  // bull $890. Model now: ~$350 / ~$570 / ~$890.
   revGrowth: [
-    [0.85, 0.05, -0.05, 0.02, 0.01],  // Bear: FY27 ~locked (H1 + Q3 guide); AI capex digests from FY28
-    [0.88, 0.48, 0.15, 0.10, 0.08],   // Base (+2%/yr revPrem): FY27 ≈ consensus $411B, FY28 +50% (haircut vs +68%), then normalizes
+    [0.86, 0.50, 0.12, 0.06, 0.05],   // Bear: FY27 ~locked; FY28 +50% (well short of +68% consensus), then AI capex digests
+    [0.88, 0.58, 0.18, 0.10, 0.08],   // Base (+2%/yr revPrem): FY27 ≈ consensus $411B, FY28 ~+60% (modest haircut vs +68%), then normalizes
     [0.88, 0.65, 0.24, 0.18, 0.13],   // Bull (+2-3%/yr revPrem): FY28 at/above consensus, Rubin super-cycle
   ],
   fcfMargin: [
-    [0.42, 0.38, 0.34, 0.32, 0.30],
+    [0.48, 0.47, 0.46, 0.45, 0.44],   // Bear: pricing power erodes slowly as custom silicon competes
     [0.50, 0.49, 0.48, 0.47, 0.46],
     [0.54, 0.53, 0.52, 0.52, 0.52],
   ],
-  exitMultiple: [16, 24, 30],
+  exitMultiple: [21, 26, 31],
   desc: [
-    'FY27 delivers (~$410B), but hyperscaler AI capex digests from FY28, sovereign/enterprise AI fails to compensate, and the market re-rates NVDA as cyclical at ~16× EBITDA. 5yr target {target} ({cagr} annualized).',
-    'FY27 lands near the ~$411B consensus (Q3 guided to $108B ex-China) and FY28 grows ~50% on the Vera Rubin ramp; FCF margin holds near 50%, then growth normalizes. P/E compresses through earnings growth. 5yr target {target} ({cagr} annualized).',
+    'FY27 delivers (~$410B) and FY28 still grows ~50%, but hyperscaler AI capex digests after that, sovereign/enterprise AI only partly compensates, and the market re-rates NVDA toward ~21× EBITDA. 5yr target {target} ({cagr} annualized).',
+    'FY27 lands near the ~$411B consensus (Q3 guided to $108B ex-China) and FY28 grows ~60% on the Vera Rubin ramp; FCF margin holds near 50%, then growth normalizes. P/E compresses through earnings growth. 5yr target {target} ({cagr} annualized).',
     'Rubin super-cycle in H2 FY27 accelerates content/GW expansion, sovereign AI + inference wave broadens TAM beyond hyperscalers, agentic AI / RL drive new CPU (Grace) growth, networking becomes second growth engine — FCF far exceeds $200B by FY28. 5yr target {target} ({cagr} annualized).',
   ],
 
-  termGrowth: [0.020, 0.030, 0.035],
+  termGrowth: [0.025, 0.030, 0.035],
   bbRate: [0.01, 0.02, 0.025],
-  ebitdaProxy: [0.55, 0.62, 0.66],
+  ebitdaProxy: [0.60, 0.63, 0.66],
   bullMaOptVal: 187 * 24400 * 0.04,
 
   driverOverrides: [

@@ -18,6 +18,8 @@ export const MRVL = defineStock({
   debt: 4470,
   beta: 2.29,
   costDebt: 0.055,
+  modelType: 'EPS_PE',     // Switched from DCF_ADVANCED (Oct 11 2026): at beta 2.29 (~17% WACC) the Gordon-growth leg valued a 40%+ grower at ~8× terminal FCF
+  baseEps: 4.22,           // FY27E (Jan 2027) non-GAAP EPS — stockanalysis consensus (FY28E $7.28, +72%)
   rsRating: 93,           // IBD RS per user, 10/10/2026 (was 87)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
@@ -70,34 +72,40 @@ export const MRVL = defineStock({
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 210, targetMedian: 350, targetHigh: 450, numAnalysts: 46 },  // stockanalysis.com, Oct 7 2026
 
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $505 / expected $1,050 /
+  // bull $1,500. Model now: ~$505 / ~$1,045 / ~$1,490.
   revGrowth: [
-    [0.42, 0.15, 0.08, 0.06, 0.05], // Bear: FY27 ~locked (H1 + Q3 guide); custom silicon FY28 delay; Broadcom optical share gain
-    [0.47, 0.50, 0.18, 0.12, 0.08], // Base: FY27 ≈ consensus $12.07B, FY28 +50% (haircut vs +63% consensus / raised mgmt outlook)
-    [0.47, 0.60, 0.25, 0.18, 0.12], // Bull (+revPrem): Nvidia + Amazon + Google + new wins all ramp; Celestial fabric scales
+    [0.45, 0.50, 0.35, 0.25, 0.18], // Bear: FY27 ~locked; FY28 +50% (short of +63% consensus), then custom-silicon ramps slip and growth fades
+    [0.47, 0.63, 0.45, 0.35, 0.28], // Base: FY27 ≈ consensus $12.07B, FY28 ≈ consensus $19.7B, 20+ design wins carry FY29-31
+    [0.50, 0.72, 0.52, 0.42, 0.33], // Bull: Nvidia + Amazon + Google + new wins all ramp; Celestial fabric scales
   ],
 
   fcfMargin: [
-    [0.25, 0.26, 0.27, 0.27, 0.27], // Bear: capex cycle; margins plateau on competitive pressure
-    [0.28, 0.32, 0.34, 0.35, 0.36], // Base: operating leverage to 35% FCF as op margin expands to 40%+
-    [0.28, 0.34, 0.38, 0.40, 0.42], // Bull: platform scale + SBC moderation + lower capex intensity
+    [0.28, 0.31, 0.33, 0.34, 0.35], // Bear: margins plateau on competitive pressure
+    [0.30, 0.35, 0.38, 0.40, 0.42], // Base: operating leverage as op margin expands past the 38-40% FY28 target
+    [0.30, 0.37, 0.41, 0.44, 0.46], // Bull: platform scale + SBC moderation + lower capex intensity
   ],
 
-  exitMultiple: [18, 28, 35],
+  exitMultiple: [26, 35, 40],       // Display-only under EPS_PE
+
+  epsCagr: [32, 44, 51],            // FY27E $4.22 → FY32 EPS ≈ $17 / $26 / $33 (FY28E consensus alone is +72%)
+  exitPE: [30, 40, 45],
 
   desc: [
     'AI capex peaks in FY27 and hyperscaler custom silicon programs delay their FY28 ramp. Broadcom closes the optical DSP gap with integrated switching+optics bundles. Celestial AI photonic fabric slips to FY29+. ' +
-      'Revenue growth decelerates sharply after FY27; FY31 reaches ~$15B but FCF margins plateau at 27%. Multiple compresses to ~18× EBITDA as the market reprices MRVL as a semiconductor cyclical. 5yr target {target} ({cagr} annualized).',
-    'FY27 (~$12.1B) and FY28 (~$18B, below the raised ~$19.7B consensus) deliver on the twice-raised outlook. Custom silicon grows +20% in FY27, re-accelerates in FY28 as 20+ design wins enter production. Optical interconnect holds 70%+ share. ' +
-      'Non-GAAP operating margin expands from 35% to 40%+ by FY30 (per 38-40% FY28 target). Revenue reaches ~$23.4B by FY31 with 36% FCF margin. Exit at 28× EBITDA (42% proxy). 5yr target {target} ({cagr} annualized).',
+      'FY28 still grows ~50%, but growth fades after that; EPS compounds ~32%/yr off FY27E $4.22 (~$17 by FY32) and the multiple compresses to ~30× as the market reprices MRVL toward a semiconductor cyclical. 5yr target {target} ({cagr} annualized).',
+    'FY27 (~$12.1B) and FY28 (~$19.7B consensus) deliver on the twice-raised outlook. Custom silicon re-accelerates in FY28 as 20+ design wins enter production. Optical interconnect holds 70%+ share. ' +
+      'Non-GAAP operating margin expands past 40%; revenue reaches ~$49B by FY31. EPS compounds ~44%/yr off FY27E $4.22 (~$26 by FY32) at a 40× exit P/E. 5yr target {target} ({cagr} annualized).',
     'Nvidia NVLink Fusion, Amazon, Google, and new hyperscaler programs all ramp simultaneously in FY28-29. Celestial AI photonic fabric achieves $1B+ run-rate by FY30, opening a new TAM. CXL/switching adds a third $1B+ growth vector. ' +
-      'Revenue approaches $28B by FY31 with 42% FCF margin. The raised FY28 outlook proves conservative. Exit at 35× EBITDA (47% proxy). 5yr target {target} ({cagr} annualized).',
+      'Revenue passes $60B by FY31 with mid-40s FCF margin. The raised FY28 outlook proves conservative; EPS compounds ~51%/yr (~$33 by FY32) at a 45× exit P/E. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
     'AI capex cycles historically run 2-3 years before rationalization. At ~65× FY27E non-GAAP EPS, the market is pricing perfection. Customer concentration risk: a single Amazon or Google custom silicon program delay cascades through FY28 estimates. ' +
       'Broadcom threatens optical DSP share by bundling with Tomahawk switching (dominant franchise) — end-to-end portfolio discounts vs Marvell point-solution pricing. ' +
       'Celestial AI photonic fabric at scale has never shipped; integration complexity and latency requirements create significant execution risk. ' +
-      'Revenue growth decelerates to mid-single-digits post-FY28 as the initial hyperscaler build-out matures. Multiple compresses to semiconductor-cyclical 18× EBITDA, erasing the AI premium.',
+      'Revenue growth decelerates steadily after FY28 as the initial hyperscaler build-out matures, and the multiple compresses toward ~30× earnings, erasing much of the AI premium.',
     'Marvell\'s thesis rests on structural, multi-year AI infrastructure investment: hyperscalers are committing $500B+/year in AI capex through at least 2028. Custom silicon is the most defensible franchise — once an XPU design is taped out with Marvell IPs, switching costs are prohibitive for 3-5 years (new tape-outs cost $500M+). ' +
       'Amazon, Google, and Microsoft all have multi-year programs in flight; 20+ new design wins entering FY28-29 production give unprecedented forward revenue visibility for a semiconductor company. ' +
       'Optical interconnect\'s 70%+ share in 800G/1.6T is extending into 200G/lane PAM4 and 1.6T next-gen. The NVLink Fusion integration locks MRVL into the Nvidia ecosystem structurally. ' +

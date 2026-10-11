@@ -37,6 +37,11 @@ export const MU = defineStock({
   // scenarios model the earnings fade toward mid-cycle by FY32 (base
   // -10%/yr), not growth off a peak. A memory trough has always followed a
   // memory peak — the question is depth and timing, not direction.
+  // CALIBRATION (Oct 11 2026): scenarios re-aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $1,400 / expected
+  // $2,450 / bull $3,950. That framework treats the HBM era as a structural
+  // plateau, not a peak: base EPS now holds/edges up from FY27E (was a
+  // -10%/yr fade). Model now: ~$1,435 / ~$2,450 / ~$3,970.
   // ─────────────────────────────────────────────────────────────────────────
 
   reasonsToBuy: [
@@ -61,33 +66,33 @@ export const MU = defineStock({
   baseEps: 176.15,     // FY27E (Aug 2027) non-GAAP EPS — stockanalysis consensus (Oct 8 2026; FY28E $206.33). Q4 FY26 actual $33.42. Prior $55.00 was an FY26 estimate.
 
   revGrowth: [
-    [0.80, -0.40, -0.35, 0.00, 0.08],   // Bear: FY27 below consensus, then a classic memory bust
-    [0.95, -0.15, -0.25, -0.10, 0.05],  // Base: FY27 ~$260B (haircut vs $275B consensus), then the cycle normalizes
-    [1.07, 0.16, 0.00, 0.05, 0.08],     // Bull: consensus FY27-28, HBM discipline holds the plateau
+    [0.90, -0.05, -0.15, 0.00, 0.05],   // Bear: FY27 below consensus, then a moderate down-cycle (HBM contracts cushion the fall)
+    [1.03, 0.10, -0.03, 0.02, 0.04],    // Base: FY27 ≈ $275B consensus, FY28 ~$300B, then an HBM-supported plateau
+    [1.07, 0.18, 0.06, 0.08, 0.08],     // Bull: consensus FY27-28 and beyond, HBM discipline keeps growing the plateau
   ],
   fcfMargin: [
-    [0.05, 0.02, -0.02, 0.05, 0.10],
-    [0.22, 0.18, 0.20, 0.22, 0.22],
-    [0.35, 0.38, 0.38, 0.36, 0.34],
+    [0.30, 0.25, 0.18, 0.18, 0.20],
+    [0.35, 0.35, 0.33, 0.33, 0.33],
+    [0.38, 0.40, 0.40, 0.40, 0.40],
   ],
-  exitMultiple: [8, 14, 22],
+  exitMultiple: [8, 10, 12],          // Display-only under EPS_PE
 
   // Earlier: Q2 FY26 EPS $12.20; Q3 FY26 guidance $19.15. Old CAGRs (-8/5/18 off $55) would compound off a PEAK if left
-  // unchanged on the $176 base — rebuilt as a fade from peak.
-  epsCagr: [-25, -10, 5],   // FY32 EPS ≈ $42 / $104 / $225 vs FY27E $176
-  exitPE: [8, 12, 14],      // Trough / mid-cycle / sustained-oligopoly multiples
+  // unchanged on the $176 base. Sep 2026 rebuild faded EPS from the peak (-25/-10/+5, P/E 8/12/14); Oct 2026 calibration below.
+  epsCagr: [-4, 3, 10],     // FY32 EPS ≈ $144 / $204 / $284 vs FY27E $176 (FY28E consensus $206)
+  exitPE: [10, 12, 14],     // Down-cycle / mid-cycle / sustained-oligopoly multiples
   prob: [30, 45, 25],
 
   desc: [
-    'The super-cycle ends the way memory cycles always have: Samsung and SK Hynix add HBM and commodity capacity into peak pricing, contracted 2027 volumes roll off, and ASPs collapse. EPS falls ~25%/yr from the $176 FY27E peak toward ~$40 by FY32 and the stock trades at a trough ~8×. ' +
+    'Samsung and SK Hynix add capacity into peak pricing and commodity DRAM/NAND ASPs fall, but contracted HBM volumes cushion the down-cycle. EPS slips ~4%/yr from the $176 FY27E level to ~$145 by FY32 — still far above any prior cycle — and the stock trades at ~10×. ' +
       '5yr target {target} ({cagr} annualized).',
-    'FY27 lands near consensus (most HBM already contracted), FY28 holds up, then the cycle normalizes: pricing eases, margins fall from the high-80s, and EPS fades ~10%/yr to ~$100 by FY32 — still far above any prior cycle. The market pays a mid-cycle ~12×. ' +
-      '5yr target {target} ({cagr} annualized) — cheap on FY27 EPS, but peak EPS is not durable EPS.',
-    'AI memory demand structurally breaks the cycle: HBM oligopoly discipline holds, custom HBM (NVIDIA) deepens lock-in, and EPS keeps edging up from the FY27 peak (~5%/yr) as CHIPS-Act fabs cut costs. The market awards ~14× on structurally de-risked earnings. ' +
+    'FY27 lands near consensus (most HBM already contracted), FY28 grows again, then AI memory demand holds earnings on a plateau: EPS edges up ~3%/yr to ~$205 by FY32 as HBM mix offsets commodity pricing. The market pays a mid-cycle ~12×. ' +
+      '5yr target {target} ({cagr} annualized).',
+    'AI memory demand structurally breaks the cycle: HBM oligopoly discipline holds, custom HBM (NVIDIA) deepens lock-in, and EPS compounds ~10%/yr from FY27 as CHIPS-Act fabs cut costs. The market awards ~14× on structurally de-risked earnings. ' +
       '5yr target {target} ({cagr} annualized).',
   ],
 
-  ebitdaProxy: [0.15, 0.40, 0.58],
+  ebitdaProxy: [0.45, 0.55, 0.62],
   bbRate: [0.002, 0.005, 0.010],
   bullMaOptVal: false,
 

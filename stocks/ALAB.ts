@@ -53,48 +53,51 @@ export const ALAB = defineStock({
   ],
 
   analystConsensus: { rating: 'Buy', targetLow: 190, targetMedian: 425, targetHigh: 500, numAnalysts: 26 },  // stockanalysis.com, Oct 9 2026
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $650 / expected $1,050 /
+  // bull $1,480. Model now: ~$645 / ~$1,035 / ~$1,470.
   revGrowth: [
-    [1.18, 0.15, 0.00, -0.08, -0.15],   // Bear: FY26 ~locked (H1 + Q3 guide ≈ $1.25B); AI capex peaks, Scorpio displaced
-    [1.24, 0.50, 0.15, 0.08, 0.00],     // Base: FY26/FY27 ≈ consensus $1.91B / $2.97B, then normalizes
-    [1.30, 0.60, 0.25, 0.15, 0.08],     // Bull: Scorpio X + optical + UALink compound
+    [1.18, 0.50, 0.40, 0.32, 0.25],     // Bear: FY26 below consensus; Scorpio X share gains slower, growth still strong but decelerating
+    [1.24, 0.58, 0.48, 0.42, 0.36],     // Base: FY26/FY27 ≈ consensus $1.91B / $2.97B, then Scorpio X + UALink sustain 35%+ growth
+    [1.30, 0.68, 0.55, 0.48, 0.40],     // Bull: Scorpio X + optical + UALink compound
   ],
   fcfMargin: [
-    [0.25, 0.22, 0.20, 0.18, 0.16],
-    [0.29, 0.32, 0.35, 0.37, 0.38],
-    [0.30, 0.34, 0.38, 0.42, 0.44],
+    [0.27, 0.28, 0.30, 0.31, 0.32],
+    [0.29, 0.33, 0.36, 0.38, 0.40],
+    [0.30, 0.35, 0.39, 0.42, 0.45],
   ],
-  exitMultiple: [14, 20, 26],
+  exitMultiple: [22, 30, 35],         // Display-only under EPS_PE
   desc: [
     'The AI capex cycle peaks early and a semiconductor downturn hits by 2028. Scorpio X is delayed or displaced by competing solutions from NVLink and ESUN. ' +
       'Hyperscalers begin internalizing their connectivity, and the operating expense step-up compresses margins without generating payback. ' +
-      'Operating leverage works in reverse, EPS compounds only ~15% from the $4.03 FY26E base, and the multiple compresses to 20x as the growth premium evaporates. 5yr target {target} ({cagr} annualized).',
-    'AI infrastructure spending sustains at moderate levels through 2028. Scorpio X ramps on schedule in 2027 with two to three hyperscaler customers. ' +
+      'Growth stays strong but well below the bull path; EPS compounds ~38% from the $4.03 FY26E base and the multiple compresses to ~32x as the hypergrowth premium fades. 5yr target {target} ({cagr} annualized).',
+    'AI infrastructure spending stays strong through 2030. Scorpio X ramps on schedule in 2027 with two to three hyperscaler customers. ' +
       'UALink adoption provides meaningful protocol diversification, and operating margins expand to around 45%. ' +
-      'Revenue roughly doubles in 2026, grows ~50% in 2027, then normalizes as the business matures. ' +
-      'Earnings compound at roughly 27% annually from the $4.03 base, but from ~85x FY26E the stock return is far more modest: 5yr target {target}, {cagr} annualized.',
+      'Revenue roughly doubles in 2026, grows ~55% in 2027, and still compounds 35%+ through 2030. ' +
+      'Earnings compound at roughly 45% annually from the $4.03 base and the stock holds a ~40x multiple: 5yr target {target}, {cagr} annualized.',
     'The AI supercycle extends and Scorpio X becomes the standard scale-up switching layer across major hyperscalers. ' +
       'Optical products ramp in 2028 and UALink adoption accelerates broadly. The company transitions from a cyclical play to an architectural infrastructure layer. ' +
       'Operating margins reach 50% as multi-protocol optionality across CXL, UALink, and NVLink Fusion captures an expanding market. ' +
-      'Earnings grow at roughly 35% annually: 5yr target {target}, {cagr} annualized.',
+      'Earnings grow at roughly 52% annually at a ~45x exit multiple: 5yr target {target}, {cagr} annualized.',
   ],
   thesis: [
     'AI scale-up protocol shifts away from merchant silicon. NVLink/ESUN displaces PCIe/CXL path. ' +
       'Hyperscalers build internal connectivity (like Google TPU interconnect). ' +
       'Aggressive OpEx step-up eats into margins during cycle downturn. ' +
       '$6.5B Amazon warrant is a ceiling, not a floor — concentrated customer risk. ' +
-      'At ~85x FY26E earnings, any air-pocket compresses the multiple hard. Semiconductor cycle hits 2028-2029.',
+      'At ~85x FY26E earnings, any air-pocket compresses the multiple hard even if growth stays strong.',
     'Amazon warrant secures strategic position. Scorpio X ramp validates scale-up switching TAM. ' +
       'PCIe 6 first-to-volume advantage holds. Software-defined fabric creates stickiness. ' +
       'AI capex sustains but growth decelerates naturally. EBIT margin expansion to 45% offsets revenue slowdown. ' +
-      'Company remains cyclical growth (type B) with improving moat. Fundamentals deliver, but the entry multiple caps returns.',
+      'Company remains cyclical growth (type B) with improving moat. Earnings growth outruns the multiple compression from today\'s entry point.',
     'Scorpio X + optical + UALink = triple growth engine. Company becomes the architectural connectivity layer ' +
       'for AI scale-up infrastructure. 2-3 hyperscaler adoption creates switching costs approaching SaaS levels. ' +
       'TAM expansion from $25B to $50B+ with optical. Moat transitions from technical to structural. ' +
       'Type B → Type A reclassification. Market cap re-rates as "AI fabric infrastructure platform".',
   ],
 
-  epsCagr: [15, 27, 35],
-  exitPE: [20, 30, 35],
+  epsCagr: [38, 45, 52],   // FY26E $4.03 → FY31 EPS ≈ $20 / $26 / $33 (FY27E consensus alone is +59%)
+  exitPE: [32, 40, 45],
   prob: [30, 40, 30],
 
   bbRate: [0.002, 0.008, 0.015],

@@ -22,7 +22,7 @@ export const PLTR = defineStock({
   baseEps: 1.62,       // FY2026E adjusted EPS — stockanalysis consensus (Oct 8 2026; range $1.51-1.75; FY27E $2.35, +45%). Prior $0.89 was trailing GAAP and understated the base (the old 38/50/65% EPS CAGRs compounded off it).
   rsRating: 99,         // IBD RS per user, 10/10/2026 (was 19)
   rsTrend: 'rising',
-  // ratingOverride removed at Q2 2026 review: after re-basing EPS ($1.62 FY26E) and CAGRs, the model reads HOLD on its own (~2% base CAGR at ~130× FY26E), and the old rationale (RS ~19 and falling) no longer holds.
+  // ratingOverride removed at Q2 2026 review (old rationale — RS ~19 and falling — no longer holds). Oct 11 2026: scenarios calibrated to the InvestAnswers 2030 targets; base now reads STRONG BUY.
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Aug 3, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -44,19 +44,22 @@ export const PLTR = defineStock({
   ],
 
   risksToBuy: [
-    'Multiple is priced for perfection — even strong execution in the base case produces only modest stock returns',
+    'Multiple is priced for perfection — returns depend on the stock holding a premium multiple for years',
     'Growth this fast invites a sharp re-rating the moment it decelerates, and the stock has round-tripped violently before',
     'Enterprise AI pilot-to-production conversion risk: boot-camps may not scale into full operational rollouts',
     'No buyback program and substantial SBC create Tragic-tier dilution with no cash offset for shareholders',
-    'Bear case delivers roughly flat returns over five years despite strong absolute business growth — multiple compression dominates',
+    'Multiple compression can absorb most of the earnings growth if enterprise AI adoption slows even modestly',
   ],
 
   analystConsensus: { rating: 'Buy', targetLow: 80, targetMedian: 215, targetHigh: 265, numAnalysts: 32 },  // stockanalysis.com, Oct 8 2026
 
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $250 / expected $650 /
+  // bull $1,000. Model now: ~$250 / ~$655 / ~$985.
   revGrowth: [
-    [0.80, 0.30, 0.18, 0.14, 0.12], // Bear: FY26 ~locked at guide (+80%); enterprise AI hype cools, growth falls fast
-    [0.82, 0.45, 0.30, 0.22, 0.18], // Base: FY26 at guide (~$8.15B), FY27 +45% (vs +51% consensus), natural deceleration
-    [0.84, 0.52, 0.40, 0.32, 0.25], // Bull: AIP becomes Fortune 500 standard, govt re-acceleration
+    [0.80, 0.45, 0.38, 0.32, 0.28], // Bear: FY26 ~locked at guide (+80%); FY27 below consensus, enterprise AI growth cools steadily
+    [0.82, 0.55, 0.50, 0.45, 0.40], // Base: FY26 at guide (~$8.15B), FY27 ≈ +51% consensus, AIP sustains 40%+ through FY30
+    [0.84, 0.60, 0.56, 0.50, 0.45], // Bull: AIP becomes Fortune 500 standard, govt re-acceleration
   ],
 
   fcfMargin: [
@@ -65,30 +68,30 @@ export const PLTR = defineStock({
     [0.48, 0.51, 0.54, 0.56, 0.58], // Bull: software unit economics fully expressed
   ],
 
-  exitMultiple: [22, 32, 45],
+  exitMultiple: [35, 55, 65],   // Display-only under EPS_PE
 
   desc: [
-    'Enterprise AI spending normalizes as ROI proof-points lag deployment hype; AIP boot-camps convert to pilots but not full rollouts. Revenue growth falls from ~80% to the low teens by FY30. ' +
-      'EPS compounds ~20% from the $1.62 FY26E base while the multiple compresses from ~130× toward 25×. 5yr target {target} ({cagr} annualized) — multiple compression overwhelms strong absolute growth.',
+    'Enterprise AI spending normalizes as ROI proof-points lag deployment hype; AIP boot-camps convert to pilots but not full rollouts. Revenue growth falls from ~80% toward the high 20s by FY30. ' +
+      'EPS compounds ~28% from the $1.62 FY26E base while the multiple compresses from ~130× toward 45×. 5yr target {target} ({cagr} annualized) — multiple compression absorbs most of the growth.',
     'AIP scales: US commercial sustains triple-digit growth into FY27 then decelerates gracefully; government modernization continues. FY26 lands at the raised ~$8.15B guide. ' +
-      'EPS compounds ~30% from the $1.62 base as margins expand. The multiple compresses from ~130× to ~38× through earnings growth. 5yr target {target} ({cagr} annualized) — quality compounds but you pay the multiple-compression tax.',
+      'EPS compounds ~42% from the $1.62 base as margins expand. The multiple compresses from ~130× to ~70× through earnings growth. 5yr target {target} ({cagr} annualized).',
     'AIP becomes the default enterprise AI orchestration layer; revenue sustains 40%+ growth through FY28 and government wins AI-enabled defense modernization (Maven, TITAN, NGC2). ' +
-      'EPS compounds ~40% from the $1.62 base and the market awards a 55× exit P/E for durable growth + structural moat. 5yr target {target} ({cagr} annualized).',
+      'EPS compounds ~50% from the $1.62 base and the market awards an 80× exit P/E for durable growth + structural moat. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
     'AI spending hype-cycle peaks; enterprises pull back on big-platform commitments and favor point-solutions. AIP pilots fail to convert to production at scale. ' +
       'Government budget cycle tightens. At ~130× FY26E EPS, multiple compression dominates returns even with continued revenue growth.',
     'Q2 2026 (revenue +93%, US commercial +149%, record $2.1B US commercial TCV, the largest guide raise in company history) shows AIP converting at scale. ' +
-      'Margins and FCF validate the software unit economics. EPS compounds ~30% annually, but from ~130× FY26E the multiple compression caps total return. Verdict: HOLD — extraordinary business, fully priced.',
+      'Margins and FCF validate the software unit economics. EPS compounds ~42% annually, which outruns the multiple compression from ~130× FY26E.',
     'AIP becomes the operating system for enterprise AI — every Fortune 500 builds on Foundry/AIP. Government wins TITAN, Maven, NGC2 expansions plus international defense. ' +
-      'Revenue sustains 40%+ growth through FY28. The "enterprise AI infrastructure layer" thesis re-rates the multiple permanently above software peers.',
+      'Revenue sustains 45%+ growth through FY30. The "enterprise AI infrastructure layer" thesis re-rates the multiple permanently above software peers.',
   ],
 
   termGrowth: [0.02, 0.03, 0.035],
 
-  epsCagr: [20, 30, 40],   // Re-based at Q2 2026 (was 38/50/65 off a $0.89 trailing-GAAP base): FY27E +45% then decelerating ≈ 30% from $1.62
-  exitPE: [25, 38, 55],
+  epsCagr: [28, 42, 50],   // Oct 2026 calibration (was 20/30/40): FY26E $1.62 → FY31 EPS ≈ $5.6 / $9.4 / $12.3 (FY27E consensus +45%)
+  exitPE: [45, 70, 80],
   prob: [30, 50, 20],
 
   bbRate: [0.00, 0.005, 0.01],

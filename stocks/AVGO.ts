@@ -50,29 +50,32 @@ export const AVGO = defineStock({
   ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 215.88, targetMedian: 535, targetHigh: 715, numAnalysts: 50 },  // stockanalysis.com, Oct 2 2026
+  // CALIBRATION (Oct 11 2026): scenarios aligned to the InvestAnswers 2030
+  // price targets (framework dated Jul 27 2026) — bear $550 / expected $950 /
+  // bull $1,300. Model now: ~$560 / ~$955 / ~$1,330.
   revGrowth: [
-    [0.25, 0.03, 0.03, 0.03, 0.03],  // Bear: Q4 run-rate (~$139B annualized) holds, then hyperscaler delays/capex reversal flatten growth
+    [0.50, 0.17, 0.10, 0.07, 0.06],  // Bear: FY27 ~$159B (short of +64% consensus) as one hyperscaler program slips, then growth fades to mid-single digits
     [0.55, 0.22, 0.15, 0.10, 0.08],  // Base (+1.5%/yr revPrem): FY27 ~$166B (haircut vs +64% consensus), then normalizes
-    [0.65, 0.28, 0.18, 0.13, 0.10],  // Bull (+2%/yr revPrem): FY27 at/above consensus + FY28 acceleration beyond 10GW
+    [0.62, 0.24, 0.15, 0.11, 0.09],  // Bull (+2%/yr revPrem): FY27 at/above consensus + FY28 acceleration beyond 10GW
   ],
   fcfMargin: [
-    [0.40, 0.40, 0.40, 0.40, 0.40],  // Bear: AI mix + margin pressure; FCF stalls
+    [0.46, 0.46, 0.47, 0.47, 0.48],  // Bear: AI mix caps margin expansion; FCF roughly flat near Q3's 46%
     [0.47, 0.49, 0.51, 0.52, 0.53],  // Base: improves as debt retires; Q2 actual 46.3%
     [0.53, 0.55, 0.57, 0.58, 0.60],  // Bull: scale + debt paydown drives expansion
   ],
-  exitMultiple: [16, 23, 26],
+  exitMultiple: [20, 23, 23],
   desc: [
-    'A hyperscaler (Google, Meta, Anthropic, or OpenAI) cancels or materially delays committed ASIC orders — the reverse of the signed agreements. FY27 growth stalls near the Q4 FY26 run-rate (~+25%), then goes flat. ' +
-      'Multiple compresses toward ~16× EBITDA simultaneously — the 2022 Nvidia scenario at 4× the scale. FCF margin stalls at 40% as AI mix shift erodes gross margin without the volume to compensate. 5yr target {target} ({cagr} annualized).',
+    'A hyperscaler (Google, Meta, Anthropic, or OpenAI) delays part of its committed ASIC volume. FY27 still grows ~50% on the contracted backlog, but growth then fades to mid-single digits. ' +
+      'Multiple compresses toward ~20× EBITDA and FCF margin stays near the mid-40s as AI mix shift caps gross margin. 5yr target {target} ({cagr} annualized).',
     'Committed contracts execute: AI semis compound off a ~$22B Q4 FY26 run-rate, ~10GW compute shipped. Total revenue ~$166B FY27 (vs $174B consensus). Operating margins hold ~66-68% despite AI mix (Q3 FY26: ~68%). ' +
       'FCF improves gradually to 53% as VMware debt retires. P/E compresses from ~31× FY26E through earnings growth — execution, not multiple expansion. 5yr target {target} ({cagr} annualized).',
     'Beyond the committed 10GW FY27, Broadcom wins additional sovereign AI or next hyperscaler ASIC volumes for FY28 (the "a lot more GW" management signaled). New 200-terabit networking switch gains outside AI clusters. ' +
-      'Revenue sustains a 25%+ CAGR beyond the ~$106B FY26 base. EBITDA margins reach 70%+ as software/networking mix improves. FCF reaches 58-60%. 5yr target {target} ({cagr} annualized).',
+      'Revenue compounds ~25%/yr beyond the ~$106B FY26 base. EBITDA margins reach 70%+ as software/networking mix improves. FCF reaches 58-60%; the multiple holds ~23× EBITDA. 5yr target {target} ({cagr} annualized).',
   ],
 
   termGrowth: [0.020, 0.030, 0.035],
   bbRate: [0.005, 0.018, 0.025],
-  ebitdaProxy: [0.55, 0.65, 0.70],
+  ebitdaProxy: [0.62, 0.65, 0.70],
   bullMaOptVal: 335 * 4700 * 0.05,
 
   driverOverrides: [
