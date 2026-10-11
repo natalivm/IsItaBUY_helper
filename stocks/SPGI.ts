@@ -18,7 +18,8 @@ export const SPGI = defineStock({
   debt: 15750,
   beta: 0.9,
   costDebt: 0.05,
-  rsRating: 21,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 80,        // IBD RS per user, 10/11/2026 (was 21)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 28, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -43,7 +44,7 @@ export const SPGI = defineStock({
     'Credit cycle slowdown sharply reduces debt issuance volume, which directly compresses the ratings segment revenue',
     'Antitrust and regulatory scrutiny on index monopoly power could constrain pricing or force structural changes',
     'Debt-funded buybacks keep leverage elevated relative to the pre-IHS Markit balance sheet',
-    'Weak institutional price momentum signals the market already fully values the quality, leaving little near-term catalyst',
+    'A premium multiple already reflects the franchise quality, leaving returns dependent on steady earnings growth rather than re-rating',
     'After the Mobility spin the company is more concentrated in ratings and indices, which swing with credit issuance and markets',
   ],
 

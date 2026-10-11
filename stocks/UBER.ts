@@ -18,8 +18,8 @@ export const UBER = defineStock({
   debt: 14730,
   beta: 1.35,
   costDebt: 0.065,
-  rsRating: 22,            // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 46,            // IBD RS per user, 10/11/2026 (was 22)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Aug 5, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

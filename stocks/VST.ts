@@ -17,8 +17,8 @@ export const VST = defineStock({
   costDebt: 0.056,
   modelType: 'EPS_PE',
   baseEps: 8.78,       // FY26E adj. EPS consensus (Oct 7 2026; range $8.11-9.45; FY27E $10.42 +19%). Prior $10.0 was above the FY26 consensus.
-  rsRating: 26,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 77,        // IBD RS per user, 10/11/2026 (was 26)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
   lastReportTag: 'Q2 2026',

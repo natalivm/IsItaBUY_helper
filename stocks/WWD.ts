@@ -20,7 +20,8 @@ export const WWD = defineStock({
   costDebt: 0.052,
   modelType: 'EPS_PE',
   baseEps: 9.48,        // FY26E (Sep 2026) adj. EPS consensus; guide raised again at Q3 to $9.30–9.50. FY27E $10.76 (+13.5%). Prior: $9.30.
-  rsRating: 80,         // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 67,         // IBD RS per user, 10/11/2026 (was 80)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q3 FY26 UPDATE (Jul 29, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
