@@ -61,7 +61,7 @@ export const KKR = defineStock({
   ],
   exitMultiple: [10, 14, 18],
   desc: [
-    'Exit markets stay weak and carried interest remains depressed; fundraising slows in a crowded market. Adjusted earnings still compound ~10% on management fees, but the multiple compresses to 12x. ' +
+    'Exit markets stay weak and carried interest remains depressed; fundraising slows in a crowded market. Fee growth slows and carry dries up, so adjusted earnings grow only ~4% a year and the multiple compresses to 10x. ' +
       'Not catastrophic given the strong franchise, but well below cost of capital. 5yr target {target} ({cagr} annualized), before dividends.',
     'The capital markets cycle normalizes: AUM keeps growing mid-teens, exits return and carry partially recovers, while insurance (Global Atlantic) accrued income grows. ' +
       'ANI compounds ~13% from the FY26E $6.32 base and the stock re-rates to 15x. No heroic assumptions — just normalization. 5yr target {target} ({cagr} annualized).',
@@ -69,8 +69,8 @@ export const KKR = defineStock({
       'ANI compounds ~15% and the market pays 17x. 5yr target {target} ({cagr} annualized).',
   ],
 
-  epsCagr: [10, 13, 15],
-  exitPE: [12, 15, 17],
+  epsCagr: [4, 13, 15],   // Bear 10→4 (10/11/2026): the old bear (10% at 12×) still returned ~6%/yr — not a bear case
+  exitPE: [10, 15, 17],   // Bear 12→10
   prob: [25, 45, 30],
 
   bbRate: [0.005, 0.01, 0.02],

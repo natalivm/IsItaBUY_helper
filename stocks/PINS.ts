@@ -52,15 +52,23 @@ export const PINS = defineStock({
     [0.16, 0.12, 0.10, 0.09, 0.08],   // Base: FY26 ≈ $4.91B consensus, FY27 ≈ $5.5B
     [0.17, 0.15, 0.14, 0.13, 0.12],   // Bull: GenAI-enhanced shopping layer sustains low-teens growth
   ],
-  fcfMargin: [0.25245, 0.297, 0.34155],
-  exitMultiple: [12, 16, 19],
+  // Recalibrated 10/11/2026 (targets too high): reported FCF (~30% margin) adds back ~9% of revenue in stock-based pay,
+  // so the DCF now uses SBC-adjusted FCF, and ebitdaProxy is set explicitly (it was on the generic default).
+  // Was fcfMargin [0.25, 0.30, 0.34] → base $62-71, ~1.7× the highest analyst target, with a bear that still made ~11%/yr.
+  fcfMargin: [
+    [0.18, 0.16, 0.15, 0.14, 0.14],   // Bear: defensive R&D spend as GenAI search erodes engagement
+    [0.21, 0.21, 0.22, 0.22, 0.23],   // Base: ~30% reported FCF less ~9% SBC, modest leverage
+    [0.22, 0.24, 0.26, 0.27, 0.28],   // Bull: operating leverage on a GenAI-enhanced commerce platform
+  ],
+  exitMultiple: [8, 12, 15],         // Was [12, 16, 19]: EV/EBITDA (after SBC) is ~11× today, so the base no longer assumes a re-rating
+  ebitdaProxy: [0.17, 0.22, 0.27],    // EBITDA after SBC (adj. EBITDA ~30% less ~9% SBC)
   desc: [
     'GenAI-powered search (Google SGE, Perplexity) erodes Pinterest\'s visual discovery moat — users bypass visual search for LLM-generated recommendations. Advertiser ROAS deteriorates as engagement declines. ' +
-      'Revenue growth falls to mid-single digits. FCF margins compress to ~25% on defensive R&D spend. Multiple compresses to 12x as market prices in structural decline. 5yr target {target} ({cagr} annualized).',
+      'Revenue growth falls to mid-single digits. FCF margins after stock-based pay compress to ~14% on defensive R&D spend. Multiple compresses to 8x EBITDA as market prices in structural decline. 5yr target {target} ({cagr} annualized).',
     'Pinterest defends its visual discovery niche alongside GenAI search — advertisers value high-intent shopping signals that LLMs can\'t replicate. Revenue grows at high-single to low-double digits. ' +
-      'FCF margins hold ~30% on ad tech maturation and buybacks keep shrinking the share count. Multiple settles at 16x reflecting an uncertainty discount. 5yr target {target} ({cagr} annualized).',
+      'FCF margins after stock-based pay hold in the low 20s on ad tech maturation, with buybacks offsetting dilution. Multiple stays near the current ~12x EBITDA, reflecting an uncertainty discount. 5yr target {target} ({cagr} annualized).',
     'Pinterest integrates GenAI into its discovery platform, enhancing personalization and advertiser targeting. Social commerce conversions accelerate as the platform becomes the default visual shopping layer. ' +
-      'Revenue sustains low-teens growth. FCF margins expand to ~34% on operating leverage. Market re-rates to 19x as a GenAI-enhanced commerce platform. 5yr target {target} ({cagr} annualized).',
+      'Revenue sustains low-teens growth. FCF margins after stock-based pay expand toward ~28% on operating leverage. Market re-rates to 15x EBITDA as a GenAI-enhanced commerce platform. 5yr target {target} ({cagr} annualized).',
   ],
 
   bullMaOptVal: 15.42 * 676.0 * 0.07,

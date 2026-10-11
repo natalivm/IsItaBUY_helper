@@ -99,7 +99,8 @@ export interface SimpleStockInput {
   /** WACC adjustment. Default: [0.01, 0, -0.005] */
   waccAdj?: Trio<number>;
 
-  /** Buyback rate. Default: [0.005, 0.015, 0.03] */
+  /** Buyback rate. Default: [0.005, 0.015, 0.03]. Used for the EPS_PE share-count display only —
+   *  the DCF ignores it (FCF already funds buybacks; applying both would double-count). */
   bbRate?: Trio<number>;
 
   /** EBITDA margin proxy. Default: [0.15, 0.22, 0.35] */
@@ -116,7 +117,8 @@ export interface SimpleStockInput {
   /**
    * Custom driver overrides per scenario. Merged on top of the standard
    * driver template. Use this only when a stock needs non-standard
-   * revPrem or fcfUplift patterns.
+   * revPrem or fcfUplift patterns — and never to add a premium to the BASE
+   * case: put the base view in revGrowth / fcfMargin directly.
    */
   driverOverrides?: Trio<Record<string, number | number[]>>;
 
@@ -143,16 +145,20 @@ export interface SimpleStockInput {
   debtSafety?: DebtData;
 }
 
-// Standard driver templates (identical across almost all stocks)
+// Standard driver templates (identical across almost all stocks).
+// Bear and BASE carry no hidden premium: the base case is exactly the stated
+// revGrowth / fcfMargin path (Oct 2026 — the old base template silently added
+// +1pt revenue growth and +0.5-1pt FCF margin, inflating every DCF base target).
+// Only the bull case keeps an upside premium on top of its stated path.
 const DRIVER_TEMPLATES = {
   revPrem: [
     [0, 0, 0, 0, 0],
-    [0.01, 0.01, 0.01, 0.01, 0.01],
+    [0, 0, 0, 0, 0],
     [0.015, 0.02, 0.02, 0.02, 0.02],
   ] as Trio<number[]>,
   fcfUplift: [
     [0, 0, 0, 0, 0],
-    [0.005, 0.005, 0.01, 0.01, 0.01],
+    [0, 0, 0, 0, 0],
     [0.01, 0.01, 0.01, 0.015, 0.015],
   ] as Trio<number[]>,
 };

@@ -78,12 +78,9 @@ export const AVGO = defineStock({
   ebitdaProxy: [0.62, 0.65, 0.70],
   bullMaOptVal: 335 * 4700 * 0.05,
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {},
-    {
-      revPrem: [0.015, 0.015, 0.015, 0.015, 0.015],
-      fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
-    },
+    {},
     {
       revPrem: [0.02, 0.02, 0.02, 0.02, 0.02],
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.015],

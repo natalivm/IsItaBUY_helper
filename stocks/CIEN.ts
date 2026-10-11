@@ -85,12 +85,9 @@ export const CIEN = defineStock({
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.14, 0.22, 0.28],
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {},
-    {
-      revPrem: [0.005, 0.005, 0.005, 0.005, 0.005],
-      fcfUplift: [0.005, 0.005, 0.005, 0.005, 0.005],
-    },
+    {},
     {
       revPrem: [0.01, 0.015, 0.015, 0.01, 0.01],
       fcfUplift: [0.005, 0.01, 0.01, 0.015, 0.015],
