@@ -18,9 +18,9 @@ export const SMWB = defineStock({
   debt: 45.7,          // stockanalysis total debt (largely leases)
   beta: 1.62,
   costDebt: 0.0,
-  rsRating: 38,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 86,        // IBD RS per user, 10/11/2026 (was 38)
   rsTrend: 'rising',
-  ratingOverride: 'HOLD',  // Model STRONG BUY/BUY on thin-margin FCF compounding, but a sub-$1B small-cap with structural AI-disruption risk to its core data asset and weak RS; Street PT only ~$9-12. HOLD.
+  ratingOverride: 'HOLD',  // Model STRONG BUY/BUY on thin-margin FCF compounding, but a sub-$1B small-cap with structural AI-disruption risk to its core data asset; Street PT only ~$9-12. RS has turned strong (38 → 86, Oct 2026), but the business-model risk, not momentum, drives the HOLD.
   // Q2 2026 UPDATE (Aug 12, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
   // Revenue $77.2M (+9%), non-GAAP op profit $6.5M (8%), FIRST positive GAAP

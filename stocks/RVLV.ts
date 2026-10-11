@@ -16,8 +16,8 @@ export const RVLV = defineStock({
   beta: 1.60,
   modelType: 'EPS_PE',
   baseEps: 0.85,       // FY26E underlying EPS: consensus $0.91 less ~$0.06 one-time IEEPA tariff refund (Q2). FY27E $1.14. Prior: $0.83.
-  rsRating: 24,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 70,        // IBD RS per user, 10/11/2026 (was 24)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   reasonsToBuy: [
     'Sales growth has held in the low-to-high teens through mid-2026, with July accelerating further',

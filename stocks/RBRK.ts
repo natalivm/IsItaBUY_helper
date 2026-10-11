@@ -17,7 +17,7 @@ export const RBRK = defineStock({
   cash: 1750,
   debt: 1150,
   beta: 1.25,
-  rsRating: 45,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 97,        // IBD RS per user, 10/11/2026 (was 45)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q2 FY27 UPDATE (Aug 27, 2026) — first data review

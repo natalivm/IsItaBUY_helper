@@ -18,7 +18,7 @@ export const INCY = defineStock({
   debt: 38,
   beta: 0.65,
   costDebt: 0.04,
-  rsRating: 65,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 91,        // IBD RS per user, 10/11/2026 (was 65)
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   ratingOverride: 'HOLD',  // Model screens BUY but the Jakafi loss-of-exclusivity overhang (~2028) caps the multiple and the Street is split (15 of 28 Hold). HOLD.

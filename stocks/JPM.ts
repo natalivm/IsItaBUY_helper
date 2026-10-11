@@ -20,7 +20,7 @@ export const JPM = defineStock({
   costDebt: 0.045,
   baseEps: 22.6,       // FY26E EPS ex-significant items: consensus $24.13 less ~$1.56 Q2 Visa/equity-investment gains. FY27E $25.12 (+11% on this base). Prior: $21.9.
   modelType: 'EPS_PE',
-  rsRating: 59,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 86,        // IBD RS per user, 10/11/2026 (was 59)
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Jul 14, 2026) — first data review

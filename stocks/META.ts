@@ -17,8 +17,8 @@ export const META = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 30.40,        // FY2026E GAAP EPS consensus (Oct 8 2026; range $27.89-32.83; FY27E $34.55, +14%). Includes Q2's $2.4B legal + $1.2B severance charges. Prior: $32.50.
-  rsRating: 22,          // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 97,          // IBD RS per user, 10/11/2026 (was 22)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
   lastReportTag: 'Q2 2026',

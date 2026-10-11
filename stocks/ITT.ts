@@ -18,7 +18,8 @@ export const ITT = defineStock({
   debt: 3830,
   beta: 1.35,
   costDebt: 0.045,
-  rsRating: 83,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 89,        // IBD RS per user, 10/11/2026 (was 83)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Aug 6, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

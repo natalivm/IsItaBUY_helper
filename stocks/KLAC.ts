@@ -19,8 +19,8 @@ export const KLAC = defineStock({
   costDebt: 0.035,
   modelType: 'EPS_PE',
   baseEps: 5.44,             // FY27E (Jun 2027) non-GAAP EPS consensus (FY26A $3.76 non-GAAP / $3.66 GAAP; FY28E $6.74 +24%). Q1 FY27 guide $1.16 ± 0.10.
-  rsRating: 94,              // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'rising',
+  rsRating: 88,              // IBD RS per user, 10/11/2026 (was 94)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q4 FY26 UPDATE (Jul 28, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

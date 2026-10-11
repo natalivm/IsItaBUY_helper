@@ -18,10 +18,10 @@ export const RKLB = defineStock({
   debt: 134,
   beta: 1.95,
   costDebt: 0.05,
-  ratingOverride: 'HOLD',  // Pins HOLD: pre-profit space name where the DCF reads deeply overvalued but RS momentum is extreme and the backlog is real — HOLD splits the difference.
+  // ratingOverride 'HOLD' removed 10/11/2026: it split the difference between a deeply overvalued DCF and extreme RS momentum; RS has collapsed (98 → 25), so the model's OVERVALUED stands.
 
-  rsRating: 98,           // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'rising',
+  rsRating: 25,           // IBD RS per user, 10/11/2026 (was 98)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Aug 10, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ export const RKLB = defineStock({
   verdictNarrative:
     "Rocket Lab is executing on everything except the one thing the valuation most depends on: revenue grew 62% in Q2, the backlog more than doubled to ~$2.4B, and Q3 guidance came in well above expectations — but Neutron has still not flown and the year-end window is slipping. " +
     "At roughly 40× this year's sales with negative free cash flow, the stock prices in Neutron success plus years of hypergrowth; the DCF cannot justify today's price without it. A ~$2.25B net cash pile removes financing risk, but equity issuance keeps diluting holders. " +
-    "HOLD — the thesis is intact and momentum is strong, but the entry offers poor risk/reward until Neutron flies. Upgrade trigger: a successful Neutron first flight plus sustained gross-margin expansion.",
+    "OVERVALUED — the business thesis is intact, but momentum has broken down (RS 98 → 25) and without it nothing supports a price the cash flows cannot justify. Upgrade trigger: a successful Neutron first flight plus sustained gross-margin expansion.",
 
   analystConsensus: { rating: 'Buy', targetLow: 64, targetMedian: 107, targetHigh: 150, numAnalysts: 22 },  // stockanalysis.com (Oct 2026)
 

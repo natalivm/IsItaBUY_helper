@@ -20,7 +20,7 @@ export const KKR = defineStock({
   costDebt: 0.052,
   baseEps: 6.32,       // FY26E adjusted net income per share — stockanalysis consensus (Oct 8 2026; FY25A $4.87, FY27E $7.41 +17%). Q2 ANI $1.63/sh (record). Prior $6.74 was too high for FY26.
   modelType: 'EPS_PE',
-  rsRating: 36,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 59,        // IBD RS per user, 10/11/2026 (was 36)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 30, 2026) — first data review
@@ -42,7 +42,7 @@ export const KKR = defineStock({
 
   risksToBuy: [
     'Carry is deeply cyclical — if exit markets stay weak, distributable earnings flatten and the thesis becomes dead money',
-    'Low relative strength signals that institutional momentum has completely abandoned the stock near-term',
+    'The stock trades at a discount because markets doubt the durability of carry and fundraising through a weaker exit cycle',
     'Post-2028 earnings trajectory is highly uncertain and depends on sustained capital markets normalization',
     'Soft moat relative to peers like Blackstone and Apollo means AUM growth could disappoint in a crowded fundraising market',
     'Insurance operations at Global Atlantic add balance-sheet complexity that makes earnings quality harder to assess',

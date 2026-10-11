@@ -17,7 +17,8 @@ export const PINS = defineStock({
   cash: 1270,          // stockanalysis (Oct 2026)
   debt: 1200,          // new borrowings alongside the buyback (was debt-free)
   beta: 1.58,
-  rsRating: 33,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 78,        // IBD RS per user, 10/11/2026 (was 33)
+  rsTrend: 'rising',
   aiImpact: 'DISRUPTION_RISK',
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

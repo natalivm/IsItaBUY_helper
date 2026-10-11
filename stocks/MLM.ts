@@ -22,7 +22,7 @@ export const MLM = defineStock({
   modelType: 'EPS_PE',
   baseEps: 16.96,              // FY26E adj. EPS consensus (range $15.11-18.10) — depressed by acquired-inventory step-up charges and energy costs; FY25A $18.77, FY27E $21.61 (+27%)
 
-  rsRating: 38,                // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 21,                // IBD RS per user, 10/11/2026 (was 38)
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Jul 30, 2026) — first data review

@@ -14,8 +14,8 @@ export const SNDK = defineStock({
   debt: 201,
   beta: 1.9,
   costDebt: 0.05,
-  rsRating: 99,       // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'rising',
+  rsRating: 85,       // IBD RS per user, 10/11/2026 (was 99)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
   lastReportTag: 'Q4 FY26',
