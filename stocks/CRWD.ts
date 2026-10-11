@@ -96,6 +96,13 @@ export const CRWD = defineStock({
   ebitdaProxy: [0.25, 0.32, 0.38],
   bullMaOptVal: false,
 
+  debtSafety: {
+    netDebt: -4190,        // stockanalysis (Oct 2026): ~$5.01B cash − ~$0.82B debt
+    ebitda: 107,           // TTM GAAP EBITDA (SBC-heavy); TTM FCF ~$1.6B
+    fy: 'TTM Q2 FY27',
+    note: 'Net cash ~$4.2B. Step 1 GREEN — GAAP EBITDA is thin only because of SBC; free cash flow is strongly positive.',
+  },
+
   burry: {
     sbc: 1097,
     gaapNi: -162,
