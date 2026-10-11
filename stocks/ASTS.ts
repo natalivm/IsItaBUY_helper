@@ -7,41 +7,53 @@ export const ASTS = defineStock({
   themeColor: '#38bdf8',
   currentPrice: 50.97,
   updatedOn: '10/09',
-  lastReportTag: 'Q1 2026',
-  fairPriceRange: '$20 - $250',
-  shares0: 370,
-  rev25: 71,
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$42.50 - $108',  // stockanalysis.com analyst target range (Oct 2026)
+  shares0: 389.2,       // all classes (stockanalysis, Oct 2026)
+  rev25: 71,            // FY2025A $70.9M; revGrowth[0] = FY26 (guide $150-200M reaffirmed; consensus $169M), FY27E $608M
   fcfMargin25: -0.10,
   taxRate: 0.15,
-  cash: 3500,           // Q1 2026 end: $3.5B (inclusive of Feb convertible notes)
-  debt: 2500,
+  cash: 2290,           // Jun 2026 (stockanalysis)
+  debt: 2990,           // convertible notes
   beta: 1.46,
   costDebt: 0.03,
-  rsRating: 73,
+  rsRating: 73,         // NOT refreshed — awaiting user RS (10/11/2026)
   rsTrend: 'falling',
-  ratingOverride: 'HOLD',  // Pins HOLD: speculative pre-revenue satellite name with falling RS — keep at HOLD regardless of model drift. (Model already HOLD.)
+  ratingOverride: 'HOLD',  // Pins HOLD: speculative pre-revenue satellite name with falling RS — keep at HOLD regardless of model drift (model reads STRONG BUY on a 2029-30 ramp it cannot yet underwrite).
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Aug 10, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $31.5M (more than doubled q/q; below ~$35M consensus) from
+  // gateway deliveries + US government milestones; net loss $231M. FY26
+  // revenue guide $150-200M REAFFIRMED (Q4-weighted). BlueBirds 11-13
+  // launched Aug 5 → 13 in orbit; 14-16 nearly ready; target ~45 by early
+  // 2027; consumer beta later in 2026. Backlog ~$1.3B. Street: Hold (13),
+  // PT $42.50-108 (median $79); FY26E rev $169M / EPS −$2.03, FY27E $608M /
+  // −$1.29. Stock $50.97 (fell 10.5% on Oct 9), down ~37% over 52 weeks.
+  // Net debt ~$0.7B (TTM FCF −$1.6B).
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Only company building space-based broadband for unmodified standard smartphones — the technical moat is years wide.',
     'Nearly sixty MNO partners covering billions of subscribers globally provides enormous distribution without building retail infrastructure.',
     'Custom ASIC chip delivers a generational performance leap over FPGA satellites, dramatically improving unit economics at scale.',
     'Government and defense contracts through prime contractors add a high-value recurring revenue stream beyond consumer mobile.',
-    'Cash-funded balance sheet provides runway to execute the constellation build without near-term dilutive financing pressure.',
+    'A contracted backlog of over a billion dollars and nearly fifty gateways in progress give the service launch real commercial footing.',
   ],
 
   risksToBuy: [
     'Revenue is still negligible for a company carrying a large market cap — execution must convert the guide each remaining quarter.',
     'Satellite launch anomalies (BB7 loss) demonstrate irreversible single-point failures with no insurance on constellation assets.',
     'Extreme share dilution history and ongoing capital intensity mean per-share returns depend on revenue scaling faster than the float.',
-    'Q1 revenue miss far below expectations raises legitimate questions about the pace of MNO monetization and subscriber activation.',
+    'Revenue keeps landing below expectations and is back-end loaded, while cash burn has pushed the balance sheet into net debt.',
     'Even in the base case, sustained profitability is years away and requires flawless execution across launches, ground integration, and partner ramp.',
   ],
 
-  analystConsensus: { rating: 'Hold', targetLow: 43, targetMedian: 70, targetHigh: 137, numAnalysts: 9 },
+  analystConsensus: { rating: 'Hold', targetLow: 42.5, targetMedian: 79, targetHigh: 108, numAnalysts: 13 },  // stockanalysis.com (Oct 2026)
   revGrowth: [
-    [0.97, 2.21, 1.44, 0.70, 0.45],
-    [1.46, 4.14, 1.78, 0.90, 0.50],
-    [2.52, 4.20, 2.08, 1.15, 0.60],
+    [1.15, 1.80, 1.40, 0.70, 0.45],   // Bear: FY26 ~$150M low end; deployment slips
+    [1.40, 2.60, 1.60, 0.90, 0.50],   // Base: FY26 ≈ $170M, FY27 ≈ $610M consensus, then ramp
+    [1.70, 3.80, 2.00, 1.15, 0.60],   // Bull: FY26 top of guide, faster MNO + government ramp
   ],
   fcfMargin: [
     [-2.50, -0.40, 0.05, 0.20, 0.28],
@@ -50,9 +62,9 @@ export const ASTS = defineStock({
   ],
   exitMultiple: [12, 18, 25],
   desc: [
-    'Deployment delays with <30 sats by YE26, stacking issues persist. Revenue reaches ~$140M in 2026, stalls below $2.5B by 2030. Launch cadence misses targets. Margins compressed by hardware-heavy mix and elevated capex ($350-425M/qtr). Dilution accelerates from additional capital raises.',
-    'On-plan deployment hitting 45 sats by YE26, stacking validated, continuous coverage live. Revenue ramps from $71M (FY25 actual) through $175M (2026 guidance midpoint) to ~$900M (2027) and $4.8B by 2029. Service revenue reaches 88% of mix. $1.2B contracted backlog provides near-term visibility. 90%+ EBITDA margins at scale as unit economics validate.',
-    'Accelerated deployment (60+ sats YE26), government/DoD contracts secured (Golden Dome, SHIELD, SDA prime contractor), L/S-band spectrum monetization live. Revenue exceeds $1.3B by 2027 and $8B+ by 2030. EBITDA margins above 80%, multiple expansion as market re-rates ASTS as dual-use infrastructure monopoly.',
+    'Deployment slips well past the ~45-satellite target, launch cadence misses and the service launch is delayed. Revenue reaches only ~$150M in 2026 and the ramp stalls; capex stays elevated and dilution accelerates from additional capital raises. 5yr target {target} ({cagr} annualized).',
+    'Roughly on-plan deployment (~45 BlueBirds by early 2027), commercial beta launches with MNO partners and continuous coverage follows. Revenue ramps from ~$170M (2026) to ~$600M (2027) and multiple billions by 2030 as service revenue dominates the mix; the ~$1.3B backlog provides near-term visibility. 5yr target {target} ({cagr} annualized).',
+    'Accelerated deployment, government/DoD contracts scale (Golden Dome, SDA) and spectrum monetization goes live. Revenue tops ~$800M in 2027 and accelerates from there; EBITDA margins at scale exceed 80% and the market re-rates ASTS as a dual-use infrastructure monopoly. 5yr target {target} ({cagr} annualized).',
   ],
 
   burry: {
@@ -78,4 +90,12 @@ export const ASTS = defineStock({
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
+
+  debtSafety: {
+    netDebt: 705,          // Jun 2026 (stockanalysis): ~$2.99B convertible debt − ~$2.29B cash
+    ebitda: -406,          // TTM EBITDA (pre-revenue constellation build)
+    capexToOcf: 1.0,       // capex (~$1B+/yr) far exceeds OCF (negative) — capped at 100% for display
+    fy: 'TTM Q2 2026',
+    note: 'RED by construction: net debt with negative EBITDA. The debt is low-coupon converts and liquidity is still ~$2.3B, but continued funding (equity or debt) is required until service revenue scales.',
+  },
 });
