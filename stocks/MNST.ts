@@ -78,12 +78,9 @@ export const MNST = defineStock({
   ebitdaProxy: [0.28, 0.32, 0.38],
   bullMaOptVal: 83.6 * 967 * 0.05,
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {},
-    {
-      revPrem: [0.005, 0.005, 0.005, 0.005, 0.005],
-      fcfUplift: [0.005, 0.005, 0.005, 0.01, 0.01],
-    },
+    {},
     {
       revPrem: [0.01, 0.015, 0.015, 0.015, 0.015],
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],

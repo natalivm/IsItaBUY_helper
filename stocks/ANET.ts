@@ -74,12 +74,9 @@ export const ANET = defineStock({
   bbRate: [0.005, 0.01, 0.015],
   ebitdaProxy: [0.48, 0.50, 0.52],
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {},
-    {
-      revPrem: [0.005, 0.005, 0.005, 0.005, 0.005],
-      fcfUplift: [0.005, 0.005, 0.005, 0.005, 0.005],
-    },
+    {},
     {
       revPrem: [0.01, 0.015, 0.015, 0.015, 0.015],
       fcfUplift: [0.01, 0.01, 0.01, 0.01, 0.01],
