@@ -19,7 +19,7 @@ export const CACI = defineStock({
   beta: 0.58,
   costDebt: 0.045,
   modelType: 'EPS_PE',    // Converted from DCF: low beta (0.58) made the Gordon perpetuity explode (base ~$1,616 vs ~$620 prose). Defense-IT has clean, stable adjusted EPS — EPS×P/E is the right frame and lands targets on the street.
-  ratingOverride: 'BUY',  // EPS_PE model reads HOLD (base ~6% 5yr CAGR at 16× exit — below the 8% soft-BUY line even with the RS 92 quality boost). Held at BUY to match consensus Buy (11 of 16 Strong Buy), a beat-and-raise FY26/FY27, the ARKA case and RS that has turned strong (28 → 92).
+  // ratingOverride 'BUY' dropped per user 10/11/2026 — the model's HOLD (base ~6% 5yr CAGR at 16× exit) stands.
 
   rsRating: 92,          // IBD RS per user, 10/11/2026 (was 28)
   rsTrend: 'rising',

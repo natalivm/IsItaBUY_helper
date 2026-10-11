@@ -22,7 +22,7 @@ export const EME = defineStock({
   modelType: 'EPS_PE',
   rsRating: 88,             // IBD RS per user, 10/11/2026 (was 83)
   rsTrend: 'rising',
-  ratingOverride: 'HOLD',  // Model BUY (~9% base CAGR, quality-boosted) but a cyclical contractor at record margins on the data-center build; HOLD on cycle/valuation risk.
+  // ratingOverride 'HOLD' dropped per user 10/11/2026 — RS 88 rising met the upgrade trigger; the model's BUY (~9% base CAGR, quality-boosted) stands.
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 30, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ export const EME = defineStock({
   verdictNarrative:
     'The fundamental case keeps getting stronger — Q2 2026 record revenue +19.8%, EPS +35%, a record $17.1B RPO, and FY2026 EPS guidance raised to $32.00-33.25. The stock now trades below the lowest analyst target. ' +
     'But EMCOR is a construction-services business earning record margins at the peak of a data-center build cycle, and the stock has been unable to hold its highs. Paying ~24× peak-cycle earnings leaves little room if data-center spending digests. ' +
-    'HOLD. The business is executing superbly; the risk is cyclical, not operational. Upgrade trigger: relative strength confirming a new uptrend, or a pullback that prices in some margin normalization.',
+    'BUY. The business is executing superbly and relative strength has confirmed a new uptrend (RS 88, rising); the risk is cyclical, not operational, so size positions with a data-center digestion in mind.',
 
   // ── Scenarios ──
   epsCagr: [5, 11, 16],        // From the FY26E $32.86 base (re-based Oct 2026; was [7,13,17] off FY25A $25.87)
