@@ -7,7 +7,9 @@ export const KKR = defineStock({
   sector: 'Alternative Asset Mgmt',
   themeColor: '#7c3aed',
   currentPrice: 90.95,
-  fairPriceRange: '$100 - $186',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$97 - $166',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 897,
   rev25: 7650,
   fcfMargin25: 0.85,
@@ -16,17 +18,26 @@ export const KKR = defineStock({
   debt: 55100,
   beta: 1.55,
   costDebt: 0.052,
-  baseEps: 6.74,
+  baseEps: 6.32,       // FY26E adjusted net income per share — stockanalysis consensus (Oct 8 2026; FY25A $4.87, FY27E $7.41 +17%). Q2 ANI $1.63/sh (record). Prior $6.74 was too high for FY26.
   modelType: 'EPS_PE',
-  rsRating: 36,
+  rsRating: 36,        // NOT refreshed — awaiting user RS (10/11/2026)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Jul 30, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Record quarter: ANI $1.5B / $1.63 per adj. share (+38-40%), FRE $1.21B /
+  // $1.32 per share (+34%; 70% FRE margin, 10th straight quarter >65%), TOE
+  // $1.68/sh (+29%). AUM $796B (+16%), fee-paying AUM $638B (+15%); $34B
+  // raised in Q2 ($305B since start of 2024). Street: Buy (23), PT $97-166
+  // (median $120); FY26E ANI $6.32, FY27E $7.41. Stock $90.95 (~14×
+  // FY26E ANI).
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
-    'Distributable earnings trajectory is visible and growing as fee-related earnings compound with AUM growth',
+    'Fee-related earnings are compounding at a record pace with best-in-class margins as assets under management keep growing',
     'Insurance integration via Global Atlantic provides a durable, recurring accrued income stream independent of carry cycles',
     'Private wealth and retail channel expansion opens a massive new source of capital inflows beyond institutional allocators',
     'Capital markets cycle recovery would unlock carried interest that is currently depressed, creating significant earnings upside',
-    'Analyst consensus is firmly Strong Buy with targets well above current price, reflecting broad underappreciation',
+    'Record earnings while the stock trades at a historically low multiple of adjusted earnings, reflecting broad underappreciation',
   ],
 
   risksToBuy: [
@@ -37,7 +48,7 @@ export const KKR = defineStock({
     'Insurance operations at Global Atlantic add balance-sheet complexity that makes earnings quality harder to assess',
   ],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 112, targetMedian: 153, targetHigh: 187, numAnalysts: 15 },
+  analystConsensus: { rating: 'Buy', targetLow: 97, targetMedian: 120, targetHigh: 166, numAnalysts: 23 },  // stockanalysis.com (Oct 8 2026)
   revGrowth: [
     [0.06, 0.04, 0.02, 0.00, 0.00],
     [0.15, 0.12, 0.10, 0.09, 0.08],
@@ -50,17 +61,12 @@ export const KKR = defineStock({
   ],
   exitMultiple: [10, 14, 18],
   desc: [
-    'Distributable earnings growth slows to about 6% per year after 2028. Exit markets stay weak and carried interest remains depressed. ' +
-      'Returns come in around 6-7% annualized from current entry including dividends. Not catastrophic given the strong balance sheet and no bankruptcy risk, ' +
-      'but significantly below cost of capital. The downside is bounded but upside is capped. A dead money scenario.',
-    'The capital markets cycle normalizes with AUM growth resuming, moderate exits returning, and carried interest partially recovering. ' +
-      'Distributable earnings grow from $6.74 toward $12+ per share by 2030. Management fees grow 22-24% with high fee-related earnings margins, ' +
-      'and insurance accrued income emerges as a catalyst for 2027-2028. Returns come in around 13-14% annualized from current entry. ' +
-      'Solid but just under the 15% threshold. No heroic assumptions required — just normalization of capital markets.',
-    'A full cycle recovery combines with structural fee growth. Insurance integration and private wealth distribution channels accelerate beyond expectations. ' +
-      'Distributable earnings grow at 16%+ annually post-2028, reaching over $13 per share by 2030. ' +
-      'Returns reach roughly 18% annualized from current entry. Requires sustained AUM growth, exit market normalization, ' +
-      'carry recovery, and insurance accrued income materializing — ambitious but supported by management visibility.',
+    'Exit markets stay weak and carried interest remains depressed; fundraising slows in a crowded market. Adjusted earnings still compound ~10% on management fees, but the multiple compresses to 12x. ' +
+      'Not catastrophic given the strong franchise, but well below cost of capital. 5yr target {target} ({cagr} annualized), before dividends.',
+    'The capital markets cycle normalizes: AUM keeps growing mid-teens, exits return and carry partially recovers, while insurance (Global Atlantic) accrued income grows. ' +
+      'ANI compounds ~13% from the FY26E $6.32 base and the stock re-rates to 15x. No heroic assumptions — just normalization. 5yr target {target} ({cagr} annualized).',
+    'A full cycle recovery combines with structural fee growth; private wealth distribution and insurance integration accelerate beyond expectations. ' +
+      'ANI compounds ~15% and the market pays 17x. 5yr target {target} ({cagr} annualized).',
   ],
 
   epsCagr: [10, 13, 15],
