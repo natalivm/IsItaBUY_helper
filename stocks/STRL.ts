@@ -6,24 +6,35 @@ export const STRL = defineStock({
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
   updatedOn: '10/09',
-  lastReportTag: 'Q4 2025',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
   currentPrice: 513,
-  fairPriceRange: '$320 - $800',
-  shares0: 30.7,               // ~30.7M diluted shares outstanding (declining via buybacks)
-  rev25: 2490,                 // FY2025 actual: $2.49B revenue (+32% YoY adj.)
+  fairPriceRange: '$700 - $1,000',  // stockanalysis.com analyst target range (Oct 8 2026)
+  shares0: 30.59,              // stockanalysis (Oct 2026)
+  rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (raised guide implies ~+64%; consensus $4.12B incl. Stone Ridge), FY27E $4.93B (+20%)
   fcfMargin25: 0.116,          // ~11.6% FCF margin (FY25 OCF ~$340M less ~$63M capex on $2.49B rev)
   taxRate: 0.24,
-  cash: 306,                   // Q4 2025: cash + $150M undrawn revolver
-  debt: 295,                   // Q4 2025: ~$295M (near net-cash)
+  cash: 464,                   // Jun 2026 (stockanalysis)
+  debt: 337,
   beta: 1.15,
   costDebt: 0.055,
 
   modelType: 'EPS_PE',
-  baseEps: 10.95,              // FY2025 actual adj. EPS ~$10.95 (+53% YoY); Q4 $3.08 vs $2.52 est.
+  baseEps: 20.04,              // FY26E adj. EPS consensus (raised guide implies +84% at midpoint; FY25A $10.88; FY27E $25.41 +27%). Prior $10.95 was FY25A.
 
-  rsRating: 96,                 // Elite: $96→$477 52-wk range; 53% EPS growth supports elevated RS
-  rsTrend: 'rising',            // Post-Q4 beat held $413-$442 range; ATH $477; FY26 guide $13.45-$14.05 well above Street $11.90
-  aiImpact: 'TAILWIND',        // DC is ~70% of E-Infra revenue, +123% YoY segment growth; CEC adds turnkey electrical
+  rsRating: 96,                 // NOT refreshed — awaiting user RS (10/11/2026)
+  rsTrend: 'rising',
+  aiImpact: 'TAILWIND',        // Data centers + semiconductor campuses drive E-Infrastructure; CEC adds turnkey electrical
+  // Q2 2026 UPDATE (Aug 3, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Record quarter: revenue +90% (~50% organic), adj. EPS $5.80 (+116%),
+  // adj. net income +118%. Backlog $4.33B (+116%; +50% organic), combined
+  // backlog $5.62B (+150%); book-to-burn 1.4x. FY26 GUIDE RAISED (incl.
+  // Stone Ridge acquisition): midpoint implies revenue +64%, adj. EPS +84%,
+  // adj. EBITDA +79%. Street: Strong Buy (8/8), PT $700-1,000 (median $754);
+  // FY26E rev $4.12B / EPS $20.04, FY27E $4.93B / $25.41. Stock $513 (~25.6×
+  // FY26E, ~20× FY27E) — well below the lowest analyst target.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'CEC acquisition adds turnkey electrical capability, creating a site-development-plus-electrical bundle no competitor can match at scale',
     'Record backlog with strong book-to-burn ratio provides multi-year earnings visibility rare for a construction company',
@@ -34,24 +45,24 @@ export const STRL = defineStock({
 
   risksToBuy: [
     'Data center capex is cyclical — a hyperscaler spending pause would simultaneously crush earnings and compress the elevated multiple',
-    'Elevated entry valuation leaves no margin of safety if EPS growth merely meets rather than beats expectations',
+    'Growth is now heavily acquisition-assisted, so organic momentum and integration need to keep pace with a much bigger base',
     'Skilled labor scarcity is an acute bottleneck that could cap throughput and pressure margins as project scale grows',
     'IIJA expiration in late 2026 creates funding uncertainty for the Transportation segment if a successor bill is delayed',
     'CEC integration execution risk is real — cultural and operational friction could delay synergy realization in the most critical growth segment',
   ],
 
   // ── EPS/PE Scenarios ──
-  epsCagr: [8, 14, 18],        // bear: E-Infra slows post-2026; base: steady 14% compounding; bull: supercycle extends
-  exitPE: [20, 25, 32],        // bear: de-rate from ~39x to quality industrial; base: proven infra compounder; bull: premium secular growth
+  epsCagr: [6, 14, 19],        // From the FY26E $20.04 base (re-based Oct 2026; was [8,14,18] off FY25A $10.95)
+  exitPE: [16, 22, 28],        // ~25.6× FY26E today; bear: quality industrial; base: proven infra compounder; bull: premium secular growth
   prob: [20, 50, 30],
 
   // ── DCF backup scenarios ──
 
-  analystConsensus: { rating: 'Buy', targetLow: 400, targetMedian: 466, targetHigh: 500, numAnalysts: 5 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 700, targetMedian: 754, targetHigh: 1000, numAnalysts: 8 },  // stockanalysis.com (Oct 8 2026)
   revGrowth: [
-    [0.12, 0.06, 0.04, 0.03, 0.02],   // Bear: DC capex digests, CEC ramp slower, semi fabs delayed
-    [0.18, 0.14, 0.11, 0.09, 0.07],   // Base: CEC cross-sell, DC extends, semi fabs start '27
-    [0.22, 0.18, 0.15, 0.12, 0.10],   // Bull: Supercycle + new geos + full CEC integration
+    [0.58, 0.05, 0.02, 0.02, 0.02],   // Bear: FY26 incl. acquisitions, then DC capex digests
+    [0.64, 0.18, 0.10, 0.08, 0.07],   // Base: FY26 ≈ $4.1B, FY27 ≈ consensus, then fade
+    [0.68, 0.25, 0.15, 0.12, 0.10],   // Bull: Supercycle + new geos + full CEC/Stone Ridge integration
   ],
   fcfMargin: [
     [0.095, 0.085, 0.080, 0.075, 0.075],   // Bear: CEC integration friction, mix shift headwinds
@@ -62,44 +73,24 @@ export const STRL = defineStock({
   exitMultiple: [8, 12, 15],
   bbRate: [0.005, 0.012, 0.020],     // $400M buyback program authorized Nov 2025; ~1% annual at current market cap
   ebitdaProxy: [0.17, 0.205, 0.23],   // FY25 adj. EBITDA margin >20% (first time in history); $503.8M EBITDA; expanding with E-Infra mix shift
-  bullMaOptVal: 391 * 30.7 * 0.03,   // M&A optionality in fragmented infrastructure market (lower % at $13B+ market cap)
+  bullMaOptVal: 391 * 30.7 * 0.03,   // M&A optionality in fragmented infrastructure market (lower % at $15B+ market cap)
 
   desc: [
-    'Data center capex cycles down in 2027 as hyperscalers digest the 2024-2026 build-out wave, slowing E-Infrastructure organic growth to low teens. ' +
-      'CEC integration delivered in 2025-2026 but the 123% segment growth rate normalizes sharply — skilled labor scarcity caps throughput expansion. ' +
-      'Semiconductor megaprojects slip further right. Transportation holds steady on IIJA backlog but Sept 2026 expiry creates reauthorization uncertainty. ' +
-      'Building Solutions remains a drag with housing affordability unresolved. Market de-rates Sterling from ~39x to 20x as growth decelerates. ' +
-      'Earnings grow at roughly 8% annually but severe multiple compression from ~39x to 20x drives significant downside.',
-    'E-Infrastructure growth continues in the mid-teens organically as $3.01B record backlog converts and CEC turnkey electrical cross-selling gains traction in new geographies. ' +
-      'FY26 guide of $13.45-$14.05 adj. EPS achievable; $3.3B combined pipeline sustains 25%+ segment margins. ' +
-      'Semiconductor megaprojects begin contributing in 2027. Transportation benefits from IIJA successor bill; margins hold at 14-16% on design-build mix. ' +
-      'Building Solutions recovers modestly as mortgage rates ease. $400M buyback and net cash balance sheet fund 1-2 tuck-in acquisitions annually. ' +
-      'Earnings compound at roughly 14% annually with multiple settling at 25x from current ~39x — upside driven by earnings growth offsetting moderate multiple compression.',
-    'AI data center supercycle extends through 2028+ — CEC turnkey electrical + site development bundle becomes the industry standard, ' +
-      'pulling Sterling into 2-3 new geographies (Texas expansion, Southeast, Midwest). Project sizes continue scaling (2-2.5x) with increasing underground infrastructure complexity. ' +
-      'FY26 guide proves conservative as $3.3B pipeline accelerates; $14+ adj. EPS likely. Semiconductor megaprojects deploy in force in 2027, adding a second growth vector. ' +
-      'Transportation margin transformation continues (adj. operating profit +66% in FY25) with large design-build contracts ahead of reauthorization. ' +
-      'Margins expand as E-Infra at scale (28%+ operating margin) drives mix higher; EBITDA margins push toward 22-25% by FY27. ' +
-      'Earnings compound at roughly 18% annually and the market sustains a 32x premium multiple for execution, secular visibility, and margin durability.',
+    'Data center capex cycles down in 2027 as hyperscalers digest the build-out wave, and E-Infrastructure organic growth slows sharply; skilled labor scarcity caps throughput and semiconductor megaprojects slip. ' +
+      'Earnings grow only ~6% from the FY26E $20.04 and the market de-rates Sterling to 16x as growth decelerates. 5yr target {target} ({cagr} annualized).',
+    'E-Infrastructure keeps growing as the record $4.3B backlog converts and CEC turnkey electrical plus Stone Ridge broaden the offering; semiconductor campuses add a second vector. ' +
+      'Earnings compound ~14% from $20.04 (FY27 +27% consensus, then fade) and the multiple settles at 22x. 5yr target {target} ({cagr} annualized).',
+    'The AI data center supercycle extends through 2028+ and the site-development-plus-electrical bundle becomes the industry standard across new geographies; project sizes keep scaling and margins expand. ' +
+      'Earnings compound ~19% and the market sustains a 28x premium for execution and visibility. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'E-Infrastructure is cyclical, not structural — 123% segment growth in FY25 is peak growth rate that normalizes as hyperscaler spending matures. ' +
-      'CEC integration delivered in FY25 ($129M Q4 revenue, $489M backlog) but ongoing skilled labor shortages cap further throughput scaling. ' +
-      'At ~39x FY25 / ~31x FY26E adj. EPS, the stock is priced for sustained 25%+ compounding — any deceleration triggers earnings miss AND multiple compression simultaneously. ' +
-      'Building Solutions is a drag (housing softness). IIJA expiry Sept 2026 creates Transportation uncertainty. ' +
-      'Peak margins are the biggest risk: FY25 EBITDA margins >20% for the first time may not be sustainable as project mix evolves.',
-    'Sterling is a proven beat-and-raise compounder — 5th consecutive year of 35%+ adj. EPS growth, and FY26 guide ($13.45-$14.05) crushed Street at $11.90. ' +
-      'CEC creates a turnkey offering (site dev + electrical) that no competitor matches at scale. ' +
-      'Backlog visibility is exceptional: $3.01B signed (+78% YoY), $3.3B combined, 80%+ mission-critical, book-to-burn >1.2x. ' +
-      'Net cash balance sheet, $400M buyback, and geographic expansion provide M&A optionality and shareholder returns. 53% adj. EPS growth in FY25 proves operating leverage is structural. ' +
-      'At 14% EPS CAGR and 25x exit, upside is driven by earnings growth even as multiple compresses from ~39x — thesis is about earnings power, not re-rating.',
-    'Sterling as the undisputed E-Infrastructure platform: site development + turnkey electrical + underground utilities = full-service mission-critical partner. ' +
-      'Data center project sizes growing exponentially with increasing underground infrastructure complexity (duct banks, high-voltage distribution, cooling infrastructure). ' +
-      'Geographic expansion (Texas, Southeast, Midwest) doubles the addressable market — FY26 revenue guide $3.05-$3.20B is just the start. ' +
-      'Semiconductor fabs, e-commerce mega-distribution centers, and renewable energy create a multi-vector growth flywheel. ' +
-      'Transportation margin transformation (+66% adj. operating profit in FY25) is underappreciated and accelerating. ' +
-      'If the supercycle extends and CEC synergies deepen, $26+ adj. EPS power by 2030 at 32x supports $830+ stock price.',
+    'E-Infrastructure is cyclical, not structural — 2026\'s extraordinary growth (revenue +64%, EPS +84%) is a peak growth rate that will normalize as hyperscaler spending matures. ' +
+      'Skilled labor shortages cap throughput, Building Solutions remains a drag, and federal transportation funding faces reauthorization uncertainty. Peak margins are the biggest risk.',
+    'Sterling is a proven beat-and-raise compounder: Q2 2026 adj. EPS +116%, backlog $4.33B (+116%), combined backlog $5.62B, book-to-burn 1.4x, and FY26 guidance raised again. ' +
+      'CEC plus Stone Ridge create a turnkey offering few competitors match at scale, and a net-cash balance sheet funds buybacks and M&A. At ~20x FY27E, the thesis is about earnings power, not re-rating.',
+    'Sterling as the undisputed E-Infrastructure platform: site development + turnkey electrical + underground utilities for data centers, semiconductor fabs and mega-distribution centers. ' +
+      'Geographic expansion multiplies the addressable market and transportation margins keep improving; if the supercycle extends, earnings power keeps compounding well above consensus.',
   ],
 
   driverOverrides: [
@@ -116,4 +107,11 @@ export const STRL = defineStock({
       fcfUplift: [0.008, 0.008, 0.010, 0.010, 0.010],
     },
   ],
+
+  debtSafety: {
+    netDebt: -128,         // Jun 2026 (stockanalysis): ~$464M cash − ~$337M debt
+    ebitda: 714,           // TTM EBITDA
+    fy: 'TTM Q2 2026',
+    note: 'Net cash ~$0.13B even after the CEC and Stone Ridge acquisitions. Step 1 GREEN.',
+  },
 });
