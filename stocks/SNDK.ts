@@ -6,62 +6,73 @@ export const SNDK = defineStock({
   sector: 'NAND Flash Memory / AI Storage',
   themeColor: '#c0392b',
   currentPrice: 1581.82,
-  shares0: 148,
-  rev25: 13200,
-  fcfMargin25: 0.25,
+  shares0: 146.4,     // 146.42M (stockanalysis, Oct 2026)
+  rev25: 20250,       // FY26A (Jun 2026) $20.25B (+175%) — base year; revGrowth[0] = FY27 (consensus $49.1B, +143%), FY28E $58.4B
+  fcfMargin25: 0.57,  // TTM FCF $11.49B / rev $20.25B
   taxRate: 0.13,
-  cash: 3735,
-  debt: 207,
+  cash: 6541,         // cash + ST investments (net cash $6.34B per stockanalysis, Oct 2026)
+  debt: 201,
   beta: 1.9,
   costDebt: 0.05,
-  rsRating: 99,
+  rsRating: 99,       // NOT refreshed — awaiting user RS (10/11/2026)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '10/09',
-  lastReportTag: 'Q3 FY26',
-  fairPriceRange: '$1,500 - $4,500',
+  lastReportTag: 'Q4 FY26',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$1,000 - $3,600',  // stockanalysis.com analyst target range (Oct 9 2026)
+  // Q4 FY26 UPDATE (Aug 5, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $8.97B (+51% q/q; ~2/3 price, ~1/3 volume), non-GAAP EPS $39.25
+  // (GAAP $43.97). FY26 revenue $20.25B (+175%), non-GAAP EPS $70.88. Q1 FY27
+  // GUIDE: revenue $10.3-10.8B (slightly below consensus), EPS $44-46, adj.
+  // GM 83-85% (!). New $14B buyback ($15.5B remaining). Street: Buy (25), PT
+  // $1,000-3,600 (median $2,150); FY27E rev $49.1B / EPS $214.82, FY28E
+  // $58.4B / $266.30. Stock $1,581.82 (~7.4× FY27E), up ~11× in 52 weeks.
+  // Peak-cycle NAND pricing — modeled like MU (FY27E base, negative base CAGR).
+  // ─────────────────────────────────────────────────────────────────────────
 
   reasonsToBuy: [
     'World\'s only pure-play publicly traded NAND company — unique asset with no direct listed comps',
     'AI infrastructure demand for enterprise SSD (model weights, inference caching, vector indexing) creates a structurally higher demand floor than prior cycles',
     'Fab-lite model via Kioxia JV amplifies FCF at cycle peaks while limiting balance-sheet CapEx exposure',
-    'Net cash balance sheet inherited from spinoff — no legacy WD debt constraining capital allocation',
+    'Record pricing has turned the business into a cash machine, funding a very large new buyback from a net-cash balance sheet',
     'Pristine Burry profile with extraordinarily low SBC relative to earnings, rare among large-cap technology names',
   ],
 
   risksToBuy: [
     'NAND is inherently cyclical — Samsung, SK Hynix, and Kioxia all have incentives to run fabs regardless of price',
-    'FY23 negative EBITDA on billions in revenue proves how catastrophic a down-cycle can be for the business model',
+    'Gross margins are at unprecedented levels for NAND — history says pricing this extreme draws in supply and eventually reverses',
     'Enterprise SSD AI demand floor is unproven over a full cycle — prior AI-demand thesis cycles have disappointed',
     'No direct CapEx control means SNDK cannot unilaterally cut supply to defend pricing in a downturn',
     'Client and consumer NAND demand remains cyclically soft, and any AI capex pause amplifies the inventory correction risk',
   ],
 
-  analystConsensus: { rating: 'Buy', targetLow: 1000, targetMedian: 1460, targetHigh: 3250, numAnalysts: 22 },
+  analystConsensus: { rating: 'Buy', targetLow: 1000, targetMedian: 2150, targetHigh: 3600, numAnalysts: 25 },  // stockanalysis.com (Oct 9 2026)
 
   modelType: 'EPS_PE',
-  baseEps: 162,
+  baseEps: 214.82,    // FY27E (Jun 2027) non-GAAP EPS consensus (range $187-238; FY26A $70.88, FY28E $266.30). Q1 FY27 guide $44-46. Prior $162 was an older estimate.
 
   revGrowth: [
-    [0.10, -0.30, -0.20, 0.05, 0.10],
-    [0.25, 0.08, 0.07, 0.07, 0.06],
-    [0.40, 0.28, 0.20, 0.15, 0.12],
+    [1.15, -0.25, -0.35, -0.05, 0.05],  // Bear: FY27 below consensus, then a classic NAND price collapse
+    [1.40, 0.10, -0.25, -0.10, 0.05],   // Base: FY27 ≈ $48.6B, FY28 peak, then prices normalize
+    [1.55, 0.20, 0.00, 0.05, 0.08],     // Bull: AI storage demand absorbs new supply; plateau, no bust
   ],
   fcfMargin: [
-    [0.15, 0.02, -0.01, 0.06, 0.12],
-    [0.25, 0.22, 0.20, 0.20, 0.21],
-    [0.32, 0.30, 0.28, 0.27, 0.26],
+    [0.50, 0.30, 0.10, 0.08, 0.12],
+    [0.55, 0.50, 0.35, 0.25, 0.25],
+    [0.58, 0.55, 0.45, 0.38, 0.35],
   ],
   exitMultiple: [9, 14, 22],
 
-  epsCagr: [-10, 5, 14],
-  exitPE: [8, 11, 14],
-  prob: [25, 50, 25],
+  epsCagr: [-25, -8, 5],   // MU-consistent peak-cycle framing: FY32 EPS ≈ $51 / $142 / $274 vs FY27E $215
+  exitPE: [8, 12, 14],     // Trough / mid-cycle / sustained-tightness multiples
+  prob: [30, 45, 25],
 
   desc: [
-    'NAND oversupply returns as Samsung/SK Hynix/Kioxia accelerate bit output through 2027-28. ASPs fall sharply toward variable cost and margins compress hard — though the AI enterprise-SSD mix cushions the collapse short of the FY23 near-zero-EBITDA trough. EPS gives back roughly 40% off the peak and the stock de-rates to a trough ~8× multiple. Bear-case target ~$700-850.',
-    'AI storage provides a structural demand floor, moderating the typical NAND cycle severity. Enterprise SSD mix-shift sustains above-trough margins. EPS compounds modestly on volume growth. Market assigns mid-cycle 11× on normalized earnings. Target ~$1,800-2,400.',
-    'AI infrastructure becomes the dominant NAND demand driver — persistent supply/demand tightness sustains 35%+ EBITDA margins through the decade. SNDK captures premium enterprise SSD pricing as hyperscalers treat NAND as strategic. EPS compounds in the low-teens; market re-rates only modestly to ~14× — a disciplined premium to the current multiple rather than a full peak-on-peak re-rating, since even a durable AI floor leaves memory a cyclical. Target ~$4,000-4,600.',
+    'NAND oversupply returns as Samsung, SK Hynix, Kioxia and Chinese suppliers chase record margins with new bit output. Prices fall sharply from the FY27 peak, margins collapse and EPS shrinks roughly three-quarters by FY32; the stock de-rates to a trough ~8x multiple. 5yr target {target} ({cagr} annualized).',
+    'FY27 lands near the ~$49B / $215 EPS consensus and FY28 is the peak; pricing then normalizes as supply catches up. AI enterprise-SSD demand keeps margins above prior troughs, and buybacks shrink the share count. EPS ends ~a third below the FY27 peak at a mid-cycle 12x. 5yr target {target} ({cagr} annualized).',
+    'AI inference and storage become the dominant NAND demand driver; supply discipline holds and pricing plateaus rather than collapses. EPS grows modestly from the FY27 peak and the market pays ~14x for a structurally less cyclical NAND business. 5yr target {target} ({cagr} annualized).',
   ],
 
   ebitdaProxy: [0.12, 0.30, 0.46],
@@ -80,9 +91,9 @@ export const SNDK = defineStock({
   },
 
   debtSafety: {
-    netDebt: -3528,
-    ebitda: 5632,
-    fy: 'LTM Q3 FY26',
-    note: 'Net cash of $3.5B — spinoff did not inherit WD debt. Fab-lite model via Kioxia JV avoids balance sheet capex exposure. Financially invulnerable at current cycle.',
+    netDebt: -6340,        // Jun 2026 (stockanalysis)
+    ebitda: 12620,         // TTM EBITDA
+    fy: 'FY26',
+    note: 'Net cash of $6.3B — spinoff did not inherit WD debt. Fab-lite model via Kioxia JV avoids balance sheet capex exposure. Financially invulnerable at current cycle.',
   },
 });
