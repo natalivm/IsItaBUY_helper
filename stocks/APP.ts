@@ -56,8 +56,8 @@ export const APP = defineStock({
   analystConsensus: { rating: 'Buy', targetLow: 325, targetMedian: 470, targetHigh: 790, numAnalysts: 33 },  // stockanalysis.com, Oct 9 2026
   revGrowth: [
     [0.12, 0.08, 0.06, 0.05, 0.05],  // Bear: Q2 miss was the start of a slowdown; self-serve disappoints, consumer stalls
-    [0.26, 0.18, 0.16, 0.15, 0.14],  // Base: FY27 ≈ consensus +26%; self-serve ramps, consumer + lead-gen expand
-    [0.30, 0.27, 0.23, 0.20, 0.18],  // Bull: consumer + lead-gen + CTV all scale
+    [0.25, 0.17, 0.14, 0.12, 0.10],  // Base: FY27 ≈ consensus (+25-26%), then normal deceleration for a ~$10B+ ad platform (~15.5% CAGR)
+    [0.29, 0.24, 0.20, 0.17, 0.15],  // Bull: consumer + lead-gen + CTV all scale (~21% CAGR)
   ],
   fcfMargin: [
     [0.68, 0.65, 0.62, 0.60, 0.58],
@@ -68,13 +68,13 @@ export const APP = defineStock({
   desc: [
     'June self-serve launch stalls — onboarding friction persists despite video creative tools. The consumer vertical loses momentum as macro cuts e-commerce ad budgets. ' +
       'Revenue growth decelerates from ~50% to single digits within 2 years (the Q2 2026 miss as the first crack). At ~84% EBITDA margins there is zero cushion — every revenue miss flows straight through. ' +
-      'Multiple compresses from ~17x to 12x. Earnings grow only ~5% from the $16.67 FY26E base. 5yr target {target} ({cagr} annualized).',
+      'Multiple compresses from ~17x to 11x. Earnings grow only ~3% from the $16.67 FY26E base. 5yr target {target} ({cagr} annualized).',
     'June self-serve launch ramps efficiently: <30-day breakeven and near-zero churn confirm the cohort economics. Consumer vertical sustains April record momentum through 2026. ' +
-      'Lead-gen model (auto/health/fintech) rolls out in 2027 as the next TAM expansion. Revenue compounds at ~22% annually; 85% EBITDA margins hold. ' +
-      'EPS grows ~21% from the $16.67 base; the multiple recovers toward 22x as execution resumes. 5yr target {target} ({cagr} annualized).',
+      'Lead-gen model (auto/health/fintech) rolls out in 2027 as the next TAM expansion. Revenue grows ~25% in FY27 then decelerates to ~10% by FY31 (~15% CAGR); ~84% EBITDA margins hold but cannot expand further. ' +
+      'EPS grows ~16% a year from the $16.67 base (revenue plus buybacks); the multiple settles near today\'s ~18x. 5yr target {target} ({cagr} annualized).',
     'Self-serve + consumer + lead-gen + CTV all compound simultaneously. 100K+ new advertisers per year at $70K+ LTV creates a flywheel where more demand density raises publisher ROAS, which attracts more supply. ' +
-      'Revenue sustains 28-30% growth for 3+ years. Buybacks accelerate on $5B+ FCF. ' +
-      'EPS grows ~37% from the $16.67 base; market re-rates from cyclical to structural at 25x. 5yr target {target} ({cagr} annualized).',
+      'Revenue sustains 20%+ growth for 3+ years (~21% CAGR). Buybacks accelerate on $5B+ FCF. ' +
+      'EPS grows ~24% from the $16.67 base; market re-rates from cyclical to structural at 23x. 5yr target {target} ({cagr} annualized).',
   ],
   thesis: [
     'Ad cycle turns down — macro cuts budgets. Meta captures no-ID traffic, TikTok takes share. ' +
@@ -92,9 +92,12 @@ export const APP = defineStock({
       'Meta competition expands pie (bid density) rather than taking share.',
   ],
 
-  epsCagr: [5, 21, 37],   // Bear 15→5 at Q2 2026 review: the old bear (15% at 18x) still returned ~17%/yr — not a bear case
-  exitPE: [12, 22, 25],   // Bear 18→12 to match a de-rating on decelerating growth
-  prob: [20, 45, 35],
+  // Recalibrated 10/11/2026 (targets looked too high): EPS growth now ties to the revenue path — margins are already ~84% EBITDA,
+  // so EPS can only grow at revenue CAGR + ~2% buybacks. Was [5,21,37] / [12,22,25] → base $951, bull $2,011 (bull 37%
+  // EPS on ~23% revenue was impossible at flat margins; base 22x exit sat well above today's ~17x).
+  epsCagr: [3, 16, 24],   // Revenue CAGR ~7% / ~15.5% / ~21% + buybacks, less some tax-rate creep
+  exitPE: [11, 18, 23],   // Today ~17x FY26E after the Q2 miss; base holds roughly there, bull re-rates modestly
+  prob: [25, 50, 25],     // Was [20,45,35] — the bull skew no longer fits a stock whose momentum broke
 
   bbRate: [0.01, 0.02, 0.03],
   ebitdaProxy: [0.70, 0.78, 0.82],
