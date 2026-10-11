@@ -18,7 +18,7 @@ export const CIEN = defineStock({
   debt: 100,
   beta: 1.30,
   costDebt: 0.045,
-  rsRating: 99,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 96,         // IBD RS per user, 10/11/2026 (was 99)
   aiImpact: 'TAILWIND',
   // Q3 FY26 UPDATE (Sep 3, 2026) — first data review since Q1
   // ─────────────────────────────────────────────────────────────────────────
@@ -96,4 +96,11 @@ export const CIEN = defineStock({
       fcfUplift: [0.005, 0.01, 0.01, 0.015, 0.015],
     },
   ],
+
+  debtSafety: {
+    netDebt: 442,          // stockanalysis (Oct 2026): ~$3.29B debt − ~$2.63B cash (note: differs from the model's cash/debt inputs — re-check at next review)
+    ebitda: 1030,          // TTM EBITDA
+    fy: 'TTM Q3 FY26',
+    note: 'GREEN (~0.4×). Modest net debt against fast-growing EBITDA.',
+  },
 });

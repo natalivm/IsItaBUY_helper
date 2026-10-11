@@ -7,22 +7,33 @@ export const GXO = defineStock({
   themeColor: '#10b981',
   currentPrice: 46.56,
   updatedOn: '10/09',
-  lastReportTag: 'Q1 2026',
-  fairPriceRange: '$50 - $139',
-  shares0: 114.3,
-  rev25: 13200,
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$55 - $90',  // stockanalysis.com analyst target range (Oct 7 2026)
+  shares0: 114.7,
+  rev25: 13180,        // FY2025A; revGrowth[0] = FY26 (organic +4-5%; consensus $13.95B, +5.9%), FY27E $14.68B (+5%)
   fcfMargin25: 0.020,
   taxRate: 0.23,
-  cash: 0,
-  debt: 2246,
+  cash: 769,           // Jun 2026 (stockanalysis)
+  debt: 3170,          // funded debt ≈ company net debt $2.4B + cash (stockanalysis $6.1B total includes leases)
   beta: 1.15,
   costDebt: 0.055,
   modelType: 'EPS_PE',
-  baseEps: 3.05,       // 2026E EPS = raised FY26 guide midpoint $2.90-$3.20 (+22% YoY mid; prior guide $2.85-$3.15 / +20% → $3.00). Q1 2026 adj EPS $0.50 (+72% YoY) beat, but part was contract-termination-cost timing shifting into later quarters — anchor to guide midpoint, not annualized Q1.
-  rsRating: 37,
-  rsTrend: 'falling',
+  baseEps: 3.05,       // 2026E EPS = FY26 guide midpoint (narrowed at Q2 to $2.95-3.15, midpoint held; consensus $3.02, FY27E $3.54 +17%).
+  rsRating: 48,        // IBD RS per user, 10/11/2026 (was 37)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // Model STRONG BUY (+94%) overstates: the +94% is cumulative ~14% CAGR, and GXO's own base case (desc[base]) pegs returns at "~8% annualized — below the 15% hurdle absent multiple expansion." Weak quality confirms HOLD: RS 37, distribution (ACC/DIS), ~-1% 3yr EPS growth, elevated leverage (Altman Z 1.9, ~2.5x net debt). Street is Strong Buy (+39% median) — revisit if momentum/quality turns.
+  ratingOverride: 'HOLD',  // Model STRONG BUY (~14% base CAGR from a ~15× P/E) overstates a thin-margin, levered (~2.5× net debt, Altman Z ~1.9) contract logistician with only middling RS (48, recovering from 37) and an Amazon sentiment overhang. Street is Strong Buy (+40% median) — revisit after the Nov 16 Investor Day or if momentum/quality turns.
+  // Q2 2026 UPDATE (Aug 4, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $3.4B (+4.3%; organic +3.4%), adj. EBITDA $219M (vs $212M),
+  // adj. EPS $0.59 (vs $0.57), GAAP $0.22; FCF +$12M. FY26 guide NARROWED
+  // with midpoints held: organic +4-5%, adj. EBITDA $945-965M, adj. EPS
+  // $2.95-3.15, FCF conversion 30-40%. New wins $410M (+34%), ~$1B 2026
+  // incremental revenue secured (+29%). Net debt $2.4B. Investor Day Nov 16
+  // 2026. Street: Strong Buy (17), PT $55-90 (median $65); FY26E $3.02,
+  // FY27E $3.54. Stock $46.56 (~15× FY26E).
+  // ─────────────────────────────────────────────────────────────────────────
   // Q1 2026 CALL UPDATE (May 6, 2026)
   // ─────────────────────────────────────────────────────────────────────────
   // Revenue $3.3B (+10.8% YoY; organic +4.1%, every region positive). Adj
@@ -52,7 +63,7 @@ export const GXO = defineStock({
     'Wincanton integration synergies tracking on schedule, adding meaningful margin uplift through year-end',
     'Amazon supply-chain overlap is narrow, and the vast majority of the market remains insourced and addressable',
     'Low customer churn reflects long-term contracted revenue that cushions against near-term volume softness',
-    'Management raised guidance after Q1, signaling confidence in H2 organic acceleration from signed-but-unstarted wins',
+    'New business wins accelerated sharply and most of next year\'s incremental revenue is already secured, supporting second-half acceleration',
   ],
 
   risksToBuy: [
@@ -68,11 +79,11 @@ export const GXO = defineStock({
   prob: [22, 45, 33],     // Modest nudge post-Q1 2026: guidance raise + record $2.7B pipeline + $870M secured strengthen base/bull; bear trimmed (25→22) because the ~24% Amazon-driven de-rating already priced much of the downside. Not a re-tune — execution still the swing factor.
 
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 58, targetMedian: 70, targetHigh: 82, numAnalysts: 13 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 55, targetMedian: 65, targetHigh: 90, numAnalysts: 17 },  // stockanalysis.com (Oct 7 2026)
   revGrowth: [
-    [0.025, 0.025, 0.02, 0.02, 0.02],
-    [0.05, 0.05, 0.05, 0.05, 0.05],
-    [0.08, 0.07, 0.07, 0.06, 0.06],
+    [0.045, 0.025, 0.02, 0.02, 0.02],
+    [0.059, 0.05, 0.05, 0.05, 0.05],
+    [0.065, 0.07, 0.07, 0.06, 0.06],
   ],
   fcfMargin: [
     [0.018, 0.018, 0.018, 0.018, 0.018],
@@ -82,12 +93,12 @@ export const GXO = defineStock({
   exitMultiple: [12, 16, 19],
   desc: [
     'Volume pressure persists with a slow new-business ramp and retention challenges, while Amazon\'s supply-chain push pressures sentiment and industry pricing. Margins stay stuck near 4% EBIT. ' +
-      'Earnings grow only ~5% annually and the multiple compresses to 16x, its historical stress zone. Essentially dead money even from the de-rated ~$50 entry.',
-    'Raised FY26 guidance plays out — adj EPS $2.90-$3.20 (+22% mid), 4-5% organic, margin expansion toward 5% EBIT from Wincanton $60M synergies and GXO Way productivity. ' +
-      'Earnings compound ~11% annually at a 19x exit multiple. Returns ~8% annualized — decent but below the 15% hurdle absent multiple expansion; the record $2.7B pipeline is the main upside swing factor.',
+      'Earnings grow only ~5% annually from the FY26 ~$3.05 and the multiple settles at 16x, its historical stress zone. 5yr target {target} ({cagr} annualized).',
+    'FY26 guidance plays out — adj. EPS ~$3.05 (+20%), 4-5% organic, margin expansion toward 5% EBIT from Wincanton synergies and GXO Way productivity; accelerating new wins sustain growth. ' +
+      'Earnings compound ~11% annually at a 19x exit multiple. 5yr target {target} ({cagr} annualized) — the pipeline conversion is the main upside swing factor.',
     'Full execution across the board: margin catch-up, $60M in Wincanton synergies, strong pipeline conversion, and a cyclical recovery. ' +
       'Earnings compound at 16% annually with the market maintaining a 22x multiple on improved profitability. ' +
-      'Delivers roughly 16% annualized returns, but requires strong execution and a normal macro environment.',
+      '5yr target {target} ({cagr} annualized) — requires strong execution and a normal macro environment.',
   ],
 
   ebitdaProxy: [0.08, 0.12, 0.15],
@@ -110,12 +121,12 @@ export const GXO = defineStock({
   ],
 
   debtSafety: {
-    netDebt: 2200,
-    ebitda: 881,
+    netDebt: 2400,         // Jun 2026 (company): net debt $2.4B, excluding leases
+    ebitda: 955,           // FY26 adj. EBITDA guide midpoint ($945-965M)
     capexToOcf: 0.28,
     interestCoverage: 3.8,
     altmanZ: 1.9,
-    fy: 'FY25',
-    note: 'Net debt 2.5× EBITDA — elevated but typical for asset-light logistics after the XPO spinoff. 2026 EBITDA guidance $930-970M should bring leverage toward 2.2×. Long-term customer contracts (avg 3-5yr) provide cash flow visibility. Red on Altman Z but not a distress signal for contract logistics.',
+    fy: 'FY26E',
+    note: 'Net debt ~2.5× EBITDA — elevated but typical for asset-light logistics after the XPO spinoff; should drift toward ~2.2× as EBITDA grows. Long-term customer contracts (avg 3-5yr) provide cash flow visibility. Red on Altman Z but not a distress signal for contract logistics.',
   },
 });

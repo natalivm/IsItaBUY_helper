@@ -6,23 +6,33 @@ export const RTX = defineStock({
   sector: 'Aerospace & Defense',
   themeColor: '#003087',
   currentPrice: 185.97,
-  fairPriceRange: '$145 - $315',
+  fairPriceRange: '$200 - $250',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 1350,
-  rev25: 90400,
+  rev25: 88600,        // FY2025A (was 90,400); revGrowth[0] = FY26 (guide $95-96B raised; consensus $96.2B, +8.5%), FY27E $103.4B (+7.5%)
   fcfMargin25: 0.08,
   taxRate: 0.18,
-  cash: 6800,
-  debt: 38900,
+  cash: 8310,
+  debt: 38860,
   beta: 0.30,
   costDebt: 0.04,
   modelType: 'EPS_PE',
-  baseEps: 5.41,
-  rsRating: 43,
-  rsTrend: 'falling',
+  baseEps: 7.25,       // FY26E adj. EPS consensus (guide $7.10-7.25 raised at Q2; FY27E $7.87 +8.5%). Prior $5.41 was stale.
+  rsRating: 59,        // IBD RS per user, 10/11/2026 (was 43)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
-  ratingOverride: 'BUY',  // Caps RTX at BUY: prevents the model flipping to STRONG BUY on spot dips — a steady defense compounder, consensus Buy. (Matches model today.)
+  // ratingOverride 'BUY' removed Oct 2026: it was a cap that "matched the model"; re-based to FY26E EPS (~26× today) the model reads HOLD, consistent with the "capital-preservation compounder" narrative.
   updatedOn: '10/09',
-  lastReportTag: 'Q1 2026',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
+  // Q2 2026 UPDATE (Jul 23, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Sales $24.7B (+14%, +16% organic), adj. EPS $1.89 (+21%), GAAP $1.57,
+  // FCF $2.9B. Backlog $289B (+22%; $170B commercial / $119B defense). FY26
+  // GUIDE RAISED: sales $95-96B (organic +8-9%), adj. EPS $7.10-7.25, FCF
+  // $8.50-8.75B. Selling Blue Canyon Technologies for $620M. Street: Buy
+  // (24), PT $200-250 (median $237); FY26E rev $96.2B / EPS $7.25, FY27E
+  // $103.4B / $7.87. Stock $185.97 (~25.7× FY26E).
+  // ─────────────────────────────────────────────────────────────────────────
 
   reasonsToBuy: [
     'Patriot, AMRAAM, and Stinger systems are in the critical procurement path of accelerating NATO and allied defense budgets',
@@ -37,15 +47,15 @@ export const RTX = defineStock({
     'Elevated merger debt limits financial flexibility and amplifies equity downside if earnings disappoint',
     'Commercial aerospace is a hidden cyclical risk — nearly half of revenue is linked to flight hour volumes that contract in a recession',
     'Defense budget sequestration or US fiscal austerity could pressure Raytheon\'s procurement pipeline in a political gridlock scenario',
-    'Base-case CAGR is modest — this is a capital-preservation compounder, not a high-return vehicle for aggressive growth mandates',
+    'At a mid-twenties earnings multiple, much of the defense and aftermarket upcycle is already priced in — expected returns are modest',
   ],
 
-  analystConsensus: { rating: 'Buy', targetLow: 160, targetMedian: 215, targetHigh: 242, numAnalysts: 24 },
+  analystConsensus: { rating: 'Buy', targetLow: 200, targetMedian: 237, targetHigh: 250, numAnalysts: 24 },  // stockanalysis.com (Oct 2026)
 
   revGrowth: [
-    [0.03, 0.03, 0.02, 0.02, 0.02],  // Bear: defense budget headwinds, GTF drag extends, commercial softness
-    [0.06, 0.06, 0.05, 0.05, 0.04],  // Base: steady defense + aftermarket recovery normalizes
-    [0.09, 0.08, 0.08, 0.07, 0.06],  // Bull: defense supercycle + full aftermarket recovery + Collins strength
+    [0.08, 0.03, 0.02, 0.02, 0.02],  // Bear: FY26 locked by guide; defense budget headwinds, GTF drag, commercial softness
+    [0.085, 0.075, 0.06, 0.05, 0.05], // Base: FY26 ≈ $96.2B, FY27 ≈ consensus, steady normalization
+    [0.09, 0.09, 0.08, 0.07, 0.06],  // Bull: defense supercycle + full aftermarket recovery + Collins strength
   ],
 
   fcfMargin: [
@@ -60,20 +70,20 @@ export const RTX = defineStock({
   ebitdaProxy: [0.14, 0.18, 0.24],
   bullMaOptVal: false,
 
-  epsCagr: [8, 12, 15],
-  exitPE: [18, 24, 28],
+  epsCagr: [6, 10, 13],   // From the FY26E $7.25 base (re-based Oct 2026; was [8,12,15] off $5.41)
+  exitPE: [17, 22, 26],
   prob: [25, 50, 25],
 
   desc: [
-    'Defense budget sequestration returns (US debt ceiling standoff or political gridlock cuts procurement). Pratt & Whitney GTF inspections exceed guided scope and cost, compressing margins further. Commercial aerospace faces recession-driven travel shock, reducing high-margin aftermarket revenue. EPS grows at only 8% annually from this base; market de-rates to 18× as growth visibility shrinks and leverage discount widens. 5yr target ~$145, roughly -4% annualized.',
-    'Defense spending continues its secular upward trajectory (NATO 2% GDP commitments, Middle East demand, Ukraine replenishment). GTF inspections complete on the guided timeline, converting the $6B headwind into a multi-year aftermarket recovery tailwind. Collins Aerospace compound at 6–7% per year on fleet renewal. EPS grows at 12% annually; market maintains 24× on the visible cash flow compounding story. 5yr target ~$228, roughly +5% annualized from $179.66.',
-    'Defense super-cycle intensifies as NATO over-achieves 2% targets and US procurement accelerates. GTF resolution unlocks Pratt & Whitney\'s full margin potential sooner than guided; aftermarket pricing power strengthens as the aging global fleet drives accelerating maintenance demand. Collins Aerospace penetrates next-gen platforms (A320neo, 787 upgrades, F-35 sustainment). EPS compounds at 15% annually; market re-rates to 28× premium on franchise durability. 5yr target ~$315, roughly +12% annualized.',
+    'Defense budget sequestration returns, Pratt & Whitney GTF inspections exceed guided scope, and a recession hits high-margin commercial aftermarket. EPS grows only ~6% from the FY26E $7.25 base and the market de-rates to 17x. 5yr target {target} ({cagr} annualized).',
+    'Defense spending keeps rising (NATO, Middle East, Ukraine replenishment) and GTF inspections complete on schedule, turning a multi-year headwind into aftermarket recovery; the record $289B backlog converts steadily. EPS compounds ~10% and the multiple settles at 22x. 5yr target {target} ({cagr} annualized).',
+    'A defense super-cycle plus full aftermarket recovery: GTF resolution unlocks Pratt & Whitney margins sooner than guided and Collins gains content on next-gen platforms. EPS compounds ~13% and the market pays a 26x premium for franchise durability. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'Bear mechanics: US defense budgets face structural fiscal pressure — the deficit trajectory creates political pressure for procurement sequestration that markets habitually underestimate. GTF inspection scope creep: the $6B Pratt & Whitney charge estimate assumed specific fleet data; if actual engine failures exceed estimates, charges grow and the timeline extends through FY28. Commercial aerospace is the hidden cyclical: ~45% of revenue is commercial aerospace-linked (Pratt & Whitney commercial, Collins commercial), making RTX more cyclical than its defense pedigree suggests. The balance sheet carries $38.9B of merger debt; at 3.1× EBITDA, any earnings miss triggers credit spread widening that amplifies equity downside. Stock beta = 0.30 means RTX won\'t crash in a bear market — but it won\'t recover fast either.',
-    'Structural defense is the anchor: NATO members are contractually committed to 2% GDP spend; US procurement is locked into multi-year platforms (Patriots, AMRAAMs, F-35 sustainment, GBSD). The Raytheon Missiles & Defense segment alone represents multi-decade backlog. GTF headwind is timing, not structural: the inspection program is fully funded ($6B+), execution is underway, and completion unlocks $1–2B/yr in deferred aftermarket revenue. FCF growing from $7.2B now to $10B+ by FY2030 as margins normalize. The balance sheet is deleveraging — investment-grade credit at 3.1× is manageable on defense contract visibility. RS Rating 84 rising reflects institutional sponsorship without the overcrowding risk of AI-momentum names.',
-    'Bull mechanics: the defense super-cycle is the most durable in decades — geopolitical necessity + European rearmament + Middle East procurement + Indo-Pacific deterrence all converge simultaneously. AMRAAM and Patriot consumption in Ukraine drives a decade of backlog replacement. Pratt & Whitney GTF resolution creates a "synthetic earnings recovery" that doesn\'t require new business — just execution of existing contracts. Commercial aerospace fleet renewal (7,000+ aircraft on order globally) creates a 20-year aftermarket stream from every new engine delivered today. At $315 (+12% annualized), RTX would trade at approximately 28× normalized EPS — premium but justified by franchise quality and visible 10-year EPS compounding. The asymmetric setup: downside ($145 bear) is -19%, upside ($315 bull) is +75%; expected value clearly positive.',
+    'Bear mechanics: US fiscal pressure creates sequestration risk that markets habitually underestimate; GTF inspection scope creep extends charges and the timeline; ~45% of revenue is commercial-aerospace linked, making RTX more cyclical than its defense pedigree suggests. Merger-era debt (~3× EBITDA) amplifies equity downside on any miss.',
+    'Structural defense is the anchor: multi-year missile and munitions programs (Patriot, AMRAAM, Stinger, SM-6) with a $119B defense backlog. Commercial backlog of $170B plus GTF recovery drives aftermarket growth. Organic growth was raised to 8-9% for 2026 and FCF is heading toward ~$8.5B+. The catch: at ~26x FY26E, the market already prices much of this.',
+    'Bull mechanics: geopolitical necessity, European rearmament and Indo-Pacific deterrence converge; munitions replenishment drives a decade of backlog; the aging global fleet drives accelerating maintenance demand from every new engine delivered today.',
   ],
 
   burry: {
@@ -84,15 +94,15 @@ export const RTX = defineStock({
     fy: 'FY25',
     overstatementPct: 8,
     overstatementSource: 'estimated',
-    note: 'Pristine — SBC $600M vs. GAAP NI $7.3B = 8% naive ratio. Defense contractor compensation is structurally cleaner than software peers. Annual buybacks ~$2.2B (from $10B+ cumulative since merger) = 3.7× SBC, providing meaningful offset. Low stock appreciation (beta 0.30) further suppresses MTM amplification. Burry-adjusted target ~$211.',
+    note: 'Pristine — SBC $600M vs. GAAP NI $7.3B = 8% naive ratio. Defense contractor compensation is structurally cleaner than software peers. Annual buybacks ~$2.2B (from $10B+ cumulative since merger) = 3.7× SBC, providing meaningful offset. Low stock appreciation (beta 0.30) further suppresses MTM amplification.',
   },
 
   debtSafety: {
-    netDebt: 32100,
-    ebitda: 10500,
+    netDebt: 30550,        // Jun 2026 (stockanalysis): ~$38.9B debt − ~$8.3B cash
+    ebitda: 15900,         // TTM EBITDA (stockanalysis)
     capexToOcf: 0.19,
     interestCoverage: 5.2,
-    fy: 'FY25',
-    note: 'Net Debt $32.1B / EBITDA ~$10.5B = 3.06× — elevated from the 2020 Raytheon-UTC merger. Step-3 checks: CapEx/OCF ~19% (passes), interest coverage ~5.2× (passes). Altman Z omitted — distorted by $57B merger-era goodwill/intangibles; classic Z-score overstates risk for post-merger defense conglomerates with investment-grade credit. Leverage is declining and FCF trajectory is improving.',
+    fy: 'TTM Q2 2026',
+    note: 'Net Debt ~$30.6B / TTM EBITDA ~$15.9B ≈ 1.9× (FY25 basis was ~3.1×) — elevated from the 2020 Raytheon-UTC merger but falling. Step-3 checks: CapEx/OCF ~19% (passes), interest coverage ~5.2× (passes). Altman Z omitted — distorted by $57B merger-era goodwill/intangibles; classic Z-score overstates risk for post-merger defense conglomerates with investment-grade credit. Leverage is declining and FCF trajectory is improving.',
   },
 });

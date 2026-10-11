@@ -122,6 +122,13 @@ export const MRVL = defineStock({
     },
   ],
 
+  debtSafety: {
+    netDebt: 1350,         // stockanalysis (Oct 2026): ~$5.29B debt − ~$3.93B cash
+    ebitda: 2850,          // TTM EBITDA
+    fy: 'TTM Q2 FY27',
+    note: 'GREEN (~0.5×). Investment-grade leverage, comfortably covered by AI-driven EBITDA growth.',
+  },
+
   burry: {
     sbc: 591,
     gaapNi: 2670,

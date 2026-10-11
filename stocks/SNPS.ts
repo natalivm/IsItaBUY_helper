@@ -17,10 +17,10 @@ export const SNPS = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 15.07,      // FY26E (Oct 2026) non-GAAP EPS = guide midpoint (raised at Q3; consensus $15.14, FY27E $18.58 +23%). Q3 $3.91. Prior: $15.50.
-  rsRating: 38,         // NOT refreshed — awaiting user RS (10/10/2026)
-  rsTrend: 'falling',
+  rsRating: 96,         // IBD RS per user, 10/11/2026 (was 38)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // Kept at Q3 FY26 pending a fresh RS read: model screens BUY (~10% base CAGR) but RS was weak/falling. Revisit when RS is updated — if momentum has turned, this override should go.
+  // ratingOverride 'HOLD' removed 10/11/2026: it was conditional on weak RS; RS has turned (38 → 96), so the model's BUY (~10% base CAGR, quality-boosted) stands.
   updatedOn: '10/09',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',

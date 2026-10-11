@@ -2,28 +2,39 @@ import { defineStock } from './defineStock';
 
 export const ROAD = defineStock({
   updatedOn: '10/09',
-  lastReportTag: 'Q2 FY26',
+  lastReportTag: 'Q3 FY26',
+  dataReviewedOn: '2026-10-11',
   ticker: 'ROAD',
   name: 'Construction Partners, Inc.',
   sector: 'Infrastructure Construction · Road & Highway',
   themeColor: '#f59e0b',
   currentPrice: 86.81,
-  fairPriceRange: '$112 - $270',
-  shares0: 56.5,               // ~56.5M shares (market cap $7.45B / $131.9)
-  rev25: 2300,                 // FY 09/2025 revenue ($M)
-  fcfMargin25: 0.067,          // ~$153M FCF / ~$2,300M revenue
+  fairPriceRange: '$115 - $165',  // stockanalysis.com analyst target range (Oct 2026)
+  shares0: 56.76,              // stockanalysis (Oct 2026)
+  rev25: 2810,                 // FY 09/2025 revenue $2.81B (was 2,300); revGrowth[0] = FY26 (consensus $3.67B, +30%), FY27E $4.08B (+11%)
+  fcfMargin25: 0.055,          // ~$153M FCF / ~$2.81B revenue
   taxRate: 0.25,
-  cash: 200,
-  debt: 800,
+  cash: 95,                    // Jun 2026 (stockanalysis)
+  debt: 1890,
   beta: 1.25,
   costDebt: 0.055,
 
   modelType: 'EPS_PE',
-  baseEps: 2.21,               // Trailing EPS FY 09/2025
+  baseEps: 3.10,               // FY26E (Sep 2026) adj. EPS consensus (range $2.93-3.20; FY25A $2.20; FY27E $3.82 +23%). Prior $2.21 was FY25.
 
-  rsRating: 52,
+  rsRating: 51,                // IBD RS per user, 10/11/2026 (was 52)
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
+  // Q3 FY26 UPDATE (Aug 7, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $999.4M (+28.2%, beat ~$973M), adj. EBITDA $163M (+24%, 16.3%
+  // margin), adj. EPS ~$1.08 (in line/beat). Record backlog $3.36B. FY26
+  // outlook raised. Headwinds: energy cost inflation, very wet May. Stock
+  // jumped to ~$120 after the print but has since slid to $86.81 (−31% over
+  // 52 weeks). Street: Strong Buy (6-7), PT $115-165 (median $138); FY26E
+  // rev $3.67B / EPS $3.10, FY27E $4.08B / $3.82. Stock ~28× FY26E, ~23×
+  // FY27E; net debt ~$1.8B (~3× EBITDA). Q4 FY26 reports ~Nov 6.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Road 2030 plan targets a doubling of the business with a credible M&A pipeline described as the most active in a quarter-century',
     'HMA vertical integration and Houston platform create durable local operational moats in Sunbelt markets',
@@ -33,7 +44,7 @@ export const ROAD = defineStock({
   ],
 
   risksToBuy: [
-    'Valuation already prices near-perfect execution — multiple compression alone could erase gains even with solid EPS growth',
+    'The stock has fallen sharply since its post-earnings high despite record backlog, signalling the market doubts the cycle\'s durability',
     'Organic growth has been volatile quarter-to-quarter, exposing operating leverage risk on the downside',
     'Leverage elevated from acquisition-driven buildout, constraining flexibility if the infrastructure cycle turns',
     'Infrastructure budgets are politically vulnerable to austerity, partisan gridlock, or reauthorization delays',
@@ -41,17 +52,17 @@ export const ROAD = defineStock({
   ],
 
   // ── EPS/PE Scenarios (updated post Q1 FY26 call) ──
-  epsCagr: [10, 16, 21],       // bear 8-12% mid / base 15-17% mid / bull 20-22% mid
-  exitPE: [23, 30, 36],        // bear 22-25x / base 28-32x / bull 35-38x
-  prob: [20, 50, 30],          // upgraded: ~40-50% prob of 15%+ CAGR (base+bull)
+  epsCagr: [8, 15, 20],        // From the FY26E $3.10 base (re-based Oct 2026; was [10,16,21] off FY25 $2.21)
+  exitPE: [17, 24, 30],        // ~28× FY26E today; bear: ordinary construction; base: quality cyclical roll-up; bull: premium consolidator
+  prob: [20, 50, 30],
 
   // ── DCF backup scenarios ──
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 110, targetMedian: 123, targetHigh: 150, numAnalysts: 5 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 115, targetMedian: 138, targetHigh: 165, numAnalysts: 7 },  // stockanalysis.com (Oct 2026)
   revGrowth: [
-    [0.30, 0.08, 0.04, 0.02, 0.01],   // Bear: M&A rollover fades, cycle slows, organic 3-4%
-    [0.38, 0.15, 0.10, 0.08, 0.07],   // Base: M&A continues, organic 7-8%, Road 2030 on track
-    [0.44, 0.20, 0.15, 0.12, 0.10],   // Bull: full M&A pipeline + strong public cycle + commercial upside
+    [0.28, 0.04, 0.03, 0.02, 0.01],   // Bear: FY26 near consensus, then M&A fades, cycle slows
+    [0.30, 0.11, 0.09, 0.08, 0.07],   // Base: FY26 ≈ $3.67B, FY27 ≈ consensus, Road 2030 on track
+    [0.32, 0.16, 0.14, 0.12, 0.10],   // Bull: full M&A pipeline + strong public cycle + commercial upside
   ],
   fcfMargin: [
     [0.060, 0.055, 0.050, 0.048, 0.048],   // Bear: margin stagnates, integration friction
@@ -65,34 +76,21 @@ export const ROAD = defineStock({
   bullMaOptVal: 131.9 * 56.5 * 0.05, // Higher M&A optionality — 'most active pipeline in 25 years'
 
   desc: [
-    'M&A integration stumbles or the infrastructure cycle turns. Award growth stalls and organic growth drops to 3-4%. ' +
-      'Leverage stays elevated above 3x, limiting further acquisition capacity. EBITDA margins stagnate in the 14-15% range, ' +
-      'falling short of Road 2030 targets. The market re-rates the stock as ordinary construction at 22-25x. ' +
-      'Earnings grow at roughly 10% but returns are negative to flat from current entry. In a stress scenario, downside reaches about 45%.',
-    'Road 2030 is broadly on track with an active M&A pipeline, 7-8% organic growth, and backlog coverage above 80%. ' +
-      'EBITDA margins reach the 15-16% range as fiscal 2026 guidance confirms. Leverage comes down to 2.5x by late 2026. ' +
-      'Highway reauthorization provides five-year visibility for federal and state funding. The market values the business as a quality cyclical at 28-32x. ' +
-      'Earnings compound at roughly 16% annually, though returns from current entry are modest at 1-3% annualized.',
-    'An infrastructure supercycle unfolds driven by highway reauthorization, Sunbelt migration, reshoring, and data center commercial demand. ' +
-      'The M&A pipeline is fully deployed with the Houston platform, greenfield plants, and geographic expansion all contributing. ' +
-      'Road 2030 targets are achieved or exceeded with over $6B in revenue and 17% EBITDA margins. ' +
-      'The market rewards execution with a 35-38x premium. Earnings compound at roughly 21% annually, ' +
-      'delivering 9-12% annualized returns from current entry.',
+    'M&A integration stumbles or the infrastructure cycle turns: award growth stalls, organic growth drops to low-single digits and leverage stays near 3x, limiting further acquisitions. ' +
+      'Margins stagnate short of Road 2030 targets and the market re-rates the stock as ordinary construction at 17x. Earnings grow ~8% from the FY26E $3.10. 5yr target {target} ({cagr} annualized).',
+    'Road 2030 is broadly on track: the record $3.36B backlog converts, organic growth runs mid-to-high single digits plus tuck-in M&A, EBITDA margins reach ~16% and leverage trends toward 2.5x. ' +
+      'Highway reauthorization provides funding visibility. Earnings compound ~15% and the market values the business as a quality cyclical at 24x. 5yr target {target} ({cagr} annualized).',
+    'An infrastructure supercycle unfolds — highway reauthorization, Sunbelt migration, reshoring and data-center commercial work — and the M&A pipeline is fully deployed. ' +
+      'Road 2030 targets are met or exceeded; earnings compound ~20% and the market pays a 30x premium. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
     'Cyclical downturn + valuation compression + M&A execution risk. No recurring revenue, operational moat only. ' +
-      'At P/E 23x, downside is severe from current 44x forward. Leverage at 3.18x constrains flexibility. ' +
-      'Organic growth volatile (Q1 only 3.5% vs 7-8% guide) — operating leverage cuts both ways. ' +
-      'Infrastructure budgets are political: vulnerable to austerity, partisan shifts, reauthorization delays.',
-    'Best-in-class cyclical operator with M&A compounding engine. Q1 FY26 confirms: +44% rev, +63% EBITDA, ' +
-      'record margins, $3.09B backlog. Deleveraging on track. Road 2030 visibility is real. ' +
-      'But 16% EPS CAGR at 44x entry = limited stock CAGR unless multiple holds above 30x. ' +
-      'Needs either cheaper entry (~$85-95) or sustained bull conditions for 15%+ total return.',
-    'ROAD as the Sunbelt infrastructure consolidator of choice. M&A pipeline "most active in 25 years", ' +
-      'HMA vertical integration creates local moats, greenfield expansion adds capacity. ' +
-      'Reauthorization + Sunbelt tailwinds + commercial (data centers, reshoring) provide multi-year demand floor. ' +
-      'If Road 2030 delivers (>$6B rev, 17% margin, >$1B EBITDA), current valuation is justified and upside remains.',
+      'Leverage around 3x EBITDA constrains flexibility, energy-cost inflation and weather make quarters volatile, and infrastructure budgets are political.',
+    'Best-in-class cyclical operator with an M&A compounding engine: Q3 FY26 revenue +28%, adj. EBITDA +24%, record $3.36B backlog and a raised FY26 outlook. ' +
+      'After the slide to the mid-$80s the stock trades ~23x FY27E — a far better entry than the 40x+ of 2025, though leverage must come down.',
+    'ROAD as the Sunbelt infrastructure consolidator of choice: HMA vertical integration creates local moats, greenfield plants add capacity, and reauthorization plus Sunbelt and commercial tailwinds provide a multi-year demand floor. ' +
+      'If Road 2030 delivers (>$6B revenue, ~17% margin), earnings power far exceeds today\'s.',
   ],
 
   driverOverrides: [
@@ -111,12 +109,12 @@ export const ROAD = defineStock({
   ],
 
   debtSafety: {
-    netDebt: 1683,
-    ebitda: 558,
+    netDebt: 1800,         // Jun 2026 (stockanalysis): ~$1.89B debt − ~$0.09B cash
+    ebitda: 590,           // FY26E adj. EBITDA approx. (~16% × $3.67B); TTM $507M
     capexToOcf: 0.30,
     interestCoverage: 4.2,
     altmanZ: 2.1,
-    fy: 'Q2 FY26',
-    note: 'Leverage at 3.0× EBITDA after acquisition-driven buildout — management targeting 2.5× by year-end. Infrastructure construction cash flows are predictable (gov\'t-backed projects, $3.1B backlog) which mitigates headline ratio. Red on paper, but structural cash flow visibility reduces real risk.',
+    fy: 'FY26E',
+    note: 'Leverage ~3.0× EBITDA after acquisition-driven buildout — management targeting ~2.5×. Infrastructure construction cash flows are predictable (gov\'t-backed projects, record $3.36B backlog), which mitigates the headline ratio. Red on paper, but structural cash flow visibility reduces real risk.',
   },
 });

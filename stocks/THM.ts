@@ -7,25 +7,37 @@ export const THM = defineStock({
   themeColor: '#CA8A04',
   updatedOn: '10/09',
   currentPrice: 2.4,
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
   fairPriceRange: '$1 - $12',
-  shares0: 245,
-  rev25: 5,
+  shares0: 261.6,     // stockanalysis (Oct 2026) — up from ~245M after the Jan 2026 Paulson subscription
+  rev25: 5,           // placeholder — pre-revenue explorer; the DCF here is an option-value proxy, not a cash-flow forecast
   fcfMargin25: -2.0,
   taxRate: 0.25,
-  cash: 115,
+  cash: 110,          // Jun 2026: ~$110.4M cash; working capital $110.1M
   debt: 0,
   beta: 0.71,
   costDebt: 0.05,
 
-  rsRating: 59,
+  rsRating: 44,       // IBD RS per user, 10/11/2026 (was 59)
   rsTrend: 'falling',
+  ratingOverride: 'HOLD',  // Added Oct 2026: pre-revenue, pre-feasibility explorer where the "DCF" is a gold-price option proxy — model STRONG BUY is not underwritable. Pinned HOLD like other pre-profit speculative names (ASTS, RKLB, ONDS).
   aiImpact: 'NEUTRAL',
-  analystConsensus: { rating: 'Strong Buy', targetLow: 2, targetMedian: 2, targetHigh: 2, numAnalysts: 1 },
+  // Q2 2026 UPDATE (Aug 12, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Q2 10-Q filed; working capital $110.1M, no debt; TTM net loss ~$3M (low
+  // burn). Paulson subscription in Jan 2026. Feasibility-study team
+  // appointed and feasibility drilling program launched (May 2026). No
+  // current analyst coverage on stockanalysis (old single-analyst $2 target
+  // retained below). Stock $2.40 (~$630M market cap), up ~13% over 52 weeks.
+  // Q3 2026 filing ~Nov 6.
+  // ─────────────────────────────────────────────────────────────────────────
+  analystConsensus: { rating: 'Strong Buy', targetLow: 2, targetMedian: 2, targetHigh: 2, numAnalysts: 1 },  // stale single-analyst target — no current coverage (Oct 2026)
   reasonsToBuy: [
     'One of the largest undeveloped gold reserves in a stable, Tier-1 Alaskan jurisdiction',
     'At elevated gold prices the project margin per ounce is exceptional, creating huge NPV asymmetry',
     'Paulson and Co. is a major and committed institutional backer with meaningful ownership',
-    'No debt and enough cash for multi-year feasibility and permitting work without near-term dilution',
+    'No debt and enough cash to fund the feasibility study and permitting work now under way without near-term dilution',
     'A streaming deal or major-producer JV at high gold prices could unlock reserve value rapidly',
   ],
 
@@ -53,26 +65,26 @@ export const THM = defineStock({
     'Gold retreats below $2,500/oz, weakening project economics sharply. NPV drops from $7-10B to marginal territory. ' +
       'Financing becomes impossible or severely dilutive. Permitting delays compound the problem. ' +
       'At worst, gold falls below $2,000 and the project stalls entirely — the call option decays. ' +
-      'Equity value reduces to cash on hand minus burn.',
+      'Equity value reduces to cash on hand minus burn. 5yr value proxy {target} ({cagr} annualized).',
     'Gold maintains $4,000+ levels. Margin of $2,932/oz makes the project compelling. ' +
       'A strategic partner or streaming deal finances the $1.93B capex, limiting dilution. ' +
       'Permitting milestones de-risk the 3-5 year timeline, triggering a re-rating. ' +
-      'Reserve optionality and Paulson institutional backing drive valuation to ~$4.50.',
+      'Reserve optionality and Paulson institutional backing drive a re-rating. 5yr value proxy {target} ({cagr} annualized).',
     'Gold supercycle pushes prices to $5,000+. At $4,158/oz margin and $7-10B project NPV, ' +
       'a major gold producer acquires THM at an NPV discount or a premium JV accelerates Livengood development. ' +
-      'Full optionality pricing of the 9M oz reserve base targets ~$6.',
+      'Full optionality pricing of the 9M oz reserve base. 5yr value proxy {target} ({cagr} annualized).',
   ],
 
   thesis: [
     'Gold price reversal + $1.93B capex mountain = option decay. No production cash flow floor. ' +
       'Below $2,500 gold, project NPV collapses from $7-10B to under $1B. Financing gap cannot be bridged at low gold. ' +
-      'Permitting takes 3-5 years, extending the burn. RS 99 in commodities often precedes volatile reversals.',
+      'Permitting takes 3-5 years, extending the burn. Momentum in junior miners often precedes volatile reversals.',
     '9.0M oz P+P reserve at $4,000+ gold = compelling project economics with $2.9B+ margin annually at full production. ' +
-      'Paulson backing ($40M placement, 38% ownership) + $115M capital provides 2-3 years for feasibility and permitting. ' +
+      'Paulson backing (largest holder; Jan 2026 subscription) + ~$110M cash funds the feasibility study launched in 2026 and early permitting. ' +
       'Streaming/JV deal highly likely at elevated gold prices. Milestone-driven re-rating as permits advance.',
-    'Gold supercycle transforms Livengood from marginal to world-class. NPV $7-10B vs $860M market cap = 8-12x gap. ' +
-      'Major producer M&A or premium JV partnership unlocks reserve value at ~$6 per share. ' +
-      'Asymmetric payoff structure from $3.51 entry with optionality for higher if gold strengthens further.',
+    'Gold supercycle transforms Livengood from marginal to world-class: a multi-billion project NPV vs a ~$630M market cap is a large gap. ' +
+      'Major producer M&A or a premium JV partnership unlocks reserve value. ' +
+      'Asymmetric payoff from current levels, with optionality for more if gold strengthens further.',
   ],
 
   termGrowth: [0.005, 0.015, 0.020],
@@ -99,9 +111,9 @@ export const THM = defineStock({
   ],
 
   debtSafety: {
-    netDebt: -115,
+    netDebt: -110,         // Jun 2026: ~$110M cash, no debt
     ebitda: 1,
-    fy: 'FY25',
-    note: 'Net cash — no debt, ~$115M cash funds Livengood development. Pre-revenue explorer; EBITDA framework not meaningful. Safety is entirely a function of cash runway vs. burn rate and permitting timeline. Watch cash balance quarterly.',
+    fy: 'Q2 2026',
+    note: 'Net cash — no debt, ~$110M cash funds Livengood feasibility work. Pre-revenue explorer; EBITDA framework not meaningful. Safety is entirely a function of cash runway vs. burn rate and permitting timeline. Watch cash balance quarterly.',
   },
 });

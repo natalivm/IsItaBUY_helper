@@ -20,7 +20,7 @@ export const TER = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 9.09,       // FY26E non-GAAP EPS — stockanalysis consensus (Sep 12 2026; range $8.82-9.35). Q2 $2.47; Q3 guide $1.85-2.15 (sequential dip). Prior $6.43 predated the AI-test surge.
-  rsRating: 99,         // NOT refreshed — awaiting user RS (10/10/2026)
+  rsRating: 97,         // IBD RS per user, 10/11/2026 (was 99)
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 28, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

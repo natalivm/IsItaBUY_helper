@@ -6,20 +6,33 @@ export const KLAC = defineStock({
   sector: 'Semiconductor Equipment · Process Control & Inspection',
   themeColor: '#00539b',
   currentPrice: 195.57,
-  fairPriceRange: '$120 - $330',
-  shares0: 1320,             // ~1,320M diluted shares post 10:1 split (Jun 2026)
-  rev25: 11100,              // FY25 revenue ~$11.1B
-  fcfMargin25: 0.34,         // FCF $3.75B / rev $11.1B ≈ 34%
+  lastReportTag: 'Q4 FY26',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$175 - $325',  // stockanalysis.com analyst target range (Oct 6 2026)
+  shares0: 1310,             // ~1,310M shares post 10:1 split (Jun 11 2026)
+  rev25: 13580,              // FY26A (Jun 2026) $13.58B — base year; revGrowth[0] = FY27 (consensus $18.1B, +34%), FY28E $21.5B
+  fcfMargin25: 0.28,         // TTM FCF $3.77B / rev $13.58B
   taxRate: 0.12,
-  cash: 5200,
-  debt: 6500,
+  cash: 4900,
+  debt: 6150,
   beta: 1.25,
   costDebt: 0.035,
   modelType: 'EPS_PE',
-  baseEps: 3.645,            // FY26E forward EPS (post 10:1 split, Jun 2026)
-  rsRating: 94,
-  rsTrend: 'rising',
+  baseEps: 5.44,             // FY27E (Jun 2027) non-GAAP EPS consensus (FY26A $3.76 non-GAAP / $3.66 GAAP; FY28E $6.74 +24%). Q1 FY27 guide $1.16 ± 0.10.
+  rsRating: 88,              // IBD RS per user, 10/11/2026 (was 94)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  // Q4 FY26 UPDATE (Jul 28, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Record revenue $3.66B (+15% y/y; beat $3.6B), non-GAAP EPS $1.05 (beat
+  // $1.00). FY26: revenue $13.58B, GAAP EPS $3.66. 10-for-1 split done Jun
+  // 11 2026 (all figures split-adjusted). Q1 FY27 GUIDE: revenue $4.0B ±
+  // $0.2B, non-GAAP EPS $1.16 ± 0.10, GM 62.5%. CY26 WFE outlook raised to
+  // the low-$150B range; mgmt expects momentum to accelerate in 2H26 and
+  // continue through 2027. Street: Buy (30), PT $175-325 (median $228.50);
+  // FY27E rev $18.1B / EPS $5.44, FY28E $21.5B / $6.74. Stock $195.57 (~36×
+  // FY27E, ~29× FY28E), up ~84% over 52 weeks.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Monopolistic process control position means yield management is the last thing fabs cut in any downturn',
     'Data and analytics network effect creates switching costs that go far beyond hardware replacement costs alone',
@@ -31,20 +44,20 @@ export const KLAC = defineStock({
   risksToBuy: [
     'Elevated forward multiple means even a normal mid-cycle pause delivers significant multiple compression and double-digit losses',
     'China exposure in the mid-to-high twenties of revenue is a material risk if export restrictions tighten further',
-    'Current supply constraints and sold-out lead times are classic peak-cycle signals that often precede demand disappointments',
-    'DRAM cost headwinds and tariff pressures are compressing gross margins in the near term with limited offset',
+    'Sold-out capacity and a sharply rising wafer-fab-equipment outlook are classic peak-cycle signals that often precede demand disappointments',
+    'The stock has nearly doubled in a year, so the valuation already assumes the 2026-27 upcycle plays out in full',
     'Bull case requires both the AI supercycle to extend and the premium multiple to hold — a dual dependency that rarely persists',
   ],
 
-  epsCagr: [10, 14, 22],
-  exitPE: [25, 28, 40],
+  epsCagr: [6, 13, 20],      // From the FY27E $5.44 base (re-based Oct 2026): base = FY28 +24% surge then a normal semicap cycle
+  exitPE: [20, 27, 35],      // From ~36× FY27E today; KLAC's 10-yr norm is low-to-mid 20s
   prob: [25, 55, 20],
 
-  analystConsensus: { rating: 'Buy', targetLow: 120, targetMedian: 160, targetHigh: 200, numAnalysts: 20 },
+  analystConsensus: { rating: 'Buy', targetLow: 175, targetMedian: 228.5, targetHigh: 325, numAnalysts: 30 },  // stockanalysis.com (Oct 6 2026)
   revGrowth: [
-    [0.06, 0.05, 0.04, 0.04, 0.03],  // bear: cycle breaks, ~7% CAGR (half of base)
-    [0.18, 0.15, 0.12, 0.11, 0.10],  // base: AI + EUV sustain, ~13% CAGR
-    [0.22, 0.18, 0.15, 0.13, 0.12],  // bull: AI supercycle extends, ~16% CAGR
+    [0.25, 0.00, -0.06, 0.04, 0.04],  // bear: FY27 below consensus, then a WFE digestion
+    [0.32, 0.15, 0.07, 0.08, 0.08],   // base: FY27 ≈ $17.9B, FY28 ~$20.6B (haircut vs $21.5B), then normal cycle
+    [0.35, 0.20, 0.13, 0.12, 0.10],   // bull: AI/HBM/advanced packaging supercycle extends
   ],
   fcfMargin: [
     [0.30, 0.30, 0.31, 0.31, 0.32],  // bear: margin pressure from cycle downturn
@@ -53,43 +66,22 @@ export const KLAC = defineStock({
   ],
   exitMultiple: [16, 22, 28],
   desc: [
-    'Semicap cycle rolls over earlier than expected as AI capex moderates and fab buildout timelines slip. ' +
-      'Supply constraints that currently limit 1H26 delivery shift from tailwind to demand destruction as orders get cancelled or deferred. ' +
-      'China restrictions tighten further, cutting mid/high-20% revenue exposure. Tariff + DRAM cost headwinds persist beyond 2026. ' +
-      'Revenue growth halves to ~7% CAGR. EPS grows at only 10% annually vs 20% consensus. ' +
-      'P/E compresses to historical average of 25x. Target: ~$4.90 × 25 = $123 — roughly −4% annualized. ' +
-      'Stress test: FY26 EPS $3.65 × 22x = $80 — a −48% drawdown from a normal cycle pause.',
-    'Normal semicap cycle plays out: WFE grows to mid-$130B in 2026 per management guidance, with 2H26 acceleration. ' +
-      'Memory WFE (DRAM) grows 15–20%, Foundry/Logic 10–15%. HBM + advanced packaging drive process control intensity higher. ' +
-      'EBIT margins expand from 43% toward 47–49% by 2030. GM headwinds from DRAM costs and tariffs normalize by mid-2027. ' +
-      'Blended scenario: EPS compounds at ~14% annually to ~$6.2–7.0 by 2030. At 28x exit, target ~$175–196. ' +
-      'Multiple compression from 41x to 28–30x limits total return to ~5–8% annualized. The market already prices most of the earnings trajectory.',
-    'AI supercycle extends through 2028–2029: EUV, advanced packaging (facility-constrained per call), and HBM drive disproportionate inspection demand. ' +
-      'Service business grows at upper end of 12–14% target, share gains in reticle, e-beam, AP, and BBP segments. ' +
-      'EBIT margins expand aggressively toward 49%+, buybacks accelerate EPS growth beyond revenue. Long-term GM reaches 63%+. ' +
-      'EPS compounds at 22% to ~$8.30 by 2030. At 40x premium multiple, target $332 — roughly 17–18% annualized. ' +
-      'This is the only scenario that clears the 15% CAGR hurdle from current entry.',
+    'Semicap cycle rolls over after the FY27 surge: AI capex moderates, memory and logic customers digest capacity, and China restrictions tighten. ' +
+      'EPS compounds only ~6% from the FY27E $5.44 base and the multiple compresses to ~20x, the low end of its historical range. 5yr target {target} ({cagr} annualized).',
+    'FY27 lands near the ~$18B consensus as WFE climbs into the low-$150B range, FY28 grows mid-teens, then a normal cycle. ' +
+      'HBM, advanced packaging and leading-edge nodes keep raising process-control intensity; services compound steadily. ' +
+      'EPS compounds ~13% from $5.44; P/E settles at 27x. 5yr target {target} ({cagr} annualized).',
+    'AI supercycle extends through 2028-2029: EUV layers, HBM and advanced packaging drive disproportionate inspection demand and share gains. ' +
+      'Margins expand, buybacks accelerate EPS, and EPS compounds ~20%. Premium 35x multiple holds. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'The main risk is cycle, not competition. Semicap equipment follows classic 2–3 year capex cycles. ' +
-      'Management confirms 1H26 virtually sold out with late-26/27 delivery backlogs — classic peak-cycle signal. ' +
-      'If AI capex moderates in 2027–2028, inspection volumes plateau and the 50x multiple rapidly compresses to 20–22x. ' +
-      'China exposure (mid/high-20% of revenue) adds geopolitical risk; tariffs + DRAM cost headwinds pressure 2026 GM by ~1–2pp. ' +
-      'KLA has $6.5B debt — manageable at 0.25x net debt/EBITDA, but limits buyback capacity in a downturn. ' +
-      'Even a normal mid-cycle pause (not a crash) delivers double-digit losses from the current 50x entry.',
-    "KLAC's process control monopoly is real — yield management is the last thing fabs cut. The data/analytics/uptime 'network effect' " +
-      'creates genuine switching costs beyond just hardware. Process control intensity rises on leading-edge, HBM, and advanced packaging. ' +
-      'Revenue CAGR ~13.6% supported by WFE growing to mid-$130B in 2026 (Memory 15–20%, Foundry/Logic 10–15%). ' +
-      'EPS outgrows revenue at ~14–16% via operating leverage + buybacks. GM ~62% targeting 63%+ long-term, EBIT ~43%, ROE >100%. ' +
-      'But the market prices this trajectory: forward P/E compresses from 41x (FY26) to 28x (FY30). ' +
-      'Returns limited by multiple compression. Expected total return ~8–10% CAGR, P(15%+) ~20%. For 12% CAGR, entry below $120 needed.',
-    'AI capex extends beyond 2028: HBM intensity (less redundancy, more metallization, EUV layers), advanced packaging ' +
-      '(facility-constrained per call — demand > supply), and 2nm/below create entirely new inspection TAM. ' +
-      'Share gains confirmed in reticle, e-beam, AP, and BBP. Service business targets upper end of 12–14% growth. ' +
-      'EPS compounds at 22% — the highest realistic scenario for a semicap equipment leader. ' +
-      "At 40x exit the stock delivers 17–18% CAGR. Key requirements: the cycle doesn't break AND the premium multiple holds. " +
-      'For 15%+ CAGR at current price, you need EPS CAGR ≥25% — aggressive even for the bull case.',
+    'The main risk is cycle, not competition. Semicap equipment follows classic 2-3 year capex cycles, and a sold-out backlog with a sharply raised WFE outlook is a classic peak-cycle signal. ' +
+      'China remains a large share of revenue and export rules can tighten without warning. From a mid-30s forward multiple, even a normal mid-cycle pause produces meaningful multiple compression.',
+    "KLAC's process control franchise is real — yield management is the last thing fabs cut. The data/analytics/uptime network effect creates switching costs beyond hardware. " +
+      'Process-control intensity rises on leading-edge logic, HBM and advanced packaging. EPS outgrows revenue via operating leverage and buybacks, but the market already prices much of the trajectory.',
+    'AI capex extends beyond 2028: HBM intensity, advanced packaging and 2nm-and-below nodes create new inspection TAM, and share gains continue in reticle, e-beam and packaging. ' +
+      "Key requirements: the cycle doesn't break AND the premium multiple holds.",
   ],
 
   ebitdaProxy: [0.40, 0.47, 0.55],
@@ -108,4 +100,11 @@ export const KLAC = defineStock({
   ],
 
   updatedOn: '10/09',
+
+  debtSafety: {
+    netDebt: 1250,         // Oct 2026: ~$6.15B debt − ~$4.90B cash (stockanalysis)
+    ebitda: 6050,          // TTM EBITDA
+    fy: 'FY26',
+    note: 'GREEN (~0.2×). Modest net debt against strong, high-margin cash flow.',
+  },
 });

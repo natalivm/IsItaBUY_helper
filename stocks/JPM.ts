@@ -7,20 +7,32 @@ export const JPM = defineStock({
   sector: 'Diversified Banking',
   themeColor: '#065f46',
   currentPrice: 332.99,
-  fairPriceRange: '$250 - $555',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$305 - $420',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 2674,
-  rev25: 182400,
+  rev25: 182450,       // FY2025A; revGrowth[0] = FY26 (consensus $208.5B, +14% incl. Visa/equity gains), FY27E $214.5B
   fcfMargin25: 0.30,
   taxRate: 0.21,
   cash: 30000,
   debt: 400000,
   beta: 1.10,
   costDebt: 0.045,
-  baseEps: 21.9,
+  baseEps: 22.6,       // FY26E EPS ex-significant items: consensus $24.13 less ~$1.56 Q2 Visa/equity-investment gains. FY27E $25.12 (+11% on this base). Prior: $21.9.
   modelType: 'EPS_PE',
-  rsRating: 59,
+  rsRating: 86,        // IBD RS per user, 10/11/2026 (was 59)
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
+  // Q2 2026 UPDATE (Jul 14, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Reported net income $21.2B / EPS $7.70 incl. a $4.6B Visa-share gain and
+  // $1.0B equity-investment gains; ex-items $16.9B / $6.14, ROTCE 23%.
+  // Revenue $57.3B (+28% reported), NII $25.5B (+10%). FY26 NII guide
+  // raised; adj. expense outlook up ~$2.5B to ~$107.5B. Dividend raised to
+  // $1.65/qtr. CET1 14.1%. Street: Buy (25; 12 Hold), PT $305-420 (median
+  // $371); FY26E EPS $24.13 (incl. gains), FY27E $25.12. Stock $332.99
+  // (~14.7× underlying FY26E). Q3 2026 reports ~Oct 14.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Best-in-class banking franchise with a structurally larger markets wallet post-COVID and a dominant payments network',
     'Through-cycle ROTCE consistency provides reliable EPS compounding regardless of short-term rate environment',
@@ -37,11 +49,11 @@ export const JPM = defineStock({
     'Late-cycle private credit stress could spread beyond the segment, creating incremental credit losses across the portfolio',
   ],
 
-  analystConsensus: { rating: 'Buy', targetLow: 220, targetMedian: 300, targetHigh: 380, numAnalysts: 20 },
+  analystConsensus: { rating: 'Buy', targetLow: 305, targetMedian: 371, targetHigh: 420, numAnalysts: 25 },  // stockanalysis.com (Oct 8 2026)
   revGrowth: [
-    [0.03, 0.02, 0.02, 0.01, 0.01],
-    [0.05, 0.05, 0.04, 0.04, 0.03],
-    [0.08, 0.07, 0.06, 0.05, 0.05],
+    [0.10, 0.00, 0.01, 0.01, 0.01],   // FY26 inflated by one-time gains in all scenarios
+    [0.12, 0.03, 0.04, 0.04, 0.03],
+    [0.14, 0.05, 0.06, 0.05, 0.05],
   ],
   fcfMargin: [
     [0.25, 0.24, 0.23, 0.22, 0.21],
@@ -50,17 +62,12 @@ export const JPM = defineStock({
   ],
   exitMultiple: [8, 11, 14],
   desc: [
-    'Rates fall, credit cycle turns (private credit stress spreads broader), markets revenue declines. ' +
-      'Through-cycle ROTCE drops below 17%. EPS CAGR ~3%, EPS 2031 ~$25, exit P/E 10x. Target ~$250. Return ~-3% CAGR. ' +
-      'Dimon warning materialized: high asset prices + late-cycle stress compress earnings and multiple simultaneously.',
-    'Through-cycle ROTCE holds at ~17% as confirmed by CFO. EPS CAGR ~8% from mid-single-digit revenue growth, ' +
-      'stable ~30% margins, buyback boost ~3%. Markets wallet structurally larger but M&A/IPO cycles normalize, not boom. ' +
-      'AI delivers margin support (~40% cost reduction in select ops) but no revenue uplift. ' +
-      'EPS 2031 ~$32, exit P/E 13x. Target ~$416. Total return ~10-11% (7.5% price + dividends). Solid but below 15%.',
-    'Simultaneous M&A boom + IPO cycle + elevated volatility + private credit expansion + aggressive buybacks. ' +
-      'Sponsor exit pipeline ($40-50B organic capital deployment) fully activates. Markets revenue stays structurally elevated. ' +
-      'EPS CAGR ~11%, EPS 2031 ~$37, exit P/E 15x. Target ~$555. Return ~14% CAGR. ' +
-      'Requires sustained macro tailwinds — cycle peak scenario, not new normal.',
+    'Rates fall, the credit cycle turns (private credit stress spreads broader) and markets revenue declines. Through-cycle ROTCE drops below 17%. ' +
+      'EPS compounds only ~3% from the underlying FY26E $22.60 and the P/E settles at 10x — Dimon\'s warning on high asset prices and late-cycle stress materializes. 5yr target {target} ({cagr} annualized), before dividends.',
+    'Through-cycle ROTCE holds near 17-20%. EPS compounds ~8% on mid-single-digit revenue growth, stable margins and a ~3% buyback boost; markets wallet stays structurally larger but M&A/IPO cycles normalize. ' +
+      'AI delivers cost support but no revenue uplift. Exit P/E 13x. 5yr target {target} ({cagr} annualized), plus a ~2% dividend yield.',
+    'Simultaneous M&A boom, IPO cycle, elevated volatility, private credit expansion and aggressive buybacks; markets revenue stays structurally elevated. ' +
+      'EPS compounds ~11% and the P/E holds 15x. 5yr target {target} ({cagr} annualized). Requires sustained macro tailwinds — a cycle-peak scenario, not a new normal.',
   ],
 
   epsCagr: [3, 8, 11],
@@ -74,6 +81,6 @@ export const JPM = defineStock({
     ebitda: 65000,
     capexToOcf: 0.03,
     fy: 'FY25',
-    note: 'Standard Net Debt/EBITDA framework does not apply to banks — JPM funds ~$3.9T in assets via deposits and wholesale funding, which is operational leverage by design, not financial distress. Real safety metric is CET1 capital ratio (~15.4%), well above the 11.5% regulatory minimum. Panel shown for context only.',
+    note: 'Standard Net Debt/EBITDA framework does not apply to banks — JPM funds ~$4T in assets via deposits and wholesale funding, which is operational leverage by design, not financial distress. Real safety metric is CET1 capital ratio (14.1% at Q2 2026), well above the regulatory minimum. Panel shown for context only.',
   },
 });
