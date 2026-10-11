@@ -22,8 +22,8 @@ export const STRL = defineStock({
   modelType: 'EPS_PE',
   baseEps: 20.04,              // FY26E adj. EPS consensus (raised guide implies +84% at midpoint; FY25A $10.88; FY27E $25.41 +27%). Prior $10.95 was FY25A.
 
-  rsRating: 96,                 // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'rising',
+  rsRating: 77,                 // IBD RS per user, 10/11/2026 (was 96)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',        // Data centers + semiconductor campuses drive E-Infrastructure; CEC adds turnkey electrical
   // Q2 2026 UPDATE (Aug 3, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

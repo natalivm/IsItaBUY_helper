@@ -22,8 +22,8 @@ export const PAAS = defineStock({
   modelType: 'EPS_PE',
   baseEps: 3.67,      // FY26E adj. EPS consensus (Sep 18 2026; range $3.16-5.14; FY25A ~$2.54, FY27E $4.75). Prior $3.89.
 
-  rsRating: 54,       // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 78,       // IBD RS per user, 10/11/2026 (was 54)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Aug 12, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -44,7 +44,7 @@ export const PAAS = defineStock({
 
   risksToBuy: [
     'No hedging means operating leverage works brutally in reverse if silver corrects even moderately from highs',
-    'Commodity stocks with RS at extreme levels frequently precede volatile mean-reverting phases',
+    'Strong momentum in commodity stocks frequently precedes volatile mean-reverting phases',
     'Escobal restart depends on Guatemalan regulatory and community approvals entirely outside management control',
     'No pricing power, no moat, no recurring revenue — the entire thesis rests on macro metal prices staying elevated',
     'A silver price correction to prior-cycle norms could cut the stock roughly in half from current levels',

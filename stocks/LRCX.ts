@@ -20,8 +20,8 @@ export const LRCX = defineStock({
   costDebt: 0.035,
   modelType: 'EPS_PE',
   baseEps: 9.47,           // FY27E (Jun 2027) non-GAAP EPS consensus (range $8.44-10.82; FY26A $5.82, FY28E $11.76 +24%)
-  rsRating: 96,            // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'rising',
+  rsRating: 92,            // IBD RS per user, 10/11/2026 (was 96)
+  rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   // Q4 FY26 UPDATE (Jul 29, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

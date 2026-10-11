@@ -20,8 +20,8 @@ export const ENVA = defineStock({
   costDebt: 0.082,      // Q1 2026 cost of funds 8.2% (down from 8.3% Q4 2025)
   modelType: 'EPS_PE',
   baseEps: 17.27,       // FY26E adj. EPS consensus (Oct 7 2026; range $16.99-17.47; FY27E $20.96 +21%). Q2 adj. EPS $4.31 (+33%). Prior $11.52 (stale FY25-era figure). EPS_PE because DCF is distorted by securitization funding debt.
-  rsRating: 91,         // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'rising',
+  rsRating: 79,         // IBD RS per user, 10/11/2026 (was 91)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 23, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

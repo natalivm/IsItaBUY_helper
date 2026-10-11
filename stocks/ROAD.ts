@@ -22,7 +22,7 @@ export const ROAD = defineStock({
   modelType: 'EPS_PE',
   baseEps: 3.10,               // FY26E (Sep 2026) adj. EPS consensus (range $2.93-3.20; FY25A $2.20; FY27E $3.82 +23%). Prior $2.21 was FY25.
 
-  rsRating: 52,                // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 51,                // IBD RS per user, 10/11/2026 (was 52)
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',
   // Q3 FY26 UPDATE (Aug 7, 2026) — first data review

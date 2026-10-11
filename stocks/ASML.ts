@@ -18,7 +18,8 @@ export const ASML = defineStock({
   debt: 2260,
   beta: 1.15,
   costDebt: 0.025,
-  rsRating: 94,         // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 94,         // IBD RS per user, 10/11/2026 (was 94)
+  rsTrend: 'flat',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 15, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

@@ -23,7 +23,8 @@ export const SOFI = defineStock({
   // tree's lender rule applies (like ENVA/NU).
   modelType: 'EPS_PE',
   baseEps: 0.59,       // FY26E adj. EPS — guide ~$0.60 (held at Q2), consensus $0.59 (range $0.56-0.63); FY27E $0.82 (+39%)
-  rsRating: 37,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 32,        // IBD RS per user, 10/11/2026 (was 37)
+  rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 29, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

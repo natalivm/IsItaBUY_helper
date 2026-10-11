@@ -18,7 +18,8 @@ export const SPOT = defineStock({
   debt: 532,           // exchangeable notes largely retired
   beta: 1.35,
   costDebt: 0.042,
-  rsRating: 16,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 94,        // IBD RS per user, 10/11/2026 (was 16)
+  rsTrend: 'rising',
   aiImpact: 'DISRUPTION_RISK',
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

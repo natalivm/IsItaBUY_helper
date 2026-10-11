@@ -20,7 +20,8 @@ export const MNST = defineStock({
   debt: 93,
   beta: 0.85,
   costDebt: 0.04,
-  rsRating: 82,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 89,        // IBD RS per user, 10/11/2026 (was 82)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Aug 6, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

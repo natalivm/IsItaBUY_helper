@@ -20,7 +20,7 @@ export const TLN = defineStock({
   costDebt: 0.07,
   modelType: 'EPS_PE',
   baseEps: 26.6,    // FY26 adj. FCF/share: guide $1.20-1.35B (raised at Q2) / ~47.9M shares. Mgmt targets ~$37 (FY27) and ~$48 (FY28) FCF/share. Street FY26E adj. EPS $22.26. Prior $10.50 was pre-ECP/Cornerstone. GAAP is distorted by hedging marks.
-  rsRating: 72,     // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 52,     // IBD RS per user, 10/11/2026 (was 72)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Aug 5, 2026) — first data review
