@@ -17,8 +17,8 @@ export const RTX = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 7.25,       // FY26E adj. EPS consensus (guide $7.10-7.25 raised at Q2; FY27E $7.87 +8.5%). Prior $5.41 was stale.
-  rsRating: 43,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 59,        // IBD RS per user, 10/11/2026 (was 43)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // ratingOverride 'BUY' removed Oct 2026: it was a cap that "matched the model"; re-based to FY26E EPS (~26× today) the model reads HOLD, consistent with the "capital-preservation compounder" narrative.
   updatedOn: '10/09',

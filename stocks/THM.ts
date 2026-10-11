@@ -19,7 +19,7 @@ export const THM = defineStock({
   beta: 0.71,
   costDebt: 0.05,
 
-  rsRating: 59,       // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 44,       // IBD RS per user, 10/11/2026 (was 59)
   rsTrend: 'falling',
   ratingOverride: 'HOLD',  // Added Oct 2026: pre-revenue, pre-feasibility explorer where the "DCF" is a gold-price option proxy — model STRONG BUY is not underwritable. Pinned HOLD like other pre-profit speculative names (ASTS, RKLB, ONDS).
   aiImpact: 'NEUTRAL',

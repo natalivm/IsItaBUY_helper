@@ -23,7 +23,8 @@ export const SMCI = defineStock({
   // decision tree's thin-FCF / working-capital rule applies — like CLS/FLEX.
   modelType: 'EPS_PE',
   baseEps: 4.34,       // FY27E (Jun 2027) non-GAAP EPS consensus (range $3.50-5.13; FY26A $3.63, FY28E $5.33). Q1 FY27 guide $1.01-1.10.
-  rsRating: 19,        // NOT refreshed — awaiting user RS (10/11/2026)
+  rsRating: 97,        // IBD RS per user, 10/11/2026 (was 19)
+  rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // Q4 FY26 UPDATE (Aug 11, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────

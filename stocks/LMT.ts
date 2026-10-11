@@ -18,8 +18,8 @@ export const LMT = defineStock({
   debt: 20540,
   beta: 0.52,
   costDebt: 0.045,
-  rsRating: 38,        // NOT refreshed — awaiting user RS (10/11/2026)
-  rsTrend: 'falling',
+  rsRating: 51,        // IBD RS per user, 10/11/2026 (was 38)
+  rsTrend: 'rising',
   // ratingOverride removed Oct 2026: re-based to FY26E EPS the model itself reads HOLD (base CAGR ~6%), matching the narrative.
   aiImpact: 'NEUTRAL',
   // Q2 2026 UPDATE (Jul 23, 2026) — first data review
@@ -35,8 +35,8 @@ export const LMT = defineStock({
 
   verdictNarrative:
     "Lockheed Martin currently looks materially more attractive on a risk-adjusted basis than many speculative defense names that have rallied over the past year. Unlike KRMN or ONDS, the valuation is supported by enormous existing cash flows, entrenched defense programs, and decades-long government relationships. The company also benefits from some of the strongest geopolitical tailwinds in the industrial sector — NATO spending acceleration, Indo-Pacific buildup, and sustained US missile defense investment. " +
-    "The fundamental case is solid — a record $230B backlog anchored by the THAAD multiyear award, ~$7B of FCF, low beta and Pristine SBC — and Q2 2026 brought a beat-and-raise. But at ~17x earnings with mid-to-high single-digit EPS growth, the expected return is modest, and relative strength has been weak as capital rotates into faster-growing defense-tech names. " +
-    "HOLD. The valuation is reasonable and the geopolitical tailwinds are real, but wait for momentum to confirm. Upgrade trigger: RS recovering above 50 alongside continued guidance raises.",
+    "The fundamental case is solid — a record $230B backlog anchored by the THAAD multiyear award, ~$7B of FCF, low beta and Pristine SBC — and Q2 2026 brought a beat-and-raise. But at ~17x earnings with mid-to-high single-digit EPS growth, the expected return is modest, and relative strength has only just recovered into the low 50s after a long stretch of weakness as capital rotated into faster-growing defense-tech names. " +
+    "HOLD. The valuation is reasonable, the geopolitical tailwinds are real and momentum is turning, but the model's ~6% base-case return keeps this a HOLD. Upgrade trigger: RS sustaining above 50 plus a higher earnings trajectory (e.g. FY27 guidance well above consensus).",
 
   reasonsToBuy: [
     'Dominant defense prime with unmatched entrenchment across F-35, missile defense, and classified programs',
