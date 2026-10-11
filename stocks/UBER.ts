@@ -2,47 +2,58 @@ import { defineStock } from './defineStock';
 
 export const UBER = defineStock({
   updatedOn: '10/09',
-  lastReportTag: 'Q1 FY26',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
   ticker: 'UBER',
   name: 'Uber Technologies',
   sector: 'Mobility & Delivery Platform',
   themeColor: '#22c55e',
   currentPrice: 71.51,
-  fairPriceRange: '$45 - $200',
-  shares0: 2080,           // ~2.08B diluted shares post Q1 FY26 $3B buyback
-  rev25: 52000,            // FY2025 actual revenue $52.0B (+18% YoY)
-  fcfMargin25: 0.19,       // FY2025 FCF $9.8B / $52.0B rev = 18.8%
+  fairPriceRange: '$70 - $150',  // stockanalysis.com analyst target range (Oct 7 2026)
+  shares0: 2040,           // 2.04B (stockanalysis, Oct 2026) — buybacks continue
+  rev25: 52020,            // FY2025 actual $52.0B; revGrowth[0] = FY26 (consensus $57.9B, +11% — business-model changes cut ~8pts vs GB growth), FY27E $66.8B (+15%)
+  fcfMargin25: 0.19,       // FY2025 FCF $9.8B / $52.0B rev = 18.8% (TTM Q2 2026 FCF $10.1B)
   taxRate: 0.21,
-  cash: 7100,              // ~$7.6B end FY2025 less net Q1 FY26 cash usage
-  debt: 9500,
+  cash: 9990,              // Jun 2026: cash + ST investments (net debt $4.74B per stockanalysis)
+  debt: 14730,
   beta: 1.35,
   costDebt: 0.065,
-  rsRating: 22,
+  rsRating: 22,            // NOT refreshed — awaiting user RS (10/11/2026)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Aug 5, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Gross bookings $58.0B (+24%, +22% cc), trips 3.9B (+18%), revenue $14.2B
+  // (+12%; business-model changes cut ~8pts), adj. EBITDA $2.8B (+33%),
+  // non-GAAP EPS $0.81 (+35%), FCF $2.8B — TTM FCF >$10B for the first time.
+  // Q3 GUIDE: GB $58.25-60.25B (+18-22% cc), EPS $0.84-0.88, adj. EBITDA
+  // $2.86-2.96B — slightly below consensus. Street: Buy (50), PT $70-150
+  // (median $100.50); FY26E rev $57.9B / EPS $3.36, FY27E $66.8B / $4.42.
+  // Stock $71.51 (~14× TTM FCF), down ~28% over 52 weeks on AV fears.
+  // ─────────────────────────────────────────────────────────────────────────
 
   reasonsToBuy: [
     'Uber One\'s loyalty ecosystem drives member spend multiples above non-members with rising retention',
     'Insurance savings are flowing through to lower prices and already accelerating trip growth in key markets',
     'AV partnerships make Uber the aggregator beneficiary of autonomous vehicles rather than their victim',
     'Suburban and sparse-market expansion adds a fast-growing second engine beyond the mature urban core',
-    'FCF yield at current prices is exceptional for a platform compounding gross bookings at twenty-plus percent',
+    'Free cash flow now exceeds ten billion a year, and the yield at current prices is exceptional for a platform still growing bookings above twenty percent',
   ],
 
   risksToBuy: [
-    'RS rating in the low twenties signals aggressive institutional distribution that must reverse first',
+    'Reported revenue is growing much slower than bookings, and near-term guidance has started to land below expectations',
     'AV players like Waymo could bypass the aggregator model with direct consumer apps at scale',
     'Personal AI agents could abstract away the Uber app through direct API integrations with rivals',
     'UK tax-law-style regulatory changes could structurally suppress revenue growth vs gross bookings globally',
     'Elevated AI and headcount spend could compress margins during any revenue growth deceleration',
   ],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 70, targetMedian: 104, targetHigh: 150, numAnalysts: 45 },
+  analystConsensus: { rating: 'Buy', targetLow: 70, targetMedian: 100.5, targetHigh: 150, numAnalysts: 50 },  // stockanalysis.com (Oct 7 2026)
 
   revGrowth: [
-    [0.07, 0.06, 0.06, 0.05, 0.05],   // Bear: AV disruption + competition limits growth
-    [0.14, 0.12, 0.11, 0.10, 0.09],   // Base: Q1 FY26 trajectory sustains, insurance tailwind
-    [0.18, 0.16, 0.14, 0.13, 0.12],   // Bull: Uber One + hotels + AV leverage + suburban
+    [0.10, 0.07, 0.06, 0.05, 0.05],   // Bear: AV disruption + competition limits growth
+    [0.11, 0.14, 0.12, 0.10, 0.09],   // Base: FY26 ≈ $57.9B consensus, FY27 slight haircut vs +15%, insurance tailwind
+    [0.12, 0.17, 0.15, 0.13, 0.12],   // Bull: Uber One + hotels + AV leverage + suburban
   ],
 
   fcfMargin: [
@@ -54,32 +65,21 @@ export const UBER = defineStock({
   exitMultiple: [11, 15, 17],
 
   desc: [
-    'AV disruption materializes: Waymo and Tesla Robotaxi capture 15-20% trip share in top-10 cities by 2028. Personal AI agents abstract away app usage, eroding retention. ' +
-      'Uber One growth stalls at 60M as benefit value proposition weakens. Revenue growth decelerates to 5-7%; FCF margins compress as Uber invests to defend position. ' +
-      'Insurance savings partially offset by re-investment, yield shrinks. Market reprices at 11× EBITDA. 5-yr target: ~$43 (-39% from $70), roughly -9% annualized.',
-    'Q1 FY26 trajectory sustains. Insurance savings ($200-400M annually) passed to consumers → trip growth holds at 20%+. Uber One scales to 70M members; cross-platform Delivery adoption drives incremental frequency. ' +
-      'AV adds trips rather than cannibalizes — utilization premium on Uber\'s network keeps AV partners committed. Revenue compounds at ~11% annually; FCF margin holds at ~18-19% with AI spend offset by headcount discipline. ' +
-      '5-yr target: ~$104 (+48% from $70), roughly +8% annualized — consistent with analyst consensus median.',
-    'Insurance savings deliver $500M+ annually, driving sustained U.S. Mobility acceleration. Suburban expansion creates a durable second growth leg; sparse market trips compound at 25%+ for 3+ years. ' +
-      'Hotels + travel reaches $10B+ annual gross bookings by FY2030 (Uber Reserve trajectory extrapolated). Uber One hits 100M+ members; cross-platform usage crosses 50% of gross bookings. ' +
-      'AV partner network (30→100+ partners) delivers incremental high-margin trips at near-zero variable cost by FY2029. FCF margins expand to 25-26% on operating leverage. ' +
-      '5-yr target: ~$198 (+181% from $70), roughly +23% annualized.',
+    'AV disruption materializes: Waymo and Tesla Robotaxi capture a meaningful share of trips in top cities by 2028, and personal AI agents abstract away app usage, eroding retention. ' +
+      'Revenue growth decelerates to mid-single digits; FCF margins compress as Uber invests to defend position. Market reprices at 11× EBITDA. 5-yr target {target} ({cagr} annualized).',
+    'The Q2 2026 trajectory sustains: bookings grow ~20% with trips +18%, insurance savings keep driving U.S. mobility elasticity, and Uber One deepens cross-platform frequency. ' +
+      'AV adds trips rather than cannibalizing them. Revenue compounds at ~11% annually; FCF margin holds near ~18%. 5-yr target {target} ({cagr} annualized).',
+    'Insurance savings, suburban expansion and hotels/travel create durable new growth legs; Uber One becomes the default membership for on-demand services. ' +
+      'The AV partner network delivers high-utilization trips at structurally better margins, and FCF margins expand to the mid-20s. 5-yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'Bear mechanics: AV tech improves faster than expected; Waymo price cuts draw price-sensitive segments. Tesla Robotaxi launch at scale in 3-5 key markets erodes Uber\'s driver supply economics. ' +
-      'Personal AI agents (Apple Siri, OpenAI Operator, Google Gemini) get deep integrations with direct booking APIs from Lyft or DoorDash, bypassing Uber\'s app. ' +
-      'UK tax model change spreads to other jurisdictions, structurally suppressing revenue growth vs gross bookings. ' +
-      'AI spend increase (CFO disclosed re-upped budget) + headcount pressure = margin compression during a revenue growth slowdown. Multiple contracts from 17x to 11x EBITDA on lower growth expectations.',
-    'Q1 FY26 shows the base case is already executing. Data points: Trips +20%, Gross Bookings +21% CC, Non-GAAP EPS +44%, record $3B buyback in a single quarter. ' +
-      'Insurance savings explicitly quantified ("hundreds of millions this year") and already flowing: L.A. trip growth accelerating, California market outperforming rest of U.S. ' +
-      'Uber One (+50% YoY to 50M) creates a structural retention moat: >50% of bookings, 3x spend per member. This is not promotional spend — it\'s genuine ecosystem lock-in. ' +
-      'AV is additive not subtractive: in every Waymo-active market, Uber\'s category position has held or improved. The 10x YoY growth in AV trips on Uber\'s network validates the aggregator model. ' +
-      'FCF $9.8B (+42%) on $52B revenue = 18.8% margin at scale. At $70, market cap $148B = 15x FCF. This is cheap for a 20%+ gross bookings growth platform.',
-    'Bull case is an operating leverage story with three accelerants: (1) Insurance: every $100M in annual insurance savings that passes through to lower prices drives measurable elasticity — L.A. is the proof point, now scaling nationally. ' +
-      '(2) Uber One network effects: hotels → more members → more bookings → more partners → better inventory. Reserve and hotels prove Uber can own planned travel, not just on-demand. ' +
-      '(3) AV platform: Uber\'s 30+ partner strategy vs Waymo\'s 1P model is defensible at scale. AV trips have higher utilization, higher take rates, and near-zero driver marginal cost. By FY2028-2030, AV trip share on Uber\'s network could be 15-20% of trips at structurally higher margins. ' +
-      'FCF expands to 25%+ margins (from 19% today) without multiple expansion needed: at 17x EBITDA and $198B FCF in FY2030, target price exceeds $200. Santan Hertz Hertz + Santander financing ecosystem makes AV scaling capital-light for Uber.',
+    'Bear mechanics: AV tech improves faster than expected; Waymo price cuts draw price-sensitive segments and Tesla Robotaxi scales in key markets, eroding Uber\'s driver-supply economics. ' +
+      'Personal AI agents integrate directly with rivals\' booking APIs. Regulatory changes keep suppressing revenue vs gross bookings, and AI spend compresses margins during a slowdown. Multiple contracts to ~11x EBITDA.',
+    'Q2 2026 shows the base case executing: bookings +24%, trips +18%, adj. EBITDA +33%, non-GAAP EPS +35%, and TTM FCF above $10B for the first time. ' +
+      'Uber One creates a structural retention moat, and AV has been additive in every Waymo-active market so far. At ~14x FCF the stock is cheap for a 20%+ bookings-growth platform — the debate is purely about AV disruption.',
+    'Bull case is an operating-leverage story with three accelerants: insurance pass-through driving trip elasticity, Uber One network effects extending into planned travel, and a multi-partner AV platform with near-zero driver cost. ' +
+      'FCF margins expand into the mid-20s without needing multiple expansion.',
   ],
 
   termGrowth: [0.015, 0.025, 0.030],
@@ -99,9 +99,9 @@ export const UBER = defineStock({
   },
 
   debtSafety: {
-    netDebt: 2400,
-    ebitda: 8700,
-    fy: 'FY25',
-    note: 'Net debt ~$2.4B (gross debt $9.5B − cash $7.1B). FY2025 adj. EBITDA $8.7B → leverage 0.27×. GREEN — effectively unlevered platform with $9.8B FCF. The $3B Q1 FY26 buyback reduced cash buffer but leverage remains minimal.',
+    netDebt: 4740,         // Jun 2026 (stockanalysis): gross debt $14.7B − cash/investments ~$10.0B
+    ebitda: 10800,         // TTM adj. EBITDA (~$2.8B/qtr run-rate; GAAP TTM EBITDA $7.5B)
+    fy: 'TTM Q2 2026',
+    note: 'GREEN (~0.4× adj. EBITDA, ~0.6× GAAP). Debt rose with buybacks, but a >$10B FCF platform is effectively unlevered.',
   },
 });
