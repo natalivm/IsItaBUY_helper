@@ -22,7 +22,7 @@ export const GLW = defineStock({
   // non-cash MTM on translated-earnings hedges, and the plan is framed in core EPS.
   modelType: 'EPS_PE',
   baseEps: 3.29,       // FY2026E core EPS — stockanalysis consensus (Oct 9 2026; FY27E $4.37, +33%). H1 core EPS ~$1.48 (Q2 $0.78, +30%); Q3 guide $0.85-0.89. FY25 core EPS $2.52.
-  rsRating: 55,        // estimated (finviz Oct 12): +76% 1y but −22% last quarter, −46% off the $272 high; confirm with IBD
+  rsRating: 78,        // IBD RS per user, 10/12/2026
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q2 2026 UPDATE (Jul 28, 2026) — initial coverage
