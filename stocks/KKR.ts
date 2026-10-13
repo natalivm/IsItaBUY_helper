@@ -6,7 +6,7 @@ export const KKR = defineStock({
   name: 'KKR & Co. Inc.',
   sector: 'Alternative Asset Mgmt',
   themeColor: '#7c3aed',
-  currentPrice: 91.51,
+  currentPrice: 87.16,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$97 - $166',  // stockanalysis.com analyst target range (Oct 8 2026)

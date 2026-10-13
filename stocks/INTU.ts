@@ -5,7 +5,7 @@ export const INTU = defineStock({
   name: 'Intuit Inc.',
   sector: 'Software / SMB Finance & Tax',
   themeColor: '#0077c5',
-  currentPrice: 305.99,
+  currentPrice: 301.45,
   fairPriceRange: '$290 - $732',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 272,        // Q4 FY26 diluted 272M (FY avg 277M, -2% y/y)
   rev25: 21400,        // FY26A (Jul 2026) $21.4B (+14%) — base year; revGrowth[0] = FY27 (guide $23.28-23.51B, +9-10%)

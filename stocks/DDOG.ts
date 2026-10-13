@@ -5,7 +5,7 @@ export const DDOG = defineStock({
   name: 'Datadog',
   sector: 'Observability / Cloud Monitoring',
   themeColor: '#632CA6',
-  currentPrice: 287.29,
+  currentPrice: 283.34,
   fairPriceRange: '$120 - $270',
   shares0: 376,        // FY26 guide (Q2 2026 update): ~376M weighted-avg diluted shares
   rev25: 3427,

@@ -8,7 +8,7 @@ export const ALAB = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 324.11,
+  currentPrice: 325.41,
   fairPriceRange: '$190 - $500',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 185,        // Q3 2026 guide ~185M diluted (Q2 183.3M)
   rev25: 852.5,        // FY2025 revenue $852.5M (was mis-set to $1,345M); FY26E consensus $1.91B (+124%), FY27E $2.97B

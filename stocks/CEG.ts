@@ -8,7 +8,7 @@ export const CEG = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 293.89,
+  currentPrice: 295.79,
   fairPriceRange: '$290 - $395',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 358,
   rev25: 25200,        // FY2025; FY26E consensus $35.5B (+41% with Calpine), FY27E $36.7B

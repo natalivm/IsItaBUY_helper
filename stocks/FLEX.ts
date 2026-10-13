@@ -5,7 +5,7 @@ export const FLEX = defineStock({
   name: 'Flex Ltd.',
   sector: 'Electronics Manufacturing Services (EMS)',
   themeColor: '#0072CE',
-  currentPrice: 117.24,
+  currentPrice: 110.88,
   updatedOn: '10/13',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-10-10',

@@ -6,7 +6,7 @@ export const TLN = defineStock({
   sector: 'Power',
   themeColor: '#3b82f6',
   updatedOn: '10/13',
-  currentPrice: 379.77,
+  currentPrice: 382.14,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$307 - $560',  // stockanalysis.com analyst target range (Sep 30 2026)

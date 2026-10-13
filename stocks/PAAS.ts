@@ -6,7 +6,7 @@ export const PAAS = defineStock({
   name: 'Pan American Silver Corp',
   sector: 'Precious Metals Mining · Silver & Gold',
   themeColor: '#94A3B8',
-  currentPrice: 45.71,
+  currentPrice: 44.53,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$51 - $94',  // stockanalysis.com analyst target range (Sep 18 2026)

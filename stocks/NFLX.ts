@@ -8,7 +8,7 @@ export const NFLX = defineStock({
   name: 'Netflix',
   sector: 'Entertainment',
   themeColor: '#ff007f',
-  currentPrice: 70.61,
+  currentPrice: 70.46,
   fairPriceRange: '$57 - $135',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 4222.0,
   rev25: 45180,

@@ -8,7 +8,7 @@ export const BKNG = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
-  currentPrice: 158.43,
+  currentPrice: 157.51,
   fairPriceRange: '$170 - $301',  // stockanalysis.com analyst target range (Oct 7 2026)
   // 25-for-1 forward split effective 04/06/2026; 751.4M shares Oct 2026 after buybacks
   shares0: 751.4,

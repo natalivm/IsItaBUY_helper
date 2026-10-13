@@ -5,7 +5,7 @@ export const AXON = defineStock({
   name: 'Axon Enterprise',
   sector: 'Public Safety Tech / Government Platform',
   themeColor: '#FFC72C',
-  currentPrice: 414.43,
+  currentPrice: 413.35,
   fairPriceRange: '$440 - $830',  // stockanalysis.com analyst target range (Sep 29 2026)
   shares0: 81.24,        // stockanalysis (Oct 2026)
   rev25: 3700,           // FY2026E base year: guide raised to +32-34% on $2.78B FY25 (consensus $3.70B); revGrowth[0] = FY27 (consensus $4.79B, +29%)

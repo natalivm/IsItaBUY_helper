@@ -5,7 +5,7 @@ export const SNPS = defineStock({
   name: 'Synopsys',
   sector: 'EDA Software / Chip Design',
   themeColor: '#7b2cbf',
-  currentPrice: 502.51,
+  currentPrice: 494.51,
   fairPriceRange: '$415 - $700',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 192,
   rev25: 7054,         // FY2025; FY26 guide midpoint $9.715B (+38% incl. Ansys), FY27E consensus $11.03B (+13.5%)

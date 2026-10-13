@@ -8,7 +8,7 @@ export const CRDO = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 200.84,
+  currentPrice: 198.31,
   fairPriceRange: '$185 - $315',  // stockanalysis.com analyst target range, Oct 5 2026
   shares0: 197,        // Q1 FY27 diluted (~$236M non-GAAP NI / $1.20)
   rev25: 1311,         // FY26A (Apr 2026) ≈ $1.31B (approx.) — base year; revGrowth[0] = FY27 (consensus $2.50B, FY28E $3.87B)

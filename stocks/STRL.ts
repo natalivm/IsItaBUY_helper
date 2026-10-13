@@ -8,7 +8,7 @@ export const STRL = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
-  currentPrice: 501.19,
+  currentPrice: 498.61,
   fairPriceRange: '$700 - $1,000',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 30.59,              // stockanalysis (Oct 2026)
   rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (raised guide implies ~+64%; consensus $4.12B incl. Stone Ridge), FY27E $4.93B (+20%)

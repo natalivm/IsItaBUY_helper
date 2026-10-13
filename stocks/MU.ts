@@ -5,7 +5,7 @@ export const MU = defineStock({
   name: 'Micron Technology',
   sector: 'DRAM / NAND Flash Memory',
   themeColor: '#1a73e8',
-  currentPrice: 989.04,
+  currentPrice: 953.19,
   shares0: 1149,       // ≈ Q4 FY26 diluted ($37.7B GAAP NI / $32.87 GAAP EPS)
   rev25: 133190,       // FY26A (FYE ~Aug/Sep 2026) $133.2B — base year; revGrowth[0] = FY27 (consensus $275.2B, FY28E $320.6B)
   fcfMargin25: 0.20,

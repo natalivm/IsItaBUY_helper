@@ -6,7 +6,7 @@ export const SOFI = defineStock({
   name: 'SoFi Technologies',
   sector: 'FinTech / Digital Banking',
   themeColor: '#3b82f6',
-  currentPrice: 15.23,
+  currentPrice: 15.24,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$12 - $30',  // stockanalysis.com analyst target range (Sep 8 2026)

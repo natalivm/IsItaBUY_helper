@@ -6,7 +6,7 @@ export const SMCI = defineStock({
   name: 'Super Micro Computer, Inc.',
   sector: 'AI Infrastructure / Servers',
   themeColor: '#eab308',
-  currentPrice: 39.98,
+  currentPrice: 39.07,
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$15 - $60',  // stockanalysis.com analyst target range (Oct 2026)

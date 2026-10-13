@@ -8,7 +8,7 @@ export const ENVA = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
-  currentPrice: 176.83,
+  currentPrice: 174.99,
   fairPriceRange: '$215 - $285',  // stockanalysis.com analyst target range (Oct 7 2026)
   shares0: 24.7,         // Q1 2026: ~110K shares repurchased; was 24.8M
   rev25: 3200,           // FY2025 net revenue ~$3.2B (Q4'25: $839M × annualized); Q1 2026 was record $875M

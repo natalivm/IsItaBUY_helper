@@ -8,7 +8,7 @@ export const ORCL = defineStock({
   updatedOn: '10/13',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 137.39,
+  currentPrice: 143.2,
   fairPriceRange: '$110 - $400',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 3000,        // Q1 FY27 diluted 3,000M (+3% y/y; $20B ATM equity sale in Q1)
   rev25: 67000,        // FY26A (May 2026) ≈ $67B (approx.) — base year; revGrowth[0] = FY27 (guide ≥$90B; consensus $90.4B, FY28E $131.7B)
