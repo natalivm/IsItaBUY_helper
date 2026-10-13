@@ -5,7 +5,7 @@ export const RVLV = defineStock({
   name: 'Revolve Group, Inc.',
   sector: 'Consumer Discretionary · Fashion E-Commerce',
   themeColor: '#c2185b',
-  currentPrice: 21.69,
+  currentPrice: 21.66,
   fairPriceRange: '$24 - $37',  // stockanalysis.com analyst target range (Oct 6 2026)
   shares0: 71.1,       // 71.09M (stockanalysis, Oct 2026)
   rev25: 1230,         // FY2025A; revGrowth[0] = FY26 (consensus $1.39B, +13%), FY27E $1.51B (+9%)
@@ -35,7 +35,7 @@ export const RVLV = defineStock({
     'Physical retail expansion is unproven at scale and adds execution risk to an already crowded strategy',
   ],
 
-  updatedOn: '10/09',
+  updatedOn: '10/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review

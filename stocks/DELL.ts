@@ -6,7 +6,7 @@ export const DELL = defineStock({
   sector: 'Hardware / AI Infrastructure',
   themeColor: '#007DB8',
 
-  currentPrice: 586.06,
+  currentPrice: 576.76,
   fairPriceRange: '$480 - $735',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 650,
   rev25: 113500,
@@ -20,7 +20,7 @@ export const DELL = defineStock({
   rsRating: 97,         // IBD RS per user, 10/10/2026 (was 92)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '10/09',
+  updatedOn: '10/13',
   lastReportTag: 'Q2 FY27',
   dataReviewedOn: '2026-10-10',
 

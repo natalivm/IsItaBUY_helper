@@ -5,10 +5,10 @@ export const INTC = defineStock({
   name: 'Intel Corporation',
   sector: 'Semiconductors / CPU & Foundry',
   themeColor: '#0071c5',
-  updatedOn: '10/09',
+  updatedOn: '10/13',
   lastReportTag: 'Q2 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 104.7,
+  currentPrice: 101.35,
   fairPriceRange: '$80 - $200',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 5104,          // ~5.10B diluted shares (Q2 FY26)
   rev25: 52500,           // FY2025 revenue ~$52.5B; FY26E consensus $63.1B (+20%), FY27E $72.4B (+15%)

@@ -5,8 +5,8 @@ export const FICO = defineStock({
   name: 'Fair Isaac Corp',
   sector: 'Analytics',
   themeColor: '#2979ff',
-  currentPrice: 667.58,
-  updatedOn: '10/09',
+  currentPrice: 740,
+  updatedOn: '10/13',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
   fairPriceRange: '$490 - $1,750',  // stockanalysis.com analyst target range, Oct 7 2026 (post-FHFA cuts still filtering in; BofA $700)
