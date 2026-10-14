@@ -5,10 +5,10 @@ export const RKLB = defineStock({
   name: 'Rocket Lab USA, Inc.',
   sector: 'Space Launch / Defense Space Infrastructure',
   themeColor: '#a855f7',
-  updatedOn: '10/13',
+  updatedOn: '10/14',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
-  currentPrice: 64.22,
+  currentPrice: 59.18,
   fairPriceRange: '$64 - $150',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 598.5,         // 598.46M (stockanalysis, Oct 2026) — up from 534M via ATM equity sales
   rev25: 602,             // FY2025 actual revenue; revGrowth[0] = FY26 (consensus $961M, +60%), FY27E $1.36B (+41%)

@@ -5,8 +5,8 @@ export const TLN = defineStock({
   name: 'Talen Energy',
   sector: 'Power',
   themeColor: '#3b82f6',
-  updatedOn: '10/13',
-  currentPrice: 382.14,
+  updatedOn: '10/14',
+  currentPrice: 358.42,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$307 - $560',  // stockanalysis.com analyst target range (Sep 30 2026)
