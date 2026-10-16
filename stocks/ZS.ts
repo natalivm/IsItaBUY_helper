@@ -5,7 +5,7 @@ export const ZS = defineStock({
   name: 'Zscaler',
   sector: 'Cybersecurity / Zero Trust',
   themeColor: '#0067D9',
-  currentPrice: 220.43,
+  currentPrice: 207.38,
   fairPriceRange: '$165 - $298',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 173,        // FY27 guide: ~173M non-GAAP diluted shares
   rev25: 3352.5,       // FY26A (FYE Jul 31, 2026) — base year; revGrowth[0] = FY27
@@ -21,7 +21,7 @@ export const ZS = defineStock({
   rsTrend: 'rising',
   ratingOverride: 'HOLD',  // Post-Q4 FY26 the base case sits at ~8.0% CAGR — a hair over the 8% soft-BUY line (TAILWIND/RS boost), so the model flips BUY↔HOLD on ~$1 price moves. HOLD is the real read: stock at the analyst mean target, ~48× FY27E EPS, growth guided down from 25% to ~17%, SBC > FCF. Revisit on a pullback or an FY27 beat-and-raise.
   aiImpact: 'TAILWIND',
-  updatedOn: '10/15',
+  updatedOn: '10/16',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
 

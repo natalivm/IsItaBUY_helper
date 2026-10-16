@@ -5,10 +5,10 @@ export const PLTR = defineStock({
   name: 'Palantir Technologies',
   sector: 'AI / Data Analytics Software',
   themeColor: '#0ea5e9',
-  updatedOn: '10/15',
+  updatedOn: '10/16',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 200.5,
+  currentPrice: 186.03,
   fairPriceRange: '$80 - $265',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 2300,
   rev25: 4480,         // FY2025; FY26 guide $8.150-8.158B (+82%), FY27E consensus $12.31B (+51%)

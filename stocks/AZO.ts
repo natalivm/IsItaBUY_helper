@@ -5,10 +5,10 @@ export const AZO = defineStock({
   name: 'AutoZone',
   sector: 'Specialty Retail',
   themeColor: '#e74c3c',
-  updatedOn: '10/15',
+  updatedOn: '10/16',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 3059.62,
+  currentPrice: 3120.59,
   fairPriceRange: '$3,000 - $4,800',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 16.6,
   rev25: 20340,        // FY26A (Aug 2026) $20.3B (+7.4%) — base year; revGrowth[0] = FY27 (consensus $21.84B, FY28E $23.40B)

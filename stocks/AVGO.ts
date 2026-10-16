@@ -5,10 +5,10 @@ export const AVGO = defineStock({
   name: 'Broadcom Inc.',
   sector: 'Semiconductors / Enterprise Software',
   themeColor: '#7c4dff',
-  updatedOn: '10/15',
+  updatedOn: '10/16',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 344.33,
+  currentPrice: 328.75,
   fairPriceRange: '$216 - $715',  // stockanalysis.com analyst target range, Oct 2 2026
   shares0: 4937,        // Q3 FY26 non-GAAP diluted
   rev25: 105970,       // FY26E (Oct) consensus $105.97B — base year; revGrowth[0] = FY27 (consensus $173.9B, +64%)

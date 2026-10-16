@@ -5,8 +5,8 @@ export const DE = defineStock({
   name: 'Deere & Company',
   sector: 'Machinery',
   themeColor: '#10b981',
-  currentPrice: 650.67,
-  updatedOn: '10/15',
+  currentPrice: 641.86,
+  updatedOn: '10/16',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
   fairPriceRange: '$500 - $813',  // stockanalysis.com analyst target range, Oct 9 2026
