@@ -43,3 +43,26 @@ Andrew Cardwell and Constance Brown described an **RSI range shift**. In uptrend
 - Pine docs — [Other data and timeframes FAQ](https://tradingview.com/pine-script-docs/faq/other-data-and-timeframes)
 - [Pine Script repainting: why it happens](https://crosstrade.io/blog/pine-script-repainting) (its `barstate.isconfirmed ? 0 : 1` security trick is outdated; PineCoders now advise against it)
 - PineCoders [Alerts library](https://www.tradingview.com/script/ukFhL5WK-Alerts/) — gating alerts with `barstate.isconfirmed`
+
+---
+
+## `MACD_MultiTF.pine` — MACD Multi-TF Alerts
+
+Classic MACD (12 / 26 / 9, EMA) in the same style and with the same safeguards as the RSI script (the higher timeframe never repaints, signals fire on closed bars only, one combined `alert()`).
+
+### What's on the pane
+| Element | Meaning |
+|---|---|
+| **Purple line** | MACD (fast EMA − slow EMA) |
+| **Yellow line** | Signal (9-bar EMA of MACD) |
+| **Soft fill between them** | green while MACD > signal, red while below |
+| **Histogram** | MACD − signal. Solid = momentum growing away from zero; faded = shrinking back toward zero |
+| **Dotted line** | Zero |
+| **▲ / ▼** | MACD crosses its signal, shown only when the higher-timeframe MACD agrees (optional: bull crosses only below zero / bear only above) |
+| **Background tint** | both timeframes have MACD above signal **and** above zero (green), or below both (red) |
+| Divergences | off by default |
+
+The higher-timeframe MACD is used as a filter and for the tint, but it is **not drawn**. Its values are on a much larger scale and would squash the pane. Its values appear in the Data Window.
+
+### Alerts
+The setup is the same as the RSI script. Per-event conditions: bullish / bearish cross, zero-line crosses, histogram turns, multi-TF alignment and divergences. Or use **"Any alert() function call"** for a single combined alert.
