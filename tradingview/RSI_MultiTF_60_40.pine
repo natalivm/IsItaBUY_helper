@@ -14,7 +14,7 @@
 //    on the right side of `and` would skip bars and corrupt its internal history.
 //  • Markers and alerts can be restricted to closed bars to avoid intrabar flicker.
 //  • alert() is called once per bar with one combined message (multiple calls in one bar can be dropped).
-indicator("RSI Multi-TF 60/40 Alerts", shorttitle = "RSI MTF 60/40", format = format.price, precision = 2, max_labels_count = 10)
+indicator("RSI Multi-TF 60/40 Alerts", shorttitle = "RSI 60/40", format = format.price, precision = 2, max_labels_count = 10)
 
 //#region ───── Inputs
 const string GRP_RSI = "RSI"
