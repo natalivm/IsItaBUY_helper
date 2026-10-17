@@ -53,7 +53,7 @@ Classic MACD (12 / 26 / 9, EMA) in the same style and with the same safeguards a
 ### What's on the pane
 | Element | Meaning |
 |---|---|
-| **Purple line** | MACD (fast EMA − slow EMA) |
+| **MACD line** | fast EMA − slow EMA. Green while rising, red while falling (turn off: *Color MACD line by direction*) |
 | **Yellow line** | Signal (9-bar EMA of MACD) |
 | **Soft fill between them** | green while MACD > signal, red while below |
 | **Histogram** | MACD − signal. Solid = momentum growing away from zero; faded = shrinking back toward zero |
@@ -62,7 +62,9 @@ Classic MACD (12 / 26 / 9, EMA) in the same style and with the same safeguards a
 | **Background tint** | both timeframes have MACD above signal **and** above zero (green), or below both (red) |
 | Divergences | off by default |
 
-The higher-timeframe MACD is used as a filter and for the tint, but it is **not drawn**. Its values are on a much larger scale and would squash the pane. Its values appear in the Data Window.
+**Scale: Auto-zoom (default).** Lines and histogram are rescaled to ±100 over the last 100 bars, so waves fill the pane even on 1–15 min charts where raw MACD is tiny. Both lines share one factor and signals use raw values, so crosses and turns land on exactly the same bars as classic MACD. Switch *Scale* to **Classic** for raw values. *Histogram height ×* makes the bars taller or shorter.
+
+The higher-timeframe MACD is used as a filter and for the tint, but it is **not drawn**. Its values are on a much larger scale and would squash the pane.
 
 ### Alerts
 The setup is the same as the RSI script. Per-event conditions: bullish / bearish cross, zero-line crosses, histogram turns, multi-TF alignment and divergences. Or use **"Any alert() function call"** for a single combined alert.

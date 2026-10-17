@@ -7,6 +7,10 @@
 // 4-shade histogram, MACD / signal lines with a soft fill between them, cross marks,
 // a non-repainting higher-timeframe (HTF) MACD filter, optional divergences and a full alert set.
 //
+// Auto-zoom (default) rescales MACD/signal and the histogram to ±100 over a rolling window, so the waves
+// fill the pane on any timeframe or symbol. One factor is applied to both lines, so crosses, zero crosses
+// and histogram flips happen on exactly the same bars as the classic MACD. Signals use the raw values.
+//
 // Same design rules as the RSI script (see tradingview/README.md):
 //  • HTF data = expression offset by [1] + lookahead_on → confirmed HTF bars only, no repaint.
 //  • Every ta.* call runs at global scope on every bar (Pine v6 `and`/`or` are lazy).
@@ -38,6 +42,14 @@ string htfManual    = input.timeframe("60", "", group = GRP_HTF, inline = "htf",
 bool   htfNoRepaint = input.bool(true, "Confirmed HTF bars only (no repaint)", group = GRP_HTF,
      tooltip = "ON: uses the last CLOSED higher-timeframe bar. Never repaints; history = realtime.\nOFF: uses the live, still-forming HTF bar. Reacts faster but repaints.")
 
+string scaleMode = input.string("Auto-zoom", "Scale", options = ["Auto-zoom", "Classic"], group = GRP_VIS,
+     tooltip = "Auto-zoom: lines and histogram are rescaled to ±100 over the lookback, so waves are always big, even on 1–15 min charts. Crosses and turns happen on the same bars as classic MACD.\nClassic: raw MACD values.")
+int    zoomLen   = input.int(100, "Auto-zoom lookback (bars)", minval = 10, group = GRP_VIS,
+     tooltip = "Window used to find the largest recent swing. Smaller = more zoom on recent moves; larger = steadier scale.")
+float  histBoost = input.float(1.0, "Histogram height ×", minval = 0.1, step = 0.25, group = GRP_VIS,
+     tooltip = "Auto-zoom: 1 = the tallest bar in the lookback reaches the same height as the lines. Classic: plain multiplier on the histogram.")
+bool   slopeColor = input.bool(true, "Color MACD line by direction", group = GRP_VIS,
+     tooltip = "MACD line turns bull color while rising and bear color while falling, so every turn is visible at a glance.")
 bool showHist  = input.bool(true, "Histogram", group = GRP_VIS, inline = "v1")
 bool showFill  = input.bool(true, "Fill between MACD and signal", group = GRP_VIS, inline = "v1")
 bool showAlignBg = input.bool(true, "Shade when chart + HTF agree", group = GRP_VIS,
@@ -100,6 +112,16 @@ inRange(bool cond) =>
 [macd, signal] = macdCalc()
 float hist = macd - signal
 
+// Display values (auto-zoom). Lines share one factor so their crosses are untouched; the histogram gets its own.
+bool  zoomOn  = scaleMode == "Auto-zoom"
+float lineMax = ta.highest(math.max(math.abs(macd), math.abs(signal)), zoomLen)
+float histMax = ta.highest(math.abs(hist), zoomLen)
+float lineK   = zoomOn ? (lineMax > 0 ? 100 / lineMax : na) : 1.0
+float histK   = zoomOn ? (histMax > 0 ? 100 / histMax : na) : 1.0
+float dMacd   = macd * lineK
+float dSignal = signal * lineK
+float dHist   = hist * histK * histBoost
+
 string htfTf     = htfMode == "Auto" ? autoHtf() : htfManual
 bool   htfValid  = htfOn and timeframe.in_seconds(htfTf) > timeframe.in_seconds()
 int    htfOffset = htfNoRepaint ? 1 : 0
@@ -140,6 +162,7 @@ bool mtfBearStart = confirmed and mtfBear and not mtfBear[1]
 bool  plFound   = not na(ta.pivotlow(macd, lbL, lbR))
 bool  phFound   = not na(ta.pivothigh(macd, lbL, lbR))
 float macdLbr   = macd[lbR]
+float dLbr      = dMacd[lbR]
 float prevPlM   = ta.valuewhen(plFound, macdLbr, 1)
 float prevPlLow = ta.valuewhen(plFound, low[lbR], 1)
 float prevPhM   = ta.valuewhen(phFound, macdLbr, 1)
@@ -152,27 +175,24 @@ bool  bearDiv   = showDiv and confirmed and phFound and phInRange and macdLbr < 
 
 //#region ───── Plots
 // Histogram: strong shade while momentum grows away from zero, faded shade while it shrinks back.
-color histCol = hist >= 0 ? (hist >= hist[1] ? bullCol : color.new(bullCol, 60)) : (hist <= hist[1] ? bearCol : color.new(bearCol, 60))
+color histCol = hist >= 0 ? (hist >= hist[1] ? color.new(bullCol, 15) : color.new(bullCol, 65)) : (hist <= hist[1] ? color.new(bearCol, 15) : color.new(bearCol, 65))
+color lineCol = slopeColor ? (macd >= macd[1] ? bullCol : bearCol) : macdCol
 
 bgcolor(showAlignBg and mtfBull ? color.new(bullCol, 88) : showAlignBg and mtfBear ? color.new(bearCol, 88) : na, title = "Multi-TF alignment")
 hline(0, "Zero line", color.new(color.gray, 40), hline.style_dotted)
-plot(hist, "Histogram", histCol, style = plot.style_columns, display = showHist ? display.all : display.none)
+plot(dHist, "Histogram", histCol, style = plot.style_columns, display = showHist ? display.all : display.none)
 
-macdPlot = plot(macd, "MACD", macdCol, 2)
-sigPlot  = plot(signal, "Signal", sigCol, 1)
+macdPlot = plot(dMacd, "MACD", lineCol, 2)
+sigPlot  = plot(dSignal, "Signal", sigCol, 2)
 fill(macdPlot, sigPlot, macd >= signal ? color.new(bullCol, 85) : color.new(bearCol, 85), "MACD / signal fill", display = showFill ? display.all : display.none)
 
-plotshape(showCross and bullCross ? macd : na, "Bull cross mark", shape.triangleup, location.absolute, bullCol, size = size.tiny)
-plotshape(showCross and bearCross ? macd : na, "Bear cross mark", shape.triangledown, location.absolute, bearCol, size = size.tiny)
+plotshape(showCross and bullCross ? dMacd : na, "Bull cross mark", shape.triangleup, location.absolute, bullCol, size = size.tiny)
+plotshape(showCross and bearCross ? dMacd : na, "Bear cross mark", shape.triangledown, location.absolute, bearCol, size = size.tiny)
 
-plot(plFound ? macdLbr : na, "Bullish divergence", bullDiv ? bullCol : color.new(bullCol, 100), 2, offset = -lbR, display = showDiv ? display.pane : display.none)
-plot(phFound ? macdLbr : na, "Bearish divergence", bearDiv ? bearCol : color.new(bearCol, 100), 2, offset = -lbR, display = showDiv ? display.pane : display.none)
-plotshape(bullDiv ? macdLbr : na, "Bullish divergence label", shape.labelup, location.absolute, bullCol, offset = -lbR, text = "Bull", textcolor = color.white, size = size.tiny, display = showDiv ? display.pane : display.none)
-plotshape(bearDiv ? macdLbr : na, "Bearish divergence label", shape.labeldown, location.absolute, bearCol, offset = -lbR, text = "Bear", textcolor = color.white, size = size.tiny, display = showDiv ? display.pane : display.none)
-
-// Values for the data window / status line only.
-plot(htfM, "HTF MACD", display = display.data_window)
-plot(htfS, "HTF signal", display = display.data_window)
+plot(plFound ? dLbr : na, "Bullish divergence", bullDiv ? bullCol : color.new(bullCol, 100), 2, offset = -lbR, display = showDiv ? display.pane : display.none)
+plot(phFound ? dLbr : na, "Bearish divergence", bearDiv ? bearCol : color.new(bearCol, 100), 2, offset = -lbR, display = showDiv ? display.pane : display.none)
+plotshape(bullDiv ? dLbr : na, "Bullish divergence label", shape.labelup, location.absolute, bullCol, offset = -lbR, text = "Bull", textcolor = color.white, size = size.tiny, display = showDiv ? display.pane : display.none)
+plotshape(bearDiv ? dLbr : na, "Bearish divergence label", shape.labeldown, location.absolute, bearCol, offset = -lbR, text = "Bear", textcolor = color.white, size = size.tiny, display = showDiv ? display.pane : display.none)
 
 var label warnLbl = na
 if barstate.islast
@@ -182,12 +202,12 @@ if barstate.islast
 
 //#region ───── Alerts
 // alertcondition(): one entry per event in the "Create alert" dialog. Pick "Once Per Bar Close" there.
-alertcondition(bullCross,    "MACD bullish cross",          '{{ticker}} {{interval}}: MACD crossed above its signal. MACD {{plot("MACD")}}, signal {{plot("Signal")}}')
-alertcondition(bearCross,    "MACD bearish cross",          '{{ticker}} {{interval}}: MACD crossed below its signal. MACD {{plot("MACD")}}, signal {{plot("Signal")}}')
-alertcondition(zUp,          "MACD crosses above zero",     '{{ticker}} {{interval}}: MACD crossed above zero. MACD {{plot("MACD")}}')
-alertcondition(zDn,          "MACD crosses below zero",     '{{ticker}} {{interval}}: MACD crossed below zero. MACD {{plot("MACD")}}')
-alertcondition(tUp,          "Histogram turns up",          '{{ticker}} {{interval}}: MACD histogram stopped falling below zero — selling momentum easing. Hist {{plot("Histogram")}}')
-alertcondition(tDn,          "Histogram turns down",        '{{ticker}} {{interval}}: MACD histogram stopped rising above zero — buying momentum easing. Hist {{plot("Histogram")}}')
+alertcondition(bullCross,    "MACD bullish cross",          '{{ticker}} {{interval}}: MACD crossed above its signal.')
+alertcondition(bearCross,    "MACD bearish cross",          '{{ticker}} {{interval}}: MACD crossed below its signal.')
+alertcondition(zUp,          "MACD crosses above zero",     '{{ticker}} {{interval}}: MACD crossed above zero.')
+alertcondition(zDn,          "MACD crosses below zero",     '{{ticker}} {{interval}}: MACD crossed below zero.')
+alertcondition(tUp,          "Histogram turns up",          '{{ticker}} {{interval}}: MACD histogram stopped falling below zero — selling momentum easing.')
+alertcondition(tDn,          "Histogram turns down",        '{{ticker}} {{interval}}: MACD histogram stopped rising above zero — buying momentum easing.')
 alertcondition(mtfBullStart, "Multi-TF bull alignment",     '{{ticker}} {{interval}}: chart AND higher-timeframe MACD both bullish (above signal and zero).')
 alertcondition(mtfBearStart, "Multi-TF bear alignment",     '{{ticker}} {{interval}}: chart AND higher-timeframe MACD both bearish (below signal and zero).')
 alertcondition(bullDiv,      "Bullish MACD divergence",     '{{ticker}} {{interval}}: regular bullish MACD divergence confirmed.')
