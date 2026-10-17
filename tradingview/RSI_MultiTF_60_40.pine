@@ -185,7 +185,7 @@ bbUp = plot(bbOn ? rsiMa + bbDev : na, "Upper Bollinger Band", color.new(bullCol
 bbLo = plot(bbOn ? rsiMa - bbDev : na, "Lower Bollinger Band", color.new(bullCol, 30), display = bbOn ? display.all : display.none)
 fill(bbUp, bbLo, color.new(bullCol, 92), "Bollinger Bands fill", display = bbOn ? display.all : display.none)
 
-plot(htfRsi, "HTF RSI", htfCol, 2, plot.style_stepline, display = htfOn ? display.all : display.none)
+plot(htfRsi, "HTF RSI", htfCol, 1, plot.style_stepline, linestyle = plot.linestyle_dashed, display = htfOn ? display.all : display.none)
 
 bgcolor(showAlignBg and mtfBull ? color.new(bullCol, 88) : showAlignBg and mtfBear ? color.new(bearCol, 88) : na, title = "Multi-TF alignment")
 

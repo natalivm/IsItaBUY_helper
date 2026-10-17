@@ -13,7 +13,7 @@ Pine Script **v6** indicator: standard RSI + RSI-based MA + a higher-timeframe R
 |---|---|
 | RSI (purple; green above 60, red below 40) | 14, close |
 | RSI-based MA (yellow) | SMA 14 (also EMA / RMA / WMA / VWMA / SMA + Bollinger Bands / None) |
-| HTF RSI (blue step line) | **Auto**: ≤1m→15m, ≤5m→1h, ≤1h→4h, ≤4h→D, D→W, W→M |
+| HTF RSI (thin dashed blue step line) | **Auto**: ≤1m→15m, ≤5m→1h, ≤1h→4h, ≤4h→D, D→W, W→M |
 | Levels | 70 / 60 / 50 / 40 / 30 |
 | Triangles | RSI breaks above 60 (HTF RSI ≥ 50) / below 40 (HTF RSI ≤ 50) |
 | Background tint | chart RSI **and** HTF RSI both > 60 (green) or both < 40 (red) |
