@@ -66,6 +66,7 @@ stopBufferTicks = input.int(1, "Stop buffer · ticks", minval=1, maxval=100, gro
 showSignals = input.bool(true, "Show signal triangles", group=G_SIGNAL)
 hideSignals5And15 = input.bool(false, "Hide signals on 5m + 15m", group=G_SIGNAL, tooltip="Hide both long and short chart triangles on 5-minute and 15-minute charts. Other timeframes are unaffected. Visual only: signal calculations, dashboard and alerts remain active. Each chart instance has its own settings.")
 showPlan = input.bool(true, "Show latest entry / stop / target lines", group=G_SIGNAL)
+matrixSellColor = input.color(#B388FF, "Matrix SELL color", group=G_SIGNAL, tooltip="Purple so SELL triangles do not blend into red candles. The magenta RSI STRONG SELL keeps its own color.")
 detailedAlerts = input.bool(true, "Enable detailed alert() messages", group=G_SIGNAL, tooltip="Create an alert using 'Any alert() function call' for entry, stop, target and R:R. Or select the separate BUY / SELL alert conditions. No orders are placed.")
 
 levelText = input.string("", "Lines / clusters · comma-separated", group=G_LEVEL, tooltip="Enter actual prices for this symbol. Example FORMAT ONLY: 100:102, 110, 120:122. A single number is a line; low:high is a cluster. Up to 12 non-overlapping entries, at least 2. Enter every intervening obstacle. The script sorts them; it cannot read other indicators or chart drawings.")
@@ -723,7 +724,7 @@ float matrixMarkerGap = math.max(nz(atr[1], high[1] - low[1]) * 0.12, syminfo.mi
 float matrixBuyMarkerPrice = low[1] - matrixMarkerGap
 float matrixSellMarkerPrice = high[1] + matrixMarkerGap
 plotshape(signalMarkersVisible and buySignal ? matrixBuyMarkerPrice : na, title="Matrix BUY - previous candle", style=shape.triangleup, location=location.absolute, color=color.lime, size=size.tiny, display=display.all, force_overlay=true, offset=-1)
-plotshape(signalMarkersVisible and sellSignal ? matrixSellMarkerPrice : na, title="Matrix SELL - previous candle", style=shape.triangledown, location=location.absolute, color=color.red, size=size.tiny, display=display.all, force_overlay=true, offset=-1)
+plotshape(signalMarkersVisible and sellSignal ? matrixSellMarkerPrice : na, title="Matrix SELL - previous candle", style=shape.triangledown, location=location.absolute, color=matrixSellColor, size=size.tiny, display=display.all, force_overlay=true, offset=-1)
 // Additional RSI markers use a separate colour pair and a price gap so they
 // remain distinguishable from the lime/red Matrix triangles. All are text-free.
 float rsiMarkerGap = math.max(nz(atr, high - low) * 0.5, syminfo.mintick * 5)
@@ -771,7 +772,7 @@ if barstate.islast
         color priceInk = known and aboveMA[d] ? color.lime : known and belowMA[d] ? color.red : color.silver
         color slopeInk = known and maUp[d] ? color.lime : known and maDown[d] ? color.red : color.silver
         string latest = na(lastSignalAt) ? "--" : (lastSide == "BUY" ? "▲ " : "▼ ") + str.format_time(lastSignalAt, "MM-dd HH:mm", syminfo.timezone)
-        color signalInk = na(lastSignalAt) ? color.silver : lastSide == "BUY" ? color.lime : color.red
+        color signalInk = na(lastSignalAt) ? color.silver : lastSide == "BUY" ? color.lime : matrixSellColor
         string chartTimeframeLabel = timeframe.isminutes and timeframe.multiplier >= 60 and timeframe.multiplier % 60 == 0 ? str.tostring(timeframe.multiplier / 60, "0") + "h" : timeframe.isminutes ? timeframe.period + "m" : timeframe.period
         f_compactRow(dashboard, 0, "MATRIX L1R", chartTimeframeLabel + (useExternalRsi ? " / EXT" : " / RSI"), color.white)
         f_compactRow(dashboard, 1, "Trend", trendLabel, trendInk)
