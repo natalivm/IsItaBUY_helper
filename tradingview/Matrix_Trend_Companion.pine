@@ -1,0 +1,749 @@
+//@version=6
+// Original approximation based on the user's supplied Matrixchannel instructions.
+// This is not Allen Reminick's code or a reconstruction of his price-level engine.
+indicator("Matrix Trend Companion - Shifted Candle RSI", shorttitle="Matrix L1R", overlay=true, max_lines_count=300, max_bars_back=1500)
+
+string G_DAY = "0 · Day trading - start here"
+signalEngine = input.string("Automatic trend reversals", "Signal engine", options=["Automatic trend reversals", "Manual Matrixchannel rules"], group=G_DAY, tooltip="Automatic: BUY/SELL marks a confirmed MA trend change without entered levels. Manual: the stricter original level-reaction/breakout and reward/risk rules; requires your prices.")
+dayPreset = input.string("Auto 5m / 15m", "Day-trading preset", options=["Auto 5m / 15m", "Custom"], group=G_DAY, tooltip="Chosen starting points, not optimized settings. 5m: 2 confirming closes, 3/3 swing pivots, 6-bar filter window. 15m: 1 confirming close, 2/2 pivots, 3-bar window. Other timeframes use Custom values.")
+customConfirm = input.int(2, "Custom confirming closes", minval=1, maxval=10, group=G_DAY)
+trendRiskGate = input.bool(false, "Automatic: require known target and minimum R:R", group=G_DAY, tooltip="OFF: show confirmed trend changes even when target/R:R is unknown or insufficient. ON: also require a known swing target and the minimum R:R below, within the filter window. Targets are never invented.")
+autoHistoryHours = input.int(24, "Automatic swing history - hours", minval=2, maxval=168, group=G_DAY)
+showAutoLevels = input.bool(false, "Show nearest automatic support / resistance", group=G_DAY)
+
+
+string G_CLOUD = "1 · Orange / blue cloud"
+string G_MA = "2 · White moving average"
+string G_CHECK = "3 · Trend checks"
+string G_VIEW = "4 · Display"
+
+profile = input.string("Conventional 9/26/52 · +25 bars", "Cloud profile", options=["Conventional 9/26/52 · +25 bars", "Short projection approximation", "Custom"], group=G_CLOUD, tooltip="Conventional: 9/26/52, +25 actual bars (26 counted inclusively). Short: 9/26/52, chosen +5 bars. The original custom settings are unknown.")
+customConversion = input.int(9, "Custom conversion period", minval=1, maxval=500, group=G_CLOUD)
+customBase = input.int(26, "Custom base period", minval=1, maxval=500, group=G_CLOUD)
+customSpan = input.int(52, "Custom slow span period", minval=1, maxval=500, group=G_CLOUD)
+customShift = input.int(5, "Custom forward shift · exact bars", minval=0, maxval=150, group=G_CLOUD, tooltip="Cloud spans calculated now are drawn this many bars to the right. Checks use the cloud actually drawn at the current candle.")
+cloudTransparency = input.int(85, "Cloud transparency", minval=0, maxval=100, group=G_CLOUD)
+showRibs = input.bool(true, "Vertical cloud stripes", group=G_CLOUD)
+ribEvery = input.int(1, "Stripe every N bars", minval=1, maxval=10, group=G_CLOUD)
+
+maLength = input.int(22, "MA period", minval=1, maxval=500, group=G_MA, tooltip="22 EMA is specified in the supplied day-trading instructions. The original hourly MA settings were not provided.")
+maType = input.string("EMA", "MA type", options=["EMA", "SMA", "RMA", "WMA"], group=G_MA)
+maSource = input.source(close, "MA source", group=G_MA)
+slopeBars = input.int(1, "Slope measured over N bars", minval=1, maxval=50, group=G_MA)
+slopeTicks = input.float(0.0, "Minimum slope change · ticks", minval=0, step=0.25, group=G_MA, tooltip="Chosen noise filter. Zero means any positive/negative change qualifies.")
+
+useNear = input.bool(false, "Require price near white MA", group=G_CHECK)
+atrLength = input.int(14, "ATR period for proximity", minval=1, maxval=200, group=G_CHECK)
+nearMultiple = input.float(1.0, "Maximum distance · ATR multiples", minval=0.05, step=0.05, group=G_CHECK, tooltip="A configurable interpretation of 'near'. The original instructions supply no numeric cutoff.")
+useMacd = input.bool(false, "Require recent MACD signal-line cross", group=G_CHECK)
+macdFast = input.int(12, "MACD fast period", minval=1, maxval=200, group=G_CHECK)
+macdSlow = input.int(26, "MACD slow period", minval=2, maxval=500, group=G_CHECK)
+macdSignal = input.int(9, "MACD signal period", minval=1, maxval=200, group=G_CHECK)
+recentBars = input.int(5, "MACD cross within N bars · inclusive", minval=0, maxval=100, group=G_CHECK, tooltip="0 = cross on this bar only. Cross must remain directionally valid. 'Recent' was not quantified in the source.")
+
+showCloud = input.bool(true, "Show cloud", group=G_VIEW)
+showGuides = input.bool(false, "Show red conversion / magenta base lines", group=G_VIEW)
+showLagging = input.bool(false, "Show blue lagging close · visual only", group=G_VIEW, tooltip="Draws the current close in the past by the forward shift. Never used for trend checks or signals.")
+showMarkers = input.bool(false, "Show new trend alignment markers", group=G_VIEW)
+// All signal triangles have a fixed -1 visual offset in this L1 version.
+// Confirmation and alerts stay on the actual signal candle. Matrix RSI gates
+// inspect the preceding candle, where the triangle is drawn.
+showDashboard = input.bool(true, "Show condition dashboard", group=G_VIEW)
+panelFont = input.string("Tiny", "Dashboard text size", options=["Tiny", "Small", "Normal"], group=G_VIEW)
+string panelText = panelFont == "Tiny" ? size.tiny : panelFont == "Small" ? size.small : size.normal
+
+string G_SIGNAL = "5 · BUY / SELL rules"
+string G_LEVEL = "6 · Your support / resistance levels"
+enableSignals = input.bool(true, "Enable BUY / SELL setups", group=G_SIGNAL)
+setupMode = input.string("Reversals", "Manual mode: setup types", options=["Reversals", "Breakouts", "Both"], group=G_SIGNAL, tooltip="Reversals are the default. Breakouts are the higher-risk alternative from the instructions. A single line uses one closed bar; a cluster uses the confirmation count below.")
+signalProfile = input.string("Basic MA rules", "Signal confirmation", options=["Basic MA rules", "Full checklist", "Custom filters"], group=G_SIGNAL, tooltip="Basic = reaction/breakout + close beyond MA + MA slope. Full = also beyond cloud, near MA, and recent directional MACD cross. Custom uses the optional switches. Manual mode always requires risk/target checks. Automatic mode uses the optional risk gate.")
+customSignalCloud = input.bool(true, "Custom: require close outside cloud", group=G_SIGNAL)
+waitBars = input.int(6, "Reaction confirmation window · bars", minval=0, maxval=100, group=G_SIGNAL, tooltip="Chosen interpretation: the touch bar plus this many later bars. A close through the far edge cancels a reversal. Breakouts allow up to max(this value, required closes) consecutive closes to qualify.")
+clusterCloses = input.int(3, "Consecutive closes beyond a cluster", minval=2, maxval=20, group=G_SIGNAL, tooltip="The author says 'several'; 3 is a configurable choice. All closes must be beyond the entire cluster.")
+minimumRR = input.float(2.0, "Minimum reward / risk", minval=0.1, step=0.1, group=G_SIGNAL, tooltip="Chosen default, not a recovered setting. Entry estimate = signal close. Target = near edge of the next entered zone. Missing target or insufficient room blocks Manual mode and risk-gated Automatic mode. Excludes fees, spread and slippage.")
+pivotStrength = input.int(3, "Swing confirmation · bars each side", minval=1, maxval=50, group=G_SIGNAL)
+stopBufferTicks = input.int(1, "Stop buffer · ticks", minval=1, maxval=100, group=G_SIGNAL)
+showSignals = input.bool(true, "Show signal triangles", group=G_SIGNAL)
+hideSignals5And15 = input.bool(false, "Hide signals on 5m + 15m", group=G_SIGNAL, tooltip="Hide both long and short chart triangles on 5-minute and 15-minute charts. Other timeframes are unaffected. Visual only: signal calculations, dashboard and alerts remain active. Each chart instance has its own settings.")
+showPlan = input.bool(true, "Show latest entry / stop / target lines", group=G_SIGNAL)
+detailedAlerts = input.bool(true, "Enable detailed alert() messages", group=G_SIGNAL, tooltip="Create an alert using 'Any alert() function call' for entry, stop, target and R:R. Or select the separate BUY / SELL alert conditions. No orders are placed.")
+
+levelText = input.string("", "Lines / clusters · comma-separated", group=G_LEVEL, tooltip="Enter actual prices for this symbol. Example FORMAT ONLY: 100:102, 110, 120:122. A single number is a line; low:high is a cluster. Up to 12 non-overlapping entries, at least 2. Enter every intervening obstacle. The script sorts them; it cannot read other indicators or chart drawings.")
+showLevels = input.bool(true, "Show entered lines / clusters", group=G_LEVEL)
+limitStart = input.bool(false, "Only use levels from the date below", group=G_LEVEL, tooltip="Static prices otherwise apply to the whole loaded chart. Set a date when the entered levels were already known; historical markers with today's levels are not a valid backtest.")
+levelsFrom = input.time(timestamp("01 Jan 2020 00:00 +0000"), "Levels valid from", group=G_LEVEL)
+
+
+string G_RSI = "7 · RSI filters"
+rsiLength = input.int(14, "RSI length", minval=2, maxval=500, group=G_RSI)
+rsiSourceMode = input.string("Current chart", "RSI values from", options=["Current chart", "External RSI plots"], group=G_RSI, tooltip="Current chart: RSI and its MA automatically use this chart's candles (5m, 15m, 4h, daily, etc.). External RSI plots: use the exact RSI and MA outputs selected below; their timeframe/settings are inherited from that indicator.")
+rsiPriceSource = input.string("Close", "Chart RSI price source", options=["Close", "Open", "High", "Low", "HL2", "HLC3", "OHLC4"], group=G_RSI, tooltip="Price series from the current chart only. External RSI values cannot accidentally be used as the price input to another RSI calculation.")
+externalRsiLine = input.source(close, "External: RSI line", group=G_RSI, tooltip="Used only in External RSI plots mode. Select the purple RSI output of your separate RSI indicator, not Close and not its moving average.")
+externalRsiAverage = input.source(close, "External: RSI moving average", group=G_RSI, tooltip="Used only in External RSI plots mode. Select the yellow MA/SMA output of your RSI indicator. Both external sources must be selected manually in that mode.")
+rsiMaLength = input.int(14, "RSI moving average length", minval=1, maxval=500, group=G_RSI)
+rsiMaType = input.string("SMA", "RSI moving average type", options=["SMA", "EMA", "RMA", "WMA"], group=G_RSI)
+useRsiBuyFilter = input.bool(true, "Block BUY when RSI > RSI MA and overbought", group=G_RSI, tooltip="Uses the previous candle, where the Matrix triangle is drawn. Suppress BUY only when BOTH that candle's RSI is above its own moving average AND above the level below. Above is a state, not a one-bar crossover event. Disable to remove this long-side RSI gate.")
+rsiBuyCeiling = input.float(70.0, "BUY overbought level", minval=0.0, maxval=100.0, step=1.0, group=G_RSI)
+useRsiSellFilter = input.bool(true, "Block SELL when RSI < RSI MA and oversold", group=G_RSI, tooltip="Mirror of the BUY gate. Uses the previous candle, where the Matrix triangle is drawn. Suppress SELL only when BOTH that candle's RSI is below its own moving average AND below the level below, i.e. do not sell into a washout. Disable to remove this short-side RSI gate.")
+rsiSellFloor = input.float(30.0, "SELL oversold level", minval=0.0, maxval=100.0, step=1.0, group=G_RSI)
+
+string G_RSI_ZONES = "8 · Separate RSI signals"
+enableRsiZoneSignals = input.bool(true, "Enable RSI oversold / overbought signals", group=G_RSI_ZONES, tooltip="Independent RSI-only signal set. Uses RSI length/source from group 7. Does not require Matrix trend, cloud, RSI-MA filters or risk gates. Does not change Matrix signals or their trade-reference lines.")
+rsiZoneMode = input.string("Enter zone", "RSI BUY trigger", options=["Enter zone", "Leave zone"], group=G_RSI_ZONES, tooltip="BUY only: Enter zone triggers when RSI enters oversold; Leave zone triggers on recovery out of oversold.")
+rsiOversoldLevel = input.float(30.0, "RSI BUY oversold level", minval=0.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="BUY threshold only; it must be below the culmination level.")
+rsiCulminationLevel = input.float(80.0, "Culmination level · arms SELL", minval=50.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="A closed candle with RSI above this level ARMS a culmination SELL. Nothing fires while RSI stays up there: strong trends can hold above 80 for many candles.")
+culminationExit = input.string("RSI crosses below its MA", "Culmination SELL fires when", options=["RSI crosses below its MA", "RSI falls back below level", "Close below white MA"], group=G_RSI_ZONES, tooltip="Once armed, ONE SELL fires on the first closed candle (with RSI back at or under the culmination level) that meets this. Earliest to latest: falls back below level → RSI below its MA → close below the white MA.")
+culminationExitLevel = input.float(70.0, "Fall-back level", minval=0.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="Only used with 'RSI falls back below level'.")
+
+bool automaticTrend = signalEngine == "Automatic trend reversals"
+bool signalMarkersVisible = showSignals and not (hideSignals5And15 and timeframe.isminutes and (timeframe.multiplier == 5 or timeframe.multiplier == 15))
+bool preset5 = dayPreset == "Auto 5m / 15m" and timeframe.isminutes and timeframe.multiplier == 5
+bool preset15 = dayPreset == "Auto 5m / 15m" and timeframe.isminutes and timeframe.multiplier == 15
+int confirmCloses = preset5 ? 2 : preset15 ? 1 : customConfirm
+int trendWindow = preset5 ? 6 : preset15 ? 3 : math.max(1, waitBars)
+int effectiveSwing = automaticTrend ? (preset5 ? 3 : preset15 ? 2 : pivotStrength) : pivotStrength
+
+int conversionLength = profile == "Custom" ? customConversion : 9
+int baseLength = profile == "Custom" ? customBase : 26
+int spanLength = profile == "Custom" ? customSpan : 52
+int shift = profile == "Custom" ? customShift : profile == "Conventional 9/26/52 · +25 bars" ? 25 : 5
+color blue = color.rgb(31, 174, 232)
+color orange = color.rgb(245, 151, 52)
+color panel = color.rgb(18, 25, 39)
+
+f_mid(int length) =>
+    math.avg(ta.highest(high, length), ta.lowest(low, length))
+
+f_ma(float src, simple int length, simple string kind) =>
+    // kind is simple and cannot change across bars. This function is called
+    // every bar, so only the selected average needs to maintain history.
+    switch kind
+        "SMA" => ta.sma(src, length)
+        "RMA" => ta.rma(src, length)
+        "WMA" => ta.wma(src, length)
+        => ta.ema(src, length)
+
+float conversion = f_mid(conversionLength)
+float base = f_mid(baseLength)
+float spanA = math.avg(conversion, base)
+float spanB = f_mid(spanLength)
+// Suppress truncated-window cloud values on the first loaded bars.
+bool spansReady = bar_index >= math.max(math.max(conversionLength, baseLength), spanLength) - 1
+float drawA = spansReady ? spanA : na
+float drawB = spansReady ? spanB : na
+float aHere = drawA[shift]
+float bHere = drawB[shift]
+float cloudTop = math.max(aHere, bHere)
+float cloudBottom = math.min(aHere, bHere)
+bool cloudReady = not na(cloudTop) and not na(cloudBottom)
+bool aboveCloud = cloudReady and close > cloudTop
+bool belowCloud = cloudReady and close < cloudBottom
+
+float whiteMA = f_ma(maSource, maLength, maType)
+bool maReady = bar_index >= maLength + slopeBars - 1 and not na(whiteMA[slopeBars])
+float slopeChange = whiteMA - whiteMA[slopeBars]
+float slopeThreshold = slopeTicks * syminfo.mintick
+bool maUp = maReady and slopeChange > slopeThreshold
+bool maDown = maReady and slopeChange < -slopeThreshold
+bool aboveMA = maReady and close > whiteMA
+bool belowMA = maReady and close < whiteMA
+
+float atr = ta.atr(atrLength)
+bool proximityReady = maReady and not na(atr)
+float maDistance = math.abs(close - whiteMA)
+bool nearMA = proximityReady and maDistance <= atr * nearMultiple
+[macdValue, macdSignalValue, macdHistogram] = ta.macd(close, macdFast, macdSlow, macdSignal)
+bool macdCrossUp = ta.crossover(macdValue, macdSignalValue)
+bool macdCrossDown = ta.crossunder(macdValue, macdSignalValue)
+int sinceUp = ta.barssince(macdCrossUp)
+int sinceDown = ta.barssince(macdCrossDown)
+bool macdReady = bar_index >= math.max(macdFast, macdSlow) + macdSignal - 2 and not na(macdSignalValue)
+bool recentUp = macdReady and not na(sinceUp) and sinceUp <= recentBars and macdValue > macdSignalValue
+bool recentDown = macdReady and not na(sinceDown) and sinceDown <= recentBars and macdValue < macdSignalValue
+
+bool ready = maReady and cloudReady and (not useNear or proximityReady) and (not useMacd or macdReady)
+bool longAligned = ready and aboveMA and maUp and aboveCloud and (not useNear or nearMA) and (not useMacd or recentUp)
+bool shortAligned = ready and belowMA and maDown and belowCloud and (not useNear or nearMA) and (not useMacd or recentDown)
+// These are trend alignment events, NOT full support/resistance reversal entries.
+// A new event can occur again after alignment was lost on an intervening close.
+bool longEvent = barstate.isconfirmed and longAligned and not longAligned[1]
+bool shortEvent = barstate.isconfirmed and shortAligned and not shortAligned[1]
+bool breakUp = barstate.isconfirmed and cloudReady and cloudReady[1] and close > cloudTop and close[1] <= cloudTop[1]
+bool breakDown = barstate.isconfirmed and cloudReady and cloudReady[1] and close < cloudBottom and close[1] >= cloudBottom[1]
+
+plot(whiteMA, title="White moving average", color=color.white, linewidth=2)
+plot(showGuides ? conversion : na, title="Conversion", color=color.red, linewidth=1)
+plot(showGuides ? base : na, title="Base", color=color.fuchsia, linewidth=1)
+plot(showLagging ? close : na, title="Lagging close · shifted visual only", color=color.blue, offset=-shift)
+pA = plot(showCloud ? drawA : na, title="Cloud span A · projected", color=color.new(blue, 15), offset=shift)
+pB = plot(showCloud ? drawB : na, title="Cloud span B · projected", color=color.new(orange, 15), offset=shift)
+fill(pA, pB, title="Orange / blue cloud", color=color.new(spanA >= spanB ? blue : orange, cloudTransparency))
+
+var array<line> ribs = array.new<line>()
+if showCloud and showRibs and spansReady and barstate.isconfirmed and bar_index % ribEvery == 0
+    line rib = line.new(x1=bar_index + shift, y1=spanA, x2=bar_index + shift, y2=spanB, xloc=xloc.bar_index, color=color.new(spanA >= spanB ? blue : orange, 60), width=1)
+    array.push(ribs, rib)
+    if array.size(ribs) > 220
+        line.delete(array.shift(ribs))
+
+plotshape(showMarkers and longEvent, title="New upward trend alignment", style=shape.triangleup, location=location.belowbar, color=blue, text="Trend +", textcolor=blue, size=size.tiny, offset=-1)
+plotshape(showMarkers and shortEvent, title="New downward trend alignment", style=shape.triangledown, location=location.abovebar, color=orange, text="Trend -", textcolor=orange, size=size.tiny, offset=-1)
+
+// Manual zones supply the missing price-location information. They do not
+// recreate Matrixchannel's proprietary levels. No signal reads a future bar.
+type PriceZone
+    float lo
+    float hi
+    bool longArmed = false
+    bool shortArmed = false
+    int longTouch = na
+    int shortTouch = na
+    float reactionLow = na
+    float reactionHigh = na
+    int upCount = 0
+    int downCount = 0
+    bool upFired = false
+    bool downFired = false
+    float breakoutLow = na
+    float breakoutHigh = na
+    line lowerLine = na
+    line upperLine = na
+    linefill shading = na
+
+var array<PriceZone> zones = array.new<PriceZone>()
+var bool levelsValid = false
+var string levelStatus = "ENTER LEVELS"
+if barstate.isfirst and not automaticTrend
+    array<string> entries = str.split(levelText, ",")
+    bool parsed = str.length(str.trim(levelText)) > 0 and array.size(entries) <= 12
+    if parsed
+        for entry in entries
+            array<string> pair = str.split(str.trim(entry), ":")
+            int parts = array.size(pair)
+            float lo = parts >= 1 ? str.tonumber(str.trim(array.get(pair, 0))) : na
+            float hi = parts == 1 ? lo : parts == 2 ? str.tonumber(str.trim(array.get(pair, 1))) : na
+            if na(lo) or na(hi) or lo > hi or parts > 2
+                parsed := false
+            else
+                array.push(zones, PriceZone.new(lo, hi))
+    int n = array.size(zones)
+    if parsed and n >= 2
+        // At most 12 entries, so a small selection sort is sufficient.
+        for i = 0 to n - 2
+            for j = i + 1 to n - 1
+                PriceZone left = array.get(zones, i)
+                PriceZone right = array.get(zones, j)
+                if right.lo < left.lo
+                    array.set(zones, i, right)
+                    array.set(zones, j, left)
+        for i = 1 to n - 1
+            PriceZone before = array.get(zones, i - 1)
+            PriceZone current = array.get(zones, i)
+            if current.lo <= before.hi
+                parsed := false
+    levelsValid := parsed and n >= 2
+    levelStatus := levelsValid ? str.tostring(n) + " LEVELS / ZONES" : str.length(str.trim(levelText)) == 0 ? "ENTER LEVELS" : "CHECK LEVEL FORMAT"
+
+// Current-chart RSI always uses this chart's own OHLC candles. There is no
+// fixed 5m/15m/4h request and no other indicator can feed its price calculation.
+float rsiSource = switch rsiPriceSource
+    "Open" => open
+    "High" => high
+    "Low" => low
+    "HL2" => hl2
+    "HLC3" => hlc3
+    "OHLC4" => ohlc4
+    => close
+float internalRsi = ta.rsi(rsiSource, rsiLength)
+float internalRsiAverage = f_ma(internalRsi, rsiMaLength, rsiMaType)
+bool useExternalRsi = rsiSourceMode == "External RSI plots"
+// External lines are used directly, NEVER passed through ta.rsi() again.
+float selectedRsi = useExternalRsi ? externalRsiLine : internalRsi
+float selectedRsiAverage = useExternalRsi ? externalRsiAverage : internalRsiAverage
+// Reject missing/out-of-range sources. A wrong source within 0-100 still
+// cannot be identified automatically; external plots must be selected correctly.
+float rsiValue = not na(selectedRsi) and selectedRsi >= 0.0 and selectedRsi <= 100.0 ? selectedRsi : na
+float rsiAverage = not na(selectedRsiAverage) and selectedRsiAverage >= 0.0 and selectedRsiAverage <= 100.0 ? selectedRsiAverage : na
+// Matrix filters inspect the marker candle (-1), not the later confirmation
+// candle. Separate RSI-only events below still use current rsiValue as before.
+float markerRsiValue = rsiValue[1]
+float markerRsiAverage = rsiAverage[1]
+bool rsiReady = not na(markerRsiValue) and not na(markerRsiAverage)
+// Mirror of the BUY gate: block a SELL only when the marker candle's RSI is BOTH
+// below its own MA AND oversold (selling into a washout). A falling RSI after a
+// close below the white MA is the normal state for a real down-turn, so it passes.
+bool rsiSellAllowed = not useRsiSellFilter or (rsiReady and not (markerRsiValue < markerRsiAverage and markerRsiValue < rsiSellFloor))
+// The BUY block requires BOTH conditions, exactly as requested. Equality at
+// the MA or at the overbought level does not trigger this block.
+bool rsiBuyAllowed = not useRsiBuyFilter or (rsiReady and not (markerRsiValue > markerRsiAverage and markerRsiValue > rsiBuyCeiling))
+plot(rsiValue, title="RSI at chart candle", display=display.data_window)
+plot(rsiAverage, title="RSI MA at chart candle", display=display.data_window)
+// Gate diagnostics are shifted to the same candle as the Matrix triangles.
+plot(rsiSellAllowed ? 1 : 0, title="Matrix SELL RSI gate - 1 pass / 0 blocked", offset=-1, display=display.data_window)
+plot(rsiBuyAllowed ? 1 : 0, title="Matrix BUY RSI gate - 1 pass / 0 blocked", offset=-1, display=display.data_window)
+plot(useExternalRsi ? 1 : 0, title="RSI mode - 0 chart / 1 external", display=display.data_window)
+
+// Separate RSI-only events. The existing Matrix BUY/SELL gates are not used.
+// BUY crossings require prior RSI. The hard SELL rule needs current RSI only.
+bool rsiZonesValid = rsiOversoldLevel < rsiCulminationLevel
+bool rsiZoneReady = rsiZonesValid and not na(rsiValue) and not na(rsiValue[1])
+bool rsiEnterOversold = rsiZoneReady and rsiValue <= rsiOversoldLevel and rsiValue[1] > rsiOversoldLevel
+bool rsiLeaveOversold = rsiZoneReady and rsiValue > rsiOversoldLevel and rsiValue[1] <= rsiOversoldLevel
+bool rsiZoneBuy = enableRsiZoneSignals and barstate.isconfirmed and (rsiZoneMode == "Enter zone" ? rsiEnterOversold : rsiLeaveOversold)
+// Culmination SELL: RSI above the culmination level only ARMS the sell. One SELL
+// fires when the culmination is over (chosen exit), so a power trend that holds
+// RSI above 80 for weeks does not print a sell on every candle.
+var bool culminationArmed = false
+var float culminationPeak = na
+bool rsiZoneSell = false
+if enableRsiZoneSignals and barstate.isconfirmed and not na(rsiValue)
+    if rsiValue > rsiCulminationLevel
+        culminationArmed := true
+        culminationPeak := na(culminationPeak) ? rsiValue : math.max(culminationPeak, rsiValue)
+    else if culminationArmed
+        bool culminationOver = switch culminationExit
+            "RSI crosses below its MA" => not na(rsiAverage) and rsiValue < rsiAverage
+            "RSI falls back below level" => rsiValue < culminationExitLevel
+            => belowMA
+        if culminationOver
+            rsiZoneSell := true
+            culminationArmed := false
+            culminationPeak := na
+
+bool signalUseCloud = signalProfile == "Full checklist" or (signalProfile == "Custom filters" and customSignalCloud)
+bool signalUseNear = signalProfile == "Full checklist" or (signalProfile == "Custom filters" and useNear)
+bool signalUseMacd = signalProfile == "Full checklist" or (signalProfile == "Custom filters" and useMacd)
+bool longGates = aboveMA and maUp and (not signalUseCloud or aboveCloud) and (not signalUseNear or nearMA) and (not signalUseMacd or recentUp) and rsiBuyAllowed
+bool shortGates = belowMA and maDown and (not signalUseCloud or belowCloud) and (not signalUseNear or nearMA) and (not signalUseMacd or recentDown) and rsiSellAllowed
+bool dateReady = not limitStart or time >= levelsFrom
+bool reversalMode = setupMode != "Breakouts"
+bool breakoutMode = setupMode != "Reversals"
+
+// A pivot is only available after the right-hand confirmation bars close.
+float pivotLow = ta.pivotlow(low, effectiveSwing, effectiveSwing)
+float pivotHigh = ta.pivothigh(high, effectiveSwing, effectiveSwing)
+var float lastSwingLow = na
+var float lastSwingHigh = na
+if barstate.isconfirmed
+    if not na(pivotLow)
+        lastSwingLow := pivotLow
+    if not na(pivotHigh)
+        lastSwingHigh := pivotHigh
+
+// Confirmed swings supply automatic risk context. They are NOT recovered
+// Matrixchannel levels. A price only enters this collection on confirmation.
+var array<float> swingPrices = array.new<float>()
+var array<int> swingKnownAt = array.new<int>()
+
+f_rememberSwing(float price) =>
+    // Refresh an exact duplicate without counting it as another obstacle.
+    int i = array.size(swingPrices) - 1
+    while i >= 0
+        if math.abs(array.get(swingPrices, i) - price) < syminfo.mintick * 0.5
+            array.remove(swingPrices, i)
+            array.remove(swingKnownAt, i)
+        i -= 1
+    array.push(swingPrices, price)
+    array.push(swingKnownAt, time)
+    if array.size(swingPrices) > 100
+        array.shift(swingPrices)
+        array.shift(swingKnownAt)
+    array.size(swingPrices)
+
+if automaticTrend and barstate.isconfirmed
+    if not na(pivotLow)
+        f_rememberSwing(pivotLow)
+    if not na(pivotHigh)
+        f_rememberSwing(pivotHigh)
+    int i = array.size(swingPrices) - 1
+    while i >= 0
+        if time - array.get(swingKnownAt, i) > autoHistoryHours * 60 * 60 * 1000
+            array.remove(swingPrices, i)
+            array.remove(swingKnownAt, i)
+        i -= 1
+
+float autoResistance = na
+float autoSupport = na
+if automaticTrend and array.size(swingPrices) > 0
+    for price in swingPrices
+        // Equality deliberately produces zero reward rather than skipping a level.
+        if price >= close
+            autoResistance := na(autoResistance) ? price : math.min(autoResistance, price)
+        if price <= close
+            autoSupport := na(autoSupport) ? price : math.max(autoSupport, price)
+float recentRiskLow = ta.lowest(low, trendWindow)
+float recentRiskHigh = ta.highest(high, trendWindow)
+
+
+// Normalize floating-point noise before rounding OUTWARD, then add the exact
+// integer tick buffer. E.g. 100.02 - 0.01 must not become a 100.00 long stop.
+// Eight fractional tick digits preserve meaningful sub-tick extremes.
+f_longStop(float extreme) =>
+    float extremeTicks = math.round(extreme / syminfo.mintick, 8)
+    (math.floor(extremeTicks) - stopBufferTicks) * syminfo.mintick
+
+f_shortStop(float extreme) =>
+    float extremeTicks = math.round(extreme / syminfo.mintick, 8)
+    (math.ceil(extremeTicks) + stopBufferTicks) * syminfo.mintick
+
+f_rr(float entryPrice, float stopPrice, float targetPrice, bool isLong) =>
+    // Work in ticks so price-subtraction noise is removed and tiny tick sizes
+    // do not collapse positive risk/reward to zero in Pine's comparisons.
+    float risk = math.round((isLong ? entryPrice - stopPrice : stopPrice - entryPrice) / syminfo.mintick, 8)
+    float reward = math.round((isLong ? targetPrice - entryPrice : entryPrice - targetPrice) / syminfo.mintick, 8)
+    not na(risk) and not na(reward) and risk > 0 and reward > 0 ? reward / risk : na
+
+f_price(float value) =>
+    na(value) ? "--" : str.tostring(value, format.mintick)
+
+// Reset on every execution. Only confirmed-bar processing can set a signal.
+bool buySignal = false
+bool sellSignal = false
+bool longLocation = false
+bool shortLocation = false
+float previewLongRR = na
+float previewShortRR = na
+float chosenStop = na
+float chosenTarget = na
+float chosenRR = na
+string chosenKind = ""
+
+if not automaticTrend and levelsValid and dateReady and barstate.isconfirmed
+    for i = 0 to array.size(zones) - 1
+        PriceZone z = array.get(zones, i)
+        if showLevels and na(z.lowerLine)
+            z.lowerLine := line.new(bar_index, z.lo, bar_index + 1, z.lo, extend=extend.right, color=color.new(color.silver, 45))
+            z.upperLine := line.new(bar_index, z.hi, bar_index + 1, z.hi, extend=extend.right, color=color.new(color.silver, 45))
+            z.shading := linefill.new(z.lowerLine, z.upperLine, color.new(color.silver, 93))
+
+        // A reversal needs an approach from outside the zone, then a touch.
+        // After consumption, a whole candle outside is needed before re-arming.
+        bool touches = low <= z.hi and high >= z.lo
+        if z.longArmed and touches and na(z.longTouch)
+            z.longTouch := bar_index
+            z.reactionLow := low
+            z.longArmed := false
+        if z.shortArmed and touches and na(z.shortTouch)
+            z.shortTouch := bar_index
+            z.reactionHigh := high
+            z.shortArmed := false
+        if not na(z.longTouch)
+            z.reactionLow := math.min(z.reactionLow, low)
+            if close < z.lo or bar_index - z.longTouch > waitBars
+                z.longTouch := na
+                z.reactionLow := na
+        if not na(z.shortTouch)
+            z.reactionHigh := math.max(z.reactionHigh, high)
+            if close > z.hi or bar_index - z.shortTouch > waitBars
+                z.shortTouch := na
+                z.reactionHigh := na
+        if low > z.hi and na(z.longTouch)
+            z.longArmed := true
+        if high < z.lo and na(z.shortTouch)
+            z.shortArmed := true
+        if close < z.lo
+            z.longArmed := false
+        if close > z.hi
+            z.shortArmed := false
+
+        // Count a fresh break only after a prior eligible close on the other side.
+        // Loading history that begins above/below a zone is not itself a breakout.
+        if close > z.hi
+            if z.upCount > 0
+                z.upCount += 1
+                z.breakoutLow := math.min(z.breakoutLow, low)
+            else if bar_index > 0 and dateReady[1] and close[1] <= z.hi
+                z.upCount := 1
+                z.breakoutLow := low
+                z.upFired := false
+        else
+            z.upCount := 0
+            z.breakoutLow := na
+            z.upFired := false
+        if close < z.lo
+            if z.downCount > 0
+                z.downCount += 1
+                z.breakoutHigh := math.max(z.breakoutHigh, high)
+            else if bar_index > 0 and dateReady[1] and close[1] >= z.lo
+                z.downCount := 1
+                z.breakoutHigh := high
+                z.downFired := false
+        else
+            z.downCount := 0
+            z.breakoutHigh := na
+            z.downFired := false
+
+        int needed = z.lo == z.hi ? 1 : clusterCloses
+        int breakWindow = math.max(waitBars, needed)
+        bool reverseLong = reversalMode and not na(z.longTouch) and close > z.hi
+        bool reverseShort = reversalMode and not na(z.shortTouch) and close < z.lo
+        bool breakoutLong = breakoutMode and not z.upFired and z.upCount >= needed and z.upCount <= breakWindow
+        bool breakoutShort = breakoutMode and not z.downFired and z.downCount >= needed and z.downCount <= breakWindow
+        bool locLong = reverseLong or breakoutLong
+        bool locShort = reverseShort or breakoutShort
+        longLocation := longLocation or locLong
+        shortLocation := shortLocation or locShort
+
+        float targetLong = na
+        float targetShort = na
+        if i < array.size(zones) - 1
+            PriceZone nextUpper = array.get(zones, i + 1)
+            targetLong := nextUpper.lo
+        if i > 0
+            PriceZone nextLower = array.get(zones, i - 1)
+            targetShort := nextLower.hi
+        // If the next entered obstacle is already reached, do not skip over it.
+        // Prefer the reversal variant when both variants describe the same bar.
+        float longExtreme = reverseLong ? math.min(nz(lastSwingLow, z.reactionLow), z.reactionLow) : z.breakoutLow
+        float shortExtreme = reverseShort ? math.max(nz(lastSwingHigh, z.reactionHigh), z.reactionHigh) : z.breakoutHigh
+        float stopLong = f_longStop(longExtreme)
+        float stopShort = f_shortStop(shortExtreme)
+        float rrLong = locLong ? f_rr(close, stopLong, targetLong, true) : na
+        float rrShort = locShort ? f_rr(close, stopShort, targetShort, false) : na
+        if not na(rrLong)
+            previewLongRR := na(previewLongRR) ? rrLong : math.max(previewLongRR, rrLong)
+        if not na(rrShort)
+            previewShortRR := na(previewShortRR) ? rrShort : math.max(previewShortRR, rrShort)
+        bool qualifiedLong = enableSignals and locLong and longGates and not na(rrLong) and rrLong >= minimumRR
+        bool qualifiedShort = enableSignals and locShort and shortGates and not na(rrShort) and rrShort >= minimumRR
+        // If several entered zones qualify on one bar, keep the highest R:R.
+        // MA direction makes opposite-direction qualifications mutually exclusive.
+        if qualifiedLong and (na(chosenRR) or rrLong > chosenRR)
+            buySignal := true
+            chosenStop := stopLong
+            chosenTarget := targetLong
+            chosenRR := rrLong
+            chosenKind := reverseLong ? "REVERSAL" : "BREAKOUT"
+        if qualifiedShort and (na(chosenRR) or rrShort > chosenRR)
+            sellSignal := true
+            chosenStop := stopShort
+            chosenTarget := targetShort
+            chosenRR := rrShort
+            chosenKind := reverseShort ? "REVERSAL" : "BREAKOUT"
+
+// Automatic mode: last confirmed directional regime persists through mixed bars.
+// A reversal is emitted only after the opposite regime confirms; recovering the
+// same direction after a neutral pullback does not create another reversal.
+var int trendDirection = 0
+var int upCloses = 0
+var int downCloses = 0
+var int regimeStarted = na
+var bool regimeSent = false
+var bool initialRegime = true
+var string autoDecision = "WARMING UP"
+bool trendTurnUp = false
+bool trendTurnDown = false
+float autoLongStop = f_longStop(math.min(nz(lastSwingLow, recentRiskLow), recentRiskLow))
+float autoShortStop = f_shortStop(math.max(nz(lastSwingHigh, recentRiskHigh), recentRiskHigh))
+float autoLongRR = f_rr(close, autoLongStop, autoResistance, true)
+float autoShortRR = f_rr(close, autoShortStop, autoSupport, false)
+bool autoLongRiskOK = not na(autoLongRR) and autoLongRR >= minimumRR
+bool autoShortRiskOK = not na(autoShortRR) and autoShortRR >= minimumRR
+
+if automaticTrend and barstate.isconfirmed
+    upCloses := aboveMA and maUp ? upCloses + 1 : 0
+    downCloses := belowMA and maDown ? downCloses + 1 : 0
+    int confirmedDirection = upCloses >= confirmCloses ? 1 : downCloses >= confirmCloses ? -1 : 0
+    if confirmedDirection != 0 and confirmedDirection != trendDirection
+        initialRegime := trendDirection == 0
+        trendDirection := confirmedDirection
+        regimeStarted := bar_index
+        regimeSent := false
+        trendTurnUp := confirmedDirection == 1
+        trendTurnDown := confirmedDirection == -1
+    bool windowOpen = not na(regimeStarted) and bar_index - regimeStarted <= trendWindow
+    bool pendingLong = trendDirection == 1 and not regimeSent and windowOpen and confirmedDirection == 1
+    bool pendingShort = trendDirection == -1 and not regimeSent and windowOpen and confirmedDirection == -1
+    longLocation := pendingLong
+    shortLocation := pendingShort
+    previewLongRR := pendingLong ? autoLongRR : na
+    previewShortRR := pendingShort ? autoShortRR : na
+    buySignal := enableSignals and pendingLong and longGates and (not trendRiskGate or autoLongRiskOK)
+    sellSignal := enableSignals and pendingShort and shortGates and (not trendRiskGate or autoShortRiskOK)
+    if buySignal or sellSignal
+        chosenStop := buySignal ? autoLongStop : autoShortStop
+        chosenTarget := buySignal ? autoResistance : autoSupport
+        chosenRR := buySignal ? autoLongRR : autoShortRR
+        chosenKind := initialRegime ? "INITIAL TREND" : "TREND REVERSAL"
+        regimeSent := true
+    if not enableSignals
+        autoDecision := "SIGNALS OFF"
+    else if not maReady
+        autoDecision := "WARMING UP"
+    else if buySignal
+        autoDecision := "↑ UP TREND"
+    else if sellSignal
+        autoDecision := "↓ DOWN TREND"
+    else if regimeSent
+        autoDecision := confirmedDirection == trendDirection ? "SIGNAL ALREADY SENT" : "PULLBACK / TURN WAIT"
+    else if trendDirection == 0
+        autoDecision := "WAIT FOR CONFIRMATION"
+    else if not windowOpen
+        autoDecision := "SETUP EXPIRED"
+    else if confirmedDirection == 0
+        autoDecision := "WAIT FOR CONFIRMATION"
+    else if (pendingLong and not longGates) or (pendingShort and not shortGates)
+        autoDecision := "OPTIONAL FILTER BLOCK"
+    else if trendRiskGate
+        autoDecision := (pendingLong and na(autoLongRR)) or (pendingShort and na(autoShortRR)) ? "NO VALID TARGET / RISK" : "R:R BELOW MINIMUM"
+    else
+        autoDecision := "WAIT"
+
+// Final shared output guards, in addition to the engine gates above. Apply on
+// confirmation candle before outputs; both guards use the MARKER candle RSI.
+buySignal := buySignal and rsiBuyAllowed
+sellSignal := sellSignal and rsiSellAllowed
+
+// Informational current swing levels. They do not backdate any signal.
+var line autoSupportLine = na
+var line autoResistanceLine = na
+if barstate.islast and automaticTrend and showAutoLevels
+    if not na(autoSupport)
+        if na(autoSupportLine)
+            autoSupportLine := line.new(bar_index, autoSupport, bar_index + 20, autoSupport, color=blue, style=line.style_dotted)
+        else
+            line.set_xy1(autoSupportLine, bar_index, autoSupport)
+            line.set_xy2(autoSupportLine, bar_index + 20, autoSupport)
+    else
+        line.delete(autoSupportLine)
+        autoSupportLine := na
+    if not na(autoResistance)
+        if na(autoResistanceLine)
+            autoResistanceLine := line.new(bar_index, autoResistance, bar_index + 20, autoResistance, color=orange, style=line.style_dotted)
+        else
+            line.set_xy1(autoResistanceLine, bar_index, autoResistance)
+            line.set_xy2(autoResistanceLine, bar_index + 20, autoResistance)
+    else
+        line.delete(autoResistanceLine)
+        autoResistanceLine := na
+
+
+// Consume same-direction active reactions after an actual emitted signal.
+// This avoids a delayed duplicate from an older overlapping setup.
+if not automaticTrend and (buySignal or sellSignal)
+    for z in zones
+        if buySignal
+            z.longTouch := na
+            z.reactionLow := na
+            z.longArmed := false
+            if z.upCount > 0
+                z.upFired := true
+        if sellSignal
+            z.shortTouch := na
+            z.reactionHigh := na
+            z.shortArmed := false
+            if z.downCount > 0
+                z.downFired := true
+
+if barstate.islast and levelsValid and showLevels
+    for z in zones
+        if not na(z.lowerLine)
+            color zoneColor = close > z.hi ? blue : close < z.lo ? orange : color.silver
+            line.set_color(z.lowerLine, color.new(zoneColor, 35))
+            line.set_color(z.upperLine, color.new(zoneColor, 35))
+            linefill.set_color(z.shading, color.new(zoneColor, 92))
+
+var float lastEntry = na
+var float lastStop = na
+var float lastTarget = na
+var float lastRR = na
+var string lastSide = "NONE"
+var string lastKind = "--"
+var int lastSignalAt = na
+var bool lastRiskOK = false
+var line entryLine = na
+var line stopLine = na
+var line targetLine = na
+if buySignal or sellSignal
+    lastSignalAt := time_close
+    lastRiskOK := not na(chosenRR) and chosenRR >= minimumRR
+    lastEntry := close
+    lastStop := chosenStop
+    lastTarget := chosenTarget
+    lastRR := chosenRR
+    lastSide := buySignal ? "BUY" : "SELL"
+    lastKind := chosenKind
+    if showPlan
+        if na(entryLine)
+            entryLine := line.new(bar_index, close, bar_index + 20, close, color=color.silver, style=line.style_dotted)
+        else
+            line.set_xy1(entryLine, bar_index, close)
+            line.set_xy2(entryLine, bar_index + 20, close)
+        if na(stopLine)
+            stopLine := line.new(bar_index, lastStop, bar_index + 20, lastStop, color=color.red, style=line.style_dashed)
+        else
+            line.set_xy1(stopLine, bar_index, lastStop)
+            line.set_xy2(stopLine, bar_index + 20, lastStop)
+        if not na(lastTarget)
+            if na(targetLine)
+                targetLine := line.new(bar_index, lastTarget, bar_index + 20, lastTarget, color=color.lime, style=line.style_dashed)
+            else
+                line.set_xy1(targetLine, bar_index, lastTarget)
+                line.set_xy2(targetLine, bar_index + 20, lastTarget)
+        else
+            line.delete(targetLine)
+            targetLine := na
+    if detailedAlerts
+        alert("Matrix Trend " + lastSide + " " + lastKind + " | " + syminfo.tickerid + " " + timeframe.period + " | close " + f_price(lastEntry) + " | stop " + f_price(lastStop) + " | target " + f_price(lastTarget) + " | R:R " + (na(lastRR) ? "unknown" : str.tostring(lastRR, "#.##")) + " | " + (automaticTrend ? "automatic trend" : "manual level setup") + " | risk " + (lastRiskOK ? "meets threshold" : "UNASSESSED / BELOW THRESHOLD"), alert.freq_once_per_bar_close)
+
+// Triangles draw one candle left. Matrix RSI gates inspect that drawn candle;
+// trend confirmation, alert times and plan lines stay on the confirmation bar.
+// Use the PREVIOUS candle's high/low for explicit Matrix marker placement.
+float matrixMarkerGap = math.max(nz(atr[1], high[1] - low[1]) * 0.12, syminfo.mintick * 2)
+float matrixBuyMarkerPrice = low[1] - matrixMarkerGap
+float matrixSellMarkerPrice = high[1] + matrixMarkerGap
+plotshape(signalMarkersVisible and buySignal ? matrixBuyMarkerPrice : na, title="Matrix BUY - previous candle", style=shape.triangleup, location=location.absolute, color=color.lime, size=size.tiny, display=display.all, force_overlay=true, offset=-1)
+plotshape(signalMarkersVisible and sellSignal ? matrixSellMarkerPrice : na, title="Matrix SELL - previous candle", style=shape.triangledown, location=location.absolute, color=color.red, size=size.tiny, display=display.all, force_overlay=true, offset=-1)
+// Additional RSI markers use a separate colour pair and a price gap so they
+// remain distinguishable from the lime/red Matrix triangles. All are text-free.
+float rsiMarkerGap = math.max(nz(atr, high - low) * 0.5, syminfo.mintick * 5)
+// RSI-only events are evaluated on the current candle, so their markers stay on it
+// (no -1 shift; only the Matrix triangles are shifted to their gate candle).
+float rsiBuyMarkerPrice = low - rsiMarkerGap
+float rsiSellMarkerPrice = high + rsiMarkerGap
+plotshape(signalMarkersVisible and rsiZoneBuy ? rsiBuyMarkerPrice : na, title="RSI oversold buy triangle", style=shape.triangleup, location=location.absolute, color=color.aqua, size=size.tiny, display=display.all, force_overlay=true)
+plotshape(signalMarkersVisible and rsiZoneSell ? rsiSellMarkerPrice : na, title="RSI culmination sell triangle", style=shape.triangledown, location=location.absolute, color=color.orange, size=size.tiny, display=display.all, force_overlay=true)
+alertcondition(rsiZoneBuy, title="RSI BUY · closed candle", message="RSI zone BUY on {{ticker}} {{interval}} at {{close}}. Check the selected Enter zone or Leave zone trigger. RSI-only event; independent of Matrix trend confirmation.")
+alertcondition(rsiZoneSell, title="RSI SELL · closed candle", message="RSI culmination SELL on {{ticker}} {{interval}} at {{close}}: RSI was above the culmination level and the culmination is now over (selected exit). Independent of Matrix trend confirmation.")
+alertcondition(rsiZoneBuy or rsiZoneSell, title="Any RSI BUY / SELL · closed candle", message="RSI zone event on {{ticker}} {{interval}} at {{close}}. See aqua/orange RSI marker for direction.")
+
+alertcondition(buySignal, title="BUY signal · closed candle", message="Matrix Trend BUY signal on {{ticker}} {{interval}} at {{close}}. Check the selected mode and the displayed target/R:R status. Use Any alert() function call for full price details.")
+alertcondition(sellSignal, title="SELL signal · closed candle", message="Matrix Trend SELL signal on {{ticker}} {{interval}} at {{close}}. Check the selected mode and the displayed target/R:R status. Use Any alert() function call for full price details.")
+alertcondition(buySignal or sellSignal, title="Any BUY / SELL setup · closed candle", message="Matrix Trend setup on {{ticker}} {{interval}} at {{close}}. See chart for direction and risk levels.")
+
+
+alertcondition(longEvent, title="Upward trend aligned · closed candle", message="Matrix Trend Companion: upward trend checks aligned on {{ticker}} {{interval}} at {{close}}. Approximation; support/resistance location not assessed.")
+alertcondition(shortEvent, title="Downward trend aligned · closed candle", message="Matrix Trend Companion: downward trend checks aligned on {{ticker}} {{interval}} at {{close}}. Approximation; support/resistance location not assessed.")
+alertcondition(breakUp, title="Close above cloud", message="Matrix Trend Companion: {{ticker}} {{interval}} closed above the cloud at {{close}}.")
+alertcondition(breakDown, title="Close below cloud", message="Matrix Trend Companion: {{ticker}} {{interval}} closed below the cloud at {{close}}.")
+
+// Compact dashboard: presentation only; signal calculations above are unchanged.
+f_compactRow(table t, int row, string label, string value, color ink) =>
+    table.cell(t, 0, row, label, text_color=color.silver, bgcolor=panel, text_size=panelText, text_halign=text.align_left)
+    table.cell(t, 1, row, value, text_color=ink, bgcolor=panel, text_size=panelText)
+
+var table dashboard = table.new(position.top_right, 2, 6, bgcolor=panel, border_width=1, border_color=color.new(color.silver, 80))
+if barstate.islast
+    if showDashboard
+        int d = barstate.isconfirmed ? 0 : 1
+        bool known = bar_index >= d and maReady[d]
+        int direction = 0
+        if known
+            direction := automaticTrend ? trendDirection[d] : aboveMA[d] and maUp[d] ? 1 : belowMA[d] and maDown[d] ? -1 : 0
+        string trendLabel = not known ? "WAIT" : direction == 1 ? "UP" : direction == -1 ? "DOWN" : "MIXED"
+        string priceLabel = not known ? "WAIT" : aboveMA[d] ? "ABOVE" : belowMA[d] ? "BELOW" : "ON MA"
+        string slopeLabel = not known ? "WAIT" : maUp[d] ? "UP" : maDown[d] ? "DOWN" : "FLAT"
+        color trendInk = direction == 1 ? color.lime : direction == -1 ? color.red : color.silver
+        color priceInk = known and aboveMA[d] ? color.lime : known and belowMA[d] ? color.red : color.silver
+        color slopeInk = known and maUp[d] ? color.lime : known and maDown[d] ? color.red : color.silver
+        string latest = na(lastSignalAt) ? "--" : (lastSide == "BUY" ? "▲ " : "▼ ") + str.format_time(lastSignalAt, "MM-dd HH:mm", syminfo.timezone)
+        color signalInk = na(lastSignalAt) ? color.silver : lastSide == "BUY" ? color.lime : color.red
+        string chartTimeframeLabel = timeframe.isminutes and timeframe.multiplier >= 60 and timeframe.multiplier % 60 == 0 ? str.tostring(timeframe.multiplier / 60, "0") + "h" : timeframe.isminutes ? timeframe.period + "m" : timeframe.period
+        f_compactRow(dashboard, 0, "MATRIX L1R", chartTimeframeLabel + (useExternalRsi ? " / EXT" : " / RSI"), color.white)
+        f_compactRow(dashboard, 1, "Trend", trendLabel, trendInk)
+        f_compactRow(dashboard, 2, "Price / " + maType + " " + str.tostring(maLength), priceLabel, priceInk)
+        f_compactRow(dashboard, 3, "MA direction", slopeLabel, slopeInk)
+        f_compactRow(dashboard, 4, "Latest signal", latest, signalInk)
+        f_compactRow(dashboard, 5, "RSI culmination", culminationArmed ? "ARMED · peak " + str.tostring(culminationPeak, "0") : "--", culminationArmed ? color.orange : color.silver)
+    else
+        table.clear(dashboard, 0, 0, 1, 5)
