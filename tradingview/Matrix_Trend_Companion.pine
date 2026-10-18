@@ -91,7 +91,10 @@ string G_RSI_ZONES = "8 · Separate RSI signals"
 enableRsiZoneSignals = input.bool(true, "Enable RSI oversold / overbought signals", group=G_RSI_ZONES, tooltip="Independent RSI-only signal set. Uses RSI length/source from group 7. Does not require Matrix trend, cloud, RSI-MA filters or risk gates. Does not change Matrix signals or their trade-reference lines.")
 rsiZoneMode = input.string("Enter zone", "RSI BUY trigger", options=["Enter zone", "Leave zone"], group=G_RSI_ZONES, tooltip="BUY only: Enter zone triggers when RSI enters oversold; Leave zone triggers on recovery out of oversold.")
 rsiOversoldLevel = input.float(30.0, "RSI BUY oversold level", minval=0.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="BUY threshold only; it must be below the culmination level.")
-rsiCulminationLevel = input.float(80.0, "Culmination level · arms SELL", minval=50.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="A closed candle with RSI above this level ARMS a culmination SELL. Nothing fires while RSI stays up there: strong trends can hold above 80 for many candles.")
+rsiSellLevel = input.float(72.0, "SELL level · normal trend", minval=50.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="Outside a power uptrend: ONE orange SELL on the first closed candle with RSI above this level. Re-arms after RSI closes back at or below it.")
+rsiStrongSellLevel = input.float(80.0, "STRONG SELL level · normal trend", minval=50.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="Outside a power uptrend: ONE larger magenta STRONG SELL on the first closed candle with RSI above this level (even if the orange SELL already fired). Re-arms after RSI closes back at or below the SELL level.")
+powerBars = input.int(20, "Power uptrend · closes above white MA", minval=2, maxval=300, group=G_RSI_ZONES, tooltip="Power uptrend = at least this many consecutive closes above the white MA, and the white MA higher than it was that many bars ago. In a power uptrend the 72 / 80 sells are muted and only the culmination SELL below can fire.")
+rsiCulminationLevel = input.float(80.0, "Power uptrend · culmination level", minval=50.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="Power uptrend only: a closed candle with RSI above this level ARMS a culmination SELL. Nothing fires while RSI stays up there: strong trends can hold above 80 for many candles.")
 culminationExit = input.string("RSI crosses below its MA", "Culmination SELL fires when", options=["RSI crosses below its MA", "RSI falls back below level", "Close below white MA"], group=G_RSI_ZONES, tooltip="Once armed, ONE SELL fires on the first closed candle (with RSI back at or under the culmination level) that meets this. Earliest to latest: falls back below level → RSI below its MA → close below the white MA.")
 culminationExitLevel = input.float(70.0, "Fall-back level", minval=0.0, maxval=100.0, step=1.0, group=G_RSI_ZONES, tooltip="Only used with 'RSI falls back below level'.")
 
@@ -290,14 +293,29 @@ bool rsiZoneReady = rsiZonesValid and not na(rsiValue) and not na(rsiValue[1])
 bool rsiEnterOversold = rsiZoneReady and rsiValue <= rsiOversoldLevel and rsiValue[1] > rsiOversoldLevel
 bool rsiLeaveOversold = rsiZoneReady and rsiValue > rsiOversoldLevel and rsiValue[1] <= rsiOversoldLevel
 bool rsiZoneBuy = enableRsiZoneSignals and barstate.isconfirmed and (rsiZoneMode == "Enter zone" ? rsiEnterOversold : rsiLeaveOversold)
-// Culmination SELL: RSI above the culmination level only ARMS the sell. One SELL
-// fires when the culmination is over (chosen exit), so a power trend that holds
-// RSI above 80 for weeks does not print a sell on every candle.
+// Power uptrend: an unbroken run of closes above a rising white MA.
+var int closesAboveMA = 0
+closesAboveMA := aboveMA ? closesAboveMA + 1 : 0
+bool powerUptrend = closesAboveMA >= powerBars and whiteMA > whiteMA[powerBars]
+
+// RSI SELLs, one per overbought excursion (an excursion ends when RSI closes back
+// at or below the SELL level).
+//  • Normal trend: orange SELL above 72, magenta STRONG SELL above 80.
+//  • Power uptrend: 72 / 80 are muted. RSI above the culmination level only ARMS a
+//    sell; one STRONG SELL fires when the culmination is over (chosen exit), so a
+//    power trend that holds RSI above 80 for weeks does not sell too early.
 var bool culminationArmed = false
 var float culminationPeak = na
-bool rsiZoneSell = false
+var bool sellLevelFired = false
+var bool strongLevelFired = false
+bool rsiSellNormal = false
+bool rsiSellStrong = false
+bool rsiSellCulmination = false
 if enableRsiZoneSignals and barstate.isconfirmed and not na(rsiValue)
-    if rsiValue > rsiCulminationLevel
+    if rsiValue <= rsiSellLevel
+        sellLevelFired := false
+        strongLevelFired := false
+    if rsiValue > rsiCulminationLevel and (powerUptrend or culminationArmed)
         culminationArmed := true
         culminationPeak := na(culminationPeak) ? rsiValue : math.max(culminationPeak, rsiValue)
     else if culminationArmed
@@ -306,9 +324,21 @@ if enableRsiZoneSignals and barstate.isconfirmed and not na(rsiValue)
             "RSI falls back below level" => rsiValue < culminationExitLevel
             => belowMA
         if culminationOver
-            rsiZoneSell := true
+            rsiSellCulmination := true
             culminationArmed := false
             culminationPeak := na
+            // This excursion is signalled; no extra 72 / 80 sell on the way down.
+            sellLevelFired := true
+            strongLevelFired := true
+    else if not powerUptrend
+        if rsiValue > rsiStrongSellLevel and not strongLevelFired
+            rsiSellStrong := true
+            strongLevelFired := true
+            sellLevelFired := true
+        else if rsiValue > rsiSellLevel and not sellLevelFired
+            rsiSellNormal := true
+            sellLevelFired := true
+bool rsiZoneSell = rsiSellNormal or rsiSellStrong or rsiSellCulmination
 
 bool signalUseCloud = signalProfile == "Full checklist" or (signalProfile == "Custom filters" and customSignalCloud)
 bool signalUseNear = signalProfile == "Full checklist" or (signalProfile == "Custom filters" and useNear)
@@ -702,10 +732,14 @@ float rsiMarkerGap = math.max(nz(atr, high - low) * 0.5, syminfo.mintick * 5)
 float rsiBuyMarkerPrice = low - rsiMarkerGap
 float rsiSellMarkerPrice = high + rsiMarkerGap
 plotshape(signalMarkersVisible and rsiZoneBuy ? rsiBuyMarkerPrice : na, title="RSI oversold buy triangle", style=shape.triangleup, location=location.absolute, color=color.aqua, size=size.tiny, display=display.all, force_overlay=true)
-plotshape(signalMarkersVisible and rsiZoneSell ? rsiSellMarkerPrice : na, title="RSI culmination sell triangle", style=shape.triangledown, location=location.absolute, color=color.orange, size=size.tiny, display=display.all, force_overlay=true)
+plotshape(signalMarkersVisible and rsiSellNormal ? rsiSellMarkerPrice : na, title="RSI SELL triangle · above 72", style=shape.triangledown, location=location.absolute, color=color.orange, size=size.tiny, display=display.all, force_overlay=true)
+plotshape(signalMarkersVisible and (rsiSellStrong or rsiSellCulmination) ? rsiSellMarkerPrice : na, title="RSI STRONG SELL triangle · above 80 / culmination", style=shape.triangledown, location=location.absolute, color=color.fuchsia, size=size.small, display=display.all, force_overlay=true)
 alertcondition(rsiZoneBuy, title="RSI BUY · closed candle", message="RSI zone BUY on {{ticker}} {{interval}} at {{close}}. Check the selected Enter zone or Leave zone trigger. RSI-only event; independent of Matrix trend confirmation.")
-alertcondition(rsiZoneSell, title="RSI SELL · closed candle", message="RSI culmination SELL on {{ticker}} {{interval}} at {{close}}: RSI was above the culmination level and the culmination is now over (selected exit). Independent of Matrix trend confirmation.")
-alertcondition(rsiZoneBuy or rsiZoneSell, title="Any RSI BUY / SELL · closed candle", message="RSI zone event on {{ticker}} {{interval}} at {{close}}. See aqua/orange RSI marker for direction.")
+alertcondition(rsiSellNormal, title="RSI SELL · above 72 · closed candle", message="RSI SELL on {{ticker}} {{interval}} at {{close}}: RSI closed above the SELL level outside a power uptrend. Independent of Matrix trend confirmation.")
+alertcondition(rsiSellStrong, title="RSI STRONG SELL · above 80 · closed candle", message="RSI STRONG SELL on {{ticker}} {{interval}} at {{close}}: RSI closed above the STRONG SELL level outside a power uptrend. Independent of Matrix trend confirmation.")
+alertcondition(rsiSellCulmination, title="RSI culmination SELL · power uptrend · closed candle", message="RSI culmination STRONG SELL on {{ticker}} {{interval}} at {{close}}: the power-uptrend culmination is over (selected exit). Independent of Matrix trend confirmation.")
+alertcondition(rsiZoneSell, title="Any RSI SELL · closed candle", message="RSI SELL event on {{ticker}} {{interval}} at {{close}}. Orange = above 72, magenta = above 80 or culmination over.")
+alertcondition(rsiZoneBuy or rsiZoneSell, title="Any RSI BUY / SELL · closed candle", message="RSI zone event on {{ticker}} {{interval}} at {{close}}. See aqua (buy) / orange-magenta (sell) RSI marker.")
 
 alertcondition(buySignal, title="BUY signal · closed candle", message="Matrix Trend BUY signal on {{ticker}} {{interval}} at {{close}}. Check the selected mode and the displayed target/R:R status. Use Any alert() function call for full price details.")
 alertcondition(sellSignal, title="SELL signal · closed candle", message="Matrix Trend SELL signal on {{ticker}} {{interval}} at {{close}}. Check the selected mode and the displayed target/R:R status. Use Any alert() function call for full price details.")
@@ -744,6 +778,7 @@ if barstate.islast
         f_compactRow(dashboard, 2, "Price / " + maType + " " + str.tostring(maLength), priceLabel, priceInk)
         f_compactRow(dashboard, 3, "MA direction", slopeLabel, slopeInk)
         f_compactRow(dashboard, 4, "Latest signal", latest, signalInk)
-        f_compactRow(dashboard, 5, "RSI culmination", culminationArmed ? "ARMED · peak " + str.tostring(culminationPeak, "0") : "--", culminationArmed ? color.orange : color.silver)
+        string sellMode = culminationArmed ? "ARMED · peak " + str.tostring(culminationPeak, "0") : powerUptrend ? "POWER · wait" : "NORMAL · " + str.tostring(rsiSellLevel, "0") + " / " + str.tostring(rsiStrongSellLevel, "0")
+        f_compactRow(dashboard, 5, "RSI sell mode", sellMode, culminationArmed ? color.fuchsia : powerUptrend ? color.lime : color.silver)
     else
         table.clear(dashboard, 0, 0, 1, 5)
