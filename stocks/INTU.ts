@@ -5,7 +5,7 @@ export const INTU = defineStock({
   name: 'Intuit Inc.',
   sector: 'Software / SMB Finance & Tax',
   themeColor: '#0077c5',
-  currentPrice: 325.15,
+  currentPrice: 325.62,
   fairPriceRange: '$290 - $732',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 272,        // Q4 FY26 diluted 272M (FY avg 277M, -2% y/y)
   rev25: 21400,        // FY26A (Jul 2026) $21.4B (+14%) — base year; revGrowth[0] = FY27 (guide $23.28-23.51B, +9-10%)
@@ -21,7 +21,7 @@ export const INTU = defineStock({
   rsTrend: 'rising',
   aiImpact: 'DISRUPTION_RISK',
   ratingOverride: 'BUY',  // Q4 FY26 review: at ~15× FY27 GAAP EPS guidance (+22-24%) the stock prices heavy AI disruption, RS has recovered (3→58, rising) and the bear case now models real disruption (1% EPS CAGR at 11×). The base case lands right at the 16% STRONG BUY line, so pin BUY — disruption risk to TurboTax argues against STRONG BUY.
-  updatedOn: '10/16',
+  updatedOn: '10/19',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
 

@@ -5,10 +5,10 @@ export const SIMO = defineStock({
   name: 'Silicon Motion Technology',
   sector: 'Semiconductors / NAND Flash Controllers',
   themeColor: '#005bac',
-  updatedOn: '10/16',
+  updatedOn: '10/19',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 211.3,   // very volatile; 52wk ~$70-$355
+  currentPrice: 217.24,   // very volatile; 52wk ~$70-$355
   fairPriceRange: '$325 - $450',  // stockanalysis.com analyst target range, Sep 30 2026
   shares0: 34,            // ~33.7M ADS; mkt cap ~$10.4B
   rev25: 886,             // FY2025 revenue $885.6M (+10.2%); FY26E consensus $1.87B (+111%), FY27E $2.43B (+30%)

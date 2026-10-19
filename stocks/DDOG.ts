@@ -5,7 +5,7 @@ export const DDOG = defineStock({
   name: 'Datadog',
   sector: 'Observability / Cloud Monitoring',
   themeColor: '#632CA6',
-  currentPrice: 247.11,
+  currentPrice: 260.36,
   fairPriceRange: '$120 - $270',
   shares0: 376,        // FY26 guide (Q2 2026 update): ~376M weighted-avg diluted shares
   rev25: 3427,
@@ -21,7 +21,7 @@ export const DDOG = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Valuation/SBC-quality driven, NOT operational. Post-Q2 2026 the EPS_PE base case lands ~at spot (~0% 5y CAGR) — model itself reads HOLD only via the TAILWIND quality boost. Stock ran ~$215 → ~$293 in Sep-Oct on accelerating growth, ~116× 2026E non-GAAP EPS. HOLD stands on the rich multiple + high SBC despite RS 94 (rising); the override keeps it out of PRIME_GROWTH if the model ever flips to BUY on a pullback.
-  updatedOn: '10/16',
+  updatedOn: '10/19',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
 

@@ -5,10 +5,10 @@ export const RDDT = defineStock({
   name: 'Reddit, Inc.',
   sector: 'Internet / Social Media & Advertising',
   themeColor: '#ff4500',
-  updatedOn: '10/16',
+  updatedOn: '10/19',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 156.14,   // fell ~10% on the Q2 print (choppy search referrals); below the ~$210 analyst median target
+  currentPrice: 155.14,   // fell ~10% on the Q2 print (choppy search referrals); below the ~$210 analyst median target
   fairPriceRange: '$130 - $300',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 207,           // 207.0M fully diluted (Q2 2026, +0.2% YoY); mkt cap ~$33B
   rev25: 2202,            // FY2025 revenue $2,202.5M (+69.4%); Q1 2026 $663M (+69%), Q2 $805M (+61%), Q3 guide $860-870M; FY26E consensus $3.39B (+54%), FY27E $4.47B
