@@ -5,10 +5,10 @@ export const CLS = defineStock({
   name: 'Celestica Inc.',
   sector: 'EMS',
   themeColor: '#f97316',
-  updatedOn: '10/19',
+  updatedOn: '10/20',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 300.35,
+  currentPrice: 299.69,
   fairPriceRange: '$375 - $550',  // stockanalysis.com analyst target range (Sep 30 2026)
   shares0: 117.9,
   rev25: 12400,        // FY2025; FY26 guide $20.5B (+65%); mgmt expects FY27 growth to ACCELERATE beyond 65%

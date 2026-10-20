@@ -3,12 +3,12 @@ import { defineStock } from './defineStock';
 export const EME = defineStock({
   ticker: 'EME',
   name: 'EMCOR Group, Inc.',
-  updatedOn: '10/19',
+  updatedOn: '10/20',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 716.79,
+  currentPrice: 702.48,
   fairPriceRange: '$885 - $1,200',  // stockanalysis.com analyst target range (Aug 8 2026)
   shares0: 44.11,
   rev25: 16990,             // FY2025A; revGrowth[0] = FY26 (guide $20.0-20.5B raised; consensus $20.3B, +19.6%), FY27E $22.3B (+10%)

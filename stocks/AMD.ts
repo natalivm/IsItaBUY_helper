@@ -5,7 +5,7 @@ export const AMD = defineStock({
   name: 'Advanced Micro Devices',
   sector: 'Semiconductors / AI Compute',
   themeColor: '#ed1c24',
-  currentPrice: 538.05,
+  currentPrice: 534.74,
   fairPriceRange: '$365 - $1,250',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 1659,        // Q2 2026 diluted
   rev25: 34600,         // FY2025; FY26E consensus $50.95B (+47%), FY27E $88.94B (+75%)
@@ -21,7 +21,7 @@ export const AMD = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // Floors AMD at HOLD. Post-Q2 2026 the base case lands ~at spot (~1% CAGR) even with FY27E EPS doubling — the stock (~80× FY26E / ~39× FY27E) prices the Helios ramp. Model reads HOLD only via the RS/TAILWIND boost; tagging the AI #2 platform OVERVALUED would overstate it if the boost is lost.
-  updatedOn: '10/19',
+  updatedOn: '10/20',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
 

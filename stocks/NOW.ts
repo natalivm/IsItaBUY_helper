@@ -5,7 +5,7 @@ export const NOW = defineStock({
   name: 'ServiceNow',
   sector: 'Enterprise SaaS / Workflow Platform',
   themeColor: '#62D84E',
-  currentPrice: 145.36,
+  currentPrice: 149.54,
   fairPriceRange: '$72 - $248',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 1030,
   rev25: 13240,          // FY2025 total revenue ≈ $13.2B (approx.; was set to a $14.0B LTM figure); FY26E consensus $16.22B, FY27E $19.26B
@@ -20,7 +20,7 @@ export const NOW = defineStock({
   rsRating: 97,          // IBD RS per user, 10/10/2026 (was 12) — rebounded ~+40% from the ~$95 AI-fear low
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '10/19',
+  updatedOn: '10/20',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
 
