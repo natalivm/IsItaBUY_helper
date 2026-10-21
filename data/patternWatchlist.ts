@@ -250,6 +250,9 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 76.11,
     invalidation: 77.57,
     target: 54.01,
+    lines: [
+      { from: ["2026-09-02", 80.93], to: ["2026-10-20", 77.46] },
+    ],
     note: "A head and shoulders top formed from late August to early October, with the head near $105. Price broke the neckline and confirmed with a daily close below $76.11, then dropped sharply into the low $60s."
   },
   {

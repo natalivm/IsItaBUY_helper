@@ -30,6 +30,7 @@ from datetime import date
 import pattern_watchlist as pw
 
 TRENDLINE_PATTERNS = {'Ascending Channel', 'Descending Channel', 'Rising Wedge', 'Falling Wedge'}
+HS_PATTERNS = {'Head & Shoulders', 'Inverse Head & Shoulders'}
 LEVEL_TOL = 0.004     # line value vs stored level (fraction of price)
 HEIGHT_TOL = 0.006    # target / goal implied by the height (fraction of price)
 LOOKBACK = 220        # bars before the evaluation bar to search for pivots
@@ -111,10 +112,60 @@ def _setup_view(s):
     return s
 
 
+def fit_head_shoulders(s, bars):
+    """Neckline through the closes of the two troughs around the head.
+
+    Top (down): troughs = swing lows of the closes, head = highest high between them.
+    Inverse (up): troughs = swing highs of the closes, head = lowest low between them.
+    signal = neckline at the signal candle (the candle whose low/high equals confirm),
+    target = signal -/+ (head - neckline at the head).
+    """
+    t, o, hi, lo_, c = bars['t'], bars['o'], bars['h'], bars['l'], bars['c']
+    last = len(t) - 1
+    up = s.get('direction') == 'up'
+    sig, conf, tgt, inv = s.get('signal'), s.get('confirm'), s.get('target'), s.get('invalidation')
+    if None in (sig, conf, tgt):
+        return None, "missing signal / confirm / target"
+    stop = max(i for i, x in enumerate(t) if x <= s['stageDate']) if s.get('stageDate') and t[0] <= s['stageDate'] else last
+    E = next((i for i in range(stop, max(0, stop - 40), -1)
+              if abs((hi[i] if up else lo_[i]) - conf) <= 0.011 + 0.0002 * conf), None)
+    if E is None:
+        return None, "signal candle not found (no candle extreme equals confirm)"
+    body = c
+    troughs = pivots(body, 'H' if up else 'L', max(0, E - 160), E - 1, ks=(1, 2, 3))
+    height = abs(tgt - sig)
+    best = None
+    for x in range(len(troughs)):
+        for y in range(x + 1, len(troughs)):
+            i, j = troughs[x], troughs[y]
+            if j - i < 3:
+                continue
+            neck = Line(i, body[i], j, body[j])
+            if abs(neck.at(E) - sig) > LEVEL_TOL * sig:
+                continue
+            head = (min if up else max)(range(i + 1, j), key=lambda k: lo_[k] if up else hi[k])
+            h0 = abs((lo_[head] if up else hi[head]) - neck.at(head))
+            if abs(h0 - height) > HEIGHT_TOL * sig:
+                continue
+            err = abs(neck.at(E) - sig) / sig + abs(h0 - height) / sig
+            inv_err = min(abs(neck.at(k) - inv) / inv for k in range(E, last + 1)) if inv else None
+            if inv_err is not None:
+                err += 0.25 * inv_err
+            if best is None or err < best[0]:
+                best = (err, neck, i, j, head, inv_err)
+    if best is None:
+        return None, "no neckline reproduces the stored levels"
+    err, neck, i, j, head, inv_err = best
+    lines = [{'from': [t[i], round(neck.at(i), 2)], 'to': [t[last], round(neck.at(last), 2)]}]
+    return lines, {'err': err, 'inv_err': inv_err, 'anchors': [t[i], t[j], f"head {t[head]}"]}
+
+
 def fit_setup(s, bars):
     """Return (lines, info) for a setup dict, or (None, reason)."""
     s = _setup_view(s)
     pattern, d, stage = s.get('pattern'), s.get('direction'), s.get('stage')
+    if pattern in HS_PATTERNS:
+        return fit_head_shoulders(s, bars)
     if pattern not in TRENDLINE_PATTERNS:
         return None, f"no trendlines for {pattern}"
     t, hi, lo_ = bars['t'], bars['h'], bars['l']
