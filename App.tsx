@@ -9,7 +9,7 @@ import PatternWatchlist from './components/PatternWatchlist';
 import LegacyHome from './components/LegacyHome';
 import ThemeToggle from './components/ThemeToggle';
 import InstallPrompt from './components/InstallPrompt';
-import ReleaseNotesPanel, { WhatsNewToast, PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY } from './components/ReleaseNotesPanel';
+import ReleaseNotesPanel, { WhatsNewToast, PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY, LATEST_TAB } from './components/ReleaseNotesPanel';
 
 import { AnimatePresence } from 'motion/react';
 import { ScrollText, Newspaper } from 'lucide-react';
@@ -154,11 +154,12 @@ const App: React.FC = () => {
                 <button className="ctl" onClick={() => openPanel('notes')}>
                   <ScrollText />
                   Notes
-                  {!updatesSeen && <span className="badge" />}
+                  {!updatesSeen && LATEST_TAB === 'notes' && <span className="badge" />}
                 </button>
                 <button className="ctl" onClick={() => openPanel('news')}>
                   <Newspaper />
                   News
+                  {!updatesSeen && LATEST_TAB === 'news' && <span className="badge" />}
                 </button>
                 <ThemeToggle />
               </>
@@ -173,7 +174,7 @@ const App: React.FC = () => {
         />
         {!updatesSeen && !panelOpen && (
           <WhatsNewToast
-            onView={() => openPanel('notes')}
+            onView={() => openPanel(LATEST_TAB)}
             onDismiss={markUpdatesSeen}
           />
         )}

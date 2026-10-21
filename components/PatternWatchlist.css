@@ -185,3 +185,7 @@
 .pbw .empty-detail{padding:17px 24px 24px;color:var(--muted);font-size:15.5px}
 .pbw .kw{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .pbw .upd{font:500 12px/1 var(--f-mono);color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:3px 6px;text-transform:none;letter-spacing:0}
+/* "Needs updating": a pending setup closed past a limit and needs a new setup posted */
+.pbw .st-upd{color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.pbw .upd-banner{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;color:var(--fg);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.pbw .upd-banner svg{flex:none;width:17px;height:17px;margin-top:2px;color:var(--accent)}
