@@ -77,12 +77,6 @@
   "stage": "confirmed",
   "ticker": "CAT"
  },
- "CBRS|main": {
-  "label": "main",
-  "setup": "Ascending Channel (daily)",
-  "stage": "target",
-  "ticker": "CBRS"
- },
  "CIEN|main": {
   "label": "main",
   "setup": "Ascending Channel (weekly)",
@@ -112,12 +106,6 @@
   "setup": "Falling Wedge (daily)",
   "stage": "confirmed",
   "ticker": "CRM"
- },
- "CRWD|main": {
-  "label": "main",
-  "setup": "Ascending Channel (monthly)",
-  "stage": "target",
-  "ticker": "CRWD"
  },
  "CRWV|main": {
   "label": "main",
@@ -226,12 +214,6 @@
   "setup": "Descending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "KMB"
- },
- "LIFE|main": {
-  "label": "main",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "LIFE"
  },
  "LITE|main": {
   "label": "main",

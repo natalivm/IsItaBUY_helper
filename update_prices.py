@@ -930,6 +930,10 @@ def main():
             new_lines, _ = pattern_lines.run(apply=True, verbose=False)
             if new_lines:
                 print(f"Fitted trendlines for: {', '.join(n for n, _, _ in new_lines)}")
+            # Drop setups that are done (target reached / failed); each gets a News post.
+            pruned, _ = pattern_watchlist.prune_finished(apply=True)
+            if pruned:
+                print("Closed setups:\n  " + "\n  ".join(pruned))
 
         # Push to git if requested
         wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))

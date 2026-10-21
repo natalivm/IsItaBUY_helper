@@ -15,6 +15,27 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-21-CBRS-main-removed",
+    date: "Oct 21 2026",
+    tickers: ["CBRS"],
+    title: "CBRS · setup closed",
+    text: "Target reached Oct 20.",
+  },
+  {
+    id: "2026-10-21-CRWD-main-removed",
+    date: "Oct 21 2026",
+    tickers: ["CRWD"],
+    title: "CRWD · setup closed",
+    text: "Target reached Jul 1.",
+  },
+  {
+    id: "2026-10-20-LIFE-main-removed",
+    date: "Oct 20 2026",
+    tickers: ["LIFE"],
+    title: "LIFE · target reached",
+    text: "Hit target $41.17.",
+  },
+  {
     id: "2026-10-21-AGCO-main-confirmed",
     date: "Oct 21 2026",
     tickers: ["AGCO"],

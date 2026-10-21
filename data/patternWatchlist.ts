@@ -997,27 +997,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Price broke the bottom of a rising channel in late September and confirmed with a daily close below $508.50, dipping to around $470. It has since bounced back above both the signal and confirmation levels to $518.76, so the break is under pressure. Invalidation sits 7.1% above."
   },
   {
-    ticker: "LIFE",
-    name: "Ethos Technologies Inc.",
-    pattern: "Falling Wedge",
-    timeframe: "daily",
-    direction: "up",
-    stage: "confirmed",
-    stageDate: "2026-10-09",
-    price: 38.86,
-    priceDate: "2026-10-19",
-    signal: 34.95,
-    confirm: 36.55,
-    invalidation: 27.64,
-    target: 41.17,
-    lines: [
-      { from: ["2026-09-16", 40.8], to: ["2026-10-20", 30.0] },
-      { from: ["2026-09-16", 34.58], to: ["2026-10-20", 27.34] },
-    ],
-    failRule: "a completed daily close below $27.64, then a follow-through close below that candle's low.",
-    note: "Price slid in a falling wedge from the mid-September high near $41 to a low around $31 at the start of October. It broke out through the upper line and confirmed with a daily close above $36.55, and is now holding in the high $30s."
-  },
-  {
     ticker: "NFLX",
     name: "Netflix Inc",
     pattern: "Descending Channel",
@@ -1218,22 +1197,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Price has slid in a falling channel from the late-September high near $25.80. No break yet. A daily close above $18.20 would open a move toward $21.84, while a close below $14.55 would point to $10.90."
   },
   {
-    ticker: "CBRS",
-    name: "Cerebras Systems Inc.",
-    pattern: "Ascending Channel",
-    timeframe: "daily",
-    direction: "down",
-    stage: "target",
-    stageDate: "2026-10-20",
-    price: 123.47,
-    priceDate: "2026-10-20",
-    signal: 205.55,
-    confirm: 195.66,
-    invalidation: 296.51,
-    target: 117.07,
-    note: "Price broke the bottom of a rising channel after topping near $265 in August, and confirmed with a daily close below $195.66. A September bounce to around $210 failed, and it slid steadily from there, reaching the $117.07 target on Oct 20. Treat it as a completed move, not a new entry."
-  },
-  {
     ticker: "FTNT",
     name: "Fortinet, Inc.",
     pattern: "Ascending Channel",
@@ -1273,22 +1236,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     signalRule: "a completed weekly close below $368.42; a close back inside cancels it.",
     failRule: "a completed weekly close above $497.47, then a follow-through close above that candle's high.",
     note: "A strong 2026 run took price from around $160 to a peak near $430 inside a rising channel. One large red weekly candle broke the lower line for a downside signal. A weekly close below $339.55, 2.1% under the latest close, would confirm it."
-  },
-  {
-    ticker: "CRWD",
-    name: "CrowdStrike Holdings, Inc.",
-    pattern: "Ascending Channel",
-    timeframe: "monthly",
-    flag: "Monthly close pending",
-    direction: "up",
-    stage: "target",
-    stageDate: "2026-07-01",
-    price: 227.37,
-    priceDate: "2026-10-20",
-    confirm: 182.87,
-    invalidation: 176.10,
-    target: 207.84,
-    note: "Price broke out above a multi-year rising channel in spring 2026, confirmed with a monthly close above $182.87, and reached the $207.84 target in July. It ran as high as about $285 before pulling back to $228. Treat it as a completed move, not a new entry."
   },
   {
     ticker: "CAKE",
