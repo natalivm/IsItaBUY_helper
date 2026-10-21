@@ -97,6 +97,10 @@ const PricesRules: React.FC<{ label?: string; children: React.ReactNode }> = ({ 
   );
 };
 
+const AutoNote: React.FC<{ on?: boolean }> = ({ on }) => on
+  ? <div className="auto-note"><i className="auto-dot" />Auto-detected: check the lines and levels by hand.</div>
+  : null;
+
 const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
   <div className="upd-banner">
     <Icon name="refresh" />
@@ -134,6 +138,17 @@ const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag })
 
 const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   const tf = s.timeframe || 'daily';
+  if (s.breakUp == null || s.breakDown == null || s.goalUp == null || s.goalDown == null) {
+    // Pending with no clear pattern yet: just the candles.
+    return (
+      <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
+        <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart</span></div>
+        <AutoNote on={s.auto} />
+        <SetupChart ticker={s.ticker} timeframe={tf} levels={[]} />
+        {s.note && <p className="note">{s.note}</p>}
+      </div>
+    );
+  }
   const rungs: Rung[] = [
     { k: 'Goal up', cls: 'k-tgt', v: s.goalUp!, p: true },
     { k: 'Breaks up', cls: 'k-tgt', v: s.breakUp!, p: true },
@@ -144,6 +159,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   return (
     <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
       <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={s.flag} /></div>
+      <AutoNote on={s.auto} />
       {s.stage === 'update' && <UpdateBanner note={s.updateNote} />}
       <div className="stepper" aria-label="Pattern stage">
         {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
@@ -265,6 +281,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
       <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={s.flag} /></div>
+      <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
         {SL.map((l, i) => {
@@ -314,7 +331,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
 
 interface Row { ticker: string; name: string; setup: PatternStock | null }
 
-const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'both'
+const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'both' && s.goalUp == null ? -Infinity : s.direction === 'both'
   ? Math.max(Math.abs(pct0(s.price, s.goalUp!)), Math.abs(pct0(s.price, s.goalDown!)))
   : Math.abs(pct0(s.price, s.target!));
 
@@ -332,7 +349,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
 
   let levels: React.ReactNode;
-  if (!s) {
+  if (!s || (s.direction === 'both' && s.goalUp == null)) {
     levels = <>{dash}{dash}</>;
   } else if (s.direction === 'both') {
     levels = (
@@ -377,6 +394,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
+          {s?.auto && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
           <span>{row.name}</span>
         </span>
         <span className="stcell">

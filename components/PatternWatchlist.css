@@ -235,4 +235,7 @@
 .pbw .detail>.stepper{grid-column:2;align-self:center}
 .pbw .chart-box{height:260px}
 }
+/* Auto-detected setups: red dot until checked by hand */
+.pbw .auto-dot{display:inline-block;flex:none;align-self:center;width:9px;height:9px;border-radius:50%;background:var(--down);box-shadow:0 0 0 3px color-mix(in srgb,var(--down) 22%,transparent)}
+.pbw .auto-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
 

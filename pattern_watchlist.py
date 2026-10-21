@@ -514,7 +514,7 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
     items = []
     for key in sorted(set(before) | set(after), key=lambda k: (k.split('|')[0], k)):
         old, new = before.get(key), after.get(key)
-        if old and new and old['stage'] == new['stage']:
+        if old and new and old['stage'] == new['stage'] and old['setup'] == new['setup']:
             continue
         ref = new or old
         t, label = ref['ticker'], ref['label']
@@ -522,13 +522,13 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
         if new is None:
             title, stage = (custom[0] if custom else f"{t} · setup removed"), 'removed'
             text = text or "No longer tracked."
-        elif old is None:
+        elif old is None or old['setup'] != new['setup']:
             stage = new['stage']
-            title = f"{t} · new setup"
+            title = custom[0] if custom else f"{t} · new setup"
             text = text or f"{new['setup']}, {STAGE_LABEL.get(stage, stage).lower()}."
         else:
             stage = new['stage']
-            title = f"{t} · {STAGE_LABEL.get(stage, stage).lower()}"
+            title = custom[0] if custom else f"{t} · {STAGE_LABEL.get(stage, stage).lower()}"
             text = text or f"Previously {STAGE_LABEL.get(old['stage'], old['stage']).lower()}."
         if label != 'main':
             title += f" ({label.replace(' alt', '')} setup)"
@@ -617,11 +617,43 @@ def _finished(s, main, now_et):
         if tgt is not None and (l[i] <= tgt if dn else h[i] >= tgt):
             return t[i], f"Hit target ${_fmt_price(tgt)}.", f"{t_} · target reached"
     n = _completed_count(t, tf, now_et)
+    pattern = s.get('pattern') or main.get('pattern') or ''
+    if 'Channel' in pattern and s.get('lines'):
+        # Channels fail on one completed close back inside the broken line (its value that day).
+        broken = s['lines'][0] if not dn else s['lines'][1]   # lines = [upper, lower]
+        (d0, v0), (d1, v1) = broken['from'], broken['to']
+        i0, i1 = t.index(d0) if d0 in t else None, t.index(d1) if d1 in t else None
+        if i0 is not None and i1 is not None and i1 > i0:
+            per = (v1 - v0) / (i1 - i0)
+            for i in range(start + 1, n):
+                line = v0 + per * (i - i0)
+                if (c[i] > line if dn else c[i] < line):
+                    return (t[i], f"Closed ${_fmt_price(c[i])} back inside the channel.", f"{t_} · pattern failed")
+            return None
     for i in range(start, n - 1):  # a close past invalidation, then a follow-through close
         if inv is not None and (c[i] > inv if dn else c[i] < inv) and (c[i + 1] > h[i] if dn else c[i + 1] < l[i]):
             return (t[i + 1], f"Closed ${_fmt_price(c[i])} past invalidation ${_fmt_price(inv)}, then followed through.",
                     f"{t_} · pattern failed")
     return None
+
+
+NO_PATTERN = 'No clear pattern'
+
+
+def placeholder_entry(ticker, name, price, price_date, note):
+    """Body of a pending "No clear pattern" entry (without the surrounding braces' indentation)."""
+    return ("{\n"
+            f"    ticker: {json.dumps(ticker)},\n"
+            f"    name: {json.dumps(name)},\n"
+            "    auto: true,\n"
+            f"    pattern: {json.dumps(NO_PATTERN)},\n"
+            '    timeframe: "daily",\n'
+            '    direction: "both",\n'
+            '    stage: "forming",\n'
+            f"    price: {_fmt_price(price) if price is not None else 0},\n"
+            f"    priceDate: {json.dumps(price_date or _date.today().isoformat())},\n"
+            f"    note: {json.dumps(note)}\n"
+            "  }")
 
 
 def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE):
@@ -649,14 +681,12 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
             report.append(f"{main['ticker']}: main setup finished ({done['main'][1]}) but its {alt_label} setup is live; left in place")
             continue
         if 'main' in done:
+            # Keep the stock: replace the entry with a placeholder that the detector rescans.
             a, b = e['span']
-            a = text.rfind('\n', 0, a) + 1
-            b = b + 1
-            if text[b:b + 1] == ',':
-                b += 1
-            if text[b:b + 1] == '\n':
-                b += 1
-            cuts.append((a, b))
+            reason = done['main'][1].rstrip('.')
+            cuts.append((a, b + 1, placeholder_entry(main['ticker'], main.get('name', main['ticker']),
+                                                    main.get('price'), main.get('priceDate'),
+                                                    f"Previous setup closed ({reason[0].lower() + reason[1:]}). Scanning for a new one.")))
         else:  # only the second setup is done: drop it (and a key-level note tied to it)
             for key in ('alt', 'keyLevel'):
                 if key in e['fields']:
@@ -664,13 +694,13 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
                     a = text.rfind('\n', 0, text.rfind(key, 0, v0)) + 1
                     b = v1 + (1 if text[v1:v1 + 1] == ',' else 0)
                     b += 1 if text[b:b + 1] == '\n' else 0
-                    cuts.append((a, b))
+                    cuts.append((a, b, ''))
         for label, r in done.items():
             notes[f"{main['ticker']}|{label}"] = r
             report.append(f"{main['ticker']} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
     new_text = text
-    for a, b in sorted(cuts, reverse=True):
-        new_text = new_text[:a] + new_text[b:]
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
     news = sync_news(text, new_text, notes, now_et.date().isoformat(), apply=apply,
                      news_path=news_path, snapshot_path=snapshot_path)
     if apply and new_text != text:

@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-21-auto-scan",
+    date: "Oct 21 2026",
+    tickers: [],
+    title: "Auto-detected setups for 67 stocks",
+    text: "67 with a channel, wedge or reversal candle, 0 with no clear pattern yet. Marked with a red dot until checked by hand.",
+  },
+  {
     id: "2026-10-21-CBRS-main-removed",
     date: "Oct 21 2026",
     tickers: ["CBRS"],
