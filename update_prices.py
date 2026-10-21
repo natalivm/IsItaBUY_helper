@@ -18,6 +18,11 @@ Friday and flags stocks that swung >15% over the week for review.
 After every --apply run, rating changes are automatically reported: stocks that
 crossed a rating threshold (STRONG BUY / BUY / HOLD / OVERVALUED) due to price
 action are flagged. Use --push to commit and push those changes to git.
+
+The same run also refreshes the home-page Pattern Break Watchlist
+(data/patternWatchlist.ts): every entry's `price` / `priceDate` is updated, and
+confirmed setups whose target was touched are flipped to stage "target"
+(see pattern_watchlist.py).
 """
 
 import argparse
@@ -30,6 +35,8 @@ import sys
 import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
+
+import pattern_watchlist
 
 STOCKS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stocks")
 HISTORY_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "price_history.json")
@@ -491,7 +498,7 @@ def print_rating_report(all_rows, changed):
 
 # ── Git Operations ──
 
-def git_commit_push(changed_files, changes, rating_changes):
+def git_commit_push(changed_files, changes, rating_changes, target_hits=None):
     """Stage price-changed files, commit with a rating-aware message, and push."""
     if not changed_files:
         print("\nNothing to commit.")
@@ -505,7 +512,13 @@ def git_commit_push(changed_files, changes, rating_changes):
 
     # Build commit message
     symbols = [sym for sym, _, _ in changes]
-    msg_parts = [f"Update prices: {', '.join(symbols)}"]
+    msg_parts = [f"Update prices: {', '.join(symbols)}" if symbols else "Update pattern watchlist prices"]
+
+    if target_hits:
+        msg_parts.append("")
+        msg_parts.append("Pattern targets reached:")
+        for sym, label, target, d in target_hits:
+            msg_parts.append(f"  {sym} ({label}): ${pattern_watchlist._fmt_price(target)} on {d}")
 
     if rating_changes:
         msg_parts.append("")
@@ -855,8 +868,13 @@ def main():
         print_rating_report(all_rows, [])
         return
 
-    prices = fetch_prices(tickers)
-    print(f"Got prices for {len(prices)}/{len(tickers)} stocks\n")
+    # Watchlist-only symbols (e.g. SPY, TSLA) are fetched alongside the stock files.
+    wl_symbols = pattern_watchlist.get_watchlist_tickers()
+    fetch_list = dict(tickers)
+    for sym in wl_symbols:
+        fetch_list.setdefault(sym, None)
+    prices = fetch_prices(fetch_list)
+    print(f"Got prices for {len([s for s in tickers if s in prices])}/{len(tickers)} stocks\n")
 
     # Compute rating changes BEFORE writing files (uses old prices vs new prices)
     all_rows, rating_changes = check_rating_changes(tickers, prices)
@@ -885,13 +903,28 @@ def main():
     # Always show rating check results
     print_rating_report(all_rows, rating_changes)
 
+    # Pattern watchlist: refresh `price` / `priceDate`, flip confirmed setups that hit target.
+    wl_changes, wl_hits = [], []
+    if wl_symbols:
+        print(f"\nFetching daily bars for {len(wl_symbols)} watchlist symbols...")
+        quotes = pattern_watchlist.fetch_daily_bars(wl_symbols, HEADERS)
+        today = datetime.now().strftime("%Y-%m-%d")
+        for sym in wl_symbols:
+            if sym in prices:  # keep the watchlist on the same quote as the stock files
+                quotes.setdefault(sym, {"date": today, "bars": []})["price"] = prices[sym]
+        wl_changes, wl_hits, wl_review = pattern_watchlist.update_watchlist(quotes, apply=args.apply)
+        wl_missing = [s for s in wl_symbols if s not in quotes]
+        pattern_watchlist.print_watchlist_report(wl_changes, wl_hits, wl_review, wl_missing, args.apply)
+
     if args.apply:
         record_prices(tickers, prices)
 
         # Push to git if requested
-        if args.push and changes:
+        if args.push and (changes or wl_changes or wl_hits):
             changed_paths = [tickers[sym]['path'] for sym, _, _ in changes if sym in tickers]
-            git_commit_push(changed_paths, changes, rating_changes)
+            if wl_changes or wl_hits:
+                changed_paths.append(pattern_watchlist.WATCHLIST_FILE)
+            git_commit_push(changed_paths, changes, rating_changes, wl_hits)
 
         # Auto-run weekly review on Fridays
         if datetime.now().weekday() == 4:  # Friday
