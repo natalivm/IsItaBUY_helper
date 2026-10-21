@@ -82,6 +82,8 @@ The home page ledger reads `data/patternWatchlist.ts`. The same `update_prices.p
 
 `note` prose is hand-written and isn't rewritten when the price moves. Re-read it when a setup changes stage.
 
+**Charts in the expanded rows** (`components/SetupChart.tsx`, TradingView `lightweight-charts`, loaded on first expand) read candles from `public/bars/TICKER_timeframe.json`. The price run rewrites these for every watchlist setup's timeframe (daily 1y, weekly 5y, monthly 10y, regular session only); refresh them by hand with `python3 pattern_watchlist.py --bars`. A setup's levels are drawn as labelled lines and its `stageDate` as a marker. To draw the pattern's trendlines, add `lines: [{ from: ['YYYY-MM-DD', price], to: ['YYYY-MM-DD', price] }, …]` to the setup (or its `alt`).
+
 ### Price Format
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).

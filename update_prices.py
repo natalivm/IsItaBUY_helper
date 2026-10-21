@@ -921,13 +921,18 @@ def main():
     if args.apply:
         record_prices(tickers, prices)
 
+        # Candles for the watchlist's expanded-row charts (public/bars/).
+        if wl_symbols:
+            bars_ok, bars_bad = pattern_watchlist.write_chart_bars(HEADERS)
+            print(f"\nWrote {len(bars_ok)} chart candle file(s)." + (f" Failed: {', '.join(bars_bad)}" if bars_bad else ""))
+
         # Push to git if requested
         wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))
         if args.push and (changes or wl_changed):
             changed_paths = [tickers[sym]['path'] for sym, _, _ in changes if sym in tickers]
             if wl_changed:
                 changed_paths += [pattern_watchlist.WATCHLIST_FILE, pattern_watchlist.NEWS_FILE,
-                                  pattern_watchlist.SNAPSHOT_FILE]
+                                  pattern_watchlist.SNAPSHOT_FILE, pattern_watchlist.BARS_DIR]
             git_commit_push(changed_paths, changes, rating_changes, wl_result)
 
         # Auto-run weekly review on Fridays

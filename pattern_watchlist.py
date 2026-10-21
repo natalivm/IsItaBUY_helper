@@ -50,6 +50,10 @@ _DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 WATCHLIST_FILE = os.path.join(_DATA_DIR, "patternWatchlist.ts")
 NEWS_FILE = os.path.join(_DATA_DIR, "newsFeed.ts")
 SNAPSHOT_FILE = os.path.join(_DATA_DIR, "watchlistStatus.json")
+# Candle files for the expanded-row charts, served with the site (public/ → dist/).
+BARS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "bars")
+# timeframe → (Yahoo interval, history range)
+CHART_RANGES = {'daily': ('1d', '1y'), 'weekly': ('1wk', '5y'), 'monthly': ('1mo', '10y')}
 
 _KEY_RE = re.compile(r'(?<![\w$])(\w+):\s*')
 _VAL_RE = re.compile(r'"(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?')
@@ -184,6 +188,62 @@ def fetch_daily_bars(symbols, headers, opener=None):
         except Exception as e:
             print(f"  {sym}: daily bars FAILED ({e})")
     return out
+
+
+# ── Chart candles ──
+
+def chart_timeframes(path=WATCHLIST_FILE):
+    """{ticker: {timeframes}} needed by the watchlist charts (main + alt setups)."""
+    with open(path) as fh:
+        entries = parse_watchlist(fh.read())
+    out = {}
+    for e in entries:
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for _, s, _ in _setups(e):
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            out.setdefault(main['ticker'], set()).add(tf)
+    return out
+
+
+def fetch_chart_bars(sym, timeframe, headers, opener=None):
+    """Regular-session OHLC candles as [(YYYY-MM-DD, o, h, l, c)], oldest first."""
+    interval, rng = CHART_RANGES.get(timeframe, CHART_RANGES['daily'])
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}"
+           f"?range={rng}&interval={interval}&includePrePost=false")
+    req = urllib.request.Request(url, headers=headers)
+    resp = opener.open(req, timeout=15) if opener else urllib.request.urlopen(req, timeout=15)
+    res = json.loads(resp.read().decode())["chart"]["result"][0]
+    q = res["indicators"]["quote"][0]
+    bars = {}
+    for ts, o, h, l, c in zip(res.get("timestamp", []), q["open"], q["high"], q["low"], q["close"]):
+        if None in (o, h, l, c):
+            continue
+        d = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
+        bars[d] = (d, o, h, l, c)  # one candle per date (the live bar can repeat the last one)
+    return [bars[d] for d in sorted(bars)]
+
+
+def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=None):
+    """Write public/bars/TICKER_timeframe.json for every watchlist chart. Returns (written, failed)."""
+    os.makedirs(bars_dir, exist_ok=True)
+    written, failed = [], []
+    for sym, tfs in sorted(chart_timeframes(path).items()):
+        for tf in sorted(tfs):
+            try:
+                bars = fetch_chart_bars(sym, tf, headers, opener)
+            except Exception as e:
+                failed.append(f"{sym} {tf} ({e})")
+                continue
+            if not bars:
+                failed.append(f"{sym} {tf} (no data)")
+                continue
+            r = lambda v: round(v, 2)
+            data = {"t": [b[0] for b in bars], "o": [r(b[1]) for b in bars], "h": [r(b[2]) for b in bars],
+                    "l": [r(b[3]) for b in bars], "c": [r(b[4]) for b in bars]}
+            with open(os.path.join(bars_dir, f"{sym}_{tf}.json"), 'w') as fh:
+                json.dump(data, fh, separators=(',', ':'))
+            written.append(f"{sym}_{tf}")
+    return written, failed
 
 
 # ── Update + checks ──
@@ -530,7 +590,12 @@ def print_watchlist_report(result, missing, apply):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Re-check watchlist setups against their stored prices and post status changes to the News feed (no network).")
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
+    ap.add_argument("--bars", action="store_true", help="only (re)download the chart candles into public/bars/ (network)")
     args = ap.parse_args()
+    if args.bars:
+        ok, bad = write_chart_bars({"User-Agent": "Mozilla/5.0"})
+        print(f"Wrote {len(ok)} chart file(s) to {os.path.relpath(BARS_DIR)}." + (f" Failed: {', '.join(bad)}" if bad else ""))
+        raise SystemExit(0)
     res = update_watchlist(None, apply=args.apply)
     print_watchlist_report(res, [], args.apply)
     if not args.apply and (res['news'] or res['needs_update'] or res['target_hits']):

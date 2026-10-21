@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { TickerDefinition } from '../types';
 import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage } from '../data/patternWatchlist';
+import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import './PatternWatchlist.css';
 
 // Home page: one scannable ledger of tickers. Clicking the ticker opens the
@@ -68,6 +69,21 @@ function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: 
   return x.stage === 'update' ? { ...x, stage: x.prevStage ?? 'forming' } : x;
 }
 
+// Chart levels + stage marker for a single-direction setup (main or alt).
+function chartSpec(s: { direction: string; stage: PatternStage; stageDate?: string; signal?: number; confirm?: number; invalidation?: number; target?: number }) {
+  const dn = s.direction === 'down';
+  const levels: ChartLevel[] = [];
+  if (s.target != null) levels.push({ price: s.target, label: s.stage === 'target' ? 'Reached' : 'Target', tone: 'up' });
+  if (s.confirm != null) levels.push({ price: s.confirm, label: 'Confirm', tone: dn ? 'down' : 'up' });
+  if (s.signal != null) levels.push({ price: s.signal, label: 'Signal', tone: 'muted' });
+  if (s.invalidation != null) levels.push({ price: s.invalidation, label: 'Invalidation', tone: 'down', solid: true });
+  const word: Partial<Record<PatternStage, string>> = { signal: 'Signal', confirmed: 'Confirmed', target: 'Target' };
+  const marker: ChartMarker | undefined = s.stageDate && word[s.stage]
+    ? { date: s.stageDate, text: word[s.stage]!, tone: dn ? 'down' : 'up', above: dn }
+    : undefined;
+  return { levels, marker };
+}
+
 const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
   <div className="upd-banner">
     <Icon name="refresh" />
@@ -121,6 +137,12 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
           <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
         ))}
       </div>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} levels={[
+        { price: s.goalUp!, label: 'Goal up', tone: 'up' },
+        { price: s.breakUp!, label: 'Breaks up', tone: 'up' },
+        { price: s.breakDown!, label: 'Breaks down', tone: 'down' },
+        { price: s.goalDown!, label: 'Goal down', tone: 'up' },
+      ]} />
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -164,6 +186,7 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
       )}
       <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
       <div className="altgrid">
         <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} /></div>
         <div>
@@ -236,6 +259,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
           );
         })}
       </div>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} {...chartSpec(s)} />
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />

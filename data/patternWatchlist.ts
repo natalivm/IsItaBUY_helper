@@ -12,6 +12,9 @@ export type PatternDirection = 'up' | 'down' | 'both';
 export type PatternStage = 'forming' | 'signal' | 'confirmed' | 'target' | 'failed' | 'update';
 export type PatternTimeframe = 'daily' | 'weekly' | 'monthly';
 
+// Optional trendline anchors for the chart: [date 'YYYY-MM-DD', price] pairs.
+export type PatternLine = { from: [string, number]; to: [string, number] };
+
 export interface PatternAltSetup {
   pattern?: string;
   timeframe: PatternTimeframe;
@@ -28,6 +31,7 @@ export interface PatternAltSetup {
   target: number;
   failRule?: string;
   note?: string;
+  lines?: PatternLine[];
 }
 
 export interface PatternHistoryEntry {
@@ -69,6 +73,7 @@ export interface PatternStock {
   confirmRule?: string;
   failRule?: string;
   note?: string;
+  lines?: PatternLine[];
   keyLevel?: { price: number; text: string };
   alt?: PatternAltSetup;
   history?: PatternHistoryEntry[];

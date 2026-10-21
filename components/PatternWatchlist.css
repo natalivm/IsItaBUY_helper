@@ -188,3 +188,9 @@
 .pbw .st-upd{color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,transparent)}
 .pbw .upd-banner{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;color:var(--fg);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
 .pbw .upd-banner svg{flex:none;width:17px;height:17px;margin-top:2px;color:var(--accent)}
+/* Expanded-row candle chart (components/SetupChart.tsx) */
+.pbw .chart-box{grid-column:1/-1;position:relative;height:340px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.pbw .chart{position:absolute;inset:0}
+.pbw .chart-msg{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;color:var(--faint);font-size:14px}
+@media (max-width:600px){.pbw .chart-box{height:270px}}
+
