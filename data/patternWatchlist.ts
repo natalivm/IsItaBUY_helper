@@ -179,6 +179,11 @@ export const PATTERN_STOCKS: PatternStock[] = [
     invalidation: 943.87,
     target: 638.57,
     note: "Price slipped through the bottom of a rising channel after topping out near $1,100. The break was confirmed with a daily close below $913.56. Invalidation sits close, just 4.3% above the latest close.",
+    // Channel lines read off the source chart (approximate, ±$5).
+    lines: [
+      { from: ["2026-07-23", 1010], to: ["2026-10-20", 1241] },
+      { from: ["2026-07-23", 718], to: ["2026-10-20", 948] },
+    ],
     tag: "Flips up if $663 holds",
     keyLevel: {
       price: 663.02,

@@ -84,6 +84,19 @@ function chartSpec(s: { direction: string; stage: PatternStage; stageDate?: stri
   return { levels, marker };
 }
 
+// Prices & Rules sit behind a button so the expanded row stays compact.
+const PricesRules: React.FC<{ label?: string; children: React.ReactNode }> = ({ label = 'Prices & Rules', children }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" className="pr-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <span>{label}</span><Chev />
+      </button>
+      {open && <div className="pr-grid">{children}</div>}
+    </>
+  );
+};
+
 const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
   <div className="upd-banner">
     <Icon name="refresh" />
@@ -143,6 +156,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
         { price: s.breakDown!, label: 'Breaks down', tone: 'down' },
         { price: s.goalDown!, label: 'Goal down', tone: 'up' },
       ]} />
+      <PricesRules>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -157,6 +171,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
         </ul>
         {s.note && <p className="thesis">{s.note}</p>}
       </div>
+      </PricesRules>
     </div>
   );
 };
@@ -187,7 +202,7 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
       <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
-      <div className="altgrid">
+      <PricesRules label={`${T} prices & rules`}>
         <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} /></div>
         <div>
           <h3>{T} rules</h3>
@@ -203,7 +218,7 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
           </ul>
           {a.note && <p className="thesis">{a.note}</p>}
         </div>
-      </div>
+      </PricesRules>
     </div>
   );
 };
@@ -260,6 +275,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
         })}
       </div>
       <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} {...chartSpec(s)} />
+      <PricesRules>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -287,6 +303,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
         </ul>
         {s.note && <p className="thesis">{s.note}</p>}
       </div>
+      </PricesRules>
       {s.alt && <AltBlock s={s} a={s.alt} />}
       {s.history && <HistBlock s={s} />}
     </div>

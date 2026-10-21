@@ -26,7 +26,7 @@ export type TrendLine = { from: [string, number]; to: [string, number] };
 interface Bars { t: string[]; o: number[]; h: number[]; l: number[]; c: number[] }
 
 // Bars visible on open, per timeframe (the rest is a scroll/zoom away).
-const VISIBLE: Record<string, number> = { daily: 90, weekly: 80, monthly: 72 };
+const VISIBLE: Record<string, number> = { daily: 90, weekly: 52, monthly: 60 };
 
 const cssVar = (el: Element, name: string) => getComputedStyle(el).getPropertyValue(name).trim();
 
@@ -102,7 +102,7 @@ const SetupChart: React.FC<{
 
       for (const ln of lines ?? []) {
         const s = chart.addSeries(lc.LineSeries, {
-          color: cssVar(el, '--wait'), lineWidth: 2, lineStyle: lc.LineStyle.Dashed,
+          color: cssVar(el, '--trend'), lineWidth: 2, lineStyle: lc.LineStyle.LargeDashed,
           priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false,
         });
         s.setData([{ time: snap(ln.from[0]) as Time, value: ln.from[1] }, { time: snap(ln.to[0]) as Time, value: ln.to[1] }]);
