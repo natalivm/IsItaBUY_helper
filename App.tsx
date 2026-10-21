@@ -2,16 +2,15 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { ScenarioType, TickerDefinition } from './types';
 import { calculateProjection, getInstitutionalRating } from './services/projectionService';
-import { TICKERS, GROUP_ORDER, GROUP_META, StockGroup, SPLASH_DURATION_MS, weightedScenarioAverage } from './constants';
+import { TICKERS, GROUP_ORDER, GROUP_META, StockGroup, weightedScenarioAverage } from './constants';
 import { classifyStock, cn } from './utils';
 import StockDetailView from './components/StockDetailView';
-import LoadingSplash from './components/LoadingSplash';
 import StockRow from './components/StockRow';
 import ThemeToggle from './components/ThemeToggle';
 import InstallPrompt from './components/InstallPrompt';
 import ReleaseNotesPanel, { WhatsNewToast, PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY } from './components/ReleaseNotesPanel';
 
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import { ScrollText, Newspaper } from 'lucide-react';
 
 // ── Main App ──
@@ -25,7 +24,6 @@ const App: React.FC = () => {
   }, [tickers]);
 
   const [activeTicker, setActiveTicker] = useState<string>(getTickerFromHash);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'default' | 'upside' | 'rs'>('default');
 
@@ -60,11 +58,6 @@ const App: React.FC = () => {
       history.pushState(null, '', '#' + ticker);
     }
     setActiveTicker(ticker);
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), SPLASH_DURATION_MS);
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -172,15 +165,7 @@ const App: React.FC = () => {
   if (activeTicker === 'home') {
     return (
       <>
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <LoadingSplash />
-          ) : (
-            <motion.div
-              key="list"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               className="min-h-screen bg-surface-card overflow-y-auto px-4 lg:px-24 pt-20 pb-24 scrollbar-hide"
             >
               <div className="max-w-4xl mx-auto mb-12">
@@ -293,16 +278,14 @@ const App: React.FC = () => {
                 })()}
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
         <ReleaseNotesPanel
           open={panelOpen}
           tab={panelTab}
           onTabChange={setPanelTab}
           onClose={() => setPanelOpen(false)}
         />
-        {!isLoading && !updatesSeen && !panelOpen && (
+        {!updatesSeen && !panelOpen && (
           <WhatsNewToast
             onView={() => openPanel('notes')}
             onDismiss={markUpdatesSeen}
