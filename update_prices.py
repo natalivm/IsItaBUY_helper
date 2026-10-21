@@ -38,6 +38,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
 
+import pattern_lines
 import pattern_watchlist
 
 STOCKS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stocks")
@@ -925,6 +926,10 @@ def main():
         if wl_symbols:
             bars_ok, bars_bad = pattern_watchlist.write_chart_bars(HEADERS)
             print(f"\nWrote {len(bars_ok)} chart candle file(s)." + (f" Failed: {', '.join(bars_bad)}" if bars_bad else ""))
+            # Trendlines for setups that don't have them yet (e.g. newly posted ones).
+            new_lines, _ = pattern_lines.run(apply=True, verbose=False)
+            if new_lines:
+                print(f"Fitted trendlines for: {', '.join(n for n, _, _ in new_lines)}")
 
         # Push to git if requested
         wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))

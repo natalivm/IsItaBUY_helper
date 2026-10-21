@@ -218,9 +218,20 @@ def fetch_chart_bars(sym, timeframe, headers, opener=None):
     for ts, o, h, l, c in zip(res.get("timestamp", []), q["open"], q["high"], q["low"], q["close"]):
         if None in (o, h, l, c):
             continue
-        d = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
-        bars[d] = (d, o, h, l, c)  # one candle per date (the live bar can repeat the last one)
-    return [bars[d] for d in sorted(bars)]
+        day = datetime.fromtimestamp(ts, tz=timezone.utc).date()
+        # Yahoo sends the live week/month as an extra bar dated today: fold it into its period.
+        if timeframe == 'weekly':
+            key = day - timedelta(days=day.weekday())
+        elif timeframe == 'monthly':
+            key = day.replace(day=1)
+        else:
+            key = day
+        if key in bars:
+            d0, o0, h0, l0, _ = bars[key]
+            bars[key] = (d0, o0, max(h0, h), min(l0, l), c)
+        else:
+            bars[key] = (day.isoformat(), o, h, l, c)
+    return [bars[k] for k in sorted(bars)]
 
 
 def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=None):

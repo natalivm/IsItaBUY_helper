@@ -95,6 +95,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 760.64,
     invalidation: 791.60,
     target: 745.20,
+    lines: [
+      { from: ["2026-06-11", 747.22], to: ["2026-10-20", 791.64] },
+      { from: ["2026-06-11", 724.41], to: ["2026-10-20", 768.83] },
+    ],
     signalRule: "a completed daily close below $767.98; a close back inside cancels it.",
     failRule: "a completed daily close above $791.60, then a follow-through close above that candle's high.",
     note: "Price closed below the bottom of a short rising channel on Oct 16, giving a downside signal. It needs a daily close below $760.64 to confirm, just 0.8% under the latest close. A close that low would also come close to the $758.94 invalidation of the upside setup below.",
@@ -108,6 +112,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       confirm: 772.65,
       invalidation: 758.94,
       target: 784.83,
+      lines: [
+        { from: ["2026-09-03", 774.03], to: ["2026-10-20", 758.45] },
+        { from: ["2026-09-03", 753.5], to: ["2026-10-20", 737.91] },
+      ],
       note: "Price broke out of a falling channel and confirmed with a daily close above $772.65 on Oct 5. It has since slipped back under that level, and the $758.94 invalidation is only 1% below the latest close."
     }
   },
@@ -126,6 +134,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 707.23,
     invalidation: 764.44,
     target: 538.12,
+    lines: [
+      { from: ["2026-03-30", 741.54], to: ["2026-10-19", 764.44] },
+      { from: ["2026-03-30", 555.6], to: ["2026-10-19", 730.08] },
+    ],
     signalRule: "a completed weekly close below $724.07; a close back inside cancels it.",
     failRule: "a completed weekly close above $764.44, then a follow-through close above that candle's high.",
     note: "After a strong run from the spring low, price stalled into a rising wedge with two failed pushes near $760. It closed below the lower line for a weekly downside signal. A weekly close below $707.23, 1.5% under the latest close, would confirm it."
@@ -161,6 +173,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 526.79,
     invalidation: 401.41,
     target: 664.85,
+    lines: [
+      { from: ["2026-06-08", 613.61], to: ["2026-10-19", 430.72] },
+      { from: ["2026-06-08", 437.23], to: ["2026-10-19", 401.4] },
+    ],
     failRule: "a completed weekly close below $401.41, then a follow-through close below that candle's low.",
     note: "Price broke out of the top of a falling wedge on the weekly chart and confirmed with a weekly close above $526.79. It ran toward the target zone, pulled back, and is now sitting just above the confirmation level."
   },
@@ -179,10 +195,9 @@ export const PATTERN_STOCKS: PatternStock[] = [
     invalidation: 943.87,
     target: 638.57,
     note: "Price slipped through the bottom of a rising channel after topping out near $1,100. The break was confirmed with a daily close below $913.56. Invalidation sits close, just 4.3% above the latest close.",
-    // Channel lines read off the source chart (approximate, ±$5).
     lines: [
-      { from: ["2026-07-23", 1010], to: ["2026-10-20", 1241] },
-      { from: ["2026-07-23", 718], to: ["2026-10-20", 948] },
+      { from: ["2026-07-14", 994.8], to: ["2026-10-20", 1243.79] },
+      { from: ["2026-07-14", 698.19], to: ["2026-10-20", 947.17] },
     ],
     tag: "Flips up if $663 holds",
     keyLevel: {
@@ -215,6 +230,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 1401.01,
     invalidation: 1519.60,
     target: 748.24,
+    lines: [
+      { from: ["2026-07-23", 1696.37], to: ["2026-10-20", 2263.52] },
+      { from: ["2026-07-23", 961.6], to: ["2026-10-20", 1528.75] },
+    ],
     note: "Price rolled over from highs near $1,900 and broke through the bottom of a rising channel. The break was confirmed with a daily close below $1,401.01, and price is now holding just under that level."
   },
   {
@@ -249,6 +268,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 207.30,
     invalidation: 414.37,
     target: 144.29,
+    lines: [
+      { from: ["2026-04-27", 222.51], to: ["2026-10-19", 504.17] },
+      { from: ["2026-04-27", 132.7], to: ["2026-10-19", 414.37] },
+    ],
     note: "Price broke down out of a rising channel on the weekly chart and confirmed with a weekly close below $207.30. After a summer bounce toward $280 it rolled over again and is pressing toward the $144.29 target.",
     history: [
       { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-13",
@@ -271,6 +294,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 39.33,
     invalidation: 49.49,
     target: 21.97,
+    lines: [
+      { from: ["2026-07-27", 49.13], to: ["2026-10-19", 49.49] },
+      { from: ["2026-07-27", 28.93], to: ["2026-10-19", 46.57] },
+    ],
     failRule: "a completed weekly close above $49.49, then a follow-through close above that candle's high.",
     note: "Price capped twice near $50 while the lows kept rising, forming a rising wedge on the weekly chart. It broke down and confirmed with a weekly close below $39.33, then fell into the high $20s."
   },
@@ -289,6 +316,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 370.00,
     invalidation: 312.95,
     target: 465.43,
+    lines: [
+      { from: ["2026-07-01", 432.86], to: ["2026-10-20", 312.05] },
+      { from: ["2026-07-01", 327.19], to: ["2026-10-20", 206.38] },
+    ],
     note: "The rebound from the July low broke out of a falling channel on the daily chart and confirmed with a daily close above $370. Price is back just under that level now. The weekly chart below points the other way, so the two timeframes currently disagree.",
     alt: {
       pattern: "Rising Wedge",
@@ -300,6 +331,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       confirm: 377.22,
       invalidation: 486.40,
       target: 292.28,
+      lines: [
+        { from: ["2026-02-23", 420.34], to: ["2026-10-19", 486.4] },
+        { from: ["2026-02-23", 308.63], to: ["2026-10-19", 470.74] },
+      ],
       failRule: "a completed weekly close above $486.40, then a follow-through close above that candle's high.",
       note: "Price broke down out of a rising wedge on the weekly chart and confirmed with a weekly close below $377.22. The July flush stopped short of the target, and price has since recovered to just under the confirmation level. Weekly close pending."
     }
@@ -333,6 +368,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 721.30,
     invalidation: 866.67,
     target: 519.93,
+    lines: [
+      { from: ["2026-08-05", 601.0], to: ["2026-10-20", 871.78] },
+      { from: ["2026-08-05", 390.28], to: ["2026-10-20", 852.83] },
+    ],
     failRule: "a completed daily close above $866.67, then a follow-through close above that candle's high.",
     note: "A steep run from the September low near $550 narrowed into a rising wedge that topped out near $780. Price broke the lower line and confirmed with a daily close below $721.30, and is now trading just under that level."
   },
@@ -348,6 +387,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     signal: 238.50,
     invalidation: 202.42,
     target: 302.98,
+    lines: [
+      { from: ["2026-09-08", 295.34], to: ["2026-10-20", 236.54] },
+      { from: ["2026-09-08", 230.86], to: ["2026-10-20", 201.44] },
+    ],
     confirmRule: "a later completed daily close beyond that signal candle's high.",
     failRule: "a completed daily close below $202.42, then a follow-through close below that candle's low.",
     note: "Price has slid from the early-September high near $295 inside a falling wedge and is now sitting near its lower edge. A daily close above $238.50 would give an upside signal. Invalidation is close, just 1.8% below the latest close."
@@ -383,6 +426,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 176.77,
     invalidation: 217.97,
     target: 145.07,
+    lines: [
+      { from: ["2026-07-27", 214.61], to: ["2026-10-19", 217.97] },
+      { from: ["2026-07-27", 156.84], to: ["2026-10-19", 207.02] },
+    ],
     signalRule: "a completed weekly close below $202.84; a close back inside cancels it.",
     failRule: "a completed weekly close above $217.97, then a follow-through close above that candle's high.",
     note: "Price made two failed pushes near $218 while the lows kept rising, forming a rising wedge on the weekly chart. One large red weekly candle broke the lower line for a downside signal. A weekly close below $176.77, 3.4% under the latest close, would confirm it."
@@ -401,6 +448,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 90.78,
     invalidation: 86.71,
     target: 96.97,
+    lines: [
+      { from: ["2026-09-09", 97.98], to: ["2026-10-20", 86.31] },
+      { from: ["2026-09-09", 88.93], to: ["2026-10-20", 77.25] },
+    ],
     note: "Price slid inside a falling channel from the September high near $98, then broke out through the upper line in mid-October. The break was confirmed with a daily close above $90.78, and price is holding just above it."
   },
   {
@@ -417,6 +468,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 354.22,
     invalidation: 393.70,
     target: 320.03,
+    lines: [
+      { from: ["2026-09-22", 366.55], to: ["2026-10-20", 395.13] },
+      { from: ["2026-09-22", 323.52], to: ["2026-10-20", 380.0] },
+    ],
     failRule: "a completed daily close above $393.70, then a follow-through close above that candle's high.",
     note: "Price ground higher in a rising wedge from late September and topped out near $380. It broke the lower line and confirmed with a daily close below $354.22, then slid into the mid $330s, closing in on the target."
   },
@@ -435,6 +490,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 700.39,
     invalidation: 1458.76,
     target: 548.46,
+    lines: [
+      { from: ["2026-02-09", 459.84], to: ["2026-10-19", 1834.46] },
+      { from: ["2026-02-09", 84.13], to: ["2026-10-19", 1458.76] },
+    ],
     note: "A powerful run in 2026 took price from under $300 to around $1,100 inside a rising channel. It broke the lower line over the summer, held sideways, and has now confirmed with a weekly close below $700.39."
   },
   {
@@ -470,6 +529,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 342.54,
     invalidation: 442.12,
     target: 258.24,
+    lines: [
+      { from: ["2026-09-04", 321.65], to: ["2026-10-20", 439.88] },
+      { from: ["2026-09-04", 209.81], to: ["2026-10-20", 425.81] },
+    ],
     failRule: "a completed daily close above $442.12, then a follow-through close above that candle's high.",
     note: "Price climbed a rising wedge from the mid-September low near $255 to a peak around $400. It broke the lower line and confirmed with a daily close below $342.54, then sold off steadily into the high $280s."
   },
@@ -487,6 +550,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 381.74,
     invalidation: 454.42,
     target: 204.90,
+    lines: [
+      { from: ["2026-08-17", 444.17], to: ["2026-10-20", 454.66] },
+      { from: ["2026-08-17", 252.86], to: ["2026-10-20", 418.25] },
+    ],
     failRule: "a completed daily close above $454.42, then a follow-through close above that candle's high.",
     note: "Price failed twice near $455, in mid-August and early October, while the lows kept rising. It broke the lower wedge line and confirmed with a daily close below $381.74, then dropped into the mid $330s."
   },
@@ -520,6 +587,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 265.60,
     invalidation: 285.24,
     target: 182.14,
+    lines: [
+      { from: ["2026-07-30", 268.48], to: ["2026-10-20", 375.28] },
+      { from: ["2026-07-30", 178.62], to: ["2026-10-20", 285.42] },
+    ],
     note: "Price climbed a rising channel to a peak near $335 in late September, then faded. It broke the lower line and confirmed with a daily close below $265.60, and has kept sliding into the high $220s."
   },
   {
@@ -536,6 +607,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 87.00,
     invalidation: 83.72,
     target: 94.77,
+    lines: [
+      { from: ["2026-09-02", 93.16], to: ["2026-10-20", 83.43] },
+      { from: ["2026-09-02", 82.48], to: ["2026-10-20", 72.75] },
+    ],
     note: "Price drifted lower in a falling channel from the early-September high near $93, bottoming around $78 in late September. It broke out through the upper line and confirmed with a daily close above $87 on Oct 19."
   },
   {
@@ -553,6 +628,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 925.14,
     invalidation: 853.42,
     target: 1123.05,
+    lines: [
+      { from: ["2026-03-23", 1183.66], to: ["2026-10-19", 856.81] },
+      { from: ["2026-03-23", 961.0], to: ["2026-10-19", 853.42] },
+    ],
     failRule: "a completed weekly close below $853.42, then a follow-through close below that candle's low.",
     note: "Price slid inside a falling wedge from the May high near $1,100 to a low around $880 in early September. It broke out through the upper line and confirmed with a weekly close above $925.14, and has since pushed up toward $1,000."
   },
@@ -589,6 +668,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 800.00,
     invalidation: 1183.95,
     target: 624.28,
+    lines: [
+      { from: ["2026-07-27", 938.24], to: ["2026-10-19", 1183.95] },
+      { from: ["2026-07-27", 594.84], to: ["2026-10-19", 1001.59] },
+    ],
     signalRule: "a completed weekly close below $967.69; a close back inside cancels it.",
     failRule: "a completed weekly close above $1,183.95, then a follow-through close above that candle's high.",
     note: "After topping near $1,150 in early October, one large red weekly candle broke the lower line of a rising wedge for a downside signal. A weekly close below $800, 4.1% under the latest close, would confirm it. The older upside break below is still technically active, so the two setups currently disagree.",
@@ -602,6 +685,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       confirm: 928.48,
       invalidation: 485.80,
       target: 1202.20,
+      lines: [
+        { from: ["2026-04-27", 1123.42], to: ["2026-10-19", 651.72] },
+        { from: ["2026-04-27", 780.48], to: ["2026-10-19", 485.8] },
+      ],
       failRule: "a completed weekly close below $485.80, then a follow-through close below that candle's low.",
       note: "Price broke out of a falling wedge and confirmed with a weekly close above $928.48 in September. The October drop pulled it back under that level, but the invalidation sits far below at $485.80."
     }
@@ -621,6 +708,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 148.00,
     invalidation: 292.70,
     target: 56.82,
+    lines: [
+      { from: ["2026-01-12", 207.8], to: ["2026-10-19", 292.7] },
+      { from: ["2026-01-12", 80.29], to: ["2026-10-19", 261.22] },
+    ],
     failRule: "a completed weekly close above $292.70, then a follow-through close above that candle's high.",
     note: "Price rallied from the April low near $130 to a peak around $250 in May inside a rising wedge, then reversed hard. It confirmed the break with a weekly close below $148 in late June and has drifted sideways to lower since."
   },
@@ -638,6 +729,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     breakDown: 180.85,
     goalUp: 248.36,
     goalDown: 147.09,
+    lines: [
+      { from: ["2026-06-01", 173.01], to: ["2026-10-19", 216.8] },
+      { from: ["2026-06-01", 139.25], to: ["2026-10-19", 183.04] },
+    ],
     note: "Price is grinding higher inside a rising channel from the June low near $150. No break yet in either direction. A weekly close above $214.61 would open a move toward $248.36, while a close below $180.85 would point to $147.09."
   },
   {
@@ -655,6 +750,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 352.30,
     invalidation: 462.84,
     target: 263.16,
+    lines: [
+      { from: ["2026-05-08", 402.0], to: ["2026-10-20", 566.6] },
+      { from: ["2026-05-08", 299.52], to: ["2026-10-20", 464.13] },
+    ],
     note: "Price broke out of the bottom of a rising channel after topping near $410 in May, and confirmed with a daily close below $352.30 in July. It has chopped sideways around $340-$360 since. The monthly wedge below is only 1.6% away from giving its own downside signal.",
     alt: {
       pattern: "Rising Wedge",
@@ -665,6 +764,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       signal: 349.77,
       invalidation: 457.90,
       target: 193.93,
+      lines: [
+        { from: ["2024-07-01", 191.75], to: ["2026-10-01", 457.9] },
+        { from: ["2024-07-01", 35.91], to: ["2026-10-01", 349.77] },
+      ],
       failRule: "a completed monthly close above $457.90, then a follow-through close above that candle's high.",
       note: "A multi-year rising wedge from the 2024 lows. Price is sitting right on its lower line. A monthly close below $349.77 would give a downside signal with a $193.93 projection."
     }
@@ -683,6 +786,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 524.43,
     invalidation: 563.51,
     target: 509.91,
+    lines: [
+      { from: ["2026-09-24", 516.64], to: ["2026-10-20", 566.27] },
+      { from: ["2026-09-24", 491.22], to: ["2026-10-20", 540.85] },
+    ],
     signalRule: "a completed daily close below $535.33; a close back inside cancels it.",
     failRule: "a completed daily close above $563.51, then a follow-through close above that candle's high.",
     note: "Price climbed a short rising channel from the late-September low near $492 to around $550. It closed below the lower line on Oct 16 for a downside signal. A daily close below $524.43, 1.7% under the latest close, would confirm it."
@@ -701,6 +808,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 256.68,
     invalidation: 245.25,
     target: 269.90,
+    lines: [
+      { from: ["2026-08-10", 280.14], to: ["2026-10-20", 244.54] },
+      { from: ["2026-08-10", 262.0], to: ["2026-10-20", 226.4] },
+    ],
     note: "Price drifted lower in a falling channel from the early-August high near $287 to a low around $245 in late September. It broke out through the upper line and confirmed with a daily close above $256.68, and is now pushing toward the target."
   },
   {
@@ -721,6 +832,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 47.97,
     invalidation: 60.48,
     target: 41.64,
+    lines: [
+      { from: ["2026-08-18", 49.97], to: ["2026-10-20", 60.72] },
+      { from: ["2026-08-18", 40.67], to: ["2026-10-20", 51.42] },
+    ],
     signalRule: "a completed daily close below $50.93; a close back inside cancels it.",
     failRule: "a completed daily close above $60.48, then a follow-through close above that candle's high.",
     note: "After a gap up in mid-August, price has crept higher in a narrow rising channel. It closed below the lower line on Oct 16 for a downside signal, but the latest close at $51.02 is already back above the $50.93 signal level, which would cancel it if it holds. A daily close below $47.97 would confirm the break.",
@@ -732,6 +847,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       signal: 51.13,
       invalidation: 45.05,
       target: 58.83,
+      lines: [
+        { from: ["2026-10-02", 55.03], to: ["2026-10-20", 50.78] },
+        { from: ["2026-10-02", 47.33], to: ["2026-10-20", 44.84] },
+      ],
       failRule: "a completed daily close below $45.05, then a follow-through close below that candle's low.",
       note: "A short falling wedge from the early-October high near $54. Price is pressing its upper line; a daily close above $51.13, just 0.2% away, would give an upside signal toward $58.83."
     }
@@ -749,6 +868,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     breakDown: 293.14,
     goalUp: 344.97,
     goalDown: 267.22,
+    lines: [
+      { from: ["2026-09-15", 272.39], to: ["2026-10-20", 323.11] },
+      { from: ["2026-09-15", 246.47], to: ["2026-10-20", 297.18] },
+    ],
     note: "Price has climbed steadily in a rising channel from the mid-September low near $260 and is now pressing the upper line. No break yet. A daily close above $319.05, just 0.7% away, would open a move toward $344.97. A close below $293.14 would point to $267.22."
   },
   {
@@ -767,6 +890,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 516.95,
     invalidation: 99.14,
     target: 731.25,
+    lines: [
+      { from: ["2026-06-08", 1019.32], to: ["2026-10-19", 234.24] },
+      { from: ["2026-06-08", 770.22], to: ["2026-10-19", 99.14] },
+    ],
     failRule: "a completed weekly close below $99.14, then a follow-through close below that candle's low.",
     note: "After peaking near $1,000 in June, price slid in a falling wedge and broke out of it in September, confirming with a weekly close above $516.95. It has since dropped back to $423, well under that level. The older downside channel break below is still active, so the two setups currently disagree.",
     alt: {
@@ -779,6 +906,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       confirm: 509.03,
       invalidation: 669.72,
       target: 15.67,
+      lines: [
+        { from: ["2026-04-06", 917.93], to: ["2026-10-19", 1225.06] },
+        { from: ["2026-04-06", 362.59], to: ["2026-10-19", 669.72] },
+      ],
       note: "A long rising channel from 2025 broke down after the June top and confirmed with a weekly close below $509.03. The projected target of $15.67 (−96.3%) comes from the full channel height and is an extreme projection."
     }
   },
@@ -796,6 +927,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 245.06,
     invalidation: 219.51,
     target: 255.91,
+    lines: [
+      { from: ["2026-09-24", 242.09], to: ["2026-10-20", 232.59] },
+      { from: ["2026-09-24", 221.4], to: ["2026-10-20", 219.4] },
+    ],
     failRule: "a completed daily close below $219.51, then a follow-through close below that candle's low.",
     note: "Price drifted lower in a falling wedge from late September, holding twice near $220. It broke out through the upper line and confirmed with a daily close above $245.06, then pulled back slightly to $242."
   },
@@ -812,6 +947,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     breakDown: 207.13,
     goalUp: 246.46,
     goalDown: 187.47,
+    lines: [
+      { from: ["2026-09-29", 187.41], to: ["2026-10-20", 229.28] },
+      { from: ["2026-09-29", 168.05], to: ["2026-10-20", 209.93] },
+    ],
     note: "Price has climbed a steep rising channel from the late-September low near $168. No break yet. A daily close above $226.80 would open a move toward $246.46. A close below $207.13, only 3.5% away, would point to $187.47."
   },
   {
@@ -828,6 +967,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 770.84,
     invalidation: 706.70,
     target: 1047.44,
+    lines: [
+      { from: ["2026-08-17", 1375.55], to: ["2026-10-20", 687.56] },
+      { from: ["2026-08-17", 1060.0], to: ["2026-10-20", 372.01] },
+    ],
     note: "Price fell hard in a descending channel from around $1,150 in early September, gapping down to near $600 by the end of the month. It recovered and broke out through the upper line, confirming with a daily close above $770.84."
   },
   {
@@ -844,6 +987,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 508.50,
     invalidation: 555.42,
     target: 443.19,
+    lines: [
+      { from: ["2026-08-04", 537.22], to: ["2026-10-20", 632.41] },
+      { from: ["2026-08-04", 462.0], to: ["2026-10-20", 557.19] },
+    ],
     note: "Price broke the bottom of a rising channel in late September and confirmed with a daily close below $508.50, dipping to around $470. It has since bounced back above both the signal and confirmation levels to $518.76, so the break is under pressure. Invalidation sits 7.1% above."
   },
   {
@@ -860,6 +1007,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 36.55,
     invalidation: 27.64,
     target: 41.17,
+    lines: [
+      { from: ["2026-09-16", 40.8], to: ["2026-10-20", 30.0] },
+      { from: ["2026-09-16", 34.58], to: ["2026-10-20", 27.34] },
+    ],
     failRule: "a completed daily close below $27.64, then a follow-through close below that candle's low.",
     note: "Price slid in a falling wedge from the mid-September high near $41 to a low around $31 at the start of October. It broke out through the upper line and confirmed with a daily close above $36.55, and is now holding in the high $30s."
   },
@@ -880,6 +1031,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 73.07,
     invalidation: 60.25,
     target: 79.25,
+    lines: [
+      { from: ["2026-09-14", 81.02], to: ["2026-10-20", 68.81] },
+      { from: ["2026-09-14", 71.99], to: ["2026-10-20", 59.78] },
+    ],
     signalRule: "a completed daily close above $70.22; a close back inside cancels it.",
     failRule: "a completed daily close below $60.25, then a follow-through close below that candle's low.",
     note: "Price slid in a falling channel from the mid-September high near $81 to a low around $67 in early October. It closed above the upper line on Oct 15 for an upside signal, but the latest close at $69.85 is back under the $70.22 signal level, which would cancel it if it holds. A daily close above $73.07 would confirm it."
@@ -899,6 +1054,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 104.77,
     invalidation: 98.30,
     target: 110.01,
+    lines: [
+      { from: ["2026-09-03", 110.0], to: ["2026-10-20", 97.92] },
+      { from: ["2026-09-03", 99.04], to: ["2026-10-20", 86.97] },
+    ],
     note: "Price slid in a falling channel from the early-September high near $110 to a low around $94 at the start of October. It gapped up through the upper line and confirmed with a daily close above $104.77. The weekly chart below points the same way.",
     alt: {
       pattern: "Descending Channel",
@@ -911,6 +1070,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       confirm: 103.22,
       invalidation: 89.28,
       target: 125.08,
+      lines: [
+        { from: ["2025-10-27", 123.09], to: ["2026-10-19", 89.28] },
+        { from: ["2025-10-27", 99.88], to: ["2026-10-19", 66.07] },
+      ],
       note: "A longer falling channel from late 2025 broke up in June and confirmed with a weekly close above $103.22. Price dipped back under it in September and has now recovered above it again."
     }
   },
@@ -928,6 +1091,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 186.79,
     invalidation: 174.68,
     target: 217.08,
+    lines: [
+      { from: ["2026-07-30", 241.17], to: ["2026-10-20", 181.09] },
+      { from: ["2026-07-30", 209.39], to: ["2026-10-20", 174.96] },
+    ],
     failRule: "a completed daily close below $174.68, then a follow-through close below that candle's low.",
     note: "Price slid in a falling wedge from the mid-August high near $226 to a low around $180 in early October. It broke out through the upper line and confirmed with a daily close above $186.79, and is now in the low $190s."
   },
@@ -946,6 +1113,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 507.36,
     invalidation: 444.57,
     target: 561.66,
+    lines: [
+      { from: ["2026-08-07", 636.13], to: ["2026-10-20", 465.79] },
+      { from: ["2026-08-07", 577.0], to: ["2026-10-20", 441.93] },
+    ],
     failRule: "a completed daily close below $444.57, then a follow-through close below that candle's low.",
     note: "Price slid in a falling wedge from the mid-August high near $615 to a low around $500 in early October. It broke out through the upper line and confirmed with a daily close above $507.36, then rallied to $548, just 2.4% short of the target. The weekly chart below points the same way.",
     alt: {
@@ -975,6 +1146,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     signal: 7.40,
     invalidation: 5.72,
     target: 9.46,
+    lines: [
+      { from: ["2026-09-04", 10.66], to: ["2026-10-20", 7.29] },
+      { from: ["2026-09-04", 8.59], to: ["2026-10-20", 5.65] },
+    ],
     confirmRule: "a later completed daily close beyond that signal candle's high.",
     failRule: "a completed daily close below $5.72, then a follow-through close below that candle's low.",
     note: "Price has slid in a falling wedge from the early-September high near $10.70 to a low around $6 in mid-October, and is now bouncing toward the upper line. A daily close above $7.40 would give an upside signal."
@@ -993,6 +1168,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 11.26,
     invalidation: 10.89,
     target: 8.41,
+    lines: [
+      { from: ["2026-08-26", 20.52], to: ["2026-10-20", 13.9] },
+      { from: ["2026-08-26", 17.34], to: ["2026-10-20", 10.72] },
+    ],
     note: "Price fell steadily in a descending channel from the late-August high near $20.50 and broke through the bottom of it, confirming with a daily close below $11.26. The invalidation at $10.89 sits below the confirmation level because the channel's lower line is sloping down."
   },
   {
@@ -1009,6 +1188,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 269.66,
     invalidation: 308.83,
     target: 235.55,
+    lines: [
+      { from: ["2026-09-24", 304.75], to: ["2026-10-20", 309.07] },
+      { from: ["2026-09-24", 263.5], to: ["2026-10-20", 280.6] },
+    ],
     failRule: "a completed daily close above $308.83, then a follow-through close above that candle's high.",
     note: "Price failed twice near $305 in late September while the lows kept rising. It broke the lower wedge line and confirmed with a large red daily close below $269.66 on Oct 16, then bounced slightly to $257."
   },
@@ -1025,6 +1208,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     breakDown: 14.55,
     goalUp: 21.84,
     goalDown: 10.90,
+    lines: [
+      { from: ["2026-09-30", 25.78], to: ["2026-10-20", 17.61] },
+      { from: ["2026-09-30", 22.13], to: ["2026-10-20", 13.97] },
+    ],
     note: "Price has slid in a falling channel from the late-September high near $25.80. No break yet. A daily close above $18.20 would open a move toward $21.84, while a close below $14.55 would point to $10.90."
   },
   {
@@ -1057,6 +1244,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 166.75,
     invalidation: 206.85,
     target: 149.21,
+    lines: [
+      { from: ["2026-08-14", 165.75], to: ["2026-10-20", 207.35] },
+      { from: ["2026-08-14", 137.72], to: ["2026-10-20", 179.32] },
+    ],
     signalRule: "a completed daily close below $177.57; a close back inside cancels it.",
     failRule: "a completed daily close above $206.85, then a follow-through close above that candle's high.",
     note: "Price climbed a rising channel from the late-August low near $150 to around $196. One large red daily candle on Oct 16 broke the lower line for a downside signal. A daily close below $166.75, 2.8% under the latest close, would confirm it."
@@ -1143,6 +1334,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 194.69,
     invalidation: 154.93,
     target: 224.54,
+    lines: [
+      { from: ["2026-09-03", 232.0], to: ["2026-10-20", 188.36] },
+      { from: ["2026-09-03", 197.19], to: ["2026-10-20", 153.56] },
+    ],
     signalRule: "a completed daily close above $189.73; a close back inside cancels it.",
     failRule: "a completed daily close below $154.93, then a follow-through close below that candle's low.",
     note: "Price fell in a descending channel from the early-September high near $232 to a low around $180 in late September. It closed above the upper line on Oct 19 for an upside signal. A daily close above $194.69, just 0.6% away, would confirm it."
@@ -1162,6 +1357,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 4.76,
     invalidation: 0.23,
     target: 21.26,
+    lines: [
+      { from: ["2023-10-01", 20.36], to: ["2026-10-01", 2.07] },
+      { from: ["2023-10-01", 3.21], to: ["2026-10-01", 0.24] },
+    ],
     failRule: "a completed monthly close below $0.23, then a follow-through close below that candle's low.",
     note: "A multi-year falling wedge from the early-2024 high near $18 bottomed around $2 in 2025. Price broke out on the monthly chart, confirmed with a monthly close above $4.76, then surged to about $14. The invalidation at $0.23 is far below because it sits at the base of the wedge."
   },
@@ -1180,6 +1379,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 776.00,
     invalidation: 1000.51,
     target: 603.20,
+    lines: [
+      { from: ["2026-03-30", 922.87], to: ["2026-10-19", 1258.8] },
+      { from: ["2026-03-30", 664.57], to: ["2026-10-19", 1000.51] },
+    ],
     note: "A rising channel from the spring low near $700 topped around $1,060 in June. Price broke the lower line in July, drifted sideways, then confirmed with a weekly close below $776 in October."
   },
   {
@@ -1195,6 +1398,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     breakDown: 753.82,
     goalUp: 1264.54,
     goalDown: 498.47,
+    lines: [
+      { from: ["2026-07-06", 1195.94], to: ["2026-10-20", 1006.83] },
+      { from: ["2026-07-06", 940.55], to: ["2026-10-20", 751.43] },
+    ],
     note: "Price has drifted lower in a falling channel from the late-June high near $1,200. It was rejected at the upper line in early October and is back near $908. No break yet. A daily close above $1,009.18 would open a move toward $1,264.54; a close below $753.82 would point to $498.47."
   },
   {
@@ -1211,6 +1418,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 257.76,
     invalidation: 282.54,
     target: 193.63,
+    lines: [
+      { from: ["2026-09-01", 273.52], to: ["2026-10-20", 361.14] },
+      { from: ["2026-09-01", 197.5], to: ["2026-10-20", 285.12] },
+    ],
     note: "Price climbed a rising channel from the start of September near $200 to around $300 in early October. It broke the lower line and confirmed with a daily close below $257.76, then slid to the mid $220s."
   },
   {
@@ -1227,6 +1438,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 87.77,
     invalidation: 82.61,
     target: 106.03,
+    lines: [
+      { from: ["2026-09-10", 100.62], to: ["2026-10-20", 81.94] },
+      { from: ["2026-09-10", 79.2], to: ["2026-10-20", 60.52] },
+    ],
     note: "Price slid in a falling channel from the late-August high near $102 to a low around $74 in late September. It broke out through the upper line and confirmed with a daily close above $87.77, and is now in the low $90s."
   },
   {
@@ -1243,6 +1458,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 192.60,
     invalidation: 205.43,
     target: 174.14,
+    lines: [
+      { from: ["2026-09-03", 185.83], to: ["2026-10-20", 219.2] },
+      { from: ["2026-09-03", 158.67], to: ["2026-10-20", 205.71] },
+    ],
     failRule: "a completed daily close above $205.43, then a follow-through close above that candle's high.",
     note: "Price climbed a narrowing rising wedge from the mid-September low near $165 to a peak around $212. It broke the lower line and confirmed with a daily close below $192.60, then bounced slightly to $194. Invalidation is close, 5.8% above."
   },
@@ -1260,6 +1479,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 142.51,
     invalidation: 121.79,
     target: 156.29,
+    lines: [
+      { from: ["2026-09-11", 148.7], to: ["2026-10-20", 133.47] },
+      { from: ["2026-09-11", 130.39], to: ["2026-10-20", 121.46] },
+    ],
     failRule: "a completed daily close below $121.79, then a follow-through close below that candle's low.",
     note: "Price drifted lower in a falling wedge from mid-September, holding near $127 at the lows. It broke out through the upper line and confirmed with a daily close above $142.51, briefly pushing past $150 before settling at $145."
   },
@@ -1277,6 +1500,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 82.48,
     invalidation: 78.20,
     target: 88.30,
+    lines: [
+      { from: ["2026-09-17", 87.86], to: ["2026-10-20", 77.76] },
+      { from: ["2026-09-17", 80.83], to: ["2026-10-20", 70.73] },
+    ],
     note: "Price slid in a falling channel from the mid-September high near $88 to a low around $76.50 at the end of the month. It broke out through the upper line and confirmed with a daily close above $82.48, and is now sitting just above that level."
   },
   {
@@ -1291,6 +1518,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     signal: 329.36,
     invalidation: 230.78,
     target: 449.12,
+    lines: [
+      { from: ["2026-08-07", 391.37], to: ["2026-10-20", 328.12] },
+      { from: ["2026-08-07", 271.6], to: ["2026-10-20", 229.97] },
+    ],
     confirmRule: "a later completed daily close beyond that signal candle's high.",
     failRule: "a completed daily close below $230.78, then a follow-through close below that candle's low.",
     note: "Price has slid in a falling wedge from the early-August high near $390 and is now sitting on the lower line. The upside signal is far away at $329.36 (+42%), while invalidation is only 0.5% below the latest close, so this setup is close to failing."
@@ -1309,6 +1540,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 145.76,
     invalidation: 171.59,
     target: 123.93,
+    lines: [
+      { from: ["2026-09-11", 168.82], to: ["2026-10-20", 171.69] },
+      { from: ["2026-09-11", 140.74], to: ["2026-10-20", 155.24] },
+    ],
     failRule: "a completed daily close above $171.59, then a follow-through close above that candle's high.",
     note: "Price failed twice near $170 while the lows kept rising, forming a rising wedge. It broke the lower line and confirmed with a daily close below $145.76, then slid into the low $130s."
   },
@@ -1327,6 +1562,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 241.25,
     invalidation: 231.80,
     target: 281.26,
+    lines: [
+      { from: ["2026-09-03", 292.88], to: ["2026-10-20", 231.8] },
+      { from: ["2026-09-03", 251.05], to: ["2026-10-20", 189.97] },
+    ],
     note: "Price slid in a falling channel from the early-September high near $293 to a low around $225 in late September. It broke out through the upper line and confirmed with a daily close above $241.25, and is now in the mid $250s."
   },
   {
@@ -1344,6 +1583,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 312.18,
     invalidation: 291.81,
     target: 342.03,
+    lines: [
+      { from: ["2026-09-15", 341.85], to: ["2026-10-20", 302.22] },
+      { from: ["2026-09-15", 306.8], to: ["2026-10-20", 291.81] },
+    ],
     failRule: "a completed daily close below $291.81, then a follow-through close below that candle's low.",
     note: "Price broke out of a falling wedge and confirmed with a daily close above $312.18 on Oct 16. It has since dropped sharply back to $297.67, below both the signal and confirmation levels, and is only 2.0% above invalidation. The break is under pressure."
   },
@@ -1362,6 +1605,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 80.00,
     invalidation: 207.83,
     target: 17.03,
+    lines: [
+      { from: ["2026-01-12", 99.58], to: ["2026-10-19", 207.83] },
+      { from: ["2026-01-12", 8.3], to: ["2026-10-19", 182.22] },
+    ],
     failRule: "a completed weekly close above $207.83, then a follow-through close above that candle's high.",
     note: "Price broke down out of a rising wedge on the weekly chart and confirmed with a weekly close below $80. It drifted sideways through the summer and has now dropped to new lows for the move."
   },
@@ -1379,10 +1626,9 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 118.70,
     invalidation: 142.48,
     target: 95.77,
-    // Channel lines read off the source chart (lower line's Oct 20 value = invalidation).
     lines: [
-      { from: ["2026-08-05", 112.07], to: ["2026-10-20", 167.15] },
-      { from: ["2026-08-05", 87.22], to: ["2026-10-20", 142.46] },
+      { from: ["2026-08-19", 122.93], to: ["2026-10-20", 166.79] },
+      { from: ["2026-08-19", 98.22], to: ["2026-10-20", 142.08] },
     ],
     note: "Price climbed a rising channel from the early-August low near $97 to a peak around $135 in early September, then broke the lower line. The break was confirmed with a daily close below $118.70 on Sep 24, and price has slid to around $105."
   }

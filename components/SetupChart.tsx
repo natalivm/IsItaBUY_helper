@@ -100,12 +100,21 @@ const SetupChart: React.FC<{
       // Snap a date to the candle that contains it (weekly / monthly bars are dated at their start).
       const snap = (d: string) => { let t = bars.t[0]; for (const x of bars.t) { if (x <= d) t = x; else break; } return t; };
 
+      // Trendlines run to the newest candle: extend past their stored end at the same slope per bar.
+      const lastIdx = bars.t.length - 1;
+      const idxOf = (d: string) => bars.t.indexOf(snap(d));
       for (const ln of lines ?? []) {
         const s = chart.addSeries(lc.LineSeries, {
           color: cssVar(el, '--trend'), lineWidth: 2, lineStyle: lc.LineStyle.LargeDashed,
           priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false,
         });
-        s.setData([{ time: snap(ln.from[0]) as Time, value: ln.from[1] }, { time: snap(ln.to[0]) as Time, value: ln.to[1] }]);
+        const i0 = idxOf(ln.from[0]), i1 = idxOf(ln.to[0]);
+        const perBar = i1 > i0 ? (ln.to[1] - ln.from[1]) / (i1 - i0) : 0;
+        const endIdx = Math.max(i1, lastIdx);
+        s.setData([
+          { time: bars.t[i0] as Time, value: ln.from[1] },
+          { time: bars.t[endIdx] as Time, value: ln.from[1] + perBar * (endIdx - i0) },
+        ]);
       }
 
       if (marker && marker.date >= bars.t[0]) {
