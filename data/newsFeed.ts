@@ -19,13 +19,13 @@ export const NEWS_ITEMS: NewsItem[] = [
     date: "Oct 20 2026",
     tickers: ["NFLX"],
     title: "NFLX · needs updating",
-    text: "Descending Channel (daily): the break pending setup closed $68.69, back below the $70.22 signal level (signal cancelled) on Oct 20 2026. A new setup needs to be posted.",
+    text: "Closed $68.69 back below signal $70.22, signal cancelled.",
   },
   {
     id: "2026-10-19-HTFL-main-update",
     date: "Oct 19 2026",
     tickers: ["HTFL"],
     title: "HTFL · needs updating",
-    text: "Ascending Channel (daily): the break pending setup closed $51.02, back above the $50.93 signal level (signal cancelled) on Oct 19 2026. A new setup needs to be posted.",
+    text: "Closed $51.02 back above signal $50.93, signal cancelled.",
   },
 ];

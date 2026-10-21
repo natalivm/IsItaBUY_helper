@@ -71,7 +71,7 @@ function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: 
 const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
   <div className="upd-banner">
     <Icon name="refresh" />
-    <span><b>Needs updating.</b> {note ? note + ' ' : ''}A new setup needs to be posted.</span>
+    <span><b>Needs updating.</b> {note}</span>
   </div>
 );
 

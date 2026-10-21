@@ -239,9 +239,9 @@ def _pending_break(s, price):
     if d == 'both':
         up, dn = s.get('breakUp'), s.get('breakDown')
         if up is not None and price > up:
-            return f"closed ${p}, above the ${_fmt_price(up)} break-up level"
+            return f"closed ${p} above break-up ${_fmt_price(up)}"
         if dn is not None and price < dn:
-            return f"closed ${p}, below the ${_fmt_price(dn)} break-down level"
+            return f"closed ${p} below break-down ${_fmt_price(dn)}"
         return None
     if d not in ('up', 'down'):
         return None
@@ -254,10 +254,10 @@ def _pending_break(s, price):
         back_name, back = ('signal', sig) if sig is not None else ('invalidation', inv)
     down = d == 'down'
     if fwd is not None and ((down and price < fwd) or (not down and price > fwd)):
-        return f"closed ${p}, {'below' if down else 'above'} the ${_fmt_price(fwd)} {fwd_name} level"
+        return f"closed ${p} {'below' if down else 'above'} {fwd_name} ${_fmt_price(fwd)}"
     if back is not None and ((down and price > back) or (not down and price < back)):
-        extra = " (signal cancelled)" if back_name == 'signal' else ""
-        return f"closed ${p}, back {'above' if down else 'below'} the ${_fmt_price(back)} {back_name} level{extra}"
+        extra = ", signal cancelled" if back_name == 'signal' else ""
+        return f"closed ${p} back {'above' if down else 'below'} {back_name} ${_fmt_price(back)}{extra}"
     return None
 
 
@@ -366,8 +366,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                     hit_date = date if hit == 'today' else hit
                     target_hits.append((sym, label, s['target'], hit_date))
                     edits += _stage_edits(text, pos, 'target', hit_date)
-                    word = 'Downward' if direction == 'down' else 'Upward'
-                    bot_notes[key] = (hit_date, f"{what}: {word.lower()} break reached its ${_fmt_price(s['target'])} target on {_display_date(hit_date)}.")
+                    bot_notes[key] = (hit_date, f"Hit target ${_fmt_price(s['target'])}.")
                     continue
                 inv = s.get('invalidation')
                 if is_close and inv is not None and ((direction == 'down' and price > inv) or (direction == 'up' and price < inv)):
@@ -382,12 +381,12 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                 review.append(f"{sym} ({label}): {reason} — not a {tf} close yet; check at the {tf} close")
                 continue
             if reason:
-                note = f"{reason} on {_display_date(date)}."
-                needs_update.append((sym, label, stage, note))
+                reason = reason[0].upper() + reason[1:]
+                needs_update.append((sym, label, stage, reason))
                 # stageDate keeps the date of the stage it was in; the flag date goes in updateDate.
                 edits += _stage_edits(text, pos, 'update', None, {'prevStage': stage, 'updateDate': date,
-                                                                   'updateNote': note[0].upper() + note[1:]})
-                bot_notes[key] = (date, f"{what}: the {STAGE_LABEL[stage].lower()} setup {note} A new setup needs to be posted.")
+                                                                   'updateNote': f"{reason} ({_short_date(date)})."})
+                bot_notes[key] = (date, f"{reason}.")
 
     new_text = text
     for start, end, new in sorted(edits, key=lambda x: (x[0], x[1]), reverse=True):
@@ -408,6 +407,13 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
 def _display_date(iso):
     try:
         return datetime.strptime(iso, "%Y-%m-%d").strftime("%b %-d %Y")
+    except ValueError:
+        return iso
+
+
+def _short_date(iso):
+    try:
+        return datetime.strptime(iso, "%Y-%m-%d").strftime("%b %-d")
     except ValueError:
         return iso
 
@@ -444,15 +450,15 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
         when, text = bot_notes.get(key, (today, None))
         if new is None:
             title, stage = f"{t} · setup removed", 'removed'
-            text = text or f"{old['setup']} is no longer tracked."
+            text = text or "No longer tracked."
         elif old is None:
             stage = new['stage']
             title = f"{t} · new setup"
-            text = text or f"{new['setup']}: {STAGE_LABEL.get(stage, stage).lower()}."
+            text = text or f"{new['setup']}, {STAGE_LABEL.get(stage, stage).lower()}."
         else:
             stage = new['stage']
             title = f"{t} · {STAGE_LABEL.get(stage, stage).lower()}"
-            text = text or f"{new['setup']}: {STAGE_LABEL.get(old['stage'], old['stage']).lower()} → {STAGE_LABEL.get(stage, stage).lower()}."
+            text = text or f"Previously {STAGE_LABEL.get(old['stage'], old['stage']).lower()}."
         if label != 'main':
             title += f" ({label.replace(' alt', '')} setup)"
         items.append({
