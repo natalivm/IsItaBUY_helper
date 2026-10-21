@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet stocks/ && echo "No price changes" && exit 0
-          git add stocks/
+          git diff --quiet stocks/ data/ && echo "No price changes" && exit 0
+          git add stocks/ data/
           git commit -m "Update stock prices ($(date -u +%Y-%m-%d))"
           git push

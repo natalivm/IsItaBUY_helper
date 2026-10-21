@@ -67,6 +67,16 @@ Group assignment depends on rating + market cap + RS rating + RS trend (see `cla
 
 If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.
 
+### Pattern Break Watchlist prices (home page)
+
+The home page ledger reads `data/patternWatchlist.ts`. The same `update_prices.py` run (logic in `pattern_watchlist.py`) also:
+
+- refreshes every entry's `price` / `priceDate` (the expanded panel's **Now** row and all `%` figures read these), including watchlist-only symbols like SPY/TSLA that have no `stocks/` file;
+- checks targets: a `confirmed` setup (or its `alt`) whose target was **touched** by any daily bar since the last check (low ≤ target for downward, high ≥ target for upward) is flipped to `stage: "target"` with `stageDate` = that day. The bot only sees daily candles, so it catches intraday touches after the close; marking a hit manually earlier is fine, since the bot never reverts `"target"`;
+- only *reports* (never edits) forming/signal setups that already touched target, and setups that **closed** beyond invalidation. Closes are what end a setup, and failure needs a follow-through close, so mark those manually.
+
+`note` prose is hand-written and isn't rewritten when the price moves. Re-read it when a setup changes stage.
+
 ### Price Format
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).
