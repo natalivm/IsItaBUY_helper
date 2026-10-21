@@ -36,7 +36,8 @@ TOUCH = 0.015                                # a swing point within 1.5% of a li
 MAX_PER_TF = 5                               # setups stored per timeframe; the UI shows the best weekly + best daily
 AGREE = 0.05                                 # targets within 5% of each other agree
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
-MAX_HEIGHT = {'daily': 0.6, 'weekly': 1.0}   # pattern height vs price; posted setups top out ~0.5 / ~0.97
+MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
+MIN_TARGET = 0.3                             # a downward target must stay above 30% of the signal
 
 
 def _r(v):
@@ -108,11 +109,15 @@ def _stage(bars, n, pattern, up, lo, start, A):
         if not (lo.at(last) * 0.97 <= c[last] <= up.at(last) * 1.03):
             return None
         if channel:
+            if lo.at(last) - height < MIN_TARGET * lo.at(last):
+                return None                      # implausible goal down
             return {'direction': 'both', 'stage': 'forming',
                     'breakUp': _r(up.at(last)), 'breakDown': _r(lo.at(last)),
                     'goalUp': _r(up.at(last) + height), 'goalDown': _r(lo.at(last) - height)}
         d = 'down' if pattern == 'Rising Wedge' else 'up'
         brk, far = (lo, up) if d == 'down' else (up, lo)
+        if d == 'down' and brk.at(last) - height < MIN_TARGET * brk.at(last):
+            return None                          # implausible projection
         return {'direction': d, 'stage': 'forming', 'signal': _r(brk.at(last)),
                 'invalidation': _r(far.at(last)),
                 'target': _r(brk.at(last) - height if d == 'down' else brk.at(last) + height)}
@@ -120,8 +125,8 @@ def _stage(bars, n, pattern, up, lo, start, A):
         return None                              # stale break
     d = sig['dir']
     target = sig['level'] + height if d == 'up' else sig['level'] - height
-    if target <= 0:
-        return None
+    if target < MIN_TARGET * sig['level']:
+        return None                              # implausible projection
     if channel:
         inv = (lo if d == 'down' else up).at(last)          # the broken line now
     else:
@@ -497,9 +502,24 @@ def scan_targets(text, redo_auto=False):
     return todo
 
 
+def _strip_stored(text):
+    """Remove `more` lists from posted (non-auto) entries."""
+    cuts = []
+    for e in pw.parse_watchlist(text):
+        f = e['fields']
+        if f.get('auto', (0, 0, None))[2] or 'more' not in f:
+            continue
+        v0, v1, _ = f['more']
+        a = text.rfind('\n', 0, text.rfind('more', 0, v0))
+        b = v1 + (1 if text[v1:v1 + 1] == ',' else 0)
+        cuts.append((a, b))
+    for a, b in sorted(cuts, reverse=True):
+        text = text[:a] + text[b:]
+    return text
+
+
 def _extras_edit(text, e, setups):
-    """Auto-detected setups for a posted entry: fill a missing shown timeframe (alt), store the rest in `more`.
-    Returns (position, text to insert) or None."""
+    """Auto-detected setups for a posted entry, stored (hidden) in `more`. Returns (position, text) or None."""
     have = {((s.get('timeframe') or e['fields'].get('timeframe', (0, 0, 'daily'))[2]),
              s.get('pattern') or e['fields']['pattern'][2], s.get('direction')) for _, s, _ in pw._setups(e)}
     new = [x for x in setups if (x['timeframe'], x['pattern'], x['direction']) not in have]
@@ -514,13 +534,8 @@ def _extras_edit(text, e, setups):
     if not kept:
         return None
     rows = []
-    shown_tfs = {e['fields']['timeframe'][2] if 'timeframe' in e['fields'] else 'daily'}
-    if e['alt'] is None:
-        # one weekly + one daily are shown: fill the missing timeframe with the best detected setup
-        fill = next((x for x in kept if x['timeframe'] not in shown_tfs), None)
-        if fill:
-            kept.remove(fill)
-            rows += _alt_ts(fill, auto=True)
+    # Posted setups are never replaced or joined on screen: detected ones are only stored
+    # (they feed the "agree" badge).
     if kept:
         if 'more' in e['fields'] and not rows:
             close = e['fields']['more'][1] - 1        # append to the existing list
@@ -543,6 +558,8 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
     """
     now_et = pw._now_et()
     text = open(pw.WATCHLIST_FILE).read()
+    if redo_auto and extras:
+        text = _strip_stored(text)             # posted stocks: re-detect their stored setups too
     todo = scan_targets(text, redo_auto)
     for t, n in (extra or {}).items():
         todo.setdefault(t, (n, None))

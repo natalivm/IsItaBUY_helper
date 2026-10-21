@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-21-auto-rescan",
+    date: "Oct 21 2026",
+    tickers: [],
+    title: "Auto-detected setups refreshed",
+    text: "Up to 5 setups per timeframe are now stored per stock; each row shows the best weekly and daily one. Stocks you posted keep their setups. Auto-detected setups carry a red dot until checked.",
+  },
+  {
     id: "2026-10-21-auto-scan-133",
     date: "Oct 21 2026",
     tickers: [],
