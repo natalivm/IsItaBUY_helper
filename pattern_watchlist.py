@@ -382,20 +382,36 @@ def _setup_text(text, pos, indent, inherit=None):
     return out
 
 
-def rebuild_entry(text, e, keep):
-    """Entry text with `keep[0]` (a positions dict) as the main setup and the rest as `more`."""
+def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, alt_auto=False):
+    """Entry text with the given main setup, optional second setup and stored setups."""
     f = e['fields']
     main_pattern = f['pattern'][2] if 'pattern' in f else None
     rows = ["{"]
-    for k in HEADER_KEYS:
+    for k in ('ticker', 'name'):
         if k in f:
-            v0, v1, _ = f[k]
-            rows.append(f"    {k}: {text[v0:v1]},")
-    rows += _setup_text(text, keep[0], '    ', inherit=main_pattern)
-    if len(keep) > 1:
+            rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
+    if main_auto:
+        rows.append("    auto: true,")
+    for k in ('price', 'priceDate'):
+        if k in f:
+            rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
+    rows += _setup_text(text, main_pos, '    ', inherit=main_pattern)
+    if main_pos is f:  # same main setup: keep its key-level note and history
+        for k in ('keyLevel', 'history'):
+            if k in f:
+                rows.append(f"    {k}: {_reindent(text[f[k][0]:f[k][1]], '    ')},")
+    if alt_pos is not None:
+        rows.append("    alt: {")
+        if alt_auto:
+            rows.append("      auto: true,")
+        rows += _setup_text(text, alt_pos, '      ', inherit=main_pattern)
+        rows.append("    },")
+    if stored:
         rows.append("    more: [")
-        for pos in keep[1:]:
+        for pos in stored:
             rows.append("      {")
+            if pos.get('auto', (0, 0, None))[2]:
+                rows.append("        auto: true,")
             rows += _setup_text(text, pos, '        ', inherit=main_pattern)
             rows.append("      },")
         rows.append("    ],")
@@ -636,6 +652,9 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
 
     items = []
     for key in sorted(set(before) | set(after), key=lambda k: (k.split('|')[0], k)):
+        label = key.split('|', 1)[1]
+        if label != 'main' and not label.endswith(' alt'):
+            continue                      # stored (hidden) setups don't post News
         old, new = before.get(key), after.get(key)
         if old and new and old['stage'] == new['stage'] and old['setup'] == new['setup']:
             continue
@@ -719,14 +738,14 @@ def _completed_count(t, timeframe, now_et):
 
 
 def _finished(s, main, now_et):
-    """(date, news text, news title) if a setup is done (target reached / failed), else None."""
+    """(date, news text, news title, kind) if a setup is done, kind 'target' or 'failed'; else None."""
     t_ = main.get('ticker')
     stage = s.get('stage')
     if stage == 'target':
         hit = s.get('stageDate') or now_et.date().isoformat()
-        return now_et.date().isoformat(), f"Target reached {_short_date(hit)}.", f"{t_} · setup closed"
+        return now_et.date().isoformat(), f"Target reached {_short_date(hit)}.", f"{t_} · setup closed", 'target'
     if stage == 'failed':
-        return now_et.date().isoformat(), "Pattern failed.", f"{t_} · setup closed"
+        return now_et.date().isoformat(), "Pattern failed.", f"{t_} · setup closed", 'failed'
     if stage != 'confirmed' or s.get('direction') not in ('up', 'down'):
         return None
     tf = s.get('timeframe') or main.get('timeframe') or 'daily'
@@ -738,7 +757,7 @@ def _finished(s, main, now_et):
     start = next((i for i, x in enumerate(t) if x >= s['stageDate']), len(t))
     for i in range(start, len(t)):  # touches count as they happen (regular-session highs/lows)
         if tgt is not None and (l[i] <= tgt if dn else h[i] >= tgt):
-            return t[i], f"Hit target ${_fmt_price(tgt)}.", f"{t_} · target reached"
+            return t[i], f"Hit target ${_fmt_price(tgt)}.", f"{t_} · target reached", 'target'
     n = _completed_count(t, tf, now_et)
     pattern = s.get('pattern') or main.get('pattern') or ''
     if 'Channel' in pattern and s.get('lines'):
@@ -751,12 +770,12 @@ def _finished(s, main, now_et):
             for i in range(start + 1, n):
                 line = v0 + per * (i - i0)
                 if (c[i] > line if dn else c[i] < line):
-                    return (t[i], f"Closed ${_fmt_price(c[i])} back inside the channel.", f"{t_} · pattern failed")
+                    return (t[i], f"Closed ${_fmt_price(c[i])} back inside the channel.", f"{t_} · pattern failed", 'failed')
             return None
     for i in range(start, n - 1):  # a close past invalidation, then a follow-through close
         if inv is not None and (c[i] > inv if dn else c[i] < inv) and (c[i + 1] > h[i] if dn else c[i + 1] < l[i]):
             return (t[i + 1], f"Closed ${_fmt_price(c[i])} past invalidation ${_fmt_price(inv)}, then followed through.",
-                    f"{t_} · pattern failed")
+                    f"{t_} · pattern failed", 'failed')
     return None
 
 
@@ -792,45 +811,67 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
     cuts, notes, report = [], {}, []
     for e in parse_watchlist(text):
         main = {k: v[2] for k, v in e['fields'].items()}
-        done = {}
-        for label, s, _ in _setups(e):
-            r = _finished(s, main, now_et)
-            if r:
-                done[label] = r
-        if not done:
+        t_ = main['ticker']
+        posted = not main.get('auto')
+        setups = _setups(e)
+        done, stored_live, edits = {}, [], []
+        for label, sv, pos in setups:
+            r = _finished(sv, main, now_et)
+            if '_span' in pos:                    # stored (hidden): finished / cancelled ones drop quietly
+                if not r and sv.get('stage') != 'update':
+                    stored_live.append(pos)
+                continue
+            if not r:
+                continue
+            if posted and not sv.get('auto') and r[3] == 'failed':
+                # A setup you posted that failed stays on screen as failed; you post the next one.
+                if sv.get('stage') != 'failed':
+                    edits += _stage_edits(text, pos, 'failed', r[0])
+                    notes[f"{t_}|{label}"] = (r[0], r[1], f"{t_} · pattern failed")
+                    report.append(f"{t_} ({label}): pattern failed — {r[1]}")
+                continue
+            done[label] = r
+        dropped = len(stored_live) < sum(1 for _, _, p in setups if '_span' in p)
+        if edits or (not done and not dropped):
+            # (a failed posted setup is marked in place; any stored clean-up waits for the next run)
+            cuts += [(a, b, v) for a, b, v in edits]
             continue
-        live = [(lb, pos) for lb, _, pos in _setups(e) if lb not in done]
-        if 'main' in done and live:
-            # Promote the next live setup to main; the rest stay as extra setups.
-            a, b = e['span']
-            cuts.append((a, b + 1, rebuild_entry(text, e, [pos for _, pos in live])))
-        elif 'main' in done:
-            # Keep the stock: replace the entry with a placeholder that the detector rescans.
-            a, b = e['span']
+        alt_label = next((lb for lb, _, _ in setups if lb.endswith(' alt')), None)
+        fields = e['fields']
+        alt_pos = e['alt']
+        main_pos, main_auto = fields, bool(main.get('auto'))
+        alt_auto = bool(alt_pos and alt_pos.get('auto', (0, 0, None))[2])
+        def take(tf):
+            """Best stored setup on a timeframe (stored setups are kept best-first)."""
+            for p in stored_live:
+                if (p['timeframe'][2] if 'timeframe' in p else main.get('timeframe')) == tf:
+                    stored_live.remove(p)
+                    return p
+            return None
+        if 'main' in done:
+            # Target hit (or an auto setup finished): the best stored setup on the same timeframe
+            # takes its place, marked auto (red dot) until you validate it.
+            tf = main.get('timeframe') or 'daily'
+            nxt = take(tf) or (stored_live.pop(0) if stored_live else None)
+            if nxt is None and alt_pos is not None and alt_label not in done:
+                nxt, alt_pos, main_auto = alt_pos, None, alt_auto
+            elif nxt is not None:
+                main_auto = True
+            main_pos = nxt
+        if alt_label in done:
+            tf = alt_pos['timeframe'][2] if 'timeframe' in alt_pos else 'daily'
+            alt_pos = take(tf)
+            alt_auto = alt_pos is not None
+        a, b = e['span']
+        if main_pos is None:
             reason = done['main'][1].rstrip('.')
-            cuts.append((a, b + 1, placeholder_entry(main['ticker'], main.get('name', main['ticker']),
-                                                    main.get('price'), main.get('priceDate'),
+            cuts.append((a, b + 1, placeholder_entry(t_, main.get('name', t_), main.get('price'), main.get('priceDate'),
                                                     f"Previous setup closed ({reason[0].lower() + reason[1:]}). Scanning for a new one.")))
         else:
-            for lb, _, pos in _setups(e):
-                if lb in done and '_span' in pos:  # an extra setup: drop it from the list
-                    a, b = pos['_span'][0], pos['_span'][1] + 1
-                    a = text.rfind('\n', 0, a) + 1
-                    b += 1 if text[b:b + 1] == ',' else 0
-                    b += 1 if text[b:b + 1] == '\n' else 0
-                    cuts.append((a, b, ''))
-        if 'main' not in done and any(lb.endswith(' alt') for lb in done):
-            # the second setup is done: drop it (and a key-level note tied to it)
-            for key in ('alt', 'keyLevel'):
-                if key in e['fields']:
-                    v0, v1, _ = e['fields'][key]
-                    a = text.rfind('\n', 0, text.rfind(key, 0, v0)) + 1
-                    b = v1 + (1 if text[v1:v1 + 1] == ',' else 0)
-                    b += 1 if text[b:b + 1] == '\n' else 0
-                    cuts.append((a, b, ''))
+            cuts.append((a, b + 1, rebuild_entry(text, e, main_pos, alt_pos, stored_live, main_auto, alt_auto)))
         for label, r in done.items():
-            notes[f"{main['ticker']}|{label}"] = r
-            report.append(f"{main['ticker']} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
+            notes[f"{t_}|{label}"] = r[:3]
+            report.append(f"{t_} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
     new_text = text
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]

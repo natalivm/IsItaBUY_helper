@@ -443,7 +443,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
-          {(s?.auto || s?.alt?.auto) && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
+          {s?.auto && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
           <span>{row.name}</span>
         </span>
         <span className="stcell">
