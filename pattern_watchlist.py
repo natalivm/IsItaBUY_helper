@@ -56,7 +56,7 @@ BARS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "b
 CHART_RANGES = {'daily': ('1d', '1y'), 'weekly': ('1wk', '5y'), 'monthly': ('1mo', '10y')}
 
 _KEY_RE = re.compile(r'(?<![\w$])(\w+):\s*')
-_VAL_RE = re.compile(r'"(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?')
+_VAL_RE = re.compile(r'"(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?|true\b|false\b')
 
 
 # ── Minimal TS-literal reader (positions are kept so edits are surgical) ──
@@ -124,7 +124,7 @@ def _fields(text, masked, depth, start, end, level):
         if not vm:
             continue
         raw = vm.group(0)
-        val = json.loads(raw) if raw.startswith('"') else float(raw)
+        val = json.loads(raw) if raw[0] in '"tf' else float(raw)
         out[m.group(1)] = (vm.start(), vm.end(), val)
     return out
 

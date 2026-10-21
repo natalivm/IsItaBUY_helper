@@ -19,7 +19,7 @@ export interface PatternAltSetup {
   pattern?: string;
   timeframe: PatternTimeframe;
   flag?: string;
-  direction: 'up' | 'down';
+  direction: PatternDirection;
   stage: PatternStage;
   stageDate?: string;
   prevStage?: PatternStage;
@@ -27,8 +27,12 @@ export interface PatternAltSetup {
   updateNote?: string;
   signal?: number;
   confirm?: number;
-  invalidation: number;
-  target: number;
+  invalidation?: number;
+  target?: number;
+  breakUp?: number;
+  breakDown?: number;
+  goalUp?: number;
+  goalDown?: number;
   failRule?: string;
   note?: string;
   lines?: PatternLine[];

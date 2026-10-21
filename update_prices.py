@@ -38,6 +38,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
 
+import pattern_detect
 import pattern_lines
 import pattern_watchlist
 
@@ -934,6 +935,10 @@ def main():
             pruned, _ = pattern_watchlist.prune_finished(apply=True)
             if pruned:
                 print("Closed setups:\n  " + "\n  ".join(pruned))
+            # Look for a new setup on stocks with none, or only a "No clear pattern" placeholder.
+            new_setups = pattern_detect.run(apply=True, verbose=False)
+            if new_setups:
+                print("Auto-detected (red dot, check by hand):\n  " + "\n  ".join(f"{t}: {d}" for t, d in new_setups))
 
         # Push to git if requested
         wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))

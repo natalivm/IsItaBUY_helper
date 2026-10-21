@@ -131,6 +131,34 @@ const Pill: React.FC<{ st: Status }> = ({ st }) => (
   <span className={`pill ${st.cls}`}><Icon name={st.icon} />{st.label}</span>
 );
 
+// "Daily / Weekly / Monthly close pending" is shown only while that candle is still open
+// (New York time): a setup on that timeframe is provisional until the close validates it.
+function nyNow() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York', year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', hour12: false, weekday: 'short',
+  }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return { y: +p.year, m: +p.month, d: +p.day, mins: (+p.hour % 24) * 60 + +p.minute, wd: p.weekday };
+}
+function closePending(tf: string): boolean {
+  const n = nyNow();
+  const weekend = n.wd === 'Sat' || n.wd === 'Sun';
+  const afterClose = n.mins >= 16 * 60;
+  if (tf === 'weekly') return !weekend && !(n.wd === 'Fri' && afterClose);
+  if (tf === 'monthly') {
+    const lastDay = new Date(Date.UTC(n.y, n.m, 0));
+    while ([0, 6].includes(lastDay.getUTCDay())) lastDay.setUTCDate(lastDay.getUTCDate() - 1);
+    return !(n.d > lastDay.getUTCDate() || (n.d === lastDay.getUTCDate() && afterClose));
+  }
+  return !weekend && n.mins >= 9 * 60 + 30 && !afterClose;
+}
+function flagFor(timeframe: string | undefined, stored?: string) {
+  const tf = timeframe || 'daily';
+  if (stored && !/close pending/i.test(stored)) return stored;
+  if (tf === 'daily' && !stored) return undefined;
+  return closePending(tf) ? `${cap(tf)} close pending` : undefined;
+}
+
 const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag }) =>
   text ? <span className={`flag${keyFlag ? ' key' : ''}`}>{text}</span> : null;
 
@@ -158,7 +186,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   ];
   return (
     <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
-      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={s.flag} /></div>
+      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={flagFor(tf, s.flag)} /></div>
       <AutoNote on={s.auto} />
       {s.stage === 'update' && <UpdateBanner note={s.updateNote} />}
       <div className="stepper" aria-label="Pattern stage">
@@ -195,7 +223,13 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
 // ── Expanded detail: second timeframe / opposing setup ──
 
 const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw }) => {
-  const a = asPrev(raw);
+  if (raw.direction === 'both') {
+    // Either-direction second setup: same panel as a main one, on its own timeframe.
+    const view = { ...raw, ticker: s.ticker, name: s.name, price: s.price, priceDate: s.priceDate,
+                   pattern: raw.pattern ?? s.pattern } as PatternStock;
+    return <div className="altwrap"><DetailBoth s={view} st={status(raw)} /></div>;
+  }
+  const a = asPrev(raw) as PatternAltSetup & { invalidation: number; target: number };
   const st = status(raw), up = a.direction === 'up', hit = a.stage === 'target';
   const tone = up ? 'var(--up)' : 'var(--down)', tf = a.timeframe, T = cap(tf);
   const side = up ? 'above' : 'below';
@@ -215,7 +249,7 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
           <p>{s.keyLevel.text}</p>
         </div>
       )}
-      <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
+      <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={flagFor(a.timeframe, a.flag)} /></div>
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
       <PricesRules label={`${T} prices & rules`}>
@@ -280,7 +314,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
 
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
-      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={s.flag} /></div>
+      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={flagFor(tf, s.flag)} /></div>
       <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
@@ -404,7 +438,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
         </span>
         <span className="meta">
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
-          <Flag text={s?.flag} />
+          <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
         </span>
         {levels}

@@ -33,6 +33,7 @@ WINDOW = {'daily': 160, 'weekly': 150}       # bars searched for a pattern
 MIN_SPAN = {'daily': 20, 'weekly': 10}       # bars between the first and last swing point
 RECENT = {'daily': 45, 'weekly': 26}         # the pattern must have formed / broken this recently
 TOUCH = 0.015                                # a swing point within 1.5% of a line touches it
+MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 1.0}   # pattern height vs price; posted setups top out ~0.5 / ~0.97
 
 
@@ -168,12 +169,16 @@ def detect_lines(bars, tf, n, all_found=None):
         if not pattern:
             continue
         two_pairs = None not in u.anchors and None not in d.anchors
-        if 'Wedge' in pattern and not two_pairs:
-            continue
+        if 'Wedge' in pattern:
+            if not two_pairs:
+                continue
+            # both lines cover the same stretch: they start (and end) close together
+            if abs(u.anchors[0] - d.anchors[0]) > 0.5 * (A - start) or abs(u.anchors[1] - d.anchors[1]) > 0.5 * (A - start):
+                continue
         if not pl._contained(bars, u, d, start, A + 1, tol=0.01, allowed=1):
             continue
         touches = _touches(u, H1, h, start, A) + _touches(d, L1, l, start, A)
-        if touches < 4:
+        if touches < MIN_TOUCHES:
             continue
         st = _stage(bars, n, pattern, u, d, start, A)
         if not st:
@@ -185,11 +190,13 @@ def detect_lines(bars, tf, n, all_found=None):
         if all_found is not None:
             all_found.append(dict(st, pattern=pattern, timeframe=tf))
         if best is None or score > best[0]:
-            best = (score, pattern, u, d, start, st)
+            best = (score, pattern, u, d, start, st, touches, A)
     if not best:
         return None
-    _, pattern, u, d, start, st = best
+    _, pattern, u, d, start, st, touches, A = best
     setup = {'pattern': pattern, 'timeframe': tf, **st,
+             'quality': {'touches': touches, 'span': A - start,
+                         'height_pct': round((u.at(start) - d.at(start)) / bars['c'][A] * 100, 1)},
              'lines': [{'from': [t[start], _r(u.at(start))], 'to': [t[last], _r(u.at(last))]},
                        {'from': [t[start], _r(d.at(start))], 'to': [t[last], _r(d.at(last))]}]}
     return setup
@@ -360,6 +367,32 @@ def compare(now_et):
             mark = 'OK  ' if ok_p and ok_d else ('POOL' if inpool else ('PAT ' if ok_p else 'DIFF'))
             got = f"{f['pattern']} {f['direction']} {f['stage']}" if f else 'nothing'
             print(f"{mark} {main['ticker']:<5} {p['timeframe']:<6} posted: {p['pattern']} {p['direction']} {p['stage']:<9} | detected: {got}")
+    ref_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pattern_reference.json')
+    if os.path.exists(ref_path):
+        print("\nScreenshot references (pattern_reference.json):")
+        for p in json.load(open(ref_path))['setups']:
+            b = pl.load_bars(p['ticker'], p['timeframe']) or get_bars(p['ticker'], p['timeframe'], False)
+            b['tf'] = p['timeframe']
+            n = pw._completed_count(b['t'], p['timeframe'], now_et)
+            pool = []
+            detect_lines(b, p['timeframe'], n, pool)
+            h = detect_hammer(b, p['timeframe'], n)
+            if h:
+                pool.append(h)
+            lvl = p.get('signal') or p.get('breakUp') or p.get('confirm') if 'Hammer' not in p['pattern'] else None
+            hits = [x for x in pool if x['pattern'] == p['pattern'] and x['direction'] == p['direction'] and x['stage'] == p['stage']
+                    and (lvl is None or abs((x.get('signal') or x.get('breakUp') or 0) - lvl) <= 0.03 * lvl)]
+            total += 1
+            in_pool += bool(hits)
+            if hits and p.get('target') is not None:
+                best = min(hits, key=lambda x: abs(x.get('target', 0) - p['target']))
+                detail = f"ours: signal {best.get('signal')} inv {best.get('invalidation')} target {best.get('target')} | theirs: {p.get('signal')} / {p.get('invalidation')} / {p['target']}"
+            elif hits and p.get('goalUp') is not None:
+                best = min(hits, key=lambda x: abs(x.get('goalUp', 0) - p['goalUp']))
+                detail = f"ours: {best.get('breakUp')} / {best.get('breakDown')} / {best.get('goalUp')} / {best.get('goalDown')} | theirs: {p['breakUp']} / {p['breakDown']} / {p['goalUp']} / {p['goalDown']}"
+            else:
+                detail = ''
+            print(f"{'POOL' if hits else 'MISS'} {p['ticker']:<5} {p['timeframe']:<6} {p['pattern']} {p['direction']} {p['stage']}  {detail}")
     print(f"\nTop pick same pattern: {same_pattern}/{total}; same pattern + direction + stage: {same_dir}/{total}")
     print(f"Posted setup found among all valid detections (pattern, direction, stage, signal within 3%): {in_pool}/{total}")
 

@@ -26,3 +26,6 @@ dist-ssr
 # Price update script local history
 price_history.json
 __pycache__/
+
+# Pattern backtest candle cache
+.backtest_cache/
