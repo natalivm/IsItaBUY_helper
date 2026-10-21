@@ -149,17 +149,16 @@
 }
 /* Phone: the list is wider than the screen and the whole page scrolls sideways.
    Ticker first, status next, then pattern / target / invalidation at full size.
-   No frame and no column titles; expanded panels stay screen-width. The page
+   No frame; column titles scroll with their columns; expanded panels stay screen-width. The page
    (.pbw) is the sideways scroller, not the document, so mobile browsers don't
    zoom out to fit the wide list. */
 @media (max-width:600px){
 .pbw{overflow-x:auto;overscroll-behavior-x:none}
 .pbw .ledger{width:max-content;min-width:100%;border:0;border-radius:0;background:var(--bg);overflow:visible}
-.pbw .head{display:none}
-.pbw .row-btn{grid-template-columns:96px 140px 330px 150px 150px 20px;gap:12px;padding-inline:0 12px}
-.pbw .row-btn .meta{display:flex}
+.pbw .head{background:transparent}
+.pbw .head,.pbw .row-btn{grid-template-columns:96px 140px 330px 150px 150px 20px;gap:12px;padding-inline:0 12px}
+.pbw .head .pc,.pbw .row-btn .meta{display:flex}
 .pbw .tk span{display:none}
-.pbw .item:first-child{border-top:1px solid var(--line)}
 .pbw .item:last-child{border-bottom:1px solid var(--line)}
 .pbw .item>div[id],.pbw .empty{width:calc(100vw - 2 * max(16px,env(safe-area-inset-left,0px)))}
 .pbw .detail{grid-template-columns:1fr;padding-inline:4px}
