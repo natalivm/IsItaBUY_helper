@@ -1354,5 +1354,21 @@ export const PATTERN_STOCKS: PatternStock[] = [
     target: 17.03,
     failRule: "a completed weekly close above $207.83, then a follow-through close above that candle's high.",
     note: "Price broke down out of a rising wedge on the weekly chart and confirmed with a weekly close below $80. It drifted sideways through the summer and has now dropped to new lows for the move."
+  },
+  {
+    ticker: "AGCO",
+    name: "AGCO Corporation",
+    pattern: "Ascending Channel",
+    timeframe: "daily",
+    direction: "down",
+    stage: "confirmed",
+    stageDate: "2026-09-24",
+    price: 104.65,
+    priceDate: "2026-10-20",
+    signal: 120.66,
+    confirm: 118.70,
+    invalidation: 142.48,
+    target: 95.77,
+    note: "Price climbed a rising channel from the early-August low near $97 to a peak around $135 in early September, then broke the lower line. The break was confirmed with a daily close below $118.70 on Sep 24, and price has slid to around $105."
   }
 ];
