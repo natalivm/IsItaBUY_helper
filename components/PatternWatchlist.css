@@ -147,24 +147,23 @@
 .pbw .head .pc,.pbw .row-btn .meta{display:none}
 .pbw .head,.pbw .row-btn{grid-template-columns:minmax(0,1.6fr) 141.5px minmax(0,1.3fr) minmax(0,1.3fr) 19px}
 }
-/* Phone: the ledger scrolls sideways. Ticker is pinned on the left, status sits
-   next to it, and pattern / target / invalidation scroll in from the right at
-   full size. The expanded panel stays screen-width instead of scrolling. */
+/* Phone: the list is wider than the screen and the whole page scrolls sideways.
+   Ticker first, status next, then pattern / target / invalidation at full size.
+   No frame and no column titles; expanded panels stay screen-width. The page
+   (.pbw) is the sideways scroller, not the document, so mobile browsers don't
+   zoom out to fit the wide list. */
 @media (max-width:600px){
-.pbw{--gut-l:max(16px,env(safe-area-inset-left,0px));--gut-r:max(16px,env(safe-area-inset-right,0px))}
-.pbw .ledger{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-.pbw .head,.pbw .rows{width:max-content;min-width:100%}
-.pbw .head,.pbw .row-btn{grid-template-columns:96px 140px 330px 150px 150px 20px;gap:12px;padding-inline:0 12px}
-.pbw .head .pc,.pbw .row-btn .meta{display:flex}
+.pbw{overflow-x:auto;overscroll-behavior-x:none}
+.pbw .ledger{width:max-content;min-width:100%;border:0;border-radius:0;background:var(--bg);overflow:visible}
+.pbw .head{display:none}
+.pbw .row-btn{grid-template-columns:96px 140px 330px 150px 150px 20px;gap:12px;padding-inline:0 12px}
+.pbw .row-btn .meta{display:flex}
 .pbw .tk span{display:none}
-.pbw .row-btn .tk,.pbw .head>span:first-child{position:sticky;left:0;z-index:2;align-self:stretch;display:flex;align-items:center;padding-left:12px;background:var(--surface);box-shadow:1px 0 0 var(--line)}
-.pbw .head>span:first-child{background:var(--surface-2)}
-.pbw .row-btn:hover .tk{background:var(--surface-2)}
-.pbw .row-btn{padding-block:0}
-.pbw .row-btn>*{padding-block:13px}
-.pbw .item>div[id]{position:sticky;left:0;width:calc(100vw - var(--gut-l) - var(--gut-r) - 2px)}
-.pbw .empty{position:sticky;left:0;width:calc(100vw - var(--gut-l) - var(--gut-r) - 2px)}
-.pbw .detail{grid-template-columns:1fr;padding-inline:17px}
+.pbw .item:first-child{border-top:1px solid var(--line)}
+.pbw .item:last-child{border-bottom:1px solid var(--line)}
+.pbw .item>div[id],.pbw .empty{width:calc(100vw - 2 * max(16px,env(safe-area-inset-left,0px)))}
+.pbw .detail{grid-template-columns:1fr;padding-inline:4px}
+.pbw .empty-detail{padding-inline:4px}
 .pbw .step{font-size:14.5px}
 }
 @media (prefers-reduced-motion:reduce){
