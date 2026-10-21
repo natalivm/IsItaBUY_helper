@@ -62,11 +62,17 @@ const GROUPS: [Group | 'all', string][] = [['all', 'All'], ['confirmed', 'Confir
 
 interface Rung { k: string; cls: string; pcls?: string; v: number; p?: boolean; now?: boolean }
 
-const Ladder: React.FC<{ rungs: Rung[]; price: number }> = ({ rungs, price }) => (
+// 'YYYY-MM-DD' → 'MM/DD', matching the `upd` tag on the stock pages.
+const updTag = (d: string) => d.slice(5, 7) + '/' + d.slice(8, 10);
+
+const Ladder: React.FC<{ rungs: Rung[]; price: number; priceDate: string }> = ({ rungs, price, priceDate }) => (
   <div className="ladder">
     {rungs.map(r => (
       <div key={r.k} className={`rung ${r.now ? 'now' : ''}`}>
-        <span className={`k ${r.cls}`}>{r.k}</span>
+        <span className="kw">
+          <span className={`k ${r.cls}`}>{r.k}</span>
+          {r.now && <span className="upd" title={`Price updated ${day(priceDate)}`}>upd {updTag(priceDate)}</span>}
+        </span>
         <span className="v">{r.p && <small className={r.pcls || r.cls}>{pct(price, r.v)}</small>}<b>{fmt(r.v)}</b></span>
       </div>
     ))}
@@ -101,7 +107,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       </div>
       <div>
         <h3>Prices that matter</h3>
-        <Ladder rungs={rungs} price={s.price} />
+        <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
         <p className="note">Latest close {fmt(s.price)} on {day(s.priceDate)}. Goals are projections, not promises.</p>
       </div>
       <div>
@@ -141,7 +147,7 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a }) =
       )}
       <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
       <div className="altgrid">
-        <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} /></div>
+        <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} /></div>
         <div>
           <h3>{T} rules</h3>
           <ul className="rules">
@@ -212,7 +218,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       </div>
       <div>
         <h3>Prices that matter</h3>
-        <Ladder rungs={rungs} price={s.price} />
+        <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
         <p className="note">Latest close {fmt(s.price)} on {day(s.priceDate)}. Target is a projection, not a promise.</p>
       </div>
       <div>
@@ -386,8 +392,6 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
         <header>
           <div>
             {asOf && <div className="asof">Prices as of {day(asOf)}</div>}
-            <h1>Pattern Break Watchlist</h1>
-            <p>Chart patterns being tracked, where each one stands, the price it is projected to reach, and the level that cancels the idea. Tap a ticker for its valuation, or the row for the full rules.</p>
           </div>
           {headerControls && <div className="hdr-ctl">{headerControls}</div>}
         </header>
@@ -417,7 +421,7 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
           <div className="head" aria-hidden="true">
             <span>Stock</span><span>Status</span><span className="pc">Pattern</span><span className="r">Target</span><span className="r">Invalidation</span><span></span>
           </div>
-          <div>
+          <div className="rows">
             {rows.length === 0
               ? <div className="empty">No stocks match this filter.</div>
               : rows.map(r => <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]} onOpenPage={onOpenStock} />)}
