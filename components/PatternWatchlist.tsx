@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { TickerDefinition } from '../types';
-import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage } from '../data/patternWatchlist';
+import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage, PatternAgree } from '../data/patternWatchlist';
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import './PatternWatchlist.css';
 
@@ -94,6 +94,18 @@ const PricesRules: React.FC<{ label?: string; children: React.ReactNode }> = ({ 
       </button>
       {open && <div className="pr-grid">{children}</div>}
     </>
+  );
+};
+
+// Several stored setups pointing to the same target (within 5%) mean more confidence.
+// The scripts precompute this as `agree` on the shown setups.
+const Agreement: React.FC<{ agree?: PatternAgree }> = ({ agree }) => {
+  if (!agree || agree.n < 2) return null;
+  const range = agree.lo === agree.hi ? fmt(agree.lo) : `${fmt(agree.lo)}–${fmt(agree.hi)}`;
+  return (
+    <div className="agree-note">
+      <b>{agree.n} patterns agree.</b> {agree.with.join(', ')} {agree.with.length > 1 ? 'point' : 'points'} to a similar target ({range}).
+    </div>
   );
 };
 
@@ -250,6 +262,8 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
         </div>
       )}
       <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={flagFor(a.timeframe, a.flag)} /></div>
+      <Agreement agree={raw.agree} />
+      <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
       <PricesRules label={`${T} prices & rules`}>
@@ -315,6 +329,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
       <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={flagFor(tf, s.flag)} /></div>
+      <Agreement agree={raw.agree} />
       <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
@@ -428,7 +443,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
-          {s?.auto && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
+          {(s?.auto || s?.alt?.auto) && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
           <span>{row.name}</span>
         </span>
         <span className="stcell">
@@ -440,6 +455,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
+          {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
         </span>
         {levels}
         <Chev />

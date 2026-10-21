@@ -104,6 +104,17 @@
    "timeframe": "daily",
    "pattern": "Descending Channel",
    "direction": "both",
+   "stage": "forming",
+   "breakUp": 148.28,
+   "breakDown": 120.59,
+   "goalUp": 175.97,
+   "goalDown": 92.9
+  },
+  {
+   "ticker": "DUOL",
+   "timeframe": "daily",
+   "pattern": "Head & Shoulders",
+   "direction": "down",
    "stage": "forming"
   }
  ]

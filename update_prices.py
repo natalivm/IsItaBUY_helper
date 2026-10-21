@@ -937,6 +937,13 @@ def main():
                 print("Closed setups:\n  " + "\n  ".join(pruned))
             # Look for a new setup on stocks with none, or only a "No clear pattern" placeholder.
             new_setups = pattern_detect.run(apply=True, verbose=False)
+            # Refresh the "N agree" summaries on the shown setups.
+            with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                wl_text = fh.read()
+            annotated = pattern_watchlist.annotate_agreement(wl_text)
+            if annotated != wl_text:
+                with open(pattern_watchlist.WATCHLIST_FILE, 'w') as fh:
+                    fh.write(annotated)
             if new_setups:
                 print("Auto-detected (red dot, check by hand):\n  " + "\n  ".join(f"{t}: {d}" for t, d in new_setups))
 

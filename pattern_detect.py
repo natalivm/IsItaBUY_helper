@@ -33,6 +33,8 @@ WINDOW = {'daily': 160, 'weekly': 150}       # bars searched for a pattern
 MIN_SPAN = {'daily': 20, 'weekly': 10}       # bars between the first and last swing point
 RECENT = {'daily': 45, 'weekly': 26}         # the pattern must have formed / broken this recently
 TOUCH = 0.015                                # a swing point within 1.5% of a line touches it
+MAX_PER_TF = 5                               # setups stored per timeframe; the UI shows the best weekly + best daily
+AGREE = 0.05                                 # targets within 5% of each other agree
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 1.0}   # pattern height vs price; posted setups top out ~0.5 / ~0.97
 
@@ -188,18 +190,22 @@ def detect_lines(bars, tf, n, all_found=None):
         rank = {'confirmed': 2, 'signal': 1, 'forming': 0}[st['stage']]
         score = (touches + (A - start) / 15, rank)
         if all_found is not None:
-            all_found.append(dict(st, pattern=pattern, timeframe=tf))
+            all_found.append(_make_setup(bars, tf, pattern, u, d, start, A, st, touches, score))
         if best is None or score > best[0]:
             best = (score, pattern, u, d, start, st, touches, A)
     if not best:
         return None
-    _, pattern, u, d, start, st, touches, A = best
-    setup = {'pattern': pattern, 'timeframe': tf, **st,
-             'quality': {'touches': touches, 'span': A - start,
-                         'height_pct': round((u.at(start) - d.at(start)) / bars['c'][A] * 100, 1)},
-             'lines': [{'from': [t[start], _r(u.at(start))], 'to': [t[last], _r(u.at(last))]},
-                       {'from': [t[start], _r(d.at(start))], 'to': [t[last], _r(d.at(last))]}]}
-    return setup
+    score, pattern, u, d, start, st, touches, A = best
+    return _make_setup(bars, tf, pattern, u, d, start, A, st, touches, score)
+
+
+def _make_setup(bars, tf, pattern, u, d, start, A, st, touches, score):
+    t, last = bars['t'], len(bars['t']) - 1
+    return {'pattern': pattern, 'timeframe': tf, **st, 'score': score,
+            'quality': {'touches': touches, 'span': A - start,
+                        'height_pct': round((u.at(start) - d.at(start)) / bars['c'][A] * 100, 1)},
+            'lines': [{'from': [t[start], _r(u.at(start))], 'to': [t[last], _r(u.at(last))]},
+                      {'from': [t[start], _r(d.at(start))], 'to': [t[last], _r(d.at(last))]}]}
 
 
 def detect_hammer(bars, tf, n):
@@ -236,8 +242,13 @@ def detect_hammer(bars, tf, n):
 
 
 def detect(ticker, bars_by_tf, now_et):
-    """One setup per timeframe, weekly first (steadier), then daily."""
-    rank = {'confirmed': 2, 'signal': 1, 'forming': 0}
+    """Every distinct valid setup, weekly first (steadier), then daily.
+
+    Several patterns can be valid on one chart at once (e.g. a rising wedge and an
+    ascending channel breaking down together); when their targets agree that is
+    extra confidence, so all of them are kept: the clearest one per pattern and
+    direction, up to MAX_PER_TF per timeframe.
+    """
     found = []
     for tf in ('weekly', 'daily'):
         bars = bars_by_tf.get(tf)
@@ -245,11 +256,56 @@ def detect(ticker, bars_by_tf, now_et):
             continue
         bars['tf'] = tf
         n = pw._completed_count(bars['t'], tf, now_et)
-        cands = [x for x in (detect_lines(bars, tf, n), detect_hammer(bars, tf, n)) if x]
-        if cands:
-            # the further-along setup wins; on a tie the channel / wedge beats the single candle
-            found.append(max(cands, key=lambda x: (rank[x['stage']], 'Hammer' not in x['pattern'])))
-    return found
+        pool = []
+        detect_lines(bars, tf, n, pool)
+        best = {}
+        for x in pool:
+            key = (x['pattern'], x['direction'])
+            if key not in best or x['score'] > best[key]['score']:
+                best[key] = x
+        picked = list(best.values())
+        h = detect_hammer(bars, tf, n)
+        if h:
+            picked.append(h)
+        found += rank_setups(picked)[:MAX_PER_TF]
+    return rank_setups(found)
+
+
+def split_display(found):
+    """(shown main, shown second, stored rest): best weekly first, best daily second."""
+    weekly = [s for s in found if s['timeframe'] == 'weekly']
+    daily = [s for s in found if s['timeframe'] == 'daily']
+    first, second = (weekly[:1] or daily[:1]), (daily[:1] if weekly else daily[1:2])
+    main = first[0] if first else None
+    alt = second[0] if second and second[0] is not main else None
+    rest = [s for s in found if s is not main and s is not alt]
+    return main, alt, rest
+
+
+def _aim(s):
+    """The price a setup points to in its direction (target, or the goal for either-direction ones)."""
+    return s.get('target')
+
+
+def agreement(s, others):
+    """How many setups (itself included) in the same direction, on any timeframe, share its target."""
+    a = _aim(s)
+    if a is None or s.get('direction') not in ('up', 'down'):
+        return 1
+    return sum(1 for o in others if o.get('direction') == s['direction']
+               and _aim(o) is not None and abs(_aim(o) - a) <= AGREE * a)
+
+
+def rank_setups(found):
+    """Most valid first: active (confirmed / signal) before pending, then most agreement on the
+    target, further along, weekly before daily, clearer pattern. Pending setups stay stored and
+    show once nothing on that timeframe is active."""
+    stage = {'confirmed': 2, 'signal': 1, 'forming': 0}
+    def key(s):
+        sc = s.get('score') or (0, 0)
+        st = stage.get(s['stage'], 0)
+        return (st > 0, agreement(s, found), st, s['timeframe'] == 'weekly', sc[0] if isinstance(sc, tuple) else sc)
+    return sorted(found, key=key, reverse=True)
 
 
 def _note(s):
@@ -283,28 +339,45 @@ def _ts_setup(s, indent):
     return out
 
 
+def _more_ts(setups, auto=False):
+    """`more: [...]` lines for extra setups (marked auto individually when added to a posted stock)."""
+    out = ["    more: ["]
+    for s in setups:
+        s = dict(s)
+        s.setdefault('note', _note(s))
+        out.append("      {")
+        if auto:
+            out.append("        auto: true,")
+        out += _ts_setup(s, '        ')
+        out.append("      },")
+    out.append("    ],")
+    return out
+
+
+def _alt_ts(s, auto=False):
+    s = dict(s)
+    s.setdefault('note', _note(s))
+    return ["    alt: {"] + (["      auto: true,"] if auto else []) + _ts_setup(s, '      ') + ["    },"]
+
+
 def _ts_entry(ticker, name, price, price_date, setups):
+    shown, second, rest = split_display(setups) if setups else (None, None, [])
+    setups = [x for x in (shown,) if x] + ([second] if second else []) + rest
     main = dict(setups[0]) if setups else {'pattern': 'No clear pattern', 'timeframe': 'daily',
                                             'direction': 'both', 'stage': 'forming',
                                             'note': 'Auto-scan found no clear channel, wedge or reversal candle yet.'}
     if setups:
         main.setdefault('note', _note(main))
-        if main['timeframe'] == 'weekly':
-            main['flag'] = 'Weekly close pending'
     lines = ["  {", f"    ticker: {json.dumps(ticker)},", f"    name: {json.dumps(name)},", "    auto: true,"]
     body = _ts_setup(main, '    ')
     # price / priceDate go after stageDate, like the posted setups
     at = next((i for i, x in enumerate(body) if x.strip().startswith(('signal', 'confirm', 'invalidation', 'target', 'breakUp', 'lines', 'note'))), len(body))
     body[at:at] = [f"    price: {pw._fmt_price(price)},", f"    priceDate: {json.dumps(price_date)},"]
     lines += body
-    if len(setups) > 1:
-        alt = dict(setups[1])
-        alt.setdefault('note', _note(alt))
-        if alt['timeframe'] == 'weekly':
-            alt['flag'] = 'Weekly close pending'
-        lines.append("    alt: {")
-        lines += _ts_setup(alt, '      ')
-        lines.append("    },")
+    if second:
+        lines += _alt_ts(second)
+    if rest:
+        lines += _more_ts(rest)
     lines.append("  },")
     return "\n".join(lines) + "\n"
 
@@ -342,7 +415,7 @@ def compare(now_et):
         if main.get('auto'):
             continue
         posted = [dict(s, pattern=s.get('pattern') or main.get('pattern'), timeframe=s.get('timeframe') or main.get('timeframe'))
-                  for _, s, _ in pw._setups(e)]
+                  for _, s, _ in pw._setups(e) if not s.get('auto')]
         found = detect(main['ticker'], {tf: pl.load_bars(main['ticker'], tf) for tf in TIMEFRAMES}, now_et)
         for p in posted:
             if p['timeframe'] not in TIMEFRAMES:
@@ -408,14 +481,15 @@ def fetch_name(ticker):
         return ticker
 
 
-def scan_targets(text):
-    """{ticker: (name, entry span or None)}: our stocks without a setup, plus placeholder entries."""
+def scan_targets(text, redo_auto=False):
+    """{ticker: (name, entry span or None)}: our stocks without a setup, plus placeholder entries
+    (and, with redo_auto, every unreviewed auto entry)."""
     todo = {}
     have = set()
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
         have.add(m['ticker'])
-        if m.get('pattern') == pw.NO_PATTERN:
+        if m.get('pattern') == pw.NO_PATTERN or (redo_auto and m.get('auto')):
             todo[m['ticker']] = (m.get('name', m['ticker']), e['span'])
     for t, n in stock_universe().items():
         if t not in have:
@@ -423,7 +497,45 @@ def scan_targets(text):
     return todo
 
 
-def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True):
+def _extras_edit(text, e, setups):
+    """Auto-detected setups for a posted entry: fill a missing shown timeframe (alt), store the rest in `more`.
+    Returns (position, text to insert) or None."""
+    have = {((s.get('timeframe') or e['fields'].get('timeframe', (0, 0, 'daily'))[2]),
+             s.get('pattern') or e['fields']['pattern'][2], s.get('direction')) for _, s, _ in pw._setups(e)}
+    new = [x for x in setups if (x['timeframe'], x['pattern'], x['direction']) not in have]
+    per_tf = {}
+    for tf, _, _ in have:
+        per_tf[tf] = per_tf.get(tf, 0) + 1
+    kept = []
+    for x in new:                                  # up to MAX_PER_TF stored per timeframe
+        if per_tf.get(x['timeframe'], 0) < MAX_PER_TF:
+            per_tf[x['timeframe']] = per_tf.get(x['timeframe'], 0) + 1
+            kept.append(x)
+    if not kept:
+        return None
+    rows = []
+    shown_tfs = {e['fields']['timeframe'][2] if 'timeframe' in e['fields'] else 'daily'}
+    if e['alt'] is None:
+        # one weekly + one daily are shown: fill the missing timeframe with the best detected setup
+        fill = next((x for x in kept if x['timeframe'] not in shown_tfs), None)
+        if fill:
+            kept.remove(fill)
+            rows += _alt_ts(fill, auto=True)
+    if kept:
+        if 'more' in e['fields'] and not rows:
+            close = e['fields']['more'][1] - 1        # append to the existing list
+            line_start = text.rfind('\n', 0, close) + 1
+            return line_start, '\n'.join(_more_ts(kept, auto=True)[1:-1]) + '\n'
+        rows += _more_ts(kept, auto=True)
+    if not rows:
+        return None
+    last = max(v[1] for k, v in e['fields'].items())
+    if text[last:last + 1] == ',':
+        return last + 1, '\n' + '\n'.join(rows)
+    return last, ',\n' + '\n'.join(rows)[:-1]
+
+
+def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_auto=False, extras=False):
     """Detect setups for stocks that have none (or only a placeholder).
 
     bulk: post one summary News item instead of one per stock (first big scan).
@@ -431,7 +543,7 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True):
     """
     now_et = pw._now_et()
     text = open(pw.WATCHLIST_FILE).read()
-    todo = scan_targets(text)
+    todo = scan_targets(text, redo_auto)
     for t, n in (extra or {}).items():
         todo.setdefault(t, (n, None))
     if verbose:
@@ -459,9 +571,27 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True):
         summary.append((ticker, desc))
         if verbose:
             print(f"  {ticker:<5} {desc}")
+    if extras:
+        # Posted stocks keep their setups; detected ones that aren't there yet are added
+        # as extra setups, each marked auto (red dot) until checked.
+        for e in pw.parse_watchlist(text):
+            m = {k: v[2] for k, v in e['fields'].items()}
+            if m.get('auto') or m['ticker'] in todo:
+                continue
+            try:
+                bars = {tf: get_bars(m['ticker'], tf, refresh) for tf in TIMEFRAMES}
+            except Exception:
+                continue
+            ed = _extras_edit(text, e, detect(m['ticker'], bars, now_et))
+            if ed:
+                cuts.append((ed[0], ed[0], ed[1]))
+                summary.append((m['ticker'], 'extra setups added'))
+                if verbose:
+                    print(f"  {m['ticker']:<5} + extra setups")
     new_text = text
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
+    new_text = pw.annotate_agreement(new_text)
     if block:
         end = new_text.rindex('\n];')
         head = new_text[:end].rstrip()
@@ -475,12 +605,12 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True):
         with open(pw.SNAPSHOT_FILE, 'w') as fh:
             json.dump(pw.status_map(new_text), fh, indent=1, sort_keys=True)
             fh.write('\n')
-        found_n = sum(1 for _, d in summary if d != 'no clear pattern')
+        n_setups = len(pw.status_map(new_text)) - len(pw.status_map(text))
         pw._prepend_news([{
-            'id': f"{today}-auto-scan", 'date': pw._display_date(today), 'tickers': [],
-            'title': f"Auto-detected setups for {len(summary)} stocks",
-            'text': f"{found_n} with a channel, wedge or reversal candle, {len(summary) - found_n} with no clear pattern yet. "
-                    "Marked with a red dot until checked by hand.",
+            'id': f"{today}-auto-scan-{len(summary)}", 'date': pw._display_date(today), 'tickers': [],
+            'title': f"Auto-detected setups updated for {len(summary)} stocks",
+            'text': f"Every valid pattern per stock is now listed (weekly and daily); {max(n_setups, 0)} setups added. "
+                    "Auto-detected ones carry a red dot until checked by hand.",
         }], pw.NEWS_FILE)
     else:
         pw.sync_news(text, new_text, {}, today, apply=True)
@@ -496,11 +626,14 @@ def main():
     ap.add_argument('--compare', action='store_true', help='compare against the posted setups (no changes)')
     ap.add_argument('--refresh', action='store_true', help='re-download candles even if cached')
     ap.add_argument('--add', nargs='*', default=[], help='extra watchlist-only tickers to scan (e.g. CBRS LIFE)')
+    ap.add_argument('--redo-auto', action='store_true', help='re-detect every unreviewed auto entry')
+    ap.add_argument('--extras', action='store_true', help='add detected extra setups to posted stocks (red dot)')
     args = ap.parse_args()
     if args.compare:
         compare(pw._now_et())
         return
-    run(apply=args.apply, refresh=args.refresh, bulk=args.bulk, extra={t: t for t in args.add})
+    run(apply=args.apply, refresh=args.refresh, bulk=args.bulk, extra={t: t for t in args.add},
+        redo_auto=args.redo_auto, extras=args.extras)
     if not args.apply:
         print("\nDry run. Use --apply to add these setups.")
 

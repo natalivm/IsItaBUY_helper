@@ -146,7 +146,19 @@ def parse_watchlist(text):
             if 'alt' in f:
                 a0, a1, _ = f['alt']
                 alt = _fields(text, masked, depth, a0 + 1, a1 - 1, 3)
-            entries.append({'fields': f, 'alt': alt, 'span': (i, end)})
+            more = []
+            if 'more' in f:  # any number of extra setups: more: [{...}, {...}]
+                m0, m1, _ = f['more']
+                j = m0 + 1
+                while j < m1 - 1:
+                    if masked[j] == '{' and depth[j] == 3:
+                        je = _close(masked, j)
+                        item = _fields(text, masked, depth, j + 1, je, 4)
+                        item['_span'] = (j, je, None)
+                        more.append(item)
+                        j = je
+                    j += 1
+            entries.append({'fields': f, 'alt': alt, 'more': more, 'span': (i, end)})
             i = end
         i += 1
     return entries
@@ -271,13 +283,124 @@ def _fmt_price(p):
 
 
 def _setups(entry):
-    """[(label, values, positions)] for the main setup and the optional alt setup."""
+    """[(label, values, positions)] for the main setup, the optional alt setup and any `more` setups."""
     f = entry['fields']
-    out = [('main', {k: v[2] for k, v in f.items()}, f)]
+    main = {k: v[2] for k, v in f.items()}
+    out = [('main', main, f)]
     if entry['alt']:
         a = {k: v[2] for k, v in entry['alt'].items()}
         out.append((f"{a.get('timeframe', 'alt')} alt", a, entry['alt']))
+    used = {lb for lb, _, _ in out}
+    for item in entry.get('more', []):
+        m = {k: v[2] for k, v in item.items() if k != '_span'}
+        label = f"{m.get('timeframe') or main.get('timeframe') or 'daily'} {m.get('pattern') or main.get('pattern')}"
+        n = 2
+        while label in used:
+            label = f"{label.split(' #')[0]} #{n}"
+            n += 1
+        used.add(label)
+        out.append((label, m, item))
     return out
+
+
+AGREE = 0.05   # targets within 5% of each other agree
+
+
+def annotate_agreement(text):
+    """Set `agree` on the two shown setups (main + second): how many stored setups in the same
+    direction, on any timeframe, point to a target within 5%, their range, and which they are.
+    Only these summaries reach the site; the stored extras are stripped from the build."""
+    edits = []
+    for e in parse_watchlist(text):
+        setups = _setups(e)
+        main = setups[0][1]
+        live = []
+        for lb, sv, pos in setups:
+            v = dict(sv)
+            if v.get('stage') == 'update':
+                v['stage'] = v.get('prevStage') or 'forming'
+            v.setdefault('timeframe', main.get('timeframe') or 'daily')
+            v['pattern'] = v.get('pattern') or main.get('pattern')
+            live.append((lb, v, pos))
+        for lb, v, pos in live:
+            if lb != 'main' and not lb.endswith(' alt'):
+                continue
+            t = v.get('target')
+            others = [] if t is None or v.get('direction') not in ('up', 'down') else [
+                o for olb, o, _ in live if olb != lb and o.get('direction') == v['direction'] and o.get('target')
+                and o.get('stage') not in ('target', 'failed') and abs(o['target'] - t) <= AGREE * t]
+            new = None
+            if others:
+                ts = [t] + [o['target'] for o in others]
+                new = json.dumps({'n': len(others) + 1, 'lo': _r2(min(ts)), 'hi': _r2(max(ts)),
+                                  'with': [f"{o['timeframe'].capitalize()} {o['pattern'].lower()}" for o in others]})
+            if 'agree' in pos:
+                v0, v1, _ = pos['agree']
+                if new:
+                    edits.append((v0, v1, new))
+                else:  # drop the line
+                    a = text.rfind('\n', 0, v0)
+                    b = v1 + (1 if text[v1:v1 + 1] == ',' else 0)
+                    edits.append((a, b, ''))
+            elif new:
+                s0, s1, _ = pos['stage']
+                line_start = text.rfind('\n', 0, s0) + 1
+                indent = re.match(r'[ \t]*', text[line_start:]).group(0)
+                edits.append((s1, s1, f",\n{indent}agree: {new}"))
+    for a, b, v in sorted(edits, key=lambda x: (x[0], x[1]), reverse=True):
+        text = text[:a] + v + text[b:]
+    return text
+
+
+def _r2(v):
+    return round(v, 2)
+
+
+HEADER_KEYS = ('ticker', 'name', 'auto', 'price', 'priceDate')
+SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
+
+
+def _reindent(value, indent):
+    """Re-indent a multi-line value (e.g. a lines array) to sit under `indent`."""
+    rows = value.split('\n')
+    if len(rows) == 1:
+        return value
+    rest = [r for r in rows[1:] if r.strip()]
+    cut = min(len(r) - len(r.lstrip()) for r in rest) if rest else 0
+    return '\n'.join([rows[0]] + [indent + r[cut:] if r.strip() else r for r in rows[1:]])
+
+
+def _setup_text(text, pos, indent, inherit=None):
+    """Field lines for one setup object, copied from its source positions."""
+    out = []
+    keys = [k for k in pos if k not in SKIP_KEYS]
+    if inherit and 'pattern' not in pos:
+        out.append(f"{indent}pattern: {json.dumps(inherit)},")
+    for k in sorted(keys, key=lambda k: pos[k][0]):
+        v0, v1, _ = pos[k]
+        out.append(f"{indent}{k}: {_reindent(text[v0:v1], indent)},")
+    return out
+
+
+def rebuild_entry(text, e, keep):
+    """Entry text with `keep[0]` (a positions dict) as the main setup and the rest as `more`."""
+    f = e['fields']
+    main_pattern = f['pattern'][2] if 'pattern' in f else None
+    rows = ["{"]
+    for k in HEADER_KEYS:
+        if k in f:
+            v0, v1, _ = f[k]
+            rows.append(f"    {k}: {text[v0:v1]},")
+    rows += _setup_text(text, keep[0], '    ', inherit=main_pattern)
+    if len(keep) > 1:
+        rows.append("    more: [")
+        for pos in keep[1:]:
+            rows.append("      {")
+            rows += _setup_text(text, pos, '        ', inherit=main_pattern)
+            rows.append("      },")
+        rows.append("    ],")
+    rows.append("  }")
+    return '\n'.join(rows)
 
 
 def _describe(s, main):
@@ -676,18 +799,28 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
                 done[label] = r
         if not done:
             continue
-        alt_label = next((lb for lb, _, _ in _setups(e) if lb != 'main'), None)
-        if 'main' in done and alt_label and alt_label not in done:
-            report.append(f"{main['ticker']}: main setup finished ({done['main'][1]}) but its {alt_label} setup is live; left in place")
-            continue
-        if 'main' in done:
+        live = [(lb, pos) for lb, _, pos in _setups(e) if lb not in done]
+        if 'main' in done and live:
+            # Promote the next live setup to main; the rest stay as extra setups.
+            a, b = e['span']
+            cuts.append((a, b + 1, rebuild_entry(text, e, [pos for _, pos in live])))
+        elif 'main' in done:
             # Keep the stock: replace the entry with a placeholder that the detector rescans.
             a, b = e['span']
             reason = done['main'][1].rstrip('.')
             cuts.append((a, b + 1, placeholder_entry(main['ticker'], main.get('name', main['ticker']),
                                                     main.get('price'), main.get('priceDate'),
                                                     f"Previous setup closed ({reason[0].lower() + reason[1:]}). Scanning for a new one.")))
-        else:  # only the second setup is done: drop it (and a key-level note tied to it)
+        else:
+            for lb, _, pos in _setups(e):
+                if lb in done and '_span' in pos:  # an extra setup: drop it from the list
+                    a, b = pos['_span'][0], pos['_span'][1] + 1
+                    a = text.rfind('\n', 0, a) + 1
+                    b += 1 if text[b:b + 1] == ',' else 0
+                    b += 1 if text[b:b + 1] == '\n' else 0
+                    cuts.append((a, b, ''))
+        if 'main' not in done and any(lb.endswith(' alt') for lb in done):
+            # the second setup is done: drop it (and a key-level note tied to it)
             for key in ('alt', 'keyLevel'):
                 if key in e['fields']:
                     v0, v1, _ = e['fields'][key]
