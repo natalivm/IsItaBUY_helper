@@ -38,6 +38,8 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
 
+import pattern_detect
+import pattern_lines
 import pattern_watchlist
 
 STOCKS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stocks")
@@ -921,13 +923,37 @@ def main():
     if args.apply:
         record_prices(tickers, prices)
 
+        # Candles for the watchlist's expanded-row charts (public/bars/).
+        if wl_symbols:
+            bars_ok, bars_bad = pattern_watchlist.write_chart_bars(HEADERS)
+            print(f"\nWrote {len(bars_ok)} chart candle file(s)." + (f" Failed: {', '.join(bars_bad)}" if bars_bad else ""))
+            # Trendlines for setups that don't have them yet (e.g. newly posted ones).
+            new_lines, _ = pattern_lines.run(apply=True, verbose=False)
+            if new_lines:
+                print(f"Fitted trendlines for: {', '.join(n for n, _, _ in new_lines)}")
+            # Drop setups that are done (target reached / failed); each gets a News post.
+            pruned, _ = pattern_watchlist.prune_finished(apply=True)
+            if pruned:
+                print("Closed setups:\n  " + "\n  ".join(pruned))
+            # Look for a new setup on stocks with none, or only a "No clear pattern" placeholder.
+            new_setups = pattern_detect.run(apply=True, verbose=False)
+            # Refresh the "N agree" summaries on the shown setups.
+            with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                wl_text = fh.read()
+            annotated = pattern_watchlist.annotate_agreement(wl_text)
+            if annotated != wl_text:
+                with open(pattern_watchlist.WATCHLIST_FILE, 'w') as fh:
+                    fh.write(annotated)
+            if new_setups:
+                print("Auto-detected (red dot, check by hand):\n  " + "\n  ".join(f"{t}: {d}" for t, d in new_setups))
+
         # Push to git if requested
         wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))
         if args.push and (changes or wl_changed):
             changed_paths = [tickers[sym]['path'] for sym, _, _ in changes if sym in tickers]
             if wl_changed:
                 changed_paths += [pattern_watchlist.WATCHLIST_FILE, pattern_watchlist.NEWS_FILE,
-                                  pattern_watchlist.SNAPSHOT_FILE]
+                                  pattern_watchlist.SNAPSHOT_FILE, pattern_watchlist.BARS_DIR]
             git_commit_push(changed_paths, changes, rating_changes, wl_result)
 
         # Auto-run weekly review on Fridays

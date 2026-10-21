@@ -1,0 +1,121 @@
+{
+ "_about": "Setups read from the source tool's screenshots. pattern_detect.py --compare checks the detector against these and against data/patternWatchlist.ts (non-auto). Levels are optional.",
+ "setups": [
+  {
+   "ticker": "DUOL",
+   "timeframe": "daily",
+   "pattern": "Falling Wedge",
+   "direction": "up",
+   "stage": "confirmed",
+   "stageDate": "2026-10-06",
+   "signal": 145.81,
+   "confirm": 147.75,
+   "invalidation": 128.85,
+   "target": 174.68
+  },
+  {
+   "ticker": "AKAM",
+   "timeframe": "daily",
+   "pattern": "Descending Channel",
+   "direction": "both",
+   "stage": "forming",
+   "breakUp": 96.48,
+   "breakDown": 77.54,
+   "goalUp": 115.43,
+   "goalDown": 58.59
+  },
+  {
+   "ticker": "TSLA",
+   "timeframe": "weekly",
+   "pattern": "Rising Wedge",
+   "direction": "down",
+   "stage": "confirmed",
+   "stageDate": "2026-07-20",
+   "signal": 403.99,
+   "confirm": 377.22,
+   "invalidation": 486.4,
+   "target": 292.28
+  },
+  {
+   "ticker": "TSLA",
+   "timeframe": "daily",
+   "pattern": "Descending Channel",
+   "direction": "up",
+   "stage": "confirmed",
+   "stageDate": "2026-09-21",
+   "signal": 359.12,
+   "confirm": 370.0,
+   "invalidation": 311.36,
+   "target": 465.43
+  },
+  {
+   "ticker": "IREN",
+   "timeframe": "weekly",
+   "pattern": "Rising Wedge",
+   "direction": "down",
+   "stage": "confirmed",
+   "stageDate": "2026-10-05"
+  },
+  {
+   "ticker": "IREN",
+   "timeframe": "weekly",
+   "pattern": "Ascending Channel",
+   "direction": "down",
+   "stage": "confirmed",
+   "stageDate": "2026-06-29"
+  },
+  {
+   "ticker": "CRWD",
+   "timeframe": "daily",
+   "pattern": "Hammer",
+   "direction": "up",
+   "stage": "forming"
+  },
+  {
+   "ticker": "DUOL",
+   "timeframe": "weekly",
+   "pattern": "Rising Wedge",
+   "direction": "down",
+   "stage": "signal",
+   "stageDate": "2026-10-12",
+   "signal": 142.92,
+   "confirm": 135.42,
+   "invalidation": 157.79,
+   "target": 113.29
+  },
+  {
+   "ticker": "DUOL",
+   "timeframe": "daily",
+   "pattern": "Rising Wedge",
+   "direction": "down",
+   "stage": "confirmed",
+   "stageDate": "2026-09-09"
+  },
+  {
+   "ticker": "DUOL",
+   "timeframe": "daily",
+   "pattern": "Ascending Channel",
+   "direction": "down",
+   "stage": "confirmed",
+   "stageDate": "2026-09-09"
+  },
+  {
+   "ticker": "DUOL",
+   "timeframe": "daily",
+   "pattern": "Descending Channel",
+   "direction": "both",
+   "stage": "forming",
+   "breakUp": 148.28,
+   "breakDown": 120.59,
+   "goalUp": 175.97,
+   "goalDown": 92.9
+  },
+  {
+   "ticker": "DUOL",
+   "timeframe": "daily",
+   "pattern": "Head & Shoulders",
+   "direction": "down",
+   "stage": "forming"
+  }
+ ]
+}

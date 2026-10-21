@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { TickerDefinition } from '../types';
-import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage } from '../data/patternWatchlist';
+import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage, PatternAgree } from '../data/patternWatchlist';
+import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import './PatternWatchlist.css';
 
 // Home page: one scannable ledger of tickers. Clicking the ticker opens the
@@ -68,6 +69,50 @@ function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: 
   return x.stage === 'update' ? { ...x, stage: x.prevStage ?? 'forming' } : x;
 }
 
+// Chart levels + stage marker for a single-direction setup (main or alt).
+function chartSpec(s: { direction: string; stage: PatternStage; stageDate?: string; signal?: number; confirm?: number; invalidation?: number; target?: number }) {
+  const dn = s.direction === 'down';
+  const levels: ChartLevel[] = [];
+  if (s.target != null) levels.push({ price: s.target, label: s.stage === 'target' ? 'Reached' : 'Target', tone: 'up' });
+  if (s.confirm != null) levels.push({ price: s.confirm, label: 'Confirm', tone: dn ? 'down' : 'up' });
+  if (s.signal != null) levels.push({ price: s.signal, label: 'Signal', tone: 'muted' });
+  if (s.invalidation != null) levels.push({ price: s.invalidation, label: 'Invalidation', tone: 'down', solid: true });
+  const word: Partial<Record<PatternStage, string>> = { signal: 'Signal', confirmed: 'Confirmed', target: 'Target' };
+  const marker: ChartMarker | undefined = s.stageDate && word[s.stage]
+    ? { date: s.stageDate, text: word[s.stage]!, tone: dn ? 'down' : 'up', above: dn }
+    : undefined;
+  return { levels, marker };
+}
+
+// Prices & Rules sit behind a button so the expanded row stays compact.
+const PricesRules: React.FC<{ label?: string; children: React.ReactNode }> = ({ label = 'Prices & Rules', children }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" className="pr-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <span>{label}</span><Chev />
+      </button>
+      {open && <div className="pr-grid">{children}</div>}
+    </>
+  );
+};
+
+// Several stored setups pointing to the same target (within 5%) mean more confidence.
+// The scripts precompute this as `agree` on the shown setups.
+const Agreement: React.FC<{ agree?: PatternAgree }> = ({ agree }) => {
+  if (!agree || agree.n < 2) return null;
+  const range = agree.lo === agree.hi ? fmt(agree.lo) : `${fmt(agree.lo)}–${fmt(agree.hi)}`;
+  return (
+    <div className="agree-note">
+      <b>{agree.n} patterns agree.</b> {agree.with.join(', ')} {agree.with.length > 1 ? 'point' : 'points'} to a similar target ({range}).
+    </div>
+  );
+};
+
+const AutoNote: React.FC<{ on?: boolean }> = ({ on }) => on
+  ? <div className="auto-note"><i className="auto-dot" />Auto-detected: check the lines and levels by hand.</div>
+  : null;
+
 const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
   <div className="upd-banner">
     <Icon name="refresh" />
@@ -98,6 +143,34 @@ const Pill: React.FC<{ st: Status }> = ({ st }) => (
   <span className={`pill ${st.cls}`}><Icon name={st.icon} />{st.label}</span>
 );
 
+// "Daily / Weekly / Monthly close pending" is shown only while that candle is still open
+// (New York time): a setup on that timeframe is provisional until the close validates it.
+function nyNow() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York', year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', hour12: false, weekday: 'short',
+  }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return { y: +p.year, m: +p.month, d: +p.day, mins: (+p.hour % 24) * 60 + +p.minute, wd: p.weekday };
+}
+function closePending(tf: string): boolean {
+  const n = nyNow();
+  const weekend = n.wd === 'Sat' || n.wd === 'Sun';
+  const afterClose = n.mins >= 16 * 60;
+  if (tf === 'weekly') return !weekend && !(n.wd === 'Fri' && afterClose);
+  if (tf === 'monthly') {
+    const lastDay = new Date(Date.UTC(n.y, n.m, 0));
+    while ([0, 6].includes(lastDay.getUTCDay())) lastDay.setUTCDate(lastDay.getUTCDate() - 1);
+    return !(n.d > lastDay.getUTCDate() || (n.d === lastDay.getUTCDate() && afterClose));
+  }
+  return !weekend && n.mins >= 9 * 60 + 30 && !afterClose;
+}
+function flagFor(timeframe: string | undefined, stored?: string) {
+  const tf = timeframe || 'daily';
+  if (stored && !/close pending/i.test(stored)) return stored;
+  if (tf === 'daily' && !stored) return undefined;
+  return closePending(tf) ? `${cap(tf)} close pending` : undefined;
+}
+
 const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag }) =>
   text ? <span className={`flag${keyFlag ? ' key' : ''}`}>{text}</span> : null;
 
@@ -105,6 +178,17 @@ const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag })
 
 const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   const tf = s.timeframe || 'daily';
+  if (s.breakUp == null || s.breakDown == null || s.goalUp == null || s.goalDown == null) {
+    // Pending with no clear pattern yet: just the candles.
+    return (
+      <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
+        <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart</span></div>
+        <AutoNote on={s.auto} />
+        <SetupChart ticker={s.ticker} timeframe={tf} levels={[]} />
+        {s.note && <p className="note">{s.note}</p>}
+      </div>
+    );
+  }
   const rungs: Rung[] = [
     { k: 'Goal up', cls: 'k-tgt', v: s.goalUp!, p: true },
     { k: 'Breaks up', cls: 'k-tgt', v: s.breakUp!, p: true },
@@ -114,13 +198,21 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   ];
   return (
     <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
-      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={s.flag} /></div>
+      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={flagFor(tf, s.flag)} /></div>
+      <AutoNote on={s.auto} />
       {s.stage === 'update' && <UpdateBanner note={s.updateNote} />}
       <div className="stepper" aria-label="Pattern stage">
         {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
           <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
         ))}
       </div>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} levels={[
+        { price: s.goalUp!, label: 'Goal up', tone: 'up' },
+        { price: s.breakUp!, label: 'Breaks up', tone: 'up' },
+        { price: s.breakDown!, label: 'Breaks down', tone: 'down' },
+        { price: s.goalDown!, label: 'Goal down', tone: 'up' },
+      ]} />
+      <PricesRules>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -135,6 +227,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
         </ul>
         {s.note && <p className="thesis">{s.note}</p>}
       </div>
+      </PricesRules>
     </div>
   );
 };
@@ -142,7 +235,13 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
 // ── Expanded detail: second timeframe / opposing setup ──
 
 const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw }) => {
-  const a = asPrev(raw);
+  if (raw.direction === 'both') {
+    // Either-direction second setup: same panel as a main one, on its own timeframe.
+    const view = { ...raw, ticker: s.ticker, name: s.name, price: s.price, priceDate: s.priceDate,
+                   pattern: raw.pattern ?? s.pattern } as PatternStock;
+    return <div className="altwrap"><DetailBoth s={view} st={status(raw)} /></div>;
+  }
+  const a = asPrev(raw) as PatternAltSetup & { invalidation: number; target: number };
   const st = status(raw), up = a.direction === 'up', hit = a.stage === 'target';
   const tone = up ? 'var(--up)' : 'var(--down)', tf = a.timeframe, T = cap(tf);
   const side = up ? 'above' : 'below';
@@ -162,9 +261,12 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
           <p>{s.keyLevel.text}</p>
         </div>
       )}
-      <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
+      <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={flagFor(a.timeframe, a.flag)} /></div>
+      <Agreement agree={raw.agree} />
+      <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
-      <div className="altgrid">
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
+      <PricesRules label={`${T} prices & rules`}>
         <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} /></div>
         <div>
           <h3>{T} rules</h3>
@@ -180,7 +282,7 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw
           </ul>
           {a.note && <p className="thesis">{a.note}</p>}
         </div>
-      </div>
+      </PricesRules>
     </div>
   );
 };
@@ -226,7 +328,9 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
 
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
-      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={s.flag} /></div>
+      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={flagFor(tf, s.flag)} /></div>
+      <Agreement agree={raw.agree} />
+      <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
         {SL.map((l, i) => {
@@ -236,6 +340,8 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
           );
         })}
       </div>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} {...chartSpec(s)} />
+      <PricesRules>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -263,6 +369,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
         </ul>
         {s.note && <p className="thesis">{s.note}</p>}
       </div>
+      </PricesRules>
       {s.alt && <AltBlock s={s} a={s.alt} />}
       {s.history && <HistBlock s={s} />}
     </div>
@@ -273,7 +380,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
 
 interface Row { ticker: string; name: string; setup: PatternStock | null }
 
-const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'both'
+const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'both' && s.goalUp == null ? -Infinity : s.direction === 'both'
   ? Math.max(Math.abs(pct0(s.price, s.goalUp!)), Math.abs(pct0(s.price, s.goalDown!)))
   : Math.abs(pct0(s.price, s.target!));
 
@@ -288,15 +395,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
   const [open, setOpen] = useState(false);
   const s = row.setup, st = status(s), id = 'd-' + row.ticker;
   const toggle = () => setOpen(o => !o);
-  const nameCell = (
-    <>
-      <b>{row.ticker}</b><span>{row.name}</span>
-    </>
-  );
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
 
   let levels: React.ReactNode;
-  if (!s) {
+  if (!s || (s.direction === 'both' && s.goalUp == null)) {
     levels = <>{dash}{dash}</>;
   } else if (s.direction === 'both') {
     levels = (
@@ -330,6 +432,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
         }}
       >
         <span className="tk">
+          {/* Only the ticker itself opens the valuation page; the rest of the row expands. */}
           {hasPage ? (
             <button
               type="button"
@@ -337,9 +440,11 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
               title={`Open ${row.ticker} valuation`}
               onClick={e => { e.stopPropagation(); onOpenPage(row.ticker); }}
             >
-              {nameCell}
+              <b>{row.ticker}</b>
             </button>
-          ) : nameCell}
+          ) : <b>{row.ticker}</b>}
+          {(s?.auto || s?.alt?.auto) && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
+          <span>{row.name}</span>
         </span>
         <span className="stcell">
           <span className={`pill ${st.cls}`} title={st.label}>
@@ -348,8 +453,9 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
         </span>
         <span className="meta">
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
-          <Flag text={s?.flag} />
+          <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
+          {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
         </span>
         {levels}
         <Chev />

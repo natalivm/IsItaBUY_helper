@@ -15,6 +15,41 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-21-auto-scan-133",
+    date: "Oct 21 2026",
+    tickers: [],
+    title: "Auto-detected setups updated for 133 stocks",
+    text: "Every valid pattern per stock is now listed (weekly and daily); 1056 setups added. Auto-detected ones carry a red dot until checked by hand.",
+  },
+  {
+    id: "2026-10-21-auto-scan",
+    date: "Oct 21 2026",
+    tickers: [],
+    title: "Auto-detected setups for 67 stocks",
+    text: "67 with a channel, wedge or reversal candle, 0 with no clear pattern yet. Marked with a red dot until checked by hand.",
+  },
+  {
+    id: "2026-10-21-CBRS-main-removed",
+    date: "Oct 21 2026",
+    tickers: ["CBRS"],
+    title: "CBRS · setup closed",
+    text: "Target reached Oct 20.",
+  },
+  {
+    id: "2026-10-21-CRWD-main-removed",
+    date: "Oct 21 2026",
+    tickers: ["CRWD"],
+    title: "CRWD · setup closed",
+    text: "Target reached Jul 1.",
+  },
+  {
+    id: "2026-10-20-LIFE-main-removed",
+    date: "Oct 20 2026",
+    tickers: ["LIFE"],
+    title: "LIFE · target reached",
+    text: "Hit target $41.17.",
+  },
+  {
     id: "2026-10-21-AGCO-main-confirmed",
     date: "Oct 21 2026",
     tickers: ["AGCO"],

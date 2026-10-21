@@ -50,9 +50,13 @@ _DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 WATCHLIST_FILE = os.path.join(_DATA_DIR, "patternWatchlist.ts")
 NEWS_FILE = os.path.join(_DATA_DIR, "newsFeed.ts")
 SNAPSHOT_FILE = os.path.join(_DATA_DIR, "watchlistStatus.json")
+# Candle files for the expanded-row charts, served with the site (public/ → dist/).
+BARS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "bars")
+# timeframe → (Yahoo interval, history range)
+CHART_RANGES = {'daily': ('1d', '1y'), 'weekly': ('1wk', '5y'), 'monthly': ('1mo', '10y')}
 
 _KEY_RE = re.compile(r'(?<![\w$])(\w+):\s*')
-_VAL_RE = re.compile(r'"(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?')
+_VAL_RE = re.compile(r'"(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?|true\b|false\b')
 
 
 # ── Minimal TS-literal reader (positions are kept so edits are surgical) ──
@@ -120,7 +124,7 @@ def _fields(text, masked, depth, start, end, level):
         if not vm:
             continue
         raw = vm.group(0)
-        val = json.loads(raw) if raw.startswith('"') else float(raw)
+        val = json.loads(raw) if raw[0] in '"tf' else float(raw)
         out[m.group(1)] = (vm.start(), vm.end(), val)
     return out
 
@@ -142,7 +146,19 @@ def parse_watchlist(text):
             if 'alt' in f:
                 a0, a1, _ = f['alt']
                 alt = _fields(text, masked, depth, a0 + 1, a1 - 1, 3)
-            entries.append({'fields': f, 'alt': alt})
+            more = []
+            if 'more' in f:  # any number of extra setups: more: [{...}, {...}]
+                m0, m1, _ = f['more']
+                j = m0 + 1
+                while j < m1 - 1:
+                    if masked[j] == '{' and depth[j] == 3:
+                        je = _close(masked, j)
+                        item = _fields(text, masked, depth, j + 1, je, 4)
+                        item['_span'] = (j, je, None)
+                        more.append(item)
+                        j = je
+                    j += 1
+            entries.append({'fields': f, 'alt': alt, 'more': more, 'span': (i, end)})
             i = end
         i += 1
     return entries
@@ -186,6 +202,73 @@ def fetch_daily_bars(symbols, headers, opener=None):
     return out
 
 
+# ── Chart candles ──
+
+def chart_timeframes(path=WATCHLIST_FILE):
+    """{ticker: {timeframes}} needed by the watchlist charts (main + alt setups)."""
+    with open(path) as fh:
+        entries = parse_watchlist(fh.read())
+    out = {}
+    for e in entries:
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for _, s, _ in _setups(e):
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            out.setdefault(main['ticker'], set()).add(tf)
+    return out
+
+
+def fetch_chart_bars(sym, timeframe, headers, opener=None):
+    """Regular-session OHLC candles as [(YYYY-MM-DD, o, h, l, c)], oldest first."""
+    interval, rng = CHART_RANGES.get(timeframe, CHART_RANGES['daily'])
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}"
+           f"?range={rng}&interval={interval}&includePrePost=false")
+    req = urllib.request.Request(url, headers=headers)
+    resp = opener.open(req, timeout=15) if opener else urllib.request.urlopen(req, timeout=15)
+    res = json.loads(resp.read().decode())["chart"]["result"][0]
+    q = res["indicators"]["quote"][0]
+    bars = {}
+    for ts, o, h, l, c in zip(res.get("timestamp", []), q["open"], q["high"], q["low"], q["close"]):
+        if None in (o, h, l, c):
+            continue
+        day = datetime.fromtimestamp(ts, tz=timezone.utc).date()
+        # Yahoo sends the live week/month as an extra bar dated today: fold it into its period.
+        if timeframe == 'weekly':
+            key = day - timedelta(days=day.weekday())
+        elif timeframe == 'monthly':
+            key = day.replace(day=1)
+        else:
+            key = day
+        if key in bars:
+            d0, o0, h0, l0, _ = bars[key]
+            bars[key] = (d0, o0, max(h0, h), min(l0, l), c)
+        else:
+            bars[key] = (day.isoformat(), o, h, l, c)
+    return [bars[k] for k in sorted(bars)]
+
+
+def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=None):
+    """Write public/bars/TICKER_timeframe.json for every watchlist chart. Returns (written, failed)."""
+    os.makedirs(bars_dir, exist_ok=True)
+    written, failed = [], []
+    for sym, tfs in sorted(chart_timeframes(path).items()):
+        for tf in sorted(tfs):
+            try:
+                bars = fetch_chart_bars(sym, tf, headers, opener)
+            except Exception as e:
+                failed.append(f"{sym} {tf} ({e})")
+                continue
+            if not bars:
+                failed.append(f"{sym} {tf} (no data)")
+                continue
+            r = lambda v: round(v, 2)
+            data = {"t": [b[0] for b in bars], "o": [r(b[1]) for b in bars], "h": [r(b[2]) for b in bars],
+                    "l": [r(b[3]) for b in bars], "c": [r(b[4]) for b in bars]}
+            with open(os.path.join(bars_dir, f"{sym}_{tf}.json"), 'w') as fh:
+                json.dump(data, fh, separators=(',', ':'))
+            written.append(f"{sym}_{tf}")
+    return written, failed
+
+
 # ── Update + checks ──
 
 STAGE_LABEL = {
@@ -200,13 +283,124 @@ def _fmt_price(p):
 
 
 def _setups(entry):
-    """[(label, values, positions)] for the main setup and the optional alt setup."""
+    """[(label, values, positions)] for the main setup, the optional alt setup and any `more` setups."""
     f = entry['fields']
-    out = [('main', {k: v[2] for k, v in f.items()}, f)]
+    main = {k: v[2] for k, v in f.items()}
+    out = [('main', main, f)]
     if entry['alt']:
         a = {k: v[2] for k, v in entry['alt'].items()}
         out.append((f"{a.get('timeframe', 'alt')} alt", a, entry['alt']))
+    used = {lb for lb, _, _ in out}
+    for item in entry.get('more', []):
+        m = {k: v[2] for k, v in item.items() if k != '_span'}
+        label = f"{m.get('timeframe') or main.get('timeframe') or 'daily'} {m.get('pattern') or main.get('pattern')}"
+        n = 2
+        while label in used:
+            label = f"{label.split(' #')[0]} #{n}"
+            n += 1
+        used.add(label)
+        out.append((label, m, item))
     return out
+
+
+AGREE = 0.05   # targets within 5% of each other agree
+
+
+def annotate_agreement(text):
+    """Set `agree` on the two shown setups (main + second): how many stored setups in the same
+    direction, on any timeframe, point to a target within 5%, their range, and which they are.
+    Only these summaries reach the site; the stored extras are stripped from the build."""
+    edits = []
+    for e in parse_watchlist(text):
+        setups = _setups(e)
+        main = setups[0][1]
+        live = []
+        for lb, sv, pos in setups:
+            v = dict(sv)
+            if v.get('stage') == 'update':
+                v['stage'] = v.get('prevStage') or 'forming'
+            v.setdefault('timeframe', main.get('timeframe') or 'daily')
+            v['pattern'] = v.get('pattern') or main.get('pattern')
+            live.append((lb, v, pos))
+        for lb, v, pos in live:
+            if lb != 'main' and not lb.endswith(' alt'):
+                continue
+            t = v.get('target')
+            others = [] if t is None or v.get('direction') not in ('up', 'down') else [
+                o for olb, o, _ in live if olb != lb and o.get('direction') == v['direction'] and o.get('target')
+                and o.get('stage') not in ('target', 'failed') and abs(o['target'] - t) <= AGREE * t]
+            new = None
+            if others:
+                ts = [t] + [o['target'] for o in others]
+                new = json.dumps({'n': len(others) + 1, 'lo': _r2(min(ts)), 'hi': _r2(max(ts)),
+                                  'with': [f"{o['timeframe'].capitalize()} {o['pattern'].lower()}" for o in others]})
+            if 'agree' in pos:
+                v0, v1, _ = pos['agree']
+                if new:
+                    edits.append((v0, v1, new))
+                else:  # drop the line
+                    a = text.rfind('\n', 0, v0)
+                    b = v1 + (1 if text[v1:v1 + 1] == ',' else 0)
+                    edits.append((a, b, ''))
+            elif new:
+                s0, s1, _ = pos['stage']
+                line_start = text.rfind('\n', 0, s0) + 1
+                indent = re.match(r'[ \t]*', text[line_start:]).group(0)
+                edits.append((s1, s1, f",\n{indent}agree: {new}"))
+    for a, b, v in sorted(edits, key=lambda x: (x[0], x[1]), reverse=True):
+        text = text[:a] + v + text[b:]
+    return text
+
+
+def _r2(v):
+    return round(v, 2)
+
+
+HEADER_KEYS = ('ticker', 'name', 'auto', 'price', 'priceDate')
+SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
+
+
+def _reindent(value, indent):
+    """Re-indent a multi-line value (e.g. a lines array) to sit under `indent`."""
+    rows = value.split('\n')
+    if len(rows) == 1:
+        return value
+    rest = [r for r in rows[1:] if r.strip()]
+    cut = min(len(r) - len(r.lstrip()) for r in rest) if rest else 0
+    return '\n'.join([rows[0]] + [indent + r[cut:] if r.strip() else r for r in rows[1:]])
+
+
+def _setup_text(text, pos, indent, inherit=None):
+    """Field lines for one setup object, copied from its source positions."""
+    out = []
+    keys = [k for k in pos if k not in SKIP_KEYS]
+    if inherit and 'pattern' not in pos:
+        out.append(f"{indent}pattern: {json.dumps(inherit)},")
+    for k in sorted(keys, key=lambda k: pos[k][0]):
+        v0, v1, _ = pos[k]
+        out.append(f"{indent}{k}: {_reindent(text[v0:v1], indent)},")
+    return out
+
+
+def rebuild_entry(text, e, keep):
+    """Entry text with `keep[0]` (a positions dict) as the main setup and the rest as `more`."""
+    f = e['fields']
+    main_pattern = f['pattern'][2] if 'pattern' in f else None
+    rows = ["{"]
+    for k in HEADER_KEYS:
+        if k in f:
+            v0, v1, _ = f[k]
+            rows.append(f"    {k}: {text[v0:v1]},")
+    rows += _setup_text(text, keep[0], '    ', inherit=main_pattern)
+    if len(keep) > 1:
+        rows.append("    more: [")
+        for pos in keep[1:]:
+            rows.append("      {")
+            rows += _setup_text(text, pos, '        ', inherit=main_pattern)
+            rows.append("      },")
+        rows.append("    ],")
+    rows.append("  }")
+    return '\n'.join(rows)
 
 
 def _describe(s, main):
@@ -443,21 +637,21 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
     items = []
     for key in sorted(set(before) | set(after), key=lambda k: (k.split('|')[0], k)):
         old, new = before.get(key), after.get(key)
-        if old and new and old['stage'] == new['stage']:
+        if old and new and old['stage'] == new['stage'] and old['setup'] == new['setup']:
             continue
         ref = new or old
         t, label = ref['ticker'], ref['label']
-        when, text = bot_notes.get(key, (today, None))
+        when, text, *custom = bot_notes.get(key, (today, None))
         if new is None:
-            title, stage = f"{t} · setup removed", 'removed'
+            title, stage = (custom[0] if custom else f"{t} · setup removed"), 'removed'
             text = text or "No longer tracked."
-        elif old is None:
+        elif old is None or old['setup'] != new['setup']:
             stage = new['stage']
-            title = f"{t} · new setup"
+            title = custom[0] if custom else f"{t} · new setup"
             text = text or f"{new['setup']}, {STAGE_LABEL.get(stage, stage).lower()}."
         else:
             stage = new['stage']
-            title = f"{t} · {STAGE_LABEL.get(stage, stage).lower()}"
+            title = custom[0] if custom else f"{t} · {STAGE_LABEL.get(stage, stage).lower()}"
             text = text or f"Previously {STAGE_LABEL.get(old['stage'], old['stage']).lower()}."
         if label != 'main':
             title += f" ({label.replace(' alt', '')} setup)"
@@ -501,6 +695,153 @@ def _prepend_news(items, news_path):
             fh.write(text)
 
 
+# ── Pruning finished setups ──
+
+def _load_chart_bars(ticker, timeframe):
+    path = os.path.join(BARS_DIR, f"{ticker}_{timeframe}.json")
+    if not os.path.exists(path):
+        return None
+    with open(path) as fh:
+        return json.load(fh)
+
+
+def _completed_count(t, timeframe, now_et):
+    """Number of candles whose period has closed (drops a live day / week / month)."""
+    last = _date.fromisoformat(t[-1])
+    today = now_et.date()
+    if timeframe == 'weekly':
+        live = last.isocalendar()[:2] == today.isocalendar()[:2] and not (today.weekday() >= 4 and _session_over(today.isoformat(), now_et))
+    elif timeframe == 'monthly':
+        live = (last.year, last.month) == (today.year, today.month) and not _period_closed('monthly', today.isoformat())
+    else:
+        live = not _session_over(t[-1], now_et)
+    return len(t) - 1 if live else len(t)
+
+
+def _finished(s, main, now_et):
+    """(date, news text, news title) if a setup is done (target reached / failed), else None."""
+    t_ = main.get('ticker')
+    stage = s.get('stage')
+    if stage == 'target':
+        hit = s.get('stageDate') or now_et.date().isoformat()
+        return now_et.date().isoformat(), f"Target reached {_short_date(hit)}.", f"{t_} · setup closed"
+    if stage == 'failed':
+        return now_et.date().isoformat(), "Pattern failed.", f"{t_} · setup closed"
+    if stage != 'confirmed' or s.get('direction') not in ('up', 'down'):
+        return None
+    tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+    bars = _load_chart_bars(t_, tf)
+    if not bars or not s.get('stageDate'):
+        return None
+    t, h, l, c = bars['t'], bars['h'], bars['l'], bars['c']
+    dn, tgt, inv = s['direction'] == 'down', s.get('target'), s.get('invalidation')
+    start = next((i for i, x in enumerate(t) if x >= s['stageDate']), len(t))
+    for i in range(start, len(t)):  # touches count as they happen (regular-session highs/lows)
+        if tgt is not None and (l[i] <= tgt if dn else h[i] >= tgt):
+            return t[i], f"Hit target ${_fmt_price(tgt)}.", f"{t_} · target reached"
+    n = _completed_count(t, tf, now_et)
+    pattern = s.get('pattern') or main.get('pattern') or ''
+    if 'Channel' in pattern and s.get('lines'):
+        # Channels fail on one completed close back inside the broken line (its value that day).
+        broken = s['lines'][0] if not dn else s['lines'][1]   # lines = [upper, lower]
+        (d0, v0), (d1, v1) = broken['from'], broken['to']
+        i0, i1 = t.index(d0) if d0 in t else None, t.index(d1) if d1 in t else None
+        if i0 is not None and i1 is not None and i1 > i0:
+            per = (v1 - v0) / (i1 - i0)
+            for i in range(start + 1, n):
+                line = v0 + per * (i - i0)
+                if (c[i] > line if dn else c[i] < line):
+                    return (t[i], f"Closed ${_fmt_price(c[i])} back inside the channel.", f"{t_} · pattern failed")
+            return None
+    for i in range(start, n - 1):  # a close past invalidation, then a follow-through close
+        if inv is not None and (c[i] > inv if dn else c[i] < inv) and (c[i + 1] > h[i] if dn else c[i + 1] < l[i]):
+            return (t[i + 1], f"Closed ${_fmt_price(c[i])} past invalidation ${_fmt_price(inv)}, then followed through.",
+                    f"{t_} · pattern failed")
+    return None
+
+
+NO_PATTERN = 'No clear pattern'
+
+
+def placeholder_entry(ticker, name, price, price_date, note):
+    """Body of a pending "No clear pattern" entry (without the surrounding braces' indentation)."""
+    return ("{\n"
+            f"    ticker: {json.dumps(ticker)},\n"
+            f"    name: {json.dumps(name)},\n"
+            "    auto: true,\n"
+            f"    pattern: {json.dumps(NO_PATTERN)},\n"
+            '    timeframe: "daily",\n'
+            '    direction: "both",\n'
+            '    stage: "forming",\n'
+            f"    price: {_fmt_price(price) if price is not None else 0},\n"
+            f"    priceDate: {json.dumps(price_date or _date.today().isoformat())},\n"
+            f"    note: {json.dumps(note)}\n"
+            "  }")
+
+
+def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE):
+    """Remove setups that are done (target reached or failed) and post one News item each.
+
+    "Needs updating" setups are kept: they are the to-do list for posting a replacement.
+    If a stock's main setup is done but its second setup is still live, both are kept
+    and the case is reported (promotion is left to a human).
+    """
+    now_et = now_et or _now_et()
+    with open(path) as fh:
+        text = fh.read()
+    cuts, notes, report = [], {}, []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        done = {}
+        for label, s, _ in _setups(e):
+            r = _finished(s, main, now_et)
+            if r:
+                done[label] = r
+        if not done:
+            continue
+        live = [(lb, pos) for lb, _, pos in _setups(e) if lb not in done]
+        if 'main' in done and live:
+            # Promote the next live setup to main; the rest stay as extra setups.
+            a, b = e['span']
+            cuts.append((a, b + 1, rebuild_entry(text, e, [pos for _, pos in live])))
+        elif 'main' in done:
+            # Keep the stock: replace the entry with a placeholder that the detector rescans.
+            a, b = e['span']
+            reason = done['main'][1].rstrip('.')
+            cuts.append((a, b + 1, placeholder_entry(main['ticker'], main.get('name', main['ticker']),
+                                                    main.get('price'), main.get('priceDate'),
+                                                    f"Previous setup closed ({reason[0].lower() + reason[1:]}). Scanning for a new one.")))
+        else:
+            for lb, _, pos in _setups(e):
+                if lb in done and '_span' in pos:  # an extra setup: drop it from the list
+                    a, b = pos['_span'][0], pos['_span'][1] + 1
+                    a = text.rfind('\n', 0, a) + 1
+                    b += 1 if text[b:b + 1] == ',' else 0
+                    b += 1 if text[b:b + 1] == '\n' else 0
+                    cuts.append((a, b, ''))
+        if 'main' not in done and any(lb.endswith(' alt') for lb in done):
+            # the second setup is done: drop it (and a key-level note tied to it)
+            for key in ('alt', 'keyLevel'):
+                if key in e['fields']:
+                    v0, v1, _ = e['fields'][key]
+                    a = text.rfind('\n', 0, text.rfind(key, 0, v0)) + 1
+                    b = v1 + (1 if text[v1:v1 + 1] == ',' else 0)
+                    b += 1 if text[b:b + 1] == '\n' else 0
+                    cuts.append((a, b, ''))
+        for label, r in done.items():
+            notes[f"{main['ticker']}|{label}"] = r
+            report.append(f"{main['ticker']} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    news = sync_news(text, new_text, notes, now_et.date().isoformat(), apply=apply,
+                     news_path=news_path, snapshot_path=snapshot_path)
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return report, news
+
+
 # ── Report ──
 
 def print_watchlist_report(result, missing, apply):
@@ -530,7 +871,21 @@ def print_watchlist_report(result, missing, apply):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Re-check watchlist setups against their stored prices and post status changes to the News feed (no network).")
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
+    ap.add_argument("--bars", action="store_true", help="only (re)download the chart candles into public/bars/ (network)")
+    ap.add_argument("--prune", action="store_true", help="remove finished setups (target reached / failed) and post them to News")
     args = ap.parse_args()
+    if args.prune:
+        rep_, news_ = prune_finished(apply=args.apply)
+        print("\n".join(rep_) or "Nothing to prune.")
+        for it in news_:
+            print(f"  News: {it['title']} — {it['text']}")
+        if rep_ and not args.apply:
+            print("\nRun with --prune --apply to remove them.")
+        raise SystemExit(0)
+    if args.bars:
+        ok, bad = write_chart_bars({"User-Agent": "Mozilla/5.0"})
+        print(f"Wrote {len(ok)} chart file(s) to {os.path.relpath(BARS_DIR)}." + (f" Failed: {', '.join(bad)}" if bad else ""))
+        raise SystemExit(0)
     res = update_watchlist(None, apply=args.apply)
     print_watchlist_report(res, [], args.apply)
     if not args.apply and (res['news'] or res['needs_update'] or res['target_hits']):
