@@ -15,7 +15,7 @@ const pct0 = (from: number, to: number) => (to - from) / from * 100;
 const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
 const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash';
+type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash' | 'refresh';
 
 const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => {
   const style = color ? { color } : undefined;
@@ -33,6 +33,8 @@ const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => 
       return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="3.6" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="1.2" fill="currentColor" /></svg>;
     case 'clock':
       return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><path d="M8 4.8V8l2.2 1.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>;
+    case 'refresh':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="M10.9 6.2A3.3 3.3 0 0 0 5 6.6M5.1 9.8a3.3 3.3 0 0 0 5.9-.4M10.9 4.2v2h-2M5.1 11.8v-2h2" style={knock} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
     case 'dash':
       return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><path d="M5.5 8h5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>;
   }
@@ -42,7 +44,7 @@ const Chev = () => (
   <svg className="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
 );
 
-type Group = 'confirmed' | 'pending' | 'target' | 'failed' | 'none';
+type Group = 'confirmed' | 'pending' | 'update' | 'target' | 'failed' | 'none';
 interface Status { label: string; short: string; cls: string; icon: IconName; group: Group }
 
 function status(s: { direction: string; stage: PatternStage } | null): Status {
@@ -55,18 +57,37 @@ function status(s: { direction: string; stage: PatternStage } | null): Status {
     case 'confirmed': return { label: `${word} break confirmed`, short: 'Confirmed', cls: tone, icon: 'check', group: 'confirmed' };
     case 'target':    return { label: 'Target reached', short: 'Target hit', cls: tone, icon: 'target', group: 'target' };
     case 'failed':    return { label: 'Pattern failed', short: 'Failed', cls: 'st-fail', icon: 'x', group: 'failed' };
+    case 'update':    return { label: 'Needs updating', short: 'Update', cls: 'st-upd', icon: 'refresh', group: 'update' };
   }
 }
 
-const GROUPS: [Group | 'all', string][] = [['all', 'All'], ['confirmed', 'Confirmed'], ['pending', 'Pending'], ['target', 'Target reached'], ['failed', 'Failed'], ['none', 'No data']];
+const GROUPS: [Group | 'all', string][] = [['all', 'All'], ['confirmed', 'Confirmed'], ['pending', 'Pending'], ['update', 'Needs update'], ['target', 'Target reached'], ['failed', 'Failed'], ['none', 'No data']];
+
+// A setup flagged "update" still renders its levels as of the stage it was in.
+function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: T): T {
+  return x.stage === 'update' ? { ...x, stage: x.prevStage ?? 'forming' } : x;
+}
+
+const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
+  <div className="upd-banner">
+    <Icon name="refresh" />
+    <span><b>Needs updating.</b> {note}</span>
+  </div>
+);
 
 interface Rung { k: string; cls: string; pcls?: string; v: number; p?: boolean; now?: boolean }
 
-const Ladder: React.FC<{ rungs: Rung[]; price: number }> = ({ rungs, price }) => (
+// 'YYYY-MM-DD' → 'MM/DD', matching the `upd` tag on the stock pages.
+const updTag = (d: string) => d.slice(5, 7) + '/' + d.slice(8, 10);
+
+const Ladder: React.FC<{ rungs: Rung[]; price: number; priceDate: string }> = ({ rungs, price, priceDate }) => (
   <div className="ladder">
     {rungs.map(r => (
       <div key={r.k} className={`rung ${r.now ? 'now' : ''}`}>
-        <span className={`k ${r.cls}`}>{r.k}</span>
+        <span className="kw">
+          <span className={`k ${r.cls}`}>{r.k}</span>
+          {r.now && <span className="upd" title={`Price updated ${day(priceDate)}`}>upd {updTag(priceDate)}</span>}
+        </span>
         <span className="v">{r.p && <small className={r.pcls || r.cls}>{pct(price, r.v)}</small>}<b>{fmt(r.v)}</b></span>
       </div>
     ))}
@@ -94,6 +115,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   return (
     <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
       <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={s.flag} /></div>
+      {s.stage === 'update' && <UpdateBanner note={s.updateNote} />}
       <div className="stepper" aria-label="Pattern stage">
         {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
           <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
@@ -101,7 +123,7 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       </div>
       <div>
         <h3>Prices that matter</h3>
-        <Ladder rungs={rungs} price={s.price} />
+        <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
         <p className="note">Latest close {fmt(s.price)} on {day(s.priceDate)}. Goals are projections, not promises.</p>
       </div>
       <div>
@@ -119,8 +141,9 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
 
 // ── Expanded detail: second timeframe / opposing setup ──
 
-const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a }) => {
-  const st = status(a), up = a.direction === 'up', hit = a.stage === 'target';
+const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw }) => {
+  const a = asPrev(raw);
+  const st = status(raw), up = a.direction === 'up', hit = a.stage === 'target';
   const tone = up ? 'var(--up)' : 'var(--down)', tf = a.timeframe, T = cap(tf);
   const side = up ? 'above' : 'below';
   const rungs = ([
@@ -140,8 +163,9 @@ const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a }) =
         </div>
       )}
       <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
+      {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="altgrid">
-        <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} /></div>
+        <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} /></div>
         <div>
           <h3>{T} rules</h3>
           <ul className="rules">
@@ -177,8 +201,9 @@ const HistBlock: React.FC<{ s: PatternStock }> = ({ s }) => (
 
 // ── Expanded detail: single-direction setup ──
 
-const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
-  if (s.direction === 'both') return <DetailBoth s={s} st={st} />;
+const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
+  if (raw.direction === 'both') return <DetailBoth s={raw} st={st} />;
+  const s = asPrev(raw);
   const dn = s.direction === 'down';
   const tone = s.stage === 'failed' ? 'var(--fail)' : (dn ? 'var(--down)' : 'var(--up)');
   const hasSig = s.signal != null;
@@ -202,6 +227,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
       <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={s.flag} /></div>
+      {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
         {SL.map((l, i) => {
           const c = s.stage === 'failed' ? '' : i < idx ? 'done' : i === idx ? 'now' : '';
@@ -212,7 +238,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       </div>
       <div>
         <h3>Prices that matter</h3>
-        <Ladder rungs={rungs} price={s.price} />
+        <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
         <p className="note">Latest close {fmt(s.price)} on {day(s.priceDate)}. Target is a projection, not a promise.</p>
       </div>
       <div>
@@ -317,7 +343,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
         </span>
         <span className="stcell">
           <span className={`pill ${st.cls}`} title={st.label}>
-            <Icon name={!s ? 'dash' : s.direction === 'both' ? 'clock' : s.direction === 'down' ? 'down' : 'up'} />{st.short}
+            <Icon name={!s ? 'dash' : s.stage === 'update' ? 'refresh' : s.direction === 'both' ? 'clock' : s.direction === 'down' ? 'down' : 'up'} />{st.short}
           </span>
         </span>
         <span className="meta">
@@ -386,8 +412,6 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
         <header>
           <div>
             {asOf && <div className="asof">Prices as of {day(asOf)}</div>}
-            <h1>Pattern Break Watchlist</h1>
-            <p>Chart patterns being tracked, where each one stands, the price it is projected to reach, and the level that cancels the idea. Tap a ticker for its valuation, or the row for the full rules.</p>
           </div>
           {headerControls && <div className="hdr-ctl">{headerControls}</div>}
         </header>
@@ -417,7 +441,7 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
           <div className="head" aria-hidden="true">
             <span>Stock</span><span>Status</span><span className="pc">Pattern</span><span className="r">Target</span><span className="r">Invalidation</span><span></span>
           </div>
-          <div>
+          <div className="rows">
             {rows.length === 0
               ? <div className="empty">No stocks match this filter.</div>
               : rows.map(r => <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]} onOpenPage={onOpenStock} />)}

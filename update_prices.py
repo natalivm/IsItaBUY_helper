@@ -20,9 +20,11 @@ crossed a rating threshold (STRONG BUY / BUY / HOLD / OVERVALUED) due to price
 action are flagged. Use --push to commit and push those changes to git.
 
 The same run also refreshes the home-page Pattern Break Watchlist
-(data/patternWatchlist.ts): every entry's `price` / `priceDate` is updated, and
-confirmed setups whose target was touched are flipped to stage "target"
-(see pattern_watchlist.py).
+(data/patternWatchlist.ts): every entry's `price` / `priceDate` is updated,
+confirmed setups whose target was touched are flipped to stage "target",
+pending setups that closed past a limit are flipped to "update" (needs a new
+setup), and every status change is posted to the News feed (data/newsFeed.ts).
+See pattern_watchlist.py.
 """
 
 import argparse
@@ -498,7 +500,7 @@ def print_rating_report(all_rows, changed):
 
 # ── Git Operations ──
 
-def git_commit_push(changed_files, changes, rating_changes, target_hits=None):
+def git_commit_push(changed_files, changes, rating_changes, wl_result=None):
     """Stage price-changed files, commit with a rating-aware message, and push."""
     if not changed_files:
         print("\nNothing to commit.")
@@ -514,11 +516,11 @@ def git_commit_push(changed_files, changes, rating_changes, target_hits=None):
     symbols = [sym for sym, _, _ in changes]
     msg_parts = [f"Update prices: {', '.join(symbols)}" if symbols else "Update pattern watchlist prices"]
 
-    if target_hits:
+    if wl_result and wl_result['news']:
         msg_parts.append("")
-        msg_parts.append("Pattern targets reached:")
-        for sym, label, target, d in target_hits:
-            msg_parts.append(f"  {sym} ({label}): ${pattern_watchlist._fmt_price(target)} on {d}")
+        msg_parts.append("Watchlist status changes:")
+        for it in wl_result['news']:
+            msg_parts.append(f"  {it['title']}")
 
     if rating_changes:
         msg_parts.append("")
@@ -904,7 +906,7 @@ def main():
     print_rating_report(all_rows, rating_changes)
 
     # Pattern watchlist: refresh `price` / `priceDate`, flip confirmed setups that hit target.
-    wl_changes, wl_hits = [], []
+    wl_result = None
     if wl_symbols:
         print(f"\nFetching daily bars for {len(wl_symbols)} watchlist symbols...")
         quotes = pattern_watchlist.fetch_daily_bars(wl_symbols, HEADERS)
@@ -912,19 +914,21 @@ def main():
         for sym in wl_symbols:
             if sym in prices:  # keep the watchlist on the same quote as the stock files
                 quotes.setdefault(sym, {"date": today, "bars": []})["price"] = prices[sym]
-        wl_changes, wl_hits, wl_review = pattern_watchlist.update_watchlist(quotes, apply=args.apply)
+        wl_result = pattern_watchlist.update_watchlist(quotes, apply=args.apply)
         wl_missing = [s for s in wl_symbols if s not in quotes]
-        pattern_watchlist.print_watchlist_report(wl_changes, wl_hits, wl_review, wl_missing, args.apply)
+        pattern_watchlist.print_watchlist_report(wl_result, wl_missing, args.apply)
 
     if args.apply:
         record_prices(tickers, prices)
 
         # Push to git if requested
-        if args.push and (changes or wl_changes or wl_hits):
+        wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))
+        if args.push and (changes or wl_changed):
             changed_paths = [tickers[sym]['path'] for sym, _, _ in changes if sym in tickers]
-            if wl_changes or wl_hits:
-                changed_paths.append(pattern_watchlist.WATCHLIST_FILE)
-            git_commit_push(changed_paths, changes, rating_changes, wl_hits)
+            if wl_changed:
+                changed_paths += [pattern_watchlist.WATCHLIST_FILE, pattern_watchlist.NEWS_FILE,
+                                  pattern_watchlist.SNAPSHOT_FILE]
+            git_commit_push(changed_paths, changes, rating_changes, wl_result)
 
         # Auto-run weekly review on Fridays
         if datetime.now().weekday() == 4:  # Friday
