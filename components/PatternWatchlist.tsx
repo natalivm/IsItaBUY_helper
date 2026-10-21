@@ -288,11 +288,6 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
   const [open, setOpen] = useState(false);
   const s = row.setup, st = status(s), id = 'd-' + row.ticker;
   const toggle = () => setOpen(o => !o);
-  const nameCell = (
-    <>
-      <b>{row.ticker}</b><span>{row.name}</span>
-    </>
-  );
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
 
   let levels: React.ReactNode;
@@ -330,6 +325,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
         }}
       >
         <span className="tk">
+          {/* Only the ticker itself opens the valuation page; the rest of the row expands. */}
           {hasPage ? (
             <button
               type="button"
@@ -337,9 +333,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
               title={`Open ${row.ticker} valuation`}
               onClick={e => { e.stopPropagation(); onOpenPage(row.ticker); }}
             >
-              {nameCell}
+              <b>{row.ticker}</b>
             </button>
-          ) : nameCell}
+          ) : <b>{row.ticker}</b>}
+          <span>{row.name}</span>
         </span>
         <span className="stcell">
           <span className={`pill ${st.cls}`} title={st.label}>
