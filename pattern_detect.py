@@ -55,6 +55,8 @@ def _classify(up, lo, start, end):
         return None
     span = end - start
     mid = (up.at(end) + lo.at(end)) / 2
+    if mid <= 0 or span <= 0 or lo.at(start) <= 0:
+        return None                              # lines below zero: not a usable pattern
     trend = (su + sl) / 2 * span / mid           # relative move of the pattern's midline
     parallel = abs(su - sl) * span <= 0.25 * max(w0, w1)
     if parallel:

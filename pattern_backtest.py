@@ -96,6 +96,14 @@ def _slice(bars, n, tf):
 
 
 def backtest_stock(job):
+    try:
+        return _backtest_stock(job)
+    except Exception as e:                       # one bad stock must not stop the whole run
+        print(f"  {job[0]}: skipped ({e})")
+        return []
+
+
+def _backtest_stock(job):
     ticker, overrides = job
     _apply(overrides)
     recs = []
