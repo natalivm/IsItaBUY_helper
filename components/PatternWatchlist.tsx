@@ -1,0 +1,433 @@
+import React, { useMemo, useState } from 'react';
+import { TickerDefinition } from '../types';
+import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage } from '../data/patternWatchlist';
+import './PatternWatchlist.css';
+
+// Home page: one scannable ledger of tickers. Clicking the ticker opens the
+// stock's valuation page; clicking anywhere else on the row unfolds its
+// trading setup (price ladder + rules). Stocks we cover that have no pattern
+// data yet are listed with empty fields.
+
+const STAGES: PatternStage[] = ['forming', 'signal', 'confirmed', 'target'];
+const fmt = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const cap = (t: string) => t[0].toUpperCase() + t.slice(1);
+const pct0 = (from: number, to: number) => (to - from) / from * 100;
+const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
+const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash';
+
+const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => {
+  const style = color ? { color } : undefined;
+  const knock = { stroke: 'var(--surface)' };
+  switch (name) {
+    case 'down':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="M8 4.5v6.5M5.2 8.3 8 11l2.8-2.7" style={knock} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+    case 'up':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="M8 11.5V5M5.2 7.7 8 5l2.8 2.7" style={knock} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+    case 'check':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="m4.8 8.2 2.2 2.2 4.2-4.4" style={knock} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+    case 'x':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="m5.5 5.5 5 5m0-5-5 5" style={knock} strokeWidth="1.7" strokeLinecap="round" /></svg>;
+    case 'target':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="3.6" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="1.2" fill="currentColor" /></svg>;
+    case 'clock':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><path d="M8 4.8V8l2.2 1.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>;
+    case 'dash':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><path d="M5.5 8h5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>;
+  }
+};
+
+const Chev = () => (
+  <svg className="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+);
+
+type Group = 'confirmed' | 'pending' | 'target' | 'failed' | 'none';
+interface Status { label: string; short: string; cls: string; icon: IconName; group: Group }
+
+function status(s: { direction: string; stage: PatternStage } | null): Status {
+  if (!s) return { label: 'No pattern data yet', short: 'No data', cls: 'st-fail', icon: 'dash', group: 'none' };
+  const dn = s.direction === 'down', word = dn ? 'Downward' : 'Upward';
+  const tone = dn ? 'st-down' : 'st-up';
+  switch (s.stage) {
+    case 'forming':   return { label: 'Waiting for a break', short: 'Waiting', cls: 'st-wait', icon: 'clock', group: 'pending' };
+    case 'signal':    return { label: `${word} break pending`, short: 'Pending', cls: 'st-wait', icon: dn ? 'down' : 'up', group: 'pending' };
+    case 'confirmed': return { label: `${word} break confirmed`, short: 'Confirmed', cls: tone, icon: 'check', group: 'confirmed' };
+    case 'target':    return { label: 'Target reached', short: 'Target hit', cls: tone, icon: 'target', group: 'target' };
+    case 'failed':    return { label: 'Pattern failed', short: 'Failed', cls: 'st-fail', icon: 'x', group: 'failed' };
+  }
+}
+
+const GROUPS: [Group | 'all', string][] = [['all', 'All'], ['confirmed', 'Confirmed'], ['pending', 'Pending'], ['target', 'Target reached'], ['failed', 'Failed'], ['none', 'No data']];
+
+interface Rung { k: string; cls: string; pcls?: string; v: number; p?: boolean; now?: boolean }
+
+const Ladder: React.FC<{ rungs: Rung[]; price: number }> = ({ rungs, price }) => (
+  <div className="ladder">
+    {rungs.map(r => (
+      <div key={r.k} className={`rung ${r.now ? 'now' : ''}`}>
+        <span className={`k ${r.cls}`}>{r.k}</span>
+        <span className="v">{r.p && <small className={r.pcls || r.cls}>{pct(price, r.v)}</small>}<b>{fmt(r.v)}</b></span>
+      </div>
+    ))}
+  </div>
+);
+
+const Pill: React.FC<{ st: Status }> = ({ st }) => (
+  <span className={`pill ${st.cls}`}><Icon name={st.icon} />{st.label}</span>
+);
+
+const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag }) =>
+  text ? <span className={`flag${keyFlag ? ' key' : ''}`}>{text}</span> : null;
+
+// ── Expanded detail: either direction ("both") ──
+
+const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
+  const tf = s.timeframe || 'daily';
+  const rungs: Rung[] = [
+    { k: 'Goal up', cls: 'k-tgt', v: s.goalUp!, p: true },
+    { k: 'Breaks up', cls: 'k-tgt', v: s.breakUp!, p: true },
+    { k: 'Now', cls: '', v: s.price, now: true },
+    { k: 'Breaks down', cls: 'k-inv', v: s.breakDown!, p: true },
+    { k: 'Goal down', cls: 'k-tgt', pcls: 'k-inv', v: s.goalDown!, p: true },
+  ];
+  return (
+    <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
+      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={s.flag} /></div>
+      <div className="stepper" aria-label="Pattern stage">
+        {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
+          <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
+        ))}
+      </div>
+      <div>
+        <h3>Prices that matter</h3>
+        <Ladder rungs={rungs} price={s.price} />
+        <p className="note">Latest close {fmt(s.price)} on {day(s.priceDate)}. Goals are projections, not promises.</p>
+      </div>
+      <div>
+        <h3>Rules</h3>
+        <ul className="rules" style={{ color: 'var(--fg)' }}>
+          <li><Icon name="up" color="var(--up)" /><span><b>Breaks up:</b> a completed {tf} close above {fmt(s.breakUp!)} starts a signal.</span></li>
+          <li><Icon name="down" color="var(--down)" /><span><b>Breaks down:</b> a completed {tf} close below {fmt(s.breakDown!)} starts a signal.</span></li>
+          <li><Icon name="check" color="var(--muted)" /><span><b>Confirms:</b> a later completed {tf} close beyond that signal candle's extreme.</span></li>
+        </ul>
+        {s.note && <p className="thesis">{s.note}</p>}
+      </div>
+    </div>
+  );
+};
+
+// ── Expanded detail: second timeframe / opposing setup ──
+
+const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a }) => {
+  const st = status(a), up = a.direction === 'up', hit = a.stage === 'target';
+  const tone = up ? 'var(--up)' : 'var(--down)', tf = a.timeframe, T = cap(tf);
+  const side = up ? 'above' : 'below';
+  const rungs = ([
+    { k: hit ? 'Reached' : 'Target', cls: 'k-tgt', pcls: a.target < s.price ? 'k-inv' : 'k-tgt', v: a.target, p: !hit },
+    a.stage === 'forming' && a.signal != null ? { k: 'Signal ' + side, cls: up ? 'k-tgt' : 'k-inv', v: a.signal, p: true } : null,
+    a.confirm != null ? { k: (a.stage === 'signal' ? 'Confirm ' : 'Confirmed ') + side, cls: 'k-lvl', v: a.confirm } : null,
+    { k: 'Now', cls: '', v: s.price, now: true },
+    { k: 'Invalidation', cls: 'k-inv', v: a.invalidation, p: true },
+  ].filter(Boolean) as Rung[]).sort((x, y) => y.v - x.v);
+  const confirming = a.stage === 'forming' || a.stage === 'signal';
+  return (
+    <div className="altwrap" style={{ '--tone': tone } as React.CSSProperties}>
+      {s.keyLevel && (
+        <div className="callout">
+          <div className="cl-k">Key level <b className="num">{fmt(s.keyLevel.price)}</b> <span>{pct(s.price, s.keyLevel.price)} from now</span></div>
+          <p>{s.keyLevel.text}</p>
+        </div>
+      )}
+      <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={a.flag} /></div>
+      <div className="altgrid">
+        <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} /></div>
+        <div>
+          <h3>{T} rules</h3>
+          <ul className="rules">
+            {a.signal != null && <li><Icon name={up ? 'up' : 'down'} color={tone} /><span><b>Signal:</b> a completed {tf} close {side} {fmt(a.signal)}.</span></li>}
+            <li><Icon name="check" color={tone} /><span><b>{confirming ? 'Confirms' : 'Confirmed'}:</b> {a.confirm != null
+              ? `a later completed ${tf} close ${side} ${fmt(a.confirm)}, beyond the signal candle's ${up ? 'high' : 'low'}.`
+              : `a later completed ${tf} close beyond that signal candle's ${up ? 'high' : 'low'}.`}</span></li>
+            {hit
+              ? <li><Icon name="target" color="var(--up)" /><span><b>Reached:</b> {fmt(a.target)} was hit. A completed move, not a new entry.</span></li>
+              : <li><Icon name="target" color={tone} /><span><b>Target:</b> projected move to {fmt(a.target)}, {pct(s.price, a.target)} from the latest close.</span></li>}
+            {!hit && <li><Icon name="x" color="var(--down)" /><span><b>Fails:</b> {a.failRule || `a completed ${tf} close back inside the broken boundary, ${up ? 'below' : 'above'} ${fmt(a.invalidation)}.`}</span></li>}
+          </ul>
+          {a.note && <p className="thesis">{a.note}</p>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HistBlock: React.FC<{ s: PatternStock }> = ({ s }) => (
+  <div className="hist">
+    <h3>History</h3>
+    {s.history!.map((h, i) => (
+      <div key={i} className="hrow">
+        <span className="pill st-fail"><Icon name="target" />{h.stage === 'target' ? 'Target hit' : cap(h.stage)}</span>
+        <span className="hmeta">{h.pattern} · {cap(h.timeframe)} · {h.direction === 'down' ? 'Downward' : 'Upward'} break · {day(h.stageDate)}</span>
+        <span className="hnums num">Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → reached {fmt(h.target)}</span>
+        {h.note && <p>{h.note}</p>}
+      </div>
+    ))}
+  </div>
+);
+
+// ── Expanded detail: single-direction setup ──
+
+const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
+  if (s.direction === 'both') return <DetailBoth s={s} st={st} />;
+  const dn = s.direction === 'down';
+  const tone = s.stage === 'failed' ? 'var(--fail)' : (dn ? 'var(--down)' : 'var(--up)');
+  const hasSig = s.signal != null;
+  const SL = hasSig ? ['Forming', 'Signal', 'Confirmed', 'Target'] : ['Forming', 'Confirmed', 'Target'];
+  const SK: PatternStage[] = hasSig ? STAGES : ['forming', 'confirmed', 'target'];
+  const idx = s.stage === 'failed' ? -1 : SK.indexOf(s.stage === 'signal' && !hasSig ? 'forming' : s.stage);
+  const pending = s.stage === 'forming' || s.stage === 'signal';
+  const target = s.target!, invalidation = s.invalidation!;
+
+  const rungs = ([
+    { k: 'Invalidation', cls: 'k-inv', v: invalidation, p: true },
+    hasSig ? { k: 'Signal ' + (dn ? 'below' : 'above'), cls: s.stage === 'forming' ? (dn ? 'k-inv' : 'k-tgt') : 'k-lvl', v: s.signal!, p: s.stage === 'forming' } : null,
+    s.confirm != null ? { k: (pending ? 'Confirm ' : 'Confirmed ') + (dn ? 'below' : 'above'), cls: pending ? (dn ? 'k-inv' : 'k-tgt') : 'k-lvl', v: s.confirm, p: pending } : null,
+    { k: 'Now', cls: '', v: s.price, now: true },
+    { k: s.stage === 'target' ? 'Reached' : 'Target', cls: 'k-tgt', pcls: target < s.price ? 'k-inv' : 'k-tgt', v: target, p: s.stage !== 'target' },
+  ].filter(Boolean) as Rung[]).sort((a, b) => b.v - a.v);
+
+  const sideWord = dn ? 'below' : 'above', backWord = dn ? 'above' : 'below', tf = s.timeframe || 'daily';
+  const reached = (i: number) => s.stage !== 'failed' && idx >= i;
+
+  return (
+    <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
+      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={s.flag} /></div>
+      <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
+        {SL.map((l, i) => {
+          const c = s.stage === 'failed' ? '' : i < idx ? 'done' : i === idx ? 'now' : '';
+          return (
+            <div key={l} className={`step ${c}`}><i></i><span>{l}</span>{i === idx && s.stageDate && <em>{day(s.stageDate)}</em>}</div>
+          );
+        })}
+      </div>
+      <div>
+        <h3>Prices that matter</h3>
+        <Ladder rungs={rungs} price={s.price} />
+        <p className="note">Latest close {fmt(s.price)} on {day(s.priceDate)}. Target is a projection, not a promise.</p>
+      </div>
+      <div>
+        <h3>Rules</h3>
+        <ul className="rules" style={{ color: 'var(--fg)' }}>
+          {hasSig ? (
+            <>
+              <li className={reached(1) ? '' : 'off'}><Icon name={dn ? 'down' : 'up'} color={tone} /><span><b>Signal:</b> {s.signalRule || `a completed ${tf} close ${sideWord} ${fmt(s.signal!)}.`}</span></li>
+              <li className={reached(2) ? '' : 'off'}><Icon name="check" color={tone} /><span><b>{reached(2) ? 'Confirmed' : 'Confirms'}:</b> {s.confirmRule || `a later completed ${tf} close ${sideWord} ${fmt(s.confirm!)}, beyond the signal candle's ${dn ? 'low' : 'high'}.`}</span></li>
+            </>
+          ) : (
+            <li className={reached(1) ? '' : 'off'}><Icon name="check" color={tone} /><span><b>{reached(1) ? 'Confirmed' : 'Confirms'}:</b> a completed {tf} close {sideWord} {fmt(s.confirm!)}.</span></li>
+          )}
+          {s.stage === 'target' ? (
+            <li><Icon name="target" color={tone} /><span><b>Reached:</b> {fmt(target)} was hit. A completed move, not a new entry.</span></li>
+          ) : (
+            <>
+              <li><Icon name="target" color={tone} /><span><b>Target:</b> projected move to {fmt(target)}, {pct(s.price, target)} from the latest close.</span></li>
+              <li><Icon name="x" color={tone} /><span><b>Fails:</b> {s.failRule || `a completed ${tf} close back inside the broken boundary, ${backWord} ${fmt(invalidation)}.`}</span></li>
+            </>
+          )}
+        </ul>
+        {s.note && <p className="thesis">{s.note}</p>}
+      </div>
+      {s.alt && <AltBlock s={s} a={s.alt} />}
+      {s.history && <HistBlock s={s} />}
+    </div>
+  );
+};
+
+// ── Rows ──
+
+interface Row { ticker: string; name: string; setup: PatternStock | null }
+
+const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'both'
+  ? Math.max(Math.abs(pct0(s.price, s.goalUp!)), Math.abs(pct0(s.price, s.goalDown!)))
+  : Math.abs(pct0(s.price, s.target!));
+
+const readPref = (key: string, fallback: string) => {
+  try { return localStorage.getItem(key) || fallback; } catch { return fallback; }
+};
+const writePref = (key: string, value: string) => {
+  try { localStorage.setItem(key, value); } catch { /* storage unavailable — non-fatal */ }
+};
+
+const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, onOpenPage }) => {
+  const [open, setOpen] = useState(false);
+  const s = row.setup, st = status(s), id = 'd-' + row.ticker;
+  const toggle = () => setOpen(o => !o);
+  const nameCell = (
+    <>
+      <b>{row.ticker}</b><span>{row.name}</span>
+    </>
+  );
+  const dash = <span className="lvl"><b className="faintb">—</b></span>;
+
+  let levels: React.ReactNode;
+  if (!s) {
+    levels = <>{dash}{dash}</>;
+  } else if (s.direction === 'both') {
+    levels = (
+      <>
+        <span className="lvl two"><b className="k-tgt">↑{fmt(s.goalUp!)}</b><b className="k-inv">↓{fmt(s.goalDown!)}</b></span>
+        <span className="lvl"><small>no side yet</small><b className="faintb">—</b></span>
+      </>
+    );
+  } else {
+    const tCls = s.target! < s.price ? 'k-inv' : 'k-tgt';
+    levels = (
+      <>
+        <span className="lvl"><small className={tCls}>{pct(s.price, s.target!)}</small><b className={tCls}>{fmt(s.target!)}</b></span>
+        <span className="lvl"><small className="k-inv">{pct(s.price, s.invalidation!)}</small><b>{fmt(s.invalidation!)}</b></span>
+      </>
+    );
+  }
+
+  return (
+    <div className="item">
+      <div
+        className="row-btn"
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={toggle}
+        onKeyDown={e => {
+          if (e.target !== e.currentTarget) return;
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        }}
+      >
+        <span className="tk">
+          {hasPage ? (
+            <button
+              type="button"
+              className="tk-link"
+              title={`Open ${row.ticker} valuation`}
+              onClick={e => { e.stopPropagation(); onOpenPage(row.ticker); }}
+            >
+              {nameCell}
+            </button>
+          ) : nameCell}
+        </span>
+        <span className="stcell">
+          <span className={`pill ${st.cls}`} title={st.label}>
+            <Icon name={!s ? 'dash' : s.direction === 'both' ? 'clock' : s.direction === 'down' ? 'down' : 'up'} />{st.short}
+          </span>
+        </span>
+        <span className="meta">
+          {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
+          <Flag text={s?.flag} />
+          <Flag text={s?.tag} keyFlag />
+        </span>
+        {levels}
+        <Chev />
+      </div>
+      <div id={id} hidden={!open}>
+        {open && (s
+          ? <Detail s={s} st={st} />
+          : <div className="empty-detail">No trading setup tracked for {row.ticker} yet.</div>)}
+      </div>
+    </div>
+  );
+};
+
+// ── Page ──
+
+interface PatternWatchlistProps {
+  tickers: Record<string, TickerDefinition>;
+  onOpenStock: (ticker: string) => void;
+  headerControls?: React.ReactNode;
+}
+
+const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls }) => {
+  const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
+  const [sortBy, setSortBy] = useState<'default' | 'target'>(() => readPref('pbw-sort', 'default') === 'target' ? 'target' : 'default');
+  const [query, setQuery] = useState('');
+
+  // Pattern stocks first (in curated order), then every covered stock that has no setup yet.
+  const allRows = useMemo<Row[]>(() => {
+    const seen = new Set(PATTERN_STOCKS.map(s => s.ticker));
+    const withSetup = PATTERN_STOCKS.map(s => ({ ticker: s.ticker, name: tickers[s.ticker]?.name ?? s.name, setup: s }));
+    const missing = (Object.values(tickers) as TickerDefinition[])
+      .filter(t => !seen.has(t.ticker))
+      .sort((a, b) => a.ticker.localeCompare(b.ticker))
+      .map(t => ({ ticker: t.ticker, name: t.name, setup: null }));
+    return [...withSetup, ...missing];
+  }, [tickers]);
+
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { all: allRows.length };
+    allRows.forEach(r => { const g = status(r.setup).group; c[g] = (c[g] || 0) + 1; });
+    return c;
+  }, [allRows]);
+
+  const activeFilter = filter === 'all' || counts[filter] ? filter : 'all';
+
+  const rows = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const out = allRows.filter(r =>
+      (activeFilter === 'all' || status(r.setup).group === activeFilter) &&
+      (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
+    if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
+    return out;
+  }, [allRows, activeFilter, query, sortBy]);
+
+  const asOf = useMemo(() => PATTERN_STOCKS.map(s => s.priceDate).sort().pop(), []);
+
+  return (
+    <div className="pbw">
+      <div className="wrap">
+        <header>
+          <div>
+            {asOf && <div className="asof">Prices as of {day(asOf)}</div>}
+            <h1>Pattern Break Watchlist</h1>
+            <p>Chart patterns being tracked, where each one stands, the price it is projected to reach, and the level that cancels the idea. Tap a ticker for its valuation, or the row for the full rules.</p>
+          </div>
+          {headerControls && <div className="hdr-ctl">{headerControls}</div>}
+        </header>
+
+        <div className="tools">
+          <div className="summary" role="group" aria-label="Filter by status">
+            {GROUPS.map(([k, l]) => {
+              const n = counts[k] || 0;
+              if (k !== 'all' && !n) return null;
+              return (
+                <button key={k} className="chip" aria-pressed={activeFilter === k}
+                  onClick={() => { setFilter(k); writePref('pbw-filter', k); }}>
+                  {l}<span className="n">{n}</span>
+                </button>
+              );
+            })}
+            <button className="chip pctchip" aria-pressed={sortBy === 'target'} title="Sort by highest % to target"
+              onClick={() => { const next = sortBy === 'target' ? 'default' : 'target'; setSortBy(next); writePref('pbw-sort', next); }}>
+              %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
+            </button>
+          </div>
+          <input type="search" value={query} onChange={e => setQuery(e.target.value)}
+            placeholder="Search ticker or company" aria-label="Search ticker or company" />
+        </div>
+
+        <div className="ledger">
+          <div className="head" aria-hidden="true">
+            <span>Stock</span><span>Status</span><span className="pc">Pattern</span><span className="r">Target</span><span className="r">Invalidation</span><span></span>
+          </div>
+          <div>
+            {rows.length === 0
+              ? <div className="empty">No stocks match this filter.</div>
+              : rows.map(r => <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]} onOpenPage={onOpenStock} />)}
+          </div>
+        </div>
+
+        <p className="foot">Percentages are measured from the latest close shown for each stock. Targets are projections, not promises. Nothing here is financial advice.</p>
+      </div>
+    </div>
+  );
+};
+
+export default PatternWatchlist;
