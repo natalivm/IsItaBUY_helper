@@ -225,4 +225,14 @@
 .pbw .chart-box{height:230px}
 .pbw .pr-grid{grid-template-columns:1fr;gap:16px}
 }
+/* Desktop: shorter rows; status line and stage tracker share one row */
+@media (min-width:821px){
+.pbw .wrap{gap:12px}
+.pbw .head{padding-block:6px}
+.pbw .row-btn{padding-block:5px}
+.pbw .pill{padding-block:2px}
+.pbw .detail>.dhead{grid-column:1}
+.pbw .detail>.stepper{grid-column:2;align-self:center}
+.pbw .chart-box{height:260px}
+}
 

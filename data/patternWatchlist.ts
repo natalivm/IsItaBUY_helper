@@ -1379,6 +1379,11 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 118.70,
     invalidation: 142.48,
     target: 95.77,
+    // Channel lines read off the source chart (lower line's Oct 20 value = invalidation).
+    lines: [
+      { from: ["2026-08-05", 112.07], to: ["2026-10-20", 167.15] },
+      { from: ["2026-08-05", 87.22], to: ["2026-10-20", 142.46] },
+    ],
     note: "Price climbed a rising channel from the early-August low near $97 to a peak around $135 in early September, then broke the lower line. The break was confirmed with a daily close below $118.70 on Sep 24, and price has slid to around $105."
   }
 ];
