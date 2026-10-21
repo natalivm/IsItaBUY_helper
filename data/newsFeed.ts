@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-21-AGCO-main-confirmed",
+    date: "Oct 21 2026",
+    tickers: ["AGCO"],
+    title: "AGCO · new setup",
+    text: "Ascending Channel (daily), break confirmed.",
+  },
+  {
     id: "2026-10-20-NFLX-main-update",
     date: "Oct 20 2026",
     tickers: ["NFLX"],

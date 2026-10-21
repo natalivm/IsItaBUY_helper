@@ -11,6 +11,12 @@
   "stage": "confirmed",
   "ticker": "ADBE"
  },
+ "AGCO|main": {
+  "label": "main",
+  "setup": "Ascending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "AGCO"
+ },
  "ALAB|main": {
   "label": "main",
   "setup": "Rising Wedge (daily)",
