@@ -18,23 +18,12 @@ Pine Script **v6** indicator: standard RSI + RSI-based MA + a higher-timeframe R
 | Triangles | RSI breaks above 60 (HTF RSI ≥ 50) / below 40 (HTF RSI ≤ 50) |
 | Background tint | chart RSI **and** HTF RSI both > 60 (green) or both < 40 (red) |
 | Divergences | off by default |
-| Dashboard | top right (settings → *Dashboard*: position, text size, on/off) |
+| Dashboard | RSI on 5m / 10m / 15m / 1H / 4H / 1D, top right |
 
 ### Dashboard
-A small table that sums up the pane at a glance. It only displays values; no signal or alert changes.
+A small table (top right) with the **live RSI on 5m, 10m, 15m, 1H, 4H and 1D**, so you can read every timeframe at once. Values are green at or above the bull level (60), red at or below the bear level (40), gray in between. Settings → *Dashboard*: on/off, position, text size, and the six timeframes.
 
-| Row | Shows |
-|---|---|
-| RSI 60/40 | chart timeframe |
-| RSI 14 | live RSI + zone: OVERBOUGHT ≥ 70 · BULL ≥ 60 · NEUTRAL · BEAR ≤ 40 · OVERSOLD ≤ 30 |
-| vs MA | RSI above / below its MA, with the MA value (or "MA off") |
-| HTF *tf* | higher-timeframe RSI + zone, or why it's hidden ("off" / "TF not higher") |
-| Multi-TF | BULL / BEAR when both RSIs agree (same as the background tint), else the HTF bias the 60/40 marks are filtered by |
-| Regime | current 60/40 zone and how many bars RSI has been in it |
-| Last signal | last 60 / 40 momentum break that passed the HTF filter, and how many bars ago |
-| Divergence | last regular divergence (only when divergences are on); counted from the pivot bar |
-
-RSI values are live (the forming bar); *Last signal* counts only signals that passed the same rules as the markers and alerts (closed bars when *Signals on bar close only* is on).
+The table is display-only. Its values include the still-forming bar on each timeframe; the HTF line, filter and alerts keep using the non-repainting HTF RSI.
 
 ### Alerts
 - **Per-event**: Create alert → Condition = this indicator → pick an event (e.g. "RSI breaks above bull level (60)") → set **Once Per Bar Close**.

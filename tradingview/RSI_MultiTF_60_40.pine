@@ -14,7 +14,7 @@
 //    on the right side of `and` would skip bars and corrupt its internal history.
 //  • Markers and alerts can be restricted to closed bars to avoid intrabar flicker.
 //  • alert() is called once per bar with one combined message (multiple calls in one bar can be dropped).
-//  • The dashboard is display-only: it reads the values above and never changes a signal or alert.
+//  • The dashboard (RSI on 6 timeframes) is display-only and never changes a signal or alert.
 indicator("RSI Multi-TF 60/40 Alerts", shorttitle = "RSI 60/40", format = format.price, precision = 2, max_labels_count = 10)
 
 //#region ───── Inputs
@@ -84,8 +84,14 @@ color htfCol  = input.color(#29B6F6, "HTF RSI", group = GRP_COL, inline = "c2")
 
 bool   showDash = input.bool(true, "Show dashboard", group = GRP_DSH)
 string dashPosIn  = input.string("Top right", "Position", options = ["Top right", "Top left", "Middle right", "Bottom right", "Bottom left"], group = GRP_DSH, inline = "dsh")
-string dashSizeIn = input.string("Small", "Text", options = ["Tiny", "Small", "Normal"], group = GRP_DSH, inline = "dsh",
-     tooltip = "RSI values are live (the forming bar). 'Last signal' only counts signals that passed the same rules as the markers and alerts.")
+string dashSizeIn = input.string("Small", "Text", options = ["Tiny", "Small", "Normal"], group = GRP_DSH, inline = "dsh")
+string dashTf1 = input.timeframe("5", "Timeframes", group = GRP_DSH, inline = "t1")
+string dashTf2 = input.timeframe("10", "", group = GRP_DSH, inline = "t1")
+string dashTf3 = input.timeframe("15", "", group = GRP_DSH, inline = "t1")
+string dashTf4 = input.timeframe("60", "", group = GRP_DSH, inline = "t2")
+string dashTf5 = input.timeframe("240", "", group = GRP_DSH, inline = "t2")
+string dashTf6 = input.timeframe("D", "", group = GRP_DSH, inline = "t2",
+     tooltip = "Live RSI (current, still-forming bar) on each timeframe. Green ≥ bull level, red ≤ bear level, gray in between.")
 //#endregion
 
 //#region ───── Functions
@@ -105,14 +111,14 @@ autoHtf() =>
     int s = timeframe.in_seconds()
     s <= 60 ? "15" : s <= 300 ? "60" : s <= 3600 ? "240" : s <= 14400 ? "D" : s <= 86400 ? "W" : s <= 604800 ? "M" : s <= 2678400 ? "3M" : "12M"
 
-// Short timeframe name for the dashboard: "60" → "1h", "240" → "4h", "15" → "15m", "D" stays "D".
+// Short timeframe name for the dashboard: "5" → "5m", "60" → "1H", "240" → "4H", "D" → "1D".
 tfLabel(string tf) =>
     int s = timeframe.in_seconds(tf)
-    s < 60 ? str.tostring(s) + "s" : s < 3600 ? str.tostring(s / 60, "#.#") + "m" : s < 86400 ? str.tostring(s / 3600, "#.#") + "h" : tf
+    s < 60 ? str.tostring(s) + "s" : s < 3600 ? str.tostring(s / 60, "#.#") + "m" : s < 86400 ? str.tostring(s / 3600, "#.#") + "H" : tf == "D" ? "1D" : tf == "W" ? "1W" : tf == "M" ? "1M" : tf
 
-// 60/40 zone name for an RSI value (70/30 extremes take priority).
-zoneTxt(float v) =>
-    na(v) ? "--" : v >= obLvl ? "OVERBOUGHT" : v >= bullLvl ? "BULL" : v <= osLvl ? "OVERSOLD" : v <= bearLvl ? "BEAR" : "NEUTRAL"
+// Live RSI on another timeframe, for the dashboard only (signals use the non-repainting htfRsi above).
+tfRsi(string tf) =>
+    request.security(syminfo.tickerid, tf, ta.rsi(rsiSrc, rsiLen))
 
 inRange(bool cond) =>
     int bars = ta.barssince(cond)
@@ -224,23 +230,13 @@ if barstate.islast
 //#endregion
 
 //#region ───── Dashboard
-// State for the dashboard, updated every bar at global scope.
-int zone = rsi >= bullLvl ? 1 : rsi <= bearLvl ? -1 : 0
-var int zoneStart = 0
-if zone != zone[1]
-    zoneStart := bar_index
-
-var int  lastSigBar  = na
-var bool lastSigBull = false
-if bullMom or bearMom
-    lastSigBar  := bar_index
-    lastSigBull := bullMom
-
-var int  lastDivBar  = na
-var bool lastDivBull = false
-if bullDiv or bearDiv
-    lastDivBar  := bar_index - lbR
-    lastDivBull := bullDiv
+// Compact RSI table: one row per timeframe, value colored by 60/40 zone.
+float dashRsi1 = tfRsi(dashTf1)
+float dashRsi2 = tfRsi(dashTf2)
+float dashRsi3 = tfRsi(dashTf3)
+float dashRsi4 = tfRsi(dashTf4)
+float dashRsi5 = tfRsi(dashTf5)
+float dashRsi6 = tfRsi(dashTf6)
 
 string dashPos  = switch dashPosIn
     "Top left"     => position.top_left
@@ -249,48 +245,23 @@ string dashPos  = switch dashPosIn
     "Bottom left"  => position.bottom_left
     => position.top_right
 string dashSize = dashSizeIn == "Tiny" ? size.tiny : dashSizeIn == "Normal" ? size.normal : size.small
-color  dashInk  = chart.fg_color
-color  dashDim  = color.new(chart.fg_color, 40)
+color  dashInk  = color.new(chart.fg_color, 15)
+color  dashDim  = color.new(chart.fg_color, 50)
 
-zoneInk(float v) =>
-    na(v) ? dashDim : v >= bullLvl ? bullCol : v <= bearLvl ? bearCol : dashInk
+dashRow(table t, int row, string tf, float v) =>
+    color ink = na(v) ? dashDim : v >= bullLvl ? bullCol : v <= bearLvl ? bearCol : dashDim
+    table.cell(t, 0, row, tfLabel(tf), text_color = dashInk, text_size = dashSize, text_halign = text.align_left)
+    table.cell(t, 1, row, na(v) ? "--" : str.tostring(v, "0.0"), text_color = ink, text_size = dashSize, text_halign = text.align_right)
 
-barsAgo(int b) =>
-    int n = bar_index - b
-    n == 0 ? "this bar" : n == 1 ? "1 bar ago" : str.tostring(n) + " bars ago"
-
-dashRow(table t, int row, string lbl, string val, color ink) =>
-    table.cell(t, 0, row, lbl, text_color = dashDim, text_size = dashSize, text_halign = text.align_left)
-    table.cell(t, 1, row, val, text_color = ink, text_size = dashSize, text_halign = text.align_right)
-
-var table dash = showDash ? table.new(dashPos, 2, 8, bgcolor = color.new(chart.bg_color, 15), frame_color = color.new(chart.fg_color, 75), frame_width = 1, border_color = color.new(chart.fg_color, 88), border_width = 1) : na
+var table dash = showDash ? table.new(dashPos, 2, 6, bgcolor = color.new(chart.bg_color, 10), frame_color = color.new(chart.fg_color, 80), frame_width = 1, border_color = color.new(chart.fg_color, 80), border_width = 1) : na
 
 if showDash and barstate.islast
-    dashRow(dash, 0, "RSI 60/40", tfLabel(timeframe.period), dashInk)
-    dashRow(dash, 1, "RSI " + str.tostring(rsiLen), str.tostring(rsi, "0.0") + "  " + zoneTxt(rsi), zoneInk(rsi))
-
-    string maTxt = not maOn ? "MA off" : na(rsiMa) ? "--" : (rsi >= rsiMa ? "ABOVE " : "BELOW ") + str.tostring(rsiMa, "0.0")
-    dashRow(dash, 2, "vs MA", maTxt, not maOn or na(rsiMa) ? dashDim : rsi >= rsiMa ? bullCol : bearCol)
-
-    string htfLbl = "HTF " + tfLabel(htfTf)
-    string htfTxt = not htfOn ? "off" : not htfValid ? "TF not higher" : na(htfRsi) ? "--" : str.tostring(htfRsi, "0.0") + "  " + zoneTxt(htfRsi)
-    dashRow(dash, 3, htfLbl, htfTxt, htfValid ? zoneInk(htfRsi) : dashDim)
-
-    // Alignment = the background tint; otherwise the HTF bias the 60/40 marks are filtered by.
-    string alTxt = not htfValid or na(htfRsi) ? "--" : mtfBull ? "BULL · both > " + str.tostring(bullLvl, "#") : mtfBear ? "BEAR · both < " + str.tostring(bearLvl, "#") : htfRsi >= htfBias ? "mixed · HTF bias up" : "mixed · HTF bias down"
-    color alInk  = mtfBull ? bullCol : mtfBear ? bearCol : dashDim
-    dashRow(dash, 4, "Multi-TF", alTxt, alInk)
-
-    string zoneName = zone == 1 ? "BULL ≥ " + str.tostring(bullLvl, "#") : zone == -1 ? "BEAR ≤ " + str.tostring(bearLvl, "#") : "RANGE " + str.tostring(bearLvl, "#") + "–" + str.tostring(bullLvl, "#")
-    int    zoneBars = bar_index - zoneStart + 1
-    dashRow(dash, 5, "Regime", zoneName + " · " + str.tostring(zoneBars) + (zoneBars == 1 ? " bar" : " bars"), zone == 1 ? bullCol : zone == -1 ? bearCol : dashInk)
-
-    string sigTxt = na(lastSigBar) ? "none yet" : (lastSigBull ? "▲ above " + str.tostring(bullLvl, "#") : "▼ below " + str.tostring(bearLvl, "#")) + " · " + barsAgo(lastSigBar)
-    dashRow(dash, 6, "Last signal", sigTxt, na(lastSigBar) ? dashDim : lastSigBull ? bullCol : bearCol)
-
-    if showDiv
-        string divTxt = na(lastDivBar) ? "none yet" : (lastDivBull ? "Bull" : "Bear") + " · " + barsAgo(lastDivBar)
-        dashRow(dash, 7, "Divergence", divTxt, na(lastDivBar) ? dashDim : lastDivBull ? bullCol : bearCol)
+    dashRow(dash, 0, dashTf1, dashRsi1)
+    dashRow(dash, 1, dashTf2, dashRsi2)
+    dashRow(dash, 2, dashTf3, dashRsi3)
+    dashRow(dash, 3, dashTf4, dashRsi4)
+    dashRow(dash, 4, dashTf5, dashRsi5)
+    dashRow(dash, 5, dashTf6, dashRsi6)
 //#endregion
 
 //#region ───── Alerts
