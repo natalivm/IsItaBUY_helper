@@ -1,0 +1,341 @@
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+//@version=6
+//
+// RSI Multi-TF 60/40 Alerts
+// ─────────────────────────
+// Standard RSI + RSI-based moving average (same MA options as TradingView's built-in RSI),
+// a non-repainting higher-timeframe (HTF) RSI, 60/40 momentum "range-shift" signals,
+// 70/30 extremes, optional regular divergences and a full alert set.
+//
+// Design notes (see tradingview/README.md for the reasoning):
+//  • HTF data uses the PineCoders pattern: expression offset by [1] + lookahead_on.
+//    It only shows CONFIRMED HTF bars, so history and realtime behave identically (no repaint).
+//  • Every ta.* call lives at global scope. Pine v6 evaluates `and`/`or` lazily, so a ta.* call
+//    on the right side of `and` would skip bars and corrupt its internal history.
+//  • Markers and alerts can be restricted to closed bars to avoid intrabar flicker.
+//  • alert() is called once per bar with one combined message (multiple calls in one bar can be dropped).
+//  • The dashboard is display-only: it reads the values above and never changes a signal or alert.
+indicator("RSI Multi-TF 60/40 Alerts", shorttitle = "RSI 60/40", format = format.price, precision = 2, max_labels_count = 10)
+
+//#region ───── Inputs
+const string GRP_RSI = "RSI"
+const string GRP_MA  = "RSI moving average"
+const string GRP_HTF = "Higher-timeframe RSI"
+const string GRP_LVL = "Levels"
+const string GRP_SIG = "Signals"
+const string GRP_ALR = "alert() events  (create alert → 'Any alert() function call')"
+const string GRP_DIV = "Divergence"
+const string GRP_COL = "Colors"
+const string GRP_DSH = "Dashboard"
+
+int    rsiLen      = input.int(14, "Length", minval = 1, group = GRP_RSI)
+float  rsiSrc      = input.source(close, "Source", group = GRP_RSI)
+bool   colorByZone = input.bool(true, "Color RSI line by 60/40 zone", group = GRP_RSI,
+     tooltip = "RSI line turns bull color above the bull level (60) and bear color below the bear level (40).")
+
+string maType = input.string("SMA", "Type", options = ["None", "SMA", "SMA + Bollinger Bands", "EMA", "SMMA (RMA)", "WMA", "VWMA"], group = GRP_MA)
+int    maLen  = input.int(14, "Length", minval = 1, group = GRP_MA)
+float  bbMult = input.float(2.0, "BB StdDev", minval = 0.001, maxval = 50, step = 0.5, group = GRP_MA,
+     tooltip = "Only used with 'SMA + Bollinger Bands'.")
+
+bool   htfOn        = input.bool(true, "Show higher-timeframe RSI", group = GRP_HTF)
+string htfMode      = input.string("Auto", "Timeframe", options = ["Auto", "Manual"], group = GRP_HTF, inline = "htf")
+string htfManual    = input.timeframe("60", "", group = GRP_HTF, inline = "htf",
+     tooltip = "Auto picks the next step up: ≤1m→15m, ≤5m→1h, ≤1h→4h, ≤4h→D, D→W, W→M, M→3M. Manual must be HIGHER than the chart timeframe, otherwise the HTF line is hidden.")
+bool   htfNoRepaint = input.bool(true, "Confirmed HTF bars only (no repaint)", group = GRP_HTF,
+     tooltip = "ON: shows the last CLOSED higher-timeframe RSI. Never repaints; history = realtime.\nOFF: shows the live, still-forming HTF bar. Reacts faster but repaints, and historical bars look better than realtime ever did.")
+float  htfBias      = input.float(50, "HTF bias level", minval = 0, maxval = 100, group = GRP_HTF,
+     tooltip = "Used by 'Require HTF bias': bull marks need HTF RSI ≥ this level, bear marks need HTF RSI ≤ it.")
+
+float obLvl   = input.float(70, "Overbought", minval = 50, maxval = 100, group = GRP_LVL, inline = "ext")
+float osLvl   = input.float(30, "Oversold", minval = 0, maxval = 50, group = GRP_LVL, inline = "ext")
+float bullLvl = input.float(60, "Bull level", minval = 50, maxval = 100, group = GRP_LVL, inline = "mom")
+float bearLvl = input.float(40, "Bear level", minval = 0, maxval = 50, group = GRP_LVL, inline = "mom",
+     tooltip = "RSI range-shift rule (Cardwell / Constance Brown): in uptrends RSI tends to hold 40–80 and push above 60; in downtrends it tends to stay 20–60 and fail at 60.")
+bool  showGradient = input.bool(true, "Gradient fill beyond overbought / oversold", group = GRP_LVL)
+
+bool closeOnly   = input.bool(true, "Signals on bar close only", group = GRP_SIG,
+     tooltip = "Markers and alerts only fire once the bar has closed, so they cannot appear and then disappear intrabar.")
+bool showMomSig  = input.bool(true, "Mark 60 / 40 momentum breaks", group = GRP_SIG)
+bool htfFilter   = input.bool(true, "Require HTF bias for 60 / 40 marks", group = GRP_SIG)
+bool showMaSig   = input.bool(false, "Mark RSI × MA crosses", group = GRP_SIG)
+bool showAlignBg = input.bool(true, "Shade when chart + HTF RSI agree", group = GRP_SIG,
+     tooltip = "Green: both RSIs above the bull level. Red: both below the bear level.")
+
+bool alMom   = input.bool(true, "60 / 40 momentum breaks", group = GRP_ALR)
+bool alFade  = input.bool(false, "Loses 60 / reclaims 40", group = GRP_ALR)
+bool alExt   = input.bool(false, "Overbought / oversold crosses", group = GRP_ALR)
+bool alMa    = input.bool(false, "RSI × MA crosses", group = GRP_ALR)
+bool alAlign = input.bool(true, "Multi-TF alignment starts", group = GRP_ALR)
+bool alDiv   = input.bool(false, "Divergences", group = GRP_ALR)
+
+bool showDiv = input.bool(false, "Show regular divergences", group = GRP_DIV,
+     tooltip = "Pivot-based: a divergence is only known after 'Pivot right' bars, so it is drawn back on the pivot but alerts arrive that many bars late.")
+int  lbL     = input.int(5, "Pivot left", minval = 1, group = GRP_DIV, inline = "piv")
+int  lbR     = input.int(5, "Pivot right", minval = 1, group = GRP_DIV, inline = "piv")
+int  rngMin  = input.int(5, "Bars between pivots: min", minval = 1, group = GRP_DIV, inline = "rng")
+int  rngMax  = input.int(60, "max", minval = 1, group = GRP_DIV, inline = "rng")
+
+color rsiCol  = input.color(#7E57C2, "RSI", group = GRP_COL, inline = "c1")
+color bullCol = input.color(#089981, "Bull", group = GRP_COL, inline = "c1")
+color bearCol = input.color(#F23645, "Bear", group = GRP_COL, inline = "c1")
+color maCol   = input.color(#FDD835, "MA", group = GRP_COL, inline = "c2")
+color htfCol  = input.color(#29B6F6, "HTF RSI", group = GRP_COL, inline = "c2")
+
+bool   showDash = input.bool(true, "Show dashboard", group = GRP_DSH)
+string dashPosIn  = input.string("Top right", "Position", options = ["Top right", "Top left", "Middle right", "Bottom right", "Bottom left"], group = GRP_DSH, inline = "dsh")
+string dashSizeIn = input.string("Small", "Text", options = ["Tiny", "Small", "Normal"], group = GRP_DSH, inline = "dsh",
+     tooltip = "RSI values are live (the forming bar). 'Last signal' only counts signals that passed the same rules as the markers and alerts.")
+//#endregion
+
+//#region ───── Functions
+// Same MA set as the built-in RSI. Called with a simple (input) type, so the branch never changes bar to bar.
+ma(float source, int length, string type) =>
+    switch type
+        "SMA"                   => ta.sma(source, length)
+        "SMA + Bollinger Bands" => ta.sma(source, length)
+        "EMA"                   => ta.ema(source, length)
+        "SMMA (RMA)"            => ta.rma(source, length)
+        "WMA"                   => ta.wma(source, length)
+        "VWMA"                  => ta.vwma(source, length)
+        => na
+
+// Next meaningful higher timeframe for the current chart.
+autoHtf() =>
+    int s = timeframe.in_seconds()
+    s <= 60 ? "15" : s <= 300 ? "60" : s <= 3600 ? "240" : s <= 14400 ? "D" : s <= 86400 ? "W" : s <= 604800 ? "M" : s <= 2678400 ? "3M" : "12M"
+
+// Short timeframe name for the dashboard: "60" → "1h", "240" → "4h", "15" → "15m", "D" stays "D".
+tfLabel(string tf) =>
+    int s = timeframe.in_seconds(tf)
+    s < 60 ? str.tostring(s) + "s" : s < 3600 ? str.tostring(s / 60, "#.#") + "m" : s < 86400 ? str.tostring(s / 3600, "#.#") + "h" : tf
+
+// 60/40 zone name for an RSI value (70/30 extremes take priority).
+zoneTxt(float v) =>
+    na(v) ? "--" : v >= obLvl ? "OVERBOUGHT" : v >= bullLvl ? "BULL" : v <= osLvl ? "OVERSOLD" : v <= bearLvl ? "BEAR" : "NEUTRAL"
+
+inRange(bool cond) =>
+    int bars = ta.barssince(cond)
+    rngMin <= bars and bars <= rngMax
+//#endregion
+
+//#region ───── Core calculations
+float rsi   = ta.rsi(rsiSrc, rsiLen)
+float rsiMa = ma(rsi, maLen, maType)
+float bbDev = ta.stdev(rsi, maLen) * bbMult
+bool  maOn  = maType != "None"
+bool  bbOn  = maType == "SMA + Bollinger Bands"
+
+// Higher timeframe. Non-repainting mode = PineCoders technique: offset the expression by one bar AND use lookahead_on.
+// (lookahead_on WITHOUT the [1] offset would leak future data into history — never do that.)
+string htfTf     = htfMode == "Auto" ? autoHtf() : htfManual
+bool   htfValid  = htfOn and timeframe.in_seconds(htfTf) > timeframe.in_seconds()
+int    htfOffset = htfNoRepaint ? 1 : 0
+float  htfReq    = request.security(syminfo.tickerid, htfTf, ta.rsi(rsiSrc, rsiLen)[htfOffset], lookahead = htfNoRepaint ? barmerge.lookahead_on : barmerge.lookahead_off)
+float  htfRsi    = htfValid ? htfReq : na
+//#endregion
+
+//#region ───── Signals (all ta.* calls evaluated unconditionally, every bar)
+bool confirmed = not closeOnly or barstate.isconfirmed
+
+bool xUpBull = ta.crossover(rsi, bullLvl)
+bool xDnBull = ta.crossunder(rsi, bullLvl)
+bool xDnBear = ta.crossunder(rsi, bearLvl)
+bool xUpBear = ta.crossover(rsi, bearLvl)
+bool xUpOb   = ta.crossover(rsi, obLvl)
+bool xDnOb   = ta.crossunder(rsi, obLvl)
+bool xDnOs   = ta.crossunder(rsi, osLvl)
+bool xUpOs   = ta.crossover(rsi, osLvl)
+bool xUpMid  = ta.crossover(rsi, 50)
+bool xDnMid  = ta.crossunder(rsi, 50)
+bool xUpMa   = ta.crossover(rsi, rsiMa)
+bool xDnMa   = ta.crossunder(rsi, rsiMa)
+
+// HTF filter: pass-through when the filter is off or no valid HTF is available.
+bool htfBullOk = not htfFilter or not htfValid or htfRsi >= htfBias
+bool htfBearOk = not htfFilter or not htfValid or htfRsi <= htfBias
+
+bool bullMom  = confirmed and xUpBull and htfBullOk
+bool bearMom  = confirmed and xDnBear and htfBearOk
+bool bullFade = confirmed and xDnBull
+bool bearFade = confirmed and xUpBear
+bool maUp     = confirmed and maOn and xUpMa
+bool maDn     = confirmed and maOn and xDnMa
+
+bool mtfBull      = htfValid and rsi > bullLvl and htfRsi > bullLvl
+bool mtfBear      = htfValid and rsi < bearLvl and htfRsi < bearLvl
+bool mtfBullStart = confirmed and mtfBull and not mtfBull[1]
+bool mtfBearStart = confirmed and mtfBear and not mtfBear[1]
+
+// Regular divergences (pivot logic of the built-in RSI, rewritten so nothing hides behind a lazy `and`).
+bool  plFound   = not na(ta.pivotlow(rsi, lbL, lbR))
+bool  phFound   = not na(ta.pivothigh(rsi, lbL, lbR))
+float rsiLbr    = rsi[lbR]
+float prevPlRsi = ta.valuewhen(plFound, rsiLbr, 1)
+float prevPlLow = ta.valuewhen(plFound, low[lbR], 1)
+float prevPhRsi = ta.valuewhen(phFound, rsiLbr, 1)
+float prevPhHi  = ta.valuewhen(phFound, high[lbR], 1)
+bool  plInRange = inRange(plFound[1])
+bool  phInRange = inRange(phFound[1])
+bool  bullDiv   = showDiv and confirmed and plFound and plInRange and rsiLbr > prevPlRsi and low[lbR] < prevPlLow
+bool  bearDiv   = showDiv and confirmed and phFound and phInRange and rsiLbr < prevPhRsi and high[lbR] > prevPhHi
+//#endregion
+
+//#region ───── Plots
+color rsiLineCol = colorByZone ? (rsi >= bullLvl ? bullCol : rsi <= bearLvl ? bearCol : rsiCol) : rsiCol
+
+hOb   = hline(obLvl, "Overbought", color.new(color.gray, 30), hline.style_solid)
+hBull = hline(bullLvl, "Bull level", color.new(bullCol, 40), hline.style_dashed)
+hline(50, "Midline", color.new(color.gray, 50), hline.style_dotted)
+hBear = hline(bearLvl, "Bear level", color.new(bearCol, 40), hline.style_dashed)
+hOs   = hline(osLvl, "Oversold", color.new(color.gray, 30), hline.style_solid)
+fill(hOb, hOs, color.new(rsiCol, 92), "Background fill")
+
+rsiPlot = plot(rsi, "RSI", rsiLineCol, 1)
+midPlot = plot(50, "Midline (hidden)", display = display.none, editable = false)
+fill(rsiPlot, midPlot, 100, obLvl, top_color = color.new(bullCol, 0), bottom_color = color.new(bullCol, 100), title = "Overbought gradient fill", display = showGradient ? display.all : display.none)
+fill(rsiPlot, midPlot, osLvl, 0, top_color = color.new(bearCol, 100), bottom_color = color.new(bearCol, 0), title = "Oversold gradient fill", display = showGradient ? display.all : display.none)
+
+plot(rsiMa, "RSI-based MA", maCol, 1, display = maOn ? display.all : display.none)
+bbUp = plot(bbOn ? rsiMa + bbDev : na, "Upper Bollinger Band", color.new(bullCol, 30), display = bbOn ? display.all : display.none)
+bbLo = plot(bbOn ? rsiMa - bbDev : na, "Lower Bollinger Band", color.new(bullCol, 30), display = bbOn ? display.all : display.none)
+fill(bbUp, bbLo, color.new(bullCol, 92), "Bollinger Bands fill", display = bbOn ? display.all : display.none)
+
+plot(htfRsi, "HTF RSI", htfCol, 1, plot.style_stepline, linestyle = plot.linestyle_dashed, display = htfOn ? display.all : display.none)
+
+bgcolor(showAlignBg and mtfBull ? color.new(bullCol, 88) : showAlignBg and mtfBear ? color.new(bearCol, 88) : na, title = "Multi-TF alignment")
+
+plotshape(showMomSig and bullMom ? rsi : na, "Bull momentum mark", shape.triangleup, location.absolute, bullCol, size = size.tiny)
+plotshape(showMomSig and bearMom ? rsi : na, "Bear momentum mark", shape.triangledown, location.absolute, bearCol, size = size.tiny)
+plotshape(showMaSig and maUp ? rsi : na, "RSI × MA up mark", shape.circle, location.absolute, color.new(bullCol, 20), size = size.tiny)
+plotshape(showMaSig and maDn ? rsi : na, "RSI × MA down mark", shape.circle, location.absolute, color.new(bearCol, 20), size = size.tiny)
+
+// Divergence lines join consecutive pivots; only the diverging segment is visible.
+plot(plFound ? rsiLbr : na, "Bullish divergence", bullDiv ? bullCol : color.new(bullCol, 100), 2, offset = -lbR, display = showDiv ? display.pane : display.none)
+plot(phFound ? rsiLbr : na, "Bearish divergence", bearDiv ? bearCol : color.new(bearCol, 100), 2, offset = -lbR, display = showDiv ? display.pane : display.none)
+plotshape(bullDiv ? rsiLbr : na, "Bullish divergence label", shape.labelup, location.absolute, bullCol, offset = -lbR, text = "Bull", textcolor = color.white, size = size.tiny, display = showDiv ? display.pane : display.none)
+plotshape(bearDiv ? rsiLbr : na, "Bearish divergence label", shape.labeldown, location.absolute, bearCol, offset = -lbR, text = "Bear", textcolor = color.white, size = size.tiny, display = showDiv ? display.pane : display.none)
+
+// Tell the user instead of silently showing nothing when the manual HTF is not higher than the chart.
+var label warnLbl = na
+if barstate.islast
+    label.delete(warnLbl)
+    warnLbl := htfOn and not htfValid ? label.new(bar_index, 50, "HTF '" + htfTf + "' is not higher than the chart timeframe — HTF RSI hidden", style = label.style_label_left, color = color.new(color.orange, 15), textcolor = color.black, size = size.small) : na
+//#endregion
+
+//#region ───── Dashboard
+// State for the dashboard, updated every bar at global scope.
+int zone = rsi >= bullLvl ? 1 : rsi <= bearLvl ? -1 : 0
+var int zoneStart = 0
+if zone != zone[1]
+    zoneStart := bar_index
+
+var int  lastSigBar  = na
+var bool lastSigBull = false
+if bullMom or bearMom
+    lastSigBar  := bar_index
+    lastSigBull := bullMom
+
+var int  lastDivBar  = na
+var bool lastDivBull = false
+if bullDiv or bearDiv
+    lastDivBar  := bar_index - lbR
+    lastDivBull := bullDiv
+
+string dashPos  = switch dashPosIn
+    "Top left"     => position.top_left
+    "Middle right" => position.middle_right
+    "Bottom right" => position.bottom_right
+    "Bottom left"  => position.bottom_left
+    => position.top_right
+string dashSize = dashSizeIn == "Tiny" ? size.tiny : dashSizeIn == "Normal" ? size.normal : size.small
+color  dashInk  = chart.fg_color
+color  dashDim  = color.new(chart.fg_color, 40)
+
+zoneInk(float v) =>
+    na(v) ? dashDim : v >= bullLvl ? bullCol : v <= bearLvl ? bearCol : dashInk
+
+barsAgo(int b) =>
+    int n = bar_index - b
+    n == 0 ? "this bar" : n == 1 ? "1 bar ago" : str.tostring(n) + " bars ago"
+
+dashRow(table t, int row, string lbl, string val, color ink) =>
+    table.cell(t, 0, row, lbl, text_color = dashDim, text_size = dashSize, text_halign = text.align_left)
+    table.cell(t, 1, row, val, text_color = ink, text_size = dashSize, text_halign = text.align_right)
+
+var table dash = showDash ? table.new(dashPos, 2, 8, bgcolor = color.new(chart.bg_color, 15), frame_color = color.new(chart.fg_color, 75), frame_width = 1, border_color = color.new(chart.fg_color, 88), border_width = 1) : na
+
+if showDash and barstate.islast
+    dashRow(dash, 0, "RSI 60/40", tfLabel(timeframe.period), dashInk)
+    dashRow(dash, 1, "RSI " + str.tostring(rsiLen), str.tostring(rsi, "0.0") + "  " + zoneTxt(rsi), zoneInk(rsi))
+
+    string maTxt = not maOn ? "MA off" : na(rsiMa) ? "--" : (rsi >= rsiMa ? "ABOVE " : "BELOW ") + str.tostring(rsiMa, "0.0")
+    dashRow(dash, 2, "vs MA", maTxt, not maOn or na(rsiMa) ? dashDim : rsi >= rsiMa ? bullCol : bearCol)
+
+    string htfLbl = "HTF " + tfLabel(htfTf)
+    string htfTxt = not htfOn ? "off" : not htfValid ? "TF not higher" : na(htfRsi) ? "--" : str.tostring(htfRsi, "0.0") + "  " + zoneTxt(htfRsi)
+    dashRow(dash, 3, htfLbl, htfTxt, htfValid ? zoneInk(htfRsi) : dashDim)
+
+    // Alignment = the background tint; otherwise the HTF bias the 60/40 marks are filtered by.
+    string alTxt = not htfValid or na(htfRsi) ? "--" : mtfBull ? "BULL · both > " + str.tostring(bullLvl, "#") : mtfBear ? "BEAR · both < " + str.tostring(bearLvl, "#") : htfRsi >= htfBias ? "mixed · HTF bias up" : "mixed · HTF bias down"
+    color alInk  = mtfBull ? bullCol : mtfBear ? bearCol : dashDim
+    dashRow(dash, 4, "Multi-TF", alTxt, alInk)
+
+    string zoneName = zone == 1 ? "BULL ≥ " + str.tostring(bullLvl, "#") : zone == -1 ? "BEAR ≤ " + str.tostring(bearLvl, "#") : "RANGE " + str.tostring(bearLvl, "#") + "–" + str.tostring(bullLvl, "#")
+    int    zoneBars = bar_index - zoneStart + 1
+    dashRow(dash, 5, "Regime", zoneName + " · " + str.tostring(zoneBars) + (zoneBars == 1 ? " bar" : " bars"), zone == 1 ? bullCol : zone == -1 ? bearCol : dashInk)
+
+    string sigTxt = na(lastSigBar) ? "none yet" : (lastSigBull ? "▲ above " + str.tostring(bullLvl, "#") : "▼ below " + str.tostring(bearLvl, "#")) + " · " + barsAgo(lastSigBar)
+    dashRow(dash, 6, "Last signal", sigTxt, na(lastSigBar) ? dashDim : lastSigBull ? bullCol : bearCol)
+
+    if showDiv
+        string divTxt = na(lastDivBar) ? "none yet" : (lastDivBull ? "Bull" : "Bear") + " · " + barsAgo(lastDivBar)
+        dashRow(dash, 7, "Divergence", divTxt, na(lastDivBar) ? dashDim : lastDivBull ? bullCol : bearCol)
+//#endregion
+
+//#region ───── Alerts
+// alertcondition(): one entry per event in the "Create alert" dialog. Pick "Once Per Bar Close" there.
+alertcondition(bullMom,      "RSI breaks above bull level (60)", '{{ticker}} {{interval}}: RSI broke above the bull level — momentum up. RSI {{plot("RSI")}}, HTF RSI {{plot("HTF RSI")}}')
+alertcondition(bearMom,      "RSI breaks below bear level (40)", '{{ticker}} {{interval}}: RSI broke below the bear level — momentum down. RSI {{plot("RSI")}}, HTF RSI {{plot("HTF RSI")}}')
+alertcondition(bullFade,     "RSI loses bull level (60)",        '{{ticker}} {{interval}}: RSI fell back under the bull level — upside momentum fading. RSI {{plot("RSI")}}')
+alertcondition(bearFade,     "RSI reclaims bear level (40)",     '{{ticker}} {{interval}}: RSI reclaimed the bear level — downside momentum fading. RSI {{plot("RSI")}}')
+alertcondition(confirmed and xUpOb, "RSI enters overbought",     '{{ticker}} {{interval}}: RSI entered overbought. RSI {{plot("RSI")}}')
+alertcondition(confirmed and xDnOb, "RSI exits overbought",      '{{ticker}} {{interval}}: RSI left overbought. RSI {{plot("RSI")}}')
+alertcondition(confirmed and xDnOs, "RSI enters oversold",       '{{ticker}} {{interval}}: RSI entered oversold. RSI {{plot("RSI")}}')
+alertcondition(confirmed and xUpOs, "RSI exits oversold",        '{{ticker}} {{interval}}: RSI left oversold. RSI {{plot("RSI")}}')
+alertcondition(confirmed and xUpMid, "RSI crosses above 50",     '{{ticker}} {{interval}}: RSI crossed above 50. RSI {{plot("RSI")}}')
+alertcondition(confirmed and xDnMid, "RSI crosses below 50",     '{{ticker}} {{interval}}: RSI crossed below 50. RSI {{plot("RSI")}}')
+alertcondition(maUp,         "RSI crosses above its MA",         '{{ticker}} {{interval}}: RSI crossed above its MA. RSI {{plot("RSI")}}, MA {{plot("RSI-based MA")}}')
+alertcondition(maDn,         "RSI crosses below its MA",         '{{ticker}} {{interval}}: RSI crossed below its MA. RSI {{plot("RSI")}}, MA {{plot("RSI-based MA")}}')
+alertcondition(mtfBullStart, "Multi-TF bull alignment",          '{{ticker}} {{interval}}: chart AND higher-timeframe RSI both above the bull level.')
+alertcondition(mtfBearStart, "Multi-TF bear alignment",          '{{ticker}} {{interval}}: chart AND higher-timeframe RSI both below the bear level.')
+alertcondition(bullDiv,      "Bullish RSI divergence",           '{{ticker}} {{interval}}: regular bullish RSI divergence confirmed.')
+alertcondition(bearDiv,      "Bearish RSI divergence",           '{{ticker}} {{interval}}: regular bearish RSI divergence confirmed.')
+
+// alert(): ONE alert covers every event ticked in the "alert() events" group, with live values in the text.
+string evt = ""
+if alMom and bullMom
+    evt += "RSI broke above " + str.tostring(bullLvl, "#.##") + " (momentum up). "
+if alMom and bearMom
+    evt += "RSI broke below " + str.tostring(bearLvl, "#.##") + " (momentum down). "
+if alFade and bullFade
+    evt += "RSI lost " + str.tostring(bullLvl, "#.##") + ". "
+if alFade and bearFade
+    evt += "RSI reclaimed " + str.tostring(bearLvl, "#.##") + ". "
+if alExt and confirmed and (xUpOb or xDnOb or xDnOs or xUpOs)
+    evt += xUpOb ? "Entered overbought. " : xDnOb ? "Left overbought. " : xDnOs ? "Entered oversold. " : "Left oversold. "
+if alMa and (maUp or maDn)
+    evt += maUp ? "RSI crossed above its MA. " : "RSI crossed below its MA. "
+if alAlign and mtfBullStart
+    evt += "Chart + HTF RSI aligned bullish. "
+if alAlign and mtfBearStart
+    evt += "Chart + HTF RSI aligned bearish. "
+if alDiv and bullDiv
+    evt += "Bullish divergence. "
+if alDiv and bearDiv
+    evt += "Bearish divergence. "
+
+if str.length(evt) > 0
+    string htfTxt = htfValid ? " | HTF " + htfTf + " RSI " + str.tostring(htfRsi, "#.##") : ""
+    alert(syminfo.ticker + " [" + timeframe.period + "] " + evt + "RSI " + str.tostring(rsi, "#.##") + htfTxt, alert.freq_once_per_bar_close)
+//#endregion
