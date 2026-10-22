@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const MNST = defineStock({
-  updatedOn: '10/20',
+  updatedOn: '10/22',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   ticker: 'MNST',
   name: 'Monster Beverage Corp',
   sector: 'Consumer Staples / Beverages',
   themeColor: '#22c55e',
-  currentPrice: 47.04,
+  currentPrice: 46.63,
   fairPriceRange: '$35 - $57',  // stockanalysis.com analyst target range (Oct 5 2026; split-adjusted)
   // 2-for-1 split effective Aug 11 2026 — shares were NOT adjusted before this review (967M → 1,960M);
   // the price had already halved, so the model was double-counting upside.

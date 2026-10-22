@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const TER = defineStock({
-  updatedOn: '10/20',
+  updatedOn: '10/22',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   ticker: 'TER',
   name: 'Teradyne, Inc.',
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
-  currentPrice: 336.59,
+  currentPrice: 345.49,
   fairPriceRange: '$350 - $550',  // stockanalysis.com analyst target range (Sep 12 2026)
   shares0: 157,
   rev25: 3190,         // FY2025; FY26E consensus ~$5.1B (+60%)

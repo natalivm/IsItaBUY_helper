@@ -5,7 +5,7 @@ export const SHOP = defineStock({
   name: 'Shopify',
   sector: 'E-commerce Infrastructure / Payments',
   themeColor: '#95BF47',
-  currentPrice: 173.48,
+  currentPrice: 174.29,
   fairPriceRange: '$120 - $220',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 1307,
   rev25: 11600,
@@ -20,7 +20,7 @@ export const SHOP = defineStock({
   rsRating: 99,         // IBD RS per user, 10/10/2026 (was 20)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  updatedOn: '10/20',
+  updatedOn: '10/22',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
 

@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const CAVA = defineStock({
-  updatedOn: '10/20',
+  updatedOn: '10/22',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   ticker: 'CAVA',
   name: 'CAVA Group, Inc.',
   sector: 'Restaurants · Fast-Casual · Mediterranean',
   themeColor: '#c8553d',
-  currentPrice: 57.45,
+  currentPrice: 55,
   fairPriceRange: '$18 - $110',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 118,
   rev25: 1180,         // FY2025 revenue $1.18B (was mis-set to $1.08B); FY26E consensus $1.50B (+27%), FY27E $1.82B (+21%)
