@@ -47,6 +47,27 @@ TRI_CONVERGE = 0.5                           # a triangle must at least halve in
 # in section 3, lost to a triangle candidate). Ranking needs tuning before this flips on.
 # Post triangles by hand meanwhile; --compare is the gate to re-run when changing this.
 DETECT_TRIANGLES = False
+
+# Candle patterns (PATTERN_RULES.md section 6): the candles themselves, never trendlines.
+# Keep this in step with detect_candle below -- several call sites branch on it, and they
+# used to test `'Hammer' in pattern`, which silently excluded every non-hammer candle.
+CANDLE_PATTERNS = frozenset((
+    'Hammer', 'Hanging Man', 'Inverted Hammer', 'Topping Tail',
+    'Bullish Engulfing', 'Bearish Engulfing',
+    'Morning Star', 'Evening Star',
+    'Three White Soldiers', 'Three Black Crows',
+))
+
+
+def is_candle(pattern):
+    return pattern in CANDLE_PATTERNS
+
+
+# The rest of section 6 beyond Hammer / Inverted Hammer. Unlike the triangles this is ON:
+# detect_candle returns at most one setup and only just after a strong move, so it does not
+# flood the line-pair pool, and --compare is byte-identical to before it existed. Set False
+# to fall back to hammers only; re-run --compare when changing this.
+DETECT_CANDLES_EXTRA = True
 TRI_DIVERGE = 2.0                            # a megaphone must at least double
 
 
@@ -251,37 +272,110 @@ def _make_setup(bars, tf, pattern, u, d, start, A, st, touches, score):
                       {'from': [t[start], _r(d.at(start))], 'to': [t[last], _r(d.at(last))]}]}
 
 
-def detect_hammer(bars, tf, n):
-    """Hammer / inverted hammer among the last few completed candles, after a decline."""
+def _shape(bars, i, after_decline, after_advance):
+    """The candle pattern ending at bar i, as (name, direction, first bar), or None.
+
+    Shapes follow PATTERN_RULES.md section 6. Context decides direction: the same
+    shape reads bullish after a decline and bearish after an advance.
+    """
+    o, h, l, c = bars['o'], bars['h'], bars['l'], bars['c']
+    body, rng = abs(c[i] - o[i]), h[i] - l[i]
+    if rng <= 0:
+        return None
+    lower, upper = min(o[i], c[i]) - l[i], h[i] - max(o[i], c[i])
+    long_lower = lower >= 2 * max(body, rng * 0.05) and upper <= 0.3 * rng
+    long_upper = upper >= 2 * max(body, rng * 0.05) and lower <= 0.3 * rng
+
+    # Single candle. Decline cases first, preserving the original hammer ordering.
+    if after_decline and long_lower:
+        return 'Hammer', 'up', i
+    if after_decline and long_upper:
+        return 'Inverted Hammer', 'up', i
+    if after_advance and long_lower:
+        return 'Hanging Man', 'down', i
+    if after_advance and long_upper:
+        return 'Topping Tail', 'down', i
+
+    if i < 1:
+        return None
+    # Two candles: the second body covers the first completely.
+    t1, b1 = max(o[i - 1], c[i - 1]), min(o[i - 1], c[i - 1])
+    t2, b2 = max(o[i], c[i]), min(o[i], c[i])
+    if t2 >= t1 and b2 <= b1 and (t2 - b2) > (t1 - b1):
+        if after_decline and c[i - 1] < o[i - 1] and c[i] > o[i]:
+            return 'Bullish Engulfing', 'up', i - 1
+        if after_advance and c[i - 1] > o[i - 1] and c[i] < o[i]:
+            return 'Bearish Engulfing', 'down', i - 1
+
+    if i < 2:
+        return None
+    a, b, d = i - 2, i - 1, i
+    body_a, body_b, body_d = (abs(c[x] - o[x]) for x in (a, b, d))
+    mid_a = (o[a] + c[a]) / 2
+    small_mid = body_b <= 0.5 * body_a and body_b <= 0.5 * body_d
+    # Three candles: star reversals.
+    if small_mid:
+        if after_decline and c[a] < o[a] and c[d] > o[d] and c[d] >= mid_a:
+            return 'Morning Star', 'up', a
+        if after_advance and c[a] > o[a] and c[d] < o[d] and c[d] <= mid_a:
+            return 'Evening Star', 'down', a
+    # Three candles: soldiers / crows -- three long bodies marching one way.
+    longs = all(abs(c[x] - o[x]) >= 0.5 * max(h[x] - l[x], 1e-9) for x in (a, b, d))
+    if longs:
+        if after_decline and all(c[x] > o[x] for x in (a, b, d)) and c[a] < c[b] < c[d] \
+                and all(h[x] - c[x] <= 0.3 * (h[x] - l[x]) for x in (a, b, d)):
+            return 'Three White Soldiers', 'up', a
+        if after_advance and all(c[x] < o[x] for x in (a, b, d)) and c[a] > c[b] > c[d] \
+                and all(c[x] - l[x] <= 0.3 * (h[x] - l[x]) for x in (a, b, d)):
+            return 'Three Black Crows', 'down', a
+    return None
+
+
+def detect_candle(bars, tf, n):
+    """Best candle pattern among the last few completed candles, or None.
+
+    Levels are the section 6 rule, shared by every candle pattern: across the
+    pattern's candles, range = highest high - lowest low; confirm = a close beyond
+    the extreme in the break direction, invalidation = the other end, target =
+    extreme +/- range. For a one-candle pattern that is the hammer rule unchanged.
+    """
     t, o, h, l, c = bars['t'], bars['o'], bars['h'], bars['l'], bars['c']
     for i in range(n - 1, max(15, n - 4), -1):
-        body, rng = abs(c[i] - o[i]), h[i] - l[i]
+        window = c[i - 15:i]
+        after_decline = c[i] <= max(window) * 0.92
+        after_advance = c[i] >= min(window) * 1.08
+        if not (after_decline or after_advance):
+            continue
+        found = _shape(bars, i, after_decline, after_advance)
+        if not found:
+            continue
+        kind, direction, first = found
+        if not DETECT_CANDLES_EXTRA and kind not in ('Hammer', 'Inverted Hammer'):
+            continue
+        hi = max(h[first:i + 1])
+        lo = min(l[first:i + 1])
+        rng = hi - lo
         if rng <= 0:
             continue
-        lower, upper = min(o[i], c[i]) - l[i], h[i] - max(o[i], c[i])
-        prior = max(c[i - 15:i])
-        if c[i] > prior * 0.92:
-            continue                             # needs a decline first
-        kind = None
-        # long wick at least 2x the body; the opposite wick small (<= 30% of the candle's range)
-        if lower >= 2 * max(body, rng * 0.05) and upper <= 0.3 * rng:
-            kind = 'Hammer'
-        elif upper >= 2 * max(body, rng * 0.05) and lower <= 0.3 * rng:
-            kind = 'Inverted Hammer'
-        if not kind:
-            continue
+        up = direction == 'up'
+        extreme, inval = (hi, lo) if up else (lo, hi)
+        target = extreme + rng if up else extreme - rng
+        if not up and target < MIN_TARGET * extreme:
+            continue                             # implausible downward projection
         later = range(i + 1, n)
-        if any(c[j] < l[i] for j in later):
-            return None                          # broke the candle's low: failed
-        target = h[i] + rng
-        if any(h[j] >= target for j in later):
-            return None
-        conf = next((j for j in later if c[j] > h[i]), None)
-        s = {'pattern': kind, 'timeframe': tf, 'direction': 'up',
-             'confirm': _r(h[i]), 'invalidation': _r(l[i]), 'target': _r(target)}
+        if any((c[j] < inval) if up else (c[j] > inval) for j in later):
+            return None                          # broke the other end: failed
+        if any((h[j] >= target) if up else (l[j] <= target) for j in later):
+            return None                          # target already reached: finished
+        conf = next((j for j in later if (c[j] > extreme if up else c[j] < extreme)), None)
+        s = {'pattern': kind, 'timeframe': tf, 'direction': direction,
+             'confirm': _r(extreme), 'invalidation': _r(inval), 'target': _r(target)}
         s.update({'stage': 'confirmed', 'stageDate': t[conf]} if conf else {'stage': 'forming'})
         return s
     return None
+
+
+detect_hammer = detect_candle          # old name, still used by --compare and detect()
 
 
 def detect(ticker, bars_by_tf, now_et):
@@ -360,8 +454,10 @@ def _note(s):
         return f"Auto-detected {p} on the {tf} chart. A {tf} close beyond the line on {pw._short_date(s['stageDate'])} gave a signal; it needs a close beyond ${s['confirm']:,.2f} to confirm."
     if s['direction'] == 'both':
         return f"Auto-detected {p} on the {tf} chart. No break yet: a {tf} close above ${s['breakUp']:,.2f} or below ${s['breakDown']:,.2f} would start a signal."
-    if 'Hammer' in s['pattern']:
-        return f"Auto-detected {p} on the {tf} chart. A {tf} close above ${s['confirm']:,.2f} would confirm it."
+    if is_candle(s['pattern']):
+        # Bearish candles (Hanging Man, Topping Tail, Evening Star, ...) confirm on a close BELOW.
+        side = 'above' if s['direction'] == 'up' else 'below'
+        return f"Auto-detected {p} on the {tf} chart. A {tf} close {side} ${s['confirm']:,.2f} would confirm it."
     return f"Auto-detected {p} on the {tf} chart. No break yet."
 
 
@@ -502,7 +598,7 @@ def compare(now_et):
             h = detect_hammer(b, p['timeframe'], n)
             if h:
                 pool.append(h)
-            lvl = p.get('signal') or p.get('breakUp') or p.get('confirm') if 'Hammer' not in p['pattern'] else None
+            lvl = None if is_candle(p['pattern']) else (p.get('signal') or p.get('breakUp') or p.get('confirm'))
             hits = [x for x in pool if x['pattern'] == p['pattern'] and x['direction'] == p['direction'] and x['stage'] == p['stage']
                     and (lvl is None or abs((x.get('signal') or x.get('breakUp') or 0) - lvl) <= 0.03 * lvl)]
             total += 1
