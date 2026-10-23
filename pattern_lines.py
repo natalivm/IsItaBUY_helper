@@ -29,7 +29,8 @@ from datetime import date
 
 import pattern_watchlist as pw
 
-TRENDLINE_PATTERNS = {'Ascending Channel', 'Descending Channel', 'Rising Wedge', 'Falling Wedge'}
+TRENDLINE_PATTERNS = {'Ascending Channel', 'Descending Channel', 'Rising Wedge', 'Falling Wedge',
+                      'Symmetrical Triangle', 'Megaphone'}  # triangles fit like wedges: two pivots per line
 HS_PATTERNS = {'Head & Shoulders', 'Inverse Head & Shoulders'}
 LEVEL_TOL = 0.004     # line value vs stored level (fraction of price)
 HEIGHT_TOL = 0.006    # target / goal implied by the height (fraction of price)

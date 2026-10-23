@@ -38,6 +38,16 @@ AGREE = 0.05                                 # targets within 5% of each other a
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
 MIN_TARGET = 0.3                             # a downward target must stay above 30% of the signal
+FLAT = 0.03                                  # a trendline moving <3% of mid across the pattern is flat
+TRI_CONVERGE = 0.5                           # a triangle must at least halve in width
+# Triangles are defined in PATTERN_RULES.md section 4 and _classify below implements them,
+# but the auto-detector does NOT emit them yet. Letting it do so adds two more accepted
+# shapes to the candidate pool, and they outranked correct ones: agreement with the
+# verified posted setups fell from 10 to 4 (AMD's weekly falling wedge, a reference case
+# in section 3, lost to a triangle candidate). Ranking needs tuning before this flips on.
+# Post triangles by hand meanwhile; --compare is the gate to re-run when changing this.
+DETECT_TRIANGLES = False
+TRI_DIVERGE = 2.0                            # a megaphone must at least double
 
 
 def _r(v):
@@ -56,16 +66,33 @@ def _classify(up, lo, start, end):
     span = end - start
     mid = (up.at(end) + lo.at(end)) / 2
     trend = (su + sl) / 2 * span / mid           # relative move of the pattern's midline
+    # Each line's own move across the pattern, as a fraction of where it started:
+    # scale-free, so "flat" means the same thing on a $6 stock and a $600 one.
+    # Measured against the pattern's own mid price, not each line's start value:
+    # an extrapolated line can start at or below zero, which is not a usable base.
+    rise_up = (up.at(end) - up.at(start)) / mid
+    rise_lo = (lo.at(end) - lo.at(start)) / mid
     parallel = abs(su - sl) * span <= 0.25 * max(w0, w1)
     if parallel:
         if abs(trend) < 0.04:                    # a flat range is not in our pattern list
             return None
         return 'Ascending Channel' if trend > 0 else 'Descending Channel'
     if w1 < 0.75 * w0:
+        # Opposite slopes (falling roof over a rising floor) are a triangle, not a wedge:
+        # a wedge's lines slope the same way, the far one at most flat (PATTERN_RULES.md
+        # section 3). Judge flatness by each line's own move across the span, not against
+        # the other line's slope -- a steep roof otherwise swallows a clearly rising floor
+        # (DAVE weekly: roof -29.9%, floor +5.4%, posted for months as a Falling Wedge).
+        if (DETECT_TRIANGLES and w1 < TRI_CONVERGE * w0 and su < 0 < sl
+                and rise_up < -FLAT and rise_lo > FLAT):
+            return 'Symmetrical Triangle'
         if sl > 0 and su > -abs(sl) * 0.2 and trend > 0:
             return 'Rising Wedge'
         if su < 0 and sl < abs(su) * 0.2 and trend < 0:
             return 'Falling Wedge'
+    elif (DETECT_TRIANGLES and w1 > TRI_DIVERGE * w0 and sl < 0 < su
+          and rise_up > FLAT and rise_lo < -FLAT):
+        return 'Megaphone'                       # widening: rising roof, falling floor
     return None
 
 
@@ -73,7 +100,12 @@ def _stage(bars, n, pattern, up, lo, start, A):
     """Walk the completed candles after the pattern formed. Returns a dict or None if finished/failed."""
     t, h, l, c = bars['t'], bars['h'], bars['l'], bars['c']
     channel = 'Channel' in pattern
-    height = up.at(start) - lo.at(start)
+    # Channels, triangles and megaphones don't predict their break direction.
+    two_way = channel or pattern in ('Symmetrical Triangle', 'Megaphone')
+    if pattern == 'Megaphone':
+        height = up.at(n - 1) - lo.at(n - 1)     # widens with time: widest at the break
+    else:
+        height = up.at(start) - lo.at(start)
     if height > MAX_HEIGHT[bars['tf']] * c[A]:
         return None                              # implausibly tall for this timeframe
     sig = None
@@ -81,8 +113,8 @@ def _stage(bars, n, pattern, up, lo, start, A):
         if sig is None:
             # Channels can break either way; a rising wedge only counts a downward break
             # and a falling wedge only an upward one (the other way ends the pattern).
-            up_ok = channel or pattern == 'Falling Wedge'
-            dn_ok = channel or pattern == 'Rising Wedge'
+            up_ok = two_way or pattern == 'Falling Wedge'
+            dn_ok = two_way or pattern == 'Rising Wedge'
             if c[i] > up.at(i):
                 if not up_ok:
                     return None
@@ -108,7 +140,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
             return None                          # old pattern that never broke
         if not (lo.at(last) * 0.97 <= c[last] <= up.at(last) * 1.03):
             return None
-        if channel:
+        if two_way:
             if lo.at(last) - height < MIN_TARGET * lo.at(last):
                 return None                      # implausible goal down
             return {'direction': 'both', 'stage': 'forming',
@@ -127,7 +159,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
     target = sig['level'] + height if d == 'up' else sig['level'] - height
     if target < MIN_TARGET * sig['level']:
         return None                              # implausible projection
-    if channel:
+    if two_way:
         inv = (lo if d == 'down' else up).at(last)          # the broken line now
     else:
         inv = (lo if d == 'up' else up).at(last)            # the pattern's far line now
@@ -136,8 +168,8 @@ def _stage(bars, n, pattern, up, lo, start, A):
     if 'conf' in sig:
         broken = up if d == 'up' else lo
         for i in range(sig['conf'] + 1, n):
-            if channel:
-                # channels fail on one completed close back inside the broken line
+            if two_way:
+                # channels and triangles fail on one completed close back inside the broken line
                 if (d == 'up' and c[i] < broken.at(i)) or (d == 'down' and c[i] > broken.at(i)):
                     return None
             elif i + 1 < n and ((d == 'down' and c[i] > inv and c[i + 1] > h[i]) or (d == 'up' and c[i] < inv and c[i + 1] < l[i])):

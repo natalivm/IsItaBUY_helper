@@ -79,7 +79,35 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   lows Jun 8 / Jul 27; signal $488.47, target $664.85, invalidation $401.41.
   Also QQQ, IREN, META, COST, GE, TWLO and others.
 
-## 4. Head & Shoulders (top) / Inverse Head & Shoulders
+## 4. Symmetrical Triangle / Megaphone
+
+- **Shape:** two **non-parallel** lines sloping in **opposite** directions.
+  *Symmetrical Triangle* (thinning): upper falls, lower rises — they converge.
+  *Megaphone* (widening; also called a broadening formation or expanding
+  triangle): upper rises, lower falls — they diverge.
+- **Drawing:** upper line through **two swing highs**, lower line through **two
+  swing lows**, same as a wedge (§3).
+- **Usual break:** neither shape predicts its own direction, so both are tracked
+  **both ways** while forming, like a channel — breaks up = upper line now,
+  breaks down = lower line now.
+- **Height:** the pattern's **widest** width. For a Symmetrical Triangle that is
+  where it starts (the earliest of the four swing points, as in §3). For a
+  Megaphone it is at the **break candle**, because the shape widens with time.
+- **Levels:** signal = break line at the signal candle · confirm = signal
+  candle's low/high · target = signal ± height · invalidation = the broken
+  line's value at the latest candle ("close back inside"), as for channels.
+- **Not a wedge.** A wedge's two lines slope the **same** way (§3: rising =
+  both rise, falling = both fall; the far line may be flat). A *rising* lower
+  line under a *falling* upper line is a Symmetrical Triangle. DAVE's weekly
+  setup was mislabelled a Falling Wedge on exactly this — its lower line rose
+  from $298.44 to $314.61 while the upper fell from $458.25 to $321.19.
+- **Sanity check:** a very tall thinning triangle fails the measured move. DAVE's
+  year-long version starts $376 wide against a ~$355 spot, so the downward
+  target lands below zero; the detector's `MIN_TARGET` guard drops these.
+
+---
+
+## 5. Head & Shoulders (top) / Inverse Head & Shoulders
 
 - **Shape:** three peaks; the middle one (head) highest, the shoulders lower and
   roughly level. Inverse: three troughs, the middle one lowest.
@@ -95,7 +123,7 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   ($79.88) closes, head Sep 8 $104.59; signal $77.99, target $54.01.
 - Inverse H&S follows by symmetry (not yet seen in our data).
 
-## 5. Hammer / Inverted Hammer (single-candle reversals)
+## 6. Hammer / Inverted Hammer (single-candle reversals)
 
 - **Hammer:** after a decline, a candle with a long **lower** wick (at least 2×
   the body) and little or no upper wick.
