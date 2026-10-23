@@ -5,7 +5,7 @@ export const STX = defineStock({
   name: 'Seagate Technology Holdings',
   sector: 'Data Storage / AI Infrastructure',
   themeColor: '#00a651',
-  currentPrice: 642.14,
+  currentPrice: 630.49,
   fairPriceRange: '$700 - $1,600',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 231,        // Q4 FY26 non-GAAP diluted (incl. exchangeable-note dilution)
   rev25: 12195,        // FY26A (FYE Jul 3 2026) $12.2B (+34%) — base year; revGrowth[0] = FY27 (consensus $18.97B, FY28E $25.5B)

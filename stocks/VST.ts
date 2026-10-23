@@ -5,7 +5,7 @@ export const VST = defineStock({
   name: 'Vistra Corp',
   sector: 'Utilities / Power',
   themeColor: '#facc15',
-  currentPrice: 140.83,
+  currentPrice: 140.16,
   fairPriceRange: '$106 - $305',  // stockanalysis.com analyst target range (Oct 7 2026)
   shares0: 335.6,
   rev25: 17740,        // FY2025A (was 19,600); revGrowth[0] = FY26 (consensus $22.5B, +27% incl. Lotus plants), FY27E $24.1B (+7%)

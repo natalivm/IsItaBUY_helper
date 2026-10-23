@@ -5,7 +5,7 @@ export const AMD = defineStock({
   name: 'Advanced Micro Devices',
   sector: 'Semiconductors / AI Compute',
   themeColor: '#ed1c24',
-  currentPrice: 507.93,
+  currentPrice: 516.79,
   fairPriceRange: '$365 - $1,250',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 1659,        // Q2 2026 diluted
   rev25: 34600,         // FY2025; FY26E consensus $50.95B (+47%), FY27E $88.94B (+75%)

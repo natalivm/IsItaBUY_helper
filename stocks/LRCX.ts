@@ -8,7 +8,7 @@ export const LRCX = defineStock({
   name: 'Lam Research Corporation',
   sector: 'Semiconductor Equipment · Etch & Deposition',
   themeColor: '#005baa',
-  currentPrice: 230.15,
+  currentPrice: 230.1,
   fairPriceRange: '$290 - $500',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 1250,           // ~1.25B shares (stockanalysis, Oct 2026); post 10:1 split (Oct 2024)
   rev25: 23230,            // FY26A (Jun 2026) $23.23B — base year; revGrowth[0] = FY27 (consensus $34.8B, +50%), FY28E $41.3B

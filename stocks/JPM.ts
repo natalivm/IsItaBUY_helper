@@ -6,7 +6,7 @@ export const JPM = defineStock({
   name: 'JPMorgan Chase & Co.',
   sector: 'Diversified Banking',
   themeColor: '#065f46',
-  currentPrice: 336.54,
+  currentPrice: 331.58,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$305 - $420',  // stockanalysis.com analyst target range (Oct 8 2026)

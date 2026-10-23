@@ -8,7 +8,7 @@ export const RKLB = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
-  currentPrice: 51.22,
+  currentPrice: 52.6,
   fairPriceRange: '$64 - $150',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 598.5,         // 598.46M (stockanalysis, Oct 2026) — up from 534M via ATM equity sales
   rev25: 602,             // FY2025 actual revenue; revGrowth[0] = FY26 (consensus $961M, +60%), FY27E $1.36B (+41%)
