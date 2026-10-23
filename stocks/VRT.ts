@@ -5,10 +5,10 @@ export const VRT = defineStock({
   name: 'Vertiv Holdings Co',
   sector: 'Electrical Equipment / Data Center Power & Cooling',
   themeColor: '#0a9396',
-  updatedOn: '10/22',
+  updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 212.15,
+  currentPrice: 195.59,
   fairPriceRange: '$236 - $427',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 393,           // Q2 2026 diluted shares 392.7M; mkt cap ~$95B
   rev25: 10230,           // FY2025 revenue $10,229.9M (+27.7% YoY); FY26 guide $13.8-14.2B (+37% incl. M&A), FY27E consensus $18.27B

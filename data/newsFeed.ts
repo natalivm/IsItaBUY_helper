@@ -15,6 +15,34 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-22-COHR-main-update",
+    date: "Oct 22 2026",
+    tickers: ["COHR"],
+    title: "COHR · needs updating",
+    text: "Closed $207.82 back below invalidation $230.78.",
+  },
+  {
+    id: "2026-10-22-INTU-daily-alt-update",
+    date: "Oct 22 2026",
+    tickers: ["INTU"],
+    title: "INTU · needs updating (daily setup)",
+    text: "Closed $354.9 above confirm $341.79.",
+  },
+  {
+    id: "2026-10-22-MSFT-main-update",
+    date: "Oct 22 2026",
+    tickers: ["MSFT"],
+    title: "MSFT · needs updating",
+    text: "Closed $521.08 below confirm $524.43.",
+  },
+  {
+    id: "2026-10-22-VRT-main-update",
+    date: "Oct 22 2026",
+    tickers: ["VRT"],
+    title: "VRT · needs updating",
+    text: "Closed $195.59 back below invalidation $202.42.",
+  },
+  {
     id: "2026-10-21-CAVA-daily-alt-update",
     date: "Oct 21 2026",
     tickers: ["CAVA"],

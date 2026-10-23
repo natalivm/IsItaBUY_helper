@@ -5,7 +5,7 @@ export const AXON = defineStock({
   name: 'Axon Enterprise',
   sector: 'Public Safety Tech / Government Platform',
   themeColor: '#FFC72C',
-  currentPrice: 402.6,
+  currentPrice: 414.6,
   fairPriceRange: '$440 - $830',  // stockanalysis.com analyst target range (Sep 29 2026)
   shares0: 81.24,        // stockanalysis (Oct 2026)
   rev25: 3700,           // FY2026E base year: guide raised to +32-34% on $2.78B FY25 (consensus $3.70B); revGrowth[0] = FY27 (consensus $4.79B, +29%)
@@ -21,7 +21,7 @@ export const AXON = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   ratingOverride: 'HOLD',  // RS collapsed to 13 (from 92), now recovering (45, Oct 2026) but not yet strong; the stock is down ~42% in a year. Model STRONG BUY (~17% base CAGR) rests on 25% EPS compounding for a Burry-Tragic SBC name (~16% of rev, thin GAAP NI) at ~55× FY26E with no margin for error; HOLD until momentum confirms (RS 70+). (Street median +65%.)
-  updatedOn: '10/22',
+  updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   // Q2 2026 UPDATE (Aug 5, 2026) — first data review

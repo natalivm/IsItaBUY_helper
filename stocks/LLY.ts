@@ -5,10 +5,10 @@ export const LLY = defineStock({
   name: 'Eli Lilly and Company',
   sector: 'Pharmaceuticals / GLP-1',
   themeColor: '#e01933',
-  updatedOn: '10/22',
+  updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 1270.75,
+  currentPrice: 1306.69,
   fairPriceRange: '$930 - $1,600',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 894,          // FY26 guide assumes ~894M shares (Q2 diluted 893.7M)
   rev25: 65200,
