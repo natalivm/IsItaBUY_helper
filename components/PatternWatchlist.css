@@ -231,8 +231,6 @@
 .pbw .head{padding-block:6px}
 .pbw .row-btn{padding-block:5px}
 .pbw .pill{padding-block:2px}
-.pbw .detail>.dhead{grid-column:1}
-.pbw .detail>.stepper{grid-column:2;align-self:center}
 .pbw .chart-box{height:260px}
 }
 /* Auto-detected setups: red dot until checked by hand */
@@ -244,3 +242,56 @@
 .pbw .agree-note{grid-column:1/-1;font-size:14px;color:var(--muted)}
 .pbw .agree-note b{color:var(--up);font-weight:600}
 
+
+/* ── Expanded row: setup list on the left, selected setup on the right ──
+   Mirrors the source tool: pick a setup on the left, read its chart on the right.
+   The chart keeps its candle width and crops older bars when the column narrows
+   (SetupChart sizes the visible range from the container width). */
+.pbw .dsplit{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:18px;align-items:start;padding:12px 20px 18px}
+.pbw .dsplit .detail{display:flex;flex-direction:column;gap:12px;padding:0;min-width:0}
+.pbw .dpanel{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pbw .dsplit .pr-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.pbw .dsplit .chart-box{height:330px}
+
+.pbw .slist{display:flex;flex-direction:column;gap:14px;min-width:0}
+.pbw .sl-head{font:700 12.5px/1 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.pbw .sl-group{display:flex;flex-direction:column;gap:7px}
+.pbw .sl-gh{display:flex;align-items:center;gap:7px;font:600 12.5px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.pbw .sl-gh svg{width:14px;height:14px;color:var(--faint)}
+.pbw .sl-card{appearance:none;display:flex;flex-direction:column;gap:5px;width:100%;text-align:left;cursor:pointer;
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg);font:inherit;padding:10px 12px}
+.pbw .sl-card:hover{background:var(--surface-2)}
+.pbw .sl-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pbw .sl-card.on{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.pbw .sl-r1{display:flex;align-items:center;gap:8px}
+.pbw .sl-r1 b{font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:-.01em}
+.pbw .sl-r1 .chev{width:16px;height:16px;margin-left:auto;transform:rotate(-90deg)}
+.pbw .sl-tf{font:600 11.5px/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  background:var(--surface-2);border-radius:6px;padding:4px 7px}
+.pbw .sl-card.on .sl-tf{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.pbw .sl-r2{display:flex;align-items:center;gap:6px;font-size:14px;min-width:0}
+.pbw .sl-r2>span{display:inline-flex;align-items:center;gap:5px;background:none;font-weight:600;white-space:nowrap}
+.pbw .sl-r2 svg{width:14px;height:14px;flex:none}
+.pbw .sl-r2 .sl-pat{color:var(--muted);font-weight:400;overflow:hidden;text-overflow:ellipsis;min-width:0;display:block}
+
+/* Panel heading: ticker, status, pattern — the stock's identity next to its chart. */
+.pbw .phead{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.pbw .ph-top{display:flex;align-items:baseline;gap:9px;min-width:0}
+.pbw .ph-tk{font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:-.01em}
+.pbw .ph-name{color:var(--muted);font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pbw .ph-st{display:inline-flex;align-items:center;gap:7px;background:none;padding:0;font-weight:700;font-size:17px}
+.pbw .ph-st svg{width:17px;height:17px;flex:none}
+.pbw .ph-sub{color:var(--muted);font-size:14.5px}
+.pbw .phead .flag{margin-top:3px}
+
+@media (max-width:900px){
+.pbw .dsplit{grid-template-columns:1fr;gap:14px}
+.pbw .slist{gap:10px}
+.pbw .sl-group{flex-direction:row;flex-wrap:wrap;align-items:stretch;gap:8px}
+.pbw .sl-gh{flex-basis:100%}
+.pbw .sl-card{flex:1 1 210px;width:auto}
+}
+@media (max-width:600px){
+.pbw .dsplit{padding-inline:4px}
+.pbw .dsplit .chart-box{height:250px}
+}
