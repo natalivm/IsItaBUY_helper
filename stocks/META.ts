@@ -6,23 +6,52 @@ export const META = defineStock({
   sector: 'Social Media / Digital Advertising / AI',
   themeColor: '#1877F2',
   currentPrice: 642.62,
-  fairPriceRange: '$580 - $1,050',  // stockanalysis.com analyst target range (Oct 8 2026)
+  fairPriceRange: '$580 - $1,050',  // stockanalysis.com analyst target range (Oct 8 2026 — PRE-Q3, needs a refresh)
   shares0: 2550,
-  rev25: 254120,         // FY2026E consensus $254.1B (+26%; Q1 $56.3B + Q2 $60.8B + Q3 guide $61-64B); FY27E $306.5B (+21%)
-  fcfMargin25: 0.06,     // FY2026E: $130-145B CapEx squeezes FCF (Q2 FCF only $0.8B)
+  rev25: 256200,         // FY2026E $256.2B (+26%): Q1 $56.3B + Q2 $60.8B + Q3A $64.6B + Q4 guide $73-76B (mid $74.5B); FY27E $306.5B (+21%)
+  fcfMargin25: 0.02,     // FY2026E: capex raised to $135-145B; FCF now tracking ~zero (Q2 +$0.8B, Q3 -$2.1B)
   taxRate: 0.14,         // Normalized FY2026 rate: 13-16% guided (Q1 was -23% including $8B one-time benefit)
-  cash: 90260,           // Jun 2026 (stockanalysis): $90.3B
-  debt: 112320,          // Jun 2026: $112.3B incl. leases (up sharply — data-center financing)
+  cash: 90260,           // Jun 2026 (stockanalysis): $90.3B — STALE, Sep 2026 balance sheet not yet pulled
+  debt: 112320,          // Jun 2026: $112.3B incl. leases (up sharply — data-center financing) — STALE as above
   beta: 1.23,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 30.40,        // FY2026E GAAP EPS consensus (Oct 8 2026; range $27.89-32.83; FY27E $34.55, +14%). Includes Q2's $2.4B legal + $1.2B severance charges. Prior: $32.50.
-  rsRating: 97,          // IBD RS per user, 10/11/2026 (was 22)
-  rsTrend: 'rising',
+  baseEps: 29.80,        // FY2026E GAAP EPS consensus post-Q3 (Oct 23 2026): Zacks $29.94, Yahoo $29.38, MarketBeat $30.01. FY27E $33.83 (was $34.55). Absorbs Q3's $9.89B legal charge. Prior: $30.40 (pre-Q3).
+  rsRating: 97,          // IBD RS per user, 10/11/2026 (was 22) — STALE: predates the -16% Oct 13->23 drawdown, needs a fresh IBD read
+  rsTrend: 'rising',     // flagged: price fell ~16% in two weeks, so 'rising' likely no longer holds
   aiImpact: 'TAILWIND',
   updatedOn: '10/23',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-11',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-23',
+  nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
+  // ⚠ 2-FOR-1 EQUIVALENT SPLIT EFFECTIVE JAN 19 2027 — ACTION REQUIRED THEN
+  // ─────────────────────────────────────────────────────────────────────────
+  // Announced with Q3 (Oct 21 2026): a one-time stock dividend of one
+  // non-voting Class C share per Class A/B share, contingent on the Restated
+  // Charter taking effect Jan 19 2027 (payment within 5 business days after;
+  // record/payment dates not yet set). Class A should then trade at ~half.
+  // WHEN IT LANDS: update_prices.py will pick up the post-split price
+  // automatically, but baseEps will NOT rebase itself. Halve baseEps (and
+  // check shares0, which doubles) IN THE SAME COMMIT, or the model will read
+  // ~2x upside overnight and wrongly flip META to STRONG BUY.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Q3 2026 UPDATE (Oct 21, 2026)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $64.60B (+26%, beat ~$63.3B) — but a $9.89B legal charge drove
+  // costs +68% to $51.6B, operating income -37% to $12.99B and operating
+  // margin to 20% (from 40%). GAAP EPS $3.83 (beat ~$3.57); adjusted $7.40
+  // (vs ~$6.53). Q4 GUIDE $73-76B (midpoint just under ~$73.75B consensus).
+  // FY26 capex raised to $135-145B (from $130-145B); FY26 expenses now
+  // $175-179B (was $165-169B). Q3 capex $34.9B, FCF -$2.1B. Reality Labs
+  // loss guided $18-19B in 2026, ~$15B in 2027. Announced a 2-for-1
+  // equivalent Class C stock dividend (see warning above).
+  // Street FY26E EPS cut to ~$29.8 (Zacks -7% over 60d), FY27E to $33.83.
+  // MARKET REACTION: popped ~4% after hours on the beat, then reversed hard
+  // — closed -6.98% Oct 22 ($697.52 -> $648.85), -8.9% on the week and
+  // -15.7% from Oct 13 ($762.50). The AI-spend/FCF story outweighed the beat.
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Q2 2026 UPDATE (Jul 29, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
   // Revenue $60.8B (+28%, beat ~$60.2B) but EPS $6.18 vs $7.22 expected
