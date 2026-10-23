@@ -5279,10 +5279,16 @@
   "stage": "confirmed",
   "ticker": "SPOT"
  },
- "SPOT|main": {
-  "label": "main",
+ "SPOT|daily alt": {
+  "label": "daily alt",
   "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "SPOT"
+ },
+ "SPOT|main": {
+  "label": "main",
+  "setup": "Falling Wedge (daily)",
+  "stage": "signal",
   "ticker": "SPOT"
  },
  "SPOT|weekly Ascending Channel": {

@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-SPOT-main-signal",
+    date: "Oct 23 2026",
+    tickers: ["SPOT"],
+    title: "SPOT · new setup",
+    text: "Falling Wedge (daily), break pending.",
+  },
+  {
     id: "2026-10-23-INTU-main-confirmed",
     date: "Oct 23 2026",
     tickers: ["INTU"],

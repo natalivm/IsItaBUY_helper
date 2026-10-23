@@ -116,6 +116,30 @@
    "pattern": "Head & Shoulders",
    "direction": "down",
    "stage": "forming"
+  },
+  {
+   "ticker": "ADBE",
+   "timeframe": "daily",
+   "pattern": "Descending Channel",
+   "direction": "up",
+   "stage": "confirmed",
+   "stageDate": "2026-10-15",
+   "signal": 239.43,
+   "confirm": 241.25,
+   "invalidation": 226.07,
+   "target": 281.26
+  },
+  {
+   "ticker": "INTU",
+   "timeframe": "weekly",
+   "pattern": "Falling Wedge",
+   "direction": "up",
+   "stage": "confirmed",
+   "stageDate": "2026-08-10",
+   "signal": 324.03,
+   "confirm": 336.3,
+   "invalidation": 156.68,
+   "target": 521.79
   }
  ]
 }
