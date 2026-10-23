@@ -1556,7 +1556,7 @@
  "CRWV|main": {
   "label": "main",
   "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "CRWV"
  },
  "CRWV|weekly alt": {

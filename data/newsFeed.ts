@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-CRWV-main-target",
+    date: "Oct 23 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · target reached",
+    text: "The weekly rising wedge reached its $53.37 target on Oct 22.",
+  },
+  {
     id: "2026-10-23-CRWV-daily-alt-removed",
     date: "Oct 23 2026",
     tickers: ["CRWV"],
@@ -111,13 +118,6 @@ export const NEWS_ITEMS: NewsItem[] = [
     tickers: ["CRDO"],
     title: "CRDO · setup closed",
     text: "Target reached Oct 23.",
-  },
-  {
-    id: "2026-10-23-CRWV-main-confirmed",
-    date: "Oct 23 2026",
-    tickers: ["CRWV"],
-    title: "CRWV · setup closed",
-    text: "Target reached Oct 22.",
   },
   {
     id: "2026-10-23-FLEX-daily-alt-confirmed",
