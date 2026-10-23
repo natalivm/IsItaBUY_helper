@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-auto-scan-77",
+    date: "Oct 23 2026",
+    tickers: [],
+    title: "Auto-detected setups updated for 77 stocks",
+    text: "Every valid pattern per stock is now listed (weekly and daily); 221 setups added. Auto-detected ones carry a red dot until checked by hand.",
+  },
+  {
     id: "2026-10-23-NET-main-forming",
     date: "Oct 23 2026",
     tickers: ["NET"],
