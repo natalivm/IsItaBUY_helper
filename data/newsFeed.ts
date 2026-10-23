@@ -15,6 +15,62 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-INTU-main-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["INTU"],
+    title: "INTU · new setup",
+    text: "Falling Wedge (weekly), break confirmed.",
+  },
+  {
+    id: "2026-10-22-ALAB-main-target",
+    date: "Oct 22 2026",
+    tickers: ["ALAB"],
+    title: "ALAB · target reached",
+    text: "Hit target $258.24.",
+  },
+  {
+    id: "2026-10-22-FLEX-daily-alt-target",
+    date: "Oct 22 2026",
+    tickers: ["FLEX"],
+    title: "FLEX · target reached (daily setup)",
+    text: "Hit target $83.65.",
+  },
+  {
+    id: "2026-10-22-KMB-main-target",
+    date: "Oct 22 2026",
+    tickers: ["KMB"],
+    title: "KMB · target reached",
+    text: "Hit target $110.01.",
+  },
+  {
+    id: "2026-10-22-LMT-main-target",
+    date: "Oct 22 2026",
+    tickers: ["LMT"],
+    title: "LMT · target reached",
+    text: "Hit target $561.66.",
+  },
+  {
+    id: "2026-10-22-MLM-daily-alt-target",
+    date: "Oct 22 2026",
+    tickers: ["MLM"],
+    title: "MLM · target reached (daily setup)",
+    text: "Hit target $517.37.",
+  },
+  {
+    id: "2026-10-22-MNDY-main-target",
+    date: "Oct 22 2026",
+    tickers: ["MNDY"],
+    title: "MNDY · target reached",
+    text: "Hit target $106.03.",
+  },
+  {
+    id: "2026-10-22-NOW-main-target",
+    date: "Oct 22 2026",
+    tickers: ["NOW"],
+    title: "NOW · target reached",
+    text: "Hit target $156.29.",
+  },
+  {
     id: "2026-10-22-COHR-main-update",
     date: "Oct 22 2026",
     tickers: ["COHR"],
