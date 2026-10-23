@@ -23,7 +23,11 @@ export const DAVE = defineStock({
   rsRating: 82,        // IBD RS per user, 10/10/2026 (was 92 in Jun 2026)
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',  // CashAI powers underwriting, but the business is consumer cash advances, not an AI beneficiary
-  ratingOverride: 'BUY',   // +14% 2wk run compressed base-case upside to ~6% → model reads HOLD, but RS 99 & rising (best-in-class momentum) keeps this a BUY / TURBO_GROWTH.
+  ratingOverride: 'BUY',   // Held at BUY by decision, 10/23/2026. NOTE the direction flipped: this override was
+                           // written in Jul 2026 to RAISE a HOLD (upside had compressed to ~6% on a +14% run,
+                           // RS was 99 & rising). Both premises are now gone — RS is 82 and falling, and the
+                           // pullback to $354.60 reopened base-case upside to ~+82%, so the model reads
+                           // STRONG BUY on its own. The override now CAPS the rating instead of lifting it.
 
   // Q2 2026 UPDATE (Aug 5, 2026)
   // ─────────────────────────────────────────────────────────────────────────
