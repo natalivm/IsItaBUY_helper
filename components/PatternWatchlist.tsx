@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { TickerDefinition } from '../types';
 import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree } from '../data/patternWatchlist';
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
@@ -91,15 +92,48 @@ function chartSpec(s: { direction: string; stage: PatternStage; stageDate?: stri
   return { levels, marker };
 }
 
-// Prices & Rules sit behind a button so the expanded row stays compact.
+// Prices & Rules open in a dialog from the panel header, so the numbers are a
+// click away without pushing the chart down the page.
 const PricesRules: React.FC<{ label?: string; children: React.ReactNode }> = ({ label = 'Prices & Rules', children }) => {
   const [open, setOpen] = useState(false);
+  const card = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    card.current?.focus();
+    // Capture phase: Escape closes this dialog without also closing the row behind it.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.stopPropagation();
+      setOpen(false);
+      trigger.current?.focus();
+    };
+    document.addEventListener('keydown', onKey, true);
+    return () => document.removeEventListener('keydown', onKey, true);
+  }, [open]);
+
+  // Into the .pbw root rather than <body>: the dialog keeps the page's theme
+  // variables, and sits outside the ledger's clipped box.
+  const host = typeof document === 'undefined' ? null : document.querySelector('.pbw');
+
   return (
     <>
-      <button type="button" className="pr-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        <span>{label}</span><Chev />
+      <button ref={trigger} type="button" className="pr-btn" aria-haspopup="dialog"
+        onClick={e => { e.stopPropagation(); setOpen(true); }}>
+        Prices &amp; rules
       </button>
-      {open && <div className="pr-grid">{children}</div>}
+      {open && host && createPortal(
+        <div className="pr-modal" onClick={() => setOpen(false)}>
+          <div ref={card} className="pr-card" role="dialog" aria-modal="true" aria-label={label} tabIndex={-1}
+            onClick={e => e.stopPropagation()}>
+            <div className="pr-top">
+              <h2>{label}</h2>
+              <button type="button" className="pr-done" onClick={() => setOpen(false)}>Done</button>
+            </div>
+            <div className="pr-grid">{children}</div>
+          </div>
+        </div>, host)}
     </>
   );
 };
@@ -189,7 +223,9 @@ type AnySetup = PatternAltSetup & { signalRule?: string; confirmRule?: string };
 
 const PanelHead: React.FC<{
   s: PatternStock; st: Status; pattern: string; tf: string; date?: string; extra?: string; flag?: string;
-}> = ({ s, st, pattern, tf, date, extra, flag }) => (
+  right?: React.ReactNode;
+}> = ({ s, st, pattern, tf, date, extra, flag, right }) => (
+  <div className="ptop">
   <div className="phead">
     <div className="ph-top"><b className="ph-tk">{s.ticker}</b><span className="ph-name">{s.name}</span></div>
     <div className={`ph-st ${st.cls}`}><Icon name={st.icon} />{st.label}</div>
@@ -197,6 +233,8 @@ const PanelHead: React.FC<{
       {pattern} · {cap(tf)} chart{date ? ` · ${day(date)}` : ''}{extra ? ` · ${extra}` : ''}
     </div>
     <Flag text={flag} />
+  </div>
+  {right}
   </div>
 );
 
@@ -225,22 +263,8 @@ const BothBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a
   ];
   return (
     <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
-      <PanelHead s={s} st={st} pattern={pattern} tf={tf} extra="Either direction" flag={flagFor(tf, a.flag)} />
-      <Agreement agree={a.agree} />
-      <AutoNote on={a.auto} />
-      {a.stage === 'update' && <UpdateBanner note={a.updateNote} />}
-      <div className="stepper" aria-label="Pattern stage">
-        {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
-          <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
-        ))}
-      </div>
-      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} levels={[
-        { price: a.goalUp!, label: 'Goal up', tone: 'up' },
-        { price: a.breakUp!, label: 'Breaks up', tone: 'up' },
-        { price: a.breakDown!, label: 'Breaks down', tone: 'down' },
-        { price: a.goalDown!, label: 'Goal down', tone: 'up' },
-      ]} />
-      <PricesRules>
+      <PanelHead s={s} st={st} pattern={pattern} tf={tf} extra="Either direction" flag={flagFor(tf, a.flag)}
+        right={<PricesRules label={`${cap(tf)} prices & rules`}>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -255,7 +279,21 @@ const BothBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a
         </ul>
         {a.note && <p className="thesis">{a.note}</p>}
       </div>
-      </PricesRules>
+        </PricesRules>} />
+      <Agreement agree={a.agree} />
+      <AutoNote on={a.auto} />
+      {a.stage === 'update' && <UpdateBanner note={a.updateNote} />}
+      <div className="stepper" aria-label="Pattern stage">
+        {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
+          <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
+        ))}
+      </div>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} levels={[
+        { price: a.goalUp!, label: 'Goal up', tone: 'up' },
+        { price: a.breakUp!, label: 'Breaks up', tone: 'up' },
+        { price: a.breakDown!, label: 'Breaks down', tone: 'down' },
+        { price: a.goalDown!, label: 'Goal down', tone: 'up' },
+      ]} />
     </div>
   );
 };
@@ -288,20 +326,8 @@ const DirBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a:
 
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
-      <PanelHead s={s} st={st} pattern={pattern} tf={tf} date={a.stageDate} flag={flagFor(tf, a.flag)} />
-      <Agreement agree={raw.agree} />
-      <AutoNote on={raw.auto} />
-      {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
-      <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
-        {SL.map((l, i) => {
-          const c = a.stage === 'failed' ? '' : i < idx ? 'done' : i === idx ? 'now' : '';
-          return (
-            <div key={l} className={`step ${c}`}><i></i><span>{l}</span>{i === idx && a.stageDate && <em>{day(a.stageDate)}</em>}</div>
-          );
-        })}
-      </div>
-      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
-      <PricesRules label={`${T} prices & rules`}>
+      <PanelHead s={s} st={st} pattern={pattern} tf={tf} date={a.stageDate} flag={flagFor(tf, a.flag)}
+        right={<PricesRules label={`${T} prices & rules`}>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -331,7 +357,19 @@ const DirBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a:
         </ul>
         {a.note && <p className="thesis">{a.note}</p>}
       </div>
-      </PricesRules>
+        </PricesRules>} />
+      <Agreement agree={raw.agree} />
+      <AutoNote on={raw.auto} />
+      {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
+      <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
+        {SL.map((l, i) => {
+          const c = a.stage === 'failed' ? '' : i < idx ? 'done' : i === idx ? 'now' : '';
+          return (
+            <div key={l} className={`step ${c}`}><i></i><span>{l}</span>{i === idx && a.stageDate && <em>{day(a.stageDate)}</em>}</div>
+          );
+        })}
+      </div>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
     </div>
   );
 };
