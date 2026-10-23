@@ -20,11 +20,17 @@ Setups we can't match (or patterns without trendlines, e.g. Hammer / H&S) are li
   python3 pattern_lines.py            # dry run: show fits and misses
   python3 pattern_lines.py --apply    # write `lines` into setups that have none
   python3 pattern_lines.py --apply --refit   # also replace existing lines
+  python3 pattern_lines.py --relevel [--apply]   # re-read sloped invalidations off the lines
+
+A sloped invalidation is a line's value at the latest candle, so it moves a
+little every session while the stored number stays where it was written. The
+daily job re-reads it (--relevel) once the candles and any new lines are in.
 """
 
 import argparse
 import json
 import os
+import re
 from datetime import date
 
 import pattern_watchlist as pw
@@ -32,6 +38,9 @@ import pattern_watchlist as pw
 TRENDLINE_PATTERNS = {'Ascending Channel', 'Descending Channel', 'Rising Wedge', 'Falling Wedge'}
 HS_PATTERNS = {'Head & Shoulders', 'Inverse Head & Shoulders'}
 LEVEL_TOL = 0.004     # line value vs stored level (fraction of price)
+MIN_MOVE = 0.01       # --relevel: a level this near its line is close enough — leave it
+CONVERGED = 0.03      # --relevel: lines this close together make the level's line ambiguous
+DRIFT = 0.08          # --relevel: further than this from the line is not drift, so leave it
 HEIGHT_TOL = 0.006    # target / goal implied by the height (fraction of price)
 LOOKBACK = 220        # bars before the evaluation bar to search for pivots
 
@@ -285,6 +294,114 @@ def _lines_ts(lines, indent):
     return f"[\n{rows}{indent}]"
 
 
+# The watchlist parser keeps only the span of a `lines:` array, so read the pairs back out.
+_LINE_RE = re.compile(r'\{\s*from:\s*\["([\d-]+)",\s*(-?[\d.]+)\],\s*to:\s*\["([\d-]+)",\s*(-?[\d.]+)\]\s*\}')
+
+
+def stored_lines(text, pos):
+    """The setup's trendlines as [((date, value), (date, value)), ...], or None."""
+    if 'lines' not in pos:
+        return None
+    found = _LINE_RE.findall(text[pos['lines'][0]:pos['lines'][1]])
+    return [((d0, float(v0)), (d1, float(v1))) for d0, v0, d1, v1 in found] or None
+
+
+def line_value(line, t, i):
+    """A stored line's value at bar i, extended at its own slope per bar."""
+    (d0, v0), (d1, v1) = line
+    idx = lambda d: max([k for k, x in enumerate(t) if x <= d] or [0])
+    i0, i1 = idx(d0), idx(d1)
+    per = (v1 - v0) / (i1 - i0) if i1 > i0 else 0.0
+    return v0 + per * (i - i0)
+
+
+def invalidation_line(pattern, direction):
+    """Which of [upper, lower] the invalidation sits on, matching the setups' own fail rules:
+    a channel fails back inside the boundary it broke, a wedge on a close past the far side."""
+    dn = direction == 'down'
+    if 'Channel' in pattern:
+        return 1 if dn else 0      # the broken boundary
+    if 'Wedge' in pattern:
+        return 0 if dn else 1      # the far side
+    return None
+
+
+def relevel(apply=False, verbose=True, now_et=None):
+    """Re-read each sloped invalidation off its line at the latest completed candle.
+
+    Only setups still in play (forming / signal / confirmed) and only while the stored
+    level plainly sits on the line the rule names — if the other line is closer, the
+    number came from somewhere else and is left alone and reported. Runs after the bars
+    and the fitter, so the levels follow the lines the charts actually draw.
+    """
+    now_et = now_et or pw._now_et()
+    with open(pw.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    edits, moved, odd = [], [], []
+    for e in pw.parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, s, pos in pw._setups(e):
+            inv = s.get('invalidation')
+            pattern = s.get('pattern') or main.get('pattern') or ''
+            if inv is None or 'invalidation' not in pos:
+                continue
+            if s.get('stage') not in ('forming', 'signal', 'confirmed'):
+                continue
+            want = invalidation_line(pattern, s.get('direction'))
+            if want is None:
+                continue
+            lines = stored_lines(text, pos)
+            if not lines or len(lines) < 2:
+                continue
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            bars = load_bars(main['ticker'], tf)
+            if not bars or not bars.get('t'):
+                continue
+            # The last completed candle: never re-read a level off a session still trading.
+            i = pw._completed_count(bars['t'], tf, now_et) - 1
+            if i < 0:
+                continue
+            name = f"{main['ticker']} ({label}, {pattern}, {tf})"
+            mine = line_value(lines[want], bars['t'], i)
+            other = line_value(lines[1 - want], bars['t'], i)
+            # Within a whisker of its line: leave it, so a number entered by hand from the
+            # source tool is not fought over every run (our fitted line is close to, but not
+            # exactly, the one the tool drew) and the daily diff stays small.
+            if abs(mine - inv) <= MIN_MOVE * abs(inv):
+                continue
+            # Near a wedge's apex the two lines sit on top of each other, so which one a
+            # level belongs to is a coin flip: leave those alone.
+            if abs(mine - other) < CONVERGED * abs(inv):
+                odd.append((name, inv, mine, 'its two lines are within %.0f%% of each other' % (CONVERGED * 100)))
+                continue
+            # Creep is a line read a few sessions ago; a level far off it was set some other
+            # way (or the setup needs a human), so don't quietly move it.
+            if abs(mine - inv) > DRIFT * abs(inv):
+                odd.append((name, inv, mine, 'that is %.0f%% away — too far to be the same line' % (abs(mine - inv) / abs(inv) * 100)))
+                continue
+            if abs(mine - inv) > abs(other - inv):
+                odd.append((name, inv, mine, 'the other line (%.2f) is nearer' % other))
+                continue
+            new = pw._fmt_price(mine)
+            moved.append((name, inv, float(new), bars['t'][i]))
+            edits.append((pos['invalidation'][0], pos['invalidation'][1], new))
+
+    if verbose:
+        for name, old, new, when in moved:
+            print(f"LEVEL {name}: invalidation {old} → {new} (its line at {when})")
+        for name, inv, mine, why in odd:
+            print(f"SKIP  {name}: invalidation {inv} vs its line at {mine:.2f} — {why}")
+        print(f"\n{len(moved)} invalidation(s) re-read, {len(odd)} left for a human.")
+    if apply and edits:
+        for a, b, v in sorted(edits, key=lambda x: x[0], reverse=True):
+            text = text[:a] + v + text[b:]
+        with open(pw.WATCHLIST_FILE, 'w') as fh:
+            fh.write(text)
+        if verbose:
+            print(f"Wrote {len(moved)} invalidation(s) to {os.path.relpath(pw.WATCHLIST_FILE)}.")
+    return moved, odd
+
+
 def run(apply=False, refit=False, verbose=True):
     """Fit lines for every setup (only those without lines unless refit). Returns (fitted, missed)."""
     with open(pw.WATCHLIST_FILE) as fh:
@@ -343,5 +460,10 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('--apply', action='store_true', help='write lines into data/patternWatchlist.ts')
     ap.add_argument('--refit', action='store_true', help='also replace lines that already exist')
+    ap.add_argument('--relevel', action='store_true',
+                    help="re-read sloped invalidations off their lines instead of fitting")
     args = ap.parse_args()
-    run(apply=args.apply, refit=args.refit)
+    if args.relevel:
+        relevel(apply=args.apply)
+    else:
+        run(apply=args.apply, refit=args.refit)

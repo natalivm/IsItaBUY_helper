@@ -475,7 +475,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     priceDate: "2026-10-23",
     signal: 932.74,
     confirm: 913.56,
-    invalidation: 943.87,
+    invalidation: 958,
     target: 638.57,
     note: "Price slipped through the bottom of a rising channel after topping out near $1,100. The break was confirmed with a daily close below $913.56. Invalidation sits close, just 4.3% above the latest close.",
     lines: [
@@ -526,7 +526,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-03",
         signal: 935.0,
         confirm: 958.0,
-        invalidation: 656.89,
+        invalidation: 631.61,
         target: 1302.52,
         lines: [
           { from: ["2026-06-17", 1381.66], to: ["2026-10-20", 656.89] },
@@ -543,7 +543,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-04",
         signal: 957.29,
         confirm: 959.76,
-        invalidation: 644.86,
+        invalidation: 638.03,
         target: 1424.77,
         lines: [
           { from: ["2026-06-09", 1321.83], to: ["2026-10-20", 762.86] },
@@ -630,7 +630,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-15",
     signal: 1483.01,
     confirm: 1401.01,
-    invalidation: 1519.60,
+    invalidation: 1556.19,
     target: 748.24,
     lines: [
       { from: ["2026-07-23", 1696.37], to: ["2026-10-20", 2263.52] },
@@ -671,7 +671,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-12",
     signal: 87.16,
     confirm: 80.63,
-    invalidation: 91.42,
+    invalidation: 93.02,
     target: 37.28,
     lines: [
       { from: ["2026-06-30", 99.79], to: ["2026-10-20", 144.33] },
@@ -722,7 +722,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-03",
         signal: 80.72,
         confirm: 82.53,
-        invalidation: 54.98,
+        invalidation: 52.64,
         target: 114.88,
         lines: [
           { from: ["2026-05-27", 133.76], to: ["2026-10-20", 54.98] },
@@ -768,7 +768,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-12",
         signal: 236.21,
         confirm: 217.73,
-        invalidation: 251.42,
+        invalidation: 257.12,
         target: 121.26,
         lines: [
           { from: ["2026-07-09", 229.5], to: ["2026-10-20", 366.38] },
@@ -826,7 +826,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-08",
         signal: 40.35,
         confirm: 38.34,
-        invalidation: 42.06,
+        invalidation: 42.63,
         target: 23.19,
         lines: [
           { from: ["2026-07-06", 44.97], to: ["2026-10-20", 59.22] },
@@ -843,7 +843,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-04",
         signal: 39.34,
         confirm: 41.82,
-        invalidation: 25.32,
+        invalidation: 24.01,
         target: 61.34,
         lines: [
           { from: ["2026-05-11", 74.36], to: ["2026-10-20", 25.32] },
@@ -866,7 +866,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-09-21",
     signal: 359.12,
     confirm: 370.00,
-    invalidation: 312.95,
+    invalidation: 307.34,
     target: 465.43,
     lines: [
       { from: ["2026-07-01", 432.86], to: ["2026-10-20", 312.05] },
@@ -1050,7 +1050,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-05",
         signal: 148.92,
         confirm: 159.84,
-        invalidation: 136.65,
+        invalidation: 133.58,
         target: 238.14,
         lines: [
           { from: ["2026-06-16", 225.64], to: ["2026-10-20", 136.65] },
@@ -1123,7 +1123,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-20",
         signal: 741.58,
         confirm: 702.71,
-        invalidation: 751.55,
+        invalidation: 766.5,
         target: 453.78,
         lines: [
           { from: ["2026-06-16", 605.81], to: ["2026-10-20", 997.58] },
@@ -1282,7 +1282,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-04",
         signal: 257.29,
         confirm: 270.99,
-        invalidation: 145.47,
+        invalidation: 134.99,
         target: 384.51,
         lines: [
           { from: ["2026-06-29", 421.52], to: ["2026-10-20", 145.47] },
@@ -1355,7 +1355,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-01",
         signal: 190.25,
         confirm: 195.56,
-        invalidation: 157.25,
+        invalidation: 150.18,
         target: 259.64,
         lines: [
           { from: ["2026-08-06", 279.81], to: ["2026-10-20", 157.25] },
@@ -1370,7 +1370,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 217.71,
-        invalidation: 129.98,
+        invalidation: 127.77,
         target: 338.29,
         lines: [
           { from: ["2026-06-04", 320.58], to: ["2026-10-20", 217.71] },
@@ -1465,7 +1465,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-14",
         signal: 208.58,
         confirm: 197.6,
-        invalidation: 213.46,
+        invalidation: 216.39,
         target: 128.32,
         lines: [
           { from: ["2026-03-05", 139.48], to: ["2026-10-20", 321.5] },
@@ -1519,7 +1519,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-15",
     signal: 87.92,
     confirm: 90.78,
-    invalidation: 86.71,
+    invalidation: 85.1,
     target: 96.97,
     lines: [
       { from: ["2026-09-09", 97.98], to: ["2026-10-20", 86.31] },
@@ -1677,7 +1677,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-05",
         signal: 348.9,
         confirm: 357.35,
-        invalidation: 322.43,
+        invalidation: 315.81,
         target: 509.19,
         lines: [
           { from: ["2026-05-13", 565.09], to: ["2026-10-20", 322.43] },
@@ -1889,7 +1889,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 234.51,
         confirm: 247.89,
-        invalidation: 206.25,
+        invalidation: 202.56,
         target: 368.92,
         lines: [
           { from: ["2026-05-28", 329.11], to: ["2026-10-20", 206.25] },
@@ -1906,7 +1906,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 238.08,
         confirm: 247.89,
-        invalidation: 145.44,
+        invalidation: 143.96,
         target: 372.3,
         lines: [
           { from: ["2026-05-28", 328.92], to: ["2026-10-20", 210.95] },
@@ -1940,7 +1940,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 247.77,
         confirm: 245.1,
-        invalidation: 254.06,
+        invalidation: 258.78,
         target: 195.15,
         lines: [
           { from: ["2026-07-29", 215.52], to: ["2026-10-20", 319.13] },
@@ -2067,7 +2067,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 369.43,
         confirm: 371.71,
-        invalidation: 297.94,
+        invalidation: 288.19,
         target: 579.56,
         lines: [
           { from: ["2026-07-07", 538.4], to: ["2026-10-20", 297.94] },
@@ -2184,7 +2184,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 102.76,
         confirm: 111.37,
-        invalidation: 87.71,
+        invalidation: 85.75,
         target: 149.78,
         lines: [
           { from: ["2026-06-02", 151.19], to: ["2026-10-20", 87.71] },
@@ -2238,7 +2238,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-12",
     signal: 272.40,
     confirm: 265.60,
-    invalidation: 285.24,
+    invalidation: 291.04,
     target: 182.14,
     lines: [
       { from: ["2026-07-30", 268.48], to: ["2026-10-20", 375.28] },
@@ -2306,7 +2306,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-18",
         signal: 255.74,
         confirm: 267.0,
-        invalidation: 182.67,
+        invalidation: 173.14,
         target: 381.6,
         lines: [
           { from: ["2026-06-18", 452.7], to: ["2026-10-20", 182.67] },
@@ -2346,7 +2346,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-09",
         signal: 87.11,
         confirm: 85.07,
-        invalidation: 103.81,
+        invalidation: 105.43,
         target: 76.89,
         lines: [
           { from: ["2026-07-23", 80.62], to: ["2026-10-20", 114.02] },
@@ -2591,7 +2591,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-02",
         signal: 352.7,
         confirm: 381.0,
-        invalidation: 308.08,
+        invalidation: 297.78,
         target: 536.56,
         lines: [
           { from: ["2026-05-07", 699.35], to: ["2026-10-20", 308.08] },
@@ -2625,7 +2625,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 360.13,
         confirm: 356.78,
-        invalidation: 367.06,
+        invalidation: 372.26,
         target: 244.34,
         lines: [
           { from: ["2026-08-27", 418.72], to: ["2026-10-20", 463.13] },
@@ -2671,7 +2671,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 440.35,
-        invalidation: 260.7,
+        invalidation: 256.23,
         target: 693.35,
         lines: [
           { from: ["2026-04-15", 707.34], to: ["2026-10-20", 440.35] },
@@ -2786,7 +2786,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 963.06,
         confirm: 893.88,
-        invalidation: 1177.22,
+        invalidation: 1191.89,
         target: 643.01,
         lines: [
           { from: ["2026-07-14", 839.88], to: ["2026-10-20", 1177.22] },
@@ -2803,7 +2803,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 946.72,
         confirm: 893.88,
-        invalidation: 968.55,
+        invalidation: 984.92,
         target: 679.9,
         lines: [
           { from: ["2026-07-23", 897.0], to: ["2026-10-20", 1174.31] },
@@ -2820,7 +2820,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 898.36,
         confirm: 951.6,
-        invalidation: 792.81,
+        invalidation: 778.42,
         target: 1354.71,
         lines: [
           { from: ["2026-05-19", 1301.35], to: ["2026-10-20", 792.81] },
@@ -2928,7 +2928,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-27",
         signal: 142.99,
         confirm: 151.63,
-        invalidation: 75.05,
+        invalidation: 69.69,
         target: 210.68,
         lines: [
           { from: ["2026-05-27", 255.61], to: ["2026-10-20", 75.05] },
@@ -3001,7 +3001,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-18",
         signal: 195.08,
         confirm: 190.66,
-        invalidation: 220.11,
+        invalidation: 223.24,
         target: 112.52,
         lines: [
           { from: ["2026-04-16", 168.11], to: ["2026-10-20", 302.67] },
@@ -3070,7 +3070,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-07-17",
     signal: 366.53,
     confirm: 352.30,
-    invalidation: 462.84,
+    invalidation: 468.5,
     target: 263.16,
     lines: [
       { from: ["2026-05-08", 402.0], to: ["2026-10-20", 566.6] },
@@ -3084,7 +3084,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       direction: "down",
       stage: "forming",
       signal: 349.77,
-      invalidation: 457.90,
+      invalidation: 448.04,
       target: 193.93,
       lines: [
         { from: ["2024-07-01", 191.75], to: ["2026-10-01", 457.9] },
@@ -3103,7 +3103,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 337.99,
         confirm: 349.91,
-        invalidation: 309.0,
+        invalidation: 305.65,
         target: 528.68,
         lines: [
           { from: ["2026-03-03", 487.4], to: ["2026-10-20", 309.0] },
@@ -3230,7 +3230,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-25",
         signal: 494.89,
         confirm: 509.44,
-        invalidation: 463.65,
+        invalidation: 458.72,
         target: 742.54,
         lines: [
           { from: ["2026-05-06", 652.76], to: ["2026-10-20", 463.65] },
@@ -3316,7 +3316,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-07",
     signal: 251.66,
     confirm: 256.68,
-    invalidation: 245.25,
+    invalidation: 242.4,
     target: 269.90,
     lines: [
       { from: ["2026-08-10", 280.14], to: ["2026-10-20", 244.54] },
@@ -3350,7 +3350,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-10",
         signal: 259.14,
         confirm: 251.93,
-        invalidation: 305.87,
+        invalidation: 309.99,
         target: 136.37,
         lines: [
           { from: ["2026-03-11", 217.0], to: ["2026-10-20", 452.55] },
@@ -3367,7 +3367,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 253.09,
         confirm: 255.43,
-        invalidation: 222.43,
+        invalidation: 219.7,
         target: 267.74,
         lines: [
           { from: ["2026-08-03", 287.2], to: ["2026-10-20", 230.35] },
@@ -3520,7 +3520,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-09",
         signal: 269.57,
         confirm: 263.91,
-        invalidation: 352.18,
+        invalidation: 360.44,
         target: 159.91,
         lines: [
           { from: ["2026-05-19", 169.94], to: ["2026-10-20", 461.84] },
@@ -3551,7 +3551,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "down",
         stage: "forming",
         signal: 301.55,
-        invalidation: 351.57,
+        invalidation: 356.06,
         target: 195.23,
         lines: [
           { from: ["2026-05-01", 175.11], to: ["2026-10-20", 351.57] },
@@ -3853,7 +3853,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-28",
         signal: 199.9,
         confirm: 185.58,
-        invalidation: 257.0,
+        invalidation: 265.56,
         target: 154.38,
         lines: [
           { from: ["2026-07-07", 91.27], to: ["2026-10-20", 291.56] },
@@ -3883,7 +3883,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "down",
         stage: "forming",
         signal: 207.73,
-        invalidation: 240.4,
+        invalidation: 244.09,
         target: 78.1,
         lines: [
           { from: ["2026-05-04", 96.32], to: ["2026-10-20", 240.4] },
@@ -3921,7 +3921,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-16",
     signal: 735.35,
     confirm: 770.84,
-    invalidation: 649.39,
+    invalidation: 641.69,
     target: 1047.44,
     lines: [
       { from: ["2026-08-17", 1375.55], to: ["2026-10-20", 687.56] },
@@ -3989,7 +3989,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-19",
         signal: 1038.23,
         confirm: 1098.31,
-        invalidation: 445.8,
+        invalidation: 412.66,
         target: 1517.13,
         lines: [
           { from: ["2026-07-15", 1675.84], to: ["2026-10-20", -130.73] },
@@ -4023,7 +4023,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-04",
         signal: 1128.34,
         confirm: 1086.0,
-        invalidation: 1332.61,
+        invalidation: 1350.63,
         target: 529.54,
         lines: [
           { from: ["2026-03-26", 1072.29], to: ["2026-10-20", 1891.39] },
@@ -4077,7 +4077,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-22",
       signal: 518.41,
       confirm: 508.50,
-      invalidation: 555.42,
+      invalidation: 562.48,
       target: 443.19,
       lines: [
         { from: ["2026-08-04", 537.22], to: ["2026-10-20", 632.41] },
@@ -4205,7 +4205,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 80.89,
         confirm: 78.23,
-        invalidation: 94.24,
+        invalidation: 95.53,
         target: 38.16,
         lines: [
           { from: ["2026-05-12", 89.17], to: ["2026-10-20", 140.45] },
@@ -4613,7 +4613,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     price: 7,
     priceDate: "2026-10-23",
     signal: 7.40,
-    invalidation: 5.72,
+    invalidation: 5.37,
     target: 9.46,
     lines: [
       { from: ["2026-09-04", 10.66], to: ["2026-10-20", 7.29] },
@@ -4666,7 +4666,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-10",
         signal: 10.15,
         confirm: 9.51,
-        invalidation: 13.16,
+        invalidation: 13.47,
         target: 4.66,
         lines: [
           { from: ["2026-07-24", 12.31], to: ["2026-10-20", 18.65] },
@@ -4715,7 +4715,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     priceDate: "2026-10-23",
     signal: 11.59,
     confirm: 11.26,
-    invalidation: 10.89,
+    invalidation: 10.2,
     target: 8.41,
     lines: [
       { from: ["2026-08-26", 20.52], to: ["2026-10-20", 13.9] },
@@ -4749,7 +4749,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-28",
         signal: 15.28,
         confirm: 15.02,
-        invalidation: 16.26,
+        invalidation: 16.43,
         target: 9.12,
         lines: [
           { from: ["2026-07-14", 18.46], to: ["2026-10-20", 22.42] },
@@ -4873,7 +4873,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-16",
         signal: 280.39,
         confirm: 269.66,
-        invalidation: 289.16,
+        invalidation: 295.74,
         target: 120.25,
         lines: [
           { from: ["2026-03-23", 129.16], to: ["2026-10-20", 449.29] },
@@ -4890,7 +4890,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-17",
         signal: 233.87,
         confirm: 244.89,
-        invalidation: 208.37,
+        invalidation: 205.31,
         target: 365.24,
         lines: [
           { from: ["2026-05-14", 319.55], to: ["2026-10-20", 208.37] },
@@ -4991,7 +4991,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-08",
         signal: 22.78,
         confirm: 21.55,
-        invalidation: 24.5,
+        invalidation: 24.9,
         target: 8.56,
         lines: [
           { from: ["2026-06-15", 27.09], to: ["2026-10-20", 43.52] },
@@ -5025,7 +5025,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-20",
         signal: 28.31,
         confirm: 27.33,
-        invalidation: 48.71,
+        invalidation: 49.61,
         target: 12.7,
         lines: [
           { from: ["2026-07-02", 25.94], to: ["2026-10-20", 48.71] },
@@ -5073,7 +5073,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 21.78,
-        invalidation: 15.39,
+        invalidation: 14.76,
         target: 31.7,
         lines: [
           { from: ["2026-08-14", 34.93], to: ["2026-10-20", 21.78] },
@@ -5151,7 +5151,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-30",
         signal: 171.71,
         confirm: 176.91,
-        invalidation: 161.69,
+        invalidation: 159.81,
         target: 207.71,
         lines: [
           { from: ["2026-08-06", 194.27], to: ["2026-10-20", 161.69] },
@@ -5379,7 +5379,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-07",
         signal: 111.27,
         confirm: 107.0,
-        invalidation: 141.18,
+        invalidation: 142.63,
         target: 75.15,
         lines: [
           { from: ["2026-03-05", 64.8], to: ["2026-10-20", 141.18] },
@@ -5396,7 +5396,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-07",
         signal: 113.14,
         confirm: 107.18,
-        invalidation: 119.62,
+        invalidation: 121.39,
         target: 78.27,
         lines: [
           { from: ["2026-03-10", 63.25], to: ["2026-10-20", 142.49] },
@@ -5709,7 +5709,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-10",
         signal: 8.77,
         confirm: 8.32,
-        invalidation: 15.49,
+        invalidation: 15.93,
         target: 4.49,
         lines: [
           { from: ["2026-07-06", 4.54], to: ["2026-10-20", 15.49] },
@@ -5726,7 +5726,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-29",
         signal: 11.65,
         confirm: 15.3,
-        invalidation: 12.92,
+        invalidation: 13.17,
         target: 15.98,
         lines: [
           { from: ["2026-05-14", 3.74], to: ["2026-10-20", 12.92] },
@@ -5782,7 +5782,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 794.96,
         confirm: 809.49,
-        invalidation: 697.22,
+        invalidation: 683.89,
         target: 1111.75,
         lines: [
           { from: ["2026-05-07", 1203.67], to: ["2026-10-20", 697.22] },
@@ -5871,7 +5871,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-29",
         signal: 947.31,
         confirm: 959.75,
-        invalidation: 854.04,
+        invalidation: 838.5,
         target: 1375.63,
         lines: [
           { from: ["2026-04-29", 1475.82], to: ["2026-10-20", 854.04] },
@@ -5894,7 +5894,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-16",
     signal: 247.71,
     confirm: 235.7,
-    invalidation: 313.03,
+    invalidation: 316.7,
     target: 162.93,
     lines: [
       { from: ["2026-07-29", 242.11], to: ["2026-10-20", 313.03] },
@@ -5928,7 +5928,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-03",
         signal: 217.18,
         confirm: 217.3,
-        invalidation: 128.0,
+        invalidation: 119.89,
         target: 344.59,
         lines: [
           { from: ["2026-05-29", 395.54], to: ["2026-10-20", 128.0] },
@@ -5984,7 +5984,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 96.47,
         confirm: 89.01,
-        invalidation: 116.52,
+        invalidation: 117.76,
         target: 70.34,
         lines: [
           { from: ["2026-07-07", 85.82], to: ["2026-10-20", 116.52] },
@@ -6001,7 +6001,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 94.72,
         confirm: 89.01,
-        invalidation: 117.59,
+        invalidation: 119.8,
         target: 42.7,
         lines: [
           { from: ["2026-04-08", 70.0], to: ["2026-10-20", 169.61] },
@@ -6091,7 +6091,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 177.29,
         confirm: 177.75,
-        invalidation: 164.24,
+        invalidation: 162.46,
         target: 278.01,
         lines: [
           { from: ["2026-04-29", 235.4], to: ["2026-10-20", 164.24] },
@@ -6197,7 +6197,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-09",
     signal: 81.27,
     confirm: 82.48,
-    invalidation: 78.20,
+    invalidation: 76.44,
     target: 88.30,
     lines: [
       { from: ["2026-09-17", 87.86], to: ["2026-10-20", 77.76] },
@@ -6375,7 +6375,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 291.54,
         confirm: 261.9,
-        invalidation: 296.78,
+        invalidation: 300.72,
         target: 153.12,
         lines: [
           { from: ["2026-07-09", 340.73], to: ["2026-10-20", 398.3] },
@@ -6448,7 +6448,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-14",
     signal: 155.53,
     confirm: 145.76,
-    invalidation: 159.29,
+    invalidation: 161.17,
     target: 110.24,
     lines: [
       { from: ["2026-07-21", 164.5], to: ["2026-10-20", 193.69] },
@@ -6465,7 +6465,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 149.53,
         confirm: 154.59,
-        invalidation: 107.98,
+        invalidation: 103.96,
         target: 222.08,
         lines: [
           { from: ["2026-07-09", 204.48], to: ["2026-10-20", 107.98] },
@@ -6570,7 +6570,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-25",
         signal: 247.71,
         confirm: 237.69,
-        invalidation: 265.43,
+        invalidation: 268.09,
         target: 146.09,
         lines: [
           { from: ["2026-04-08", 247.44], to: ["2026-10-20", 349.6] },
@@ -6722,7 +6722,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 304.43,
         confirm: 311.27,
-        invalidation: 297.4,
+        invalidation: 292.12,
         target: 333.48,
         lines: [
           { from: ["2026-08-06", 388.84], to: ["2026-10-20", 297.4] },
@@ -6739,7 +6739,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-02",
         signal: 317.62,
         confirm: 312.25,
-        invalidation: 334.24,
+        invalidation: 337.8,
         target: 178.62,
         lines: [
           { from: ["2026-03-23", 299.83], to: ["2026-10-20", 473.24] },
@@ -6780,7 +6780,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-08",
         signal: 72.77,
         confirm: 70.63,
-        invalidation: 79.08,
+        invalidation: 81.18,
         target: 34.77,
         lines: [
           { from: ["2026-07-22", 72.94], to: ["2026-10-20", 117.07] },
@@ -6797,7 +6797,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-17",
         signal: 63.57,
         confirm: 64.56,
-        invalidation: 43.72,
+        invalidation: 41.24,
         target: 92.93,
         lines: [
           { from: ["2026-06-09", 119.79], to: ["2026-10-20", 43.72] },
@@ -6867,7 +6867,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     priceDate: "2026-10-23",
     signal: 120.66,
     confirm: 118.70,
-    invalidation: 142.48,
+    invalidation: 145.14,
     target: 95.77,
     lines: [
       { from: ["2026-08-19", 122.93], to: ["2026-10-20", 166.79] },
@@ -6952,7 +6952,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-31",
         signal: 111.65,
         confirm: 113.86,
-        invalidation: 96.89,
+        invalidation: 95.66,
         target: 142.93,
         lines: [
           { from: ["2026-05-05", 144.45], to: ["2026-10-20", 96.89] },
@@ -7091,7 +7091,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-22",
         signal: 445.03,
         confirm: 468.51,
-        invalidation: 368.87,
+        invalidation: 357.99,
         target: 554.63,
         lines: [
           { from: ["2026-07-07", 637.23], to: ["2026-10-20", 368.87] },
@@ -7219,7 +7219,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-20",
       signal: 264.4,
       confirm: 270.4,
-      invalidation: 260.55,
+      invalidation: 248.99,
       target: 399.62,
       lines: [
         { from: ["2026-06-11", 607.22], to: ["2026-10-20", 260.55] },
@@ -7261,7 +7261,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 274.65,
-        invalidation: 257.6,
+        invalidation: 254.61,
         target: 401.98,
         lines: [
           { from: ["2026-08-05", 437.79], to: ["2026-10-20", 274.65] },
@@ -7315,7 +7315,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-18",
       signal: 4.31,
       confirm: 4.11,
-      invalidation: 3.98,
+      invalidation: 3.94,
       target: 2.59,
       lines: [
         { from: ["2026-07-09", 6.68], to: ["2026-10-20", 5.7] },
@@ -7346,7 +7346,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 3.49,
-        invalidation: 3.15,
+        invalidation: 3.05,
         target: 5.48,
         lines: [
           { from: ["2026-06-30", 7.74], to: ["2026-10-20", 3.49] },
@@ -7401,7 +7401,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-28",
       signal: 1729.49,
       confirm: 1759.25,
-      invalidation: 1614.94,
+      invalidation: 1594.73,
       target: 2617.34,
       lines: [
         { from: ["2026-05-12", 2362.86], to: ["2026-10-20", 1614.94] },
@@ -7434,7 +7434,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-28",
         signal: 1746.98,
         confirm: 1732.35,
-        invalidation: 2115.76,
+        invalidation: 2144.87,
         target: 1015.98,
         lines: [
           { from: ["2026-03-17", 1391.06], to: ["2026-10-20", 2681.92] },
@@ -7504,7 +7504,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-16",
       signal: 46.76,
       confirm: 42.0,
-      invalidation: 45.67,
+      invalidation: 44.86,
       target: 32.44,
       lines: [
         { from: ["2026-08-06", 74.08], to: ["2026-10-20", 59.99] },
@@ -7537,7 +7537,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 61.41,
         confirm: 65.76,
-        invalidation: 34.49,
+        invalidation: 31.88,
         target: 102.54,
         lines: [
           { from: ["2026-06-02", 118.74], to: ["2026-10-20", 34.49] },
@@ -7642,7 +7642,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-09",
         signal: 414.31,
         confirm: 420.97,
-        invalidation: 374.59,
+        invalidation: 359.7,
         target: 453.74,
         lines: [
           { from: ["2026-09-02", 538.43], to: ["2026-10-20", 374.59] },
@@ -7778,7 +7778,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-10",
         signal: 2956.61,
         confirm: 2881.51,
-        invalidation: 3273.34,
+        invalidation: 3306.1,
         target: 1223.01,
         lines: [
           { from: ["2026-03-23", 3412.4], to: ["2026-10-20", 5006.94] },
@@ -7928,7 +7928,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-15",
         signal: 156.51,
         confirm: 160.68,
-        invalidation: 140.56,
+        invalidation: 134.58,
         target: 184.77,
         lines: [
           { from: ["2026-08-12", 236.26], to: ["2026-10-20", 140.56] },
@@ -8013,7 +8013,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-08",
       signal: 573.97,
       confirm: 599.09,
-      invalidation: 548.58,
+      invalidation: 540.12,
       target: 967.4,
       lines: [
         { from: ["2026-03-11", 983.04], to: ["2026-10-20", 548.58] },
@@ -8062,7 +8062,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-07",
         signal: 614.83,
         confirm: 597.41,
-        invalidation: 645.25,
+        invalidation: 654.38,
         target: 260.65,
         lines: [
           { from: ["2026-04-02", 579.59], to: ["2026-10-20", 1083.75] },
@@ -8078,7 +8078,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-22",
         signal: 638.65,
         confirm: 624.49,
-        invalidation: 810.66,
+        invalidation: 818.78,
         target: 365.16,
         lines: [
           { from: ["2026-06-01", 545.29], to: ["2026-10-20", 810.66] },
@@ -8227,7 +8227,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 57.82,
-        invalidation: 43.42,
+        invalidation: 42.64,
         target: 86.23,
         lines: [
           { from: ["2026-05-13", 100.46], to: ["2026-10-20", 57.82] },
@@ -8387,7 +8387,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-08-27",
       signal: 273.59,
       confirm: 279.92,
-      invalidation: 216.73,
+      invalidation: 212.36,
       target: 426.75,
       lines: [
         { from: ["2026-03-20", 431.03], to: ["2026-10-20", 216.73] },
@@ -8571,7 +8571,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 311.0,
         confirm: 318.41,
-        invalidation: 234.42,
+        invalidation: 227.01,
         target: 402.47,
         lines: [
           { from: ["2026-06-02", 474.03], to: ["2026-10-20", 234.42] },
@@ -8879,7 +8879,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-17",
       signal: 223.99,
       confirm: 233.68,
-      invalidation: 168.07,
+      invalidation: 164.55,
       target: 309.84,
       lines: [
         { from: ["2026-07-13", 336.0], to: ["2026-10-20", 157.8] },
@@ -8896,7 +8896,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-25",
         signal: 251.68,
         confirm: 258.39,
-        invalidation: 230.58,
+        invalidation: 227.06,
         target: 314.2,
         lines: [
           { from: ["2026-07-13", 312.65], to: ["2026-10-20", 230.58] },
@@ -9125,7 +9125,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-16",
       signal: 500.97,
       confirm: 452.42,
-      invalidation: 508.62,
+      invalidation: 516.27,
       target: 290.13,
       lines: [
         { from: ["2026-04-15", 387.84], to: ["2026-10-20", 719.46] },
@@ -9292,7 +9292,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-28",
         signal: 146.82,
         confirm: 142.17,
-        invalidation: 177.88,
+        invalidation: 179.76,
         target: 106.45,
         lines: [
           { from: ["2026-07-10", 133.5], to: ["2026-10-20", 177.88] },
@@ -9457,7 +9457,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-25",
         signal: 747.64,
         confirm: 762.19,
-        invalidation: 635.53,
+        invalidation: 619.51,
         target: 1018.24,
         lines: [
           { from: ["2026-06-17", 1094.65], to: ["2026-10-20", 635.53] },
@@ -9500,7 +9500,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-20",
       signal: 173.45,
       confirm: 178.31,
-      invalidation: 166.89,
+      invalidation: 160.33,
       target: 263.35,
       lines: [
         { from: ["2026-07-15", 315.54], to: ["2026-10-20", 166.89] },
@@ -9533,7 +9533,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-20",
         signal: 173.45,
         confirm: 178.31,
-        invalidation: 137.09,
+        invalidation: 133.4,
         target: 275.87,
         lines: [
           { from: ["2026-07-02", 333.03], to: ["2026-10-20", 166.89] },
@@ -9604,7 +9604,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-15",
       signal: 426.04,
       confirm: 404.4,
-      invalidation: 434.1,
+      invalidation: 440.14,
       target: 189.67,
       lines: [
         { from: ["2026-03-18", 370.38], to: ["2026-10-20", 670.47] },
@@ -9637,7 +9637,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-21",
         signal: 415.03,
         confirm: 425.34,
-        invalidation: 361.75,
+        invalidation: 354.48,
         target: 668.18,
         lines: [
           { from: ["2026-04-28", 654.8], to: ["2026-10-20", 361.75] },
@@ -9742,7 +9742,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-22",
         signal: 107.91,
         confirm: 112.94,
-        invalidation: 83.69,
+        invalidation: 80.53,
         target: 149.28,
         lines: [
           { from: ["2026-06-01", 186.88], to: ["2026-10-20", 83.69] },
@@ -9756,7 +9756,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 115.64,
-        invalidation: 73.16,
+        invalidation: 71.8,
         target: 175.74,
         lines: [
           { from: ["2026-05-19", 181.4], to: ["2026-10-20", 115.64] },
@@ -9812,7 +9812,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-08",
       signal: 13.37,
       confirm: 12.61,
-      invalidation: 16.52,
+      invalidation: 16.82,
       target: 8.93,
       lines: [
         { from: ["2026-04-28", 8.69], to: ["2026-10-20", 20.96] },
@@ -10018,7 +10018,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-23",
       signal: 57.66,
       confirm: 62.14,
-      invalidation: 52.83,
+      invalidation: 52.2,
       target: 84.65,
       lines: [
         { from: ["2026-06-11", 71.73], to: ["2026-10-20", 52.83] },
@@ -10051,7 +10051,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-16",
         signal: 59.68,
         confirm: 56.64,
-        invalidation: 60.56,
+        invalidation: 61.44,
         target: 44.63,
         lines: [
           { from: ["2026-06-17", 50.45], to: ["2026-10-20", 75.61] },
@@ -10303,7 +10303,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 333.18,
         confirm: 330.12,
-        invalidation: 380.17,
+        invalidation: 384.72,
         target: 125.72,
         lines: [
           { from: ["2026-04-28", 404.21], to: ["2026-10-20", 535.41] },
@@ -10411,7 +10411,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-18",
         signal: 201.04,
         confirm: 203.85,
-        invalidation: 180.45,
+        invalidation: 177.76,
         target: 285.24,
         lines: [
           { from: ["2026-04-16", 295.93], to: ["2026-10-20", 180.45] },
@@ -10823,7 +10823,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-10",
         signal: 38.95,
         confirm: 35.18,
-        invalidation: 35.5,
+        invalidation: 35.14,
         target: 16.58,
         lines: [
           { from: ["2026-05-14", 70.86], to: ["2026-10-20", 57.87] },
@@ -10847,7 +10847,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-01",
     signal: 36.13,
     confirm: 33.07,
-    invalidation: 44.92,
+    invalidation: 46.31,
     target: 24.61,
     lines: [
       { from: ["2026-06-29", 19.88], to: ["2026-10-20", 56.43] },
@@ -10863,7 +10863,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-17",
       signal: 40.35,
       confirm: 38.36,
-      invalidation: 56.43,
+      invalidation: 57.82,
       target: 24.24,
       lines: [
         { from: ["2026-06-29", 19.88], to: ["2026-10-20", 56.43] },
@@ -11083,7 +11083,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-08",
       signal: 304.27,
       confirm: 310.3,
-      invalidation: 168.52,
+      invalidation: 164.28,
       target: 492.85,
       lines: [
         { from: ["2026-06-01", 495.62], to: ["2026-10-20", 215.74] },
@@ -11100,7 +11100,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-04",
         signal: 291.22,
         confirm: 292.78,
-        invalidation: 166.02,
+        invalidation: 154.28,
         target: 433.67,
         lines: [
           { from: ["2026-07-07", 455.55], to: ["2026-10-20", 166.02] },
@@ -11220,7 +11220,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-05",
         signal: 1693.48,
         confirm: 1709.36,
-        invalidation: 1539.72,
+        invalidation: 1510.02,
         target: 1946.54,
         lines: [
           { from: ["2026-08-27", 2159.13], to: ["2026-10-20", 1469.97] },
@@ -11422,7 +11422,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-24",
       signal: 44.17,
       confirm: 43.31,
-      invalidation: 47.17,
+      invalidation: 47.64,
       target: 30.44,
       lines: [
         { from: ["2026-03-23", 37.8], to: ["2026-10-20", 60.9] },
@@ -11649,7 +11649,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-14",
         signal: 15.0,
         confirm: 14.44,
-        invalidation: 16.55,
+        invalidation: 16.72,
         target: 8.41,
         lines: [
           { from: ["2026-03-17", 14.54], to: ["2026-10-20", 23.14] },
@@ -11747,7 +11747,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-09",
       signal: 234.57,
       confirm: 229.85,
-      invalidation: 241.51,
+      invalidation: 244.12,
       target: 153.31,
       lines: [
         { from: ["2026-03-04", 184.7], to: ["2026-10-20", 322.77] },
@@ -11780,7 +11780,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-02",
         signal: 224.67,
         confirm: 233.21,
-        invalidation: 203.45,
+        invalidation: 199.47,
         target: 350.82,
         lines: [
           { from: ["2026-05-19", 344.05], to: ["2026-10-20", 203.45] },
@@ -12028,7 +12028,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-13",
         signal: 6.0,
         confirm: 6.75,
-        invalidation: 5.56,
+        invalidation: 5.29,
         target: 11.19,
         lines: [
           { from: ["2026-06-02", 14.16], to: ["2026-10-20", 5.56] },
@@ -12056,7 +12056,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 6.66,
-        invalidation: 5.63,
+        invalidation: 5.46,
         target: 8.41,
         lines: [
           { from: ["2026-08-06", 10.27], to: ["2026-10-20", 6.66] },
@@ -12110,7 +12110,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-11",
       signal: 51.65,
       confirm: 50.47,
-      invalidation: 60.99,
+      invalidation: 61.99,
       target: 22.67,
       lines: [
         { from: ["2026-05-26", 55.94], to: ["2026-10-20", 94.02] },
@@ -12213,7 +12213,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-01",
         signal: 23.34,
         confirm: 21.38,
-        invalidation: 26.68,
+        invalidation: 26.97,
         target: 16.84,
         lines: [
           { from: ["2026-03-23", 19.23], to: ["2026-10-20", 33.17] },
@@ -12377,7 +12377,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-01",
         signal: 124.21,
         confirm: 126.5,
-        invalidation: 102.12,
+        invalidation: 101.06,
         target: 182.39,
         lines: [
           { from: ["2026-05-07", 200.69], to: ["2026-10-20", 111.72] },
@@ -12409,7 +12409,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-01",
         signal: 121.0,
         confirm: 126.21,
-        invalidation: 103.42,
+        invalidation: 100.78,
         target: 151.86,
         lines: [
           { from: ["2026-06-22", 177.28], to: ["2026-10-20", 103.42] },
@@ -12464,7 +12464,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-15",
       signal: 90.65,
       confirm: 100.5,
-      invalidation: 70.04,
+      invalidation: 67.66,
       target: 138.27,
       lines: [
         { from: ["2026-07-23", 119.18], to: ["2026-10-20", 70.04] },
@@ -12513,7 +12513,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-13",
         signal: 122.82,
         confirm: 119.93,
-        invalidation: 133.4,
+        invalidation: 138.69,
         target: 68.08,
         lines: [
           { from: ["2026-08-10", 99.95], to: ["2026-10-20", 181.82] },
@@ -12541,7 +12541,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "down",
         stage: "forming",
         signal: 109.04,
-        invalidation: 132.61,
+        invalidation: 134.02,
         target: 62.31,
         lines: [
           { from: ["2026-06-01", 86.46], to: ["2026-10-20", 132.61] },
@@ -12614,7 +12614,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-08",
       signal: 152.1,
       confirm: 154.52,
-      invalidation: 144.28,
+      invalidation: 141.67,
       target: 243.54,
       lines: [
         { from: ["2026-05-13", 239.94], to: ["2026-10-20", 144.28] },
@@ -12663,7 +12663,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-28",
         signal: 153.66,
         confirm: 149.82,
-        invalidation: 166.27,
+        invalidation: 168.5,
         target: 62.49,
         lines: [
           { from: ["2026-03-10", 142.46], to: ["2026-10-20", 257.45] },
@@ -12754,7 +12754,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-01",
         signal: 109.27,
         confirm: 105.0,
-        invalidation: 125.12,
+        invalidation: 126.48,
         target: 67.17,
         lines: [
           { from: ["2026-05-29", 122.39], to: ["2026-10-20", 163.75] },
@@ -12896,7 +12896,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-09",
         signal: 21.53,
         confirm: 21.67,
-        invalidation: 20.72,
+        invalidation: 20.42,
         target: 34.84,
         lines: [
           { from: ["2026-03-16", 35.92], to: ["2026-10-20", 20.72] },
@@ -13189,7 +13189,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-14",
       signal: 254.97,
       confirm: 246.0,
-      invalidation: 261.63,
+      invalidation: 264.96,
       target: 112.27,
       lines: [
         { from: ["2026-03-30", 247.69], to: ["2026-10-20", 456.53] },
@@ -13222,7 +13222,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 237.89,
         confirm: 258.0,
-        invalidation: 169.4,
+        invalidation: 162.77,
         target: 358.03,
         lines: [
           { from: ["2026-06-01", 385.93], to: ["2026-10-20", 169.4] },
@@ -13307,7 +13307,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-04",
         signal: 36.67,
         confirm: 37.88,
-        invalidation: 29.07,
+        invalidation: 28.38,
         target: 57.93,
         lines: [
           { from: ["2026-06-02", 51.4], to: ["2026-10-20", 29.07] },
@@ -13323,7 +13323,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-13",
         signal: 40.49,
         confirm: 39.24,
-        invalidation: 42.21,
+        invalidation: 43.07,
         target: 25.53,
         lines: [
           { from: ["2026-06-15", 32.07], to: ["2026-10-20", 54.05] },
@@ -13408,7 +13408,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-13",
       signal: 9.09,
       confirm: 8.79,
-      invalidation: 9.46,
+      invalidation: 9.65,
       target: 6.78,
       lines: [
         { from: ["2026-03-25", 2.81], to: ["2026-10-20", 11.77] },
@@ -13425,7 +13425,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-09",
         signal: 8.57,
         confirm: 8.22,
-        invalidation: 11.49,
+        invalidation: 11.65,
         target: 4.73,
         lines: [
           { from: ["2026-03-06", 2.97], to: ["2026-10-20", 11.49] },
@@ -13457,7 +13457,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-09",
         signal: 8.29,
         confirm: 8.49,
-        invalidation: 7.96,
+        invalidation: 7.84,
         target: 9.42,
         lines: [
           { from: ["2026-08-27", 9.48], to: ["2026-10-20", 7.96] },
@@ -13528,7 +13528,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-16",
       signal: 341.04,
       confirm: 333.71,
-      invalidation: 411.84,
+      invalidation: 416.21,
       target: 222.08,
       lines: [
         { from: ["2026-03-06", 183.25], to: ["2026-10-20", 411.84] },
@@ -13577,7 +13577,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-16",
         signal: 341.04,
         confirm: 333.71,
-        invalidation: 348.28,
+        invalidation: 353.71,
         target: 248.17,
         lines: [
           { from: ["2026-03-23", 177.05], to: ["2026-10-20", 422.72] },
@@ -13593,7 +13593,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-17",
         signal: 314.54,
         confirm: 338.0,
-        invalidation: 288.1,
+        invalidation: 284.79,
         target: 474.4,
         lines: [
           { from: ["2026-06-09", 389.46], to: ["2026-10-20", 288.1] },
@@ -14063,7 +14063,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-10-02",
       signal: 2.55,
       confirm: 2.52,
-      invalidation: 3.37,
+      invalidation: 3.4,
       target: 1.15,
       lines: [
         { from: ["2026-06-17", 2.4], to: ["2026-10-20", 3.37] },
@@ -14080,7 +14080,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-14",
         signal: 2.26,
         confirm: 2.22,
-        invalidation: 2.32,
+        invalidation: 2.36,
         target: 1.15,
         lines: [
           { from: ["2026-06-17", 2.4], to: ["2026-10-20", 3.37] },
@@ -14112,7 +14112,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-18",
         signal: 2.43,
         confirm: 2.53,
-        invalidation: 1.9,
+        invalidation: 1.83,
         target: 3.88,
         lines: [
           { from: ["2026-07-13", 3.49], to: ["2026-10-20", 1.9] },
@@ -14179,7 +14179,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       stageDate: "2026-09-29",
       signal: 302.47,
       confirm: 307.41,
-      invalidation: 265.62,
+      invalidation: 259.12,
       target: 481.16,
       lines: [
         { from: ["2026-04-29", 525.69], to: ["2026-10-20", 265.62] },
@@ -14228,7 +14228,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-24",
         signal: 345.33,
         confirm: 308.48,
-        invalidation: 423.5,
+        invalidation: 428.83,
         target: 149.62,
         lines: [
           { from: ["2026-03-10", 343.84], to: ["2026-10-20", 619.21] },
@@ -14360,7 +14360,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-09",
         signal: 68.82,
         confirm: 70.32,
-        invalidation: 65.64,
+        invalidation: 64.45,
         target: 104.94,
         lines: [
           { from: ["2026-05-08", 110.52], to: ["2026-10-20", 65.64] },
@@ -14450,7 +14450,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-06",
         signal: 141.68,
         confirm: 146.94,
-        invalidation: 136.65,
+        invalidation: 135.28,
         target: 198.53,
         lines: [
           { from: ["2026-03-03", 209.83], to: ["2026-10-20", 136.65] },
@@ -14514,7 +14514,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-08-21",
         signal: 146.58,
         confirm: 138.77,
-        invalidation: 172.63,
+        invalidation: 174.41,
         target: 74.92,
         lines: [
           { from: ["2026-03-27", 160.2], to: ["2026-10-20", 244.28] },
@@ -14617,7 +14617,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-09-08",
         signal: 445.88,
         confirm: 468.19,
-        invalidation: 270.34,
+        invalidation: 253.35,
         target: 623.32,
         lines: [
           { from: ["2026-06-25", 729.0], to: ["2026-10-20", 270.34] },
@@ -14646,7 +14646,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         direction: "up",
         stage: "forming",
         signal: 423.99,
-        invalidation: 328.73,
+        invalidation: 324.1,
         target: 585.72,
         lines: [
           { from: ["2026-07-09", 601.5], to: ["2026-10-20", 423.99] },
@@ -14732,7 +14732,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         stageDate: "2026-10-01",
         signal: 328.06,
         confirm: 330.41,
-        invalidation: 305.81,
+        invalidation: 301.36,
         target: 352.11,
         lines: [
           { from: ["2026-08-06", 382.95], to: ["2026-10-20", 305.81] },
