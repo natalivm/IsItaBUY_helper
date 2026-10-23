@@ -158,7 +158,7 @@
  "ALAB|main": {
   "label": "main",
   "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "ALAB"
  },
  "ALAB|weekly Ascending Channel": {
@@ -1352,7 +1352,7 @@
  "COST|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "COST"
  },
  "COST|daily Falling Wedge": {
@@ -2102,7 +2102,7 @@
  "FICO|daily Hammer": {
   "label": "daily Hammer",
   "setup": "Hammer (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "FICO"
  },
  "FICO|main": {
@@ -2162,7 +2162,7 @@
  "FLEX|daily alt": {
   "label": "daily alt",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "FLEX"
  },
  "FLEX|main": {
@@ -2773,7 +2773,7 @@
  },
  "INTU|main": {
   "label": "main",
-  "setup": "Descending Channel (weekly)",
+  "setup": "Falling Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "INTU"
  },
@@ -3032,7 +3032,7 @@
  "KMB|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "KMB"
  },
  "KMB|weekly Ascending Channel": {
@@ -3308,7 +3308,7 @@
  "LMT|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "LMT"
  },
  "LMT|daily Descending Channel #2": {
@@ -3326,7 +3326,7 @@
  "LMT|main": {
   "label": "main",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "LMT"
  },
  "LMT|weekly Ascending Channel": {
@@ -3518,7 +3518,7 @@
  "MLM|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "MLM"
  },
  "MLM|daily Descending Channel #2": {
@@ -3536,7 +3536,7 @@
  "MLM|daily alt": {
   "label": "daily alt",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "MLM"
  },
  "MLM|main": {
@@ -3590,7 +3590,7 @@
  "MNDY|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "MNDY"
  },
  "MNDY|weekly Ascending Channel": {
@@ -3908,7 +3908,7 @@
  "NOW|main": {
   "label": "main",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "target",
   "ticker": "NOW"
  },
  "NOW|weekly Ascending Channel": {
@@ -5279,10 +5279,16 @@
   "stage": "confirmed",
   "ticker": "SPOT"
  },
- "SPOT|main": {
-  "label": "main",
+ "SPOT|daily alt": {
+  "label": "daily alt",
   "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "SPOT"
+ },
+ "SPOT|main": {
+  "label": "main",
+  "setup": "Falling Wedge (daily)",
+  "stage": "signal",
   "ticker": "SPOT"
  },
  "SPOT|weekly Ascending Channel": {

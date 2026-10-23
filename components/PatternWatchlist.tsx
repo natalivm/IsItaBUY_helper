@@ -1,13 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TickerDefinition } from '../types';
-import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternStage, PatternAgree } from '../data/patternWatchlist';
+import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree } from '../data/patternWatchlist';
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import './PatternWatchlist.css';
 
 // Home page: one scannable ledger of tickers. Clicking the ticker opens the
 // stock's valuation page; clicking anywhere else on the row unfolds its
-// trading setup (price ladder + rules). Stocks we cover that have no pattern
-// data yet are listed with empty fields.
+// trading setups — every setup tracked on the stock listed on the left, the
+// selected one's chart, stage and rules on the right. Stocks we cover that
+// have no pattern data yet are listed with empty fields.
 
 const STAGES: PatternStage[] = ['forming', 'signal', 'confirmed', 'target'];
 const fmt = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -45,20 +46,26 @@ const Chev = () => (
   <svg className="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
 );
 
+const Cross = () => (
+  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 6 8 8m0-8-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
+);
+
 type Group = 'confirmed' | 'pending' | 'update' | 'target' | 'failed' | 'none';
-interface Status { label: string; short: string; cls: string; icon: IconName; group: Group }
+// `mid` sits between `short` (ledger pill) and `label` (panel heading): it names
+// the direction without the sentence, for the setup cards in the expanded row.
+interface Status { label: string; mid: string; short: string; cls: string; icon: IconName; group: Group }
 
 function status(s: { direction: string; stage: PatternStage } | null): Status {
-  if (!s) return { label: 'No pattern data yet', short: 'No data', cls: 'st-fail', icon: 'dash', group: 'none' };
-  const dn = s.direction === 'down', word = dn ? 'Downward' : 'Upward';
+  if (!s) return { label: 'No pattern data yet', mid: 'No data', short: 'No data', cls: 'st-fail', icon: 'dash', group: 'none' };
+  const dn = s.direction === 'down', word = dn ? 'Downward' : 'Upward', side = dn ? 'Down' : 'Up';
   const tone = dn ? 'st-down' : 'st-up';
   switch (s.stage) {
-    case 'forming':   return { label: 'Waiting for a break', short: 'Waiting', cls: 'st-wait', icon: 'clock', group: 'pending' };
-    case 'signal':    return { label: `${word} break pending`, short: 'Pending', cls: 'st-wait', icon: dn ? 'down' : 'up', group: 'pending' };
-    case 'confirmed': return { label: `${word} break confirmed`, short: 'Confirmed', cls: tone, icon: 'check', group: 'confirmed' };
-    case 'target':    return { label: 'Target reached', short: 'Target hit', cls: tone, icon: 'target', group: 'target' };
-    case 'failed':    return { label: 'Pattern failed', short: 'Failed', cls: 'st-fail', icon: 'x', group: 'failed' };
-    case 'update':    return { label: 'Needs updating', short: 'Update', cls: 'st-upd', icon: 'refresh', group: 'update' };
+    case 'forming':   return { label: 'Waiting for a break', mid: 'Forming', short: 'Waiting', cls: 'st-wait', icon: 'clock', group: 'pending' };
+    case 'signal':    return { label: `${word} break pending`, mid: `${side} pending`, short: 'Pending', cls: 'st-wait', icon: dn ? 'down' : 'up', group: 'pending' };
+    case 'confirmed': return { label: `${word} break confirmed`, mid: `${side} confirmed`, short: 'Confirmed', cls: tone, icon: 'check', group: 'confirmed' };
+    case 'target':    return { label: 'Target reached', mid: 'Target hit', short: 'Target hit', cls: tone, icon: 'target', group: 'target' };
+    case 'failed':    return { label: 'Pattern failed', mid: 'Failed', short: 'Failed', cls: 'st-fail', icon: 'x', group: 'failed' };
+    case 'update':    return { label: 'Needs updating', mid: 'Needs update', short: 'Update', cls: 'st-upd', icon: 'refresh', group: 'update' };
   }
 }
 
@@ -174,43 +181,64 @@ function flagFor(timeframe: string | undefined, stored?: string) {
 const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag }) =>
   text ? <span className={`flag${keyFlag ? ' key' : ''}`}>{text}</span> : null;
 
-// ── Expanded detail: either direction ("both") ──
+// ── Expanded row: the stock's setups on the left, the selected one on the right ──
 
-const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
-  const tf = s.timeframe || 'daily';
-  if (s.breakUp == null || s.breakDown == null || s.goalUp == null || s.goalDown == null) {
+// Main setup and alt setups share these fields; the main one also carries
+// hand-written signal / confirm rules.
+type AnySetup = PatternAltSetup & { signalRule?: string; confirmRule?: string };
+
+const PanelHead: React.FC<{
+  s: PatternStock; st: Status; pattern: string; tf: string; date?: string; extra?: string; flag?: string;
+}> = ({ s, st, pattern, tf, date, extra, flag }) => (
+  <div className="phead">
+    <div className="ph-top"><b className="ph-tk">{s.ticker}</b><span className="ph-name">{s.name}</span></div>
+    <div className={`ph-st ${st.cls}`}><Icon name={st.icon} />{st.label}</div>
+    <div className="ph-sub">
+      {pattern} · {cap(tf)} chart{date ? ` · ${day(date)}` : ''}{extra ? ` · ${extra}` : ''}
+    </div>
+    <Flag text={flag} />
+  </div>
+);
+
+// ── Panel: either-direction setup ("both") ──
+
+const BothBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a, st }) => {
+  const tf = a.timeframe || 'daily';
+  const pattern = a.pattern ?? s.pattern;
+  if (a.breakUp == null || a.breakDown == null || a.goalUp == null || a.goalDown == null) {
     // Pending with no clear pattern yet: just the candles.
     return (
       <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
-        <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart</span></div>
-        <AutoNote on={s.auto} />
+        <PanelHead s={s} st={st} pattern={pattern} tf={tf} flag={flagFor(tf, a.flag)} />
+        <AutoNote on={a.auto} />
         <SetupChart ticker={s.ticker} timeframe={tf} levels={[]} />
-        {s.note && <p className="note">{s.note}</p>}
+        {a.note && <p className="note">{a.note}</p>}
       </div>
     );
   }
   const rungs: Rung[] = [
-    { k: 'Goal up', cls: 'k-tgt', v: s.goalUp!, p: true },
-    { k: 'Breaks up', cls: 'k-tgt', v: s.breakUp!, p: true },
+    { k: 'Goal up', cls: 'k-tgt', v: a.goalUp!, p: true },
+    { k: 'Breaks up', cls: 'k-tgt', v: a.breakUp!, p: true },
     { k: 'Now', cls: '', v: s.price, now: true },
-    { k: 'Breaks down', cls: 'k-inv', v: s.breakDown!, p: true },
-    { k: 'Goal down', cls: 'k-tgt', pcls: 'k-inv', v: s.goalDown!, p: true },
+    { k: 'Breaks down', cls: 'k-inv', v: a.breakDown!, p: true },
+    { k: 'Goal down', cls: 'k-tgt', pcls: 'k-inv', v: a.goalDown!, p: true },
   ];
   return (
     <div className="detail" style={{ '--tone': 'var(--wait)' } as React.CSSProperties}>
-      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart · Either direction</span><Flag text={flagFor(tf, s.flag)} /></div>
-      <AutoNote on={s.auto} />
-      {s.stage === 'update' && <UpdateBanner note={s.updateNote} />}
+      <PanelHead s={s} st={st} pattern={pattern} tf={tf} extra="Either direction" flag={flagFor(tf, a.flag)} />
+      <Agreement agree={a.agree} />
+      <AutoNote on={a.auto} />
+      {a.stage === 'update' && <UpdateBanner note={a.updateNote} />}
       <div className="stepper" aria-label="Pattern stage">
         {['Forming', 'Signal', 'Confirmed', 'Target'].map((l, i) => (
           <div key={l} className={`step ${i === 0 ? 'now' : ''}`}><i></i><span>{l}</span></div>
         ))}
       </div>
-      <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} levels={[
-        { price: s.goalUp!, label: 'Goal up', tone: 'up' },
-        { price: s.breakUp!, label: 'Breaks up', tone: 'up' },
-        { price: s.breakDown!, label: 'Breaks down', tone: 'down' },
-        { price: s.goalDown!, label: 'Goal down', tone: 'up' },
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} levels={[
+        { price: a.goalUp!, label: 'Goal up', tone: 'up' },
+        { price: a.breakUp!, label: 'Breaks up', tone: 'up' },
+        { price: a.breakDown!, label: 'Breaks down', tone: 'down' },
+        { price: a.goalDown!, label: 'Goal down', tone: 'up' },
       ]} />
       <PricesRules>
       <div>
@@ -221,127 +249,59 @@ const DetailBoth: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       <div>
         <h3>Rules</h3>
         <ul className="rules" style={{ color: 'var(--fg)' }}>
-          <li><Icon name="up" color="var(--up)" /><span><b>Breaks up:</b> a completed {tf} close above {fmt(s.breakUp!)} starts a signal.</span></li>
-          <li><Icon name="down" color="var(--down)" /><span><b>Breaks down:</b> a completed {tf} close below {fmt(s.breakDown!)} starts a signal.</span></li>
+          <li><Icon name="up" color="var(--up)" /><span><b>Breaks up:</b> a completed {tf} close above {fmt(a.breakUp!)} starts a signal.</span></li>
+          <li><Icon name="down" color="var(--down)" /><span><b>Breaks down:</b> a completed {tf} close below {fmt(a.breakDown!)} starts a signal.</span></li>
           <li><Icon name="check" color="var(--muted)" /><span><b>Confirms:</b> a later completed {tf} close beyond that signal candle's extreme.</span></li>
         </ul>
-        {s.note && <p className="thesis">{s.note}</p>}
+        {a.note && <p className="thesis">{a.note}</p>}
       </div>
       </PricesRules>
     </div>
   );
 };
 
-// ── Expanded detail: second timeframe / opposing setup ──
+// ── Panel: single-direction setup ──
 
-const AltBlock: React.FC<{ s: PatternStock; a: PatternAltSetup }> = ({ s, a: raw }) => {
-  if (raw.direction === 'both') {
-    // Either-direction second setup: same panel as a main one, on its own timeframe.
-    const view = { ...raw, ticker: s.ticker, name: s.name, price: s.price, priceDate: s.priceDate,
-                   pattern: raw.pattern ?? s.pattern } as PatternStock;
-    return <div className="altwrap"><DetailBoth s={view} st={status(raw)} /></div>;
-  }
-  const a = asPrev(raw) as PatternAltSetup & { invalidation: number; target: number };
-  const st = status(raw), up = a.direction === 'up', hit = a.stage === 'target';
-  const tone = up ? 'var(--up)' : 'var(--down)', tf = a.timeframe, T = cap(tf);
-  const side = up ? 'above' : 'below';
-  const rungs = ([
-    { k: hit ? 'Reached' : 'Target', cls: 'k-tgt', pcls: a.target < s.price ? 'k-inv' : 'k-tgt', v: a.target, p: !hit },
-    a.stage === 'forming' && a.signal != null ? { k: 'Signal ' + side, cls: up ? 'k-tgt' : 'k-inv', v: a.signal, p: true } : null,
-    a.confirm != null ? { k: (a.stage === 'signal' ? 'Confirm ' : 'Confirmed ') + side, cls: 'k-lvl', v: a.confirm } : null,
-    { k: 'Now', cls: '', v: s.price, now: true },
-    { k: 'Invalidation', cls: 'k-inv', v: a.invalidation, p: true },
-  ].filter(Boolean) as Rung[]).sort((x, y) => y.v - x.v);
-  const confirming = a.stage === 'forming' || a.stage === 'signal';
-  return (
-    <div className="altwrap" style={{ '--tone': tone } as React.CSSProperties}>
-      {s.keyLevel && (
-        <div className="callout">
-          <div className="cl-k">Key level <b className="num">{fmt(s.keyLevel.price)}</b> <span>{pct(s.price, s.keyLevel.price)} from now</span></div>
-          <p>{s.keyLevel.text}</p>
-        </div>
-      )}
-      <div className="dhead"><Pill st={st} /><span>{a.pattern ? a.pattern + ' · ' : ''}{T} chart{a.stageDate ? ' · ' + day(a.stageDate) : ''}</span><Flag text={flagFor(a.timeframe, a.flag)} /></div>
-      <Agreement agree={raw.agree} />
-      <AutoNote on={raw.auto} />
-      {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
-      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
-      <PricesRules label={`${T} prices & rules`}>
-        <div><h3>{T} prices</h3><Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} /></div>
-        <div>
-          <h3>{T} rules</h3>
-          <ul className="rules">
-            {a.signal != null && <li><Icon name={up ? 'up' : 'down'} color={tone} /><span><b>Signal:</b> a completed {tf} close {side} {fmt(a.signal)}.</span></li>}
-            <li><Icon name="check" color={tone} /><span><b>{confirming ? 'Confirms' : 'Confirmed'}:</b> {a.confirm != null
-              ? `a later completed ${tf} close ${side} ${fmt(a.confirm)}, beyond the signal candle's ${up ? 'high' : 'low'}.`
-              : `a later completed ${tf} close beyond that signal candle's ${up ? 'high' : 'low'}.`}</span></li>
-            {hit
-              ? <li><Icon name="target" color="var(--up)" /><span><b>Reached:</b> {fmt(a.target)} was hit. A completed move, not a new entry.</span></li>
-              : <li><Icon name="target" color={tone} /><span><b>Target:</b> projected move to {fmt(a.target)}, {pct(s.price, a.target)} from the latest close.</span></li>}
-            {!hit && <li><Icon name="x" color="var(--down)" /><span><b>Fails:</b> {a.failRule || `a completed ${tf} close back inside the broken boundary, ${up ? 'below' : 'above'} ${fmt(a.invalidation)}.`}</span></li>}
-          </ul>
-          {a.note && <p className="thesis">{a.note}</p>}
-        </div>
-      </PricesRules>
-    </div>
-  );
-};
-
-const HistBlock: React.FC<{ s: PatternStock }> = ({ s }) => (
-  <div className="hist">
-    <h3>History</h3>
-    {s.history!.map((h, i) => (
-      <div key={i} className="hrow">
-        <span className="pill st-fail"><Icon name="target" />{h.stage === 'target' ? 'Target hit' : cap(h.stage)}</span>
-        <span className="hmeta">{h.pattern} · {cap(h.timeframe)} · {h.direction === 'down' ? 'Downward' : 'Upward'} break · {day(h.stageDate)}</span>
-        <span className="hnums num">Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → reached {fmt(h.target)}</span>
-        {h.note && <p>{h.note}</p>}
-      </div>
-    ))}
-  </div>
-);
-
-// ── Expanded detail: single-direction setup ──
-
-const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
-  if (raw.direction === 'both') return <DetailBoth s={raw} st={st} />;
-  const s = asPrev(raw);
-  const dn = s.direction === 'down';
-  const tone = s.stage === 'failed' ? 'var(--fail)' : (dn ? 'var(--down)' : 'var(--up)');
-  const hasSig = s.signal != null;
+const DirBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a: raw, st }) => {
+  const a = asPrev(raw);
+  const dn = a.direction === 'down';
+  const tone = a.stage === 'failed' ? 'var(--fail)' : (dn ? 'var(--down)' : 'var(--up)');
+  const hasSig = a.signal != null;
   const SL = hasSig ? ['Forming', 'Signal', 'Confirmed', 'Target'] : ['Forming', 'Confirmed', 'Target'];
   const SK: PatternStage[] = hasSig ? STAGES : ['forming', 'confirmed', 'target'];
-  const idx = s.stage === 'failed' ? -1 : SK.indexOf(s.stage === 'signal' && !hasSig ? 'forming' : s.stage);
-  const pending = s.stage === 'forming' || s.stage === 'signal';
-  const target = s.target!, invalidation = s.invalidation!;
+  const idx = a.stage === 'failed' ? -1 : SK.indexOf(a.stage === 'signal' && !hasSig ? 'forming' : a.stage);
+  const pending = a.stage === 'forming' || a.stage === 'signal';
+  const target = a.target!, invalidation = a.invalidation!;
+  const tf = a.timeframe || 'daily', T = cap(tf);
+  const pattern = a.pattern ?? s.pattern;
 
   const rungs = ([
     { k: 'Invalidation', cls: 'k-inv', v: invalidation, p: true },
-    hasSig ? { k: 'Signal ' + (dn ? 'below' : 'above'), cls: s.stage === 'forming' ? (dn ? 'k-inv' : 'k-tgt') : 'k-lvl', v: s.signal!, p: s.stage === 'forming' } : null,
-    s.confirm != null ? { k: (pending ? 'Confirm ' : 'Confirmed ') + (dn ? 'below' : 'above'), cls: pending ? (dn ? 'k-inv' : 'k-tgt') : 'k-lvl', v: s.confirm, p: pending } : null,
+    hasSig ? { k: 'Signal ' + (dn ? 'below' : 'above'), cls: a.stage === 'forming' ? (dn ? 'k-inv' : 'k-tgt') : 'k-lvl', v: a.signal!, p: a.stage === 'forming' } : null,
+    a.confirm != null ? { k: (pending ? 'Confirm ' : 'Confirmed ') + (dn ? 'below' : 'above'), cls: pending ? (dn ? 'k-inv' : 'k-tgt') : 'k-lvl', v: a.confirm, p: pending } : null,
     { k: 'Now', cls: '', v: s.price, now: true },
-    { k: s.stage === 'target' ? 'Reached' : 'Target', cls: 'k-tgt', pcls: target < s.price ? 'k-inv' : 'k-tgt', v: target, p: s.stage !== 'target' },
-  ].filter(Boolean) as Rung[]).sort((a, b) => b.v - a.v);
+    { k: a.stage === 'target' ? 'Reached' : 'Target', cls: 'k-tgt', pcls: target < s.price ? 'k-inv' : 'k-tgt', v: target, p: a.stage !== 'target' },
+  ].filter(Boolean) as Rung[]).sort((x, y) => y.v - x.v);
 
-  const sideWord = dn ? 'below' : 'above', backWord = dn ? 'above' : 'below', tf = s.timeframe || 'daily';
-  const reached = (i: number) => s.stage !== 'failed' && idx >= i;
+  const sideWord = dn ? 'below' : 'above', backWord = dn ? 'above' : 'below';
+  const reached = (i: number) => a.stage !== 'failed' && idx >= i;
 
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
-      <div className="dhead"><Pill st={st} /><span>{s.pattern} · {cap(tf)} chart{s.stageDate ? ' · ' + day(s.stageDate) : ''}</span><Flag text={flagFor(tf, s.flag)} /></div>
+      <PanelHead s={s} st={st} pattern={pattern} tf={tf} date={a.stageDate} flag={flagFor(tf, a.flag)} />
       <Agreement agree={raw.agree} />
       <AutoNote on={raw.auto} />
       {raw.stage === 'update' && <UpdateBanner note={raw.updateNote} />}
       <div className="stepper" aria-label="Pattern stage" style={{ gridTemplateColumns: `repeat(${SL.length},1fr)` }}>
         {SL.map((l, i) => {
-          const c = s.stage === 'failed' ? '' : i < idx ? 'done' : i === idx ? 'now' : '';
+          const c = a.stage === 'failed' ? '' : i < idx ? 'done' : i === idx ? 'now' : '';
           return (
-            <div key={l} className={`step ${c}`}><i></i><span>{l}</span>{i === idx && s.stageDate && <em>{day(s.stageDate)}</em>}</div>
+            <div key={l} className={`step ${c}`}><i></i><span>{l}</span>{i === idx && a.stageDate && <em>{day(a.stageDate)}</em>}</div>
           );
         })}
       </div>
-      <SetupChart ticker={s.ticker} timeframe={tf} lines={s.lines} {...chartSpec(s)} />
-      <PricesRules>
+      <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} {...chartSpec(a)} />
+      <PricesRules label={`${T} prices & rules`}>
       <div>
         <h3>Prices that matter</h3>
         <Ladder rungs={rungs} price={s.price} priceDate={s.priceDate} />
@@ -352,26 +312,125 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s: raw, st }) => {
         <ul className="rules" style={{ color: 'var(--fg)' }}>
           {hasSig ? (
             <>
-              <li className={reached(1) ? '' : 'off'}><Icon name={dn ? 'down' : 'up'} color={tone} /><span><b>Signal:</b> {s.signalRule || `a completed ${tf} close ${sideWord} ${fmt(s.signal!)}.`}</span></li>
-              <li className={reached(2) ? '' : 'off'}><Icon name="check" color={tone} /><span><b>{reached(2) ? 'Confirmed' : 'Confirms'}:</b> {s.confirmRule || `a later completed ${tf} close ${sideWord} ${fmt(s.confirm!)}, beyond the signal candle's ${dn ? 'low' : 'high'}.`}</span></li>
+              <li className={reached(1) ? '' : 'off'}><Icon name={dn ? 'down' : 'up'} color={tone} /><span><b>Signal:</b> {a.signalRule || `a completed ${tf} close ${sideWord} ${fmt(a.signal!)}.`}</span></li>
+              <li className={reached(2) ? '' : 'off'}><Icon name="check" color={tone} /><span><b>{reached(2) ? 'Confirmed' : 'Confirms'}:</b> {a.confirmRule || (a.confirm != null
+                ? `a later completed ${tf} close ${sideWord} ${fmt(a.confirm)}, beyond the signal candle's ${dn ? 'low' : 'high'}.`
+                : `a later completed ${tf} close beyond that signal candle's ${dn ? 'low' : 'high'}.`)}</span></li>
             </>
           ) : (
-            <li className={reached(1) ? '' : 'off'}><Icon name="check" color={tone} /><span><b>{reached(1) ? 'Confirmed' : 'Confirms'}:</b> a completed {tf} close {sideWord} {fmt(s.confirm!)}.</span></li>
+            <li className={reached(1) ? '' : 'off'}><Icon name="check" color={tone} /><span><b>{reached(1) ? 'Confirmed' : 'Confirms'}:</b> a completed {tf} close {sideWord} {fmt(a.confirm!)}.</span></li>
           )}
-          {s.stage === 'target' ? (
+          {a.stage === 'target' ? (
             <li><Icon name="target" color={tone} /><span><b>Reached:</b> {fmt(target)} was hit. A completed move, not a new entry.</span></li>
           ) : (
             <>
               <li><Icon name="target" color={tone} /><span><b>Target:</b> projected move to {fmt(target)}, {pct(s.price, target)} from the latest close.</span></li>
-              <li><Icon name="x" color={tone} /><span><b>Fails:</b> {s.failRule || `a completed ${tf} close back inside the broken boundary, ${backWord} ${fmt(invalidation)}.`}</span></li>
+              <li><Icon name="x" color={tone} /><span><b>Fails:</b> {a.failRule || `a completed ${tf} close back inside the broken boundary, ${backWord} ${fmt(invalidation)}.`}</span></li>
             </>
           )}
         </ul>
-        {s.note && <p className="thesis">{s.note}</p>}
+        {a.note && <p className="thesis">{a.note}</p>}
       </div>
       </PricesRules>
-      {s.alt && <AltBlock s={s} a={s.alt} />}
-      {s.history && <HistBlock s={s} />}
+    </div>
+  );
+};
+
+// ── Panel: a finished setup from the stock's history ──
+
+const HistPanel: React.FC<{ s: PatternStock; h: PatternHistoryEntry; st: Status }> = ({ s, h, st }) => (
+  <div className="detail" style={{ '--tone': h.direction === 'down' ? 'var(--down)' : 'var(--up)' } as React.CSSProperties}>
+    <PanelHead s={s} st={st} pattern={h.pattern} tf={h.timeframe} date={h.stageDate}
+      extra={`${h.direction === 'down' ? 'Downward' : 'Upward'} break`} />
+    <SetupChart ticker={s.ticker} timeframe={h.timeframe} {...chartSpec(h)} />
+    <p className="hnums num">Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → reached {fmt(h.target)}</p>
+    {h.note && <p className="thesis">{h.note}</p>}
+  </div>
+);
+
+// ── Left pane: every setup tracked on this stock ──
+
+type Entry =
+  | { kind: 'setup'; key: string; a: AnySetup; st: Status; pattern: string; tf: string; auto?: boolean }
+  | { kind: 'hist'; key: string; h: PatternHistoryEntry; st: Status; pattern: string; tf: string; auto?: boolean };
+
+type Bucket = 'confirmed' | 'pending' | 'update' | 'finished';
+const BUCKETS: [Bucket, string][] = [
+  ['confirmed', 'Confirmed'], ['pending', 'Watching for a break'],
+  ['update', 'Needs updating'], ['finished', 'Finished'],
+];
+const bucketOf = (g: Group): Bucket =>
+  g === 'confirmed' ? 'confirmed' : g === 'update' ? 'update' : g === 'pending' || g === 'none' ? 'pending' : 'finished';
+
+const SetupList: React.FC<{ ticker: string; entries: Entry[]; sel: string; onSel: (k: string) => void }> = ({ ticker, entries, sel, onSel }) => (
+  <div className="slist">
+    <div className="sl-head">Setups on {ticker} · {entries.length}</div>
+    {BUCKETS.map(([b, title]) => {
+      const items = entries.filter(e => bucketOf(e.st.group) === b);
+      if (!items.length) return null;
+      return (
+        <div key={b} className="sl-group">
+          <div className="sl-gh"><Icon name={items[0].st.icon} />{title} · {items.length}</div>
+          {items.map(e => (
+            <button key={e.key} type="button" className={`sl-card${sel === e.key ? ' on' : ''}`}
+              aria-pressed={sel === e.key} onClick={() => onSel(e.key)}>
+              <span className="sl-r1">
+                <b>{ticker}</b>
+                {e.auto && <i className="auto-dot" title="Auto-detected: check by hand" />}
+                <span className="sl-tf">{cap(e.tf)}</span>
+                <Chev />
+              </span>
+              <span className="sl-r2">
+                <span className={e.st.cls}><Icon name={e.st.icon} />{e.st.mid}</span>
+                <span className="sl-pat">· {e.pattern}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      );
+    })}
+  </div>
+);
+
+// ── Expanded row ──
+
+const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
+  const entries = useMemo<Entry[]>(() => {
+    const out: Entry[] = [{
+      kind: 'setup', key: 'main', a: s as AnySetup, st: status(s),
+      pattern: s.pattern, tf: s.timeframe || 'daily', auto: s.auto,
+    }];
+    if (s.alt) out.push({
+      kind: 'setup', key: 'alt', a: s.alt, st: status(s.alt),
+      pattern: s.alt.pattern ?? s.pattern, tf: s.alt.timeframe, auto: s.alt.auto,
+    });
+    (s.history ?? []).forEach((h, i) => out.push({
+      kind: 'hist', key: 'h' + i, h, st: status(h), pattern: h.pattern, tf: h.timeframe,
+    }));
+    return out;
+  }, [s]);
+
+  const [sel, setSel] = useState(entries[0].key);
+  const cur = entries.find(e => e.key === sel) ?? entries[0];
+
+  const panel = cur.kind === 'hist'
+    ? <HistPanel s={s} h={cur.h} st={cur.st} />
+    : cur.a.direction === 'both'
+      ? <BothBody s={s} a={cur.a} st={cur.st} />
+      : <DirBody s={s} a={cur.a} st={cur.st} />;
+
+  return (
+    <div className="dsplit">
+      <SetupList ticker={s.ticker} entries={entries} sel={cur.key} onSel={setSel} />
+      <div className="dpanel">
+        {panel}
+        {s.keyLevel && (
+          <div className="callout">
+            <div className="cl-k">Key level <b className="num">{fmt(s.keyLevel.price)}</b> <span>{pct(s.price, s.keyLevel.price)} from now</span></div>
+            <p>{s.keyLevel.text}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -391,11 +450,19 @@ const writePref = (key: string, value: string) => {
   try { localStorage.setItem(key, value); } catch { /* storage unavailable — non-fatal */ }
 };
 
-const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, onOpenPage }) => {
-  const [open, setOpen] = useState(false);
+const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle: () => void; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, open, onToggle, onOpenPage }) => {
   const s = row.setup, st = status(s), id = 'd-' + row.ticker;
-  const toggle = () => setOpen(o => !o);
+  const item = useRef<HTMLDivElement>(null);
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
+
+  // Opening lifts the row to the top of the screen so its panel is whole;
+  // the row header then sticks there, keeping the close control in reach.
+  useEffect(() => {
+    if (!open) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const id = requestAnimationFrame(() => item.current?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' }));
+    return () => cancelAnimationFrame(id);
+  }, [open]);
 
   let levels: React.ReactNode;
   if (!s || (s.direction === 'both' && s.goalUp == null)) {
@@ -418,17 +485,17 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
   }
 
   return (
-    <div className="item">
+    <div className={`item${open ? ' open' : ''}`} ref={item}>
       <div
         className="row-btn"
         role="button"
         tabIndex={0}
         aria-expanded={open}
         aria-controls={id}
-        onClick={toggle}
+        onClick={onToggle}
         onKeyDown={e => {
           if (e.target !== e.currentTarget) return;
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); }
         }}
       >
         <span className="tk">
@@ -458,7 +525,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
         </span>
         {levels}
-        <Chev />
+        {open
+          ? <button type="button" className="closex" title={`Close ${row.ticker}`} aria-label={`Close ${row.ticker} setups`}
+              onClick={e => { e.stopPropagation(); onToggle(); }}><Cross /></button>
+          : <Chev />}
       </div>
       <div id={id} hidden={!open}>
         {open && (s
@@ -481,6 +551,17 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
   const [sortBy, setSortBy] = useState<'default' | 'target'>(() => readPref('pbw-sort', 'default') === 'target' ? 'target' : 'default');
   const [query, setQuery] = useState('');
+  // One row open at a time: opening another closes the last, so the ledger
+  // never turns into a stack of panels.
+  const [openTicker, setOpenTicker] = useState<string | null>(null);
+
+  // Escape closes the open row, wherever focus happens to be.
+  useEffect(() => {
+    if (!openTicker) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpenTicker(null); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [openTicker]);
 
   // Pattern stocks first (in curated order), then every covered stock that has no setup yet.
   const allRows = useMemo<Row[]>(() => {
@@ -550,7 +631,12 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
           <div className="rows">
             {rows.length === 0
               ? <div className="empty">No stocks match this filter.</div>
-              : rows.map(r => <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]} onOpenPage={onOpenStock} />)}
+              : rows.map(r => (
+                <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]}
+                  open={openTicker === r.ticker}
+                  onToggle={() => setOpenTicker(t => t === r.ticker ? null : r.ticker)}
+                  onOpenPage={onOpenStock} />
+              ))}
           </div>
         </div>
 

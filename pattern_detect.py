@@ -153,8 +153,12 @@ def detect_lines(bars, tf, n, all_found=None):
     t, h, l = bars['t'], bars['h'], bars['l']
     last = len(t) - 1
     lo_i = max(0, last - WINDOW[tf])
-    H = pl.pivots(h, 'H', lo_i, last - 1, ks=(2, 3))
-    L = pl.pivots(l, 'L', lo_i, last - 1, ks=(2, 3))
+    # Same swing points the source tool draws through (PATTERN_RULES.md: at least one
+    # candle each side) and the same ones pattern_lines.py fits with. Requiring 2-3 candles
+    # each side here used to exclude the lines the tool actually draws: INTU's weekly wedge
+    # hangs off a k=1 high, so no candidate reproduced it at all.
+    H = pl.pivots(h, 'H', lo_i, last - 1, ks=(1, 2, 3))
+    L = pl.pivots(l, 'L', lo_i, last - 1, ks=(1, 2, 3))
     H1 = pl.pivots(h, 'H', lo_i, last - 1, ks=(1,))
     L1 = pl.pivots(l, 'L', lo_i, last - 1, ks=(1,))
     ups = [ln for ln in pl._pair_lines(H, h, last) if ln.anchors[1] - ln.anchors[0] >= 3]
@@ -190,10 +194,12 @@ def detect_lines(bars, tf, n, all_found=None):
         st = _stage(bars, n, pattern, u, d, start, A)
         if not st:
             continue
-        # The clearest pattern wins (most touches, then longest); its stage is whatever the
-        # candles say. Many stocks are honestly still forming.
+        # The clearest pattern wins (most touches, length only as a tiebreak); its stage is
+        # whatever the candles say. Many stocks are honestly still forming. Span is worth
+        # ~1 touch per 60 bars: the tool draws the pattern in play now, not the longest one
+        # on the chart, and a heavier span term handed the top spot to big old structures.
         rank = {'confirmed': 2, 'signal': 1, 'forming': 0}[st['stage']]
-        score = (touches + (A - start) / 15, rank)
+        score = (touches + (A - start) / 60, rank)
         if all_found is not None:
             all_found.append(_make_setup(bars, tf, pattern, u, d, start, A, st, touches, score))
         if best is None or score > best[0]:

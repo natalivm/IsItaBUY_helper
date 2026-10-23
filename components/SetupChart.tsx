@@ -45,6 +45,7 @@ const SetupChart: React.FC<{
   useEffect(() => {
     let chart: IChartApi | null = null;
     let observer: MutationObserver | null = null;
+    let resizer: ResizeObserver | null = null;
     let cancelled = false;
 
     (async () => {
@@ -124,10 +125,24 @@ const SetupChart: React.FC<{
         }]);
       }
 
-      // ~7px per candle, so phones open on fewer bars than desktop.
-      const n = bars.t.length, show = Math.min(VISIBLE[timeframe] ?? 90, Math.floor(el.clientWidth / 7));
-      chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, n - show), to: n + 5 });
+      // ~7px per candle, so a phone — or the narrow panel beside the setup list —
+      // opens on fewer bars than a wide desktop column.
+      const n = bars.t.length;
+      const fitRange = () => {
+        const show = Math.min(VISIBLE[timeframe] ?? 90, Math.max(20, Math.floor(el.clientWidth / 7)));
+        chart?.timeScale().setVisibleLogicalRange({ from: Math.max(0, n - show), to: n + 5 });
+      };
+      fitRange();
       setState('ready');
+
+      // On resize keep the candles their size and drop older bars off the left,
+      // rather than squeezing the whole window into a narrower box.
+      let frame = 0;
+      resizer = new ResizeObserver(() => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(fitRange);
+      });
+      resizer.observe(el);
 
       // Follow the app's light/dark toggle.
       observer = new MutationObserver(() => {
@@ -147,6 +162,7 @@ const SetupChart: React.FC<{
     return () => {
       cancelled = true;
       observer?.disconnect();
+      resizer?.disconnect();
       chart?.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
