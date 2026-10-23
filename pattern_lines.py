@@ -315,12 +315,20 @@ def line_value(line, t, i):
     return v0 + per * (i - i0)
 
 
-def invalidation_line(pattern, direction):
-    """Which of [upper, lower] the invalidation sits on, matching the setups' own fail rules:
-    a channel fails back inside the boundary it broke, a wedge on a close past the far side."""
+def invalidation_line(pattern, direction, stage):
+    """Which of [upper, lower] the invalidation sits on, matching the setups' own fail rules.
+
+    A confirmed channel fails back inside the boundary it broke ("back inside the broken
+    boundary, above $X") — SPY and QQQ read that way, and so do the other 18 posted channel
+    breaks. While a channel is still pending there is nothing to fall back into, so the level
+    that kills it is the opposite side of the channel, with the wedge-style follow-through
+    wording. A wedge invalidates on the far side either way.
+    """
     dn = direction == 'down'
     if 'Channel' in pattern:
-        return 1 if dn else 0      # the broken boundary
+        if stage == 'confirmed':
+            return 1 if dn else 0  # the boundary it broke
+        return 0 if dn else 1      # still pending: the opposite side
     if 'Wedge' in pattern:
         return 0 if dn else 1      # the far side
     return None
@@ -347,7 +355,13 @@ def relevel(apply=False, verbose=True, now_et=None):
                 continue
             if s.get('stage') not in ('forming', 'signal', 'confirmed'):
                 continue
-            want = invalidation_line(pattern, s.get('direction'))
+            # Auto-detected setups are the detector's own arithmetic and stay consistent with
+            # the levels it derived alongside them; it places a pending channel's invalidation
+            # on the broken boundary rather than the far side, so re-reading these here would
+            # just fight pattern_detect.py every run. They are redone by a rescan instead.
+            if s.get('auto') or main.get('auto'):
+                continue
+            want = invalidation_line(pattern, s.get('direction'), s.get('stage'))
             if want is None:
                 continue
             lines = stored_lines(text, pos)

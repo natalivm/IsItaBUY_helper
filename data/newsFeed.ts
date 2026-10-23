@@ -15,6 +15,55 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-CRWV-main-target",
+    date: "Oct 23 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · target reached",
+    text: "The weekly rising wedge reached its $53.37 target on Oct 22.",
+  },
+  {
+    id: "2026-10-23-CRWV-daily-alt-removed",
+    date: "Oct 23 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · setup removed (daily setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-23-CRWV-weekly-alt-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · new setup (weekly setup)",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
+    id: "2026-10-23-QQQ-daily-alt-signal",
+    date: "Oct 23 2026",
+    tickers: ["QQQ"],
+    title: "QQQ · new setup (daily setup)",
+    text: "Ascending Channel (daily), break pending.",
+  },
+  {
+    id: "2026-10-23-QQQ-main-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["QQQ"],
+    title: "QQQ · break confirmed",
+    text: "Previously needs updating.",
+  },
+  {
+    id: "2026-10-23-SPY-daily-alt-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["SPY"],
+    title: "SPY · new setup (daily setup)",
+    text: "Ascending Channel (daily), break confirmed.",
+  },
+  {
+    id: "2026-10-23-SPY-main-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["SPY"],
+    title: "SPY · new setup",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
     id: "2026-10-23-auto-scan-77",
     date: "Oct 23 2026",
     tickers: [],
@@ -69,13 +118,6 @@ export const NEWS_ITEMS: NewsItem[] = [
     tickers: ["CRDO"],
     title: "CRDO · setup closed",
     text: "Target reached Oct 23.",
-  },
-  {
-    id: "2026-10-23-CRWV-main-confirmed",
-    date: "Oct 23 2026",
-    tickers: ["CRWV"],
-    title: "CRWV · setup closed",
-    text: "Target reached Oct 22.",
   },
   {
     id: "2026-10-23-FLEX-daily-alt-confirmed",
