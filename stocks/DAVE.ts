@@ -23,6 +23,7 @@ export const DAVE = defineStock({
   rsRating: 82,        // IBD RS per user, 10/10/2026 (was 92 in Jun 2026)
   rsTrend: 'falling',
   aiImpact: 'NEUTRAL',  // CashAI powers underwriting, but the business is consumer cash advances, not an AI beneficiary
+  ratingOverride: 'BUY',   // +14% 2wk run compressed base-case upside to ~6% → model reads HOLD, but RS 99 & rising (best-in-class momentum) keeps this a BUY / TURBO_GROWTH.
 
   // Q2 2026 UPDATE (Aug 5, 2026)
   // ─────────────────────────────────────────────────────────────────────────
