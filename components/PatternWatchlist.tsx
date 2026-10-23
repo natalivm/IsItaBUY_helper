@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TickerDefinition } from '../types';
 import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree } from '../data/patternWatchlist';
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
@@ -44,6 +44,10 @@ const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => 
 
 const Chev = () => (
   <svg className="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+);
+
+const Cross = () => (
+  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 6 8 8m0-8-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
 );
 
 type Group = 'confirmed' | 'pending' | 'update' | 'target' | 'failed' | 'none';
@@ -446,11 +450,19 @@ const writePref = (key: string, value: string) => {
   try { localStorage.setItem(key, value); } catch { /* storage unavailable — non-fatal */ }
 };
 
-const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, onOpenPage }) => {
-  const [open, setOpen] = useState(false);
+const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle: () => void; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, open, onToggle, onOpenPage }) => {
   const s = row.setup, st = status(s), id = 'd-' + row.ticker;
-  const toggle = () => setOpen(o => !o);
+  const item = useRef<HTMLDivElement>(null);
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
+
+  // Opening lifts the row to the top of the screen so its panel is whole;
+  // the row header then sticks there, keeping the close control in reach.
+  useEffect(() => {
+    if (!open) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const id = requestAnimationFrame(() => item.current?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' }));
+    return () => cancelAnimationFrame(id);
+  }, [open]);
 
   let levels: React.ReactNode;
   if (!s || (s.direction === 'both' && s.goalUp == null)) {
@@ -473,17 +485,17 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
   }
 
   return (
-    <div className="item">
+    <div className={`item${open ? ' open' : ''}`} ref={item}>
       <div
         className="row-btn"
         role="button"
         tabIndex={0}
         aria-expanded={open}
         aria-controls={id}
-        onClick={toggle}
+        onClick={onToggle}
         onKeyDown={e => {
           if (e.target !== e.currentTarget) return;
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); }
         }}
       >
         <span className="tk">
@@ -513,7 +525,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; onOpenPage: (ticker: str
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
         </span>
         {levels}
-        <Chev />
+        {open
+          ? <button type="button" className="closex" title={`Close ${row.ticker}`} aria-label={`Close ${row.ticker} setups`}
+              onClick={e => { e.stopPropagation(); onToggle(); }}><Cross /></button>
+          : <Chev />}
       </div>
       <div id={id} hidden={!open}>
         {open && (s
@@ -536,6 +551,17 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
   const [sortBy, setSortBy] = useState<'default' | 'target'>(() => readPref('pbw-sort', 'default') === 'target' ? 'target' : 'default');
   const [query, setQuery] = useState('');
+  // One row open at a time: opening another closes the last, so the ledger
+  // never turns into a stack of panels.
+  const [openTicker, setOpenTicker] = useState<string | null>(null);
+
+  // Escape closes the open row, wherever focus happens to be.
+  useEffect(() => {
+    if (!openTicker) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpenTicker(null); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [openTicker]);
 
   // Pattern stocks first (in curated order), then every covered stock that has no setup yet.
   const allRows = useMemo<Row[]>(() => {
@@ -605,7 +631,12 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
           <div className="rows">
             {rows.length === 0
               ? <div className="empty">No stocks match this filter.</div>
-              : rows.map(r => <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]} onOpenPage={onOpenStock} />)}
+              : rows.map(r => (
+                <LedgerRow key={r.ticker} row={r} hasPage={!!tickers[r.ticker]}
+                  open={openTicker === r.ticker}
+                  onToggle={() => setOpenTicker(t => t === r.ticker ? null : r.ticker)}
+                  onOpenPage={onOpenStock} />
+              ))}
           </div>
         </div>
 

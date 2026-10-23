@@ -295,3 +295,23 @@
 .pbw .dsplit{padding-inline:4px}
 .pbw .dsplit .chart-box{height:250px}
 }
+
+/* ── Open row: one at a time, its header pinned with a close control ──
+   The pinned header keeps the ticker, status and ✕ in sight while the panel
+   below is read, so closing never means scrolling back up to find the row. */
+/* `clip` keeps the ledger's rounded corners without making it a scroll
+   container — `hidden` would, and a sticky row inside it would never pin.
+   Browsers without `overflow:clip` drop this and keep `hidden` (no pinning). */
+.pbw .ledger{overflow:clip}
+.pbw .item.open>.row-btn{position:sticky;top:0;z-index:4;background:var(--surface);
+  border-bottom:1px solid var(--line);box-shadow:0 10px 12px -12px var(--shade)}
+.pbw .closex{appearance:none;display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;margin:-3px -3px -3px 0;padding:0;border:0;border-radius:8px;
+  background:none;color:var(--faint);cursor:pointer}
+.pbw .closex svg{width:20px;height:20px}
+.pbw .closex:hover{color:var(--fg);background:var(--surface-2)}
+.pbw .closex:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){
+/* .pbw is the sideways scroller here, so a pinned header has nothing to pin to. */
+.pbw .item.open>.row-btn{position:static;box-shadow:none}
+}
