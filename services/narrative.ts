@@ -4,7 +4,7 @@ import { usd, pctFmt } from './stockMetrics';
 /**
  * Live-value templating for analyst narratives.
  *
- * Narratives (strategicNarrative, scenario desc/thesis) are hand-written prose,
+ * Narratives (scenario desc/thesis) are hand-written prose,
  * but any number that is *relative to the live spot price* — targets, "% from
  * current", annualized CAGR — drifts the moment prices update. To prevent the
  * text from contradicting the computed cards (e.g. a narrative quoting an old

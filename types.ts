@@ -74,8 +74,6 @@ export interface TickerDefinition {
   rsTrend?: RsTrend;
   aiImpact: 'TAILWIND' | 'DISRUPTION_RISK' | 'NEUTRAL';
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
-  /** @deprecated No longer rendered — replaced by reasonsToBuy / risksToBuy. Kept for back-compat. */
-  strategicNarrative?: string;
   /** Alpha Strategic View — concise, qualitative reasons to own the stock (no precise numbers). */
   reasonsToBuy?: string[];
   /** Alpha Strategic View — concise, qualitative risks of owning the stock (no precise numbers). */
@@ -97,6 +95,9 @@ export interface TickerDefinition {
   lastReportTag?: string;
   /** Date fundamentals/RS/overrides were last manually reviewed (YYYY-MM-DD). The price bot never touches this — it's the real staleness signal. See review_status.py. */
   dataReviewedOn?: string;
+  /** Next scheduled earnings date (YYYY-MM-DD). Once it passes without a newer
+   * dataReviewedOn, review_status.py flags the stock however recent the review was. */
+  nextEarningsOn?: string;
   /**
    * Michael Burry "Cassandra Unchained" SBC dilution check.
    * Dollar values in millions ($M).
