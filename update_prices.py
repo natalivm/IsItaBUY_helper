@@ -931,6 +931,13 @@ def main():
             new_lines, _ = pattern_lines.run(apply=True, verbose=False)
             if new_lines:
                 print(f"Fitted trendlines for: {', '.join(n for n, _, _ in new_lines)}")
+            # A sloped invalidation is its line's value at the latest candle, so re-read it
+            # now the candles and any new lines are in. Levels the rule can't claim are
+            # listed for a human instead.
+            releveled, left = pattern_lines.relevel(apply=True, verbose=False)
+            if releveled:
+                print(f"Re-read {len(releveled)} invalidation(s) off their lines"
+                      + (f"; {len(left)} left for review" if left else ""))
             # Drop setups that are done (target reached / failed); each gets a News post.
             pruned, _ = pattern_watchlist.prune_finished(apply=True)
             if pruned:

@@ -423,6 +423,23 @@ def _describe(s, main):
     return f"{s.get('pattern') or main.get('pattern') or 'Setup'} ({s.get('timeframe') or main.get('timeframe') or 'daily'})"
 
 
+TARGET_TOL = 0.005   # within this much of the target counts as reaching it
+
+
+def _reached(direction, target, high=None, low=None):
+    """Did this bar reach the target, give or take the tolerance?
+
+    A miss by a rounding error is a hit: CRWV's weekly low stopped thirteen cents above a
+    $53.37 target, which is not a setup that failed to get there. The margin is a fraction
+    of the target rather than a fixed number of cents, because the watchlist runs from
+    sub-dollar names to four-figure ones and a flat margin would be meaningless at one end
+    and enormous at the other.
+    """
+    if direction == 'down':
+        return low is not None and low <= target * (1 + TARGET_TOL)
+    return high is not None and high >= target * (1 - TARGET_TOL)
+
+
 def _target_hit(setup, bars, since, price):
     """First date on/after `since` where a confirmed setup's target was touched, else None."""
     direction, target = setup.get('direction'), setup.get('target')
@@ -431,11 +448,11 @@ def _target_hit(setup, bars, since, price):
     for d, high, low, _ in bars:
         if d < since:
             continue
-        if (direction == 'down' and low <= target) or (direction == 'up' and high >= target):
+        if _reached(direction, target, high, low):
             return d
     # No bars (fetch fallback / stored-price check) — fall back to the latest price alone.
     if not bars and price is not None:
-        if (direction == 'down' and price <= target) or (direction == 'up' and price >= target):
+        if _reached(direction, target, price, price):
             return 'today'
     return None
 
@@ -756,7 +773,7 @@ def _finished(s, main, now_et):
     dn, tgt, inv = s['direction'] == 'down', s.get('target'), s.get('invalidation')
     start = next((i for i, x in enumerate(t) if x >= s['stageDate']), len(t))
     for i in range(start, len(t)):  # touches count as they happen (regular-session highs/lows)
-        if tgt is not None and (l[i] <= tgt if dn else h[i] >= tgt):
+        if tgt is not None and _reached(s['direction'], tgt, h[i], l[i]):
             return t[i], f"Hit target ${_fmt_price(tgt)}.", f"{t_} · target reached", 'target'
     n = _completed_count(t, tf, now_et)
     pattern = s.get('pattern') or main.get('pattern') or ''
