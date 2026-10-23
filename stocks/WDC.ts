@@ -6,12 +6,13 @@ export const WDC = defineStock({
   sector: 'Data Storage / HDD & AI Infrastructure',
   themeColor: '#0073cf',
   updatedOn: '10/23',
-  lastReportTag: 'Q4 FY26',
-  dataReviewedOn: '2026-10-10',
+  lastReportTag: 'Q1 FY27',
+  dataReviewedOn: '2026-10-23',
+  nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
   currentPrice: 343.67,   // 52wk ~$63-$800; ~-27% since late July ($545) and ~-50% off the high, despite a beat-and-raise
   fairPriceRange: '$420 - $1,050',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 388,           // ~388M diluted (Q4 FY26 / Q1 FY27 guide); HDD-only post-Sandisk spin; mkt cap ~$154B
-  rev25: 12919,           // FY2026A (FYE Jul 3 2026) $12,919M (+36%) — base year; revGrowth[0] = FY27. FY27E consensus $19.22B, FY28E $26.36B
+  rev25: 12919,           // FY2026A (FYE Jul 3 2026) $12,919M (+36%) — base year; revGrowth[0] = FY27. FY27E consensus $19.22B (pre-Q1; Q1A $4.38B + Q2 guide ~$7.2B implies upside), FY28E $26.36B
   fcfMargin25: 0.25,      // Q3 FY26 FCF margin 29%, approaching 30%+ (FCF $978M on $1.1B OCF, $145M CapEx)
   taxRate: 0.16,          // ~16% effective
   cash: 1579,            // Jul 3 2026 cash (excl. the retained Sandisk stake)
@@ -19,11 +20,29 @@ export const WDC = defineStock({
   beta: 1.9,
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 20.18,         // FY2027E non-GAAP EPS — stockanalysis consensus (Oct 9 2026; FY28E $32.05). FY26A $10.22 (Q4 $3.56); Q1 FY27 guide $4.00 ±0.15 (~$16 annualized, ramping). No FY guide. Base 12% CAGR = an FY28 surge then a cyclical plateau (FY32E ~$35.6). Prior: $13.00 (Q4 FY26 run-rate). TIKR models a steep AI-storage ramp: FY27E ~$18 -> FY30E ~$52 normalized — a super-cycle the price already embeds.
-  rsRating: 74,           // IBD RS per user, 10/10/2026 (was 99) — ~-27% since late July
-  rsTrend: 'falling',
+  baseEps: 20.85,         // FY2027E non-GAAP EPS consensus post-Q1 (Investing.com, Oct 23 2026; +5.8% over 30d, +14.8% over 90d). LIKELY CONSERVATIVE: Q1A $4.64 + Q2 guide mid $5.80 = $10.44 in H1 alone, so $20.85 implies a FLAT H2 while revenue accelerates (+55% -> +66-72% y/y). Holding the Q2 run-rate through H2 gives ~$22. FY28E $32.05 (pre-Q1). Prior: $20.18 (pre-Q1 consensus).
+  rsRating: 74,           // IBD RS per user, 10/10/2026 (was 99) — PRE-Q1, needs a fresh IBD read after the beat-and-raise
+  rsTrend: 'falling',     // flagged: set before the Q1 FY27 print; re-check direction
   aiImpact: 'TAILWIND',
   // ratingOverride removed at Q4 FY26 review: model reads HOLD on its own (base ≈ spot under the mid-cycle ~11x framework, TAILWIND/RS boost), and the old rationale ("trades ABOVE the $554 analyst median") no longer holds — stock is now below the entire $420-1,050 Street range.
+
+  // Q1 FY27 UPDATE (Oct 22, 2026)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Beat-and-raise again, bigger. Q1 revenue $4.38B (+55% y/y) vs the $4.1B
+  // ±$0.1B guide. Non-GAAP EPS $4.64 vs the $4.00 ±$0.15 guide and ~$4.08
+  // consensus (+14% beat); GAAP $4.63. Quarterly dividend raised 17% to
+  // $0.175. Q2 FY27 GUIDE: revenue +66-72% y/y (~$7.2B) and non-GAAP EPS
+  // $5.60-6.00 vs ~$4.79 consensus — roughly 20% above the Street, and an
+  // ACCELERATION from Q1's +55%, not the cyclical plateau the base case
+  // assumed. Street FY27E EPS moved to ~$20.85 (from $20.18).
+  // Note the H1 math: $4.64 actual + $5.80 guided = $10.44, so the $20.85
+  // FY27 consensus prices in a flat H2. If the Q2 run-rate simply holds,
+  // FY27 lands nearer $22 — the "FY28 surge then plateau" shape in the base
+  // case now looks too conservative and should be revisited at Q2.
+  // MARKET REACTION: the guidance beat did not hold the stock — $343.67 on
+  // Oct 23 (~16.5x FY27E), still ~-50% off the high and below the entire
+  // $420-1,050 Street range. Cyclical-peak scepticism, not an earnings miss.
+  // ─────────────────────────────────────────────────────────────────────────
 
   // Q4 FY26 UPDATE (Aug 5, 2026)
   // ─────────────────────────────────────────────────────────────────────────
