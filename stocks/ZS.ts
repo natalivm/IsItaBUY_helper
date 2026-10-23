@@ -5,7 +5,7 @@ export const ZS = defineStock({
   name: 'Zscaler',
   sector: 'Cybersecurity / Zero Trust',
   themeColor: '#0067D9',
-  currentPrice: 237.76,
+  currentPrice: 255.15,
   fairPriceRange: '$165 - $298',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 173,        // FY27 guide: ~173M non-GAAP diluted shares
   rev25: 3352.5,       // FY26A (FYE Jul 31, 2026) — base year; revGrowth[0] = FY27

@@ -8,7 +8,7 @@ export const WWD = defineStock({
   name: 'Woodward, Inc.',
   sector: 'Aerospace & Defense',
   themeColor: '#3b82f6',
-  currentPrice: 304.85,
+  currentPrice: 303.55,
   fairPriceRange: '$380 – $502',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 59.05,       // 59.05M (stockanalysis, Oct 2026) — buybacks
   rev25: 3570,          // FY25 actual base; FY26 guide +20–23% (consensus $4.34B, +21.6%), FY27E $4.71B (+8.6%)

@@ -8,7 +8,7 @@ export const AGCO = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 106.17,
+  currentPrice: 106.1,
   fairPriceRange: '$98 - $151',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 71.2,       // Q2 2026 diluted (after a $345M buyback in Q2)
   rev25: 10080,        // FY2025; FY26 guide $10.1-10.2B (cut at Q2), FY27E consensus $10.72B

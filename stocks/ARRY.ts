@@ -8,7 +8,7 @@ export const ARRY = defineStock({
   name: 'Array Technologies',
   sector: 'Solar / Industrial Equipment',
   themeColor: '#f59e0b',
-  currentPrice: 3.3,
+  currentPrice: 3.19,
   fairPriceRange: '$4 - $13',  // stockanalysis.com analyst target range (Sep 30 2026)
   shares0: 156,        // Q2 2026 diluted 155.7M
   rev25: 1280,         // FY2025; FY26 guide $1.4-1.5B (consensus $1.43B), FY27E $1.62B

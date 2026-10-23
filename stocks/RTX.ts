@@ -5,7 +5,7 @@ export const RTX = defineStock({
   name: 'RTX Corporation',
   sector: 'Aerospace & Defense',
   themeColor: '#003087',
-  currentPrice: 194.71,
+  currentPrice: 191.01,
   fairPriceRange: '$200 - $250',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 1350,
   rev25: 88600,        // FY2025A (was 90,400); revGrowth[0] = FY26 (guide $95-96B raised; consensus $96.2B, +8.5%), FY27E $103.4B (+7.5%)

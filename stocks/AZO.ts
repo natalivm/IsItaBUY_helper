@@ -8,7 +8,7 @@ export const AZO = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 3270.7,
+  currentPrice: 3200.76,
   fairPriceRange: '$3,000 - $4,800',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 16.6,
   rev25: 20340,        // FY26A (Aug 2026) $20.3B (+7.4%) — base year; revGrowth[0] = FY27 (consensus $21.84B, FY28E $23.40B)

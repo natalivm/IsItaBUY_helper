@@ -8,7 +8,7 @@ export const AVGO = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 323.24,
+  currentPrice: 321.68,
   fairPriceRange: '$216 - $715',  // stockanalysis.com analyst target range, Oct 2 2026
   shares0: 4937,        // Q3 FY26 non-GAAP diluted
   rev25: 105970,       // FY26E (Oct) consensus $105.97B — base year; revGrowth[0] = FY27 (consensus $173.9B, +64%)

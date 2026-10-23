@@ -8,7 +8,7 @@ export const FRSH = defineStock({
   name: 'Freshworks Inc.',
   sector: 'Enterprise SaaS / ITSM & CX',
   themeColor: '#00B89C',
-  currentPrice: 15.32,
+  currentPrice: 15.49,
   fairPriceRange: '$10 - $25',  // stockanalysis.com analyst target range (Sep 14 2026)
   shares0: 260.9,      // 260.92M (stockanalysis, Oct 2026) — buyback retiring the float
   rev25: 838.8,        // FY2025A; revGrowth[0] = FY26 (guide $963.5-966.5M, +15%), FY27E $1.10B (+14%)

@@ -8,7 +8,7 @@ export const ANET = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 171.07,
+  currentPrice: 172.37,
   fairPriceRange: '$190 - $289',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 1276,       // Q2 2026 diluted
   rev25: 9006,         // FY2025; FY26E consensus $12.68B (+41%; mgmt ~$12.6B), FY27E $16.34B (+29%)

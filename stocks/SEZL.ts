@@ -8,7 +8,7 @@ export const SEZL = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 139.3,
+  currentPrice: 132.12,
   fairPriceRange: '$150 - $196',  // stockanalysis.com analyst target range (PTs as of Aug 20 2026)
   shares0: 33.59,         // Finviz Shs Outstand 33.59M (Q2 2026 diluted weighted 34.7M) (float only 16.74M; insiders own ~51%)
   rev25: 450.28,          // FY2025 total revenue $450.28M (+66% YoY); TTM $480.91M

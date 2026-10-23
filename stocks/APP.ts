@@ -8,7 +8,7 @@ export const APP = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 264.28,
+  currentPrice: 260.25,
   fairPriceRange: '$325 - $790',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 337,         // Q2 2026 diluted 337.0M (335M outstanding)
   rev25: 8090,          // FY2026E consensus $8.09B (Q1 $1.84B + Q2 $1.92B + Q3 guide $2.07B) — base year; revGrowth[0] = FY27 (consensus $10.23B, +26%)

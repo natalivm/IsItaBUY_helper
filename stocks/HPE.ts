@@ -8,7 +8,7 @@ export const HPE = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 55.47,    // FY ends Oct 31; ran off ~$14 lows on the Juniper/AI re-rate
+  currentPrice: 56.69,    // FY ends Oct 31; ran off ~$14 lows on the Juniper/AI re-rate
   fairPriceRange: '$53 - $92',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 1449,          // Q3 FY26 diluted weighted shares 1,449M (incl. preferred issued for Juniper); mkt cap ~$106B
   rev25: 34296,           // FY2025 (Oct) revenue $34,296M (+13.8%, partial-year Juniper); LTM $38,794M. Q2 FY26 rev $10.7B (+40%)

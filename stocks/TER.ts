@@ -8,7 +8,7 @@ export const TER = defineStock({
   name: 'Teradyne, Inc.',
   sector: 'Semiconductor Equipment · Test & Automation',
   themeColor: '#f59e0b',
-  currentPrice: 308.75,
+  currentPrice: 308.85,
   fairPriceRange: '$350 - $550',  // stockanalysis.com analyst target range (Sep 12 2026)
   shares0: 157,
   rev25: 3190,         // FY2025; FY26E consensus ~$5.1B (+60%)

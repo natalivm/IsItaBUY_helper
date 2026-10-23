@@ -8,7 +8,7 @@ export const APH = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 73.07,
+  currentPrice: 74.09,
   fairPriceRange: '$85 - $116',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 1278,
   rev25: 23095,        // FY2025 revenue $23.1B (was mis-set to $31B); FY26E consensus $35.6B (+54%), FY27E $42.6B (+20%)
