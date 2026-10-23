@@ -9,6 +9,13 @@ silently. `updatedOn` can't tell you that: the price bot resets it to today on
 every run. The real freshness signal is `dataReviewedOn` (YYYY-MM-DD), which the
 price bot never touches.
 
+Elapsed days alone are not enough, though: a stock can be reviewed on the 11th,
+report on the 21st and still look "fresh" on the 23rd. So each stock can also
+carry `nextEarningsOn: 'YYYY-MM-DD'` — the next scheduled report, taken from the
+company's IR calendar at review time. Once that date passes without a newer
+review, the stock is flagged REPORTED SINCE REVIEW no matter how recent the
+review was. Record the following quarter's date whenever you review a stock.
+
 This tool reads it and prints a prioritized review queue. It NEVER changes any
 value — it only surfaces what a human should look at.
 
@@ -57,6 +64,7 @@ def load_stocks():
         rows.append({
             "ticker": ticker,
             "reviewed": _field(text, "dataReviewedOn"),
+            "nextEarnings": _field(text, "nextEarningsOn"),
             "lastReport": _field(text, "lastReportTag"),
             "override": _field(text, "ratingOverride"),
             "hasDebt": _has_block(text, "debtSafety"),
@@ -99,7 +107,22 @@ def main():
         else:
             fresh.append(r)
 
+    # Earnings landed since the last review: the date-based check elapsed-days can't make.
+    reported = []
+    for r in rows:
+        ne = r["nextEarnings"]
+        if not ne:
+            continue
+        try:
+            ne_d = datetime.strptime(ne, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if ne_d <= today and (not r["reviewed"] or r["reviewed"] < ne):
+            reported.append(r)
+    reported_set = {r["ticker"] for r in reported}
+
     no_report = [r for r in rows if not r["lastReport"]]
+    no_next = [r for r in rows if not r["nextEarnings"]]
     no_debt = [r for r in rows if not r["hasDebt"]]
     no_burry = [r for r in rows if not r["hasBurry"]]
 
@@ -107,6 +130,8 @@ def main():
     print(f"  reviewed & fresh:        {len(fresh)}")
     print(f"  STALE (> {args.days}d):          {len(stale)}")
     print(f"  never reviewed (no date): {len(never)}")
+    print(f"  REPORTED since review:    {len(reported)}")
+    print(f"  missing nextEarningsOn:   {len(no_next)}")
     print(f"  missing lastReportTag:    {len(no_report)}")
     print(f"  missing debtSafety:       {len(no_debt)}")
     print(f"  missing burry:            {len(no_burry)}")
@@ -116,9 +141,19 @@ def main():
         for r in sorted(stale, key=lambda x: -x["age"]):
             print(f"  {r['ticker']:6} reviewed {r['reviewed']}  ({r['age']}d ago)  lastReport={r['lastReport'] or '?'}")
 
+    if reported:
+        print("\n── REPORTED SINCE REVIEW — earnings landed after dataReviewedOn (review regardless of age) ──")
+        for r in sorted(reported, key=lambda x: x["nextEarnings"]):
+            age = f"{r['age']}d ago" if r["age"] is not None else "never reviewed"
+            print(f"  {r['ticker']:6} reported {r['nextEarnings']}  reviewed {r['reviewed'] or '-'} ({age})  lastReport={r['lastReport'] or '?'}")
+
     if never:
         print("\n── NEVER REVIEWED — no dataReviewedOn (set one after checking latest earnings) ──")
         print("  " + "  ".join(r["ticker"] for r in never))
+
+    if no_next:
+        print(f"\n── MISSING nextEarningsOn ({len(no_next)}) — can't tell if earnings landed since review ──")
+        print("  " + "  ".join(r["ticker"] for r in no_next))
 
     if no_report:
         print("\n── MISSING lastReportTag — can't tell which earnings the data reflects ──")
@@ -132,7 +167,7 @@ def main():
         print(f"\n── MISSING burry ({len(no_burry)}) ──")
         print("  " + "  ".join(r["ticker"] for r in no_burry))
 
-    needs_review = len(stale) + len(never)
+    needs_review = len({r["ticker"] for r in stale} | {r["ticker"] for r in never} | reported_set)
     print(f"\n{needs_review} stock(s) need a data review.")
 
     if args.strict and (needs_review or no_report):
