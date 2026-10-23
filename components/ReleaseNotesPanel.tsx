@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ScrollText, Newspaper, Sparkles } from 'lucide-react';
 import { cn } from '../utils';
+import { NEWS_ITEMS } from '../data/newsFeed';
 
 export type PanelTab = 'notes' | 'news';
 
-// Bump this whenever a new release note / news item is added. The in-app
+// Bump this whenever a new release note is added. News items (data/newsFeed.ts)
+// bump the combined UPDATES_VERSION on their own via their id. The in-app
 // "What's New" toast and the unseen-badge dot fire whenever the user's stored
-// seen-version differs from this. (Not a real OS push — same in-app pop-up
-// system as the PWA install prompt.)
-export const UPDATES_VERSION = '2026-06-28.3';
+// seen-version differs from UPDATES_VERSION. (Not a real OS push — same in-app
+// pop-up system as the PWA install prompt.)
+const NOTES_VERSION = '2026-06-28.3';
 export const UPDATES_SEEN_KEY = 'isitabuy-updates-seen';
-// One-line summary shown in the toast.
-export const LATEST_SUMMARY = 'Deep-dive refresh of WDC & RDDT against verified TIKR financials and the latest earnings-call / conference transcripts. WDC holds HOLD (parabolic, above target); RDDT holds BUY (below target, AI-search traffic the key risk). No home-group changes.';
+// One-line summary of the latest release note, shown in the toast.
+const NOTES_SUMMARY = 'Deep-dive refresh of WDC & RDDT against verified TIKR financials and the latest earnings-call / conference transcripts. WDC holds HOLD (parabolic, above target); RDDT holds BUY (below target, AI-search traffic the key risk). No home-group changes.';
 
 interface ReleaseNote {
   date: string;
@@ -114,15 +116,19 @@ const RELEASE_NOTES: ReleaseNote[] = [
   },
 ];
 
-interface NewsItem {
-  date: string;
-  title: string;
-  image?: string;
-  text?: string;
-}
-
-// Chart updates get posted here.
-const NEWS_ITEMS: NewsItem[] = [];
+// News ids start with an ISO date, so the newest post can be compared with the
+// latest release note to decide which one the toast / badge points at.
+const latestNews = NEWS_ITEMS[0];
+const newsIsLatest = !!latestNews && latestNews.id.slice(0, 10) >= NOTES_VERSION.slice(0, 10);
+export const UPDATES_VERSION = `${NOTES_VERSION}|${latestNews?.id ?? ''}`;
+export const LATEST_TAB: PanelTab = newsIsLatest ? 'news' : 'notes';
+export const LATEST_SUMMARY = (() => {
+  if (!newsIsLatest) return NOTES_SUMMARY;
+  const sameDay = NEWS_ITEMS.filter(n => n.date === latestNews.date);
+  return sameDay.length === 1
+    ? `${latestNews.title}. ${latestNews.text ?? ''}`.trim()
+    : `${sameDay.length} watchlist updates: ${sameDay.map(n => n.title).join('; ')}.`;
+})();
 
 const TabButton: React.FC<{ active: boolean; onClick: () => void; icon: React.ReactNode; label: string }> = ({ active, onClick, icon, label }) => (
   <button
@@ -207,6 +213,13 @@ const ReleaseNotesPanel: React.FC<Props> = ({ open, tab, onTabChange, onClose })
                         <span className="text-[10px] font-bold text-slate-500 mono">{item.date}</span>
                         <h3 className="text-sm font-bold text-slate-200">{item.title}</h3>
                       </div>
+                      {item.tickers && item.tickers.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-1.5">
+                          {item.tickers.map(t => (
+                            <span key={t} className="text-[10px] font-black mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400">{t}</span>
+                          ))}
+                        </div>
+                      )}
                       {item.image && (
                         <img src={item.image} alt={item.title} className="w-full rounded-lg border border-slate-700/50 mb-2" />
                       )}

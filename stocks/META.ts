@@ -5,50 +5,90 @@ export const META = defineStock({
   name: 'Meta Platforms',
   sector: 'Social Media / Digital Advertising / AI',
   themeColor: '#1877F2',
-  currentPrice: 664.54,
-  fairPriceRange: '$520 - $900',
-  shares0: 2560,
-  rev25: 245000,         // FY2026 estimate: Q1 $56.3B + Q2 mid $59.5B + H2 ~$130B
-  fcfMargin25: 0.01,     // FY2026 ~0.7% per consensus: $133B+ CapEx all but eliminates FCF
+  currentPrice: 642.62,
+  fairPriceRange: '$580 - $1,050',  // stockanalysis.com analyst target range (Oct 8 2026 — PRE-Q3, needs a refresh)
+  shares0: 2550,
+  rev25: 256200,         // FY2026E $256.2B (+26%): Q1 $56.3B + Q2 $60.8B + Q3A $64.6B + Q4 guide $73-76B (mid $74.5B); FY27E $306.5B (+21%)
+  fcfMargin25: 0.02,     // FY2026E: capex raised to $135-145B; FCF now tracking ~zero (Q2 +$0.8B, Q3 -$2.1B)
   taxRate: 0.14,         // Normalized FY2026 rate: 13-16% guided (Q1 was -23% including $8B one-time benefit)
-  cash: 81200,           // Q1 2026 end: $81.2B
-  debt: 58700,           // Q1 2026 end: $58.7B (up from ~$30B — cloud/infrastructure commitments)
+  cash: 90260,           // Jun 2026 (stockanalysis): $90.3B — STALE, Sep 2026 balance sheet not yet pulled
+  debt: 112320,          // Jun 2026: $112.3B incl. leases (up sharply — data-center financing) — STALE as above
   beta: 1.23,
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 32.50,
-  rsRating: 22,
-  rsTrend: 'falling',
+  baseEps: 29.80,        // FY2026E GAAP EPS consensus post-Q3 (Oct 23 2026): Zacks $29.94, Yahoo $29.38, MarketBeat $30.01. FY27E $33.83 (was $34.55). Absorbs Q3's $9.89B legal charge. Prior: $30.40 (pre-Q3).
+  rsRating: 97,          // IBD RS per user, 10/11/2026 (was 22) — STALE: predates the -16% Oct 13->23 drawdown, needs a fresh IBD read
+  rsTrend: 'rising',     // flagged: price fell ~16% in two weeks, so 'rising' likely no longer holds
   aiImpact: 'TAILWIND',
-  updatedOn: '07/16',
-  lastReportTag: 'Q1 2026',
+  updatedOn: '10/23',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-23',
+  nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
+  // ⚠ 2-FOR-1 EQUIVALENT SPLIT EFFECTIVE JAN 19 2027 — ACTION REQUIRED THEN
+  // ─────────────────────────────────────────────────────────────────────────
+  // Announced with Q3 (Oct 21 2026): a one-time stock dividend of one
+  // non-voting Class C share per Class A/B share, contingent on the Restated
+  // Charter taking effect Jan 19 2027 (payment within 5 business days after;
+  // record/payment dates not yet set). Class A should then trade at ~half.
+  // WHEN IT LANDS: update_prices.py will pick up the post-split price
+  // automatically, but baseEps will NOT rebase itself. Halve baseEps (and
+  // check shares0, which doubles) IN THE SAME COMMIT, or the model will read
+  // ~2x upside overnight and wrongly flip META to STRONG BUY.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Q3 2026 UPDATE (Oct 21, 2026)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $64.60B (+26%, beat ~$63.3B) — but a $9.89B legal charge drove
+  // costs +68% to $51.6B, operating income -37% to $12.99B and operating
+  // margin to 20% (from 40%). GAAP EPS $3.83 (beat ~$3.57); adjusted $7.40
+  // (vs ~$6.53). Q4 GUIDE $73-76B (midpoint just under ~$73.75B consensus).
+  // FY26 capex raised to $135-145B (from $130-145B); FY26 expenses now
+  // $175-179B (was $165-169B). Q3 capex $34.9B, FCF -$2.1B. Reality Labs
+  // loss guided $18-19B in 2026, ~$15B in 2027. Announced a 2-for-1
+  // equivalent Class C stock dividend (see warning above).
+  // Street FY26E EPS cut to ~$29.8 (Zacks -7% over 60d), FY27E to $33.83.
+  // MARKET REACTION: popped ~4% after hours on the beat, then reversed hard
+  // — closed -6.98% Oct 22 ($697.52 -> $648.85), -8.9% on the week and
+  // -15.7% from Oct 13 ($762.50). The AI-spend/FCF story outweighed the beat.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Q2 2026 UPDATE (Jul 29, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $60.8B (+28%, beat ~$60.2B) but EPS $6.18 vs $7.22 expected
+  // (−13% y/y) on $2.4B legal charges + $1.2B severance; expenses +55%. Q3
+  // GUIDE $61-64B (below ~$63.2B consensus). FY26 capex $130-145B (narrowed
+  // up from $125-145B), total expenses raised to $165-169B. Q2 FCF just
+  // $0.8B (capex $31B). Street: Strong Buy (63), PT $580-1,050 (median
+  // $800); FY26E rev $254.1B / EPS $30.40, FY27E $306.5B / $34.55. Stock
+  // $718.67 (~23.6× FY26E), flat over 52 weeks; now net debt ~$22B.
+  // ─────────────────────────────────────────────────────────────────────────
 
   reasonsToBuy: [
     'Dominant social platform with over three and a half billion daily active people and unmatched advertising data flywheel',
     'Muse Spark frontier model signals Meta is now a credible AI lab capable of competing at the top of the capability curve',
     'WhatsApp paid messaging and business AI tools represent a structurally new revenue stream compounding rapidly',
-    'Cheapest Mag-7 name on a quality-adjusted basis despite record operating margins and best-in-class gross margins',
+    'Advertising revenue is still growing faster than almost any mega-cap, showing the AI-driven ad engine is working',
     'Declining share count and strong buyback history provide durable EPS tailwind as the AI build matures',
   ],
 
   risksToBuy: [
-    'Massive AI infrastructure capex commitments severely compress near-term free cash flow with uncertain return on investment',
-    'RS falling with institutions distributing — technical setup argues against buying into current price weakness',
+    'Massive AI infrastructure capex has nearly wiped out free cash flow and pushed the balance sheet into net debt',
+    'Costs are growing much faster than revenue, so earnings are flat this year despite strong sales growth',
     'Reality Labs continues consuming billions in capital with no clear monetization timeline or platform success',
     'Dependence on a single advertising revenue model leaves Meta exposed to any macro-driven ad spending slowdown',
     'Regulatory and antitrust exposure across multiple jurisdictions could structurally constrain the platform\'s growth',
   ],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 600, targetMedian: 820, targetHigh: 1000, numAnalysts: 56 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 580, targetMedian: 800, targetHigh: 1050, numAnalysts: 63 },  // stockanalysis.com (Oct 8 2026)
 
   // rev25 = FY2026 estimate; year-1 = FY2027 growth rate
   revGrowth: [
-    [0.11, 0.08, 0.07, 0.06, 0.05], // Bear: ad saturation, AI capex doesn't ROI
-    [0.15, 0.13, 0.11, 0.10, 0.09], // Base: sustained by AI ad flywheel + WhatsApp monetization
-    [0.20, 0.17, 0.15, 0.13, 0.11], // Bull: Muse Spark + agentic commerce scale
+    [0.13, 0.09, 0.07, 0.06, 0.05], // Bear: ad growth cools, AI capex doesn't ROI
+    [0.19, 0.15, 0.12, 0.10, 0.09], // Base: FY27 ≈ $302B (slight haircut vs $306.5B), AI ad flywheel + WhatsApp
+    [0.23, 0.19, 0.16, 0.13, 0.11], // Bull: Muse Spark + agentic commerce scale
   ],
 
-  // fcfMargin25 = ~1% (FY2026 ~0.7% per consensus); year-1 = FY2027
+  // fcfMargin25 = ~6% (FY2026E); year-1 = FY2027
   fcfMargin: [
     [0.02, 0.05, 0.08, 0.11, 0.14],   // Bear: capex stays elevated, FCF barely recovers
     [0.04, 0.09, 0.12, 0.17, 0.20],   // Base: consensus trajectory — capex caps FCF recovery
@@ -58,22 +98,21 @@ export const META = defineStock({
   exitMultiple: [12, 16, 22],
 
   desc: [
-    '$133-189B/yr CapEx generates insufficient incremental ROI. Business AIs (10M weekly conversations) plateau without a monetization model. Revenue decelerates to 6-8% by FY29 as ad market matures. ' +
-      'FCF stays near-zero as capex never moderates (consensus FCF margin still ~14% by FY30). EPS CAGR ~6% from the $32.50 base. Multiple compresses to ~13× as market re-rates Meta to a capex-heavy ad utility. 5yr target ~$565, ~-2%/yr.',
-    'Q1 2026 validated the ad flywheel (+33% revenue, 41% margins), but AI capex risk is in the base case: per consensus, $133-189B/yr CapEx holds FCF margin to ~0.7% FY26 → ~12% FY29 → ~17% FY30 — it does NOT snap back to the historical 30%+. ' +
-      'WhatsApp paid messaging + business AIs compound into a meaningful third revenue line; CapEx moderates only gradually. ' +
-      'EPS compounds at ~12% CAGR (capex D&A drags GAAP EPS); share count shrinks ~2%/yr; ~16× exit. 5yr target ~$900, ~+8%/yr (near analyst median).',
-    'Muse Spark family + personal/business agents deliver genuinely new monetizable categories for billions of people; AI-native creative tools and agentic commerce expand the ad TAM. ' +
-      'Reality Labs glasses scale toward a second platform. CapEx ROI materializes as inference demand justifies the build, letting FCF leverage finally kick in. EPS compounds at ~16% CAGR; ~19× exit. 5yr target ~$1,300, ~+16%/yr.',
+    '$130B+/yr CapEx generates insufficient incremental ROI and business AIs plateau without a monetization model. Revenue decelerates to mid-single digits by FY30 as the ad market matures, and FCF stays depressed. ' +
+      'EPS compounds ~6% from the FY26E $30.40 base; multiple compresses to ~14x as the market re-rates Meta to a capex-heavy ad utility. 5yr target {target} ({cagr} annualized).',
+    'The ad flywheel keeps compounding (Q2 revenue +28%), but AI capex keeps FCF well below the historical 30%+ for years. WhatsApp paid messaging and business AIs become a meaningful third revenue line; capex moderates only gradually. ' +
+      'EPS compounds ~13% from $30.40 as FY26 legal/severance charges roll off; share count shrinks ~2%/yr; ~18x exit. 5yr target {target} ({cagr} annualized).',
+    'Muse Spark and personal/business agents create new monetizable categories for billions of people; agentic commerce expands the ad TAM and AI glasses scale toward a second platform. ' +
+      'CapEx ROI materializes and FCF leverage kicks in. EPS compounds ~17%; ~21x exit. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    '$125-145B capex doesn\'t translate to incremental revenue. Muse Spark model quality falls short of frontier (OpenAI/Anthropic/Google maintain leads). Reality Labs bleeds on with no monetization path. ' +
-      'FCF compressed indefinitely; buybacks slow as capex consumes cash (LTM buybacks already dropped from $44B to $26B). Multiple compresses on capex anxiety + deceleration.',
-    'Muse Spark + subsequent models drive real product improvements — business AI adoption 10× in one quarter is the signal. WhatsApp paid messaging $885M (+74%) is a structural new revenue stream. ' +
-      'But the base case now assumes capex moderates only slowly: per consensus FCF margin is still ~12% in FY29 / ~17% FY30, well below the historical 30%+ — the ad flywheel funds the AI build rather than dropping to FCF. Share count declining ~2%/yr compounds EPS. RS recovery from 42 → 60+ contingent on visible AI ROI.',
-    'Meta builds the dominant personal + business agent platform. Agentic commerce at scale (shopping, local, health) expands addressable market far beyond display ads. ' +
-      'AI glasses (daily users 3× YoY) evolve into a persistent AI companion — the next major platform. LTM economics (82% gross margin, 41% operating margin, $48B FCF even during peak capex) prove the structural advantage.',
+    'Capex doesn\'t translate into incremental revenue, frontier-model quality falls short of OpenAI/Anthropic/Google, and Reality Labs bleeds on. ' +
+      'FCF stays compressed, buybacks slow as capex consumes cash, and debt keeps rising. Multiple compresses on capex anxiety plus deceleration.',
+    'Ad revenue growth in the high-20s proves AI is improving targeting and engagement. WhatsApp paid messaging and business AIs are structural new revenue streams. ' +
+      'But the base case assumes capex moderates only slowly — the ad flywheel funds the AI build rather than dropping to FCF. RS recovery is contingent on visible AI ROI and expense discipline.',
+    'Meta builds the dominant personal + business agent platform. Agentic commerce at scale expands addressable market far beyond display ads, and AI glasses evolve into a persistent AI companion. ' +
+      'Best-in-class gross margins and operating leverage prove the structural advantage once capex intensity peaks.',
   ],
 
   termGrowth: [0.020, 0.030, 0.035],
@@ -81,8 +120,8 @@ export const META = defineStock({
   ebitdaProxy: [0.42, 0.48, 0.54],
   bullMaOptVal: false,
 
-  epsCagr: [6, 12, 16],
-  exitPE: [13, 16, 19],
+  epsCagr: [6, 13, 17],   // From the FY26E $30.40 base (depressed by one-time charges + D&A ramp)
+  exitPE: [14, 18, 21],   // Was [13,16,19]; Meta's 10-yr median P/E is low-20s — 18x base still bakes in capex anxiety
   prob: [35, 45, 20],
 
   driverOverrides: [
@@ -96,6 +135,13 @@ export const META = defineStock({
       fcfUplift: [0.01, 0.015, 0.015, 0.02, 0.02],
     },
   ],
+
+  debtSafety: {
+    netDebt: 22060,        // Jun 2026: ~$112.3B debt (incl. leases) − ~$90.3B cash (stockanalysis)
+    ebitda: 109660,        // TTM EBITDA
+    fy: 'TTM Q2 2026',
+    note: 'GREEN (~0.2×). Swung from net cash to modest net debt as data-center financing ramps — watch the trajectory, not the level.',
+  },
 
   burry: {
     sbc: 20427,

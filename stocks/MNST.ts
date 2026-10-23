@@ -1,28 +1,42 @@
 import { defineStock } from './defineStock';
 
 export const MNST = defineStock({
-  updatedOn: '07/16',
-  lastReportTag: 'Q4 2025',
+  updatedOn: '10/23',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
   ticker: 'MNST',
   name: 'Monster Beverage Corp',
   sector: 'Consumer Staples / Beverages',
   themeColor: '#22c55e',
-  currentPrice: 99.94,
-  fairPriceRange: '$60 - $100',
-  shares0: 967,
-  rev25: 8200,
+  currentPrice: 46.19,
+  fairPriceRange: '$35 - $57',  // stockanalysis.com analyst target range (Oct 5 2026; split-adjusted)
+  // 2-for-1 split effective Aug 11 2026 — shares were NOT adjusted before this review (967M → 1,960M);
+  // the price had already halved, so the model was double-counting upside.
+  shares0: 1960,
+  rev25: 8290,         // FY2025A $8.29B; revGrowth[0] = FY26 (consensus $9.73B, +17%), FY27E $10.66B (+10%)
   fcfMargin25: 0.215,
   taxRate: 0.22,
-  cash: 2000,
-  debt: 750,
+  cash: 3420,          // Jun 2026 (stockanalysis)
+  debt: 93,
   beta: 0.85,
   costDebt: 0.04,
-  rsRating: 82,
+  rsRating: 89,        // IBD RS per user, 10/11/2026 (was 82)
+  rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
+  // Q2 2026 UPDATE (Aug 6, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Net sales $2.54B (+20.2%; +17.9% FX-neutral), GM 55.9% (+20bp; pricing
+  // and mix offset aluminum/freight), EPS $0.59 (+19%), adj. $0.60 (+15%;
+  // beat). International +34.6% (~46% of sales). Monster Energy segment
+  // +21.6%; Alcohol Brands −15%. Marketing spend up (selling 10.6% of
+  // sales). 2-for-1 split effective Aug 11 2026. Street: Buy (25), PT
+  // $35-57 (median $50); FY26E rev $9.73B / EPS $1.15, FY27E $10.66B /
+  // $1.31. Stock $43.64 (~38× FY26E), up ~27% over 52 weeks.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Best-in-class energy drink brand with dominant shelf positioning and deep Coca-Cola distribution partnership',
     'International runway still vast — APAC and emerging market penetration remains far below North American levels',
-    'Margin recovery well underway with EBITDA margins inflecting sharply back toward historical levels from a trough',
+    'Sales growth accelerated to around twenty percent with international now nearly half the business and margins edging higher',
     'Zero-sugar and functional beverage tailwinds structurally favor Monster\'s core portfolio over sugary alternatives',
     'Foodservice channel significantly underpenetrated relative to traditional retail, offering a durable long-term growth vector',
   ],
@@ -35,11 +49,11 @@ export const MNST = defineStock({
     'Concentration in a single beverage category limits diversification if consumer tastes shift away from energy drinks',
   ],
 
-  analystConsensus: { rating: 'Buy', targetLow: 60, targetMedian: 79, targetHigh: 96, numAnalysts: 24 },
+  analystConsensus: { rating: 'Buy', targetLow: 35, targetMedian: 50, targetHigh: 57, numAnalysts: 25 },  // stockanalysis.com (Oct 5 2026; split-adjusted)
   revGrowth: [
-    [0.07, 0.07, 0.06, 0.06, 0.05],
-    [0.10, 0.10, 0.09, 0.09, 0.08],
-    [0.12, 0.12, 0.11, 0.11, 0.10],
+    [0.15, 0.06, 0.06, 0.05, 0.05],   // Bear: FY26 near consensus, then category maturation
+    [0.17, 0.09, 0.09, 0.09, 0.08],   // Base: FY26 ≈ $9.7B, FY27 ≈ consensus, steady HSD
+    [0.19, 0.12, 0.11, 0.11, 0.10],   // Bull: international + foodservice accelerate
   ],
   fcfMargin: [
     [0.20, 0.20, 0.19, 0.19, 0.19],
@@ -48,14 +62,14 @@ export const MNST = defineStock({
   ],
   exitMultiple: [18, 22, 28],
   desc: [
-    'Category maturation, multiple compression to 25x P/E, and growth deceleration to 8% EPS CAGR. International mix drag weighs on margins. GLP-1 and competitive disruption create headwinds.',
-    'Steady execution as a quality compounder: 9-10% revenue growth, stable 31-32% EBIT margins, and 12-13% EPS CAGR. International expansion and zero sugar tailwinds offset modest P/E compression to 30x.',
-    'International runway accelerates (APAC $33B TAM), foodservice penetration expands, zero-sugar margins lift profitability. 16% EPS CAGR with P/E sustaining at 35x on premium compounder status.',
+    'Category maturation, GLP-1 behavioral shifts and competition slow growth to mid-single digits; international mix drags margins and the multiple compresses sharply from today\'s high-30s P/E. 5yr target {target} ({cagr} annualized).',
+    'Steady execution as a quality compounder: high-single-digit revenue growth after a ~17% FY26, stable low-30s EBIT margins and low-teens EPS growth; international and zero-sugar tailwinds offset gradual P/E compression. 5yr target {target} ({cagr} annualized).',
+    'International runway accelerates, foodservice penetration expands and zero-sugar margins lift profitability; the market keeps paying a premium-compounder multiple. 5yr target {target} ({cagr} annualized).',
   ],
   thesis: [
-    'Q4 2025 (Feb 26) is the first gating test after a 64% run from lows. Soft guidance or margin stall triggers derating from 41x fwd P/E — $60–70 is realistic downside. GLP-1 behavioral shift and functional beverage competition remain structural overhangs.',
-    'Margin recovery from 26.8% to ~31.9% EBITDA is the key inflection the market is rewarding. At 41x fwd P/E on 12-13% EPS growth, valuation remains the limiter. Q4 earnings confirm or deny the story — constructive print extends re-rating; miss compresses multiple. Base: mid-to-high single digit returns as P/E normalizes toward 30x.',
-    'Structural compounder with under-modeled levers: foodservice (70% vs 98% penetration), EM affordable engine, and Coke relationship deepening. Sustained margin expansion to 35%+ EBITDA and 16% EPS CAGR justify analyst targets of $96–98. Premium multiple sustained.',
+    'At ~38x FY26E earnings after a ~27% run, any growth stall or margin miss triggers a de-rating. GLP-1 behavioral shift and functional beverage competition remain structural overhangs, and marketing spend is rising.',
+    'Q2 2026 delivered ~20% sales growth, international +35% and steady ~56% gross margins. The business is executing; valuation is the limiter — returns roughly track mid-teens EPS growth minus some multiple compression.',
+    'Structural compounder with under-modeled levers: foodservice penetration, an emerging-market affordable-energy engine and a deepening Coca-Cola relationship. Sustained margin expansion and mid-teens EPS growth would justify a premium multiple for years.',
   ],
 
   termGrowth: [0.02, 0.025, 0.03],
@@ -64,15 +78,19 @@ export const MNST = defineStock({
   ebitdaProxy: [0.28, 0.32, 0.38],
   bullMaOptVal: 83.6 * 967 * 0.05,
 
-  driverOverrides: [
+  driverOverrides: [   // base entry carries no revPrem/fcfUplift premium (removed Oct 2026 — the base view lives in revGrowth/fcfMargin)
     {},
-    {
-      revPrem: [0.005, 0.005, 0.005, 0.005, 0.005],
-      fcfUplift: [0.005, 0.005, 0.005, 0.01, 0.01],
-    },
+    {},
     {
       revPrem: [0.01, 0.015, 0.015, 0.015, 0.015],
       fcfUplift: [0.01, 0.01, 0.015, 0.015, 0.02],
     },
   ],
+
+  debtSafety: {
+    netDebt: -3330,        // Jun 2026 (stockanalysis): ~$3.42B cash − ~$0.09B debt
+    ebitda: 2930,          // TTM EBITDA
+    fy: 'TTM Q2 2026',
+    note: 'Net cash ~$3.3B, essentially debt-free. Step 1 GREEN.',
+  },
 });

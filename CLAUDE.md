@@ -8,7 +8,7 @@ Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (l
 
 ### Automatic Updates (GitHub Actions)
 
-A workflow (`.github/workflows/update-prices.yml`) runs **every weekday at 9:30 PM UTC** (after US market close). It fetches prices from Yahoo Finance, commits changes to `main`, and triggers a site redeploy. You can also trigger it manually from the **Actions** tab on GitHub.
+A workflow (`.github/workflows/update-prices.yml`) runs **every weekday at 9:47 PM UTC** (after US market close). It fetches prices from Yahoo Finance, commits changes to `main`, and triggers a site redeploy. You can also trigger it manually from the **Actions** tab on GitHub.
 
 ### Manual Update via Script (on your local machine)
 
@@ -66,6 +66,31 @@ Rating thresholds (expected 5-year CAGR — both DCF and EPS_PE feed a 5y-forwar
 Group assignment depends on rating + market cap + RS rating + RS trend (see `classifyStock()` in `App.tsx`).
 
 If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.
+
+### Pattern Break Watchlist prices (home page)
+
+The home page ledger reads `data/patternWatchlist.ts`. The same `update_prices.py` run (logic in `pattern_watchlist.py`) also:
+
+- refreshes every entry's `price` / `priceDate` (the expanded panel's **Now** row and all `%` figures read these), including watchlist-only symbols like SPY/TSLA that have no `stocks/` file;
+- checks targets: a `confirmed` setup (or its `alt`) whose target was **touched** by any daily bar since the last check (low ≤ target for downward, high ≥ target for upward) is flipped to `stage: "target"` with `stageDate` = that day. The bot only sees daily candles, so it catches intraday touches after the close; marking a hit manually earlier is fine, since the bot never reverts `"target"`;
+- flags **pending** setups (forming / signal / either-direction) that **closed** past a limit as `stage: "update"` ("Needs updating": post a new setup), recording `prevStage` and `updateNote`. Limits: forming = invalidation ↔ signal (or confirm if no signal level); signal = signal (close back past it cancels the signal) ↔ confirm; either-direction = breakDown ↔ breakUp. Only a close on the setup's own timeframe counts: daily every run, weekly on Fridays, monthly on the month's last weekday. In between, it's listed for review only;
+- only *reports* (never edits) confirmed setups that **closed** beyond invalidation. Failure needs a follow-through close, so mark those manually.
+
+- uses **regular-session prices only** (9:30–16:00 ET), never pre/post-market. Close-based checks (needs updating, invalidation) are skipped while that day's session is still open, so a run before 16:00 ET never re-labels a setup on an intraday price; target touches count from regular-session highs/lows. The Action runs at 21:47 UTC, after the close year-round.
+
+- **removes finished setups**: target reached (touched any time since confirmation) or failed (a completed close past invalidation plus a follow-through close), each with one News post saying why. "Needs updating" setups stay until a replacement is posted. By hand: `python3 pattern_watchlist.py --prune` (dry run) / `--prune --apply`.
+
+**Every status change goes to the News feed** (`data/newsFeed.ts`, newest first). The script diffs the watchlist against `data/watchlistStatus.json`, so hand edits (a new setup, a re-posted setup, a setup marked failed or removed) are posted too, not just the bot's own changes. **After editing any setup's `stage` by hand, run `python3 pattern_watchlist.py --apply`** (no network; re-checks stored prices and posts the changes), and commit `data/`. The daily price run does the same automatically. A new News post also triggers the in-app "What's New" toast.
+
+`note` prose is hand-written and isn't rewritten when the price moves. Re-read it when a setup changes stage.
+
+**Charts in the expanded rows** (`components/SetupChart.tsx`, TradingView `lightweight-charts`, loaded on first expand) read candles from `public/bars/TICKER_timeframe.json`. The price run rewrites these for every watchlist setup's timeframe (daily 1y, weekly 5y, monthly 10y, regular session only); refresh them by hand with `python3 pattern_watchlist.py --bars`. A setup's levels are drawn as labelled lines and its `stageDate` as a marker. Trendlines come from the setup's (or its `alt`'s) `lines: [{ from: ['YYYY-MM-DD', price], to: ['YYYY-MM-DD', price] }, …]`; the chart extends them to the newest candle.
+
+**Auto-detected setups** (`pattern_detect.py`): stocks without a setup are scanned on the daily and weekly charts (weekly = main, steadier; daily = second setup) for the clearest channel / wedge / hammer per PATTERN_RULES.md, or get a pending "No clear pattern" placeholder. They carry `auto: true` and show a **red dot** until checked by hand — remove `auto: true` once verified. A finished setup leaves a placeholder that gets rescanned. `python3 pattern_detect.py` (dry run), `--apply`, `--compare` (agreement with the posted setups), `--add TICKER` (scan a watchlist-only symbol).
+
+**Pattern rules** (how each pattern — channels, wedges, head & shoulders, hammers — is drawn and how signal / confirm / target / invalidation are set, with verified examples) are in `PATTERN_RULES.md`. Follow them when posting a setup by hand.
+
+**Trendlines are fitted automatically** by `pattern_lines.py` (run by the daily price job for setups without lines; by hand: `python3 pattern_lines.py` dry run, `--apply` to write, `--refit` to replace existing). It reproduces the source tool's construction: lines run through swing highs (upper) / swing lows (lower), at least 1 candle each side; channels are parallel (two-pivot line + parallel through one pivot, or one pivot aimed at the stored level); wedges use two pivots per line; head & shoulders necklines run through the closes of the two troughs. A fit is only accepted when the lines reproduce the setup's own levels: signal = broken line at the signal candle (the candle whose high/low equals `confirm`), target = signal ± the pattern height where the lines start, invalidation ≈ a line's value at the latest candle; forming setups match their break levels at the latest candle. Setups it can't match (and Hammer / Head & Shoulders) are listed and left without lines. After posting a new channel/wedge setup, run `python3 pattern_lines.py --apply`.
 
 ### Price Format
 

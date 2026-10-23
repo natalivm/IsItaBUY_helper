@@ -1,0 +1,341 @@
+/* Pattern Break Watchlist (home page). Everything is scoped under .pbw so it
+   doesn't leak into the stock detail pages. Dark is the app default; the
+   ThemeToggle sets data-theme="light" on <html>. */
+.pbw{
+  --bg:#12151c; --surface:#1a1e27; --surface-2:#222734; --line:#2c3240;
+  --fg:#eceef3; --muted:#a2a8b8; --faint:#6f7688;
+  --accent:#8b9bff;
+  --down:#ec6b6f; --down-soft:#3a2125; --up:#4ec98f; --up-soft:#173327;
+  --wait:#e2b23f; --wait-soft:#372d17; --fail:#9aa0ae; --fail-soft:#272b35;
+  --inset:#151922; --shade:rgba(0,0,0,.45);
+  --trend:#a8915f;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  min-height:100vh;min-height:100dvh;
+}
+:root[data-theme="light"] .pbw{
+  --bg:#f3f4f7; --surface:#ffffff; --surface-2:#eceef3; --line:#dcdfe7;
+  --fg:#161a23; --muted:#5d6475; --faint:#8a90a0;
+  --accent:#3b4fd8;
+  --down:#c8383f; --down-soft:#fbe9ea; --up:#1f8a5b; --up-soft:#e3f4ec;
+  --wait:#a8780f; --wait-soft:#f8efd9; --fail:#6b7180; --fail-soft:#eceef2;
+  --inset:#eef0f4; --shade:rgba(22,26,35,.10);
+  --trend:#9a7b3c;
+}
+.pbw *{box-sizing:border-box}
+.pbw{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:18px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:38.5px 67px}
+.pbw .wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:29px}
+.pbw .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.pbw header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14.5px 29px}
+.pbw header h1{font-family:var(--f-display);font-weight:800;font-size:clamp(33.5px,5vw,48px);letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+.pbw header p{margin:7px 0 0;color:var(--muted);max-width:56ch}
+.pbw .asof{font-size:14.5px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+.pbw .summary{display:flex;flex-wrap:wrap;gap:9.5px}
+.pbw .chip{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:500 15.5px/1 var(--f-body);
+  padding:9.5px 14.5px;border-radius:1199px;cursor:pointer;display:inline-flex;align-items:center;gap:9.5px}
+.pbw .chip .n{font-family:var(--f-mono);color:var(--muted);font-size:14.5px}
+.pbw .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.pbw .chip[aria-pressed="true"] .n{color:inherit;opacity:.7}
+.pbw .chip:focus-visible,.pbw .row-btn:focus-visible,.pbw input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pbw .dot{width:9.5px;height:9.5px;border-radius:50%;background:currentColor}
+.pbw .tools{display:flex;flex-wrap:wrap;gap:14.5px;align-items:center;justify-content:space-between}
+.pbw .pctchip{font-family:var(--f-mono);font-weight:600;min-width:45.5px;justify-content:center}
+.pbw .pctchip .n:empty{display:none}
+.pbw input[type=search]{font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:11px 14.5px;min-width:0;width:288px;max-width:100%}
+.pbw .ledger{background:var(--surface);border:1px solid var(--line);border-radius:17px;overflow:hidden}
+.pbw .head,.pbw .row-btn{display:grid;grid-template-columns:minmax(0,2.1fr) 153.5px minmax(0,1.7fr) minmax(0,1.35fr) minmax(0,1.35fr) 21.5px;gap:17px;align-items:center;padding:11px 19px}
+.pbw .head{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line);background:var(--surface-2)}
+.pbw .head .r,.pbw .row-btn .r{text-align:right}
+.pbw .item+.item{border-top:1px solid var(--line)}
+.pbw .row-btn{appearance:none;width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;padding-block:13px}
+.pbw .row-btn:hover{background:var(--surface-2)}
+.pbw .tk{display:flex;align-items:baseline;gap:11px;min-width:0}
+.pbw .tk b{font-family:var(--f-display);font-weight:800;font-size:20.5px;letter-spacing:-.01em;line-height:1.2;flex:none}
+.pbw .tk span{color:var(--muted);font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pbw .pill{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:15px;padding:3.5px 11px 3.5px 6px;border-radius:1199px;white-space:nowrap}
+.pbw .pill svg{width:17px;height:17px;flex:none}
+.pbw .st-down{color:var(--down);background:var(--down-soft)}
+.pbw .st-up{color:var(--up);background:var(--up-soft)}
+.pbw .st-wait{color:var(--wait);background:var(--wait-soft)}
+.pbw .st-fail{color:var(--fail);background:var(--fail-soft)}
+.pbw .meta{display:flex;align-items:center;gap:9.5px;color:var(--muted);font-size:15.5px;min-width:0;white-space:nowrap}
+.pbw .meta .txt{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pbw .flag{flex:none;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--wait);background:var(--wait-soft);padding:3.5px 8.5px;border-radius:6px}
+.pbw .lvl{display:flex;align-items:baseline;justify-content:flex-end;gap:8.5px;line-height:1.25;white-space:nowrap}
+.pbw .lvl b{font-family:var(--f-mono);font-weight:600;font-size:18px}
+.pbw .dhead{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:7px 14.5px;color:var(--muted);font-size:15.5px;padding-top:7px}
+.pbw .lvl small{font-family:var(--f-mono);font-size:14.5px}
+.pbw .lbl-m{display:none}
+.pbw .chev{width:24px;height:24px;color:var(--faint);transition:transform .2s}
+.pbw .row-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.pbw .detail{padding:5px 24px 29px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:33.5px}
+.pbw .detail h3{font:700 14.5px/1 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin:0 0 14.5px}
+.pbw .stepper{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);position:relative;padding-top:5px}
+.pbw .step{display:flex;flex-direction:column;align-items:center;gap:9.5px;position:relative;font-size:15.5px;color:var(--faint);text-align:center}
+.pbw .step::before{content:"";position:absolute;top:11px;right:50%;width:100%;height:3.5px;background:var(--line);z-index:0}
+.pbw .step:first-child::before{display:none}
+.pbw .step.done::before,.pbw .step.now::before{background:var(--tone)}
+.pbw .step i{width:24px;height:24px;border-radius:50%;background:var(--surface);border:3px solid var(--line);position:relative;z-index:1}
+.pbw .step.done i{background:var(--tone);border-color:var(--tone)}
+.pbw .step.now i{background:var(--surface);border-color:var(--tone);box-shadow:0 0 0 4px color-mix(in srgb,var(--tone) 22%,transparent)}
+.pbw .step.now{color:var(--tone);font-weight:600}
+.pbw .step.done{color:var(--muted)}
+.pbw .step em{font-style:normal;font-size:13px;color:var(--faint);font-family:var(--f-mono)}
+.pbw .ladder{border:1px solid var(--line);border-radius:14.5px;overflow:hidden}
+.pbw .rung{display:flex;justify-content:space-between;align-items:baseline;gap:14.5px;padding:13px 17px}
+.pbw .rung+.rung{border-top:1px solid var(--line)}
+.pbw .rung .k{font-size:14.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+.pbw .rung .v{display:flex;gap:12px;align-items:baseline}
+.pbw .rung .v b{font-family:var(--f-mono);font-size:20.5px;font-weight:600}
+.pbw .rung .v small{font-family:var(--f-mono);font-size:14.5px}
+.pbw .rung.now{background:var(--surface-2)}
+.pbw .rung.now .k{color:var(--muted)}
+.pbw .k-inv{color:var(--down)}
+.pbw .k-tgt{color:var(--up)}
+.pbw .k-lvl{color:var(--muted)}
+.pbw .note{margin:12px 0 0;font-size:15.5px;color:var(--faint)}
+.pbw .rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14.5px}
+.pbw .rules li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start}
+.pbw .rules svg{width:21.5px;height:21.5px;margin-top:2px}
+.pbw .rules b{font-weight:600}
+.pbw .rules .off{color:var(--faint)}
+.pbw .thesis{margin:24px 0 0;padding-top:19px;border-top:1px dashed var(--line);color:var(--muted);max-width:60ch}
+.pbw .flag.key{color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.pbw .altwrap{grid-column:1/-1;display:flex;flex-direction:column;gap:19px;border-top:1px solid var(--line);padding-top:24px}
+.pbw .altgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:33.5px}
+.pbw .callout{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--surface));border-radius:14.5px;padding:17px 19px}
+.pbw .callout p{margin:7px 0 0;color:var(--muted);max-width:72ch}
+.pbw .cl-k{font-size:14.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.pbw .cl-k b{font-size:19px;letter-spacing:0;color:var(--fg);margin-left:4px}
+.pbw .cl-k span{font-family:var(--f-mono);text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400;margin-left:6px}
+@media (max-width:600px){
+.pbw .altgrid{grid-template-columns:1fr}
+}
+.pbw .row-btn[aria-expanded="true"]{background:var(--surface)}
+.pbw .row-btn[aria-expanded="true"] + div{background:var(--inset);box-shadow:inset 0 8px 10px -8px var(--shade),inset 0 -8px 10px -8px var(--shade)}
+.pbw .row-btn[aria-expanded="true"] + div .detail{padding-top:17px}
+.pbw .row-btn[aria-expanded="true"] + div .ladder{background:var(--surface)}
+.pbw .row-btn[aria-expanded="true"] + div .rung.now{background:var(--surface-2)}
+.pbw .row-btn[aria-expanded="true"] + div .step i{background:var(--inset)}
+.pbw .row-btn[aria-expanded="true"] + div .step.done i{background:var(--tone)}
+.pbw .detail{font-size:15.5px;line-height:1.45}
+.pbw .detail h3{font-size:13px;margin-bottom:10px}
+.pbw .detail .dhead,.pbw .detail .note,.pbw .detail .thesis,.pbw .detail .callout p{font-size:15px}
+.pbw .detail .pill{font-size:14.5px}
+.pbw .detail .rung{padding:9.5px 14.5px}
+.pbw .detail .rung .k{font-size:13px}
+.pbw .detail .rung .v b{font-size:17px}
+.pbw .detail .rung .v small{font-size:13px}
+.pbw .detail .rules{gap:11px}
+.pbw .detail .rules svg{width:18px;height:18px}
+.pbw .detail .rules li{grid-template-columns:20.5px 1fr;gap:9.5px}
+.pbw .detail .step{font-size:14.5px}
+.pbw .detail .cl-k{font-size:13px}
+.pbw .detail .cl-k b{font-size:17px}
+.pbw .hist{grid-column:1/-1;border-top:1px solid var(--line);padding-top:19px}
+.pbw .hrow{display:flex;flex-wrap:wrap;align-items:center;gap:7px 14.5px;padding:12px 14.5px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
+.pbw .hrow+.hrow{margin-top:8px}
+.pbw .hrow .hnums{font-size:14.5px;color:var(--fg)}
+.pbw .hrow p{flex-basis:100%;margin:0;font-size:15px;color:var(--faint)}
+.pbw .lvl.two{gap:9.5px}
+.pbw .lvl.two b{font-size:15.5px}
+.pbw .faintb{color:var(--faint)}
+.pbw .lvl small:not([class]){color:var(--faint)}
+.pbw .empty{padding:48px 24px;text-align:center;color:var(--muted)}
+.pbw .foot{font-size:14.5px;color:var(--faint);max-width:70ch}
+@media (max-width:820px){
+.pbw .head .pc,.pbw .row-btn .meta{display:none}
+.pbw .head,.pbw .row-btn{grid-template-columns:minmax(0,1.6fr) 141.5px minmax(0,1.3fr) minmax(0,1.3fr) 19px}
+}
+/* Phone: the list is wider than the screen and the whole page scrolls sideways.
+   Ticker first, status next, then pattern / target / invalidation at full size.
+   No frame; column titles scroll with their columns; expanded panels stay screen-width. The page
+   (.pbw) is the sideways scroller, not the document, so mobile browsers don't
+   zoom out to fit the wide list. */
+@media (max-width:600px){
+.pbw{overflow-x:auto;overscroll-behavior-x:none}
+.pbw .ledger{width:max-content;min-width:100%;border:0;border-radius:0;background:var(--bg);overflow:visible}
+.pbw .head{background:transparent}
+.pbw .head,.pbw .row-btn{grid-template-columns:96px 140px 330px 150px 150px 20px;gap:12px;padding-inline:0 12px}
+.pbw .head .pc,.pbw .row-btn .meta{display:flex}
+.pbw .tk span{display:none}
+.pbw .item:last-child{border-bottom:1px solid var(--line)}
+.pbw .item>div[id],.pbw .empty{width:calc(100vw - 2 * max(16px,env(safe-area-inset-left,0px)))}
+.pbw .detail{grid-template-columns:1fr;padding-inline:4px}
+.pbw .empty-detail{padding-inline:4px}
+.pbw .step{font-size:14.5px}
+}
+@media (prefers-reduced-motion:reduce){
+.pbw .chev{transition:none}
+}
+
+/* App additions: header controls, ticker link to the valuation page, empty rows */
+.pbw .meta{overflow:hidden} /* two flags no longer spill into the Target column */
+.pbw .hdr-ctl{display:flex;align-items:center;gap:9.5px;flex-wrap:wrap}
+.pbw .ctl{appearance:none;position:relative;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:500 14.5px/1 var(--f-body);padding:8.5px 13px;border-radius:1199px;cursor:pointer}
+.pbw .ctl:hover{color:var(--fg)}
+.pbw .ctl svg{width:15.5px;height:15.5px}
+.pbw .ctl .badge{position:absolute;top:-2px;right:-2px;width:9.5px;height:9.5px;border-radius:50%;background:var(--wait)}
+.pbw .row-btn{cursor:pointer}
+.pbw .tk-link{appearance:none;border:0;background:none;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;display:inline-flex;flex:none;text-align:left}
+.pbw .tk-link b{text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 45%,transparent);text-underline-offset:3px;text-decoration-thickness:2px}
+.pbw .tk-link:hover b{color:var(--accent);text-decoration-color:var(--accent)}
+.pbw .tk-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:5px}
+.pbw .empty-detail{padding:17px 24px 24px;color:var(--muted);font-size:15.5px}
+.pbw .kw{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pbw .upd{font:500 12px/1 var(--f-mono);color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:3px 6px;text-transform:none;letter-spacing:0}
+/* "Needs updating": a pending setup closed past a limit and needs a new setup posted */
+.pbw .st-upd{color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.pbw .upd-banner{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;color:var(--fg);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.pbw .upd-banner svg{flex:none;width:17px;height:17px;margin-top:2px;color:var(--accent)}
+/* Expanded-row candle chart (components/SetupChart.tsx) */
+.pbw .chart-box{grid-column:1/-1;position:relative;height:340px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.pbw .chart{position:absolute;inset:0}
+.pbw .chart-msg{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;color:var(--faint);font-size:14px}
+@media (max-width:600px){.pbw .chart-box{height:270px}}
+/* Compact spacing (type sizes unchanged) */
+.pbw{padding-block:20px 40px}
+.pbw .wrap{gap:16px}
+.pbw .head{padding-block:8px}
+.pbw .row-btn{padding-block:8px}
+.pbw .detail{gap:14px 28px;padding:2px 20px 16px}
+.pbw .row-btn[aria-expanded="true"] + div .detail{padding-top:10px}
+.pbw .dhead{padding-top:0}
+.pbw .stepper{padding-top:0}
+.pbw .step{gap:4px;font-size:14px}
+.pbw .step i{width:18px;height:18px}
+.pbw .step::before{top:7.5px;height:3px}
+.pbw .step em{font-size:12px}
+.pbw .chart-box{height:280px}
+.pbw .altwrap{gap:12px;padding-top:14px}
+.pbw .detail .rung{padding:7px 14px}
+.pbw .detail .rules{gap:8px}
+.pbw .thesis{margin-top:12px;padding-top:10px}
+.pbw .hist{padding-top:12px}
+.pbw .pr-grid{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+@media (max-width:600px){
+.pbw .detail{padding-inline:4px}
+.pbw .chart-box{height:230px}
+.pbw .pr-grid{grid-template-columns:1fr;gap:16px}
+}
+/* Desktop: shorter rows; status line and stage tracker share one row */
+@media (min-width:821px){
+.pbw .wrap{gap:12px}
+.pbw .head{padding-block:6px}
+.pbw .row-btn{padding-block:5px}
+.pbw .pill{padding-block:2px}
+.pbw .chart-box{height:260px}
+}
+/* Auto-detected setups: red dot until checked by hand */
+.pbw .auto-dot{display:inline-block;flex:none;align-self:center;width:9px;height:9px;border-radius:50%;background:var(--down);box-shadow:0 0 0 3px color-mix(in srgb,var(--down) 22%,transparent)}
+.pbw .auto-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
+.pbw .altwrap>.detail{padding:0}
+/* Confidence: several stored setups agree on the target */
+.pbw .flag.agree{color:var(--up);background:var(--up-soft)}
+.pbw .agree-note{grid-column:1/-1;font-size:14px;color:var(--muted)}
+.pbw .agree-note b{color:var(--up);font-weight:600}
+
+
+/* ── Expanded row: setup list on the left, selected setup on the right ──
+   Mirrors the source tool: pick a setup on the left, read its chart on the right.
+   The chart keeps its candle width and crops older bars when the column narrows
+   (SetupChart sizes the visible range from the container width). */
+.pbw .dsplit{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:18px;align-items:start;padding:12px 20px 18px}
+.pbw .dsplit .detail{display:flex;flex-direction:column;gap:12px;padding:0;min-width:0}
+.pbw .dpanel{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pbw .dsplit .pr-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.pbw .dsplit .chart-box{height:330px}
+
+.pbw .slist{display:flex;flex-direction:column;gap:14px;min-width:0}
+.pbw .sl-head{font:700 12.5px/1 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.pbw .sl-group{display:flex;flex-direction:column;gap:7px}
+.pbw .sl-gh{display:flex;align-items:center;gap:7px;font:600 12.5px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.pbw .sl-gh svg{width:14px;height:14px;color:var(--faint)}
+.pbw .sl-card{appearance:none;display:flex;flex-direction:column;gap:5px;width:100%;text-align:left;cursor:pointer;
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg);font:inherit;padding:10px 12px}
+.pbw .sl-card:hover{background:var(--surface-2)}
+.pbw .sl-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pbw .sl-card.on{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.pbw .sl-r1{display:flex;align-items:center;gap:8px}
+.pbw .sl-r1 b{font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:-.01em}
+.pbw .sl-r1 .chev{width:16px;height:16px;margin-left:auto;transform:rotate(-90deg)}
+.pbw .sl-tf{font:600 11.5px/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  background:var(--surface-2);border-radius:6px;padding:4px 7px}
+.pbw .sl-card.on .sl-tf{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.pbw .sl-r2{display:flex;align-items:center;gap:6px;font-size:14px;min-width:0}
+.pbw .sl-r2>span{display:inline-flex;align-items:center;gap:5px;background:none;font-weight:600;white-space:nowrap}
+.pbw .sl-r2 svg{width:14px;height:14px;flex:none}
+.pbw .sl-r2 .sl-pat{color:var(--muted);font-weight:400;overflow:hidden;text-overflow:ellipsis;min-width:0;display:block}
+
+/* Panel heading: ticker, status, pattern — the stock's identity next to its chart. */
+.pbw .phead{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.pbw .ph-top{display:flex;align-items:baseline;gap:9px;min-width:0}
+.pbw .ph-tk{font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:-.01em}
+.pbw .ph-name{color:var(--muted);font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pbw .ph-st{display:inline-flex;align-items:center;gap:7px;background:none;padding:0;font-weight:700;font-size:17px}
+.pbw .ph-st svg{width:17px;height:17px;flex:none}
+.pbw .ph-sub{color:var(--muted);font-size:14.5px}
+.pbw .phead .flag{margin-top:3px}
+
+@media (max-width:900px){
+.pbw .dsplit{grid-template-columns:1fr;gap:14px}
+.pbw .slist{gap:10px}
+.pbw .sl-group{flex-direction:row;flex-wrap:wrap;align-items:stretch;gap:8px}
+.pbw .sl-gh{flex-basis:100%}
+.pbw .sl-card{flex:1 1 210px;width:auto}
+}
+@media (max-width:600px){
+.pbw .dsplit{padding-inline:4px}
+.pbw .dsplit .chart-box{height:250px}
+}
+
+/* ── Open row: one at a time, its header pinned with a close control ──
+   The pinned header keeps the ticker, status and ✕ in sight while the panel
+   below is read, so closing never means scrolling back up to find the row. */
+/* `clip` keeps the ledger's rounded corners without making it a scroll
+   container — `hidden` would, and a sticky row inside it would never pin.
+   Browsers without `overflow:clip` drop this and keep `hidden` (no pinning). */
+.pbw .ledger{overflow:clip}
+.pbw .item.open>.row-btn{position:sticky;top:0;z-index:4;background:var(--surface);
+  border-bottom:1px solid var(--line);box-shadow:0 10px 12px -12px var(--shade)}
+.pbw .closex{appearance:none;display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;margin:-3px -3px -3px 0;padding:0;border:0;border-radius:8px;
+  background:none;color:var(--faint);cursor:pointer}
+.pbw .closex svg{width:20px;height:20px}
+.pbw .closex:hover{color:var(--fg);background:var(--surface-2)}
+.pbw .closex:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){
+/* .pbw is the sideways scroller here, so a pinned header has nothing to pin to. */
+.pbw .item.open>.row-btn{position:static;box-shadow:none}
+}
+
+/* ── Prices & Rules: a button in the panel header, opening a dialog ──
+   Keeps the numbers one click away without pushing the chart down the page. */
+.pbw .ptop{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.pbw .pr-btn{appearance:none;flex:none;border:1px solid var(--line);border-radius:1199px;background:var(--surface);
+  color:var(--fg);font:600 14.5px/1 var(--f-body);padding:10px 18px;cursor:pointer}
+.pbw .pr-btn:hover{background:var(--surface-2);border-color:var(--faint)}
+.pbw .pr-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pbw .pr-modal{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);
+  display:grid;place-items:center;padding:max(16px,env(safe-area-inset-left,0px))}
+.pbw .pr-card{width:min(760px,100%);max-height:86vh;overflow:auto;background:var(--surface);
+  border:1px solid var(--line);border-radius:18px;padding:0 24px 24px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
+.pbw .pr-card:focus{outline:none}
+.pbw .pr-top{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 0 16px;background:var(--surface);border-bottom:1px solid var(--line);margin-bottom:20px}
+.pbw .pr-top h2{margin:0;font:700 19px/1.2 var(--f-body);letter-spacing:-.01em}
+.pbw .pr-done{appearance:none;border:1px solid color-mix(in srgb,var(--up) 55%,var(--line));border-radius:1199px;
+  background:var(--surface);color:var(--fg);font:600 15px/1 var(--f-body);padding:10px 22px;cursor:pointer}
+.pbw .pr-done:hover{background:var(--up-soft)}
+.pbw .pr-done:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){
+.pbw .ptop{flex-direction:column;gap:10px}
+.pbw .pr-card{max-height:92vh;padding-inline:16px}
+.pbw .pr-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+.pbw .pr-card{animation:pr-in .14s ease-out}
+@keyframes pr-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+}

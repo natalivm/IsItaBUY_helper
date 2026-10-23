@@ -149,10 +149,6 @@ export function weightedScenarioAverage(
   return (bear * w.bear + base * w.base + bull * w.bull) / total;
 }
 
-// ── Display Constants ──
-
-export const SPLASH_DURATION_MS = 3000;
-
 // ── Scenario Configuration ──
 
 const SCENARIO_META: Record<ScenarioType, { label: string; color: string; bg: string }> = {

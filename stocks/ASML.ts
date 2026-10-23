@@ -5,70 +5,77 @@ export const ASML = defineStock({
   name: 'ASML Holding',
   sector: 'Semiconductor Equipment · EUV Lithography',
   themeColor: '#0064d2',
-  updatedOn: '07/16',
-  currentPrice: 1784.87,
-  fairPriceRange: '$420 - $1,400',
-  shares0: 384,
-  rev25: 34400,
-  fcfMargin25: 0.32,
+  updatedOn: '10/23',
+  currentPrice: 1571.8,
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
+  fairPriceRange: '$868 - $2,902',  // stockanalysis.com analyst target range (Oct 9 2026)
+  shares0: 384.1,
+  rev25: 37900,        // FY2025A €32.7B × ~1.16 USD/EUR; revGrowth[0] = FY26 (guide €43-45B raised at Q2; consensus €42.9B), FY27E €54.7B
+  fcfMargin25: 0.30,
   taxRate: 0.15,
-  cash: 6000,
-  debt: 5000,
+  cash: 8650,          // stockanalysis (Oct 2026), USD
+  debt: 2260,
   beta: 1.15,
   costDebt: 0.025,
-  rsRating: 94,
+  rsRating: 94,         // IBD RS per user, 10/11/2026 (was 94)
+  rsTrend: 'flat',
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Jul 15, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Net sales €9.3B (above guide on Installed Base Mgmt €2.8B; systems
+  // €6.6B), GM 54.0%, net income €2.9B. FY26 GUIDE RAISED to €43-45B, GM
+  // 54-56% (~+35% y/y). Q3 guide €11.0-12.0B, GM 55-57%. Demand driven by AI
+  // accelerators and DRAM pricing (EUV layer count rising). Street: Strong
+  // Buy (37 of 42 Buy/Strong Buy), PT $868-2,902 (median $2,158); FY26E rev
+  // €42.9B / EPS €38.47, FY27E €54.7B / €52.20. Stock $1,780 (~32× FY26E,
+  // ~29× FY27E in USD). Q3 2026 reports mid-October.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'Sole supplier of EUV lithography globally — no credible competitor exists, making this a structural monopoly for decades.',
     'High-NA transition deepens the moat as the most advanced nodes below two nanometers require next-generation ASML machines.',
     'Massive installed base generates a growing, high-margin service and upgrade revenue stream largely independent of new-tool cycles.',
-    'AI-driven advanced node buildout (two nanometer and below) is pulling forward chipmaker capex and filling the order backlog.',
+    'AI accelerator and DRAM demand pushed the full-year outlook sharply higher, well ahead of the long-term plan trajectory.',
     'Multi-billion euro buyback program consistently reduces share count, compounding per-share earnings growth on top of revenue gains.',
   ],
 
   risksToBuy: [
     'At a premium forward multiple, even a modest cycle pause or TSMC capex delay translates directly into painful downside.',
-    'Near-term product mix headwinds from dry DUV and EUV 3600 transitions create earnings noise before 2027 improves.',
+    'After a huge step-up year, the setup assumes chipmaker and memory capex stays elevated — any digestion phase hits orders hard.',
     'Export restrictions on China sales could remove a significant revenue chunk with little warning or offsetting volume.',
     'High-NA ramp depends on Intel qualification proceeding on schedule — delays would defer a key multi-year growth driver.',
-    'Best risk-adjusted entry is materially below current levels — patience is required to achieve an attractive return from here.',
+    'The stock has rallied hard over the past year, so the valuation already discounts much of the memory and AI upcycle.',
   ],
 
   prob: [30, 40, 30],
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 1150, targetMedian: 1476, targetHigh: 1911, numAnalysts: 12 },
+  analystConsensus: { rating: 'Strong Buy', targetLow: 868, targetMedian: 2158, targetHigh: 2902, numAnalysts: 42 },  // stockanalysis.com (Oct 9 2026)
   revGrowth: [
-    [0.05, 0.05, 0.05, 0.04, 0.04],
-    [0.12, 0.13, 0.13, 0.12, 0.12],
-    [0.19, 0.17, 0.16, 0.15, 0.15],
+    [0.28, 0.02, -0.05, 0.04, 0.04],  // Bear: FY26 at low end of guide, then a memory/logic capex digestion
+    [0.33, 0.22, 0.10, 0.09, 0.08],   // Base: FY26 ≈ €43.5B, FY27 ~€53B (haircut vs €54.7B consensus), then normal cycle
+    [0.36, 0.28, 0.16, 0.13, 0.11],   // Bull: AI + DRAM EUV intensity sustain a multi-year supercycle
   ],
   fcfMargin: [
-    [0.20, 0.20, 0.22, 0.22, 0.22],
-    [0.26, 0.28, 0.30, 0.31, 0.32],
-    [0.28, 0.30, 0.33, 0.35, 0.36],
+    [0.24, 0.22, 0.22, 0.24, 0.24],
+    [0.29, 0.30, 0.31, 0.31, 0.32],
+    [0.31, 0.33, 0.34, 0.35, 0.36],
   ],
   exitMultiple: [20, 25, 30],
   desc: [
-    'Capital spending pauses at TSMC and Intel as fab readiness delays persist and AI capex moderates. ' +
-      'Margin pressure from the dry DUV and EUV 3600 product mix does not resolve by 2027. ' +
-      'Earnings grow at 10% annually but the multiple compresses to its historical floor of 25x. ' +
-      'At current valuation this translates to only about 4% annualized returns — essentially dead money.',
-    'A normal semiconductor cycle plays out with AI and datacenter demand sustaining EUV dominance. High-NA ramps on schedule. ' +
-      'The installed base plus upgrades grow steadily, and the 2026 margin dip recovers by 2027 as the product mix improves. ' +
-      'The 12 billion euro buyback program adds 1-2% to annual earnings growth through 2028. ' +
-      'Earnings compound at 18% annually with a 30x exit multiple, delivering around 16% annualized returns.',
-    'An AI capex supercycle drives massive advanced node buildout at 2nm and below, with High-NA fully adopted after Intel qualification. ' +
-      'DRAM EUV intensity accelerates as memory markets tighten and single EUV exposures replace multi-pattern DUV. ' +
-      'Metrology and inspection revenues grow significantly, and the buyback program accelerates earnings per share. ' +
-      'Earnings compound at 22% annually with a 35x premium multiple, delivering roughly 24% annualized returns.',
+    'After the FY26 step-up, TSMC, Samsung and memory makers pause and orders fall; revenue drifts lower into FY28 before recovering. ' +
+      'Margins slip back toward the low-50s gross margin range and the multiple compresses toward its historical floor. 5yr target {target} ({cagr} annualized).',
+    'FY26 lands near the raised €43-45B guide and FY27 grows ~20%+ on AI accelerator and DRAM EUV demand, then growth normalizes to high single digits. ' +
+      'High-NA ramps on schedule and the installed base keeps compounding; buybacks add to per-share growth. 5yr target {target} ({cagr} annualized).',
+    'An AI capex supercycle drives sustained advanced-logic and DRAM buildout, High-NA becomes standard at 2nm and below, and EUV layer counts keep rising. ' +
+      'Revenue compounds well past the long-term plan and margins expand toward the high-50s. 5yr target {target} ({cagr} annualized).',
   ],
 
   ebitdaProxy: [0.35, 0.45, 0.55],
   bbRate: [0.01, 0.02, 0.025],
   debtSafety: {
-    netDebt: -1000,
-    ebitda: 10500,
-    fy: 'FY25',
-    note: 'Slight net cash position ($6B cash vs $5B debt). EUV monopoly generates strong cash flows; balance sheet is conservatively managed.',
+    netDebt: -6390,        // Oct 2026: ~$2.26B debt − ~$8.65B cash (stockanalysis)
+    ebitda: 15380,         // TTM EBITDA (stockanalysis)
+    fy: 'TTM Q2 2026',
+    note: 'Net cash ~$6.4B. EUV monopoly generates strong cash flows; balance sheet is conservatively managed.',
   },
 });

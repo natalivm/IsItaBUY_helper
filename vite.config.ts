@@ -4,6 +4,38 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// The watchlist data keeps up to 5 detected setups per timeframe in `more: [...]` for the
+// Python scripts; the site only shows the best weekly + daily setup (and their precomputed
+// `agree` summary), so the stored extras are stripped from the bundle.
+function stripStoredSetups() {
+  return {
+    name: 'strip-stored-setups',
+    enforce: 'pre' as const,
+    transform(code: string, id: string) {
+      if (!id.replace(/\\/g, '/').endsWith('data/patternWatchlist.ts')) return null;
+      let out = '';
+      let i = 0;
+      const key = /\n[ \t]*more:\s*\[/g;
+      let m: RegExpExecArray | null;
+      while ((m = key.exec(code))) {
+        let j = m.index + m[0].length, depth = 1;
+        while (j < code.length && depth) {
+          const ch = code[j];
+          if (ch === '"') { j++; while (j < code.length && code[j] !== '"') j += code[j] === '\\' ? 2 : 1; }
+          else if (ch === '[' || ch === '{') depth++;
+          else if (ch === ']' || ch === '}') depth--;
+          j++;
+        }
+        if (code[j] === ',') j++;
+        out += code.slice(i, m.index);
+        i = j;
+        key.lastIndex = j;
+      }
+      return { code: out + code.slice(i), map: null };
+    },
+  };
+}
+
 export default defineConfig({
   base: '/IsItaBUY_helper/',
   server: {
@@ -11,6 +43,7 @@ export default defineConfig({
     host: '0.0.0.0',
   },
   plugins: [
+    stripStoredSetups(),
     react(),
     tailwindcss(),
     VitePWA({

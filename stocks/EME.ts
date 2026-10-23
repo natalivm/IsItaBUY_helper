@@ -3,57 +3,69 @@ import { defineStock } from './defineStock';
 export const EME = defineStock({
   ticker: 'EME',
   name: 'EMCOR Group, Inc.',
-  updatedOn: '07/16',
-  lastReportTag: 'Q1 2026',
+  updatedOn: '10/23',
+  lastReportTag: 'Q2 2026',
+  dataReviewedOn: '2026-10-11',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 750.04,
-  fairPriceRange: '$560 - $1350',
-  shares0: 44.7,
-  rev25: 16990,             // Revenue 2025A ($M); FY2025 actual; +18.5% YoY (record)
+  currentPrice: 647.66,
+  fairPriceRange: '$885 - $1,200',  // stockanalysis.com analyst target range (Aug 8 2026)
+  shares0: 44.11,
+  rev25: 16990,             // FY2025A; revGrowth[0] = FY26 (guide $20.0-20.5B raised; consensus $20.3B, +19.6%), FY27E $22.3B (+10%)
   fcfMargin25: 0.058,       // ~5.8% FCF margin; OCF $1.3B / $16.99B rev
   taxRate: 0.245,
-  cash: 1100,               // Q4'25 actual cash on hand ($M); up from $650M modeled
-  debt: 800,
+  cash: 924,                // Jun 2026 (stockanalysis)
+  debt: 548,
   beta: 1.08,
   costDebt: 0.052,
-  baseEps: 25.87,           // 2025A adj. EPS (record; +20% YoY); 2026E guided $27.25–29.25
+  baseEps: 32.86,           // FY26E EPS consensus (guide raised at Q2 to $32.00-33.25; FY25A $25.87; FY27E $36.75 +12%)
   modelType: 'EPS_PE',
-  rsRating: 83,
-  ratingOverride: 'HOLD',  // Model STRONG BUY (~+36%) but a cyclical electrical contractor near peak margins on the data-center build; consensus Buy. HOLD on cycle/valuation risk.
+  rsRating: 88,             // IBD RS per user, 10/11/2026 (was 83)
+  rsTrend: 'rising',
+  // ratingOverride 'HOLD' dropped per user 10/11/2026 — RS 88 rising met the upgrade trigger; the model's BUY (~9% base CAGR, quality-boosted) stands.
   aiImpact: 'TAILWIND',
+  // Q2 2026 UPDATE (Jul 30, 2026) — first data review
+  // ─────────────────────────────────────────────────────────────────────────
+  // Record revenue $5.15B (+19.8%; organic +19.6%), diluted EPS $9.06
+  // (+34.8%; beat ~$7.23), op margin 10.6%. Record RPO $17.14B (+$5.2B y/y).
+  // FY26 GUIDE RAISED: revenue $20.0-20.5B (from $18.5-19.25B), EPS
+  // $32.00-33.25 (from $28.25-29.75). Buying five union electrical
+  // contractors (~$625M trailing revenue). Street: Buy (10), PT $885-1,200
+  // (median $1,047); FY26E rev $20.3B / EPS $32.86, FY27E $22.3B / $36.75.
+  // Stock $789.45 (~24× FY26E) — below the lowest analyst target.
+  // ─────────────────────────────────────────────────────────────────────────
   reasonsToBuy: [
     'AI data center mechanical scope is structurally larger than prior cloud builds, driving outsized backlog growth for EMCOR\'s mechanical segment',
     'Record remaining performance obligations provide exceptional multi-year revenue visibility for a construction-services business',
     'Pristine capital allocation — buybacks vastly exceed SBC and a net-cash balance sheet funds an active M&A pipeline',
-    'Nine consecutive quarters of EPS acceleration demonstrate repeatable execution across complex, large-scale projects',
+    'Guidance was raised sharply again, with earnings growing far faster than revenue on record margins and a record backlog',
     'Prefabrication and virtual design capabilities create a productivity moat that competitors cannot replicate quickly at scale',
   ],
 
   risksToBuy: [
     'Data center capex digestion or hyperscaler spending slowdown could rapidly deflate the elevated backlog and growth premium',
-    'Institutional distribution near the prior high is a caution flag, with Acc/Dist at its weakest reading and a potential topping pattern forming',
+    'Margins are at record highs for a construction-services business — any normalization would hit earnings hard',
     'Construction services margins are thin and highly sensitive to labor cost inflation or union contract renegotiations',
     'HOLD override reflects valuation at a full cyclical premium — fundamentals are strong but the entry price is demanding',
     'Acquisition integration risk grows as EMCOR pursues larger M&A to sustain the data center growth trajectory',
   ],
 
   verdictNarrative:
-    'The fundamental case remains strong — Q1 2026 record revenue +19.7%, EPS +30%, RPO $15.62B (+33%), and raised FY2026 guidance. Long-term base-case target ~$1,143 implies 38% upside. ' +
-    'However the chart is flashing warning signs that override the model rating. A potential head-and-shoulders pattern is forming: left shoulder ~$850, head ~$965, right shoulder currently building ~$827. MACD has crossed bearish with a widening red histogram (-11.98). Acc/Dist rated E — institutions were selling into the $950–965 head. ' +
-    'HOLD. Do not add here. The key level is the neckline at ~$780–810 — a break on volume would confirm the H&S and open a measured move toward $600–620. A reclaim of the 50-day MA ($833) with improving Acc/Dist would flip this back to BUY.',
+    'The fundamental case keeps getting stronger — Q2 2026 record revenue +19.8%, EPS +35%, a record $17.1B RPO, and FY2026 EPS guidance raised to $32.00-33.25. The stock now trades below the lowest analyst target. ' +
+    'But EMCOR is a construction-services business earning record margins at the peak of a data-center build cycle, and the stock has been unable to hold its highs. Paying ~24× peak-cycle earnings leaves little room if data-center spending digests. ' +
+    'BUY. The business is executing superbly and relative strength has confirmed a new uptrend (RS 88, rising); the risk is cyclical, not operational, so size positions with a data-center digestion in mind.',
 
   // ── Scenarios ──
-  epsCagr: [7, 13, 17],        // bear: DC slows; base: DC normalizes; bull: DC high-teens + M&A
-  exitPE: [18, 24, 28],        // bear: ordinary industrial; base: quality cyclical; bull: premium for DC visibility
+  epsCagr: [5, 11, 16],        // From the FY26E $32.86 base (re-based Oct 2026; was [7,13,17] off FY25A $25.87)
+  exitPE: [16, 22, 27],        // bear: ordinary industrial; base: quality cyclical; bull: premium for DC visibility
   prob: [20, 50, 30],       // nudged bull after DC RPO +60% YoY and AI mechanical multiplier confirmed
 
 
-  analystConsensus: { rating: 'Buy', targetLow: 675, targetMedian: 759, targetHigh: 900, numAnalysts: 12 }, // pre-Q4'25; likely revised up post-earnings
+  analystConsensus: { rating: 'Buy', targetLow: 885, targetMedian: 1047, targetHigh: 1200, numAnalysts: 10 },  // stockanalysis.com (Aug 8 2026)
   revGrowth: [
-    [0.08, 0.05, 0.03, -0.02, 0.03],
-    [0.14, 0.10, 0.09, 0.08, 0.07],
-    [0.16, 0.14, 0.12, 0.10, 0.10],
+    [0.17, 0.02, 0.00, -0.02, 0.03],  // Bear: FY26 near guide, then data-center digestion
+    [0.20, 0.10, 0.08, 0.08, 0.07],   // Base: FY26 ≈ $20.3B, FY27 ≈ consensus, then HSD
+    [0.21, 0.14, 0.12, 0.10, 0.10],   // Bull: AI data-center supercycle + M&A
   ],
   fcfMargin: [
     [0.048, 0.045, 0.042, 0.040, 0.042],
@@ -67,22 +79,19 @@ export const EME = defineStock({
   bullMaOptVal: 706 * 44.7 * 0.04,
 
   desc: [
-    'Data center demand drops sharply, cutting about 12% of revenue despite starting 2026 with record $13.25B RPOs. Variable union labor absorbs some of the pain, but margins drift down to the 8-8.5% range. ' +
-      'The market re-rates EMCOR as an ordinary industrial at 18x. Earnings still grow at about 7% annually from the $25.87 FY2025 base, but multiple compression drives roughly -4% annualized stock returns. ' +
-      'The downside is driven by valuation reset, not bankruptcy risk. Managed but painful.',
-    'Data center demand normalizes but holds at healthy levels. Organic growth runs in the high-single to low-double digits, backed by confirmed productivity gains (revenue 2x headcount growth). ' +
-      'Capital allocation balanced: M&A pipeline strong, 60% dividend increase, $500M incremental buyback. The market values EMCOR as a quality cyclical at 24x. ' +
-      'Earnings grow at roughly 13% annually from the $25.87 FY2025 base, delivering about 7% annualized stock returns. Good company, not cheap entry.',
-    'The AI data center supercycle extends through 2031. The 1.5–2x mechanical scope multiplier on AI vs. cloud-era data centers drives disproportionate revenue growth in the Mechanical segment. ' +
-      'Prefab/VDC/BIM productivity moat pushes margins toward 10%+. Acquisitions execute well from the strong M&A pipeline. The market pays a 28x premium for execution and visibility. ' +
-      'Earnings compound at roughly 17% annually from the $25.87 FY2025 base, delivering about 14% annualized stock returns.',
+    'Data center demand drops sharply after the 2026 surge, and margins drift back toward the 8-8.5% range as variable union labor absorbs only part of the pain. ' +
+      'The market re-rates EMCOR as an ordinary industrial at 16x; earnings grow only ~5% annually from the FY26E $32.86. The downside is a valuation reset, not bankruptcy risk. 5yr target {target} ({cagr} annualized).',
+    'Data center demand normalizes but holds at healthy levels; the record $17B RPO converts and organic growth runs high-single digits, supported by tuck-in M&A and buybacks. ' +
+      'Earnings compound ~11% from $32.86 and the market values EMCOR as a quality cyclical at 22x. 5yr target {target} ({cagr} annualized).',
+    'The AI data center supercycle extends through 2031; the larger mechanical/electrical scope on AI builds drives disproportionate growth, prefab/VDC productivity pushes margins higher, and acquisitions execute well. ' +
+      'Earnings compound ~16% and the market pays a 27x premium for execution and visibility. 5yr target {target} ({cagr} annualized).',
   ],
 
   debtSafety: {
-    netDebt: -300,
-    ebitda: 1750,
-    fy: 'FY25',
-    note: 'Net cash — $1.1B cash vs $800M debt. Strong FCF supports M&A pipeline and $500M+ annual buyback program.',
+    netDebt: -376,         // Jun 2026 (stockanalysis): ~$924M cash − ~$548M debt
+    ebitda: 1990,          // TTM EBITDA
+    fy: 'TTM Q2 2026',
+    note: 'Net cash ~$0.4B. Strong FCF supports the M&A pipeline (five electrical contractors being acquired) and ongoing buybacks.',
   },
 
   burry: {

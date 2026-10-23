@@ -18,6 +18,13 @@ Friday and flags stocks that swung >15% over the week for review.
 After every --apply run, rating changes are automatically reported: stocks that
 crossed a rating threshold (STRONG BUY / BUY / HOLD / OVERVALUED) due to price
 action are flagged. Use --push to commit and push those changes to git.
+
+The same run also refreshes the home-page Pattern Break Watchlist
+(data/patternWatchlist.ts): every entry's `price` / `priceDate` is updated,
+confirmed setups whose target was touched are flipped to stage "target",
+pending setups that closed past a limit are flipped to "update" (needs a new
+setup), and every status change is posted to the News feed (data/newsFeed.ts).
+See pattern_watchlist.py.
 """
 
 import argparse
@@ -30,6 +37,10 @@ import sys
 import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
+
+import pattern_detect
+import pattern_lines
+import pattern_watchlist
 
 STOCKS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stocks")
 HISTORY_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "price_history.json")
@@ -491,7 +502,7 @@ def print_rating_report(all_rows, changed):
 
 # ── Git Operations ──
 
-def git_commit_push(changed_files, changes, rating_changes):
+def git_commit_push(changed_files, changes, rating_changes, wl_result=None):
     """Stage price-changed files, commit with a rating-aware message, and push."""
     if not changed_files:
         print("\nNothing to commit.")
@@ -505,7 +516,13 @@ def git_commit_push(changed_files, changes, rating_changes):
 
     # Build commit message
     symbols = [sym for sym, _, _ in changes]
-    msg_parts = [f"Update prices: {', '.join(symbols)}"]
+    msg_parts = [f"Update prices: {', '.join(symbols)}" if symbols else "Update pattern watchlist prices"]
+
+    if wl_result and wl_result['news']:
+        msg_parts.append("")
+        msg_parts.append("Watchlist status changes:")
+        for it in wl_result['news']:
+            msg_parts.append(f"  {it['title']}")
 
     if rating_changes:
         msg_parts.append("")
@@ -855,8 +872,13 @@ def main():
         print_rating_report(all_rows, [])
         return
 
-    prices = fetch_prices(tickers)
-    print(f"Got prices for {len(prices)}/{len(tickers)} stocks\n")
+    # Watchlist-only symbols (e.g. SPY, TSLA) are fetched alongside the stock files.
+    wl_symbols = pattern_watchlist.get_watchlist_tickers()
+    fetch_list = dict(tickers)
+    for sym in wl_symbols:
+        fetch_list.setdefault(sym, None)
+    prices = fetch_prices(fetch_list)
+    print(f"Got prices for {len([s for s in tickers if s in prices])}/{len(tickers)} stocks\n")
 
     # Compute rating changes BEFORE writing files (uses old prices vs new prices)
     all_rows, rating_changes = check_rating_changes(tickers, prices)
@@ -885,13 +907,54 @@ def main():
     # Always show rating check results
     print_rating_report(all_rows, rating_changes)
 
+    # Pattern watchlist: refresh `price` / `priceDate`, flip confirmed setups that hit target.
+    wl_result = None
+    if wl_symbols:
+        print(f"\nFetching daily bars for {len(wl_symbols)} watchlist symbols...")
+        quotes = pattern_watchlist.fetch_daily_bars(wl_symbols, HEADERS)
+        today = datetime.now().strftime("%Y-%m-%d")
+        for sym in wl_symbols:
+            if sym in prices:  # keep the watchlist on the same quote as the stock files
+                quotes.setdefault(sym, {"date": today, "bars": []})["price"] = prices[sym]
+        wl_result = pattern_watchlist.update_watchlist(quotes, apply=args.apply)
+        wl_missing = [s for s in wl_symbols if s not in quotes]
+        pattern_watchlist.print_watchlist_report(wl_result, wl_missing, args.apply)
+
     if args.apply:
         record_prices(tickers, prices)
 
+        # Candles for the watchlist's expanded-row charts (public/bars/).
+        if wl_symbols:
+            bars_ok, bars_bad = pattern_watchlist.write_chart_bars(HEADERS)
+            print(f"\nWrote {len(bars_ok)} chart candle file(s)." + (f" Failed: {', '.join(bars_bad)}" if bars_bad else ""))
+            # Trendlines for setups that don't have them yet (e.g. newly posted ones).
+            new_lines, _ = pattern_lines.run(apply=True, verbose=False)
+            if new_lines:
+                print(f"Fitted trendlines for: {', '.join(n for n, _, _ in new_lines)}")
+            # Drop setups that are done (target reached / failed); each gets a News post.
+            pruned, _ = pattern_watchlist.prune_finished(apply=True)
+            if pruned:
+                print("Closed setups:\n  " + "\n  ".join(pruned))
+            # Look for a new setup on stocks with none, or only a "No clear pattern" placeholder.
+            new_setups = pattern_detect.run(apply=True, verbose=False)
+            # Refresh the "N agree" summaries on the shown setups.
+            with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                wl_text = fh.read()
+            annotated = pattern_watchlist.annotate_agreement(wl_text)
+            if annotated != wl_text:
+                with open(pattern_watchlist.WATCHLIST_FILE, 'w') as fh:
+                    fh.write(annotated)
+            if new_setups:
+                print("Auto-detected (red dot, check by hand):\n  " + "\n  ".join(f"{t}: {d}" for t, d in new_setups))
+
         # Push to git if requested
-        if args.push and changes:
+        wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))
+        if args.push and (changes or wl_changed):
             changed_paths = [tickers[sym]['path'] for sym, _, _ in changes if sym in tickers]
-            git_commit_push(changed_paths, changes, rating_changes)
+            if wl_changed:
+                changed_paths += [pattern_watchlist.WATCHLIST_FILE, pattern_watchlist.NEWS_FILE,
+                                  pattern_watchlist.SNAPSHOT_FILE, pattern_watchlist.BARS_DIR]
+            git_commit_push(changed_paths, changes, rating_changes, wl_result)
 
         # Auto-run weekly review on Fridays
         if datetime.now().weekday() == 4:  # Friday
