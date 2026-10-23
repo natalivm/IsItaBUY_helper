@@ -14798,5 +14798,37 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $199.76 on Oct 5.",
       },
     ],
+  },
+  {
+    // Watchlist-only symbol (no stocks/ file). Candles arrive with the next price run.
+    ticker: "NET",
+    name: "Cloudflare, Inc.",
+    price: 325.73,
+    priceDate: "2026-10-23",
+    pattern: "Rising Wedge",
+    timeframe: "weekly",
+    direction: "down",
+    stage: "forming",
+    signal: 304.38,
+    invalidation: 372.93,
+    target: 200.09,
+    failRule: "a completed weekly close above $372.93, then a follow-through close above that candle's high.",
+    note: "Price climbed all year inside a rising wedge. The September push into the high $300s stalled and reversed hard, leaving the stock back in the low $300s near the wedge's lower line. A weekly close below $304.38 would start the signal; the measured move points to $200.09.",
+    alt: {
+      pattern: "Ascending Channel",
+      timeframe: "weekly",
+      direction: "both",
+      stage: "forming",
+      breakUp: 365.38,
+      breakDown: 287.60,
+      goalUp: 443.16,
+      goalDown: 209.82,
+      note: "The wider rising channel the same advance sits in, drawn off the spring low. Price is mid-channel after the September reversal, so neither side has broken: a weekly close above $365.38 or below $287.60 starts a signal.",
+    },
+    history: [
+      { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-16",
+        confirm: 346.15, invalidation: 429.53, target: 304.48,
+        note: "Daily channel break confirmed below $346.15 and reached the $304.48 target. A completed move, not a new entry." }
+    ],
   }
 ];

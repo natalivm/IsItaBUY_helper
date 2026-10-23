@@ -140,6 +140,27 @@
    "confirm": 336.3,
    "invalidation": 156.68,
    "target": 521.79
+  },
+  {
+   "ticker": "NET",
+   "timeframe": "weekly",
+   "pattern": "Rising Wedge",
+   "direction": "down",
+   "stage": "forming",
+   "signal": 304.38,
+   "invalidation": 372.93,
+   "target": 200.09
+  },
+  {
+   "ticker": "NET",
+   "timeframe": "daily",
+   "pattern": "Ascending Channel",
+   "direction": "down",
+   "stage": "target",
+   "stageDate": "2026-10-16",
+   "confirm": 346.15,
+   "invalidation": 429.53,
+   "target": 304.48
   }
  ]
 }

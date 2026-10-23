@@ -3095,6 +3095,18 @@
   "stage": "confirmed",
   "ticker": "NBIS"
  },
+ "NET|main": {
+  "label": "main",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "forming",
+  "ticker": "NET"
+ },
+ "NET|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "forming",
+  "ticker": "NET"
+ },
  "NFLX|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",

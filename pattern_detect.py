@@ -455,7 +455,14 @@ def compare(now_et):
     if os.path.exists(ref_path):
         print("\nScreenshot references (pattern_reference.json):")
         for p in json.load(open(ref_path))['setups']:
-            b = pl.load_bars(p['ticker'], p['timeframe']) or get_bars(p['ticker'], p['timeframe'], False)
+            b = pl.load_bars(p['ticker'], p['timeframe'])
+            if b is None:
+                # Newly posted symbol: its candles arrive with the next price run.
+                try:
+                    b = get_bars(p['ticker'], p['timeframe'], False)
+                except Exception as exc:
+                    print(f"SKIP {p['ticker']:<5} {p['timeframe']:<6} {p['pattern']} — no candles yet ({exc.__class__.__name__})")
+                    continue
             b['tf'] = p['timeframe']
             n = pw._completed_count(b['t'], p['timeframe'], now_et)
             pool = []
