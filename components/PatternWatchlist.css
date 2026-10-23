@@ -214,11 +214,6 @@
 .pbw .detail .rules{gap:8px}
 .pbw .thesis{margin-top:12px;padding-top:10px}
 .pbw .hist{padding-top:12px}
-.pbw .pr-toggle{grid-column:1/-1;appearance:none;display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);font:600 15px/1.2 var(--f-body);cursor:pointer}
-.pbw .pr-toggle:hover{background:var(--surface-2)}
-.pbw .pr-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.pbw .pr-toggle .chev{width:18px;height:18px}
-.pbw .pr-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
 .pbw .pr-grid{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
 @media (max-width:600px){
 .pbw .detail{padding-inline:4px}
@@ -314,4 +309,33 @@
 @media (max-width:600px){
 /* .pbw is the sideways scroller here, so a pinned header has nothing to pin to. */
 .pbw .item.open>.row-btn{position:static;box-shadow:none}
+}
+
+/* ── Prices & Rules: a button in the panel header, opening a dialog ──
+   Keeps the numbers one click away without pushing the chart down the page. */
+.pbw .ptop{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.pbw .pr-btn{appearance:none;flex:none;border:1px solid var(--line);border-radius:1199px;background:var(--surface);
+  color:var(--fg);font:600 14.5px/1 var(--f-body);padding:10px 18px;cursor:pointer}
+.pbw .pr-btn:hover{background:var(--surface-2);border-color:var(--faint)}
+.pbw .pr-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pbw .pr-modal{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);
+  display:grid;place-items:center;padding:max(16px,env(safe-area-inset-left,0px))}
+.pbw .pr-card{width:min(760px,100%);max-height:86vh;overflow:auto;background:var(--surface);
+  border:1px solid var(--line);border-radius:18px;padding:0 24px 24px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
+.pbw .pr-card:focus{outline:none}
+.pbw .pr-top{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 0 16px;background:var(--surface);border-bottom:1px solid var(--line);margin-bottom:20px}
+.pbw .pr-top h2{margin:0;font:700 19px/1.2 var(--f-body);letter-spacing:-.01em}
+.pbw .pr-done{appearance:none;border:1px solid color-mix(in srgb,var(--up) 55%,var(--line));border-radius:1199px;
+  background:var(--surface);color:var(--fg);font:600 15px/1 var(--f-body);padding:10px 22px;cursor:pointer}
+.pbw .pr-done:hover{background:var(--up-soft)}
+.pbw .pr-done:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){
+.pbw .ptop{flex-direction:column;gap:10px}
+.pbw .pr-card{max-height:92vh;padding-inline:16px}
+.pbw .pr-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+.pbw .pr-card{animation:pr-in .14s ease-out}
+@keyframes pr-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 }

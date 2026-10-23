@@ -15,6 +15,20 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-NET-main-forming",
+    date: "Oct 23 2026",
+    tickers: ["NET"],
+    title: "NET · new setup",
+    text: "Rising Wedge (weekly), waiting for a break.",
+  },
+  {
+    id: "2026-10-23-NET-weekly-alt-forming",
+    date: "Oct 23 2026",
+    tickers: ["NET"],
+    title: "NET · new setup (weekly setup)",
+    text: "Ascending Channel (weekly), waiting for a break.",
+  },
+  {
     id: "2026-10-23-AAOI-main-confirmed",
     date: "Oct 23 2026",
     tickers: ["AAOI"],
