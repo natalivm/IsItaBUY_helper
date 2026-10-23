@@ -8,7 +8,7 @@ Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (l
 
 ### Automatic Updates (GitHub Actions)
 
-A workflow (`.github/workflows/update-prices.yml`) runs **every weekday at 9:30 PM UTC** (after US market close). It fetches prices from Yahoo Finance, commits changes to `main`, and triggers a site redeploy. You can also trigger it manually from the **Actions** tab on GitHub.
+A workflow (`.github/workflows/update-prices.yml`) runs **every weekday at 9:47 PM UTC** (after US market close). It fetches prices from Yahoo Finance, commits changes to `main`, and triggers a site redeploy. You can also trigger it manually from the **Actions** tab on GitHub.
 
 ### Manual Update via Script (on your local machine)
 
@@ -76,7 +76,7 @@ The home page ledger reads `data/patternWatchlist.ts`. The same `update_prices.p
 - flags **pending** setups (forming / signal / either-direction) that **closed** past a limit as `stage: "update"` ("Needs updating": post a new setup), recording `prevStage` and `updateNote`. Limits: forming = invalidation ↔ signal (or confirm if no signal level); signal = signal (close back past it cancels the signal) ↔ confirm; either-direction = breakDown ↔ breakUp. Only a close on the setup's own timeframe counts: daily every run, weekly on Fridays, monthly on the month's last weekday. In between, it's listed for review only;
 - only *reports* (never edits) confirmed setups that **closed** beyond invalidation. Failure needs a follow-through close, so mark those manually.
 
-- uses **regular-session prices only** (9:30–16:00 ET), never pre/post-market. Close-based checks (needs updating, invalidation) are skipped while that day's session is still open, so a run before 16:00 ET never re-labels a setup on an intraday price; target touches count from regular-session highs/lows. The Action runs at 21:30 UTC, after the close year-round.
+- uses **regular-session prices only** (9:30–16:00 ET), never pre/post-market. Close-based checks (needs updating, invalidation) are skipped while that day's session is still open, so a run before 16:00 ET never re-labels a setup on an intraday price; target touches count from regular-session highs/lows. The Action runs at 21:47 UTC, after the close year-round.
 
 - **removes finished setups**: target reached (touched any time since confirmation) or failed (a completed close past invalidation plus a follow-through close), each with one News post saying why. "Needs updating" setups stay until a replacement is posted. By hand: `python3 pattern_watchlist.py --prune` (dry run) / `--prune --apply`.
 
