@@ -2,10 +2,12 @@ name: Update Stock Prices
 
 on:
   schedule:
-    # Runs Mon-Fri at 9:30 PM UTC = 5:30 PM ET in summer / 4:30 PM ET in winter,
+    # Runs Mon-Fri at 9:47 PM UTC = 5:47 PM ET in summer / 4:47 PM ET in winter,
     # so it is always after the 4:00 PM ET close (8:01 PM UTC was 3:01 PM ET in winter).
     # The watchlist checks rely on closing prices.
-    - cron: '30 21 * * 1-5'
+    # The odd minute is deliberate: GitHub throttles scheduled workflows hardest on
+    # the hour and half-hour, and the old '30 21' slot was starting 1-2.5 h late.
+    - cron: '47 21 * * 1-5'
   workflow_dispatch: # allows manual trigger from GitHub UI
 
 permissions:
@@ -37,5 +39,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stocks/ data/ public/bars/
           git diff --cached --quiet && echo "No price changes" && exit 0
-          git commit -m "Update stock prices ($(date -u +%Y-%m-%d))"
+          # Label the commit with the market date the prices come from, not the run
+          # date: a run delayed past midnight UTC would otherwise claim the next day.
+          PRICE_DATE=$(grep -o 'priceDate: "[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}"' data/patternWatchlist.ts \
+            | grep -o '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}' | sort | tail -1)
+          git commit -m "Update stock prices (${PRICE_DATE:-$(date -u +%Y-%m-%d)})"
           git push
