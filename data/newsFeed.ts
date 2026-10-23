@@ -15,6 +15,20 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-CRWV-daily-alt-removed",
+    date: "Oct 23 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · setup removed (daily setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-23-CRWV-weekly-alt-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · new setup (weekly setup)",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
     id: "2026-10-23-QQQ-daily-alt-signal",
     date: "Oct 23 2026",
     tickers: ["QQQ"],

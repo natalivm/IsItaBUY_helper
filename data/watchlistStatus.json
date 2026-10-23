@@ -1553,45 +1553,15 @@
   "stage": "confirmed",
   "ticker": "CRWD"
  },
- "CRWV|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWV"
- },
- "CRWV|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "signal",
-  "ticker": "CRWV"
- },
- "CRWV|daily Descending Channel #2": {
-  "label": "daily Descending Channel #2",
-  "setup": "Descending Channel (daily)",
-  "stage": "forming",
-  "ticker": "CRWV"
- },
- "CRWV|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWV"
- },
- "CRWV|daily alt": {
-  "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWV"
- },
  "CRWV|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
+  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "CRWV"
  },
- "CRWV|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
+ "CRWV|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "CRWV"
  },
