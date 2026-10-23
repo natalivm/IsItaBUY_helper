@@ -4499,10 +4499,16 @@
   "stage": "forming",
   "ticker": "QQQ"
  },
+ "QQQ|daily alt": {
+  "label": "daily alt",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
+  "ticker": "QQQ"
+ },
  "QQQ|main": {
   "label": "main",
   "setup": "Rising Wedge (weekly)",
-  "stage": "update",
+  "stage": "confirmed",
   "ticker": "QQQ"
  },
  "QQQ|weekly Ascending Channel": {
@@ -5497,14 +5503,14 @@
  },
  "SPY|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "SPY"
  },
  "SPY|main": {
   "label": "main",
-  "setup": "Ascending Channel (daily)",
-  "stage": "update",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "confirmed",
   "ticker": "SPY"
  },
  "SPY|weekly Ascending Channel": {

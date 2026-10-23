@@ -15,6 +15,34 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-QQQ-daily-alt-signal",
+    date: "Oct 23 2026",
+    tickers: ["QQQ"],
+    title: "QQQ · new setup (daily setup)",
+    text: "Ascending Channel (daily), break pending.",
+  },
+  {
+    id: "2026-10-23-QQQ-main-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["QQQ"],
+    title: "QQQ · break confirmed",
+    text: "Previously needs updating.",
+  },
+  {
+    id: "2026-10-23-SPY-daily-alt-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["SPY"],
+    title: "SPY · new setup (daily setup)",
+    text: "Ascending Channel (daily), break confirmed.",
+  },
+  {
+    id: "2026-10-23-SPY-main-confirmed",
+    date: "Oct 23 2026",
+    tickers: ["SPY"],
+    title: "SPY · new setup",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
     id: "2026-10-23-auto-scan-77",
     date: "Oct 23 2026",
     tickers: [],
