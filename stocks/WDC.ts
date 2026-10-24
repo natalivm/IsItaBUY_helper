@@ -7,7 +7,7 @@ export const WDC = defineStock({
   themeColor: '#0073cf',
   updatedOn: '10/23',
   lastReportTag: 'Q1 FY27',
-  dataReviewedOn: '2026-10-23',
+  dataReviewedOn: '2026-10-24',
   nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
   currentPrice: 343.67,   // 52wk ~$63-$800; ~-27% since late July ($545) and ~-50% off the high, despite a beat-and-raise
   fairPriceRange: '$420 - $1,050',  // stockanalysis.com analyst target range, Oct 9 2026
@@ -21,8 +21,8 @@ export const WDC = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 20.85,         // FY2027E non-GAAP EPS consensus post-Q1 (Investing.com, Oct 23 2026; +5.8% over 30d, +14.8% over 90d). LIKELY CONSERVATIVE: Q1A $4.64 + Q2 guide mid $5.80 = $10.44 in H1 alone, so $20.85 implies a FLAT H2 while revenue accelerates (+55% -> +66-72% y/y). Holding the Q2 run-rate through H2 gives ~$22. FY28E $32.05 (pre-Q1). Prior: $20.18 (pre-Q1 consensus).
-  rsRating: 74,           // IBD RS per user, 10/10/2026 (was 99) — PRE-Q1, needs a fresh IBD read after the beat-and-raise
-  rsTrend: 'falling',     // flagged: set before the Q1 FY27 print; re-check direction
+  rsRating: 59,           // IBD RS per user, 10/24/2026 (was 74 on 10/10, 99 in July) — still sliding despite the Q1 FY27 beat-and-raise
+  rsTrend: 'falling',     // 99 -> 74 -> 59; the price is not following the earnings
   aiImpact: 'TAILWIND',
   // ratingOverride removed at Q4 FY26 review: model reads HOLD on its own (base ≈ spot under the mid-cycle ~11x framework, TAILWIND/RS boost), and the old rationale ("trades ABOVE the $554 analyst median") no longer holds — stock is now below the entire $420-1,050 Street range.
 

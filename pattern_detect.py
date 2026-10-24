@@ -149,7 +149,9 @@ def _stage(bars, n, pattern, up, lo, start, A):
             continue
         d = sig['dir']
         if 'conf' not in sig:
-            if (d == 'up' and c[i] > sig['confirm']) or (d == 'down' and c[i] < sig['confirm']):
+            # The close has to clear the confirm level by pw.CONFIRM_TOL, so a break
+            # through by a few cents stays at signal rather than starting a call.
+            if pw._confirmed(c[i], sig['confirm'], d == 'down'):
                 sig['conf'] = i
             elif (d == 'up' and c[i] < sig['level']) or (d == 'down' and c[i] > sig['level']):
                 sig = None                       # close back inside: signal cancelled

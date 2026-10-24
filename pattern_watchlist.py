@@ -658,6 +658,15 @@ def _describe(s, main):
 
 
 TARGET_TOL = 0.005   # within this much of the target counts as reaching it
+# Confirmation works the other way: the close has to CLEAR the level by this much before a
+# break counts, so a close a few cents through does not start a call. Same 0.5%, opposite
+# sign -- TARGET_TOL is generous (a near miss still counts), CONFIRM_TOL is strict.
+CONFIRM_TOL = 0.005
+
+
+def _confirmed(close, level, down):
+    """Has `close` cleared the confirm level by CONFIRM_TOL, in the break's direction?"""
+    return close < level * (1 - CONFIRM_TOL) if down else close > level * (1 + CONFIRM_TOL)
 
 
 def _reached(direction, target, high=None, low=None):
@@ -714,7 +723,10 @@ def _pending_break(s, price):
         fwd_name, fwd = 'confirm', conf
         back_name, back = ('signal', sig) if sig is not None else ('invalidation', inv)
     down = d == 'down'
-    if fwd is not None and ((down and price < fwd) or (not down and price > fwd)):
+    # Crossing `confirm` from the signal stage is a confirmation, so it needs the same
+    # margin the detector uses; the other limits stay a plain close.
+    crossed = _confirmed(price, fwd, down) if fwd_name == 'confirm' else ((down and price < fwd) or (not down and price > fwd))
+    if fwd is not None and crossed:
         return f"closed ${p} {'below' if down else 'above'} {fwd_name} ${_fmt_price(fwd)}"
     if back is not None and ((down and price > back) or (not down and price < back)):
         extra = ", signal cancelled" if back_name == 'signal' else ""
