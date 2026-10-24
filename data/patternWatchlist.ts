@@ -12,7 +12,11 @@ export type PatternDirection = 'up' | 'down' | 'both';
 /** 'retest' is a confirmed break that has come back to the broken boundary and is
  *  being tested. It behaves as confirmed everywhere -- same levels, same target and
  *  failure checks -- and only reads differently. See PATTERN_RULES.md section 1. */
-export type PatternStage = 'forming' | 'signal' | 'confirmed' | 'retest' | 'target' | 'failed' | 'update';
+/** 'atRisk' is a confirmed break whose price has closed back past its own invalidation,
+ *  once. Failure needs a follow-through close, so the break is not dead -- but it is no
+ *  longer working, and the row says so. The price run sets it and clears it again if the
+ *  next close comes back inside; prevStage / updateDate hold what it was and when it went. */
+export type PatternStage = 'forming' | 'signal' | 'confirmed' | 'retest' | 'atRisk' | 'target' | 'failed' | 'update';
 export type PatternTimeframe = 'daily' | 'weekly' | 'monthly';
 /** Direction of the stock's own trend, from ~3 months of daily bars (pattern_watchlist._trend).
  *  Setups pointing the same way are listed first; 'flat' leaves the stored order alone. */
@@ -12661,7 +12665,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     priceDate: "2026-10-23",
     rsi: 66.6,
     trend: "up",
-    auto: true,
     pattern: "Falling Wedge",
     timeframe: "daily",
     direction: "up",
