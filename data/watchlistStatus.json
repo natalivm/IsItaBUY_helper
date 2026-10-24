@@ -3434,7 +3434,7 @@
  "META|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "META"
  },
  "META|daily Ascending Channel #2": {
@@ -3461,9 +3461,9 @@
   "stage": "confirmed",
   "ticker": "META"
  },
- "META|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
-  "setup": "Ascending Channel (weekly)",
+ "META|weekly Descending Channel": {
+  "label": "weekly Descending Channel",
+  "setup": "Descending Channel (weekly)",
   "stage": "forming",
   "ticker": "META"
  },
