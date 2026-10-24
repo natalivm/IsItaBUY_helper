@@ -407,6 +407,10 @@ def detect(ticker, bars_by_tf, now_et):
     direction, up to MAX_PER_TF per timeframe.
     """
     found = []
+    # The stop tier is measured against the stock's latest close, so the daily chart
+    # supplies it when there is one -- a weekly bar mid-week is not where price is.
+    daily = bars_by_tf.get('daily') or bars_by_tf.get('weekly')
+    px = daily['c'][-1] if daily and daily.get('c') else None
     for tf in ('weekly', 'daily'):
         bars = bars_by_tf.get(tf)
         if not bars or len(bars['t']) < 40:
@@ -424,8 +428,8 @@ def detect(ticker, bars_by_tf, now_et):
         h = detect_hammer(bars, tf, n)
         if h:
             picked.append(h)
-        found += rank_setups(picked)[:MAX_PER_TF]
-    return rank_setups(found)
+        found += rank_setups(picked, px)[:MAX_PER_TF]
+    return rank_setups(found, px)
 
 
 def split_display(found):
@@ -453,15 +457,23 @@ def agreement(s, others):
                and _aim(o) is not None and abs(_aim(o) - a) <= AGREE * a)
 
 
-def rank_setups(found):
-    """Most valid first: active (confirmed / signal) before pending, then most agreement on the
-    target, further along, weekly before daily, clearer pattern. Pending setups stay stored and
-    show once nothing on that timeframe is active."""
+def rank_setups(found, price=None):
+    """Most valid first: active (confirmed / signal) before pending, then a stop close enough
+    to act on, then most agreement on the target, further along, weekly before daily, clearer
+    pattern. Pending setups stay stored and show once nothing on that timeframe is active.
+
+    The stop tier sits second on purpose. A valid pattern whose invalidation is half the share
+    price away is still a true reading of where the stock is going, and it stays in the list
+    for that -- but when the same chart also offers one you could put an order behind, that is
+    the one to lead with. Without a price (older callers, tests) the tier is simply off.
+    """
     stage = {'confirmed': 2, 'signal': 1, 'forming': 0}
     def key(s):
         sc = s.get('score') or (0, 0)
         st = stage.get(s['stage'], 0)
-        return (st > 0, agreement(s, found), st, s['timeframe'] == 'weekly', sc[0] if isinstance(sc, tuple) else sc)
+        tradable = price is not None and pw.tradable_stop(price, s.get('invalidation'))
+        return (st > 0, tradable, agreement(s, found), st, s['timeframe'] == 'weekly',
+                sc[0] if isinstance(sc, tuple) else sc)
     return sorted(found, key=key, reverse=True)
 
 

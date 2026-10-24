@@ -156,6 +156,31 @@ last). Every row shows its RSI; the bolt and the accent colour mark only the
 setups momentum backs (≥60 for a long, ≤40 for a short), so the badge still
 says "actionable" while the order stays a plain number.
 
+### The 10% stop rule
+
+A setup's invalidation is its stop, and a stop nobody would wear is not a setup.
+**`MAX_STOP = 10`** (percent of price, `pattern_watchlist.py`, mirrored in
+`components/PatternWatchlist.tsx`) is the line, and it is the same number on
+every timeframe — the loss does not know which chart the line was drawn on.
+Inside it the level is one you could put an order behind; beyond it the pattern
+is still a true reading of where the stock is going, which is worth keeping, but
+it is not an entry. Only ~18% of the setups the ledger shows clear the bar, so
+the rule **ranks and labels, it never deletes**:
+
+- **The ledger** reads the distance off the Invalidation column. Within 10% it
+  sits in a green pill; wider and the whole cell recedes to muted grey. The
+  ⤓ chip beside ⚡ sorts tightest-stop first and carries the count of rows that
+  clear the bar. Only a setup you could still take is measured at all
+  (`stopPct`): a reached target, a failure, a needs-updating row and an at-risk
+  one — which has by definition already closed past its stop — read as no
+  distance rather than as a tight one.
+- **`pattern_detect.rank_setups`** puts a tradable stop second in its key, under
+  "is it active" and above target agreement: when a chart offers both a wide
+  pattern and one you could trade, the tradable one is promoted.
+- **`weekly_feature.score_setup`** adds 15 for a stop inside 10% and subtracts 20
+  beyond 25%, so the landing page's three cards are setups to act on rather than
+  the widest drawings on the board.
+
 ### Rebuilding the lists
 
 `.github/workflows/weekly-feature.yml` runs **Mondays at 9:23 AM UTC**, before

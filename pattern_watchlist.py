@@ -442,6 +442,28 @@ RSI_PERIOD = 14
 RSI_BULL = 60
 RSI_BEAR = 40
 
+# A setup's invalidation is its stop, and a stop you would never wear is not a
+# setup -- it is a drawing. Ten percent of price is the line: inside it the
+# level is something to act on, beyond it the pattern is still worth reading for
+# where the stock is going, but not for where to put an order. That is not a
+# tested edge either; it is the size of loss this watchlist is willing to plan
+# for, and it is the same number whatever the timeframe, because the money does
+# not know which chart the line was drawn on.
+MAX_STOP = 10.0
+
+
+def stop_pct(price, invalidation):
+    """How far a setup's invalidation sits from price, as a % of price, or None."""
+    if not price or invalidation is None:
+        return None
+    return abs(price - invalidation) / price * 100
+
+
+def tradable_stop(price, invalidation):
+    """True when the stop is close enough to act on, False when it is only context."""
+    pct = stop_pct(price, invalidation)
+    return pct is not None and pct <= MAX_STOP
+
 
 def _rsi(bars, period=RSI_PERIOD):
     """Wilder's RSI on closes, or None if there is not enough history.
