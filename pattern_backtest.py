@@ -79,7 +79,7 @@ def outcome(bars, s, d):
     if channel and s.get('lines'):
         broken = _line_fn(s['lines'][1] if dn else s['lines'][0], t)
     for i in range(d + 1, len(t)):
-        if (l[i] <= tgt) if dn else (h[i] >= tgt):
+        if pw._reached(s['direction'], tgt, h[i], l[i]):   # same margin the daily run allows
             return 'win', i - d
         if broken:
             if (c[i] > broken(i)) if dn else (c[i] < broken(i)):

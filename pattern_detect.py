@@ -100,7 +100,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
                 sig = None                       # close back inside: signal cancelled
             continue
         target = sig['level'] + height if d == 'up' else sig['level'] - height
-        if (d == 'up' and h[i] >= target) or (d == 'down' and l[i] <= target):
+        if pw._reached(d, target, h[i], l[i]):
             return None                          # target already reached: finished
     last = len(t) - 1
     if sig is None:
@@ -242,7 +242,7 @@ def detect_hammer(bars, tf, n):
         if any(c[j] < l[i] for j in later):
             return None                          # broke the candle's low: failed
         target = h[i] + rng
-        if any(h[j] >= target for j in later):
+        if any(pw._reached('up', target, h[j], l[j]) for j in later):
             return None
         conf = next((j for j in later if c[j] > h[i]), None)
         s = {'pattern': kind, 'timeframe': tf, 'direction': 'up',
