@@ -429,7 +429,11 @@ const HistPanel: React.FC<{ s: PatternStock; h: PatternHistoryEntry; st: Status 
     <PanelHead s={s} st={st} pattern={h.pattern} tf={h.timeframe} date={h.stageDate}
       extra={`${h.direction === 'down' ? 'Downward' : 'Upward'} break`} />
     <SetupChart ticker={s.ticker} timeframe={h.timeframe} {...chartSpec(h)} />
-    <p className="hnums num">Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → reached {fmt(h.target)}</p>
+    <p className="hnums num">{h.confirm != null && h.target != null
+      ? <>Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → reached {fmt(h.target)}</>
+      /* Failed while forming: there is no confirm and no target to show, only the level
+         it died on and the signal it never reached. */
+      : <>Never signalled {h.direction === 'down' ? 'below' : 'above'} {h.signal != null ? fmt(h.signal) : '—'} → failed at {fmt(h.invalidation)}</>}</p>
     {h.note && <p className="thesis">{h.note}</p>}
   </div>
 );

@@ -38,6 +38,7 @@ AGREE = 0.05                                 # targets within 5% of each other a
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
 MIN_TARGET = 0.3                             # a downward target must stay above 30% of the signal
+HEIGHT_REF = 'mean'                         # where a pattern's height is measured: start | signal | mean
 FLAT = 0.03                                  # a trendline moving <3% of mid across the pattern is flat
 TRI_CONVERGE = 0.5                           # a triangle must at least halve in width
 # Triangles are defined in PATTERN_RULES.md section 4 and _classify below implements them,
@@ -136,10 +137,19 @@ def _stage(bars, n, pattern, up, lo, start, A):
     channel = 'Channel' in pattern
     # Channels, triangles and megaphones don't predict their break direction.
     two_way = channel or pattern in ('Symmetrical Triangle', 'Megaphone')
-    if pattern == 'Megaphone':
-        height = up.at(n - 1) - lo.at(n - 1)     # widens with time: widest at the break
-    else:
-        height = up.at(start) - lo.at(start)
+    def _height(at):
+        # Where the pattern's height is measured decides the whole measured move. At the
+        # start a wedge is at its widest, so the projection is the full mouth of it; at
+        # the break it is as narrow as it ever gets. HEIGHT_REF picks between them --
+        # see the completed-calls section in CLAUDE.md for what each one scores.
+        if pattern == 'Megaphone':
+            return up.at(n - 1) - lo.at(n - 1)   # widens with time: widest at the break
+        if HEIGHT_REF == 'signal':
+            return up.at(at) - lo.at(at)
+        if HEIGHT_REF == 'mean':
+            return ((up.at(start) - lo.at(start)) + (up.at(at) - lo.at(at))) / 2
+        return up.at(start) - lo.at(start)
+    height = _height(start)
     if height > MAX_HEIGHT[bars['tf']] * c[A]:
         return None                              # implausibly tall for this timeframe
     sig = None
@@ -167,11 +177,14 @@ def _stage(bars, n, pattern, up, lo, start, A):
             elif (d == 'up' and c[i] < sig['level']) or (d == 'down' and c[i] > sig['level']):
                 sig = None                       # close back inside: signal cancelled
             continue
-        target = sig['level'] + height if d == 'up' else sig['level'] - height
+        hgt = _height(sig['i'])
+        target = sig['level'] + hgt if d == 'up' else sig['level'] - hgt
         if pw._reached(d, target, h[i], l[i]):   # same margin the daily run allows
             return None                          # target already reached: finished
     last = len(t) - 1
     if sig is None:
+        # Nothing has broken, so there is no break candle to measure at: the forming
+        # projections below necessarily use the height where the pattern started.
         if A < n - 1 - RECENT[bars['tf']] * 2:
             return None                          # old pattern that never broke
         if not (lo.at(last) * 0.97 <= c[last] <= up.at(last) * 1.03):
@@ -192,6 +205,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
     if sig['i'] < n - 1 - RECENT[bars['tf']]:
         return None                              # stale break
     d = sig['dir']
+    height = _height(sig['i'])                   # the break's own height, not the start's
     target = sig['level'] + height if d == 'up' else sig['level'] - height
     if target < MIN_TARGET * sig['level']:
         return None                              # implausible projection
@@ -534,7 +548,7 @@ def _alt_ts(s, auto=False):
     return ["    alt: {"] + (["      auto: true,"] if auto else []) + _ts_setup(s, '      ') + ["    },"]
 
 
-def _ts_entry(ticker, name, price, price_date, setups):
+def _ts_entry(ticker, name, price, price_date, setups, keep=((), ())):
     shown, second, rest = split_display(setups) if setups else (None, None, [])
     setups = [x for x in (shown,) if x] + ([second] if second else []) + rest
     main = dict(setups[0]) if setups else {'pattern': 'No clear pattern', 'timeframe': 'daily',
@@ -546,12 +560,13 @@ def _ts_entry(ticker, name, price, price_date, setups):
     body = _ts_setup(main, '    ')
     # price / priceDate go after stageDate, like the posted setups
     at = next((i for i, x in enumerate(body) if x.strip().startswith(('signal', 'confirm', 'invalidation', 'target', 'breakUp', 'lines', 'note'))), len(body))
-    body[at:at] = [f"    price: {pw._fmt_price(price)},", f"    priceDate: {json.dumps(price_date)},"]
+    body[at:at] = [f"    price: {pw._fmt_price(price)},", f"    priceDate: {json.dumps(price_date)},"] + list(keep[0])
     lines += body
     if second:
         lines += _alt_ts(second)
     if rest:
         lines += _more_ts(rest)
+    lines += list(keep[1])                         # history / keyLevel survive a re-detection
     lines.append("  },")
     return "\n".join(lines) + "\n"
 
@@ -662,19 +677,38 @@ def fetch_name(ticker):
         return ticker
 
 
+# Entry-level fields that survive a re-detection: they are not the detector's to write.
+# `rsi` / `trend` come from the price run, `history` holds finished calls (a target we posted
+# and hit) and `keyLevel` is hand-written prose. Rewriting an entry used to drop all four.
+KEEP_HEAD = ('rsi', 'trend')       # scalars, kept beside price
+KEEP_TAIL = ('keyLevel', 'history')  # blocks, kept at the end
+
+
+def _carry(text, e):
+    """Source lines for the kept fields of an entry, as (beside price, at the end)."""
+    def lines(keys):
+        out = []
+        for k in keys:
+            if k in e['fields']:
+                v0, v1, _ = e['fields'][k]
+                out.append(f"    {k}: " + text[v0:v1] + ",")
+        return out
+    return lines(KEEP_HEAD), lines(KEEP_TAIL)
+
+
 def scan_targets(text, redo_auto=False):
-    """{ticker: (name, entry span or None)}: our stocks without a setup, plus placeholder entries
-    (and, with redo_auto, every unreviewed auto entry)."""
+    """{ticker: (name, entry span or None, lines to keep)}: our stocks without a setup, plus
+    placeholder entries (and, with redo_auto, every unreviewed auto entry)."""
     todo = {}
     have = set()
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
         have.add(m['ticker'])
         if m.get('pattern') == pw.NO_PATTERN or (redo_auto and m.get('auto')):
-            todo[m['ticker']] = (m.get('name', m['ticker']), e['span'])
+            todo[m['ticker']] = (m.get('name', m['ticker']), e['span'], _carry(text, e))
     for t, n in stock_universe().items():
         if t not in have:
-            todo[t] = (n, None)
+            todo[t] = (n, None, ([], []))
     return todo
 
 
@@ -738,11 +772,11 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
         text = _strip_stored(text)             # posted stocks: re-detect their stored setups too
     todo = scan_targets(text, redo_auto)
     for t, n in (extra or {}).items():
-        todo.setdefault(t, (n, None))
+        todo.setdefault(t, (n, None, ([], [])))
     if verbose:
         print(f"Scanning {len(todo)} stocks without a setup...\n")
     cuts, block, summary = [], '', []
-    for ticker, (name, span) in sorted(todo.items()):
+    for ticker, (name, span, keep) in sorted(todo.items()):
         try:
             bars = {tf: get_bars(ticker, tf, refresh) for tf in TIMEFRAMES}
         except Exception as e:
@@ -755,7 +789,7 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
         d = bars['daily']
         if span is not None and not found:
             continue                              # still nothing: leave the placeholder
-        entry = _ts_entry(ticker, name, d['c'][-1], d['t'][-1], found)
+        entry = _ts_entry(ticker, name, d['c'][-1], d['t'][-1], found, keep)
         if span is not None:
             cuts.append((span[0], span[1] + 1, entry.strip().rstrip(',')))
         else:
@@ -812,6 +846,137 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
     return summary
 
 
+# ---------------------------------------------------------------------------
+# Stored setups on hand-posted stocks
+# ---------------------------------------------------------------------------
+
+ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'archive')
+
+
+def _item_text(text, span):
+    """Source text of one `more` item, braces included."""
+    return text[span[0]:span[1] + 1]
+
+
+def _entry_parts(text, e):
+    """Every setup on an entry as (label, is_auto, source text, span)."""
+    out = []
+    f = e['fields']
+    if 'alt' in f:
+        a0, a1, _ = f['alt']
+        out.append(('alt', bool((e['alt'] or {}).get('auto', (0, 0, None))[2]), text[a0:a1], (a0, a1 - 1)))
+    for i, item in enumerate(e['more']):
+        sp = item['_span']
+        out.append((f'more[{i}]', bool(item.get('auto', (0, 0, None))[2]), _item_text(text, sp), (sp[0], sp[1])))
+    return out
+
+
+def archive_hand_setups(text, path=None, verbose=True):
+    """Write every setup on a hand-posted stock to a dated JSON file, verbatim.
+
+    A re-scan rewrites stored setups, and the only thing standing between a hand-written
+    one and the detector is its missing `auto` flag. This is the copy to splice back from
+    if that judgement turns out wrong: source text, not parsed values, so it goes back in
+    exactly as it was.
+    """
+    today = date.today().isoformat()
+    path = path or os.path.join(ARCHIVE_DIR, f'handSetups-{today}.json')
+    out = {}
+    for e in pw.parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        if m.get('auto'):
+            continue                                   # the whole entry is machine-drawn
+        rec = {'name': m.get('name'), 'main': None, 'setups': []}
+        for k in ('keyLevel', 'history'):
+            if k in e['fields']:
+                v0, v1, _ = e['fields'][k]
+                rec[k] = text[v0:v1]
+        for label, auto, src, _ in _entry_parts(text, e):
+            rec['setups'].append({'label': label, 'auto': auto, 'text': src})
+        out[m['ticker']] = rec
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    hand = sum(1 for r in out.values() for s in r['setups'] if not s['auto'])
+    auto = sum(1 for r in out.values() for s in r['setups'] if s['auto'])
+    with open(path, 'w') as fh:
+        json.dump({'generated': today,
+                   'note': 'Verbatim source of every stored setup on a hand-posted stock, '
+                           'taken before a re-scan. `auto: false` entries are the hand-written ones.',
+                   'stocks': out}, fh, indent=1, sort_keys=True)
+        fh.write('\n')
+    if verbose:
+        print(f"Archived {hand} hand-written and {auto} auto setups across {len(out)} stocks -> {path}")
+    return path
+
+
+def redo_stored(apply=False, refresh=False, verbose=True):
+    """Re-detect the stored (hidden) setups on hand-posted stocks, in place.
+
+    Only setups carrying `auto: true` are rewritten, and only where the fresh scan still
+    finds the same pattern on the same timeframe in the same direction — the levels are
+    replaced, the setup is not. Anything without the flag is left exactly as written:
+    `--extras` deletes the whole `more` list and rebuilds it, which takes the hand-written
+    setups with it.
+    """
+    now_et = pw._now_et()
+    text = open(pw.WATCHLIST_FILE).read()
+    archive_hand_setups(text, verbose=verbose)
+    cuts, n_hit, n_miss, n_hand = [], 0, 0, 0
+    for e in pw.parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        if m.get('auto'):
+            continue
+        parts = _entry_parts(text, e)
+        if not any(auto for _, auto, _, _ in parts):
+            n_hand += len(parts)
+            continue
+        try:
+            bars = {tf: get_bars(m['ticker'], tf, refresh) for tf in TIMEFRAMES}
+        except Exception as ex:
+            if verbose:
+                print(f"  {m['ticker']}: candles failed ({ex})")
+            continue
+        fresh = {(x['timeframe'], x['pattern'], x['direction']): x for x in detect(m['ticker'], bars, now_et)}
+        for label, auto, src, span in parts:
+            if not auto:
+                n_hand += 1
+                continue
+            old = _parse_item(src)
+            key = (old.get('timeframe'), old.get('pattern'), old.get('direction'))
+            new = fresh.get(key)
+            if not new:
+                n_miss += 1
+                if verbose:
+                    print(f"  {m['ticker']:<5} {label:<9} {' '.join(str(x) for x in key)}: gone from the fresh scan, left as is")
+                continue
+            indent = '      ' if label == 'alt' else '        '
+            body = ([f"{indent}auto: true,"] + _ts_setup(dict(new, note=new.get('note') or _note(new)), indent))
+            repl = '{\n' + '\n'.join(body) + '\n' + indent[:-2] + '}'
+            if repl != src:
+                cuts.append((span[0], span[1] + 1, repl))
+                n_hit += 1
+    if verbose:
+        print(f"\n{n_hit} stored setups re-detected, {n_miss} no longer found (left alone), "
+              f"{n_hand} hand-written (untouched).")
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    new_text = pw.annotate_agreement(new_text)
+    if not apply or new_text == text:
+        return n_hit
+    pw.sync_news(text, new_text, {}, now_et.date().isoformat(), apply=True)
+    with open(pw.WATCHLIST_FILE, 'w') as fh:
+        fh.write(new_text)
+    return n_hit
+
+
+def _parse_item(src):
+    """The scalar fields of one stored setup, from its source text."""
+    masked = pw._mask_strings(src)
+    depth = pw._depths(masked)
+    f = pw._fields(src, masked, depth, 1, len(src) - 1, 1)
+    return {k: v[2] for k, v in f.items()}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('--apply', action='store_true', help='add the detected setups to the watchlist')
@@ -821,7 +986,16 @@ def main():
     ap.add_argument('--add', nargs='*', default=[], help='extra watchlist-only tickers to scan (e.g. CBRS LIFE)')
     ap.add_argument('--redo-auto', action='store_true', help='re-detect every unreviewed auto entry')
     ap.add_argument('--extras', action='store_true', help='add detected extra setups to posted stocks (red dot)')
+    ap.add_argument('--redo-stored', action='store_true',
+                    help="re-detect the auto setups stored on hand-posted stocks, in place")
+    ap.add_argument('--archive', action='store_true', help='write archive/handSetups-<date>.json and stop')
     args = ap.parse_args()
+    if args.archive:
+        archive_hand_setups(open(pw.WATCHLIST_FILE).read())
+        return
+    if args.redo_stored:
+        redo_stored(apply=args.apply, refresh=args.refresh)
+        return
     if args.compare:
         compare(pw._now_et())
         return
