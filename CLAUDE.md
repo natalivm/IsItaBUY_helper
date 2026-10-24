@@ -145,6 +145,47 @@ reached their objective and stopped short of ours. That is a statement about the
 this ledger, not about whose method is better, and those six rows are exactly the ones
 that should have closed themselves.
 
+### Training on the calls that completed
+
+`pattern_reproduce.py` scores the detector against the source tool's finished calls,
+which are recorded as `history` rows in `data/patternWatchlist.ts`. For each one it
+replays the chart up to the day the call completed, runs the detector on exactly those
+candles, and asks whether it rebuilds that setup. Every label is a setup that paid, so
+unlike the distribution comparisons there is no survivorship to correct for.
+
+Baseline on the 20 calls whose candles reach back far enough:
+
+- **confirm level: 0.0% median error.** The break detection is exact — this is not where
+  anything is wrong.
+- **right pattern and direction: 15/20.** Three of the five misses are Hammers that
+  `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
+- **target: 14.6% median error**, and that is the whole defect.
+
+**`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
+the measured move. The height used to be taken at the pattern's *start*, where a
+converging wedge is at its widest, so the projection was the full mouth of it. Measured
+against the completed calls:
+
+| | wedges | channels |
+|---|---|---|
+| `start` | 14.6% | 17.4% |
+| `signal` | 14.0% (only 3 survive the filters) | 17.4% |
+| **`mean`** (current) | **6.8%** | 17.4% |
+
+Wedge error halves. Channels do not move at all and cannot — their lines are parallel, so
+the height is the same wherever it is measured, and their remaining 17.4% is a
+line-fitting problem rather than a height one. The cost is about 2 points on the
+held-out half of the agreement-with-hand-posted metric (32.7% to 30.9%); the train half
+fell much further, which is noise at n=63.
+
+**`pw.MIN_ROOM = 0.10` looks too high and has not been changed.** Six of the 22 completed
+calls had less than 10% between confirm and target — META's hammer at 2.2%, LMT's at
+2.8%, LMT's daily descending channel at 3.1%, CRWD's hammer at 3.4%, KMB's channel at
+5.0%, NBIS's at 8.1% — so the floor would have discarded 27% of the setups that worked,
+candle patterns worst of all, since a candle projects a candle-sized move. Lowering it
+did not change the reproduction score, so there is no measured gain to point at; the
+argument is only that the completed calls say the floor is in the wrong place.
+
 ### Working on the scripts: two traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.

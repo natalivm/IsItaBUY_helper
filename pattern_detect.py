@@ -38,6 +38,7 @@ AGREE = 0.05                                 # targets within 5% of each other a
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
 MIN_TARGET = 0.3                             # a downward target must stay above 30% of the signal
+HEIGHT_REF = 'mean'                         # where a pattern's height is measured: start | signal | mean
 FLAT = 0.03                                  # a trendline moving <3% of mid across the pattern is flat
 TRI_CONVERGE = 0.5                           # a triangle must at least halve in width
 # Triangles are defined in PATTERN_RULES.md section 4 and _classify below implements them,
@@ -136,10 +137,19 @@ def _stage(bars, n, pattern, up, lo, start, A):
     channel = 'Channel' in pattern
     # Channels, triangles and megaphones don't predict their break direction.
     two_way = channel or pattern in ('Symmetrical Triangle', 'Megaphone')
-    if pattern == 'Megaphone':
-        height = up.at(n - 1) - lo.at(n - 1)     # widens with time: widest at the break
-    else:
-        height = up.at(start) - lo.at(start)
+    def _height(at):
+        # Where the pattern's height is measured decides the whole measured move. At the
+        # start a wedge is at its widest, so the projection is the full mouth of it; at
+        # the break it is as narrow as it ever gets. HEIGHT_REF picks between them --
+        # see the completed-calls section in CLAUDE.md for what each one scores.
+        if pattern == 'Megaphone':
+            return up.at(n - 1) - lo.at(n - 1)   # widens with time: widest at the break
+        if HEIGHT_REF == 'signal':
+            return up.at(at) - lo.at(at)
+        if HEIGHT_REF == 'mean':
+            return ((up.at(start) - lo.at(start)) + (up.at(at) - lo.at(at))) / 2
+        return up.at(start) - lo.at(start)
+    height = _height(start)
     if height > MAX_HEIGHT[bars['tf']] * c[A]:
         return None                              # implausibly tall for this timeframe
     sig = None
@@ -167,11 +177,14 @@ def _stage(bars, n, pattern, up, lo, start, A):
             elif (d == 'up' and c[i] < sig['level']) or (d == 'down' and c[i] > sig['level']):
                 sig = None                       # close back inside: signal cancelled
             continue
-        target = sig['level'] + height if d == 'up' else sig['level'] - height
+        hgt = _height(sig['i'])
+        target = sig['level'] + hgt if d == 'up' else sig['level'] - hgt
         if pw._reached(d, target, h[i], l[i]):   # same margin the daily run allows
             return None                          # target already reached: finished
     last = len(t) - 1
     if sig is None:
+        # Nothing has broken, so there is no break candle to measure at: the forming
+        # projections below necessarily use the height where the pattern started.
         if A < n - 1 - RECENT[bars['tf']] * 2:
             return None                          # old pattern that never broke
         if not (lo.at(last) * 0.97 <= c[last] <= up.at(last) * 1.03):
@@ -192,6 +205,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
     if sig['i'] < n - 1 - RECENT[bars['tf']]:
         return None                              # stale break
     d = sig['dir']
+    height = _height(sig['i'])                   # the break's own height, not the start's
     target = sig['level'] + height if d == 'up' else sig['level'] - height
     if target < MIN_TARGET * sig['level']:
         return None                              # implausible projection
