@@ -104,38 +104,39 @@ behind as it strips them, which was tried and backed out — 124 of 149 stocks c
 unchecked setup somewhere, so a dot covering them fires on almost every row and stops
 discriminating. If that broader signal is ever wanted, that is where it goes.
 
-### The measured move is too long
+### Targets: what the completed setups actually say
 
-Completed setups from the source tool are recorded as `history` rows, and comparing
-them against the detector's own reading of the same chart turns up one consistent
-defect. The break levels agree — confirms have matched to the cent on CVX and CRWD,
-and within 2% on FRSH — but **the measured move the detector projects off those lines
-is 1.4x to 4.4x the one the source tool projects**, median 2.18x over the five cases
-where both readings exist. The last column is how far apart the two confirms sit --
-four of the five are inside 3%, so these are the same setup measured differently, not
-different setups:
+Completed setups from the source tool are recorded as `history` rows. Comparing them
+against the detector's reading of the same chart looked at first like a clean defect —
+the break levels agree (confirms have matched to the cent on CVX and CRWD, and within
+3% on XOM, FRSH and KMB) while the measured move off those same lines runs 1.4x to
+4.4x longer, median 2.18x over five matched pairs.
 
-| | our move | theirs | ratio | confirms apart |
-|---|---|---|---|---|
-| XOM weekly falling wedge | 20.3% | 13.6% | 1.49x | 1.9% |
-| CVX weekly descending channel | 34.2% | 10.0% | 3.41x | 0.0% |
-| FRSH weekly descending channel | 47.8% | 33.1% | 1.44x | 1.8% |
-| KMB weekly rising wedge | 26.6% | 12.2% | 2.18x | 2.7% |
-| RBRK daily rising wedge | 46.3% | 10.4% | 4.43x | 19.1% |
+**That comparison is confounded and the 2.18x should not be used.** Every pair sets one
+of our *live* setups against one of their *completed* ones, and a setup completes partly
+because its target was short enough to reach. Controlling for it:
 
-The cost is not that the targets are ambitious. It is that **a target nobody reaches
-leaves the setup open forever**, which is where the stale "confirmed" rows come from:
-price walks to the real objective, stops, and our copy still reads as running. FRSH is
-the clearest case — at $15.49 it is past the $14.40 that was actually reached and short
-of our $15.71, and it was leading the landing page on 40.7% of room that no longer
-existed.
+| | n | median move |
+|---|---|---|
+| live setups posted from the source tool | 525 | 30.1% |
+| live setups the detector drew | 247 | 38.9% |
+| **completed** setups from the source tool | 18 | **12.1%** |
 
-LMT argues the other way and is worth keeping in view: its three completed calls all
-targeted $526-562 and the stock is now $604.18, so short targets close cleanly and then
-leave the move behind. The fix is therefore not "make targets shorter" but "make them
-reachable" — and it belongs in `_stage`'s height calculation in `pattern_detect.py`,
-not in any of the thresholds, which measured optimal (see the 10% stop section for how
-that sweep ran).
+The source tool's own live setups project 30.1% and the ones that finish average 12.1%.
+Same tool, same method — the gap is survivorship, not error. Against that control the
+detector projects **1.29x** the source tool, not 2.18x, and even that may be composition
+rather than method.
+
+What survives is more interesting than the original claim: **a measured-move target is
+usually not reached, in either system.** Long-target setups mostly do not resolve, which
+is why the ledger accumulates "confirmed" rows whose price walked away — FRSH led the
+landing page on 40.7% of room to a target that had effectively already played out. The
+fix is therefore not to shorten the projection. It is to stop treating an unreached
+target as a reason to keep a setup live, which is what `atRisk` and the "Break undone"
+chip already do and what the retirement rules should lean on harder.
+
+Smaller completed targets are not evidence of a better method either — METAs hammer
+reached a 2.2% objective because a candle pattern projects a candle-sized move.
 
 ### Working on the scripts: two traps
 

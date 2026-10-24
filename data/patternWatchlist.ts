@@ -1064,6 +1064,14 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     failRule: "a completed daily close above $887.11, then a follow-through close above that candle's high.",
     note: "A steep run from the September low near $550 narrowed into a rising wedge that topped out near $780. Price broke the lower line and confirmed with a daily close below $721.30, and is now trading just under that level.",
+    history: [
+      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-09-21",
+        confirm: 619.46, invalidation: 511.68, target: 732.94,
+        note: "Confirmed above $619.46 and reached $732.94 on Sep 21; price has since fallen back to $642.62. An 18.3% measured move, which is large for a completed call in this set and still well under what our own live setups on this chart project." },
+      { pattern: "Hammer", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-21",
+        confirm: 696.51, invalidation: 681.05, target: 711.96,
+        note: "Confirmed above $696.51 and reached $711.96 on Oct 21 — a 2.2% move, the smallest completed target recorded here. A candle pattern projects a candle-sized objective, which is exactly why it got there." }
+    ],
     more: [
       {
         pattern: "Ascending Channel",
