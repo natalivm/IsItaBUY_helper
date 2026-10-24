@@ -42,21 +42,7 @@ export const LLY = defineStock({
   // $102.4B. ~33× FY26E / ~25× FY27E EPS. Net: volume engine accelerating,
   // price erosion is the offset; thesis intact, valuation full but not stretched.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'GLP-1 platform is a metabolic disease franchise comparable in scale and durability to NVDA in AI or ASML in lithography',
-    'Tiered therapy stack from oral mass-market to high-efficacy injections maximizes patient lifetime value across every segment',
-    'Foundayo (oral orforglipron) now FDA-approved and launching — a hyperscalable pill opening the needle-free mass market (~3/4 of starts are new-to-class)',
-    'Retatrutide triple-agonist has a completed positive Phase III package across obesity, sleep apnea and knee pain — a likely third obesity franchise',
-    'Manufacturing moat (~$50B committed) and LillyDirect channel create structural barriers that pipeline-only competitors cannot quickly replicate',
-  ],
 
-  risksToBuy: [
-    'Priced for near-perfect execution — even modest deceleration in GLP-1 penetration triggers significant multiple compression',
-    'Novo Nordisk, Amgen, and Pfizer are all aggressively developing competing GLP-1 and oral obesity therapies',
-    'Steep realized-price erosion, especially outside the US, means volume must keep surging just to sustain revenue growth',
-    'Payer and employer pushback on GLP-1 reimbursement at scale could suppress volume growth well below TAM estimates',
-    'Post-2030 patent cliff on tirzepatide creates a revenue overhang that weighs on long-duration valuation assumptions',
-  ],
 
   // Q2 2026: base 12→14, bull 16→18. FY26 base is depressed by the one-time $3.03 IPR&D charge; Street FY27E $47.64 (+33%) then decelerating to low-teens compounds to ~14% from the $36 base. Prior: base 12% landed 5y EPS on Street 2030E ~$63.8.
   epsCagr: [8, 14, 18],

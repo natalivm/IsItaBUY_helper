@@ -33,21 +33,7 @@ export const FTNT = defineStock({
   // rev $8.12B, FY27E $3.78 / $9.04B (growth slows as refresh laps). ~56×
   // FY26E. (No split — the old $80-135 PTs were simply stale.)
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'ASIC-driven SASE platform delivers a cost and performance edge that cloud-native peers cannot replicate',
-    'Extraordinary capital efficiency with industry-leading ROIC and consistent net share retirement over many years',
-    'Three durable growth vectors: SASE expansion, AI security across data centers, and OT industrial security',
-    'Pristine SBC profile — one of the cleanest shareholder economics in the entire cybersecurity sector',
-    'Firewall refresh and OT security demand are driving the fastest product growth in years, with billings accelerating',
-  ],
 
-  risksToBuy: [
-    'Stock has rallied sharply and trades well ahead of analyst consensus targets, limiting near-term upside',
-    'Cloud-native SASE competitors Zscaler and Palo Alto aggressively pursue enterprise platform consolidation deals',
-    'Firewall refresh cycle remains muted, and any deceleration in SASE adoption hits the growth narrative hard',
-    'Premium valuation leaves little room for execution misses or macro-driven IT budget cuts',
-    'Significant overbought technical condition increases the risk of a sharp pullback before the next leg up',
-  ],
 
   analystConsensus: { rating: 'Hold', targetLow: 104, targetMedian: 165, targetHigh: 220, numAnalysts: 44 },  // stockanalysis.com, Oct 7 2026
   revGrowth: [

@@ -35,21 +35,7 @@ export const SNPS = defineStock({
   // $9.72B, FY27E $18.58 / $11.03B. Stock $510 (~34× FY26E / ~27× FY27E).
   // ─────────────────────────────────────────────────────────────────────────
 
-  reasonsToBuy: [
-    'Dominant EDA market share means every advanced AI chip — NVIDIA, AMD, custom hyperscaler silicon — requires Synopsys tools',
-    'Ansys acquisition creates a full silicon-to-system simulation platform no competitor can match at scale',
-    'Record backlog provides multi-year revenue visibility unusual for a software company of this size',
-    'AI-chip design intensity compounds demand: each new architecture generation requires more verification and IP attach',
-    'Capital-light model with high gross margins and strong FCF generation regardless of the semiconductor cycle',
-  ],
 
-  risksToBuy: [
-    'Cadence is competing aggressively on AI-design wins and gaining share in advanced-node verification',
-    'Ansys integration friction could delay synergies and create cultural and technical drag on the combined platform',
-    'China revenue exposure creates a geopolitical tail risk that could be cut with little warning by export controls',
-    'Valuation prices in flawless execution — even modest EDA cycle deceleration triggers painful multiple compression',
-    'SBC elevated at a meaningful share of revenue with buybacks covering only a fraction of new issuance',
-  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 414.77, targetMedian: 580, targetHigh: 700, numAnalysts: 25 },  // stockanalysis.com, Oct 9 2026
 

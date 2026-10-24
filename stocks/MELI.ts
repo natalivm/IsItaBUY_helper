@@ -44,21 +44,7 @@ export const MELI = defineStock({
   rsRating: 87,         // IBD RS per user, 10/10/2026 (was 20)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  reasonsToBuy: [
-    'Dominant LATAM e-commerce and fintech infrastructure with deep network effects across payments, lending, and logistics',
-    'Top-line growth accelerating to around fifty percent year-over-year while building out a credit card cohort with maturing loss curves',
-    'Vast underpenetrated market — LATAM digital commerce and financial inclusion remain in early innings of multi-decade adoption',
-    'Fintech flywheel (Mercado Pago) increasingly cross-sells lending, insurance, and savings across the existing commerce base',
-    'Elite cash conversion and minimal share dilution despite the investment cycle separates MELI from most EM growth peers',
-  ],
 
-  risksToBuy: [
-    'Net income has fallen year-over-year for three straight quarters as heavy margin investment depresses earnings',
-    'Rapidly expanding credit portfolio raises provisions and increases sensitivity to a Brazil macroeconomic shock',
-    'Intensifying competition from local and global players in Brazilian e-commerce and digital payments',
-    'Extended margin-investment period could suppress EPS for additional quarters, testing investor patience',
-    'Currency and political risks across Brazil, Mexico, and Argentina are embedded in every financial line',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 1750, targetMedian: 2275, targetHigh: 2800, numAnalysts: 26 },  // stockanalysis.com, Oct 6 2026
   revGrowth: [

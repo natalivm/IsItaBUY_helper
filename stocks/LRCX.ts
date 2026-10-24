@@ -32,21 +32,7 @@ export const LRCX = defineStock({
   // $290-500 (median $385); FY27E rev $34.8B (+50%) / EPS $9.47 (+63%),
   // FY28E $41.3B / $11.76. Stock $318.84 (~34× FY27E), up ~124% in 52 weeks.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Dominant etch and deposition franchise with mid-to-high-thirty percent share of global wafer fab equipment',
-    'CSBG installed base of over a hundred thousand chambers provides sticky, recurring-like revenue through downturns',
-    'Structural content gains at each new node — GAA, backside power, and advanced packaging require more etch steps per wafer',
-    'NAND upgrade spending has turned on sharply and the wafer-fab-equipment outlook keeps being raised, driving a record year ahead',
-    'Aggressive buyback program returning the majority of FCF annually, compounding EPS growth beyond revenue',
-  ],
 
-  risksToBuy: [
-    'China represents over a third of revenue — a single export-control policy shift could erase a quarter of sales overnight',
-    'Premium multiple prices in a sustained AI supercycle; historical mean reversion alone can erase years of EPS growth',
-    'WFE cycles typically pause after two to three strong years — memory capex normalization could create a sharp air pocket',
-    'The stock has more than doubled in a year, so the valuation already discounts a record memory-driven upcycle',
-    'Burry-published SBC overstatement of nearly half means reported earnings materially overstate true owner economics',
-  ],
 
   epsCagr: [4, 12, 19],    // From the FY27E $9.47 base (re-based Oct 2026) — FY27 is a +63% surge year, so base = FY28 +20%ish then a normal cycle
   exitPE: [18, 26, 34],    // From ~34× FY27E; Lam's historical range is high-teens to mid-20s
@@ -83,13 +69,6 @@ export const LRCX = defineStock({
       'Key enablers: NAND greenfield, HBM stacking (deposition-heavy), backside power and 3D-IC packaging, plus higher services monetization.',
   ],
 
-  keyTakeaways: [
-    "June quarter revenue rose 15% sequentially on a doubling of NAND revenue, with record operating margins — the upcycle is showing up in real numbers.",
-    "Consensus now expects FY27 revenue to jump roughly 50% and EPS more than 60%. That is a record year, and record years in semicap are usually followed by digestion.",
-    "Services from the installed base remain a large, sticky part of revenue and soften downturns — but they do not offset a full memory capex pause.",
-    "China plus Korea and Taiwan account for most revenue. Export-control policy is the single biggest risk outside Lam's control.",
-    "Bottom line: the business is executing at peak quality and the stock has more than doubled. You're paying for a strong cycle continuing.",
-  ],
 
   termGrowth: [0.015, 0.025, 0.03],
   bbRate: [0.01, 0.02, 0.03],

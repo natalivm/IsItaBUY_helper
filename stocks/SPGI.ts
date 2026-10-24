@@ -32,21 +32,7 @@ export const SPGI = defineStock({
   // $521); FY26E EPS $17.86, FY27E $20.19 (+13%). Stock $407.82 (~23×
   // FY26E), down ~15% over 52 weeks.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Ratings and index businesses are regulatory-embedded monopolies — issuers and fund managers have no credible alternative',
-    'CapIQ and Platts are workflow systems-of-record that AI models augment rather than replace, deepening rather than disrupting the moat',
-    'AI-driven efficiency program targeting meaningful cost reduction creates a structural margin uplift not yet priced in',
-    'Over half a century of consecutive dividend increases reflects the earnings durability of a near-monopoly data franchise',
-    'Passive investing growth structurally benefits the index business as trillions in AUM track S&P-branded benchmarks',
-  ],
 
-  risksToBuy: [
-    'Credit cycle slowdown sharply reduces debt issuance volume, which directly compresses the ratings segment revenue',
-    'Antitrust and regulatory scrutiny on index monopoly power could constrain pricing or force structural changes',
-    'Debt-funded buybacks keep leverage elevated relative to the pre-IHS Markit balance sheet',
-    'A premium multiple already reflects the franchise quality, leaving returns dependent on steady earnings growth rather than re-rating',
-    'After the Mobility spin the company is more concentrated in ratings and indices, which swing with credit issuance and markets',
-  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 477, targetMedian: 521, targetHigh: 553, numAnalysts: 24 },  // stockanalysis.com (Oct 8 2026)
   revGrowth: [

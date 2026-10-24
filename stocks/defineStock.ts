@@ -57,15 +57,7 @@ export interface SimpleStockInput {
    * "Model: X" in the Investment Verdict for monitoring.
    */
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
-  /** @deprecated No longer rendered — replaced by reasonsToBuy / risksToBuy. Kept for back-compat. */
-  strategicNarrative?: string;
-  /** Alpha Strategic View: concise, qualitative reasons to own the stock (no precise numbers). 3-5 bullets. */
-  reasonsToBuy?: string[];
-  /** Alpha Strategic View: concise, qualitative risks of owning the stock (no precise numbers). 3-5 bullets. */
-  risksToBuy?: string[];
-  verdictNarrative?: string;
-  /** Optional "what this quarter's numbers mean" bullets, rendered in the Investment Verdict. */
-  keyTakeaways?: string[];
+  /** Detail-page prose lives in stocks/prose/TICKER.ts and loads on demand; see StockProse. */
 
   // ── Model type (default: DCF_ADVANCED) ──
   modelType?: 'DCF_ADVANCED' | 'EPS_PE';
@@ -137,6 +129,9 @@ export interface SimpleStockInput {
   lastReportTag?: string;
   /** Date fundamentals/RS/overrides were last manually reviewed (YYYY-MM-DD). The price bot never touches it. See review_status.py. */
   dataReviewedOn?: string;
+  /** Next scheduled earnings date (YYYY-MM-DD). Once it passes without a newer
+   * dataReviewedOn, review_status.py flags the stock however recent the review was. */
+  nextEarningsOn?: string;
 
   /** Burry SBC dilution indicator data (display-only). */
   burry?: BurryData;
@@ -181,7 +176,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     ticker, name, sector, themeColor, currentPrice, shares0,
     rev25, fcfMargin25, taxRate, cash, debt, beta, costDebt,
     fairPriceRange, active = true,
-    rsRating, rsTrend = 'flat', aiImpact, ratingOverride, strategicNarrative, reasonsToBuy, risksToBuy, verdictNarrative, keyTakeaways,
+    rsRating, rsTrend = 'flat', aiImpact, ratingOverride,
     modelType = 'DCF_ADVANCED',
 
     // Scenarios
@@ -205,6 +200,7 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     updatedOn,
     lastReportTag,
     dataReviewedOn,
+    nextEarningsOn,
 
     // Burry indicator
     burry,
@@ -273,16 +269,12 @@ export function defineStock(input: SimpleStockInput): StockDefinition {
     rsTrend,
     aiImpact,
     ratingOverride,
-    strategicNarrative,
-    reasonsToBuy,
-    risksToBuy,
-    verdictNarrative,
-    keyTakeaways,
     baseEps,
     analystConsensus,
     updatedOn,
     lastReportTag,
     dataReviewedOn,
+    nextEarningsOn,
     burry,
     debtSafety,
     scenarios: {

@@ -32,21 +32,7 @@ export const CRDO = defineStock({
   // (20), PT $185-315 (median $288.50); FY27E EPS $6.31 / rev $2.50B, FY28E
   // $9.69 / $3.87B. Stock $216.55 (~34× FY27E / ~22× FY28E).
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'AEC chips are the de facto standard for intra-rack connectivity, giving Credo an entrenched position as AI clusters scale',
-    'DustPhotonics acquisition vertically integrates the silicon photonics PIC layer, expanding addressable revenue per deployment',
-    'ZeroFlap Optics pulled forward into production validates a new reliability-first optical category with multiple hyperscaler customers',
-    'Best-in-class gross margins at scale signal genuine semiconductor IP differentiation rather than commodity assembly value',
-    'Four distinct product expansions — ALCs, OmniConnect, ZeroFlap, SiPho PICs — stagger future growth vectors into the next decade',
-  ],
 
-  risksToBuy: [
-    'Top-three customers represent the vast majority of revenue — a single hyperscaler pause would be severely damaging',
-    'Earnout-based DustPhotonics deal creates meaningful dilution risk if silicon photonics integration hits design-win milestones',
-    'SBC as a share of revenue is structurally high, and true owner cash flow is a fraction of the headline FCF figure',
-    'Extreme beta means the stock experiences sharp drawdowns in any risk-off or AI-spending-doubt environment',
-    'FY27 is back-half loaded — near-term sequential growth is modest, leaving little cushion if early quarters disappoint',
-  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 185, targetMedian: 288.5, targetHigh: 315, numAnalysts: 20 },  // stockanalysis.com, Oct 5 2026
   revGrowth: [

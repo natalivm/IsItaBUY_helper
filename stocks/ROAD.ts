@@ -35,21 +35,7 @@ export const ROAD = defineStock({
   // rev $3.67B / EPS $3.10, FY27E $4.08B / $3.82. Stock ~28× FY26E, ~23×
   // FY27E; net debt ~$1.8B (~3× EBITDA). Q4 FY26 reports ~Nov 6.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Road 2030 plan targets a doubling of the business with a credible M&A pipeline described as the most active in a quarter-century',
-    'HMA vertical integration and Houston platform create durable local operational moats in Sunbelt markets',
-    'Record backlog with strong coverage ratio provides exceptional near-term revenue visibility for a cyclical business',
-    'Sunbelt population migration, reshoring, and data center construction create a multi-year demand floor beyond federal highway spend',
-    'EBITDA margins expanding toward best-in-class levels as scale and vertical integration benefits compound',
-  ],
 
-  risksToBuy: [
-    'The stock has fallen sharply since its post-earnings high despite record backlog, signalling the market doubts the cycle\'s durability',
-    'Organic growth has been volatile quarter-to-quarter, exposing operating leverage risk on the downside',
-    'Leverage elevated from acquisition-driven buildout, constraining flexibility if the infrastructure cycle turns',
-    'Infrastructure budgets are politically vulnerable to austerity, partisan gridlock, or reauthorization delays',
-    'No recurring revenue or durable moat outside execution quality — the thesis is entirely cycle-dependent',
-  ],
 
   // ── EPS/PE Scenarios (updated post Q1 FY26 call) ──
   epsCagr: [8, 15, 20],        // From the FY26E $3.10 base (re-based Oct 2026; was [10,16,21] off FY25 $2.21)

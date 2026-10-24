@@ -38,6 +38,8 @@ export interface PatternAltSetup {
   breakDown?: number;
   goalUp?: number;
   goalDown?: number;
+  signalRule?: string;
+  confirmRule?: string;
   failRule?: string;
   note?: string;
   lines?: PatternLine[];

@@ -35,7 +35,8 @@ from datetime import date
 
 import pattern_watchlist as pw
 
-TRENDLINE_PATTERNS = {'Ascending Channel', 'Descending Channel', 'Rising Wedge', 'Falling Wedge'}
+TRENDLINE_PATTERNS = {'Ascending Channel', 'Descending Channel', 'Rising Wedge', 'Falling Wedge',
+                      'Symmetrical Triangle', 'Megaphone'}  # triangles fit like wedges: two pivots per line
 HS_PATTERNS = {'Head & Shoulders', 'Inverse Head & Shoulders'}
 LEVEL_TOL = 0.004     # line value vs stored level (fraction of price)
 MIN_MOVE = 0.01       # --relevel: a level this near its line is close enough — leave it

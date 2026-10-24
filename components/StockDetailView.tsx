@@ -1,8 +1,9 @@
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Info, LayoutDashboard, ChevronDown, TrendingUp, AlertTriangle } from 'lucide-react';
-import { TickerDefinition, ProjectionData, ScenarioType } from '../types';
+import { TickerDefinition, ProjectionData, ScenarioType, StockProse } from '../types';
+import { loadProse } from '../stocks/prose';
 import { computeStockMetrics, usd, pctFmt } from '../services/stockMetrics';
 import { applyNarrativeTokens, scenarioNarrativeTokens } from '../services/narrative';
 import { AI_IMPACT_BADGE } from '../constants';
@@ -39,6 +40,17 @@ const StockDetailView: React.FC<Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [quantOpen, setQuantOpen] = useState(false);
   const [alphaOpen, setAlphaOpen] = useState(true);
+
+  // Detail-page prose is a per-stock lazy chunk, so it is not in the main bundle.
+  // Until it arrives the panels below simply render nothing, which is what they
+  // already did for a stock that has no prose at all.
+  const [prose, setProse] = useState<StockProse>({});
+  useEffect(() => {
+    let live = true;
+    setProse({});
+    loadProse(tickerDef.ticker).then(p => { if (live) setProse(p); });
+    return () => { live = false; };
+  }, [tickerDef.ticker]);
   useSwipeNavigation(containerRef, { onSwipeLeft: onBack, onSwipeRight: onNext });
 
   const metrics = useMemo(
@@ -195,14 +207,14 @@ const StockDetailView: React.FC<Props> = ({
                           className="overflow-hidden"
                         >
                           <div className="px-4 pb-5 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {tickerDef.reasonsToBuy && tickerDef.reasonsToBuy.length > 0 && (
+                            {prose.reasonsToBuy && prose.reasonsToBuy.length > 0 && (
                               <div>
                                 <div className="text-xs font-black uppercase tracking-[0.2em] text-emerald-500 mb-3 flex items-center gap-2">
                                   <TrendingUp className="w-3.5 h-3.5" />
                                   Why Buy
                                 </div>
                                 <ul className="space-y-2.5">
-                                  {tickerDef.reasonsToBuy.map((r, i) => (
+                                  {prose.reasonsToBuy.map((r, i) => (
                                     <li key={i} className="flex gap-2.5 text-sm text-slate-200 leading-relaxed">
                                       <span className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 bg-emerald-500" />
                                       <span>{r}</span>
@@ -211,14 +223,14 @@ const StockDetailView: React.FC<Props> = ({
                                 </ul>
                               </div>
                             )}
-                            {tickerDef.risksToBuy && tickerDef.risksToBuy.length > 0 && (
+                            {prose.risksToBuy && prose.risksToBuy.length > 0 && (
                               <div>
                                 <div className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-3 flex items-center gap-2">
                                   <AlertTriangle className="w-3.5 h-3.5" />
                                   Risks
                                 </div>
                                 <ul className="space-y-2.5">
-                                  {tickerDef.risksToBuy.map((r, i) => (
+                                  {prose.risksToBuy.map((r, i) => (
                                     <li key={i} className="flex gap-2.5 text-sm text-slate-200 leading-relaxed">
                                       <span className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 bg-amber-500" />
                                       <span>{r}</span>
@@ -286,7 +298,8 @@ const StockDetailView: React.FC<Props> = ({
           investmentConclusion={investmentConclusion}
           activeStockData={activeStockData}
           metrics={metrics}
-          narrativeOverride={tickerDef.verdictNarrative}
+          narrativeOverride={prose.verdictNarrative}
+          keyTakeaways={prose.keyTakeaways}
         />
       </div>
     </motion.div>

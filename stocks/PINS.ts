@@ -30,21 +30,7 @@ export const PINS = defineStock({
   // FY27E $5.55B / $2.40. Stock $21.40 (~10.6× FY26E, ~9.5× TTM FCF), down
   // ~33% over 52 weeks.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'High-intent visual shopping signals are difficult for LLMs to replicate, sustaining advertiser value proposition',
-    'Aggressive buybacks have cut the share count sharply, and the stock trades at a high free-cash-flow yield',
-    'Revenue growth actually accelerated into the high teens with record users, contradicting the structural-decline narrative',
-    'Monthly active user growth in international markets remains a meaningful untapped monetization opportunity',
-    'If GenAI integration enhances personalization, Pinterest could accelerate its social commerce conversion rates',
-  ],
 
-  risksToBuy: [
-    'Guidance points to slower growth in the back half, and the market keeps de-rating the stock despite beats',
-    'GenAI-powered search directly threatens the visual discovery moat that anchors Pinterest\'s advertising model',
-    'Revenue growth in a disruption scenario could deteriorate to low single digits with multiple compression to follow',
-    'The platform has struggled to fully convert discovery intent into measurable direct-response advertiser ROI',
-    'AI disruption risk is flagged as severe — the bear case is structural decline, not a temporary cyclical setback',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 22, targetMedian: 29, targetHigh: 42.36, numAnalysts: 38 },  // stockanalysis.com (Aug 20 2026)
   revGrowth: [

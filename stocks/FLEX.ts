@@ -34,21 +34,7 @@ export const FLEX = defineStock({
   // $45.0B. Stock $119.83 (~26× FY27E / ~17× FY28E) — BELOW the low PT.
   // (No split — the old $73-85 PTs and $2.65 EPS base were simply stale.)
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Embedded power and high-voltage DC expertise puts Flex in a narrow-moat position few EMS competitors can match for AI server builds',
-    'Aggressive buyback program has been the primary EPS driver, and at current price continues to compound per-share value efficiently',
-    'Data-center power and AI infrastructure demand is now driving strong double-digit revenue growth, not just margin gains',
-    'AI server and EV content ramp represent two independent growth vectors that could simultaneously accelerate revenue recovery',
-    'Guidance keeps rising and next year\'s earnings are expected to grow far faster than revenue as the AI ramp scales',
-  ],
 
-  risksToBuy: [
-    'The majority of EPS growth came from buybacks and margin expansion rather than organic revenue growth — a fragile earnings construction',
-    'Growth is increasingly concentrated in hyperscaler AI programs, making the business more cyclical than its history suggests',
-    'In a cyclical downturn, a derating toward trough contract-manufacturing levels could produce a severe drawdown',
-    'Heavy capacity investment for data-center customers raises capex and the cost of any demand air pocket',
-    'EMS is a thin-margin, capital-intensive business with intense competition from Asian players on cost and scale',
-  ],
 
   epsCagr: [6, 13, 20],   // Bull 17→20 at Q1 FY27 (FY28E +50% consensus); base 13% = FY28 surge then an EMS-cycle fade
   exitPE: [13, 18, 22],
