@@ -15,6 +15,20 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-SIMO-main-target",
+    date: "Oct 23 2026",
+    tickers: ["SIMO"],
+    title: "SIMO · target reached",
+    text: "Hit target $192.44.",
+  },
+  {
+    id: "2026-10-24-auto-scan-74",
+    date: "Oct 24 2026",
+    tickers: [],
+    title: "Auto-detected setups updated for 74 stocks",
+    text: "Every valid pattern per stock is now listed (weekly and daily); 7 setups added. Auto-detected ones carry a red dot until checked by hand.",
+  },
+  {
     id: "2026-10-24-ENVA-daily-alt-removed",
     date: "Oct 24 2026",
     tickers: ["ENVA"],

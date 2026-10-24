@@ -183,7 +183,12 @@ def _stage(bars, n, pattern, up, lo, start, A):
     if target < MIN_TARGET * sig['level']:
         return None                              # implausible projection
     if two_way:
-        inv = (lo if d == 'down' else up).at(last)          # the broken line now
+        # Confirmed: the boundary it broke ("back inside"). Still pending: there is nothing
+        # to fall back into yet, so the level that kills it is the channel's far side.
+        # Taking the broken line either way made invalidation equal the signal.
+        broke = lo if d == 'down' else up
+        far = up if d == 'down' else lo
+        inv = (broke if 'conf' in sig else far).at(last)
     else:
         inv = (lo if d == 'up' else up).at(last)            # the pattern's far line now
     out = {'direction': d, 'signal': _r(sig['level']), 'confirm': _r(sig['confirm']),
@@ -233,6 +238,19 @@ def detect_lines(bars, tf, n, all_found=None):
             continue
         pattern = _classify(u, d, start, A)
         if not pattern:
+            continue
+        # Section 2: a channel is two PARALLEL lines -- one through two swing points, the
+        # other parallel through one on the opposite side. combos also pairs two
+        # independently fitted lines, and _classify's tolerance let those through as
+        # channels, which stored a shape whose width drifted (60% of them) and whose
+        # height was therefore ambiguous. The parallel construction of the same lines is
+        # already in combos, so dropping these loses no real candidate.
+        if 'Channel' in pattern and abs(u.slope - d.slope) > 1e-9:
+            continue
+        # A line extrapolated far enough to go through zero is not a price level. The
+        # drawn span is [start, last] (see the 'lines' field below), not [start, A] --
+        # a falling line can stay positive to the last anchor and still cross after it.
+        if min(u.at(start), d.at(start), u.at(last), d.at(last)) <= 0:
             continue
         two_pairs = None not in u.anchors and None not in d.anchors
         if 'Wedge' in pattern:
