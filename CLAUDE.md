@@ -90,6 +90,16 @@ The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatc
 
 **Charts in the expanded rows** (`components/SetupChart.tsx`, TradingView `lightweight-charts`, loaded on first expand) read candles from `public/bars/TICKER_timeframe.json`. The price run rewrites these for every watchlist setup's timeframe (daily 1y, weekly 5y, monthly 10y, regular session only); refresh them by hand with `python3 pattern_watchlist.py --bars`. A setup's levels are drawn as labelled lines and its `stageDate` as a marker. Trendlines come from the setup's (or its `alt`'s) `lines: [{ from: ['YYYY-MM-DD', price], to: ['YYYY-MM-DD', price] }, …]`; the chart extends them to the newest candle.
 
+**When the detector runs.** A setup takes time to develop, so the daily price job does
+**not** go looking for new ones: `prune_finished` closes the setups that finished, which
+leaves those stocks a "No clear pattern" placeholder, and the plain `pattern_detect.run()`
+fills only those. Everything else is left to keep developing. **Friday is the
+re-evaluation** — the price run passes `redo_auto=True` (a superset of the placeholder
+scan, so it replaces the daily call rather than adding to it) and then `redo_stored()`, so
+every machine-drawn setup is redrawn on the week's closed candles. Neither path touches
+anything written by hand. The Friday run also writes `archive/handSetups-<date>.json`;
+`ARCHIVE_KEEP` holds the newest 8, about two months.
+
 **Auto-detected setups** (`pattern_detect.py`): stocks without a setup are scanned on the daily and weekly charts (weekly = main, steadier; daily = second setup) for the clearest channel / wedge / hammer per PATTERN_RULES.md, or get a pending "No clear pattern" placeholder. They carry `auto: true` and show a **red dot** until checked by hand — remove `auto: true` once verified.
 There are **two dots on a ledger row, deliberately the same signal twice**. One sits
 beside the **ticker**, so the Stock column can be scanned top to bottom for the stocks
@@ -165,14 +175,19 @@ projection, the more often that fires, so at `BACK = 0` the setups that survive 
 scored are disproportionately the ones that over-project. That flattered the exact number
 being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
 
-Baseline on the 20 calls whose candles reach back far enough:
+Baseline on the 23 calls whose candles reach back far enough:
 
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
-- **right pattern and direction: 15/20.** Three of the four misses are Hammers that
-  `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
-- **target: 13.5% median error**, and that is the whole defect — 4.7% on wedges against
-  22.6% on channels.
+- **right pattern and direction: 17/23.** Most of the misses are Hammers that
+  `detect_hammer` does not find, and one is a Bull Flag, which is not implemented and is
+  not a tuning gap — see PATTERN_RULES.md §5b for why, and for the measuring rule verified
+  off the one completed flag on record.
+- **target: 6.7% median error**, with 13 of the 17 inside both level tolerances.
+
+The tables below were measured on the 20 calls on record at the time. Three more have
+since been added, and the headline held at **6.7% on all 23** — the extra labels were not
+used to tune anything, so that is an out-of-sample check rather than a re-fit.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
@@ -187,8 +202,8 @@ against the completed calls:
 Wedge error drops by well over half, and holds under every cutoff tested (at `BACK = 0`
 it reads 14.6% → 6.8%, at `BACK = 2` 11.4% → 4.2%). Channels do not move at all and
 cannot — their lines are parallel, so the height is the same wherever it is measured, and
-their 22.6% is a line-fitting problem rather than a height one. **Channels are now the
-whole of the remaining target error.**
+their error is a line-fitting problem rather than a height one — see **MIN_SIDE_TOUCHES**
+below, which is what fixed it.
 
 The cost is one setup, consistently: KLAC's daily rising wedge at `BACK = 1`, CVX's weekly
 falling wedge at `BACK = 0`. Both are lost to the same guard — a shorter target is more
@@ -228,6 +243,68 @@ source of every stored setup on every hand-posted stock, `auto` flag included, p
 stock's `keyLevel` and `history`. It stores source text rather than parsed values, so a
 setup goes back exactly as it was written. `python3 pattern_detect.py --archive` writes
 one without changing anything.
+
+**`MIN_SIDE_TOUCHES = 2`: both boundaries have to be touched.** A channel is one line
+through two swing points plus a *parallel through a single opposite pivot*, and nothing in
+the scoring objected to how far away that pivot sat. The result was a boundary price never
+came back to, and a channel as wide as its one outlier. On the completed calls the
+detector's channel was wider than the call's in **8 cases out of 8**, never narrower.
+
+Requiring each boundary to carry at least 2 touches (wedges already do, both their lines
+being fitted through two pivots, so this bites only channels):
+
+| | channel target error | overall | levels close | patterns rebuilt | agrees with hand-posted |
+|---|---|---|---|---|---|
+| 1 per side | 22.6% | 13.5% | 8/15 | 15/20 | 79.0% |
+| 2 per side | 9.9% | 9.0% | 10/15 | 15/20 | 74.6% |
+| **2 per side, `SIDE_EXEMPT = 0.20`** (current) | **8.8%** | **6.7%** | **12/15** | 15/20 | 75.0% |
+| 3 per side | 9.4% | 9.0% | — | 9/20 | — |
+
+Channel error drops by more than half with no loss on the completed calls, and three per
+side collapses recall for nothing.
+
+**`SIDE_EXEMPT` keeps the rule off narrow patterns**, where a single-touch boundary costs
+little in absolute width. It is not a free parameter fitted to the result: swept from 0 to
+100% the error falls to a flat optimum over 20–25% and then climbs back to *exactly* the
+no-rule baseline by 40% (13.5% / 22.6%), which is the shape the argument predicts and the
+reason to believe it. 0.20 is the near edge of that plateau, so the fewest single-touch
+channels are readmitted for the same gain.
+
+**The remaining cost is 4 points on the independent control** — reproducing the setups
+posted by hand is 75.0% against 79.0% with no rule, 10 of 252 — because some hand-drawn
+channels do rest on a single touch and are wider than the exemption. That trade was taken
+deliberately: the goal is the setups worth acting on, not every setup the rules can draw,
+and a boundary touched once is not a boundary. Raising `SIDE_EXEMPT` hands them back,
+at the width accuracy the table prices.
+
+### Stop distance: why the live invalidation cannot measure it
+
+A sloped invalidation is its line's value at the **latest** candle (see "Sloped
+invalidations track their line" above), so it walks every session. `invalidation` says
+where a setup dies *today*; it does not say what being wrong would have cost on entry.
+Both obvious ways of reading a stop off the ledger are therefore broken, and each fails
+in its own direction:
+
+- **Distance from today's price** finds THM, EME and MLM at 0.0% — that is price sitting
+  *on* the line, a setup about to be invalidated. Ranked tightest-first it promotes the
+  setups closest to dying.
+- **Distance from the confirm level** looked spectacular (reward/risk of 301x, 100x, 75x)
+  and is an artifact: a confirmed channel's invalidation sits on the boundary it broke, so
+  right after the break `confirm ≈ invalidation` by construction. Confirmed setups inside
+  2% had a median age of **10 days** against **46** for those beyond 20%. The number was
+  measuring elapsed time, not risk.
+
+**`breakInvalidation` is the fix**: the invalidation as it stood on the day of the break,
+written once by `pattern_lines.freeze_stops()` (`python3 pattern_lines.py --freeze-stops`,
+`--apply`; the daily run calls it after `relevel`) and never re-read. On the same test the
+age spread across stop buckets falls from 4.6x to 1.8x, and what is left is survivorship
+rather than drift — a tight stop resolves faster, so the tight setups still open are
+genuinely younger. Backfilled for 570 confirmed setups; the handful that could not be
+recovered have no trendlines or no candles reaching their `stageDate`.
+
+A setup redrawn by a rescan loses the field and gets a fresh one on the next run, which is
+correct: it is a different setup. **Nothing ranks on it yet** — it exists so that a stop
+rule, if one is ever wanted again, has a number that means what it says.
 
 ### Working on the scripts: three traps
 

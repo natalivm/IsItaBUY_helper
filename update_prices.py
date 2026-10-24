@@ -938,12 +938,27 @@ def main():
             if releveled:
                 print(f"Re-read {len(releveled)} invalidation(s) off their lines"
                       + (f"; {len(left)} left for review" if left else ""))
+            # ...and record where the invalidation stood at the break, before it walks any
+            # further. Write-once: the live level says where a setup dies today, this says
+            # what being wrong would have cost on entry.
+            frozen, _ = pattern_lines.freeze_stops(apply=True, verbose=False)
+            if frozen:
+                print(f"Recorded {len(frozen)} break level(s).")
             # Drop setups that are done (target reached / failed); each gets a News post.
             pruned, _ = pattern_watchlist.prune_finished(apply=True)
             if pruned:
                 print("Closed setups:\n  " + "\n  ".join(pruned))
-            # Look for a new setup on stocks with none, or only a "No clear pattern" placeholder.
-            new_setups = pattern_detect.run(apply=True, verbose=False)
+            # A setup takes time to develop, so midweek the detector only fills stocks whose
+            # setup has just finished -- prune_finished above leaves those a placeholder, and
+            # a plain run() picks up nothing else. Friday is the re-evaluation: every
+            # machine-drawn setup is redrawn on the week's closed candles, the entries
+            # (--redo-auto, a superset of the placeholder scan) and the setups stored on
+            # hand-posted stocks alike. Neither path touches anything written by hand.
+            friday = datetime.now().weekday() == 4
+            new_setups = pattern_detect.run(apply=True, verbose=False, redo_auto=friday)
+            if friday:
+                n = pattern_detect.redo_stored(apply=True, verbose=False)
+                print(f"Friday re-evaluation: {len(new_setups)} entries and {n} stored setups redrawn.")
             # Refresh the "N agree" summaries on the shown setups.
             with open(pattern_watchlist.WATCHLIST_FILE) as fh:
                 wl_text = fh.read()

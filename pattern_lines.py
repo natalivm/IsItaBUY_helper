@@ -400,6 +400,66 @@ def relevel(apply=False, verbose=True, now_et=None):
     return moved, odd
 
 
+def freeze_stops(apply=False, verbose=True):
+    """Record each confirmed setup's invalidation **as it stood at the break**.
+
+    A sloped invalidation is its line's value at the latest candle, so it walks a little
+    every session and `invalidation` says where the setup dies *today*, not what it would
+    have cost to be wrong on entry. Measured off the live level, a "tight stop" turns out
+    to mean nothing more than a recent break: confirmed setups inside 2% have a median age
+    of 10 days against 46 days for those beyond 20%, because right after a break the line
+    has not moved yet. Any ranking by risk needs a level frozen where the trade started,
+    which is what this writes.
+
+    Only ever added, never re-read: that is the whole point. A setup redrawn by a rescan
+    loses the field and gets a fresh one from its new lines on the next run.
+    """
+    with open(pw.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    edits, done, skipped = [], [], []
+    for e in pw.parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, s, pos in pw._setups(e):
+            pattern = s.get('pattern') or main.get('pattern') or ''
+            name = f"{main['ticker']} ({label}, {pattern})"
+            if s.get('stage') != 'confirmed' or s.get('breakInvalidation') is not None:
+                continue
+            sd = s.get('stageDate')
+            want = invalidation_line(pattern, s.get('direction'), 'confirmed')
+            if not sd or want is None or 'invalidation' not in pos:
+                continue
+            lines = stored_lines(text, pos)
+            if not lines or len(lines) < 2:
+                skipped.append((name, 'no trendlines'))
+                continue
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            bars = load_bars(main['ticker'], tf)
+            if not bars or not bars.get('t'):
+                continue
+            # The candle the break was recorded on. Candles only reach back so far, so a
+            # setup whose stageDate predates the file cannot have its level recovered.
+            i = next((k for k, d in enumerate(bars['t']) if d >= sd), None)
+            if i is None or bars['t'][0] > sd:
+                skipped.append((name, f'candles do not reach {sd}'))
+                continue
+            at = pw._fmt_price(line_value(lines[want], bars['t'], i))
+            b = pos['invalidation'][1]
+            edits.append((b, b, f", breakInvalidation: {at}"))
+            done.append((name, s.get('invalidation'), float(at), sd))
+    if verbose:
+        for name, now, at, sd in done:
+            print(f"STOP  {name}: invalidation {now} now, {at} at the break ({sd})")
+        for name, why in skipped:
+            print(f"SKIP  {name}: {why}")
+        print(f"\n{len(done)} break level(s) recorded, {len(skipped)} could not be recovered.")
+    if apply and edits:
+        for a, b, v in sorted(edits, key=lambda x: x[0], reverse=True):
+            text = text[:a] + v + text[b:]
+        with open(pw.WATCHLIST_FILE, 'w') as fh:
+            fh.write(text)
+    return done, skipped
+
+
 def run(apply=False, refit=False, verbose=True):
     """Fit lines for every setup (only those without lines unless refit). Returns (fitted, missed)."""
     with open(pw.WATCHLIST_FILE) as fh:
@@ -460,8 +520,12 @@ if __name__ == '__main__':
     ap.add_argument('--refit', action='store_true', help='also replace lines that already exist')
     ap.add_argument('--relevel', action='store_true',
                     help="re-read sloped invalidations off their lines instead of fitting")
+    ap.add_argument('--freeze-stops', action='store_true',
+                    help="record each confirmed setup's invalidation as it stood at the break")
     args = ap.parse_args()
-    if args.relevel:
+    if args.freeze_stops:
+        freeze_stops(apply=args.apply)
+    elif args.relevel:
         relevel(apply=args.apply)
     else:
         run(apply=args.apply, refit=args.refit)

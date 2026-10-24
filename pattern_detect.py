@@ -37,6 +37,8 @@ MAX_PER_TF = 5                               # setups stored per timeframe; the 
 AGREE = 0.05                                 # targets within 5% of each other agree
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
+MIN_SIDE_TOUCHES = 2                         # touches required on EACH boundary of a pattern
+SIDE_EXEMPT = 0.20                           # ...unless the pattern is this narrow vs price
 MIN_TARGET = 0.3                             # a downward target must stay above 30% of the signal
 HEIGHT_REF = 'mean'                         # where a pattern's height is measured: start | signal | mean
 FLAT = 0.03                                  # a trendline moving <3% of mid across the pattern is flat
@@ -237,7 +239,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
 
 def detect_lines(bars, tf, n, all_found=None):
     """Best current channel / wedge on these candles, or None. Every valid one is appended to all_found."""
-    t, h, l = bars['t'], bars['h'], bars['l']
+    t, h, l, c = bars['t'], bars['h'], bars['l'], bars['c']
     last = len(t) - 1
     lo_i = max(0, last - WINDOW[tf])
     # Same swing points the source tool draws through (PATTERN_RULES.md: at least one
@@ -288,8 +290,14 @@ def detect_lines(bars, tf, n, all_found=None):
                 continue
         if not pl._contained(bars, u, d, start, A + 1, tol=0.01, allowed=1):
             continue
-        touches = _touches(u, H1, h, start, A) + _touches(d, L1, l, start, A)
+        tu, td = _touches(u, H1, h, start, A), _touches(d, L1, l, start, A)
+        touches = tu + td
         if touches < MIN_TOUCHES:
+            continue
+        # A boundary resting on a single pivot is a line price never came back to, and a
+        # channel built on one is as wide as that one outlier. Tight patterns are exempt:
+        # there the single touch costs little, and the exemption is what keeps the recall.
+        if min(tu, td) < MIN_SIDE_TOUCHES and (u.at(start) - d.at(start)) > SIDE_EXEMPT * c[A]:
             continue
         st = _stage(bars, n, pattern, u, d, start, A)
         if not st:
@@ -851,6 +859,15 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
 # ---------------------------------------------------------------------------
 
 ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'archive')
+ARCHIVE_KEEP = 8                             # weekly runs, so about two months of copies
+
+
+def _trim_archive(keep=None):
+    """Drop all but the newest ARCHIVE_KEEP copies: the Friday job writes one a week."""
+    old = sorted(glob.glob(os.path.join(ARCHIVE_DIR, 'handSetups-*.json')))[:-(keep or ARCHIVE_KEEP)]
+    for f in old:
+        os.remove(f)
+    return old
 
 
 def _item_text(text, span):
@@ -881,6 +898,7 @@ def archive_hand_setups(text, path=None, verbose=True):
     """
     today = date.today().isoformat()
     path = path or os.path.join(ARCHIVE_DIR, f'handSetups-{today}.json')
+    _trim_archive()
     out = {}
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
