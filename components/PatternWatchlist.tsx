@@ -164,7 +164,7 @@ const Agreement: React.FC<{ agree?: PatternAgree }> = ({ agree }) => {
 };
 
 const AutoNote: React.FC<{ on?: boolean }> = ({ on }) => on
-  ? <div className="auto-note"><i className="auto-dot" />Auto-detected: check the lines and levels by hand.</div>
+  ? <div className="auto-note"><i className="auto-dot" />This setup was drawn by the detector. Its lines and levels have not been checked by hand.</div>
   : null;
 
 const UpdateBanner: React.FC<{ note?: string }> = ({ note }) => (
@@ -481,13 +481,13 @@ const SetupList: React.FC<{ ticker: string; entries: Entry[]; sel: string; onSel
               aria-pressed={sel === e.key} onClick={() => onSel(e.key)}>
               <span className="sl-r1">
                 <b>{ticker}</b>
-                {e.auto && <i className="auto-dot" title="Auto-detected: check by hand" />}
                 <span className="sl-tf">{cap(e.tf)}</span>
                 <Chev />
               </span>
               <span className="sl-r2">
                 <span className={e.st.cls}><Icon name={e.st.icon} />{e.st.mid}</span>
                 <span className="sl-pat">· {e.pattern}</span>
+                {e.auto && <i className="auto-dot" title="This setup was auto-detected — its lines and levels have not been checked by hand" />}
               </span>
             </button>
           ))}
@@ -679,7 +679,6 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
-          {s?.auto && <i className="auto-dot" title="Auto-detected: check by hand" aria-label="Auto-detected" />}
           <span>{row.name}</span>
         </span>
         <span className="stcell">
@@ -689,6 +688,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
         </span>
         <span className="meta">
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
+          {/* The dot marks THIS setup as machine-drawn, never the stock: a stock can carry a
+              hand-posted setup and an auto-detected one at once, and a price refresh never
+              earns one. It sits with the pattern for that reason. */}
+          {s?.auto && <i className="auto-dot" title="This setup was auto-detected — its lines and levels have not been checked by hand" aria-label="Auto-detected setup" />}
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
           <Undone pct={undoneBy(s, s?.price)} tf={s?.timeframe} />
