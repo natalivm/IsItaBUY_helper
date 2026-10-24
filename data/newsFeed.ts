@@ -15,6 +15,20 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-22-SPOT-daily-alt-failed",
+    date: "Oct 22 2026",
+    tickers: ["SPOT"],
+    title: "SPOT · pattern failed (daily setup)",
+    text: "Closed $583.66 back inside the channel.",
+  },
+  {
+    id: "2026-10-20-GM-main-failed",
+    date: "Oct 20 2026",
+    tickers: ["GM"],
+    title: "GM · pattern failed",
+    text: "Closed $77.09 back inside the channel.",
+  },
+  {
     id: "2026-10-24-CRWV-main-confirmed",
     date: "Oct 24 2026",
     tickers: ["CRWV"],
