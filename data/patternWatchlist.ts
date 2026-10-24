@@ -18667,5 +18667,24 @@ export const PATTERN_STOCKS: PatternStock[] = [
         confirm: 346.15, invalidation: 429.53, target: 304.48,
         note: "Daily channel break confirmed below $346.15 and reached the $304.48 target. A completed move, not a new entry." }
     ],
-  }
+  },
+  {
+    ticker: "VZ",
+    name: "Verizon Communications",
+    price: 44.66,
+    priceDate: "2026-10-23",
+    pattern: "Falling Wedge",
+    timeframe: "daily",
+    direction: "up",
+    stage: "signal",
+    stageDate: "2026-10-22",
+    signal: 44.2,
+    confirm: 45.29,
+    invalidation: 38.92,
+    target: 53.39,
+    signalRule: "a completed daily close above $44.20; a close back inside cancels it.",
+    confirmRule: "a later completed daily close above $45.29, beyond the signal candle's high.",
+    failRule: "a completed daily close below $38.92, then a follow-through close below that candle's low.",
+    note: "The slide from the September high near $52 narrowed into a falling wedge, with the lower line catching the Oct 9 low around $40. Price closed above the upper line on Oct 22 for the signal and is holding just under the confirmation level; it needs a daily close above $45.29 to confirm.",
+  },
 ];

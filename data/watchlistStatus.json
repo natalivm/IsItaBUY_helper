@@ -6029,6 +6029,12 @@
   "stage": "forming",
   "ticker": "VST"
  },
+ "VZ|main": {
+  "label": "main",
+  "setup": "Falling Wedge (daily)",
+  "stage": "signal",
+  "ticker": "VZ"
+ },
  "WDC|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
