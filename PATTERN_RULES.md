@@ -27,6 +27,7 @@ last trading day). Regular-session prices only, never pre/after-market.
 | Forming / Waiting | The pattern is drawn, price is still inside it. |
 | Signal (Pending) | A completed close beyond the break line. **Signal level** = the break line's value at that candle. A close back inside cancels the signal. |
 | Confirmed | A later completed close beyond the signal candle's extreme. **Confirm level** = the signal candle's low (downward break) or high (upward break). |
+| Retest | (Ours) A confirmed break that has come back to the boundary it broke, without a completed close back past it. The levels do not change — it is the same setup being tested. It resolves by walking away (back to Confirmed, on toward the target) or by failing. Marked **by hand**: the price run reports a confirmed setup sitting on its boundary but never sets or clears the stage, so a stock cannot flip between the two every session. Everything else treats it as Confirmed — same levels, same target and failure checks. |
 | Target reached | Price *touches* the target (intraday high/low counts). |
 | Failed | A completed close back past invalidation, then a follow-through close beyond that candle's extreme. |
 | Needs updating | (Ours) A pending setup closed past one of its limits; a new setup must be posted. |
@@ -145,6 +146,14 @@ than 30% of the candle's range:
 *Topping Tail* is the name this project uses; the standard literature calls the
 same candle a **Shooting Star**. It is the Inverted Hammer's shape read at a top.
 
+**Bald candle (Marubozu)** — the body spans essentially the whole range, with no
+meaningful wick at either end. *Bullish Bald Candle*: opens at or near its low and
+closes at or near its high. *Bearish Bald Candle*: the mirror. One side being bald
+is enough to name it; what matters is that the period closed at its extreme with no
+rejection. Unlike the wick patterns above it needs no prior move — it is a
+continuation signal as often as a reversal — so direction comes from the candle
+itself, not from the trend into it.
+
 **Two candles**
 
 - **Bullish Engulfing:** after a decline, a down candle, then an up candle whose
@@ -176,7 +185,9 @@ Across the pattern's candles let **range** = highest high − lowest low, and
 
 This is the §6 hammer rule generalised, and it reproduces the verified example
 exactly — SPCX daily hammer, Oct 15 (high $149.04, low $140.66, range $8.38):
-confirm $149.04, invalidation $140.66, target $157.42.
+confirm $149.04, invalidation $140.66, target $157.42. It also reproduces the source
+tool's monthly Bullish Bald Candle on ENVA to the cent: range $242.93 − $158.38 =
+$84.55, target $242.93 + $84.55 = $327.48.
 
 ### Reliability
 

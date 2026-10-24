@@ -310,8 +310,8 @@ def invalidation_line(pattern, direction, stage):
     """
     dn = direction == 'down'
     if 'Channel' in pattern:
-        if stage == 'confirmed':
-            return 1 if dn else 0  # the boundary it broke
+        if stage in ('confirmed', 'retest'):
+            return 1 if dn else 0  # the boundary it broke (a retest is sitting on it)
         return 0 if dn else 1      # still pending: the opposite side
     if 'Wedge' in pattern:
         return 0 if dn else 1      # the far side

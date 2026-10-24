@@ -1973,15 +1973,15 @@
   "stage": "confirmed",
   "ticker": "ENVA"
  },
- "ENVA|daily alt": {
-  "label": "daily alt",
-  "setup": "Descending Channel (daily)",
+ "ENVA|main": {
+  "label": "main",
+  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "ENVA"
  },
- "ENVA|main": {
-  "label": "main",
-  "setup": "Descending Channel (weekly)",
+ "ENVA|monthly alt": {
+  "label": "monthly alt",
+  "setup": "Bullish Bald Candle (monthly)",
   "stage": "confirmed",
   "ticker": "ENVA"
  },
@@ -6034,6 +6034,12 @@
   "setup": "Falling Wedge (daily)",
   "stage": "signal",
   "ticker": "VZ"
+ },
+ "V|main": {
+  "label": "main",
+  "setup": "Ascending Channel (daily)",
+  "stage": "retest",
+  "ticker": "V"
  },
  "WDC|daily Ascending Channel": {
   "label": "daily Ascending Channel",

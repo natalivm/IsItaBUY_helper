@@ -9,7 +9,10 @@
 //            (set by pattern_watchlist.py; stageDate keeps the date of the previous stage).
 
 export type PatternDirection = 'up' | 'down' | 'both';
-export type PatternStage = 'forming' | 'signal' | 'confirmed' | 'target' | 'failed' | 'update';
+/** 'retest' is a confirmed break that has come back to the broken boundary and is
+ *  being tested. It behaves as confirmed everywhere -- same levels, same target and
+ *  failure checks -- and only reads differently. See PATTERN_RULES.md section 1. */
+export type PatternStage = 'forming' | 'signal' | 'confirmed' | 'retest' | 'target' | 'failed' | 'update';
 export type PatternTimeframe = 'daily' | 'weekly' | 'monthly';
 /** Direction of the stock's own trend, from ~3 months of daily bars (pattern_watchlist._trend).
  *  Setups pointing the same way are listed first; 'flat' leaves the stored order alone. */
@@ -11145,42 +11148,36 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "ENVA",
     name: "Enova International",
-    auto: true,
     price: 165.07,
     priceDate: "2026-10-23",
     rsi: 31.7,
     trend: "down",
-    pattern: "Descending Channel",
+    pattern: "Rising Wedge",
     timeframe: "weekly",
-    direction: "up",
+    direction: "down",
     stage: "confirmed",
-    stageDate: "2026-06-15",
-    signal: 173.25,
-    confirm: 193.54,
-    invalidation: 164.5,
-    target: 285.59,
-    lines: [
-      { from: ["2024-11-18", 210.59], to: ["2026-10-19", 164.5] },
-      { from: ["2024-11-18", 98.25], to: ["2026-10-19", 52.16] },
-    ],
-    note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $193.54 on Jun 15.",
+    stageDate: "2026-02-23",
+    signal: 161.62,
+    confirm: 145.08,
+    invalidation: 298.89,
+    target: 119.67,
+    signalRule: "a completed weekly close below $161.62.",
+    confirmRule: "a later completed weekly close below $145.08, beyond the signal candle's low.",
+    failRule: "a completed weekly close above $298.89, then a follow-through close above that candle's high.",
+    note: "The year-long advance ran inside a rising wedge and broke the lower line in February, confirming below $145.08. Price then rallied all the way to the high $200s before rolling over again, so the break is long in the tooth \u2014 the $119.67 measured move stands, but invalidation sits far above at $298.89.",
     alt: {
-      auto: true,
-      pattern: "Descending Channel",
-      timeframe: "daily",
+      pattern: "Bullish Bald Candle",
+      timeframe: "monthly",
       direction: "up",
       stage: "confirmed",
-      agree: {"n": 3, "lo": 262.85, "hi": 267.04, "with": ["Weekly falling wedge", "Daily falling wedge"]},
-      stageDate: "2026-10-20",
-      signal: 173.45,
-      confirm: 178.31,
-      invalidation: 160.33,
-      target: 263.35,
-      lines: [
-        { from: ["2026-07-15", 315.54], to: ["2026-10-23", 160.33] },
-        { from: ["2026-07-15", 225.64], to: ["2026-10-23", 95.24] },
-      ],
-      note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $178.31 on Oct 20.",
+      stageDate: "2026-07-01",
+      flag: "Monthly close pending",
+      confirm: 242.93,
+      invalidation: 158.38,
+      target: 327.48,
+      confirmRule: "a completed monthly close above $242.93.",
+      failRule: "a completed monthly close below $158.38.",
+      note: "A monthly candle that opened at its low and closed at its high, no wick either end. It needs a monthly close above $242.93 to stay confirmed; price is well below that now and only just above the $158.38 invalidation.",
     },
     more: [
       {
@@ -18686,5 +18683,23 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirmRule: "a later completed daily close above $45.29, beyond the signal candle's high.",
     failRule: "a completed daily close below $38.92, then a follow-through close below that candle's low.",
     note: "The slide from the September high near $52 narrowed into a falling wedge, with the lower line catching the Oct 9 low around $40. Price closed above the upper line on Oct 22 for the signal and is holding just under the confirmation level; it needs a daily close above $45.29 to confirm.",
+  },
+  {
+    ticker: "V",
+    name: "VISA Inc.",
+    price: 407.92,
+    priceDate: "2026-10-23",
+    pattern: "Ascending Channel",
+    timeframe: "daily",
+    direction: "up",
+    stage: "retest",
+    signal: 403.58,
+    confirm: 408.59,
+    invalidation: 405,
+    target: 441.49,
+    signalRule: "a completed daily close above $403.58.",
+    confirmRule: "a later completed daily close above $408.59, beyond the signal candle's high.",
+    failRule: "a completed daily close back inside the broken boundary, below $405.00.",
+    note: "Price climbed all year inside an ascending channel and broke out of the top in October, confirming on a daily close above $408.59. It is now back on the broken boundary at $405 — the retest. Holding it keeps the $441.49 measured move live; a daily close back inside kills the break.",
   },
 ];

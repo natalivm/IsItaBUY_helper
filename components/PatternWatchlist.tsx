@@ -69,6 +69,8 @@ function status(s: { direction: string; stage: PatternStage } | null): Status {
     case 'forming':   return { label: 'Waiting for a break', mid: 'Forming', short: 'Waiting', cls: 'st-wait', icon: 'clock', group: 'pending' };
     case 'signal':    return { label: `${word} break pending`, mid: `${side} pending`, short: 'Pending', cls: 'st-wait', icon: dn ? 'down' : 'up', group: 'pending' };
     case 'confirmed': return { label: `${word} break confirmed`, mid: `${side} confirmed`, short: 'Confirmed', cls: tone, icon: 'check', group: 'confirmed' };
+    // A confirmed break back on its boundary: still confirmed, grouped and coloured as such.
+    case 'retest':    return { label: 'Retest in progress', mid: `${side} retest`, short: 'Retest', cls: tone, icon: 'check', group: 'confirmed' };
     case 'target':    return { label: 'Target reached', mid: 'Target hit', short: 'Target hit', cls: tone, icon: 'target', group: 'target' };
     case 'failed':    return { label: 'Pattern failed', mid: 'Failed', short: 'Failed', cls: 'st-fail', icon: 'x', group: 'failed' };
     case 'update':    return { label: 'Needs updating', mid: 'Needs update', short: 'Update', cls: 'st-upd', icon: 'refresh', group: 'update' };
@@ -312,7 +314,9 @@ const DirBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a:
   const hasSig = a.signal != null;
   const SL = hasSig ? ['Forming', 'Signal', 'Confirmed', 'Target'] : ['Forming', 'Confirmed', 'Target'];
   const SK: PatternStage[] = hasSig ? STAGES : ['forming', 'confirmed', 'target'];
-  const idx = a.stage === 'failed' ? -1 : SK.indexOf(a.stage === 'signal' && !hasSig ? 'forming' : a.stage);
+  // A retest sits on the Confirmed node of the rail -- it is the break being tested, not a step past it.
+  const railStage = a.stage === 'retest' ? 'confirmed' : a.stage === 'signal' && !hasSig ? 'forming' : a.stage;
+  const idx = a.stage === 'failed' ? -1 : SK.indexOf(railStage);
   const pending = a.stage === 'forming' || a.stage === 'signal';
   const target = a.target!, invalidation = a.invalidation!;
   const tf = a.timeframe || 'daily', T = cap(tf);

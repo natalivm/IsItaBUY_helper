@@ -15,6 +15,41 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-ENVA-daily-alt-removed",
+    date: "Oct 24 2026",
+    tickers: ["ENVA"],
+    title: "ENVA · setup removed (daily setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-24-ENVA-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["ENVA"],
+    title: "ENVA · new setup",
+    text: "Rising Wedge (weekly), break confirmed.",
+  },
+  {
+    id: "2026-10-24-ENVA-monthly-alt-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["ENVA"],
+    title: "ENVA · new setup (monthly setup)",
+    text: "Bullish Bald Candle (monthly), break confirmed.",
+  },
+  {
+    id: "2026-10-24-V-main-retest",
+    date: "Oct 24 2026",
+    tickers: ["V"],
+    title: "V · retest in progress",
+    text: "Previously break confirmed.",
+  },
+  {
+    id: "2026-10-24-V-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["V"],
+    title: "V · new setup",
+    text: "Ascending Channel (daily), break confirmed.",
+  },
+  {
     id: "2026-10-24-VZ-main-signal",
     date: "Oct 24 2026",
     tickers: ["VZ"],

@@ -56,6 +56,8 @@ CANDLE_PATTERNS = frozenset((
     'Bullish Engulfing', 'Bearish Engulfing',
     'Morning Star', 'Evening Star',
     'Three White Soldiers', 'Three Black Crows',
+    # Posted by hand from the source tool; _shape does not detect these yet.
+    'Bullish Bald Candle', 'Bearish Bald Candle',
 ))
 
 
