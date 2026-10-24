@@ -360,6 +360,28 @@ HEADER_KEYS = ('ticker', 'name', 'auto', 'price', 'priceDate')
 SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
 
 
+# The parser records array fields (`lines`, `history`) as spans in the source text rather
+# than values, so a setup's trendlines have to be read back out of it.
+_LINE_RE = re.compile(r'\{\s*from:\s*\["([\d-]+)",\s*(-?[\d.]+)\],\s*to:\s*\["([\d-]+)",\s*(-?[\d.]+)\]\s*\}')
+
+
+def stored_lines(text, pos):
+    """The setup's trendlines as [((date, value), (date, value)), ...], or None."""
+    if 'lines' not in pos:
+        return None
+    found = _LINE_RE.findall(text[pos['lines'][0]:pos['lines'][1]])
+    return [((d0, float(v0)), (d1, float(v1))) for d0, v0, d1, v1 in found] or None
+
+
+def line_value(line, t, i):
+    """A stored line's value at bar i, extended at its own slope per bar."""
+    (d0, v0), (d1, v1) = line
+    idx = lambda d: max([k for k, x in enumerate(t) if x <= d] or [0])
+    i0, i1 = idx(d0), idx(d1)
+    per = (v1 - v0) / (i1 - i0) if i1 > i0 else 0.0
+    return v0 + per * (i - i0)
+
+
 def _reindent(value, indent):
     """Re-indent a multi-line value (e.g. a lines array) to sit under `indent`."""
     rows = value.split('\n')
@@ -780,7 +802,11 @@ def _completed_count(t, timeframe, now_et):
     last = _date.fromisoformat(t[-1])
     today = now_et.date()
     if timeframe == 'weekly':
-        live = last.isocalendar()[:2] == today.isocalendar()[:2] and not (today.weekday() >= 4 and _session_over(today.isoformat(), now_et))
+        # The week closes with Friday's session, so on Saturday and Sunday it is already
+        # over — waiting for 16:00 on a day with no session left the just-closed week
+        # looking live all weekend.
+        closed = today.weekday() >= 5 or (today.weekday() == 4 and _session_over(today.isoformat(), now_et))
+        live = last.isocalendar()[:2] == today.isocalendar()[:2] and not closed
     elif timeframe == 'monthly':
         live = (last.year, last.month) == (today.year, today.month) and not _period_closed('monthly', today.isoformat())
     else:
@@ -788,8 +814,12 @@ def _completed_count(t, timeframe, now_et):
     return len(t) - 1 if live else len(t)
 
 
-def _finished(s, main, now_et):
-    """(date, news text, news title, kind) if a setup is done, kind 'target' or 'failed'; else None."""
+def _finished(s, main, now_et, lines=None):
+    """(date, news text, news title, kind) if a setup is done, kind 'target' or 'failed'; else None.
+
+    `lines` comes from stored_lines(): the parser hands back a span, not a value, so the
+    channel rule below cannot read them off the setup itself.
+    """
     t_ = main.get('ticker')
     stage = s.get('stage')
     if stage == 'target':
@@ -811,18 +841,14 @@ def _finished(s, main, now_et):
             return t[i], f"Hit target ${_fmt_price(tgt)}.", f"{t_} · target reached", 'target'
     n = _completed_count(t, tf, now_et)
     pattern = s.get('pattern') or main.get('pattern') or ''
-    if 'Channel' in pattern and s.get('lines'):
-        # Channels fail on one completed close back inside the broken line (its value that day).
-        broken = s['lines'][0] if not dn else s['lines'][1]   # lines = [upper, lower]
-        (d0, v0), (d1, v1) = broken['from'], broken['to']
-        i0, i1 = t.index(d0) if d0 in t else None, t.index(d1) if d1 in t else None
-        if i0 is not None and i1 is not None and i1 > i0:
-            per = (v1 - v0) / (i1 - i0)
-            for i in range(start + 1, n):
-                line = v0 + per * (i - i0)
-                if (c[i] > line if dn else c[i] < line):
-                    return (t[i], f"Closed ${_fmt_price(c[i])} back inside the channel.", f"{t_} · pattern failed", 'failed')
-            return None
+    if 'Channel' in pattern and lines and len(lines) >= 2:
+        # Channels fail on one completed close back inside the broken line (its value that day):
+        # the boundary the break came through, which is also where the invalidation sits.
+        broken = lines[1] if dn else lines[0]   # lines = [upper, lower]
+        for i in range(start + 1, n):
+            if (c[i] > line_value(broken, t, i)) if dn else (c[i] < line_value(broken, t, i)):
+                return (t[i], f"Closed ${_fmt_price(c[i])} back inside the channel.", f"{t_} · pattern failed", 'failed')
+        return None
     for i in range(start, n - 1):  # a close past invalidation, then a follow-through close
         if inv is not None and (c[i] > inv if dn else c[i] < inv) and (c[i + 1] > h[i] if dn else c[i + 1] < l[i]):
             return (t[i + 1], f"Closed ${_fmt_price(c[i])} past invalidation ${_fmt_price(inv)}, then followed through.",
@@ -870,7 +896,7 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
         setups = _setups(e)
         done, stored_live, edits = {}, [], []
         for label, sv, pos in setups:
-            r = _finished(sv, main, now_et)
+            r = _finished(sv, main, now_et, stored_lines(text, pos))
             if '_span' in pos:                    # stored (hidden): finished / cancelled ones drop quietly
                 if not r and sv.get('stage') != 'update':
                     stored_live.append(pos)

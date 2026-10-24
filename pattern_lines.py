@@ -295,25 +295,8 @@ def _lines_ts(lines, indent):
     return f"[\n{rows}{indent}]"
 
 
-# The watchlist parser keeps only the span of a `lines:` array, so read the pairs back out.
-_LINE_RE = re.compile(r'\{\s*from:\s*\["([\d-]+)",\s*(-?[\d.]+)\],\s*to:\s*\["([\d-]+)",\s*(-?[\d.]+)\]\s*\}')
-
-
-def stored_lines(text, pos):
-    """The setup's trendlines as [((date, value), (date, value)), ...], or None."""
-    if 'lines' not in pos:
-        return None
-    found = _LINE_RE.findall(text[pos['lines'][0]:pos['lines'][1]])
-    return [((d0, float(v0)), (d1, float(v1))) for d0, v0, d1, v1 in found] or None
-
-
-def line_value(line, t, i):
-    """A stored line's value at bar i, extended at its own slope per bar."""
-    (d0, v0), (d1, v1) = line
-    idx = lambda d: max([k for k, x in enumerate(t) if x <= d] or [0])
-    i0, i1 = idx(d0), idx(d1)
-    per = (v1 - v0) / (i1 - i0) if i1 > i0 else 0.0
-    return v0 + per * (i - i0)
+stored_lines = pw.stored_lines     # the watchlist module owns the file format
+line_value = pw.line_value
 
 
 def invalidation_line(pattern, direction, stage):

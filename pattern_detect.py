@@ -153,7 +153,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
                 sig = None                       # close back inside: signal cancelled
             continue
         target = sig['level'] + height if d == 'up' else sig['level'] - height
-        if (d == 'up' and h[i] >= target) or (d == 'down' and l[i] <= target):
+        if pw._reached(d, target, h[i], l[i]):   # same margin the daily run allows
             return None                          # target already reached: finished
     last = len(t) - 1
     if sig is None:
@@ -365,7 +365,7 @@ def detect_candle(bars, tf, n):
         later = range(i + 1, n)
         if any((c[j] < inval) if up else (c[j] > inval) for j in later):
             return None                          # broke the other end: failed
-        if any((h[j] >= target) if up else (l[j] <= target) for j in later):
+        if any(pw._reached(direction, target, h[j], l[j]) for j in later):
             return None                          # target already reached: finished
         conf = next((j for j in later if (c[j] > extreme if up else c[j] < extreme)), None)
         s = {'pattern': kind, 'timeframe': tf, 'direction': direction,

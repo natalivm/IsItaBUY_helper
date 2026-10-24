@@ -44,12 +44,6 @@
  "ADBE|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "ADBE"
- },
- "ADBE|daily Ascending Channel #2": {
-  "label": "daily Ascending Channel #2",
-  "setup": "Ascending Channel (daily)",
   "stage": "forming",
   "ticker": "ADBE"
  },
@@ -2261,12 +2255,6 @@
   "stage": "confirmed",
   "ticker": "FTNT"
  },
- "GEV|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "GEV"
- },
  "GEV|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
@@ -2282,12 +2270,6 @@
  "GE|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "GE"
- },
- "GE|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "GE"
  },
@@ -2396,7 +2378,7 @@
  "GM|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "failed",
   "ticker": "GM"
  },
  "GM|weekly Ascending Channel": {
@@ -2629,12 +2611,6 @@
  },
  "INTC|daily Descending Channel": {
   "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "INTC"
- },
- "INTC|daily Descending Channel #2": {
-  "label": "daily Descending Channel #2",
   "setup": "Descending Channel (daily)",
   "stage": "forming",
   "ticker": "INTC"
@@ -3107,12 +3083,6 @@
   "stage": "forming",
   "ticker": "LITE"
  },
- "LITE|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "LITE"
- },
  "LITE|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
@@ -3425,12 +3395,6 @@
   "stage": "forming",
   "ticker": "META"
  },
- "META|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "META"
- },
  "META|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
@@ -3673,12 +3637,6 @@
  },
  "MSFT|daily Ascending Channel": {
   "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "MSFT"
- },
- "MSFT|daily Ascending Channel #2": {
-  "label": "daily Ascending Channel #2",
   "setup": "Ascending Channel (daily)",
   "stage": "forming",
   "ticker": "MSFT"
@@ -5342,7 +5300,7 @@
  "SPOT|daily alt": {
   "label": "daily alt",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "failed",
   "ticker": "SPOT"
  },
  "SPOT|main": {
