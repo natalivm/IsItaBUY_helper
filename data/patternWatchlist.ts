@@ -10841,23 +10841,15 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $14.98 on Oct 22.",
     },
+    history: [
+      { pattern: "Descending Channel", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-12",
+        confirm: 10.82, invalidation: 8.58, target: 14.4,
+        note: "Confirmed above $10.82 and reached $14.40 on Oct 12; price has run on to $15.49. The third case of the same divergence: our copy of this channel put the confirm at $10.63 and the invalidation at $8.66, both within 2% of the source tool, and then measured the move to $15.71 — 9.1% further than the $14.40 that was actually reached. Price is now past their target and short of ours, so ours still read confirmed and running on a call that had finished." },
+      { pattern: "Rising Wedge", timeframe: "daily", direction: "down", stage: "failed", stageDate: "2026-10-22",
+        signal: 14.05, invalidation: 14.73,
+        note: "Never signalled. The wedge needed a daily close below $14.05 and instead closed above $14.73 with follow-through, which ends it. Fourth bearish setup in this batch to die without ever triggering — CVX had two, CRWD one — on a stock that went on to $15.49." }
+    ],
     more: [
-      {
-        pattern: "Descending Channel",
-        timeframe: "weekly",
-        direction: "up",
-        stage: "confirmed",
-        stageDate: "2026-07-13",
-        signal: 10.28,
-        confirm: 10.63,
-        invalidation: 8.66,
-        target: 15.71,
-        lines: [
-          { from: ["2025-04-07", 16.79], to: ["2026-10-19", 8.66] },
-          { from: ["2025-04-07", 11.37], to: ["2026-10-19", 3.23] },
-        ],
-        note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $10.63 on Jul 13.",
-      },
       {
         pattern: "Rising Wedge",
         timeframe: "weekly",
