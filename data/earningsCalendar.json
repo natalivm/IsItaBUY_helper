@@ -1,0 +1,87 @@
+{
+  "AMZN": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "amc"
+  },
+  "APH": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "CLS": {
+    "date": "2026-10-26",
+    "estimated": false,
+    "time": "amc"
+  },
+  "FTNT": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
+  "GLW": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "INTC": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "amc"
+  },
+  "KLAC": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
+  "LLY": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "META": {
+    "date": "2027-02-03",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "NOW": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
+  "RDDT": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "amc"
+  },
+  "SNDK": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "amc"
+  },
+  "SOFI": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "SPGI": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "STX": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "amc"
+  },
+  "VRT": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "WDC": {
+    "date": "2027-02-03",
+    "estimated": false,
+    "time": "tbd"
+  }
+}

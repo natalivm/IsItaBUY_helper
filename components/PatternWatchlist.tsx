@@ -12,11 +12,11 @@ import './PatternWatchlist.css';
 // have no pattern data yet are listed with empty fields.
 
 const STAGES: PatternStage[] = ['forming', 'signal', 'confirmed', 'target'];
-const fmt = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+export const fmt = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const cap = (t: string) => t[0].toUpperCase() + t.slice(1);
 const pct0 = (from: number, to: number) => (to - from) / from * 100;
-const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
-const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+export const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
+export const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash' | 'refresh';
 
@@ -59,9 +59,9 @@ const Cross = () => (
 type Group = 'confirmed' | 'pending' | 'update' | 'target' | 'failed' | 'none';
 // `mid` sits between `short` (ledger pill) and `label` (panel heading): it names
 // the direction without the sentence, for the setup cards in the expanded row.
-interface Status { label: string; mid: string; short: string; cls: string; icon: IconName; group: Group }
+export interface Status { label: string; mid: string; short: string; cls: string; icon: IconName; group: Group }
 
-function status(s: { direction: string; stage: PatternStage } | null): Status {
+export function status(s: { direction: string; stage: PatternStage } | null): Status {
   if (!s) return { label: 'No pattern data yet', mid: 'No data', short: 'No data', cls: 'st-fail', icon: 'dash', group: 'none' };
   const dn = s.direction === 'down', word = dn ? 'Downward' : 'Upward', side = dn ? 'Down' : 'Up';
   const tone = dn ? 'st-down' : 'st-up';
@@ -187,8 +187,10 @@ const Ladder: React.FC<{ rungs: Rung[]; price: number; priceDate: string }> = ({
   </div>
 );
 
-const Pill: React.FC<{ st: Status }> = ({ st }) => (
-  <span className={`pill ${st.cls}`}><Icon name={st.icon} />{st.label}</span>
+// `text` overrides the sentence-long label for narrow layouts (the landing
+// page's weekday columns pass st.mid).
+export const Pill: React.FC<{ st: Status; text?: string }> = ({ st, text }) => (
+  <span className={`pill ${st.cls}`}><Icon name={st.icon} />{text ?? st.label}</span>
 );
 
 // "Daily / Weekly / Monthly close pending" is shown only while that candle is still open
@@ -653,11 +655,19 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
-          {s && momentumOf(s.rsi, s.direction) === 'with' && (
-            <span className="flag mom" title={`Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`}>
-              <Bolt />RSI {Math.round(s.rsi!)}
-            </span>
-          )}
+          {s?.rsi != null && (() => {
+            // The reading is on every row so the RSI sort reads as an order;
+            // the bolt and the accent are kept for the ones momentum backs.
+            const m = momentumOf(s.rsi, s.direction);
+            return (
+              <span className={`flag mom${m === 'with' ? '' : ' off'}`}
+                title={m === 'with'
+                  ? `Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`
+                  : `Daily RSI ${s.rsi!.toFixed(1)}`}>
+                {m === 'with' && <Bolt />}RSI {Math.round(s.rsi!)}
+              </span>
+            );
+          })()}
         </span>
         {levels}
         {open
@@ -680,18 +690,22 @@ interface PatternWatchlistProps {
   tickers: Record<string, TickerDefinition>;
   onOpenStock: (ticker: string) => void;
   headerControls?: React.ReactNode;
+  /** Pre-fill the search box — the landing page links here filtered to one symbol. */
+  initialQuery?: string;
 }
 
-const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls }) => {
+const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls, initialQuery = '' }) => {
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
   const [sortBy, setSortBy] = useState<'default' | 'target' | 'momentum'>(() => {
     const p = readPref('pbw-sort', 'default');
     return p === 'target' || p === 'momentum' ? p : 'default';
   });
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery);
   // One row open at a time: opening another closes the last, so the ledger
   // never turns into a stack of panels.
   const [openTicker, setOpenTicker] = useState<string | null>(null);
+
+  useEffect(() => { setQuery(initialQuery); }, [initialQuery]);
 
   // Escape closes the open row, wherever focus happens to be.
   useEffect(() => {
@@ -732,15 +746,10 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
       (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
     if (sortBy === 'momentum') {
-      // Setups RSI actually backs first, strongest conviction (furthest from 50) at the top;
-      // then everything neutral; setups momentum argues against sink to the bottom.
-      const score = (r: Row) => {
-        const s = r.setup;
-        const m = momentumOf(s?.rsi, s?.direction);
-        const dist = s?.rsi == null ? -1 : Math.abs(s.rsi - 50);
-        return m === 'with' ? 2000 + dist : m === 'against' ? dist - 1000 : dist;
-      };
-      out.sort((a, b) => score(b) - score(a));
+      // Straight RSI, strongest first; stocks with no reading go last. Whether
+      // momentum backs a setup's direction still shows on the row's bolt badge,
+      // so the ranking stays a plain, readable number.
+      out.sort((a, b) => (b.setup?.rsi ?? -1) - (a.setup?.rsi ?? -1));
     }
     return out;
   }, [allRows, activeFilter, query, sortBy]);
@@ -774,7 +783,7 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
               %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
             </button>
             <button className="chip momchip" aria-pressed={sortBy === 'momentum'}
-              title="Sort by momentum: setups the daily RSI backs (≥60 for a long, ≤40 for a short) first"
+              title="Sort by daily RSI, highest first. The bolt marks setups RSI backs (≥60 for a long, ≤40 for a short)"
               onClick={() => { const next = sortBy === 'momentum' ? 'default' : 'momentum'; setSortBy(next); writePref('pbw-sort', next); }}>
               <Bolt /><span className="n">{sortBy === 'momentum' ? '↓' : hotCount || ''}</span>
             </button>

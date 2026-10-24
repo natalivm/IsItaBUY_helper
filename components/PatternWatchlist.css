@@ -243,6 +243,7 @@
 /* Momentum: RSI backs this setup's direction, so it is actionable now. */
 .pbw .flag.mom{color:var(--accent);background:var(--accent-soft);display:inline-flex;align-items:center;gap:4px;white-space:nowrap;flex:none}
 .pbw .flag.mom .bolt{width:11px;height:11px;flex:none}
+.pbw .flag.mom.off{color:var(--faint);background:var(--surface-2)}
 .pbw .agree-note{grid-column:1/-1;font-size:14px;color:var(--muted)}
 .pbw .agree-note b{color:var(--up);font-weight:600}
 
