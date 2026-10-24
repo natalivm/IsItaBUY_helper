@@ -12,11 +12,11 @@ import './PatternWatchlist.css';
 // have no pattern data yet are listed with empty fields.
 
 const STAGES: PatternStage[] = ['forming', 'signal', 'confirmed', 'target'];
-const fmt = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+export const fmt = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const cap = (t: string) => t[0].toUpperCase() + t.slice(1);
 const pct0 = (from: number, to: number) => (to - from) / from * 100;
-const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
-const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+export const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
+export const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash' | 'refresh';
 
@@ -59,9 +59,9 @@ const Cross = () => (
 type Group = 'confirmed' | 'pending' | 'update' | 'target' | 'failed' | 'none';
 // `mid` sits between `short` (ledger pill) and `label` (panel heading): it names
 // the direction without the sentence, for the setup cards in the expanded row.
-interface Status { label: string; mid: string; short: string; cls: string; icon: IconName; group: Group }
+export interface Status { label: string; mid: string; short: string; cls: string; icon: IconName; group: Group }
 
-function status(s: { direction: string; stage: PatternStage } | null): Status {
+export function status(s: { direction: string; stage: PatternStage } | null): Status {
   if (!s) return { label: 'No pattern data yet', mid: 'No data', short: 'No data', cls: 'st-fail', icon: 'dash', group: 'none' };
   const dn = s.direction === 'down', word = dn ? 'Downward' : 'Upward', side = dn ? 'Down' : 'Up';
   const tone = dn ? 'st-down' : 'st-up';
@@ -185,7 +185,7 @@ const Ladder: React.FC<{ rungs: Rung[]; price: number; priceDate: string }> = ({
   </div>
 );
 
-const Pill: React.FC<{ st: Status }> = ({ st }) => (
+export const Pill: React.FC<{ st: Status }> = ({ st }) => (
   <span className={`pill ${st.cls}`}><Icon name={st.icon} />{st.label}</span>
 );
 
@@ -676,18 +676,22 @@ interface PatternWatchlistProps {
   tickers: Record<string, TickerDefinition>;
   onOpenStock: (ticker: string) => void;
   headerControls?: React.ReactNode;
+  /** Pre-fill the search box — the landing page links here filtered to one symbol. */
+  initialQuery?: string;
 }
 
-const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls }) => {
+const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls, initialQuery = '' }) => {
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
   const [sortBy, setSortBy] = useState<'default' | 'target' | 'momentum'>(() => {
     const p = readPref('pbw-sort', 'default');
     return p === 'target' || p === 'momentum' ? p : 'default';
   });
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery);
   // One row open at a time: opening another closes the last, so the ledger
   // never turns into a stack of panels.
   const [openTicker, setOpenTicker] = useState<string | null>(null);
+
+  useEffect(() => { setQuery(initialQuery); }, [initialQuery]);
 
   // Escape closes the open row, wherever focus happens to be.
   useEffect(() => {

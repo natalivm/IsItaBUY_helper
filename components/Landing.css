@@ -1,0 +1,73 @@
+/* Landing page. Scoped under .pbw so it inherits the watchlist's colour tokens,
+   typography and shared controls (.ctl, .pill); .lnd adds only what
+   the two lists need. */
+
+.pbw.lnd .wrap{gap:38px}
+.pbw.lnd section{display:flex;flex-direction:column;gap:19px}
+.pbw.lnd .sec-head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(23px,3vw,29px);letter-spacing:-.015em;line-height:1.15;margin:0}
+.pbw.lnd .sec-head p{margin:7px 0 0;color:var(--muted);max-width:64ch}
+.pbw.lnd .sec-head .asof{margin-top:9.5px}
+.pbw.lnd .empty{border:1px dashed var(--line);border-radius:17px;padding:29px 19px;text-align:center;color:var(--faint)}
+
+/* ── Hottest setups ── */
+.pbw.lnd .hot-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.pbw.lnd .hot{display:flex;flex-direction:column;gap:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:19px}
+.pbw.lnd .hot-top{display:flex;flex-direction:column;align-items:flex-start;gap:11px}
+.pbw.lnd .hot .sym{display:flex;flex-direction:column;gap:2px;min-width:0;max-width:100%}
+.pbw.lnd .hot .sym b{font-family:var(--f-display);font-weight:800;font-size:24px;letter-spacing:-.01em;line-height:1.1}
+.pbw.lnd .hot .sym span{color:var(--muted);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pbw.lnd .hot-pat{color:var(--muted);font-size:15.5px}
+.pbw.lnd .hot-pat::first-letter{text-transform:uppercase}
+.pbw.lnd .hot-pat em{font-style:normal;color:var(--faint)}
+.pbw.lnd .hot-lvl{display:flex;flex-direction:column;gap:0;margin:0;border:1px solid var(--line);border-radius:14.5px;overflow:hidden}
+.pbw.lnd .hot-lvl>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 14.5px}
+.pbw.lnd .hot-lvl>div+div{border-top:1px solid var(--line)}
+.pbw.lnd .hot-lvl dt{font-size:14px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.pbw.lnd .hot-lvl dd{margin:0;display:flex;align-items:baseline;gap:9.5px;font-family:var(--f-mono);font-size:18px;font-weight:600}
+.pbw.lnd .hot-lvl small{font-size:14.5px;font-weight:500;color:var(--faint)}
+.pbw.lnd .hot-lvl small.up{color:var(--up)}
+.pbw.lnd .hot-lvl small.dn{color:var(--down)}
+.pbw.lnd .hot-why{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;color:var(--muted);font-size:15.5px}
+.pbw.lnd .hot-why li{display:grid;grid-template-columns:14px 1fr;gap:8px}
+.pbw.lnd .hot-why li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin:8px 0 0 4px}
+
+/* ── Buttons into the watchlist ── */
+.pbw.lnd .go,.pbw.lnd .all{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:9.5px;
+  font:600 16px/1 var(--f-body);border-radius:12px;cursor:pointer;padding:13px 19px;border:1px solid transparent}
+.pbw.lnd .go{margin-top:auto;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));color:var(--accent)}
+.pbw.lnd .go:hover{background:color-mix(in srgb,var(--accent) 18%,var(--surface))}
+.pbw.lnd .all{align-self:flex-start;background:var(--fg);color:var(--bg)}
+.pbw.lnd .all:hover{opacity:.88}
+.pbw.lnd .arr{width:18px;height:18px;flex:none}
+.pbw.lnd .go:focus-visible,.pbw.lnd .all:focus-visible,.pbw.lnd .erow:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ── Reporting this week ── */
+.pbw.lnd .earn{background:var(--surface);border:1px solid var(--line);border-radius:17px;overflow:hidden}
+.pbw.lnd .eday+.eday{border-top:1px solid var(--line)}
+.pbw.lnd .eday h3{margin:0;font:700 14px/1 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);
+  padding:11px 19px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.pbw.lnd .eday ul{list-style:none;margin:0;padding:0}
+.pbw.lnd .eday li+li .erow{border-top:1px solid var(--line)}
+.pbw.lnd .erow{appearance:none;width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;
+  display:flex;align-items:baseline;justify-content:space-between;gap:17px;padding:13px 19px}
+.pbw.lnd .erow:hover:not(:disabled){background:var(--surface-2)}
+.pbw.lnd .erow:disabled{cursor:default}
+.pbw.lnd .erow .sym{display:flex;align-items:baseline;gap:11px;min-width:0}
+.pbw.lnd .erow .sym b{font-family:var(--f-display);font-weight:800;font-size:19px;letter-spacing:-.01em;flex:none}
+.pbw.lnd .erow .sym span{color:var(--muted);font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pbw.lnd .slot{color:var(--faint);font-size:15px;white-space:nowrap;flex:none}
+.pbw.lnd .slot em{font-style:normal}
+
+@media (max-width:900px){
+  .pbw.lnd .hot-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  /* The ledger turns .pbw into a sideways scroller on phones; the landing has
+     no wide table, so the document stays the only scroller. */
+  .pbw.lnd{overflow-x:visible}
+  /* Stacked, so the row's own width no longer sizes the ticker block: without
+     the full width the ellipsised company name collapses to nothing. */
+  .pbw.lnd .erow{flex-direction:column;align-items:flex-start;gap:4px}
+  .pbw.lnd .erow .sym{width:100%}
+  .pbw.lnd .all{align-self:stretch}
+}

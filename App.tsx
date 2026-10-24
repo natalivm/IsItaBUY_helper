@@ -1,33 +1,48 @@
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { ScenarioType, TickerDefinition } from './types';
 import { calculateProjection, getInstitutionalRating } from './services/projectionService';
 import { TICKERS, GROUP_ORDER, StockGroup, weightedScenarioAverage } from './constants';
 import { classifyStock } from './utils';
 import StockDetailView from './components/StockDetailView';
 import PatternWatchlist from './components/PatternWatchlist';
+import Landing from './components/Landing';
 import LegacyHome from './components/LegacyHome';
 import ThemeToggle from './components/ThemeToggle';
 import InstallPrompt from './components/InstallPrompt';
 import ReleaseNotesPanel, { WhatsNewToast, PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY, LATEST_TAB } from './components/ReleaseNotesPanel';
 
 import { AnimatePresence } from 'motion/react';
-import { ScrollText, Newspaper } from 'lucide-react';
+import { ScrollText, Newspaper, ArrowLeft } from 'lucide-react';
 
-// Set to true to bring back the previous grouped home page (components/LegacyHome.tsx).
+// Set to true to bring back the grouped stock list (components/LegacyHome.tsx)
+// in place of the Pattern Break Watchlist on the #watchlist route.
 const USE_LEGACY_HOME = false;
+
+// Hash routes: '' → landing, '#watchlist' (optionally '#watchlist/NVDA', which
+// opens the list filtered to that symbol) → the stock list, '#TICKER' → a stock
+// page. `view` doubles as the ticker on a stock page, which is what the
+// projection memos key off.
+const WATCHLIST = 'watchlist';
+interface Route { view: string; query: string }
 
 // ── Main App ──
 
 const App: React.FC = () => {
   const tickers = TICKERS;
 
-  const getTickerFromHash = useCallback(() => {
-    const hash = window.location.hash.slice(1);
-    return hash && tickers[hash] ? hash : 'home';
+  const getRouteFromHash = useCallback((): Route => {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    if (hash === WATCHLIST) return { view: WATCHLIST, query: '' };
+    if (hash.startsWith(WATCHLIST + '/')) return { view: WATCHLIST, query: hash.slice(WATCHLIST.length + 1) };
+    return { view: hash && tickers[hash] ? hash : 'home', query: '' };
   }, [tickers]);
 
-  const [activeTicker, setActiveTicker] = useState<string>(getTickerFromHash);
+  const [route, setRoute] = useState<Route>(getRouteFromHash);
+  const activeTicker = route.view;
+  // Where "Back" on a stock page returns to: whichever list the visitor came from.
+  const listRoute = useRef<string>('home');
+  if (activeTicker === 'home' || activeTicker === WATCHLIST) listRoute.current = activeTicker;
 
   // Release Notes / News panel + in-app "What's New" notification (no OS push).
   const [panelOpen, setPanelOpen] = useState(false);
@@ -53,20 +68,20 @@ const App: React.FC = () => {
     markUpdatesSeen();
   }, [markUpdatesSeen]);
 
-  const navigateTo = useCallback((ticker: string) => {
-    if (ticker === 'home') {
+  const navigateTo = useCallback((view: string, query = '') => {
+    if (view === 'home') {
       history.pushState(null, '', location.pathname + location.search);
     } else {
-      history.pushState(null, '', '#' + ticker);
+      history.pushState(null, '', '#' + view + (query ? '/' + encodeURIComponent(query) : ''));
     }
-    setActiveTicker(ticker);
+    setRoute({ view, query });
   }, []);
 
   useEffect(() => {
-    const onPopState = () => setActiveTicker(getTickerFromHash());
+    const onPopState = () => setRoute(getRouteFromHash());
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [getTickerFromHash]);
+  }, [getRouteFromHash]);
 
   useEffect(() => {
     if (activeTicker !== 'home') {
@@ -74,7 +89,7 @@ const App: React.FC = () => {
     }
   }, [activeTicker]);
 
-  const tickerDef = activeTicker !== 'home' ? tickers[activeTicker] : null;
+  const tickerDef = tickers[activeTicker] ?? null;
 
   const allProjections = useMemo(() => {
     if (!tickerDef) return null;
@@ -134,10 +149,33 @@ const App: React.FC = () => {
     return { pwAvg, cagr };
   }, [allProjections, tickerDef]);
 
-  if (activeTicker === 'home') {
+  if (activeTicker === 'home' || activeTicker === WATCHLIST) {
+    const panelControls = (
+      <>
+        <button className="ctl" onClick={() => openPanel('notes')}>
+          <ScrollText />
+          Notes
+          {!updatesSeen && LATEST_TAB === 'notes' && <span className="badge" />}
+        </button>
+        <button className="ctl" onClick={() => openPanel('news')}>
+          <Newspaper />
+          News
+          {!updatesSeen && LATEST_TAB === 'news' && <span className="badge" />}
+        </button>
+        <ThemeToggle />
+      </>
+    );
+
     return (
       <>
-        {USE_LEGACY_HOME ? (
+        {activeTicker === 'home' ? (
+          <Landing
+            tickers={tickers}
+            onOpenWatchlist={ticker => navigateTo(WATCHLIST, ticker)}
+            onOpenStock={navigateTo}
+            headerControls={panelControls}
+          />
+        ) : USE_LEGACY_HOME ? (
           <LegacyHome
             tickers={tickers}
             groupedData={groupedData}
@@ -149,19 +187,14 @@ const App: React.FC = () => {
           <PatternWatchlist
             tickers={tickers}
             onOpenStock={navigateTo}
+            initialQuery={route.query}
             headerControls={
               <>
-                <button className="ctl" onClick={() => openPanel('notes')}>
-                  <ScrollText />
-                  Notes
-                  {!updatesSeen && LATEST_TAB === 'notes' && <span className="badge" />}
+                <button className="ctl" onClick={() => navigateTo('home')}>
+                  <ArrowLeft />
+                  Home
                 </button>
-                <button className="ctl" onClick={() => openPanel('news')}>
-                  <Newspaper />
-                  News
-                  {!updatesSeen && LATEST_TAB === 'news' && <span className="badge" />}
-                </button>
-                <ThemeToggle />
+                {panelControls}
               </>
             }
           />
@@ -196,7 +229,7 @@ const App: React.FC = () => {
         allProjections={allProjections}
         investmentConclusion={investmentConclusion}
         activeStockData={activeStockData}
-        onBack={() => navigateTo('home')}
+        onBack={() => navigateTo(listRoute.current)}
         onNext={() => {
           const idx = flatTickerOrder.indexOf(activeTicker);
           const next = flatTickerOrder[idx + 1] ?? flatTickerOrder[0];
