@@ -174,9 +174,15 @@ the rule **ranks and labels, it never deletes**:
   (`stopPct`): a reached target, a failure, a needs-updating row and an at-risk
   one — which has by definition already closed past its stop — read as no
   distance rather than as a tight one.
-- **`pattern_detect.rank_setups`** puts a tradable stop second in its key, under
-  "is it active" and above target agreement: when a chart offers both a wide
-  pattern and one you could trade, the tradable one is promoted.
+- **`pattern_detect.rank_setups`** puts a tradable stop **third** in its key,
+  under "is it active" and under target agreement: when a chart offers both a
+  wide pattern and one you could trade, the tradable one is promoted, but it
+  never outranks several stored setups agreeing on a target. The placement was
+  measured in all five slots against the hand-posted setups — under agreement it
+  matches the posted pattern 45% of the time against 43% with no tier at all;
+  over agreement that falls to 37% and the full pattern-direction-stage match
+  collapses from 33% to 22%. Agreement is evidence about the chart; the stop is
+  a question about the trade.
 - **`weekly_feature.score_setup`** adds 15 for a stop inside 10% and subtracts 20
   beyond 25%, so the landing page's three cards are setups to act on rather than
   the widest drawings on the board.

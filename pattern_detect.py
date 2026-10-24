@@ -458,21 +458,26 @@ def agreement(s, others):
 
 
 def rank_setups(found, price=None):
-    """Most valid first: active (confirmed / signal) before pending, then a stop close enough
-    to act on, then most agreement on the target, further along, weekly before daily, clearer
+    """Most valid first: active (confirmed / signal) before pending, then most agreement on the
+    target, then a stop close enough to act on, further along, weekly before daily, clearer
     pattern. Pending setups stay stored and show once nothing on that timeframe is active.
 
-    The stop tier sits second on purpose. A valid pattern whose invalidation is half the share
-    price away is still a true reading of where the stock is going, and it stays in the list
-    for that -- but when the same chart also offers one you could put an order behind, that is
-    the one to lead with. Without a price (older callers, tests) the tier is simply off.
+    A valid pattern whose invalidation is half the share price away is still a true reading of
+    where the stock is going, and it stays in the list for that -- but when the same chart also
+    offers one you could put an order behind, that is the one to lead with. The tier sits third
+    rather than second because it was measured in all five places against the setups posted by
+    hand: under agreement it picks the same pattern slightly more often than no tier at all
+    (45% vs 43%), over agreement it falls to 37%, and the full pattern-direction-stage match
+    collapses from 33% to 22%. Several stored setups pointing at one target is real evidence
+    about the chart, and the stop is a question of whether to take the trade, not of what the
+    chart says. Without a price (older callers, tests) the tier is simply off.
     """
     stage = {'confirmed': 2, 'signal': 1, 'forming': 0}
     def key(s):
         sc = s.get('score') or (0, 0)
         st = stage.get(s['stage'], 0)
         tradable = price is not None and pw.tradable_stop(price, s.get('invalidation'))
-        return (st > 0, tradable, agreement(s, found), st, s['timeframe'] == 'weekly',
+        return (st > 0, agreement(s, found), tradable, st, s['timeframe'] == 'weekly',
                 sc[0] if isinstance(sc, tuple) else sc)
     return sorted(found, key=key, reverse=True)
 
