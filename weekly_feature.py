@@ -5,8 +5,9 @@ Build the landing page's two weekly lists (data/weeklyFeature.ts):
   1. Hottest setups  — up to 3 of the watchlist's most actionable setups,
      scored from data/patternWatchlist.ts (stage, RSI momentum, trend
      agreement, room to target, reward/risk, freshness).
-  2. Reporting this week — the covered stocks whose next earnings date falls
-     inside the coming Mon-Fri, from Yahoo Finance (cached in
+  2. Reporting this week — every symbol the site tracks (valuation pages and
+     watchlist-only symbols alike) whose next earnings date falls inside the
+     coming Mon-Fri, from Yahoo Finance (cached in
      data/earningsCalendar.json) with each stock file's hand-curated
      `nextEarningsOn` as a fallback.
 
@@ -218,8 +219,20 @@ def hot_setups(text, limit=TOP_N, include_auto=False, today=None):
 # ── Earnings calendar ──
 
 def stock_tickers():
-    """{ticker: name} for every stock with a detail page."""
+    """{ticker: name} for every symbol the site tracks.
+
+    That is every stock with a valuation page *and* every watchlist-only
+    symbol (SPY, CAT, XOM, ...). A watchlist entry has a setup to link to,
+    which is all the earnings list needs — it does not need fundamentals.
+    """
     out = {}
+    with open(pw.WATCHLIST_FILE) as fh:
+        wl = fh.read()
+    for e in pw.parse_watchlist(wl):
+        f = e['fields']
+        if 'ticker' in f:
+            out[f['ticker'][2]] = f.get('name', (0, 0, f['ticker'][2]))[2]
+    # A stock file's name wins: it is the curated one the detail page shows.
     for fn in sorted(os.listdir(STOCKS_DIR)):
         if not fn.endswith('.ts') or fn in ('index.ts', 'defineStock.ts'):
             continue
@@ -460,7 +473,7 @@ def main():
             print(f"           · {w}")
 
     names = stock_tickers()
-    print(f"\nEarnings for {len(names)} covered stocks:")
+    print(f"\nEarnings for {len(names)} tracked symbols:")
     rows, cal = earnings_this_week(names, monday, friday, offline=args.offline)
     if rows:
         for r in rows:

@@ -281,6 +281,12 @@
   "stage": "forming",
   "ticker": "AMD"
  },
+ "AMKR|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "AMKR"
+ },
  "AMZN|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -1115,6 +1121,12 @@
   "stage": "confirmed",
   "ticker": "CBRS"
  },
+ "CCJ|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "CCJ"
+ },
  "CEG|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -1330,6 +1342,12 @@
   "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "COHR"
+ },
+ "COIN|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "COIN"
  },
  "COST|daily Ascending Channel": {
   "label": "daily Ascending Channel",
@@ -1576,6 +1594,12 @@
   "setup": "Descending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "CVS"
+ },
+ "CVX|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "CVX"
  },
  "DASH|daily Rising Wedge": {
   "label": "daily Rising Wedge",
@@ -1907,6 +1931,12 @@
   "stage": "signal",
   "ticker": "DUOL"
  },
+ "D|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "D"
+ },
  "EME|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
@@ -1966,6 +1996,12 @@
   "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "EME"
+ },
+ "ENPH|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "ENPH"
  },
  "ENVA|daily Ascending Channel": {
   "label": "daily Ascending Channel",
@@ -2062,6 +2098,12 @@
   "setup": "Descending Channel (weekly)",
   "stage": "forming",
   "ticker": "ETN"
+ },
+ "FCX|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "FCX"
  },
  "FICO|daily Ascending Channel": {
   "label": "daily Ascending Channel",
@@ -2240,7 +2282,7 @@
  "FTNT|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
-  "stage": "forming",
+  "stage": "update",
   "ticker": "FTNT"
  },
  "FTNT|daily alt": {
@@ -2276,8 +2318,14 @@
  "FTNT|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "forming",
+  "stage": "update",
   "ticker": "FTNT"
+ },
+ "GD|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "GD"
  },
  "GEV|main": {
   "label": "main",
@@ -2506,6 +2554,12 @@
   "setup": "Rising Wedge (weekly)",
   "stage": "forming",
   "ticker": "GXO"
+ },
+ "HOOD|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "HOOD"
  },
  "HPE|daily Ascending Channel": {
   "label": "daily Ascending Channel",
@@ -3047,6 +3101,12 @@
   "stage": "confirmed",
   "ticker": "KMB"
  },
+ "KO|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "KO"
+ },
  "KRMN|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -3094,6 +3154,12 @@
   "setup": "Falling Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "KRMN"
+ },
+ "LHX|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "LHX"
  },
  "LIFE|daily Ascending Channel": {
   "label": "daily Ascending Channel",
@@ -3910,6 +3976,12 @@
   "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "NOW"
+ },
+ "NUE|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "NUE"
  },
  "NU|daily Ascending Channel": {
   "label": "daily Ascending Channel",
@@ -6250,6 +6322,12 @@
   "setup": "Falling Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "WWD"
+ },
+ "XOM|main": {
+  "label": "main",
+  "setup": "No clear pattern (daily)",
+  "stage": "forming",
+  "ticker": "XOM"
  },
  "XOP|daily Ascending Channel": {
   "label": "daily Ascending Channel",
