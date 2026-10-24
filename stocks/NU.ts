@@ -79,21 +79,7 @@ export const NU = defineStock({
   // Probability of 15%+ CAGR: ~75% (held — Mexico IFRS profitability + AI-in-
   // production confirm thesis; YoY NI decel + seasonal CLA cap further upgrade).
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Most efficient digital bank in the world by cost — record-low efficiency ratio achieved at massive and growing scale',
-    'Mexico second S-curve hit IFRS profitability ahead of plan, validating the multi-country expansion playbook',
-    'Massive Brazilian financial inclusion runway — over a hundred million customers yet still deepening ARPU through credit and services',
-    'nuFormer AI now in production for credit decisioning and loan valuation, improving underwriting economics structurally',
-    'Pristine SBC profile plus a newly authorized buyback — owner earnings essentially equal GAAP earnings',
-  ],
 
-  risksToBuy: [
-    'Brazil macro shock — elevated SELIC rates and household debt-service stress could trigger a sharp delinquency cycle',
-    'Rapid credit-book expansion into unsecured lending increases sensitivity to any deterioration in Brazilian consumer credit',
-    'Mexico banking regulation could impose capital requirements or product restrictions that slow the second S-curve',
-    'FX volatility across Brazil, Mexico, and Colombia directly compresses dollar-reported earnings without any operational change',
-    'Valuation reflects compounding expectations already — any growth deceleration or credit scare would re-rate the multiple sharply',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 12, targetMedian: 19, targetHigh: 23, numAnalysts: 22 },  // stockanalysis.com, Oct 6 2026
   revGrowth: [

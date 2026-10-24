@@ -34,21 +34,7 @@ export const AZO = defineStock({
   // $170.78 / rev $21.84B, FY28E $192.37 / $23.40B. Stock $2,940 — ~17×
   // FY27E, below the low PT (historical median ~22×).
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Mega-Hub density investment is a deliberate operating leverage setup — management guides EBIT acceleration in coming years',
-    'Commercial segment gaining consistent market share with durable above-market growth rates',
-    'Decades-long buyback program has retired the vast majority of shares outstanding, compounding per-share value structurally',
-    'Auto parts demand is highly recession-resistant — older vehicle fleet and DIY maintenance insulate revenue in downturns',
-    'Pricing power and inventory breadth create a distribution moat that newer entrants cannot quickly replicate',
-  ],
 
-  risksToBuy: [
-    'Heavy capital expenditure in the current investment cycle is depressing near-term FCF and earnings visibility',
-    'Same-store traffic declined recently, raising questions about whether the demand acceleration thesis will materialize',
-    'Commercial mix shift toward professional installers compresses gross margin relative to the higher-margin DIY segment',
-    'Significant structural debt load from systematic leveraged buybacks could become a constraint if rates stay elevated',
-    'Relative strength is only middling — the market has started to recover but is not yet fully rewarding the long-term thesis',
-  ],
 
   epsCagr: [4, 12, 15],   // Bear 7→4: the old bear (7% at 18x) still returned ~5%/yr
   exitPE: [14, 20, 23],   // Q4 FY26: trimmed from [18, 22, 24] — the stock now trades ~17× FY27E, so the base no longer assumes a full re-rate to the 22× historical median

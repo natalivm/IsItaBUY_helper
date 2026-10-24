@@ -37,21 +37,7 @@ export const SMCI = defineStock({
   // PT $15-60 (median $43); FY27E rev $67.1B / EPS $4.34, FY28E $78.8B /
   // $5.33. Stock $41.85 (~9.6× FY27E), down ~29% over 52 weeks.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Direct beneficiary of the AI infrastructure buildout with hypergrowth revenue driven by GPU server demand',
-    'Liquid-cooled and direct-liquid-cooling leadership gives SMCI a real engineering edge in high-density GPU clusters',
-    'Faster time-to-market on new GPU platforms than larger competitors due to modular server architecture',
-    'DCBBS building-block platform positions SMCI to diversify beyond current concentrated client exposure',
-    'Record order intake and backlog point to revenue growing dramatically again this year at a single-digit earnings multiple',
-  ],
 
-  risksToBuy: [
-    'Dangerously high single-client concentration creates existential revenue risk if that relationship shifts',
-    'Gross margins at structurally thin levels leave virtually no cushion for pricing pressure or cost surprises',
-    'Hypergrowth is consuming billions of cash in inventory and receivables, pushing the balance sheet into net debt',
-    'Accounting irregularities and auditor history create a persistent governance discount in institutional sentiment',
-    'AI capex cycle deceleration would simultaneously hit revenue growth and compress a low-quality hardware multiple',
-  ],
 
   epsCagr: [0, 8, 15],      // From the FY27E $4.34 base
   exitPE: [7, 10, 14],       // ~9.6× FY27E today; low-quality hardware multiple with a governance discount

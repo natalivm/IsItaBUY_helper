@@ -42,21 +42,7 @@ export const INTU = defineStock({
   // de-rated a still-compounding franchise to ~15× GAAP earnings.
   // ─────────────────────────────────────────────────────────────────────────
 
-  reasonsToBuy: [
-    'Dominant SMB finance and tax platform with deeply embedded workflows that create high switching costs for customers',
-    'Agentic AI initiative positions Intuit as the autonomous financial back-office for small businesses if it monetizes successfully',
-    'Durable double-digit revenue compounding driven by QuickBooks ecosystem lock-in and recurring subscription model',
-    'Ongoing buyback program and remaining authorization provide meaningful EPS accretion support through the drawdown',
-    'After a deep de-rating the stock trades at a low multiple of guided earnings that already prices in heavy AI disruption',
-  ],
 
-  risksToBuy: [
-    'AI-native tax and accounting tools from ChatGPT-era competitors could erode TurboTax and QuickBooks pricing power',
-    'TurboTax growth has slowed to low single digits, the clearest sign of AI and free-filing pressure on the consumer franchise',
-    'Heavy SBC burden means non-GAAP earnings significantly flatter the true owner economics of the business',
-    'IRS Direct File expansion and free alternatives directly threaten the consumer tax segment that anchors the brand',
-    'Mailchimp cross-sell has underdelivered and Credit Karma growth has slowed, dimming the platform narrative',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 290, targetMedian: 400, targetHigh: 732, numAnalysts: 34 },  // stockanalysis.com, Oct 7 2026
 

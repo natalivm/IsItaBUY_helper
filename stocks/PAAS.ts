@@ -34,21 +34,7 @@ export const PAAS = defineStock({
   // FY27E $4.80B / $4.75. Stock $46.27 (~12.6× FY26E), up ~16% over 52
   // weeks; TTM FCF $1.3B. Fully unhedged to silver and gold prices.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Fully unhedged silver and gold exposure provides maximum leverage to a continuing precious metals bull market',
-    'Juanicipio is a world-class low-cost silver operation delivering strong free cash flow at current metal prices',
-    'Escobal restart represents substantial optionality — a large, permitted mine that could add meaningful EPS uplift',
-    'Record free cash flow and net cash balance sheet provide financial strength to pursue growth and return capital',
-    'Record shareholder returns through dividends and buybacks show the cash generation is real at current metal prices',
-  ],
 
-  risksToBuy: [
-    'No hedging means operating leverage works brutally in reverse if silver corrects even moderately from highs',
-    'Strong momentum in commodity stocks frequently precedes volatile mean-reverting phases',
-    'Escobal restart depends on Guatemalan regulatory and community approvals entirely outside management control',
-    'No pricing power, no moat, no recurring revenue — the entire thesis rests on macro metal prices staying elevated',
-    'A silver price correction to prior-cycle norms could cut the stock roughly in half from current levels',
-  ],
 
   epsCagr: [-10, 6, 15],   // From the FY26E $3.67 base at high metal prices (re-based Oct 2026; was [-10,8,18] off $3.89)
   exitPE: [12, 15, 20],    // Miner multiples: trough / mid-cycle / bull-market premium (was [14,17,22])

@@ -116,7 +116,7 @@ It flags stocks that are stale (review older than the threshold), never reviewed
 
 ## Alpha Strategic View — Why Buy / Risks
 
-The detail-page "Why Buy / Risks" panel (formerly the prose "Alpha Strategic View") renders two bulleted lists from each stock's `defineStock` call:
+The detail-page "Why Buy / Risks" panel (formerly the prose "Alpha Strategic View") renders two bulleted lists. **These live in `stocks/prose/TICKER.ts`, not in the `defineStock` call** — along with `verdictNarrative` and `keyTakeaways`, they are the four detail-page-only prose fields, split into per-stock lazy chunks so the home page doesn't download them (~38 KB gzipped). Edit them there; the shape is the same:
 
 ```ts
 reasonsToBuy: ['…', '…'],  // qualitative case FOR owning the stock
@@ -129,7 +129,22 @@ Rules (see INTC for the reference implementation):
 - 4-5 bullets each, one line (~8-18 words), specific to *this* company — real catalysts/moats on the buy side, real execution/competition/valuation/balance-sheet concerns on the risk side.
 - `reasonsToBuy` = the bull drivers; `risksToBuy` = the bear factors. For loss-making/speculative names, risks should say so honestly.
 
-`strategicNarrative` is **deprecated and removed** from stock files — it's no longer rendered. The field remains optional in the schema only for back-compat. New stocks only need `reasonsToBuy` + `risksToBuy`.
+`strategicNarrative` is **gone** — removed from the stock files, from `StockDefinition` and from `SimpleStockInput`. New stocks need `reasonsToBuy` + `risksToBuy` in `stocks/prose/TICKER.ts`.
+
+### Adding a new stock's prose
+
+Create `stocks/prose/TICKER.ts` next to `stocks/TICKER.ts` — the filename must match the ticker exactly, since `loadProse()` resolves `./${ticker}.ts`:
+
+```ts
+export const prose = {
+  reasonsToBuy: ['…'],
+  risksToBuy: ['…'],
+  verdictNarrative: '…',   // optional
+  keyTakeaways: ['…'],     // optional
+};
+```
+
+A stock with no prose file renders the detail page without those panels — it does not error. Scenario prose (`desc` / `thesis`) stays in the stock file: the home page needs the rest of `scenarios` to compute ratings.
 
 ## Narrative Live-Value Tokens
 
@@ -143,7 +158,7 @@ The "Blended Value" / "5Y Prob-Weighted CAGR" use each stock's own `prob: [bear,
 
 ## Burry SBC Indicator
 
-Each stock can carry an optional `burry` block in its `defineStock` call. When present, the home-page row gets a colored `B X%` badge, the detail page renders a full `BurryIndicator` panel + `Burry-Adjusted Read` callout in the verdict, and (for ≥30% overstatement) the strategicNarrative ends with a Burry-context sentence. The model verdict itself is **never** affected — Burry data is parallel/display-only.
+Each stock can carry an optional `burry` block in its `defineStock` call. When present, the home-page row gets a colored `B X%` badge, the detail page renders a full `BurryIndicator` panel + `Burry-Adjusted Read` callout in the verdict, The model verdict itself is **never** affected — Burry data is parallel/display-only.
 
 ### Schema
 
@@ -201,7 +216,6 @@ Update the `burry` block when:
 
 After any update:
 - Verify the badge tier changes haven't broken expected groupings
-- Re-read the strategicNarrative if its appended Burry sentence references stale numbers
 - Run `npm run build` to confirm no TypeScript errors
 
 ### Loss-makers and edge cases

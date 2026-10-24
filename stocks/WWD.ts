@@ -33,21 +33,7 @@ export const WWD = defineStock({
   // FY26E rev $4.34B / EPS $9.48, FY27E $4.71B / $10.76. Stock $335.51 (~35×
   // FY26E, ~31× FY27E). Q4 FY26 reports mid-November.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'LEAP and GTF aftermarket is a long-duration, high-margin annuity as the installed base matures',
-    'New Lufthansa Technik, Air France KLM, and AAR MRO partnerships expand the services franchise globally',
-    'Data center power-gen demand is pulling OEM capacity-study requests beyond prior facility plans',
-    'VRM solenoid acquisition deepens next-generation single-aisle content across the Airbus and Boeing programs',
-    'Earnings are growing far faster than sales, with guidance raised again and large capital returns planned',
-  ],
 
-  risksToBuy: [
-    'Valuation in the mid-thirties times current-year earnings leaves little margin for any guidance miss',
-    'FCF conversion is constrained by heavy capital expenditure and a large inventory build',
-    'Airline capacity reductions from fuel price spikes could sharply slow the aftermarket growth rate',
-    'Data center capacity expansion is still at the study phase — it may not materialize on expected timelines',
-    'China on-highway wind-down removes a revenue stream while integration of VRM solenoids is still early',
-  ],
 
   // EPS_PE model: epsCagr and exitPE are the primary valuation drivers.
   // revGrowth and fcfMargin are kept for display/yield calculations.

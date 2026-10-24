@@ -1,3 +1,18 @@
+/**
+ * Detail-page prose for one stock, loaded on demand via stocks/prose/index.ts.
+ * Deliberately NOT part of StockDefinition: the home page never renders it, and
+ * bundling it cost ~37 KB gzipped on first load.
+ */
+export interface StockProse {
+  /** Alpha Strategic View — concise, qualitative reasons to own the stock (no precise numbers). */
+  reasonsToBuy?: string[];
+  /** Alpha Strategic View — concise, qualitative risks of owning the stock (no precise numbers). */
+  risksToBuy?: string[];
+  verdictNarrative?: string;
+  /** Optional "what this quarter's numbers mean" bullets, rendered in the Investment Verdict. */
+  keyTakeaways?: string[];
+}
+
 
 export enum ScenarioType {
   BEAR = 'bear',
@@ -74,13 +89,6 @@ export interface TickerDefinition {
   rsTrend?: RsTrend;
   aiImpact: 'TAILWIND' | 'DISRUPTION_RISK' | 'NEUTRAL';
   ratingOverride?: 'STRONG BUY' | 'BUY' | 'HOLD' | 'OVERVALUED';
-  /** Alpha Strategic View — concise, qualitative reasons to own the stock (no precise numbers). */
-  reasonsToBuy?: string[];
-  /** Alpha Strategic View — concise, qualitative risks of owning the stock (no precise numbers). */
-  risksToBuy?: string[];
-  verdictNarrative?: string;
-  /** Optional "what this quarter's numbers mean" bullets, rendered in the Investment Verdict. */
-  keyTakeaways?: string[];
   cash?: number;
   debt?: number;
   beta?: number;

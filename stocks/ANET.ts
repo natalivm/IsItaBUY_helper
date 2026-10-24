@@ -33,21 +33,7 @@ export const ANET = defineStock({
   // (32), PT $190-289 (median $248); FY26E EPS $4.12 / rev $12.68B, FY27E
   // $5.22 / $16.34B. ~53× FY26E / ~42× FY27E.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'EOS network operating system creates deep hyperscaler lock-in — switching costs compound with every incremental deployment.',
-    'AI fabric revenue more than doubling with supply, not demand, as the binding multi-year constraint.',
-    'Scale-across platform (7800R) opens a third growth leg beyond scale-out, expanding the addressable opportunity.',
-    'Fortress balance sheet — zero debt and a large cash pile fund R&D and supply commitments with room for buybacks.',
-    'ESUN and next-generation optics position Arista for the scale-up cluster opportunity beginning in 2027.',
-  ],
 
-  risksToBuy: [
-    'Valuation already reflects sustained premium growth — any AI capex deceleration would compress the multiple sharply.',
-    'Heavy concentration in two hyperscaler customers means a single spending pause can hit revenue disproportionately.',
-    'Near-term gross margin pressure from memory and wafer costs could persist longer than the market expects.',
-    'Campus and enterprise networking expansion is still unproven at scale and faces entrenched Cisco competition.',
-    'The law of large numbers bites quickly — sustaining above-market growth becomes harder as the revenue base compounds.',
-  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 190, targetMedian: 248, targetHigh: 289, numAnalysts: 32 },  // stockanalysis.com, Oct 9 2026
   revGrowth: [

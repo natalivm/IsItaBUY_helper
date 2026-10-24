@@ -34,21 +34,7 @@ export const BKNG = defineStock({
   // $240); FY26E rev $29.25B / EPS $10.45, FY27E $31.97B / $12.38. Stock
   // $160.34 (~15× FY26E, ~8% FCF yield), down ~22% over 52 weeks.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Revenue growing far faster than room nights signals pricing power and merchant payments mix doing the heavy lifting',
-    'Aggressive share repurchase program at scale — billions returned quarterly — is compounding per-share value rapidly',
-    'Two-sided marketplace with deep supply integrations and payment infrastructure creates a transaction-layer moat LLMs cannot easily displace',
-    'Transformation cost savings program self-funds reinvestment while protecting EBITDA margin trajectory',
-    'Trading at a historically low earnings multiple despite strong free cash flow yield providing meaningful downside cushion',
-  ],
 
-  risksToBuy: [
-    'Middle East conflict is weighing on long-haul travel, and guidance assumes the drag persists into the second half',
-    'EU regulation could compress take rates and add compliance costs to the hotel fee structure',
-    'AI travel assistants represent a real long-term top-of-funnel risk if booking happens outside Booking\'s platform',
-    'Google\'s distribution power makes customer acquisition expensive and could erode margins if paid traffic costs rise',
-    'RS near historic lows indicates no institutional momentum — value entry with uncertain catalyst timing',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 170, targetMedian: 240, targetHigh: 301, numAnalysts: 37 },  // stockanalysis.com (Oct 7 2026; split-adjusted)
 
