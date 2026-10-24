@@ -392,6 +392,10 @@ type Entry =
   | { kind: 'setup'; key: string; a: AnySetup; st: Status; pattern: string; tf: string; auto?: boolean }
   | { kind: 'hist'; key: string; h: PatternHistoryEntry; st: Status; pattern: string; tf: string; auto?: boolean };
 
+// Setups shown per timeframe in the left list (the data stores up to 5; vite.config.ts
+// keeps 3 of them in the bundle, so raising this needs KEEP_PER_TF raised too).
+const MAX_PER_TF = 3;
+
 type Bucket = 'confirmed' | 'pending' | 'update' | 'finished';
 const BUCKETS: [Bucket, string][] = [
   ['confirmed', 'Confirmed'], ['pending', 'Watching for a break'],
@@ -434,14 +438,56 @@ const SetupList: React.FC<{ ticker: string; entries: Entry[]; sel: string; onSel
 
 const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
   const entries = useMemo<Entry[]>(() => {
-    const out: Entry[] = [{
+    const live: Entry[] = [{
       kind: 'setup', key: 'main', a: s as AnySetup, st: status(s),
       pattern: s.pattern, tf: s.timeframe || 'daily', auto: s.auto,
     }];
-    if (s.alt) out.push({
+    if (s.alt) live.push({
       kind: 'setup', key: 'alt', a: s.alt, st: status(s.alt),
       pattern: s.alt.pattern ?? s.pattern, tf: s.alt.timeframe, auto: s.alt.auto,
     });
+    (s.more ?? []).forEach((m, i) => live.push({
+      kind: 'setup', key: 'm' + i, a: m, st: status(m),
+      pattern: m.pattern ?? s.pattern, tf: m.timeframe, auto: m.auto,
+    }));
+
+    // more[] can repeat a setup that is already the main one or the alt.
+    const seen = new Set<string>();
+    const unique = live.filter(e => {
+      const a = e.kind === 'setup' ? e.a : null;
+      const sig = [e.pattern, e.tf, a?.direction, a?.stage, a?.confirm ?? a?.breakUp].join('|');
+      return seen.has(sig) ? false : (seen.add(sig), true);
+    });
+
+    // Setups pointing the same way as the stock's own trend come first, so a
+    // falling stock leads with its short setups and a rising one with its longs.
+    // A 'both' setup sits between the two; on a flat or unknown trend nothing
+    // is reordered and the stored order stands.
+    const rank = (e: Entry) => {
+      const d = e.kind === 'setup' ? e.a.direction : undefined;
+      if (s.trend === 'up') return d === 'up' ? 0 : d === 'both' ? 1 : 2;
+      if (s.trend === 'down') return d === 'down' ? 0 : d === 'both' ? 1 : 2;
+      return 1;
+    };
+
+    const order: string[] = [];
+    const byTf = new Map<string, Entry[]>();
+    unique.forEach(e => {
+      const k = e.tf || 'daily';
+      if (!byTf.has(k)) { byTf.set(k, []); order.push(k); }
+      byTf.get(k)!.push(e);
+    });
+
+    const out: Entry[] = [];
+    order.forEach(tf => {
+      const list = byTf.get(tf)!;
+      out.push(...list
+        .map((e, i) => ({ e, i, r: rank(e) }))
+        .sort((a, b) => a.r - b.r || a.i - b.i)   // ties keep the stored order
+        .slice(0, MAX_PER_TF)
+        .map(x => x.e));
+    });
+
     (s.history ?? []).forEach((h, i) => out.push({
       kind: 'hist', key: 'h' + i, h, st: status(h), pattern: h.pattern, tf: h.timeframe,
     }));

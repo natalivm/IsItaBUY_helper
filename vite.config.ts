@@ -5,8 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 // The watchlist data keeps up to 5 detected setups per timeframe in `more: [...]` for the
-// Python scripts; the site only shows the best weekly + daily setup (and their precomputed
-// `agree` summary), so the stored extras are stripped from the bundle.
+// Python scripts. The site shows up to KEEP_PER_TF of them per timeframe, so the rest are
+// stripped from the bundle rather than the whole array (which is what this used to do, back
+// when only the best weekly + daily setup was shown).
+const KEEP_PER_TF = 3;
+
 function stripStoredSetups() {
   return {
     name: 'strip-stored-setups',
@@ -18,18 +21,32 @@ function stripStoredSetups() {
       const key = /\n[ \t]*more:\s*\[/g;
       let m: RegExpExecArray | null;
       while ((m = key.exec(code))) {
-        let j = m.index + m[0].length, depth = 1;
+        const open = m.index + m[0].length;
+        let j = open, depth = 1;
+        // Object spans inside this `more: [...]`, so we can keep the first few per timeframe.
+        const objs: [number, number][] = [];
+        let objStart = -1;
         while (j < code.length && depth) {
           const ch = code[j];
           if (ch === '"') { j++; while (j < code.length && code[j] !== '"') j += code[j] === '\\' ? 2 : 1; }
-          else if (ch === '[' || ch === '{') depth++;
-          else if (ch === ']' || ch === '}') depth--;
+          else if (ch === '[') depth++;
+          else if (ch === '{') { if (depth === 1) objStart = j; depth++; }
+          else if (ch === '}') { depth--; if (depth === 1 && objStart >= 0) { objs.push([objStart, j + 1]); objStart = -1; } }
+          else if (ch === ']') depth--;
           j++;
         }
-        if (code[j] === ',') j++;
-        out += code.slice(i, m.index);
-        i = j;
-        key.lastIndex = j;
+        const close = j - 1;                       // the ']' that ends the array
+        const seen: Record<string, number> = {};
+        const keep = objs.filter(([a, b]) => {
+          const tf = /timeframe:\s*"(\w+)"/.exec(code.slice(a, b))?.[1] ?? '?';
+          seen[tf] = (seen[tf] ?? 0) + 1;
+          return seen[tf] <= KEEP_PER_TF;
+        });
+        out += code.slice(i, open);
+        out += keep.map(([a, b]) => '\n      ' + code.slice(a, b) + ',').join('');
+        out += '\n    ';
+        i = close;                                  // resume at ']' so the array stays closed
+        key.lastIndex = close;
       }
       return { code: out + code.slice(i), map: null };
     },

@@ -178,7 +178,8 @@ def fetch_daily_bars(symbols, headers, opener=None):
     """{sym: {'price', 'date', 'bars': [(YYYY-MM-DD, high, low, close)]}} from Yahoo's chart API."""
     out = {}
     for sym in symbols:
-        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=1mo&interval=1d&includePrePost=false"
+        # 3mo, not 1mo: these bars feed the trend read below as well as target touches.
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=3mo&interval=1d&includePrePost=false"
         try:
             req = urllib.request.Request(url, headers=headers)
             resp = opener.open(req, timeout=10) if opener else urllib.request.urlopen(req, timeout=10)
@@ -356,7 +357,130 @@ def _r2(v):
     return round(v, 2)
 
 
-HEADER_KEYS = ('ticker', 'name', 'auto', 'price', 'priceDate')
+# Trend read (see _trend). Direction comes from the moving average and the swing
+# structure; ADX only gates whether there is a trend at all, per the usual
+# convention that ADX measures strength and the DI/price side measures direction.
+TREND_MIN_BARS = 30      # fewer daily bars than this and the window is too short to call
+TREND_WINDOW = 63        # ~3 months of sessions, when reading trend off the stored candles
+TREND_SLOPE_BARS = 10    # lookback for "is the average sloping?"
+TREND_ADX_PERIOD = 14
+TREND_ADX_MIN = 20       # below this the market is ranging, so report flat
+
+
+def _adx(bars, period=TREND_ADX_PERIOD):
+    """Wilder's ADX. Strength only -- it says nothing about which way."""
+    if len(bars) < period * 2 + 1:
+        return None
+    tr, pdm, ndm = [], [], []
+    for i in range(1, len(bars)):
+        _, h, l, c = bars[i]
+        _, ph, pl, pc = bars[i - 1]
+        tr.append(max(h - l, abs(h - pc), abs(l - pc)))
+        up, dn = h - ph, pl - l
+        pdm.append(up if up > dn and up > 0 else 0.0)
+        ndm.append(dn if dn > up and dn > 0 else 0.0)
+
+    def smooth(xs):
+        out = [sum(xs[:period])]
+        for x in xs[period:]:
+            out.append(out[-1] - out[-1] / period + x)
+        return out
+
+    str_, sp, sn = smooth(tr), smooth(pdm), smooth(ndm)
+    dx = []
+    for a, b, c in zip(str_, sp, sn):
+        if a <= 0:
+            continue
+        pdi, ndi = 100 * b / a, 100 * c / a
+        if pdi + ndi:
+            dx.append(100 * abs(pdi - ndi) / (pdi + ndi))
+    if len(dx) < period:
+        return None
+    adx = sum(dx[:period]) / period
+    for x in dx[period:]:
+        adx = (adx * (period - 1) + x) / period
+    return adx
+
+
+def _structure(bars):
+    """+1 for higher highs and higher lows, -1 for lower highs and lower lows, else 0.
+
+    Uses the same swing definition as the patterns themselves (PATTERN_RULES.md
+    section 1: one candle each side), so the trend read and the setups agree on
+    what a swing is.
+    """
+    highs = [b[1] for b in bars]
+    lows = [b[2] for b in bars]
+    H = [i for i in range(1, len(bars) - 1) if highs[i] > highs[i - 1] and highs[i] > highs[i + 1]]
+    L = [i for i in range(1, len(bars) - 1) if lows[i] < lows[i - 1] and lows[i] < lows[i + 1]]
+    if len(H) < 2 or len(L) < 2:
+        return 0
+    hh, hl = highs[H[-1]] > highs[H[-2]], lows[L[-1]] > lows[L[-2]]
+    lh, ll = highs[H[-1]] < highs[H[-2]], lows[L[-1]] < lows[L[-2]]
+    if hh and hl:
+        return 1
+    if lh and ll:
+        return -1
+    return 0
+
+
+def _stored_daily(sym):
+    """Daily bars from public/bars/, as fetch_daily_bars shapes them.
+
+    The no-network path (`--apply` with no quotes) still needs enough history to
+    read a trend, and the chart candles are already on disk.
+    """
+    path = os.path.join(BARS_DIR, f"{sym}_daily.json")
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path) as fh:
+            b = json.load(fh)
+        return list(zip(b['t'], b['h'], b['l'], b['c']))[-TREND_WINDOW:]
+    except (ValueError, KeyError, OSError):
+        return []
+
+
+def _trend(bars):
+    """'up' / 'down' / 'flat' from ~3 months of daily bars, or None if too few.
+
+    Follows the usual construction rather than a home-made one: a moving average
+    for direction (its slope, and which side price sits on), swing structure to
+    confirm, and ADX purely as a strength gate -- a market that is going nowhere
+    reports flat however the other two lean. Direction is a majority of the
+    three; requiring no dissent at all was too strict, since one disagreeing
+    vote is normal (CRWD, +42% over the window with its last two swings lower,
+    read flat under that rule).
+
+    The UI puts setups pointing the same way as the trend at the top of a
+    stock's setup list; flat leaves that list in its stored order.
+    """
+    bars = [b for b in bars if b[1] is not None and b[2] is not None and b[3] is not None]
+    if len(bars) < TREND_MIN_BARS:
+        return None
+    closes = [b[3] for b in bars]
+    n = 50 if len(closes) >= 50 + TREND_SLOPE_BARS else 20
+    if len(closes) < n + TREND_SLOPE_BARS:
+        return None
+    sma = lambda k: sum(closes[k - n:k]) / n
+    now, before = sma(len(closes)), sma(len(closes) - TREND_SLOPE_BARS)
+
+    votes = [
+        1 if now > before else -1 if now < before else 0,      # is the average sloping?
+        1 if closes[-1] > now else -1 if closes[-1] < now else 0,  # which side is price on?
+        _structure(bars),                                       # higher highs / lower lows
+    ]
+    adx = _adx(bars)
+    if adx is not None and adx < TREND_ADX_MIN:
+        return 'flat'                                           # ranging: strength gate fails
+    if votes.count(1) >= 2:
+        return 'up'
+    if votes.count(-1) >= 2:
+        return 'down'
+    return 'flat'
+
+
+HEADER_KEYS = ('ticker', 'name', 'auto', 'trend', 'price', 'priceDate')
 SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
 
 
@@ -615,6 +739,16 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
             edits.append((f['price'][0], f['price'][1], new_price))
         if 'priceDate' in f and f['priceDate'][2] != date:
             edits.append((f['priceDate'][0], f['priceDate'][1], json.dumps(date)))
+
+        trend = _trend(q.get('bars') or _stored_daily(sym))
+        if trend:
+            if 'trend' in f:
+                if f['trend'][2] != trend:
+                    edits.append((f['trend'][0], f['trend'][1], json.dumps(trend)))
+            elif 'priceDate' in f:
+                # New field: slot it in just after priceDate so the header stays readable.
+                at = f['priceDate'][1]
+                edits.append((at, at, f',\n    trend: {json.dumps(trend)}'))
 
         for label, s, pos in _setups(e):
             stage, direction = s.get('stage'), s.get('direction')
