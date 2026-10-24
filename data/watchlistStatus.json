@@ -1627,13 +1627,7 @@
  },
  "CRWD|main": {
   "label": "main",
-  "setup": "Bullish Bald Candle (daily)",
-  "stage": "forming",
-  "ticker": "CRWD"
- },
- "CRWD|weekly alt": {
-  "label": "weekly alt",
-  "setup": "Bearish Engulfing (weekly)",
+  "setup": "Ascending Channel (daily)",
   "stage": "forming",
   "ticker": "CRWD"
  },

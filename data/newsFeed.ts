@@ -15,6 +15,13 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-CRWD-weekly-alt-removed",
+    date: "Oct 24 2026",
+    tickers: ["CRWD"],
+    title: "CRWD · setup removed (weekly setup)",
+    text: "No longer tracked.",
+  },
+  {
     id: "2026-10-24-CRWD-daily-alt-removed",
     date: "Oct 24 2026",
     tickers: ["CRWD"],
