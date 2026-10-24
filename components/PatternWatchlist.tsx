@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { TickerDefinition } from '../types';
-import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree } from '../data/patternWatchlist';
+import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree, PatternDirection } from '../data/patternWatchlist';
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import './PatternWatchlist.css';
 
@@ -47,6 +47,11 @@ const Chev = () => (
   <svg className="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
 );
 
+// Momentum: a lightning bolt, used on the sort control and the row badge.
+const Bolt = () => (
+  <svg className="bolt" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9 1.5 3.5 9.2h3.3L7 14.5 12.5 6.8H9.2L9 1.5Z" fill="currentColor" /></svg>
+);
+
 const Cross = () => (
   <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 6 8 8m0-8-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
 );
@@ -81,7 +86,7 @@ function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: 
 function chartSpec(s: { direction: string; stage: PatternStage; stageDate?: string; signal?: number; confirm?: number; invalidation?: number; target?: number }) {
   const dn = s.direction === 'down';
   const levels: ChartLevel[] = [];
-  if (s.target != null) levels.push({ price: s.target, label: s.stage === 'target' ? 'Reached' : 'Target', tone: 'up' });
+  if (s.target != null) levels.push({ price: s.target, label: s.stage === 'target' ? 'Reached' : 'Target', tone: 'target' });
   if (s.confirm != null) levels.push({ price: s.confirm, label: 'Confirm', tone: dn ? 'down' : 'up' });
   if (s.signal != null) levels.push({ price: s.signal, label: 'Signal', tone: 'muted' });
   if (s.invalidation != null) levels.push({ price: s.invalidation, label: 'Invalidation', tone: 'down', solid: true });
@@ -289,10 +294,10 @@ const BothBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a
         ))}
       </div>
       <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} levels={[
-        { price: a.goalUp!, label: 'Goal up', tone: 'up' },
+        { price: a.goalUp!, label: 'Goal up', tone: 'target' },
         { price: a.breakUp!, label: 'Breaks up', tone: 'up' },
         { price: a.breakDown!, label: 'Breaks down', tone: 'down' },
-        { price: a.goalDown!, label: 'Goal down', tone: 'up' },
+        { price: a.goalDown!, label: 'Goal down', tone: 'target' },
       ]} />
     </div>
   );
@@ -392,6 +397,25 @@ type Entry =
   | { kind: 'setup'; key: string; a: AnySetup; st: Status; pattern: string; tf: string; auto?: boolean }
   | { kind: 'hist'; key: string; h: PatternHistoryEntry; st: Status; pattern: string; tf: string; auto?: boolean };
 
+// Setups shown per timeframe in the left list. The data stores up to 5 per timeframe and
+// public/setups/TICKER.json carries all of them, so this can be raised on its own.
+const MAX_PER_TF = 3;
+
+// Daily RSI-14 regime, the same thresholds the scripts use (pattern_watchlist.RSI_BULL/BEAR).
+// Cardwell's convention: an uptrend tends to hold RSI 40-80 and a downtrend 20-60, so
+// clearing 60 is bullish and losing 40 bearish. RSI confirms a direction, it never sets one --
+// above 60 backs a long setup and argues against a short, and below 40 the reverse.
+const RSI_BULL = 60;
+const RSI_BEAR = 40;
+
+type Momentum = 'with' | 'against' | 'neutral';
+const momentumOf = (rsi: number | undefined, dir: PatternDirection | undefined): Momentum => {
+  if (rsi == null || (dir !== 'up' && dir !== 'down')) return 'neutral';
+  if (rsi >= RSI_BULL) return dir === 'up' ? 'with' : 'against';
+  if (rsi <= RSI_BEAR) return dir === 'down' ? 'with' : 'against';
+  return 'neutral';
+};
+
 type Bucket = 'confirmed' | 'pending' | 'update' | 'finished';
 const BUCKETS: [Bucket, string][] = [
   ['confirmed', 'Confirmed'], ['pending', 'Watching for a break'],
@@ -432,21 +456,85 @@ const SetupList: React.FC<{ ticker: string; entries: Entry[]; sel: string; onSel
 
 // ── Expanded row ──
 
+// A stock's extra setups are not in the bundle; vite.config.ts writes them to
+// public/setups/TICKER.json and an expanded row fetches them, like the candles.
+type Extra = { alt?: PatternAltSetup; more?: PatternAltSetup[] };
+const extraCache = new Map<string, Extra>();
+
 const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
+  // In dev the data is served unsplit, so fall back to whatever is already on `s`.
+  const inline: Extra = { alt: s.alt, more: s.more };
+  const [extra, setExtra] = useState<Extra>(() => extraCache.get(s.ticker) ?? inline);
+
+  useEffect(() => {
+    if (s.alt || s.more) return;                 // unsplit build: nothing to fetch
+    const hit = extraCache.get(s.ticker);
+    if (hit) { setExtra(hit); return; }
+    let live = true;
+    setExtra({});
+    fetch(`${import.meta.env.BASE_URL}setups/${s.ticker}.json`)
+      .then(r => (r.ok ? r.json() : {}))
+      .then((d: Extra) => { extraCache.set(s.ticker, d); if (live) setExtra(d); })
+      .catch(() => { /* the main setup still renders without them */ });
+    return () => { live = false; };
+  }, [s.ticker, s.alt, s.more]);
+
   const entries = useMemo<Entry[]>(() => {
-    const out: Entry[] = [{
+    const live: Entry[] = [{
       kind: 'setup', key: 'main', a: s as AnySetup, st: status(s),
       pattern: s.pattern, tf: s.timeframe || 'daily', auto: s.auto,
     }];
-    if (s.alt) out.push({
-      kind: 'setup', key: 'alt', a: s.alt, st: status(s.alt),
-      pattern: s.alt.pattern ?? s.pattern, tf: s.alt.timeframe, auto: s.alt.auto,
+    if (extra.alt) live.push({
+      kind: 'setup', key: 'alt', a: extra.alt, st: status(extra.alt),
+      pattern: extra.alt.pattern ?? s.pattern, tf: extra.alt.timeframe, auto: extra.alt.auto,
     });
+    (extra.more ?? []).forEach((m, i) => live.push({
+      kind: 'setup', key: 'm' + i, a: m, st: status(m),
+      pattern: m.pattern ?? s.pattern, tf: m.timeframe, auto: m.auto,
+    }));
+
+    // more[] can repeat a setup that is already the main one or the alt.
+    const seen = new Set<string>();
+    const unique = live.filter(e => {
+      const a = e.kind === 'setup' ? e.a : null;
+      const sig = [e.pattern, e.tf, a?.direction, a?.stage, a?.confirm ?? a?.breakUp].join('|');
+      return seen.has(sig) ? false : (seen.add(sig), true);
+    });
+
+    // Setups pointing the same way as the stock's own trend come first, so a
+    // falling stock leads with its short setups and a rising one with its longs.
+    // A 'both' setup sits between the two; on a flat or unknown trend nothing
+    // is reordered and the stored order stands.
+    const rank = (e: Entry) => {
+      const d = e.kind === 'setup' ? e.a.direction : undefined;
+      if (s.trend === 'up') return d === 'up' ? 0 : d === 'both' ? 1 : 2;
+      if (s.trend === 'down') return d === 'down' ? 0 : d === 'both' ? 1 : 2;
+      return 1;
+    };
+
+    const order: string[] = [];
+    const byTf = new Map<string, Entry[]>();
+    unique.forEach(e => {
+      const k = e.tf || 'daily';
+      if (!byTf.has(k)) { byTf.set(k, []); order.push(k); }
+      byTf.get(k)!.push(e);
+    });
+
+    const out: Entry[] = [];
+    order.forEach(tf => {
+      const list = byTf.get(tf)!;
+      out.push(...list
+        .map((e, i) => ({ e, i, r: rank(e) }))
+        .sort((a, b) => a.r - b.r || a.i - b.i)   // ties keep the stored order
+        .slice(0, MAX_PER_TF)
+        .map(x => x.e));
+    });
+
     (s.history ?? []).forEach((h, i) => out.push({
       kind: 'hist', key: 'h' + i, h, st: status(h), pattern: h.pattern, tf: h.timeframe,
     }));
     return out;
-  }, [s]);
+  }, [s, extra]);
 
   const [sel, setSel] = useState(entries[0].key);
   const cur = entries.find(e => e.key === sel) ?? entries[0];
@@ -561,6 +649,11 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
+          {s && momentumOf(s.rsi, s.direction) === 'with' && (
+            <span className="flag mom" title={`Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`}>
+              <Bolt />RSI {Math.round(s.rsi!)}
+            </span>
+          )}
         </span>
         {levels}
         {open
@@ -587,7 +680,10 @@ interface PatternWatchlistProps {
 
 const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls }) => {
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
-  const [sortBy, setSortBy] = useState<'default' | 'target'>(() => readPref('pbw-sort', 'default') === 'target' ? 'target' : 'default');
+  const [sortBy, setSortBy] = useState<'default' | 'target' | 'momentum'>(() => {
+    const p = readPref('pbw-sort', 'default');
+    return p === 'target' || p === 'momentum' ? p : 'default';
+  });
   const [query, setQuery] = useState('');
   // One row open at a time: opening another closes the last, so the ledger
   // never turns into a stack of panels.
@@ -619,6 +715,11 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
   }, [allRows]);
 
   const activeFilter = filter === 'all' || counts[filter] ? filter : 'all';
+  // How many setups RSI currently backs -- shown on the momentum chip when it is off.
+  const hotCount = useMemo(
+    () => allRows.filter(r => momentumOf(r.setup?.rsi, r.setup?.direction) === 'with').length,
+    [allRows],
+  );
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -626,6 +727,17 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
       (activeFilter === 'all' || status(r.setup).group === activeFilter) &&
       (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
+    if (sortBy === 'momentum') {
+      // Setups RSI actually backs first, strongest conviction (furthest from 50) at the top;
+      // then everything neutral; setups momentum argues against sink to the bottom.
+      const score = (r: Row) => {
+        const s = r.setup;
+        const m = momentumOf(s?.rsi, s?.direction);
+        const dist = s?.rsi == null ? -1 : Math.abs(s.rsi - 50);
+        return m === 'with' ? 2000 + dist : m === 'against' ? dist - 1000 : dist;
+      };
+      out.sort((a, b) => score(b) - score(a));
+    }
     return out;
   }, [allRows, activeFilter, query, sortBy]);
 
@@ -656,6 +768,11 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
             <button className="chip pctchip" aria-pressed={sortBy === 'target'} title="Sort by highest % to target"
               onClick={() => { const next = sortBy === 'target' ? 'default' : 'target'; setSortBy(next); writePref('pbw-sort', next); }}>
               %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
+            </button>
+            <button className="chip momchip" aria-pressed={sortBy === 'momentum'}
+              title="Sort by momentum: setups the daily RSI backs (≥60 for a long, ≤40 for a short) first"
+              onClick={() => { const next = sortBy === 'momentum' ? 'default' : 'momentum'; setSortBy(next); writePref('pbw-sort', next); }}>
+              <Bolt /><span className="n">{sortBy === 'momentum' ? '↓' : hotCount || ''}</span>
             </button>
           </div>
           <input type="search" value={query} onChange={e => setQuery(e.target.value)}

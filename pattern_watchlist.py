@@ -178,7 +178,8 @@ def fetch_daily_bars(symbols, headers, opener=None):
     """{sym: {'price', 'date', 'bars': [(YYYY-MM-DD, high, low, close)]}} from Yahoo's chart API."""
     out = {}
     for sym in symbols:
-        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=1mo&interval=1d&includePrePost=false"
+        # 3mo, not 1mo: these bars feed the trend read below as well as target touches.
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=3mo&interval=1d&includePrePost=false"
         try:
             req = urllib.request.Request(url, headers=headers)
             resp = opener.open(req, timeout=10) if opener else urllib.request.urlopen(req, timeout=10)
@@ -356,7 +357,182 @@ def _r2(v):
     return round(v, 2)
 
 
-HEADER_KEYS = ('ticker', 'name', 'auto', 'price', 'priceDate')
+# Trend read (see _trend). Direction comes from the moving average and the swing
+# structure; ADX only gates whether there is a trend at all, per the usual
+# convention that ADX measures strength and the DI/price side measures direction.
+TREND_MIN_BARS = 30      # fewer daily bars than this and the window is too short to call
+TREND_WINDOW = 63        # ~3 months of sessions, when reading trend off the stored candles
+TREND_SLOPE_BARS = 10    # lookback for "is the average sloping?"
+TREND_ADX_PERIOD = 14
+TREND_ADX_MIN = 20       # below this the market is ranging, so report flat
+
+
+def _adx(bars, period=TREND_ADX_PERIOD):
+    """Wilder's ADX. Strength only -- it says nothing about which way."""
+    if len(bars) < period * 2 + 1:
+        return None
+    tr, pdm, ndm = [], [], []
+    for i in range(1, len(bars)):
+        _, h, l, c = bars[i]
+        _, ph, pl, pc = bars[i - 1]
+        tr.append(max(h - l, abs(h - pc), abs(l - pc)))
+        up, dn = h - ph, pl - l
+        pdm.append(up if up > dn and up > 0 else 0.0)
+        ndm.append(dn if dn > up and dn > 0 else 0.0)
+
+    def smooth(xs):
+        out = [sum(xs[:period])]
+        for x in xs[period:]:
+            out.append(out[-1] - out[-1] / period + x)
+        return out
+
+    str_, sp, sn = smooth(tr), smooth(pdm), smooth(ndm)
+    dx = []
+    for a, b, c in zip(str_, sp, sn):
+        if a <= 0:
+            continue
+        pdi, ndi = 100 * b / a, 100 * c / a
+        if pdi + ndi:
+            dx.append(100 * abs(pdi - ndi) / (pdi + ndi))
+    if len(dx) < period:
+        return None
+    adx = sum(dx[:period]) / period
+    for x in dx[period:]:
+        adx = (adx * (period - 1) + x) / period
+    return adx
+
+
+def _structure(bars):
+    """+1 for higher highs and higher lows, -1 for lower highs and lower lows, else 0.
+
+    Uses the same swing definition as the patterns themselves (PATTERN_RULES.md
+    section 1: one candle each side), so the trend read and the setups agree on
+    what a swing is.
+    """
+    highs = [b[1] for b in bars]
+    lows = [b[2] for b in bars]
+    H = [i for i in range(1, len(bars) - 1) if highs[i] > highs[i - 1] and highs[i] > highs[i + 1]]
+    L = [i for i in range(1, len(bars) - 1) if lows[i] < lows[i - 1] and lows[i] < lows[i + 1]]
+    if len(H) < 2 or len(L) < 2:
+        return 0
+    hh, hl = highs[H[-1]] > highs[H[-2]], lows[L[-1]] > lows[L[-2]]
+    lh, ll = highs[H[-1]] < highs[H[-2]], lows[L[-1]] < lows[L[-2]]
+    if hh and hl:
+        return 1
+    if lh and ll:
+        return -1
+    return 0
+
+
+# RSI (see _rsi). 14 is Wilder's own period and the default on most charts.
+# The 60/40 pair is the Cardwell regime convention -- an uptrend tends to hold
+# RSI between 40 and 80, a downtrend between 20 and 60 -- so clearing 60 is a
+# bullish-regime signal and losing 40 a bearish one. They are conventions, not
+# tested edges: RSI confirms a setup's direction, it never sets it.
+RSI_PERIOD = 14
+RSI_BULL = 60
+RSI_BEAR = 40
+
+
+def _rsi(bars, period=RSI_PERIOD):
+    """Wilder's RSI on closes, or None if there is not enough history.
+
+    Wilder smoothing (seed = simple mean of the first `period` changes, then
+    recursive), not the simple-moving-average variant -- the two drift apart
+    after a volatile stretch, and charts show Wilder's.
+    """
+    closes = [b[3] for b in bars if b[3] is not None]
+    if len(closes) < period + 1:
+        return None
+    gains = losses = 0.0
+    for i in range(1, period + 1):
+        d = closes[i] - closes[i - 1]
+        gains += max(d, 0.0)
+        losses += max(-d, 0.0)
+    avg_gain, avg_loss = gains / period, losses / period
+    for i in range(period + 1, len(closes)):
+        d = closes[i] - closes[i - 1]
+        avg_gain = (avg_gain * (period - 1) + max(d, 0.0)) / period
+        avg_loss = (avg_loss * (period - 1) + max(-d, 0.0)) / period
+    if avg_loss == 0:
+        return 100.0 if avg_gain > 0 else 50.0
+    rs = avg_gain / avg_loss
+    return 100 - 100 / (1 + rs)
+
+
+def _momentum(rsi, direction):
+    """Does momentum back this setup's direction? 'with' / 'against' / 'neutral'.
+
+    Deliberately symmetric: RSI over 60 confirms an upward setup but argues
+    against a downward one, and under 40 the reverse. An either-direction setup
+    has no side to confirm.
+    """
+    if rsi is None or direction not in ('up', 'down'):
+        return 'neutral'
+    if rsi >= RSI_BULL:
+        return 'with' if direction == 'up' else 'against'
+    if rsi <= RSI_BEAR:
+        return 'with' if direction == 'down' else 'against'
+    return 'neutral'
+
+
+def _stored_daily(sym):
+    """Daily bars from public/bars/, as fetch_daily_bars shapes them.
+
+    The no-network path (`--apply` with no quotes) still needs enough history to
+    read a trend, and the chart candles are already on disk.
+    """
+    path = os.path.join(BARS_DIR, f"{sym}_daily.json")
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path) as fh:
+            b = json.load(fh)
+        return list(zip(b['t'], b['h'], b['l'], b['c']))[-TREND_WINDOW:]
+    except (ValueError, KeyError, OSError):
+        return []
+
+
+def _trend(bars):
+    """'up' / 'down' / 'flat' from ~3 months of daily bars, or None if too few.
+
+    Follows the usual construction rather than a home-made one: a moving average
+    for direction (its slope, and which side price sits on), swing structure to
+    confirm, and ADX purely as a strength gate -- a market that is going nowhere
+    reports flat however the other two lean. Direction is a majority of the
+    three; requiring no dissent at all was too strict, since one disagreeing
+    vote is normal (CRWD, +42% over the window with its last two swings lower,
+    read flat under that rule).
+
+    The UI puts setups pointing the same way as the trend at the top of a
+    stock's setup list; flat leaves that list in its stored order.
+    """
+    bars = [b for b in bars if b[1] is not None and b[2] is not None and b[3] is not None]
+    if len(bars) < TREND_MIN_BARS:
+        return None
+    closes = [b[3] for b in bars]
+    n = 50 if len(closes) >= 50 + TREND_SLOPE_BARS else 20
+    if len(closes) < n + TREND_SLOPE_BARS:
+        return None
+    sma = lambda k: sum(closes[k - n:k]) / n
+    now, before = sma(len(closes)), sma(len(closes) - TREND_SLOPE_BARS)
+
+    votes = [
+        1 if now > before else -1 if now < before else 0,      # is the average sloping?
+        1 if closes[-1] > now else -1 if closes[-1] < now else 0,  # which side is price on?
+        _structure(bars),                                       # higher highs / lower lows
+    ]
+    adx = _adx(bars)
+    if adx is not None and adx < TREND_ADX_MIN:
+        return 'flat'                                           # ranging: strength gate fails
+    if votes.count(1) >= 2:
+        return 'up'
+    if votes.count(-1) >= 2:
+        return 'down'
+    return 'flat'
+
+
+HEADER_KEYS = ('ticker', 'name', 'auto', 'trend', 'rsi', 'price', 'priceDate')
 SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
 
 
@@ -616,6 +792,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
     entries = parse_watchlist(text)
     edits, price_changes, target_hits, needs_update, review = [], [], [], [], []
     bot_notes = {}  # "TICKER|label" → (date, news text) for changes this run made
+    momentum = []   # (sym, rsi, 'with'/'against'/'neutral', direction) for the hot-momentum report
 
     for e in entries:
         f = e['fields']
@@ -637,6 +814,24 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
             edits.append((f['price'][0], f['price'][1], new_price))
         if 'priceDate' in f and f['priceDate'][2] != date:
             edits.append((f['priceDate'][0], f['priceDate'][1], json.dumps(date)))
+
+        daily = q.get('bars') or _stored_daily(sym)
+        trend = _trend(daily)
+        rsi = _rsi(daily)
+        # Both are read-only reads off the candles; slot new ones in after priceDate
+        # so the entry header stays readable.
+        for key, val in (('trend', trend), ('rsi', None if rsi is None else round(rsi, 1))):
+            if val is None:
+                continue
+            new = json.dumps(val)
+            if key in f:
+                if json.dumps(f[key][2]) != new:
+                    edits.append((f[key][0], f[key][1], new))
+            elif 'priceDate' in f:
+                at = f['priceDate'][1]
+                edits.append((at, at, f',\n    {key}: {new}'))
+            if key == 'rsi' and rsi is not None:
+                momentum.append((sym, rsi, _momentum(rsi, main.get('direction')), main.get('direction')))
 
         for label, s, pos in _setups(e):
             stage, direction = s.get('stage'), s.get('direction')
@@ -681,7 +876,8 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
         with open(path, 'w') as fh:
             fh.write(new_text)
 
-    return {'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
+    return {'momentum': momentum,
+            'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'review': review, 'news': news}
 
 
@@ -989,6 +1185,29 @@ def print_watchlist_report(result, missing, apply):
         print(f"\n🔄 Needs updating ({'marked' if apply else 'would mark'} stage → update):")
         for sym, label, stage, note in result['needs_update']:
             print(f"  {sym:<6} {label:<12} {stage:<8} {note}")
+    mom = result.get('momentum') or []
+    if mom:
+        hot = [m for m in mom if m[2] == 'with']
+        longs = sorted([m for m in hot if m[3] == 'up'], key=lambda m: -m[1])
+        shorts = sorted([m for m in hot if m[3] == 'down'], key=lambda m: m[1])
+        against = [m for m in mom if m[2] == 'against']
+        print(f"\n🔥 Momentum (daily RSI-{RSI_PERIOD}; ≥{RSI_BULL} bullish, ≤{RSI_BEAR} bearish)")
+        if hot:
+            print(f"  Actionable now — RSI backs the setup's direction ({len(hot)}):")
+            if longs:
+                print(f"    ↑ LONG  ({len(longs)}, strongest first)")
+                for sym, rsi, _, _ in longs:
+                    print(f"        {sym:<6} RSI {rsi:5.1f}")
+            if shorts:
+                print(f"    ↓ SHORT ({len(shorts)}, weakest first)")
+                for sym, rsi, _, _ in shorts:
+                    print(f"        {sym:<6} RSI {rsi:5.1f}")
+        else:
+            print("  Nothing actionable: no setup has RSI behind it today.")
+        if against:
+            print(f"  Momentum against the setup ({len(against)}) — wait or re-read:")
+            print("    " + ", ".join(f"{s} {r:.0f}" for s, r, _, _ in sorted(against, key=lambda m: -m[1])))
+
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:

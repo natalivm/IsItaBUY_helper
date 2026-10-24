@@ -10,7 +10,7 @@ import type { IChartApi, Time } from 'lightweight-charts';
 export interface ChartLevel {
   price: number;
   label: string;
-  tone: 'up' | 'down' | 'muted';
+  tone: 'up' | 'down' | 'muted' | 'target';
   solid?: boolean;
 }
 
@@ -65,6 +65,7 @@ const SetupChart: React.FC<{
       const palette = () => ({
         bg: cssVar(el, '--surface'), fg: cssVar(el, '--muted'), grid: cssVar(el, '--line'),
         up: cssVar(el, '--up'), down: cssVar(el, '--down'), muted: cssVar(el, '--faint'),
+        target: cssVar(el, '--target'),
       });
       let pal = palette();
 
@@ -83,7 +84,10 @@ const SetupChart: React.FC<{
       const inView = levels.map(l => l.price).filter(p => p >= lo * 0.5 && p <= hi * 1.6);
       const candles = chart.addSeries(lc.CandlestickSeries, {
         upColor: pal.up, downColor: pal.down, wickUpColor: pal.up, wickDownColor: pal.down, borderVisible: false,
+        // The current price gets its own green line below, so suppress the series'
+        // default last-value tag -- otherwise the axis shows two labels for it.
         priceLineVisible: false,
+        lastValueVisible: false,
         autoscaleInfoProvider: (original: () => { priceRange: { minValue: number; maxValue: number } } | null) => {
           const r = original();
           if (!r || !inView.length) return r;
@@ -92,7 +96,14 @@ const SetupChart: React.FC<{
       });
       candles.setData(bars.t.map((t, i) => ({ time: t as Time, open: bars.o[i], high: bars.h[i], low: bars.l[i], close: bars.c[i] })));
 
-      const toneColor = (t: ChartLevel['tone']) => (t === 'up' ? pal.up : t === 'down' ? pal.down : pal.muted);
+      const toneColor = (t: ChartLevel['tone']) =>
+        t === 'up' ? pal.up : t === 'down' ? pal.down : t === 'target' ? pal.target : pal.muted;
+
+      // Where price is now: green, so it reads apart from the setup's own levels.
+      const nowLine = candles.createPriceLine({
+        price: bars.c[bars.c.length - 1], color: pal.up, lineWidth: 1,
+        lineStyle: lc.LineStyle.Dotted, axisLabelVisible: true, title: 'Now',
+      });
       const priceLines = levels.map(l => candles.createPriceLine({
         price: l.price, color: toneColor(l.tone), lineWidth: l.solid ? 2 : 1,
         lineStyle: l.solid ? lc.LineStyle.Solid : lc.LineStyle.Dashed, axisLabelVisible: true, title: l.label,
@@ -155,6 +166,7 @@ const SetupChart: React.FC<{
         });
         candles.applyOptions({ upColor: pal.up, downColor: pal.down, wickUpColor: pal.up, wickDownColor: pal.down });
         priceLines.forEach((pl, i) => pl.applyOptions({ color: toneColor(levels[i].tone) }));
+        nowLine.applyOptions({ color: pal.up });
       });
       observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     })();

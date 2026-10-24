@@ -29,3 +29,6 @@ __pycache__/
 
 # Pattern backtest candle cache
 .backtest_cache/
+
+# Generated at build time by the split-stored-setups plugin in vite.config.ts.
+public/setups/
