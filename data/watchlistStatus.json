@@ -3463,14 +3463,14 @@
  },
  "KO|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
   "ticker": "KO"
  },
  "KO|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "setup": "Topping Tail (weekly)",
+  "stage": "forming",
   "ticker": "KO"
  },
  "KO|weekly Ascending Channel": {
