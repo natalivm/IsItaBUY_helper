@@ -1085,6 +1085,21 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "A steep run from the September low near $550 narrowed into a rising wedge that topped out near $780. Price broke the lower line and confirmed with a daily close below $721.30, and is now trading just under that level.",
     more: [
       {
+        pattern: "Ascending Channel",
+        timeframe: "weekly",
+        direction: "down",
+        stage: "confirmed",
+        stageDate: "2025-11-03",
+        signal: 677.97,
+        confirm: 645.57,
+        invalidation: 1052.30,
+        target: 475.78,
+        signalRule: "a completed weekly close below $677.97.",
+        confirmRule: "a later completed weekly close below $645.57, beyond the signal candle's low.",
+        failRule: "a completed weekly close back inside the broken boundary, above $1,052.30.",
+        note: "The long ascending channel broke down in November 2025 and confirmed below $645.57. A year on, price is still hovering at that confirmation level while the broken lower boundary has risen to $1,052.30, so the $475.78 measured move is intact but the break has gone nowhere for twelve months.",
+      },
+      {
         auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
