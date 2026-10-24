@@ -15,6 +15,27 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-CRWD-daily-alt-removed",
+    date: "Oct 24 2026",
+    tickers: ["CRWD"],
+    title: "CRWD · setup removed (daily setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-24-CRWD-main-forming",
+    date: "Oct 24 2026",
+    tickers: ["CRWD"],
+    title: "CRWD · new setup",
+    text: "Bullish Bald Candle (daily), waiting for a break.",
+  },
+  {
+    id: "2026-10-24-CRWD-weekly-alt-forming",
+    date: "Oct 24 2026",
+    tickers: ["CRWD"],
+    title: "CRWD · new setup (weekly setup)",
+    text: "Bearish Engulfing (weekly), waiting for a break.",
+  },
+  {
     id: "2026-10-24-CCJ-daily-alt-retest",
     date: "Oct 24 2026",
     tickers: ["CCJ"],

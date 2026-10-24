@@ -1625,64 +1625,16 @@
   "stage": "forming",
   "ticker": "CRM"
  },
- "CRWD|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
- "CRWD|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
- "CRWD|daily Morning Star": {
-  "label": "daily Morning Star",
-  "setup": "Morning Star (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
- "CRWD|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
- "CRWD|daily alt": {
-  "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
  "CRWD|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
- "CRWD|weekly Ascending Channel": {
-  "label": "weekly Ascending Channel",
-  "setup": "Ascending Channel (weekly)",
+  "setup": "Bullish Bald Candle (daily)",
   "stage": "forming",
   "ticker": "CRWD"
  },
- "CRWD|weekly Bearish Engulfing": {
-  "label": "weekly Bearish Engulfing",
+ "CRWD|weekly alt": {
+  "label": "weekly alt",
   "setup": "Bearish Engulfing (weekly)",
   "stage": "forming",
-  "ticker": "CRWD"
- },
- "CRWD|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "CRWD"
- },
- "CRWD|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
   "ticker": "CRWD"
  },
  "CRWV|main": {
