@@ -189,29 +189,51 @@ the rule **ranks and labels, it never deletes**:
 
 **What the backtest says about it** (`python3 pattern_backtest.py`, 215 stocks,
 1,717 confirmed setups replayed walk-forward; stop distance derived from the
-stored `reward_pct / rr`):
+stored `reward_pct / rr`). Read the right-hand half — R is *defined* as reward
+÷ risk, so a tight stop inflates it by construction and the R columns flatter
+the rule. Per trade is `hit × median win% − (1 − hit) × median loss%`:
 
-| stop at confirmation | closed | hit rate | median R | expectancy | per trade |
-|---|---|---|---|---|---|
-| ≤5% | 191 | 40% | 6.2 | +1.92R | +6.0% |
-| 5–10% | 379 | 58% | 1.1 | +0.24R | +1.9% |
-| 10–20% | 489 | 66% | 0.8 | +0.20R | +2.9% |
-| 20–35% | 298 | 65% | 0.7 | +0.09R | +2.2% |
-| >35% | 139 | 61% | 0.6 | −0.02R | −0.7% |
+| stop at confirmation | closed | hit rate | median R | exp (R) | median win | median loss | **per trade** |
+|---|---|---|---|---|---|---|---|
+| ≤5% | 191 | 40% | 6.2 | +1.92 | 9.6% | 2.9% | **+2.1%** |
+| 5–10% | 379 | 58% | 1.1 | +0.24 | 6.5% | 7.5% | **+0.6%** |
+| 10–20% | 489 | 66% | 0.8 | +0.20 | 10.1% | 14.6% | **+1.7%** |
+| 20–35% | 298 | 65% | 0.7 | +0.09 | 13.0% | 24.7% | **−0.0%** |
+| >35% | 139 | 61% | 0.6 | −0.02 | 20.3% | 46.5% | **−5.7%** |
 
-**A tight stop hits its target less often, not more** — 40% against 66% for a
-wide one — and anyone reading hit rate alone would throw the rule out. It earns
-its place on reward instead: the tight ones pay 6.2x the risk when they work,
-and a setup whose stop is more than a third of the share price away has no
-expectancy left at all. Expectancy is `hit × medianR − (1 − hit)`, in units of
-the stop; the last column converts back to price at the bucket's median risk.
+What this does and does not support:
 
-Two things the numbers do **not** account for: the backtest's "loss" is the
-setup's own failure rule (a close back inside the broken line, or past
-invalidation plus a follow-through), which lands *beyond* the stop, so a real
-stopped-out loss is smaller than modelled; and the 221 setups still open at the
-end of the data are excluded, which drops more wide setups than tight ones
-because the tight ones resolve faster.
+- **It does support cutting wide stops.** Past roughly 20% of price the edge is
+  gone, and past 35% it is −5.7% a trade over 139 setups. The `score_setup`
+  penalty beyond 25% sits exactly there.
+- **It does not single out 10%.** Per trade is not monotonic — the 10–20% bucket
+  (+1.7%) beats 5–10% (+0.6%). Ten percent is a defensible line and it is the
+  one we trade to, but the data would support 15% or 20% about as well, so do
+  not treat `MAX_STOP` as a fitted number or re-tune it on this table.
+- **A tight stop hits its target less often, not more** — 40% against 66%. Hit
+  rate alone says the rule is backwards; it earns its place by losing 2.9%
+  instead of 46.5% when it is wrong.
+
+By pattern, the same caution applies twice over. In R units a tight stop appears
+to rescue everything, including the worst performer (weekly Rising Wedge down,
+−0.34R overall, +1.54R when the stop is inside 10%). In price terms most of that
+is the same artifact: weekly Ascending Channel up earns +4.4% a trade whether the
+stop is tight or wide. What survives is narrower — a **wide stop on a short** is
+the one genuinely losing combination (weekly Rising Wedge down beyond 10%:
+−11.5% a trade over 127 setups; Ascending Channel down: −4.8% over 93).
+
+Three confounds to hold on to before anyone acts on the pattern table:
+
+- The sample runs over a period the market mostly rose: up-breaks earn +0.32R
+  against −0.08R for down-breaks, so every bearish pattern is reading partly as
+  market drift rather than as a bad pattern.
+- The universe is today's watchlist plus today's large caps, which is
+  survivorship: these are the stocks that still matter now.
+- The backtest's "loss" is the setup's own failure rule (a close back inside the
+  broken line, or past invalidation plus a follow-through), which lands *beyond*
+  the stop — so the loss column is worse than a real stopped-out loss, and the
+  221 setups still open at the end of the data are excluded entirely, which drops
+  more wide setups than tight ones because tight ones resolve faster.
 
 ### Rebuilding the lists
 
