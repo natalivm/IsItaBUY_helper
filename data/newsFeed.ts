@@ -15,6 +15,62 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-SIMO-main-target",
+    date: "Oct 23 2026",
+    tickers: ["SIMO"],
+    title: "SIMO · target reached",
+    text: "Hit target $192.44.",
+  },
+  {
+    id: "2026-10-24-auto-scan-74",
+    date: "Oct 24 2026",
+    tickers: [],
+    title: "Auto-detected setups updated for 74 stocks",
+    text: "Every valid pattern per stock is now listed (weekly and daily); 7 setups added. Auto-detected ones carry a red dot until checked by hand.",
+  },
+  {
+    id: "2026-10-24-ENVA-daily-alt-removed",
+    date: "Oct 24 2026",
+    tickers: ["ENVA"],
+    title: "ENVA · setup removed (daily setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-24-ENVA-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["ENVA"],
+    title: "ENVA · new setup",
+    text: "Rising Wedge (weekly), break confirmed.",
+  },
+  {
+    id: "2026-10-24-ENVA-monthly-alt-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["ENVA"],
+    title: "ENVA · new setup (monthly setup)",
+    text: "Bullish Bald Candle (monthly), break confirmed.",
+  },
+  {
+    id: "2026-10-24-V-main-retest",
+    date: "Oct 24 2026",
+    tickers: ["V"],
+    title: "V · retest in progress",
+    text: "Previously break confirmed.",
+  },
+  {
+    id: "2026-10-24-V-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["V"],
+    title: "V · new setup",
+    text: "Ascending Channel (daily), break confirmed.",
+  },
+  {
+    id: "2026-10-24-VZ-main-signal",
+    date: "Oct 24 2026",
+    tickers: ["VZ"],
+    title: "VZ · new setup",
+    text: "Falling Wedge (daily), break pending.",
+  },
+  {
     id: "2026-10-22-SPOT-daily-alt-failed",
     date: "Oct 22 2026",
     tickers: ["SPOT"],

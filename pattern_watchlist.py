@@ -274,6 +274,7 @@ def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=Non
 
 STAGE_LABEL = {
     'forming': 'Waiting for a break', 'signal': 'Break pending', 'confirmed': 'Break confirmed',
+    'retest': 'Retest in progress',
     'target': 'Target reached', 'failed': 'Pattern failed', 'update': 'Needs updating',
 }
 
@@ -360,6 +361,7 @@ def _r2(v):
 # Trend read (see _trend). Direction comes from the moving average and the swing
 # structure; ADX only gates whether there is a trend at all, per the usual
 # convention that ADX measures strength and the DI/price side measures direction.
+RETEST_BAND = 0.015      # within 1.5% of the broken boundary counts as sitting on it
 TREND_MIN_BARS = 30      # fewer daily bars than this and the window is too short to call
 TREND_WINDOW = 63        # ~3 months of sessions, when reading trend off the stored candles
 TREND_SLOPE_BARS = 10    # lookback for "is the average sloping?"
@@ -613,7 +615,7 @@ def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, a
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     if main_auto:
         rows.append("    auto: true,")
-    for k in ('price', 'priceDate'):
+    for k in ('trend', 'rsi', 'price', 'priceDate'):
         if k in f:
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     rows += _setup_text(text, main_pos, '    ', inherit=main_pattern)
@@ -837,7 +839,16 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
             stage, direction = s.get('stage'), s.get('direction')
             key, what = f"{sym}|{label}", _describe(s, main)
 
-            if stage == 'confirmed' and direction in ('up', 'down'):
+            # A confirmed break that has come back to its boundary: report it so it can
+            # be marked `retest` by hand. Never set here -- an automatic flag would flip
+            # back and forth as price brushes the line, and post News each time.
+            if stage == 'confirmed' and direction in ('up', 'down') and s.get('invalidation'):
+                inv = s['invalidation']
+                if inv and abs(price - inv) <= RETEST_BAND * inv:
+                    review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
+                                  f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
+            # A retest is a confirmed break, so it keeps running the target check.
+            if stage in ('confirmed', 'retest') and direction in ('up', 'down'):
                 since = max(old_date, s.get('stageDate') or old_date)
                 hit = _target_hit(s, q['bars'], since, price)
                 if hit:
@@ -1023,7 +1034,7 @@ def _finished(s, main, now_et, lines=None):
         return now_et.date().isoformat(), f"Target reached {_short_date(hit)}.", f"{t_} · setup closed", 'target'
     if stage == 'failed':
         return now_et.date().isoformat(), "Pattern failed.", f"{t_} · setup closed", 'failed'
-    if stage != 'confirmed' or s.get('direction') not in ('up', 'down'):
+    if stage not in ('confirmed', 'retest') or s.get('direction') not in ('up', 'down'):
         return None
     tf = s.get('timeframe') or main.get('timeframe') or 'daily'
     bars = _load_chart_bars(t_, tf)
