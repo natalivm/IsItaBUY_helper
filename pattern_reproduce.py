@@ -36,12 +36,22 @@ def labels():
     return out
 
 
-def bars_until(ticker, tf, date):
+# How many candles before the completion day the replay stops. The completion bar is the
+# one that reached the target, so including it hands the detector a chart on which the
+# move is already over: `_stage` discards a setup whose target has been reached, and the
+# shorter (more accurate) the projection, the more often that fires. At BACK = 0 the only
+# setups that survive to be scored are the ones that over-project, which flatters exactly
+# the error being measured. Stopping a bar earlier asks the honest question: with the call
+# still live, does the detector draw it?
+BACK = 1
+
+
+def bars_until(ticker, tf, date, back=None):
     path = f'public/bars/{ticker}_{tf}.json'
     if not os.path.exists(path):
         return None
     b = json.load(open(path))
-    n = sum(1 for d in b['t'] if d <= date)
+    n = sum(1 for d in b['t'] if d <= date) - (BACK if back is None else back)
     if n < 40:
         return None
     out = {k: b[k][:n] for k in 'tohlc' if k in b}
@@ -98,6 +108,8 @@ def score(overrides, verbose=False):
 
 
 if __name__ == '__main__':
+    if '--back' in sys.argv:
+        BACK = int(sys.argv[sys.argv.index('--back') + 1])
     L = labels()
     print(f"{len(L)} completed calls on record")
     r = score({}, verbose=True)
@@ -105,4 +117,5 @@ if __name__ == '__main__':
     print(f"  detector produced anything at all:   {r['anything']}")
     print(f"  produced the right pattern+direction: {r['pattern']}")
     print(f"  and levels close (confirm<=3%, target<=15%): {r['levels']}")
-    print(f"  median confirm error {r['confirm_err']}%   median target error {r['target_err']}%")
+    print(f"  median confirm error {r['confirm_err']:.1f}%   median target error {r['target_err']:.1f}%")
+    print(f"  (replay stops {BACK} bar(s) before the completion day)")

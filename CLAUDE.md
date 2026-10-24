@@ -153,30 +153,46 @@ replays the chart up to the day the call completed, runs the detector on exactly
 candles, and asks whether it rebuilds that setup. Every label is a setup that paid, so
 unlike the distribution comparisons there is no survivorship to correct for.
 
+**The replay stops one bar before the completion day** (`BACK` in `pattern_reproduce.py`,
+`--back N` to change it). The completion bar is the one that reached the target, so
+including it hands the detector a chart on which the move is already over — and `_stage`
+discards a setup whose target has been reached. The shorter and more accurate the
+projection, the more often that fires, so at `BACK = 0` the setups that survive to be
+scored are disproportionately the ones that over-project. That flattered the exact number
+being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
+
 Baseline on the 20 calls whose candles reach back far enough:
 
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
-- **right pattern and direction: 15/20.** Three of the five misses are Hammers that
+- **right pattern and direction: 15/20.** Three of the four misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
-- **target: 14.6% median error**, and that is the whole defect.
+- **target: 13.5% median error**, and that is the whole defect — 4.7% on wedges against
+  22.6% on channels.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
 converging wedge is at its widest, so the projection was the full mouth of it. Measured
 against the completed calls:
 
-| | wedges | channels |
-|---|---|---|
-| `start` | 14.6% | 17.4% |
-| `signal` | 14.0% (only 3 survive the filters) | 17.4% |
-| **`mean`** (current) | **6.8%** | 17.4% |
+| | wedges | channels | patterns rebuilt |
+|---|---|---|---|
+| `start` | 11.4% | 22.6% | 16/20 |
+| **`mean`** (current) | **4.7%** | 22.6% | 15/20 |
 
-Wedge error halves. Channels do not move at all and cannot — their lines are parallel, so
-the height is the same wherever it is measured, and their remaining 17.4% is a
-line-fitting problem rather than a height one. The cost is about 2 points on the
-held-out half of the agreement-with-hand-posted metric (32.7% to 30.9%); the train half
-fell much further, which is noise at n=63.
+Wedge error drops by well over half, and holds under every cutoff tested (at `BACK = 0`
+it reads 14.6% → 6.8%, at `BACK = 2` 11.4% → 4.2%). Channels do not move at all and
+cannot — their lines are parallel, so the height is the same wherever it is measured, and
+their 22.6% is a line-fitting problem rather than a height one. **Channels are now the
+whole of the remaining target error.**
+
+The cost is one setup, consistently: KLAC's daily rising wedge at `BACK = 1`, CVX's weekly
+falling wedge at `BACK = 0`. Both are lost to the same guard — a shorter target is more
+often one the chart has already reached, and `_stage` then discards the setup as finished.
+That is the detector being right in a way the harness scores as a miss, and it is the
+honest price of the change. It also costs about 2 points on the held-out half of the
+agreement-with-hand-posted metric (32.7% to 30.9%); the train half fell much further,
+which is noise at n=63.
 
 **`pw.MIN_ROOM = 0.10` looks too high and has not been changed.** Six of the 22 completed
 calls had less than 10% between confirm and target — META's hammer at 2.2%, LMT's at
