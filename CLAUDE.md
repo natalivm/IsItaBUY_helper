@@ -175,16 +175,19 @@ projection, the more often that fires, so at `BACK = 0` the setups that survive 
 scored are disproportionately the ones that over-project. That flattered the exact number
 being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
 
-Baseline on the 20 calls whose candles reach back far enough:
+Baseline on the 23 calls whose candles reach back far enough:
 
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
-- **right pattern and direction: 15/20.** Three of the four misses are Hammers that
+- **right pattern and direction: 17/23.** Most of the misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented and is
   not a tuning gap — see PATTERN_RULES.md §5b for why, and for the measuring rule verified
   off the one completed flag on record.
-- **target: 6.7% median error** — 4.7% on wedges, 8.8% on channels, and 12 of the 15 now
-  land inside both level tolerances against 8 before.
+- **target: 6.7% median error**, with 13 of the 17 inside both level tolerances.
+
+The tables below were measured on the 20 calls on record at the time. Three more have
+since been added, and the headline held at **6.7% on all 23** — the extra labels were not
+used to tune anything, so that is an out-of-sample check rather than a re-fit.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
@@ -296,7 +299,7 @@ written once by `pattern_lines.freeze_stops()` (`python3 pattern_lines.py --free
 `--apply`; the daily run calls it after `relevel`) and never re-read. On the same test the
 age spread across stop buckets falls from 4.6x to 1.8x, and what is left is survivorship
 rather than drift — a tight stop resolves faster, so the tight setups still open are
-genuinely younger. Backfilled for 586 of 592 confirmed setups; the six that could not be
+genuinely younger. Backfilled for 570 confirmed setups; the handful that could not be
 recovered have no trendlines or no candles reaching their `stageDate`.
 
 A setup redrawn by a rescan loses the field and gets a fresh one on the next run, which is
