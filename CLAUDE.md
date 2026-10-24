@@ -349,6 +349,49 @@ rather than `LEVEL` — **re-read that setup's `failRule`**, which is hand-writt
 quoting the old price and the pending follow-through wording, and is not rewritten for you.
 A wedge invalidates on the far side at every stage, so this never fires for one.
 
+## Bundle: what loads on which route
+
+`#` is the landing page, and it used to download the whole app — all 95 stock definitions,
+the valuation model, the ledger and the notes drawer, none of which it renders. The routes
+past it are `React.lazy` now, and the first chunk is 514 KB / 151 KB gzipped against 944 KB
+/ 293 KB before.
+
+| chunk | carries | fetched when |
+|---|---|---|
+| `index` | React, motion, `data/patternWatchlist.ts`, Landing | always |
+| `WhatsNewToast` | the toast | there is an unseen update |
+| `ReleaseNotesPanel` + `utils` | the drawer, `cn`, tailwind-merge | the drawer is first opened |
+| `PatternWatchlist` | the ledger | `#watchlist` |
+| `StockPage` | **all 95 stock definitions**, `constants.ts`, the projection service, the detail page | `#TICKER` |
+| `lightweight-charts` | the charting library | a row is first expanded |
+
+Three rules keep it that way, and breaking any one of them silently puts the stock
+definitions back in the first chunk:
+
+- **Nothing reachable from `App.tsx` or `Landing.tsx` may import `constants.ts`, `stocks/`
+  or `services/universe.ts`** — directly or through a helper. `utils.ts` counts: it imports
+  `StockGroup` from constants.
+- **What the list routes need from the stock files is `virtual:stock-catalog`**, one
+  `{ticker, name}` row per file in `stocks/`, served by `stockCatalog()` in `vite.config.ts`
+  (~3 KB against 555 KB). It is the landing page's "covered" count, the ledger's company
+  names, and the check that `#TICKER` is a real route. Nothing else needs it; the detail
+  page has the definitions themselves. The plugin fails the build if a file's `ticker` does
+  not match its filename, which `loadProse()` already depended on silently.
+- **A lazy route must not also be imported statically.** Landing pulling five helpers out of
+  `PatternWatchlist.tsx` was enough for rollup to give up on the split and bundle the whole
+  ledger; those live in `components/setupStatus.tsx` now. Rollup says so when it happens —
+  *"dynamically imported ... but also statically imported"* — and that warning is the signal
+  the split has silently reverted.
+
+Check it with `npx vite build` and look at `index-*.js`, or load the page and watch which
+`.js` the network panel fetches.
+
+**`npm run lint` only became real with `@types/react`.** It was missing, so `tsc --noEmit`
+treated every JSX element as `any` and checked no component props at all — a bogus prop on
+a typed component raised nothing. Installing `@types/react` / `@types/react-dom` turned up
+exactly zero pre-existing errors, so nothing was being hidden, but nothing was being caught
+either. Keep them: a route split is exactly the kind of change that trips prop errors.
+
 ### Price Format
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).

@@ -1,19 +1,28 @@
 
-import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
-import { ScenarioType, TickerDefinition } from './types';
-import { calculateProjection, getInstitutionalRating } from './services/projectionService';
-import { TICKERS, GROUP_ORDER, StockGroup, weightedScenarioAverage } from './constants';
-import { classifyStock } from './utils';
-import StockDetailView from './components/StockDetailView';
-import PatternWatchlist from './components/PatternWatchlist';
+import React, { useState, useEffect, useCallback, useRef, Suspense, lazy } from 'react';
+import { STOCK_CATALOG } from 'virtual:stock-catalog';
 import Landing from './components/Landing';
-import LegacyHome from './components/LegacyHome';
 import ThemeToggle from './components/ThemeToggle';
 import InstallPrompt from './components/InstallPrompt';
-import ReleaseNotesPanel, { WhatsNewToast, PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY, LATEST_TAB } from './components/ReleaseNotesPanel';
+import { PanelTab, UPDATES_VERSION, UPDATES_SEEN_KEY, LATEST_TAB } from './components/releaseNotes';
 
-import { AnimatePresence } from 'motion/react';
 import { ScrollText, Newspaper, ArrowLeft } from 'lucide-react';
+
+// Routes beyond the landing page load on navigation. Between them they carry the stock
+// definitions, the valuation model and the watchlist ledger — none of which the landing
+// page renders, and all of which used to ship in its first chunk.
+const PatternWatchlist = lazy(() => import('./components/PatternWatchlist'));
+const StockPage = lazy(() => import('./components/StockPage'));
+const LegacyHomePage = lazy(() => import('./components/LegacyHomePage'));
+// The notes drawer and its toast: mounted on first use, not on first paint. Between them
+// they carry `cn` (and tailwind-merge) and the panel's own markup.
+const ReleaseNotesPanel = lazy(() => import('./components/ReleaseNotesPanel'));
+const WhatsNewToast = lazy(() => import('./components/WhatsNewToast').then(m => ({ default: m.WhatsNewToast })));
+
+// Which hashes are a stock page. The catalog is one row per file in stocks/ (ticker and
+// name, ~3 KB) rather than the definitions themselves — see `stockCatalog()` in
+// vite.config.ts.
+const STOCK_TICKERS = new Set(STOCK_CATALOG.map(s => s.ticker));
 
 // Set to true to bring back the grouped stock list (components/LegacyHome.tsx)
 // in place of the Pattern Break Watchlist on the #watchlist route.
@@ -26,17 +35,19 @@ const USE_LEGACY_HOME = false;
 const WATCHLIST = 'watchlist';
 interface Route { view: string; query: string }
 
+// Shown while a route's chunk is in flight. Deliberately bare: the chunks are served from
+// the same origin and usually precached by the service worker, so a spinner would flash.
+const RouteFallback: React.FC = () => <div className="min-h-screen bg-slate-950" />;
+
 // ── Main App ──
 
 const App: React.FC = () => {
-  const tickers = TICKERS;
-
   const getRouteFromHash = useCallback((): Route => {
     const hash = decodeURIComponent(window.location.hash.slice(1));
     if (hash === WATCHLIST) return { view: WATCHLIST, query: '' };
     if (hash.startsWith(WATCHLIST + '/')) return { view: WATCHLIST, query: hash.slice(WATCHLIST.length + 1) };
-    return { view: hash && tickers[hash] ? hash : 'home', query: '' };
-  }, [tickers]);
+    return { view: hash && STOCK_TICKERS.has(hash) ? hash : 'home', query: '' };
+  }, []);
 
   const [route, setRoute] = useState<Route>(getRouteFromHash);
   const activeTicker = route.view;
@@ -46,6 +57,7 @@ const App: React.FC = () => {
 
   // Release Notes / News panel + in-app "What's New" notification (no OS push).
   const [panelOpen, setPanelOpen] = useState(false);
+  const [panelEverOpened, setPanelEverOpened] = useState(false);
   const [panelTab, setPanelTab] = useState<PanelTab>('notes');
   const [updatesSeen, setUpdatesSeen] = useState<boolean>(() => {
     try {
@@ -64,6 +76,7 @@ const App: React.FC = () => {
 
   const openPanel = useCallback((tab: PanelTab) => {
     setPanelTab(tab);
+    setPanelEverOpened(true);
     setPanelOpen(true);
     markUpdatesSeen();
   }, [markUpdatesSeen]);
@@ -89,66 +102,6 @@ const App: React.FC = () => {
     }
   }, [activeTicker]);
 
-  const tickerDef = tickers[activeTicker] ?? null;
-
-  const allProjections = useMemo(() => {
-    if (!tickerDef) return null;
-    return {
-      [ScenarioType.BEAR]: calculateProjection(activeTicker, ScenarioType.BEAR, tickers, true),
-      [ScenarioType.BASE]: calculateProjection(activeTicker, ScenarioType.BASE, tickers, true),
-      [ScenarioType.BULL]: calculateProjection(activeTicker, ScenarioType.BULL, tickers, true),
-    };
-  }, [activeTicker, tickerDef, tickers]);
-
-  const currentProjection = allProjections ? allProjections[ScenarioType.BASE] : null;
-
-  const universeData = useMemo(() => {
-    return Object.values(tickers).map((t: TickerDefinition) => {
-      const proj = calculateProjection(t.ticker, ScenarioType.BASE, tickers, true);
-      const rating = getInstitutionalRating(proj.pricePerShare, t.currentPrice, t.ratingOverride, { rsRating: t.rsRating, aiImpact: t.aiImpact });
-      const baseCaseUpside = (proj.pricePerShare - t.currentPrice) / t.currentPrice;
-      const group = classifyStock(t, rating.label, t.rsRating, baseCaseUpside);
-
-      return { ticker: t.ticker, fairPriceRange: t.fairPriceRange || 'N/A', baseTarget: proj.pricePerShare, baseUpside: baseCaseUpside, rsRating: t.rsRating, active: t.active, ...rating, aiImpact: t.aiImpact, group };
-    }).sort((a, b) => a.ticker.localeCompare(b.ticker));
-  }, [tickers]);
-
-  const groupedData = useMemo(() => {
-    const groups: Record<StockGroup, typeof universeData> = {
-      PRIME_GROWTH: [],
-      TURBO_GROWTH: [],
-      WATCH_LIST: [],
-      AVOID: [],
-    };
-    universeData.forEach(s => groups[s.group].push(s));
-    return groups;
-  }, [universeData]);
-
-  const flatTickerOrder = useMemo(() => {
-    const list: string[] = [];
-    GROUP_ORDER.forEach(groupKey => {
-      groupedData[groupKey].forEach(s => list.push(s.ticker));
-    });
-    return list;
-  }, [groupedData]);
-
-  const investmentConclusion = useMemo(() => {
-    if (!allProjections || !tickerDef) return null;
-    const { bear, base, bull } = allProjections;
-    const probWeights =
-      bear.config.prob != null && base.config.prob != null && bull.config.prob != null
-        ? { bear: bear.config.prob, base: base.config.prob, bull: bull.config.prob }
-        : undefined;
-    const pwAvg = weightedScenarioAverage(
-      bear.pricePerShare,
-      base.pricePerShare,
-      bull.pricePerShare,
-      probWeights,
-    );
-    const cagr = (Math.pow(pwAvg / tickerDef.currentPrice, 1 / 5) - 1) * 100;
-    return { pwAvg, cagr };
-  }, [allProjections, tickerDef]);
-
   if (activeTicker === 'home' || activeTicker === WATCHLIST) {
     const panelControls = (
       <>
@@ -170,72 +123,67 @@ const App: React.FC = () => {
       <>
         {activeTicker === 'home' ? (
           <Landing
-            tickers={tickers}
+            covered={STOCK_CATALOG.length}
             onOpenWatchlist={ticker => navigateTo(WATCHLIST, ticker)}
             headerControls={panelControls}
           />
-        ) : USE_LEGACY_HOME ? (
-          <LegacyHome
-            tickers={tickers}
-            groupedData={groupedData}
-            updatesSeen={updatesSeen}
-            openPanel={openPanel}
-            navigateTo={navigateTo}
-          />
         ) : (
-          <PatternWatchlist
-            tickers={tickers}
-            onOpenStock={navigateTo}
-            initialQuery={route.query}
-            headerControls={
-              <>
-                <button className="ctl" onClick={() => navigateTo('home')}>
-                  <ArrowLeft />
-                  Home
-                </button>
-                {panelControls}
-              </>
-            }
-          />
+          <Suspense fallback={<RouteFallback />}>
+            {USE_LEGACY_HOME ? (
+              <LegacyHomePage
+                updatesSeen={updatesSeen}
+                openPanel={openPanel}
+                navigateTo={navigateTo}
+              />
+            ) : (
+              <PatternWatchlist
+                catalog={STOCK_CATALOG}
+                onOpenStock={navigateTo}
+                initialQuery={route.query}
+                headerControls={
+                  <>
+                    <button className="ctl" onClick={() => navigateTo('home')}>
+                      <ArrowLeft />
+                      Home
+                    </button>
+                    {panelControls}
+                  </>
+                }
+              />
+            )}
+          </Suspense>
         )}
-        <ReleaseNotesPanel
-          open={panelOpen}
-          tab={panelTab}
-          onTabChange={setPanelTab}
-          onClose={() => setPanelOpen(false)}
-        />
-        {!updatesSeen && !panelOpen && (
-          <WhatsNewToast
-            onView={() => openPanel(LATEST_TAB)}
-            onDismiss={markUpdatesSeen}
-          />
-        )}
+        <Suspense fallback={null}>
+          {/* Mounted once opened and kept mounted, so the drawer still animates shut. */}
+          {panelEverOpened && (
+            <ReleaseNotesPanel
+              open={panelOpen}
+              tab={panelTab}
+              onTabChange={setPanelTab}
+              onClose={() => setPanelOpen(false)}
+            />
+          )}
+          {!updatesSeen && !panelOpen && (
+            <WhatsNewToast
+              onView={() => openPanel(LATEST_TAB)}
+              onDismiss={markUpdatesSeen}
+            />
+          )}
+        </Suspense>
         <InstallPrompt />
       </>
     );
   }
 
-  if (!tickerDef || !allProjections || !currentProjection || !investmentConclusion) return null;
-
-  const activeStockData = universeData.find(s => s.ticker === tickerDef.ticker);
-
   return (
-    <AnimatePresence mode="wait">
-      <StockDetailView
-        key={tickerDef.ticker}
-        tickerDef={tickerDef}
-        currentProjection={currentProjection}
-        allProjections={allProjections}
-        investmentConclusion={investmentConclusion}
-        activeStockData={activeStockData}
+    <Suspense fallback={<RouteFallback />}>
+      <StockPage
+        ticker={activeTicker}
         onBack={() => navigateTo(listRoute.current)}
-        onNext={() => {
-          const idx = flatTickerOrder.indexOf(activeTicker);
-          const next = flatTickerOrder[idx + 1] ?? flatTickerOrder[0];
-          navigateTo(next);
-        }}
+        onNavigate={navigateTo}
+        onUnknown={() => navigateTo('home')}
       />
-    </AnimatePresence>
+    </Suspense>
   );
 };
 
