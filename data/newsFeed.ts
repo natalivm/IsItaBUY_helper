@@ -15,6 +15,55 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-CRWV-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · setup closed",
+    text: "Target reached Oct 22.",
+  },
+  {
+    id: "2026-10-24-CRWV-weekly-alt-removed",
+    date: "Oct 24 2026",
+    tickers: ["CRWV"],
+    title: "CRWV · setup removed (weekly setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-24-SIMO-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["SIMO"],
+    title: "SIMO · setup closed",
+    text: "Target reached Oct 23.",
+  },
+  {
+    id: "2026-10-22-AVGO-main-confirmed",
+    date: "Oct 22 2026",
+    tickers: ["AVGO"],
+    title: "AVGO · target reached",
+    text: "Hit target $320.03.",
+  },
+  {
+    id: "2026-10-22-SIMO-daily-alt-confirmed",
+    date: "Oct 22 2026",
+    tickers: ["SIMO"],
+    title: "SIMO · target reached (daily setup)",
+    text: "Hit target $183.22.",
+  },
+  {
+    id: "2026-10-15-USAR-main-failed",
+    date: "Oct 15 2026",
+    tickers: ["USAR"],
+    title: "USAR · pattern failed",
+    text: "Closed $10.32 past invalidation $10.2, then followed through.",
+  },
+  {
+    id: "2026-10-01-MELI-daily-alt-confirmed",
+    date: "Oct 1 2026",
+    tickers: ["MELI"],
+    title: "MELI · target reached (daily setup)",
+    text: "Hit target $1665.",
+  },
+  {
     id: "2026-10-23-CRWV-main-target",
     date: "Oct 23 2026",
     tickers: ["CRWV"],

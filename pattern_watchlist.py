@@ -382,7 +382,30 @@ def _setup_text(text, pos, indent, inherit=None):
     return out
 
 
-def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, alt_auto=False):
+def history_entry(sv, main, finish_date, kind, indent='      '):
+    """A finished setup written as a `history` row, so a call that played out stays on the page.
+
+    The watchlist drops setups once they are done; without this, a target you posted and hit
+    leaves no trace. Only directional setups with the levels a history row needs qualify.
+    """
+    direction, pattern = sv.get('direction'), sv.get('pattern') or main.get('pattern')
+    tf = sv.get('timeframe') or main.get('timeframe') or 'daily'
+    confirm, inv, target = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
+    if direction not in ('up', 'down') or not pattern or None in (confirm, inv, target):
+        return None
+    note = sv.get('note')
+    head = (f"{indent}{{ pattern: {json.dumps(pattern)}, timeframe: {json.dumps(tf)}, "
+            f"direction: {json.dumps(direction)}, stage: {json.dumps(kind)}, "
+            f"stageDate: {json.dumps(sv.get('stageDate') or finish_date)},")
+    body = (f"{indent}  confirm: {_fmt_price(confirm)}, invalidation: {_fmt_price(inv)}, "
+            f"target: {_fmt_price(target)}" + (',' if note else ' }'))
+    rows = [head, body]
+    if note:
+        rows.append(f"{indent}  note: {json.dumps(note, ensure_ascii=False)} }}")
+    return '\n'.join(rows)
+
+
+def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, alt_auto=False, history=()):
     """Entry text with the given main setup, optional second setup and stored setups."""
     f = e['fields']
     main_pattern = f['pattern'][2] if 'pattern' in f else None
@@ -396,10 +419,21 @@ def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, a
         if k in f:
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     rows += _setup_text(text, main_pos, '    ', inherit=main_pattern)
-    if main_pos is f:  # same main setup: keep its key-level note and history
-        for k in ('keyLevel', 'history'):
-            if k in f:
-                rows.append(f"    {k}: {_reindent(text[f[k][0]:f[k][1]], '    ')},")
+    # The key level and the history belong to the stock, not to whichever setup is on top,
+    # so they survive a setup being replaced.
+    if 'keyLevel' in f:
+        rows.append(f"    keyLevel: {_reindent(text[f['keyLevel'][0]:f['keyLevel'][1]], '    ')},")
+    if 'history' in f or history:
+        if 'history' in f:
+            arr = _reindent(text[f['history'][0]:f['history'][1]], '    ')
+            if history:   # newest first, like the News feed
+                cut = arr.index('[') + 1
+                arr = arr[:cut] + '\n' + ',\n'.join(history) + ',' + arr[cut:]
+            rows.append(f"    history: {arr},")
+        else:
+            rows.append("    history: [")
+            rows.append(',\n'.join(history))
+            rows.append("    ],")
     if alt_pos is not None:
         rows.append("    alt: {")
         if alt_auto:
@@ -799,8 +833,11 @@ def _finished(s, main, now_et):
 NO_PATTERN = 'No clear pattern'
 
 
-def placeholder_entry(ticker, name, price, price_date, note):
+def placeholder_entry(ticker, name, price, price_date, note, history=()):
     """Body of a pending "No clear pattern" entry (without the surrounding braces' indentation)."""
+    tail = ""
+    if history:
+        tail = ",\n    history: [\n" + ",\n".join(history) + "\n    ]"
     return ("{\n"
             f"    ticker: {json.dumps(ticker)},\n"
             f"    name: {json.dumps(name)},\n"
@@ -811,7 +848,7 @@ def placeholder_entry(ticker, name, price, price_date, note):
             '    stage: "forming",\n'
             f"    price: {_fmt_price(price) if price is not None else 0},\n"
             f"    priceDate: {json.dumps(price_date or _date.today().isoformat())},\n"
-            f"    note: {json.dumps(note)}\n"
+            f"    note: {json.dumps(note)}" + tail + "\n"
             "  }")
 
 
@@ -879,13 +916,25 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
             tf = alt_pos['timeframe'][2] if 'timeframe' in alt_pos else 'daily'
             alt_pos = take(tf)
             alt_auto = alt_pos is not None
+        # Keep the setups you posted yourself: a target you called and hit, or a pattern that
+        # failed, is worth having on the page instead of vanishing.
+        keep = []
+        if posted:
+            for label, r in done.items():
+                sv = next((v for lb, v, pos in setups if lb == label and '_span' not in pos), None)
+                if sv is None or sv.get('auto'):
+                    continue
+                row = history_entry(sv, main, r[0], r[3])
+                if row:
+                    keep.append(row)
         a, b = e['span']
         if main_pos is None:
             reason = done['main'][1].rstrip('.')
             cuts.append((a, b + 1, placeholder_entry(t_, main.get('name', t_), main.get('price'), main.get('priceDate'),
-                                                    f"Previous setup closed ({reason[0].lower() + reason[1:]}). Scanning for a new one.")))
+                                                    f"Previous setup closed ({reason[0].lower() + reason[1:]}). Scanning for a new one.",
+                                                    keep)))
         else:
-            cuts.append((a, b + 1, rebuild_entry(text, e, main_pos, alt_pos, stored_live, main_auto, alt_auto)))
+            cuts.append((a, b + 1, rebuild_entry(text, e, main_pos, alt_pos, stored_live, main_auto, alt_auto, keep)))
         for label, r in done.items():
             notes[f"{t_}|{label}"] = r[:3]
             report.append(f"{t_} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
