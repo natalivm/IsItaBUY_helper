@@ -4,49 +4,101 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// The watchlist data keeps up to 5 detected setups per timeframe in `more: [...]` for the
-// Python scripts. The site shows up to KEEP_PER_TF of them per timeframe, so the rest are
-// stripped from the bundle rather than the whole array (which is what this used to do, back
-// when only the best weekly + daily setup was shown).
-const KEEP_PER_TF = 3;
+// A watchlist entry's extra setups (`alt`, and up to 5 per timeframe in `more: [...]`)
+// are only read once a row is expanded, but they were bundled for every visitor: ~464 KB
+// of source, 38 KB gzipped. This plugin writes them to public/setups/TICKER.json at build
+// start and strips them from the module, so the home page ships only each stock's main
+// setup and an expanded row fetches the rest — the same trip it already makes for candles.
+//
+// The source stays a single .ts file, so pattern_watchlist.py and pattern_detect.py are
+// untouched. Every emitted file is JSON.parse'd here: a conversion slip fails the build
+// instead of silently shipping an entry whose extra setups never load.
+import fs from 'fs';
 
-function stripStoredSetups() {
+const WATCHLIST = 'data/patternWatchlist.ts';
+const SETUPS_DIR = 'public/setups';
+
+/** The JS object-literal source the Python writer emits, as JSON. */
+function toJson(src: string): string {
+  let out = '';
+  for (let i = 0; i < src.length; i++) {
+    const ch = src[i];
+    if (ch === '"') {                       // copy strings verbatim
+      let j = i + 1;
+      while (j < src.length && src[j] !== '"') j += src[j] === '\\' ? 2 : 1;
+      out += src.slice(i, j + 1);
+      i = j;
+      continue;
+    }
+    out += ch;
+  }
+  return out
+    .replace(/([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g, '$1"$2":')   // quote bare keys
+    .replace(/,(\s*[}\]])/g, '$1');                            // drop trailing commas
+}
+
+/** Value starting at `from` (an object or array literal), as [start, end). */
+function spanOf(code: string, from: number): [number, number] {
+  let i = from, depth = 0;
+  for (; i < code.length; i++) {
+    const ch = code[i];
+    if (ch === '"') { i++; while (i < code.length && code[i] !== '"') i += code[i] === '\\' ? 2 : 1; continue; }
+    if (ch === '{' || ch === '[') depth++;
+    else if (ch === '}' || ch === ']') { depth--; if (!depth) return [from, i + 1]; }
+  }
+  return [from, code.length];
+}
+
+function splitStoredSetups() {
   return {
-    name: 'strip-stored-setups',
+    name: 'split-stored-setups',
     enforce: 'pre' as const,
+
+    buildStart() {
+      const code = fs.readFileSync(WATCHLIST, 'utf8');
+      fs.rmSync(SETUPS_DIR, { recursive: true, force: true });
+      fs.mkdirSync(SETUPS_DIR, { recursive: true });
+
+      const starts: { ticker: string; at: number }[] = [];
+      const re = /\n  \{\n    ticker: "([A-Z.]+)"/g;
+      let m: RegExpExecArray | null;
+      while ((m = re.exec(code))) starts.push({ ticker: m[1], at: m.index });
+
+      let written = 0;
+      starts.forEach((s, k) => {
+        const body = code.slice(s.at, k + 1 < starts.length ? starts[k + 1].at : code.length);
+        const extra: Record<string, unknown> = {};
+        for (const key of ['alt', 'more'] as const) {
+          const hit = new RegExp(`\n    ${key}: ([\\[{])`).exec(body);
+          if (!hit) continue;
+          const [a, b] = spanOf(body, hit.index + hit[0].length - 1);
+          const json = toJson(body.slice(a, b));
+          try {
+            extra[key] = JSON.parse(json);
+          } catch (err) {
+            throw new Error(`split-stored-setups: ${s.ticker}.${key} did not convert to JSON (${(err as Error).message})`);
+          }
+        }
+        if (!Object.keys(extra).length) return;
+        fs.writeFileSync(`${SETUPS_DIR}/${s.ticker}.json`, JSON.stringify(extra));
+        written++;
+      });
+      this.warn?.(`split-stored-setups: wrote ${written} per-ticker setup files`);
+    },
+
     transform(code: string, id: string) {
-      if (!id.replace(/\\/g, '/').endsWith('data/patternWatchlist.ts')) return null;
+      if (!id.replace(/\\/g, '/').endsWith(WATCHLIST)) return null;
       let out = '';
       let i = 0;
-      const key = /\n[ \t]*more:\s*\[/g;
+      const re = /\n[ \t]*(alt|more):\s*[[{]/g;
       let m: RegExpExecArray | null;
-      while ((m = key.exec(code))) {
-        const open = m.index + m[0].length;
-        let j = open, depth = 1;
-        // Object spans inside this `more: [...]`, so we can keep the first few per timeframe.
-        const objs: [number, number][] = [];
-        let objStart = -1;
-        while (j < code.length && depth) {
-          const ch = code[j];
-          if (ch === '"') { j++; while (j < code.length && code[j] !== '"') j += code[j] === '\\' ? 2 : 1; }
-          else if (ch === '[') depth++;
-          else if (ch === '{') { if (depth === 1) objStart = j; depth++; }
-          else if (ch === '}') { depth--; if (depth === 1 && objStart >= 0) { objs.push([objStart, j + 1]); objStart = -1; } }
-          else if (ch === ']') depth--;
-          j++;
-        }
-        const close = j - 1;                       // the ']' that ends the array
-        const seen: Record<string, number> = {};
-        const keep = objs.filter(([a, b]) => {
-          const tf = /timeframe:\s*"(\w+)"/.exec(code.slice(a, b))?.[1] ?? '?';
-          seen[tf] = (seen[tf] ?? 0) + 1;
-          return seen[tf] <= KEEP_PER_TF;
-        });
-        out += code.slice(i, open);
-        out += keep.map(([a, b]) => '\n      ' + code.slice(a, b) + ',').join('');
-        out += '\n    ';
-        i = close;                                  // resume at ']' so the array stays closed
-        key.lastIndex = close;
+      while ((m = re.exec(code))) {
+        const [, end] = spanOf(code, m.index + m[0].length - 1);
+        let j = end;
+        if (code[j] === ',') j++;
+        out += code.slice(i, m.index);
+        i = j;
+        re.lastIndex = j;
       }
       return { code: out + code.slice(i), map: null };
     },
@@ -60,7 +112,7 @@ export default defineConfig({
     host: '0.0.0.0',
   },
   plugins: [
-    stripStoredSetups(),
+    splitStoredSetups(),
     react(),
     tailwindcss(),
     VitePWA({

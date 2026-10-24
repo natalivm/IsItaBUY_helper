@@ -397,8 +397,8 @@ type Entry =
   | { kind: 'setup'; key: string; a: AnySetup; st: Status; pattern: string; tf: string; auto?: boolean }
   | { kind: 'hist'; key: string; h: PatternHistoryEntry; st: Status; pattern: string; tf: string; auto?: boolean };
 
-// Setups shown per timeframe in the left list (the data stores up to 5; vite.config.ts
-// keeps 3 of them in the bundle, so raising this needs KEEP_PER_TF raised too).
+// Setups shown per timeframe in the left list. The data stores up to 5 per timeframe and
+// public/setups/TICKER.json carries all of them, so this can be raised on its own.
 const MAX_PER_TF = 3;
 
 // Daily RSI-14 regime, the same thresholds the scripts use (pattern_watchlist.RSI_BULL/BEAR).
@@ -456,17 +456,39 @@ const SetupList: React.FC<{ ticker: string; entries: Entry[]; sel: string; onSel
 
 // ── Expanded row ──
 
+// A stock's extra setups are not in the bundle; vite.config.ts writes them to
+// public/setups/TICKER.json and an expanded row fetches them, like the candles.
+type Extra = { alt?: PatternAltSetup; more?: PatternAltSetup[] };
+const extraCache = new Map<string, Extra>();
+
 const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
+  // In dev the data is served unsplit, so fall back to whatever is already on `s`.
+  const inline: Extra = { alt: s.alt, more: s.more };
+  const [extra, setExtra] = useState<Extra>(() => extraCache.get(s.ticker) ?? inline);
+
+  useEffect(() => {
+    if (s.alt || s.more) return;                 // unsplit build: nothing to fetch
+    const hit = extraCache.get(s.ticker);
+    if (hit) { setExtra(hit); return; }
+    let live = true;
+    setExtra({});
+    fetch(`${import.meta.env.BASE_URL}setups/${s.ticker}.json`)
+      .then(r => (r.ok ? r.json() : {}))
+      .then((d: Extra) => { extraCache.set(s.ticker, d); if (live) setExtra(d); })
+      .catch(() => { /* the main setup still renders without them */ });
+    return () => { live = false; };
+  }, [s.ticker, s.alt, s.more]);
+
   const entries = useMemo<Entry[]>(() => {
     const live: Entry[] = [{
       kind: 'setup', key: 'main', a: s as AnySetup, st: status(s),
       pattern: s.pattern, tf: s.timeframe || 'daily', auto: s.auto,
     }];
-    if (s.alt) live.push({
-      kind: 'setup', key: 'alt', a: s.alt, st: status(s.alt),
-      pattern: s.alt.pattern ?? s.pattern, tf: s.alt.timeframe, auto: s.alt.auto,
+    if (extra.alt) live.push({
+      kind: 'setup', key: 'alt', a: extra.alt, st: status(extra.alt),
+      pattern: extra.alt.pattern ?? s.pattern, tf: extra.alt.timeframe, auto: extra.alt.auto,
     });
-    (s.more ?? []).forEach((m, i) => live.push({
+    (extra.more ?? []).forEach((m, i) => live.push({
       kind: 'setup', key: 'm' + i, a: m, st: status(m),
       pattern: m.pattern ?? s.pattern, tf: m.timeframe, auto: m.auto,
     }));
@@ -512,7 +534,7 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       kind: 'hist', key: 'h' + i, h, st: status(h), pattern: h.pattern, tf: h.timeframe,
     }));
     return out;
-  }, [s]);
+  }, [s, extra]);
 
   const [sel, setSel] = useState(entries[0].key);
   const cur = entries.find(e => e.key === sel) ?? entries[0];
