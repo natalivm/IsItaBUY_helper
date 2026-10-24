@@ -87,7 +87,22 @@ The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatc
 **Charts in the expanded rows** (`components/SetupChart.tsx`, TradingView `lightweight-charts`, loaded on first expand) read candles from `public/bars/TICKER_timeframe.json`. The price run rewrites these for every watchlist setup's timeframe (daily 1y, weekly 5y, monthly 10y, regular session only); refresh them by hand with `python3 pattern_watchlist.py --bars`. A setup's levels are drawn as labelled lines and its `stageDate` as a marker. Trendlines come from the setup's (or its `alt`'s) `lines: [{ from: ['YYYY-MM-DD', price], to: ['YYYY-MM-DD', price] }, …]`; the chart extends them to the newest candle.
 
 **Auto-detected setups** (`pattern_detect.py`): stocks without a setup are scanned on the daily and weekly charts (weekly = main, steadier; daily = second setup) for the clearest channel / wedge / hammer per PATTERN_RULES.md, or get a pending "No clear pattern" placeholder. They carry `auto: true` and show a **red dot** until checked by hand — remove `auto: true` once verified.
-The dot belongs to the **setup, not the stock**: it marks one machine-drawn reading, and a stock can carry a hand-posted setup and an auto-detected one at the same time without either inheriting the other's status. A setup you post has no dot, and a price refresh never adds one — `update_prices.py` touches `price`, `priceDate`, `rsi` and `trend` and never writes `auto`. In the UI the dot therefore sits beside the pattern name, not beside the ticker. A finished setup leaves a placeholder that gets rescanned. `python3 pattern_detect.py` (dry run), `--apply`, `--compare` (agreement with the posted setups), `--add TICKER` (scan a watchlist-only symbol).
+There are **two dots on a ledger row, deliberately the same signal twice**. One sits
+beside the **ticker**, so the Stock column can be scanned top to bottom for the stocks
+still owed a look; the other sits beside the **pattern name**, where it says which
+reading is machine-drawn. Both fire on the shown setup's own `auto` — 67 of 149 rows at
+the time of writing. The expanded panel carries its own dot on each setup it lists, which
+is where the stored ones surface. A stock can hold a hand-posted setup and an
+auto-detected one at the same time without either inheriting the other's status, a setup
+you post has no dot, and a price refresh never adds one — `update_prices.py` touches
+`price`, `priceDate`, `rsi` and `trend` and never writes `auto`.
+
+The row dots cannot see the stored setups: the build moves `alt` and `more` into
+`public/setups/TICKER.json` (the `split-stored-setups` plugin in `vite.config.ts`) and
+an expanded row fetches them. Counting those would need the plugin to leave a tally
+behind as it strips them, which was tried and backed out — 124 of 149 stocks carry an
+unchecked setup somewhere, so a dot covering them fires on almost every row and stops
+discriminating. If that broader signal is ever wanted, that is where it goes.
 
 ### Working on the scripts: two traps
 

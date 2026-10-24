@@ -612,6 +612,21 @@ const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'b
   ? Math.max(Math.abs(pct0(s.price, s.goalUp!)), Math.abs(pct0(s.price, s.goalDown!)))
   : Math.abs(pct0(s.price, s.target!));
 
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** How well a row matches the search box: 0 is no match, higher is better.
+ *
+ *  A company name only counts at the start of a word. Searching "CAT" used to return
+ *  Verizon Communications, because "cat" sits inside the word -- which reads as the
+ *  wrong row opening rather than as a search hit. */
+function searchRank(r: Row, q: string): number {
+  const tk = r.ticker.toLowerCase();
+  if (tk === q) return 4;
+  if (tk.startsWith(q)) return 3;
+  if (new RegExp(`\\b${escapeRe(q)}`, 'i').test(r.name)) return 2;
+  return tk.includes(q) ? 1 : 0;
+}
+
 const readPref = (key: string, fallback: string) => {
   try { return localStorage.getItem(key) || fallback; } catch { return fallback; }
 };
@@ -679,6 +694,16 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
+          {/* One dot per row, beside the ticker so the Stock column can be scanned for
+              the stocks still owed a look. It speaks for the setup this row is showing;
+              the expanded panel carries its own dot on each setup. */}
+          {s?.auto && (
+            <i
+              className="auto-dot stock"
+              title={`The setup shown for ${row.ticker} was drawn by the detector — its lines and levels have not been checked by hand`}
+              aria-label="Unchecked setup"
+            />
+          )}
           <span>{row.name}</span>
         </span>
         <span className="stcell">
@@ -688,9 +713,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
         </span>
         <span className="meta">
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
-          {/* The dot marks THIS setup as machine-drawn, never the stock: a stock can carry a
-              hand-posted setup and an auto-detected one at once, and a price refresh never
-              earns one. It sits with the pattern for that reason. */}
+          {/* The second of the row's two dots, and deliberately so: the one by the ticker
+              makes the Stock column scannable for what is owed a look, this one says which
+              reading is machine-drawn. A stock can carry a hand-posted setup and an
+              auto-detected one at once, and a price refresh never earns either. */}
           {s?.auto && <i className="auto-dot" title="This setup was auto-detected — its lines and levels have not been checked by hand" aria-label="Auto-detected setup" />}
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
@@ -783,8 +809,10 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
     const out = allRows.filter(r =>
-      (activeFilter === 'all' || status(r.setup).group === activeFilter) &&
-      (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
+      (activeFilter === 'all' || status(r.setup).group === activeFilter) && (!q || searchRank(r, q) > 0));
+    // With a query and no sort chosen, the best match leads: searching CAT should put
+    // Caterpillar first, not leave it under whatever the stored order happened to be.
+    if (q && sortBy === 'default') out.sort((a, b) => searchRank(b, q) - searchRank(a, q));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
     if (sortBy === 'momentum') {
       // Straight RSI, strongest first; stocks with no reading go last. Whether
