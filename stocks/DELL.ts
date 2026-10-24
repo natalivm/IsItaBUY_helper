@@ -43,21 +43,7 @@ export const DELL = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
   analystConsensus: { rating: 'Buy', targetLow: 480, targetMedian: 600, targetHigh: 735, numAnalysts: 29 },  // stockanalysis.com, Oct 9 2026
 
-  reasonsToBuy: [
-    'Unmatched Fortune 500 distribution reach that pure-play ODMs cannot replicate at enterprise scale',
-    'Massive multi-quarter AI server backlog gives rare revenue visibility for a hardware business',
-    'High-margin services and storage attach to AI deployments is an underpriced earnings-quality upgrade',
-    'Deep Nvidia Blackwell integration positions Dell as the default on-prem AI infrastructure vendor',
-    'Valuation remains undemanding relative to the scale of revenue and cash flow growth being delivered',
-  ],
 
-  risksToBuy: [
-    'AI server hardware is a thin-margin pass-through, so explosive revenue growth does not translate equally to free cash flow',
-    'Hyperscaler capex normalization in coming years could unwind backlog faster than supply commitments allow',
-    'PC segment faces ongoing secular decline and contributes meaningfully to overall revenue mix',
-    'Debt load of tens of billions limits financial flexibility and amplifies cyclical downside risk',
-    'Supermicro and HPE compete aggressively on liquid-cooled Blackwell configurations, pressuring share',
-  ],
 
   revGrowth: [
     [0.62, -0.05, 0.00, 0.03, 0.03], // Bear: FY27 lands ~4% under the $192B guide (H1 + Q3 guide ≈ locked), then AI capex normalizes and revenue dips in FY28

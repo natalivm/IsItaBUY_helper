@@ -35,21 +35,7 @@ export const STRL = defineStock({
   // FY26E rev $4.12B / EPS $20.04, FY27E $4.93B / $25.41. Stock $513 (~25.6×
   // FY26E, ~20× FY27E) — well below the lowest analyst target.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'CEC acquisition adds turnkey electrical capability, creating a site-development-plus-electrical bundle no competitor can match at scale',
-    'Record backlog with strong book-to-burn ratio provides multi-year earnings visibility rare for a construction company',
-    'Five consecutive years of accelerating EPS growth demonstrates genuine operating leverage, not just cycle tailwinds',
-    'AI data center boom drives structural demand for underground utilities and high-voltage infrastructure as project complexity grows',
-    'Near net-cash balance sheet and active buyback program provide capital return optionality alongside organic growth',
-  ],
 
-  risksToBuy: [
-    'Data center capex is cyclical — a hyperscaler spending pause would simultaneously crush earnings and compress the elevated multiple',
-    'Growth is now heavily acquisition-assisted, so organic momentum and integration need to keep pace with a much bigger base',
-    'Skilled labor scarcity is an acute bottleneck that could cap throughput and pressure margins as project scale grows',
-    'IIJA expiration in late 2026 creates funding uncertainty for the Transportation segment if a successor bill is delayed',
-    'CEC integration execution risk is real — cultural and operational friction could delay synergy realization in the most critical growth segment',
-  ],
 
   // ── EPS/PE Scenarios ──
   epsCagr: [6, 14, 19],        // From the FY26E $20.04 base (re-based Oct 2026; was [8,14,18] off FY25A $10.95)

@@ -35,20 +35,7 @@ export const PANW = defineStock({
   // Street: Buy (55), PT $190-475 (median $412.50); FY27E EPS $4.19, FY28E
   // $4.88. Stock $418.78 (~100× FY27E) at the median target.
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Four-pillar platform strategy drives customer consolidation with best-in-class net revenue retention',
-    'SASE and Identity acquisitions meaningfully expand addressable budget and deepen switching costs',
-    'Agentic AI security is a net-new, expanding category where PANW\'s platform is already well-positioned',
-    'Elite free cash flow margins make PANW one of the most capital-efficient cybersecurity businesses at scale',
-  ],
 
-  risksToBuy: [
-    'CyberArk and Chronosphere integration costs have already cut near-term EPS guidance and may drag further',
-    'Stock trades at a very rich multiple of earnings, at the median analyst target, with little margin of safety',
-    'The CyberArk stock deal expanded the share count meaningfully, diluting per-share growth for existing holders',
-    'Cybersecurity platform consolidation is intensifying from Microsoft, CrowdStrike, and other scaled competitors',
-    'SBC remains large in absolute terms and buybacks have not yet scaled to meaningfully offset dilution',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 190, targetMedian: 412.5, targetHigh: 475, numAnalysts: 55 },  // stockanalysis.com, Oct 7 2026
   revGrowth: [

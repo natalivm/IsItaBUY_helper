@@ -53,21 +53,7 @@ export const FICO = defineStock({
   // (21), PT $490-1,750 (median $1,100); FY26E EPS $42.85 / rev $2.54B,
   // FY27E $50.20 / $2.80B (likely not yet fully cut for Sep 29).
 
-  reasonsToBuy: [
-    'Still the default score across credit cards, auto and personal lending, where the mortgage rule changes do not apply',
-    'After a historic sell-off the stock trades at a low multiple of current earnings, pricing in heavy damage already',
-    'Exceptional free cash flow conversion well above most software peers, with margins at record highs and still expanding',
-    'Aggressive share buyback program has reduced share count materially over five years, creating powerful per-share earnings compounding',
-    'Platform software provides a durable second engine that could accelerate once AI-driven decisioning demand scales',
-  ],
 
-  risksToBuy: [
-    'Revenue is dangerously concentrated in mortgage-cycle volumes — any origination slowdown hits earnings disproportionately hard',
-    'The mortgage monopoly is broken — regulators now let lenders use a far cheaper VantageScore with equal pricing treatment',
-    'Large lenders are already switching their preferred score, so price cuts and share loss in mortgage scores look likely',
-    'Debt-funded buybacks were executed far above today\'s price, leaving more leverage against a now-shrinking profit engine',
-    'Software segment\'s non-platform ARR is eroding, and legacy replacement risk grows if competitors land enterprise decisioning contracts',
-  ],
 
   analystConsensus: { rating: 'Buy', targetLow: 490, targetMedian: 1100, targetHigh: 1750, numAnalysts: 21 },  // stockanalysis.com, Oct 7 2026 — several PTs not yet reset after Sep 29
   // Rebuilt Oct 2026 for the FHFA monopoly break. FY26 (Sep 2026) is locked at ~$2.54B (+27.6%);

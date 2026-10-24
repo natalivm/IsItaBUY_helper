@@ -34,21 +34,7 @@ export const TLN = defineStock({
   // (median $470); FY26E EPS $22.26, FY27E $30.75. Stock $378.57 (~14×
   // FY26E FCF/share, ~10× mgmt's FY27 target).
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    '24/7 carbon-free nuclear baseload is genuinely scarce and cannot be replicated at hyperscale',
-    'Amazon Susquehanna co-location deal proves hyperscalers will pay a structural premium for nuclear power',
-    'Gas plant acquisition was priced well below peer comps, providing immediate value accretion',
-    'Acquisitions have roughly doubled the cash-flow base, and management targets steep per-share free-cash-flow growth through 2028',
-    'AI-driven data center electricity demand represents a multi-decade structural tailwind for power generators',
-  ],
 
-  risksToBuy: [
-    'One of the most leveraged balance sheets in the portfolio after debt-funded gas plant acquisitions',
-    'Entire investment thesis depends on AI power demand driving rapid EBITDA expansion to service debt',
-    'PJM geographic concentration with no ERCOT diversification unlike major peers',
-    'FERC regulatory scrutiny on nuclear-to-data-center co-location could delay or cap co-location deals',
-    'Gas plant integration execution risk on a complex multi-gigawatt acquisition at elevated leverage',
-  ],
 
   epsCagr: [4, 13, 18],   // FCF/share CAGR from the FY26 $26.6 base — base is a deliberate haircut to mgmt's FY27-28 targets (~$37/$48) for leverage + merchant risk
   exitPE: [10, 14, 18],   // P/FCF exits for a levered IPP (was [13,18,24] on a lower base)

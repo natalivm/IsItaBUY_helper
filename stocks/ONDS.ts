@@ -34,20 +34,7 @@ export const ONDS = defineStock({
   // Market cap ~$3.8B at $6.73, EV ~$2.5B (net cash ~$1.34B). (No split —
   // the price/target gap is real.)
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Positioned at the intersection of three converging defense megatrends: drones, counter-UAS, and AI-enabled ISR',
-    'American Robotics subsidiary provides a real operational platform for autonomous military and industrial deployment',
-    'Revenue scaled roughly tenfold in a year through acquisitions and organic growth, with a large and growing backlog',
-    'A large net-cash balance sheet funds the path to profitability and further acquisitions without new borrowing',
-  ],
 
-  risksToBuy: [
-    'Losses widened as the company scaled, and profitability targets are still ahead rather than demonstrated',
-    'Repeated share issuances and GAAP losses create structural dilution risk with no buyback offset',
-    'Contract cadence is lumpy and unpredictable — a single dry quarter can trigger severe re-rating',
-    'Defense budget pressure or a shift in procurement priorities could indefinitely delay material contract wins',
-    'Bear case reflects a realistic re-rating toward fundamentals that would erase the vast majority of market cap',
-  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 13, targetMedian: 18.5, targetHigh: 25, numAnalysts: 10 },  // stockanalysis.com, Oct 5 2026
 

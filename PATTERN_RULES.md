@@ -79,7 +79,35 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   lows Jun 8 / Jul 27; signal $488.47, target $664.85, invalidation $401.41.
   Also QQQ, IREN, META, COST, GE, TWLO and others.
 
-## 4. Head & Shoulders (top) / Inverse Head & Shoulders
+## 4. Symmetrical Triangle / Megaphone
+
+- **Shape:** two **non-parallel** lines sloping in **opposite** directions.
+  *Symmetrical Triangle* (thinning): upper falls, lower rises — they converge.
+  *Megaphone* (widening; also called a broadening formation or expanding
+  triangle): upper rises, lower falls — they diverge.
+- **Drawing:** upper line through **two swing highs**, lower line through **two
+  swing lows**, same as a wedge (§3).
+- **Usual break:** neither shape predicts its own direction, so both are tracked
+  **both ways** while forming, like a channel — breaks up = upper line now,
+  breaks down = lower line now.
+- **Height:** the pattern's **widest** width. For a Symmetrical Triangle that is
+  where it starts (the earliest of the four swing points, as in §3). For a
+  Megaphone it is at the **break candle**, because the shape widens with time.
+- **Levels:** signal = break line at the signal candle · confirm = signal
+  candle's low/high · target = signal ± height · invalidation = the broken
+  line's value at the latest candle ("close back inside"), as for channels.
+- **Not a wedge.** A wedge's two lines slope the **same** way (§3: rising =
+  both rise, falling = both fall; the far line may be flat). A *rising* lower
+  line under a *falling* upper line is a Symmetrical Triangle. DAVE's weekly
+  setup was mislabelled a Falling Wedge on exactly this — its lower line rose
+  from $298.44 to $314.61 while the upper fell from $458.25 to $321.19.
+- **Sanity check:** a very tall thinning triangle fails the measured move. DAVE's
+  year-long version starts $376 wide against a ~$355 spot, so the downward
+  target lands below zero; the detector's `MIN_TARGET` guard drops these.
+
+---
+
+## 5. Head & Shoulders (top) / Inverse Head & Shoulders
 
 - **Shape:** three peaks; the middle one (head) highest, the shoulders lower and
   roughly level. Inverse: three troughs, the middle one lowest.
@@ -95,17 +123,66 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   ($79.88) closes, head Sep 8 $104.59; signal $77.99, target $54.01.
 - Inverse H&S follows by symmetry (not yet seen in our data).
 
-## 5. Hammer / Inverted Hammer (single-candle reversals)
+## 6. Candle patterns (single- and multi-candle reversals)
 
-- **Hammer:** after a decline, a candle with a long **lower** wick (at least 2×
-  the body) and little or no upper wick.
-- **Inverted Hammer:** after a decline, a long **upper** wick (at least 2× the
-  body) and little or no lower wick.
-- **No trendlines:** the pattern is the candle itself.
-- **Levels (upward):** confirm = a completed close above the candle's high ·
-  invalidation = the candle's low · target = the high + the candle's full range
-  (high − low).
-- **Verified:** SPCX daily hammer, Oct 15 (high $149.04, low $140.66): confirm
-  $149.04, invalidation $140.66, target $157.42 = $149.04 + $8.38.
-- Inverted Hammer uses the same levels by symmetry of the rule above (not yet
-  seen in our data); a bearish version after a rise mirrors them downward.
+The pattern is the candle (or the two or three candles) itself — **no trendlines**.
+
+**Context decides the direction, not the shape.** The same shape is bullish after
+a decline and bearish after an advance, which is why each row below is a pair.
+A candle pattern only counts at the end of a move: a decline for the bullish
+reading, an advance for the bearish one.
+
+### Shapes
+
+**Single candle** — one long wick at least 2× the body, the opposite wick no more
+than 30% of the candle's range:
+
+| Long wick | After a decline (upward) | After an advance (downward) |
+|---|---|---|
+| Lower | **Hammer** | **Hanging Man** |
+| Upper | **Inverted Hammer** | **Topping Tail** |
+
+*Topping Tail* is the name this project uses; the standard literature calls the
+same candle a **Shooting Star**. It is the Inverted Hammer's shape read at a top.
+
+**Two candles**
+
+- **Bullish Engulfing:** after a decline, a down candle, then an up candle whose
+  body covers the previous body completely.
+- **Bearish Engulfing:** after an advance, an up candle, then a down candle whose
+  body covers the previous body completely.
+
+**Three candles**
+
+- **Morning Star** (upward, after a decline): a long down candle, a small-bodied
+  candle, then a long up candle closing at least halfway into the first body.
+- **Evening Star** (downward, after an advance): the mirror image.
+- **Three White Soldiers** (upward): three long up candles, each closing above the
+  last, each with a small upper wick.
+- **Three Black Crows** (downward): the mirror image.
+
+**Doji** (a body under 5% of the candle's range) means indecision, not direction.
+It is deliberately **not** a setup on its own — there is nothing to aim at. Note
+it in prose if it matters; do not post it.
+
+### Levels
+
+Across the pattern's candles let **range** = highest high − lowest low, and
+**extreme** = that highest high (upward) or lowest low (downward).
+
+- **confirm** = a completed close beyond the extreme
+- **invalidation** = the opposite end of the range
+- **target** = extreme ± range
+
+This is the §6 hammer rule generalised, and it reproduces the verified example
+exactly — SPCX daily hammer, Oct 15 (high $149.04, low $140.66, range $8.38):
+confirm $149.04, invalidation $140.66, target $157.42.
+
+### Reliability
+
+Published win rates for these patterns disagree between sources and methodologies,
+so none are quoted here. Multi-candle patterns are generally held to be steadier
+than single-candle ones, and every source stresses that context — the prior trend,
+nearby levels, volume — decides whether a candle means anything. Treat a candle
+setup as the weakest evidence on a chart: where one disagrees with a channel or
+wedge on the same timeframe, the trendline pattern wins.

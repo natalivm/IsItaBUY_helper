@@ -15,6 +15,8 @@ interface Props {
   activeStockData: { label: string; color?: string } | undefined;
   metrics: StockMetrics;
   narrativeOverride?: string;
+  /** Lazy-loaded with the rest of the detail-page prose; see stocks/prose. */
+  keyTakeaways?: string[];
   extraMetrics?: { label: string; value: React.ReactNode; subtext: string }[];
 }
 
@@ -25,6 +27,7 @@ const InvestmentVerdict: React.FC<Props> = ({
   activeStockData,
   metrics,
   narrativeOverride,
+  keyTakeaways,
   extraMetrics,
 }) => {
   const tc = tickerDef.themeColor;
@@ -279,14 +282,14 @@ const InvestmentVerdict: React.FC<Props> = ({
               })()}
 
               {/* Key takeaways */}
-              {tickerDef.keyTakeaways && tickerDef.keyTakeaways.length > 0 && (
+              {keyTakeaways && keyTakeaways.length > 0 && (
                 <div className="pt-4 border-t border-slate-800/80">
                   <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
                     <Lightbulb className="w-3 h-3 text-amber-400" />
                     <span>What This Means For You</span>
                   </div>
                   <ul className="space-y-3">
-                    {tickerDef.keyTakeaways.map((point, i) => (
+                    {keyTakeaways.map((point, i) => (
                       <li key={i} className="flex gap-3 text-sm text-slate-300 leading-relaxed">
                         <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: tc }} />
                         {point}

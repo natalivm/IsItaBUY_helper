@@ -31,21 +31,7 @@ export const ITT = defineStock({
   // Street: Strong Buy (14), PT $175-285 (median $265); FY26E rev $5.52B /
   // EPS $8.26, FY27E $6.02B / $9.61. Stock $201.37 (~24× FY26E).
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'SPX FLOW acquisition creates a global top-three flow solutions position with meaningful cross-sell and scale advantages',
-    'High-margin aftermarket mix provides recurring revenue that cushions profitability through industrial cycle downturns',
-    'Cryogenic pump exposure ties ITT to structural energy transition demand in LNG and hydrogen infrastructure buildout',
-    'Industrial AI predictive maintenance integration expands the addressable market beyond legacy flow applications',
-    'Organic orders and revenue are growing double digits on top of the acquisition, with guidance raised and synergies ahead of plan',
-  ],
 
-  risksToBuy: [
-    'SPX FLOW integration could encounter margin dilution if cross-sell synergies take longer to materialize than expected',
-    'Acquisition debt limits capital flexibility and constrains the ability to return cash or pursue further deals',
-    'Industrial cycle sensitivity means earnings can decelerate sharply if global manufacturing activity contracts',
-    'Deferred Middle East orders and tougher second-half comparisons could slow organic growth from its current pace',
-    'Bull case requires de-leveraging to unlock buyback capacity — that takes time and execution discipline',
-  ],
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 175, targetMedian: 265, targetHigh: 285, numAnalysts: 14 },  // stockanalysis.com (Sep 30 2026)
   revGrowth: [

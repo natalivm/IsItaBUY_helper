@@ -33,21 +33,7 @@ export const ASTS = defineStock({
   // −$1.29. Stock $50.97 (fell 10.5% on Oct 9), down ~37% over 52 weeks.
   // Net debt ~$0.7B (TTM FCF −$1.6B).
   // ─────────────────────────────────────────────────────────────────────────
-  reasonsToBuy: [
-    'Only company building space-based broadband for unmodified standard smartphones — the technical moat is years wide.',
-    'Nearly sixty MNO partners covering billions of subscribers globally provides enormous distribution without building retail infrastructure.',
-    'Custom ASIC chip delivers a generational performance leap over FPGA satellites, dramatically improving unit economics at scale.',
-    'Government and defense contracts through prime contractors add a high-value recurring revenue stream beyond consumer mobile.',
-    'A contracted backlog of over a billion dollars and nearly fifty gateways in progress give the service launch real commercial footing.',
-  ],
 
-  risksToBuy: [
-    'Revenue is still negligible for a company carrying a large market cap — execution must convert the guide each remaining quarter.',
-    'Satellite launch anomalies (BB7 loss) demonstrate irreversible single-point failures with no insurance on constellation assets.',
-    'Extreme share dilution history and ongoing capital intensity mean per-share returns depend on revenue scaling faster than the float.',
-    'Revenue keeps landing below expectations and is back-end loaded, while cash burn has pushed the balance sheet into net debt.',
-    'Even in the base case, sustained profitability is years away and requires flawless execution across launches, ground integration, and partner ramp.',
-  ],
 
   analystConsensus: { rating: 'Hold', targetLow: 42.5, targetMedian: 79, targetHigh: 108, numAnalysts: 13 },  // stockanalysis.com (Oct 2026)
   revGrowth: [
