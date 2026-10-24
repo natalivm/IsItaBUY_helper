@@ -224,6 +224,34 @@ function flagFor(timeframe: string | undefined, stored?: string) {
 const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag }) =>
   text ? <span className={`flag${keyFlag ? ' key' : ''}`}>{text}</span> : null;
 
+/** How far price has retraced back past the level that confirmed the break, as a %, or null.
+ *
+ *  A confirmed break only *fails* on a close past invalidation plus a follow-through close,
+ *  and on a wide pattern that level can sit 50-90% away -- so a break can give back
+ *  everything it gained and still read "Break confirmed". A third of the confirmed setups
+ *  on the ledger are in that state. This says so on the row; it changes no stage and no
+ *  level, and the setup is still the one the rules say it is. */
+export function undoneBy(
+  a: { direction: string; stage: PatternStage; confirm?: number } | null | undefined,
+  price?: number,
+): number | null {
+  if (!a || price == null || a.confirm == null) return null;
+  if (a.stage !== 'confirmed' && a.stage !== 'retest') return null;
+  if (a.direction !== 'up' && a.direction !== 'down') return null;
+  const past = a.direction === 'up' ? a.confirm - price : price - a.confirm;
+  return past > 0 ? (past / a.confirm) * 100 : null;
+}
+
+const Undone: React.FC<{ pct: number | null; tf?: string }> = ({ pct, tf }) =>
+  pct == null ? null : (
+    <span
+      className="flag undone"
+      title={`Price has given back the whole break — it sits ${pct.toFixed(1)}% back past the ${tf || 'daily'} close that confirmed it. The setup has not formally failed, but it is not working.`}
+    >
+      Break undone {pct.toFixed(0)}%
+    </span>
+  );
+
 // ── Expanded row: the stock's setups on the left, the selected one on the right ──
 
 // Main setup and alt setups share these fields; the main one also carries
@@ -232,8 +260,8 @@ type AnySetup = PatternAltSetup & { signalRule?: string; confirmRule?: string };
 
 const PanelHead: React.FC<{
   s: PatternStock; st: Status; pattern: string; tf: string; date?: string; extra?: string; flag?: string;
-  right?: React.ReactNode;
-}> = ({ s, st, pattern, tf, date, extra, flag, right }) => (
+  undone?: number | null; right?: React.ReactNode;
+}> = ({ s, st, pattern, tf, date, extra, flag, undone, right }) => (
   <div className="ptop">
   <div className="phead">
     <div className="ph-top"><b className="ph-tk">{s.ticker}</b><span className="ph-name">{s.name}</span></div>
@@ -242,6 +270,7 @@ const PanelHead: React.FC<{
       {pattern} · {cap(tf)} chart{date ? ` · ${day(date)}` : ''}{extra ? ` · ${extra}` : ''}
     </div>
     <Flag text={flag} />
+    <Undone pct={undone ?? null} tf={tf} />
   </div>
   {right}
   </div>
@@ -338,6 +367,7 @@ const DirBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a:
   return (
     <div className="detail" style={{ '--tone': tone } as React.CSSProperties}>
       <PanelHead s={s} st={st} pattern={pattern} tf={tf} date={a.stageDate} flag={flagFor(tf, a.flag)}
+        undone={undoneBy(a, s.price)}
         right={<PricesRules label={`${T} prices & rules`}>
       <div>
         <h3>Prices that matter</h3>
@@ -654,6 +684,7 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
+          <Undone pct={undoneBy(s, s?.price)} tf={s?.timeframe} />
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
           {s?.rsi != null && (() => {
             // The reading is on every row so the RSI sort reads as an order;
