@@ -50,6 +50,13 @@ _DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 WATCHLIST_FILE = os.path.join(_DATA_DIR, "patternWatchlist.ts")
 NEWS_FILE = os.path.join(_DATA_DIR, "newsFeed.ts")
 SNAPSHOT_FILE = os.path.join(_DATA_DIR, "watchlistStatus.json")
+
+# Pause the News feed while setups are being reworked by hand, so a session of edits does
+# not post a post per change. Stage changes still happen and the snapshot is still written,
+# so nothing floods the feed when this goes back to False -- the changes made while paused
+# simply never get a News item. Every run says loudly that it is paused. `--no-news` does
+# the same for a single run without touching this.
+NEWS_PAUSED = True
 # Candle files for the expanded-row charts, served with the site (public/ → dist/).
 BARS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "bars")
 # timeframe → (Yahoo interval, history range)
@@ -782,7 +789,7 @@ def _stage_edits(text, pos, new_stage, on_date, extra=None):
 
 
 def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FILE,
-                     snapshot_path=SNAPSHOT_FILE, today=None, now_et=None):
+                     snapshot_path=SNAPSHOT_FILE, today=None, now_et=None, post_news=None):
     """
     quotes: {sym: {'price', 'date', 'bars'}}; pass None to re-check against the stored prices.
     Returns a dict: price_changes [(sym, old, new)], target_hits, needs_update, review, news.
@@ -908,7 +915,8 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
     for start, end, new in sorted(edits, key=lambda x: (x[0], x[1]), reverse=True):
         new_text = new_text[:start] + new + new_text[end:]
 
-    news = sync_news(text, new_text, bot_notes, today, apply=apply, news_path=news_path, snapshot_path=snapshot_path)
+    news = sync_news(text, new_text, bot_notes, today, apply=apply, news_path=news_path,
+                     snapshot_path=snapshot_path, paused=post_news is False or NEWS_PAUSED)
 
     if apply and new_text != text:
         with open(path, 'w') as fh:
@@ -948,7 +956,8 @@ def status_map(text):
     return out
 
 
-def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE):
+def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE,
+              paused=None):
     """Post one News item per status change since the last snapshot. Returns the items."""
     if os.path.exists(snapshot_path):
         with open(snapshot_path) as fh:
@@ -989,8 +998,10 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
     items.sort(key=lambda it: it['tickers'][0])
     items.sort(key=lambda it: it['id'][:10], reverse=True)  # newest first; id starts with the ISO date
     if apply:
-        if items:
+        if items and not paused:
             _prepend_news(items, news_path)
+        # The snapshot is written either way: it is what the next run diffs against, so
+        # leaving it stale would make every paused change post at once on resuming.
         with open(snapshot_path, 'w') as fh:
             json.dump(after, fh, indent=1, sort_keys=True)
             fh.write('\n')
@@ -1202,7 +1213,7 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
     news = sync_news(text, new_text, notes, now_et.date().isoformat(), apply=apply,
-                     news_path=news_path, snapshot_path=snapshot_path)
+                     news_path=news_path, snapshot_path=snapshot_path, paused=NEWS_PAUSED)
     if apply and new_text != text:
         with open(path, 'w') as fh:
             fh.write(new_text)
@@ -1212,6 +1223,10 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
 # ── Report ──
 
 def print_watchlist_report(result, missing, apply):
+    if NEWS_PAUSED:
+        print("\n⏸  News posting is PAUSED (NEWS_PAUSED in pattern_watchlist.py). Stage changes are\n"
+              "   still written and the snapshot still moves, so nothing is queued up for later —\n"
+              "   changes made while paused get no News item at all. Set it back to False to resume.")
     print(f"\n{'='*72}\nPATTERN WATCHLIST ({os.path.relpath(WATCHLIST_FILE)})\n")
     mode = "Updated" if apply else "Would update"
     print(f"{mode} {len(result['price_changes'])} watchlist price(s).")
@@ -1271,6 +1286,7 @@ if __name__ == "__main__":
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
     ap.add_argument("--bars", action="store_true", help="only (re)download the chart candles into public/bars/ (network)")
     ap.add_argument("--prune", action="store_true", help="remove finished setups (target reached / failed) and post them to News")
+    ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     args = ap.parse_args()
     if args.prune:
         rep_, news_ = prune_finished(apply=args.apply)
@@ -1284,7 +1300,7 @@ if __name__ == "__main__":
         ok, bad = write_chart_bars({"User-Agent": "Mozilla/5.0"})
         print(f"Wrote {len(ok)} chart file(s) to {os.path.relpath(BARS_DIR)}." + (f" Failed: {', '.join(bad)}" if bad else ""))
         raise SystemExit(0)
-    res = update_watchlist(None, apply=args.apply)
+    res = update_watchlist(None, apply=args.apply, post_news=False if args.no_news else None)
     print_watchlist_report(res, [], args.apply)
     if not args.apply and (res['news'] or res['needs_update'] or res['target_hits']):
         print("\nRun with --apply to write these changes.")
