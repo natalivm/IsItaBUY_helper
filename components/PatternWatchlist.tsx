@@ -431,6 +431,10 @@ const HistPanel: React.FC<{ s: PatternStock; h: PatternHistoryEntry; st: Status 
     <SetupChart ticker={s.ticker} timeframe={h.timeframe} {...chartSpec(h)} />
     <p className="hnums num">{h.confirm != null && h.target != null
       ? <>Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → reached {fmt(h.target)}</>
+      /* Confirmed, then failed before the measured move: the confirm level is known and
+         the target never was, so it does not belong in the "never signalled" line below. */
+      : h.confirm != null
+      ? <>Confirmed {h.direction === 'down' ? 'below' : 'above'} {fmt(h.confirm)} → failed at {fmt(h.invalidation)}</>
       /* Failed while forming: there is no confirm and no target to show, only the level
          it died on and the signal it never reached. */
       : <>Never signalled {h.direction === 'down' ? 'below' : 'above'} {h.signal != null ? fmt(h.signal) : '—'} → failed at {fmt(h.invalidation)}</>}</p>
