@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { TickerDefinition } from '../types';
-import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree } from '../data/patternWatchlist';
+import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, PatternStage, PatternAgree, PatternDirection } from '../data/patternWatchlist';
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import './PatternWatchlist.css';
 
@@ -45,6 +45,11 @@ const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => 
 
 const Chev = () => (
   <svg className="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+);
+
+// Momentum: a lightning bolt, used on the sort control and the row badge.
+const Bolt = () => (
+  <svg className="bolt" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9 1.5 3.5 9.2h3.3L7 14.5 12.5 6.8H9.2L9 1.5Z" fill="currentColor" /></svg>
 );
 
 const Cross = () => (
@@ -396,6 +401,21 @@ type Entry =
 // keeps 3 of them in the bundle, so raising this needs KEEP_PER_TF raised too).
 const MAX_PER_TF = 3;
 
+// Daily RSI-14 regime, the same thresholds the scripts use (pattern_watchlist.RSI_BULL/BEAR).
+// Cardwell's convention: an uptrend tends to hold RSI 40-80 and a downtrend 20-60, so
+// clearing 60 is bullish and losing 40 bearish. RSI confirms a direction, it never sets one --
+// above 60 backs a long setup and argues against a short, and below 40 the reverse.
+const RSI_BULL = 60;
+const RSI_BEAR = 40;
+
+type Momentum = 'with' | 'against' | 'neutral';
+const momentumOf = (rsi: number | undefined, dir: PatternDirection | undefined): Momentum => {
+  if (rsi == null || (dir !== 'up' && dir !== 'down')) return 'neutral';
+  if (rsi >= RSI_BULL) return dir === 'up' ? 'with' : 'against';
+  if (rsi <= RSI_BEAR) return dir === 'down' ? 'with' : 'against';
+  return 'neutral';
+};
+
 type Bucket = 'confirmed' | 'pending' | 'update' | 'finished';
 const BUCKETS: [Bucket, string][] = [
   ['confirmed', 'Confirmed'], ['pending', 'Watching for a break'],
@@ -607,6 +627,11 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
+          {s && momentumOf(s.rsi, s.direction) === 'with' && (
+            <span className="flag mom" title={`Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`}>
+              <Bolt />RSI {Math.round(s.rsi!)}
+            </span>
+          )}
         </span>
         {levels}
         {open
@@ -633,7 +658,10 @@ interface PatternWatchlistProps {
 
 const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls }) => {
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
-  const [sortBy, setSortBy] = useState<'default' | 'target'>(() => readPref('pbw-sort', 'default') === 'target' ? 'target' : 'default');
+  const [sortBy, setSortBy] = useState<'default' | 'target' | 'momentum'>(() => {
+    const p = readPref('pbw-sort', 'default');
+    return p === 'target' || p === 'momentum' ? p : 'default';
+  });
   const [query, setQuery] = useState('');
   // One row open at a time: opening another closes the last, so the ledger
   // never turns into a stack of panels.
@@ -665,6 +693,11 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
   }, [allRows]);
 
   const activeFilter = filter === 'all' || counts[filter] ? filter : 'all';
+  // How many setups RSI currently backs -- shown on the momentum chip when it is off.
+  const hotCount = useMemo(
+    () => allRows.filter(r => momentumOf(r.setup?.rsi, r.setup?.direction) === 'with').length,
+    [allRows],
+  );
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -672,6 +705,17 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
       (activeFilter === 'all' || status(r.setup).group === activeFilter) &&
       (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
+    if (sortBy === 'momentum') {
+      // Setups RSI actually backs first, strongest conviction (furthest from 50) at the top;
+      // then everything neutral; setups momentum argues against sink to the bottom.
+      const score = (r: Row) => {
+        const s = r.setup;
+        const m = momentumOf(s?.rsi, s?.direction);
+        const dist = s?.rsi == null ? -1 : Math.abs(s.rsi - 50);
+        return m === 'with' ? 2000 + dist : m === 'against' ? dist - 1000 : dist;
+      };
+      out.sort((a, b) => score(b) - score(a));
+    }
     return out;
   }, [allRows, activeFilter, query, sortBy]);
 
@@ -702,6 +746,11 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
             <button className="chip pctchip" aria-pressed={sortBy === 'target'} title="Sort by highest % to target"
               onClick={() => { const next = sortBy === 'target' ? 'default' : 'target'; setSortBy(next); writePref('pbw-sort', next); }}>
               %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
+            </button>
+            <button className="chip momchip" aria-pressed={sortBy === 'momentum'}
+              title="Sort by momentum: setups the daily RSI backs (≥60 for a long, ≤40 for a short) first"
+              onClick={() => { const next = sortBy === 'momentum' ? 'default' : 'momentum'; setSortBy(next); writePref('pbw-sort', next); }}>
+              <Bolt /><span className="n">{sortBy === 'momentum' ? '↓' : hotCount || ''}</span>
             </button>
           </div>
           <input type="search" value={query} onChange={e => setQuery(e.target.value)}

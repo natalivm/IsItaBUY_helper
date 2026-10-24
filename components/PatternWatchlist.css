@@ -4,7 +4,7 @@
 .pbw{
   --bg:#12151c; --surface:#1a1e27; --surface-2:#222734; --line:#2c3240;
   --fg:#eceef3; --muted:#a2a8b8; --faint:#6f7688;
-  --accent:#8b9bff;
+  --accent:#8b9bff; --accent-soft:#232a4a;
   --down:#ec6b6f; --down-soft:#3a2125; --up:#4ec98f; --up-soft:#173327;
   --wait:#e2b23f; --wait-soft:#372d17; --fail:#9aa0ae; --fail-soft:#272b35;
   --inset:#151922; --shade:rgba(0,0,0,.45);
@@ -18,7 +18,7 @@
 :root[data-theme="light"] .pbw{
   --bg:#f3f4f7; --surface:#ffffff; --surface-2:#eceef3; --line:#dcdfe7;
   --fg:#161a23; --muted:#5d6475; --faint:#8a90a0;
-  --accent:#3b4fd8;
+  --accent:#3b4fd8; --accent-soft:#e6e9fb;
   --down:#c8383f; --down-soft:#fbe9ea; --up:#1f8a5b; --up-soft:#e3f4ec;
   --wait:#a8780f; --wait-soft:#f8efd9; --fail:#6b7180; --fail-soft:#eceef2;
   --inset:#eef0f4; --shade:rgba(22,26,35,.10);
@@ -45,6 +45,10 @@
 .pbw .tools{display:flex;flex-wrap:wrap;gap:14.5px;align-items:center;justify-content:space-between}
 .pbw .pctchip{font-family:var(--f-mono);font-weight:600;min-width:45.5px;justify-content:center}
 .pbw .pctchip .n:empty{display:none}
+.pbw .momchip{min-width:45.5px;justify-content:center;gap:4px}
+.pbw .momchip .bolt{width:13px;height:13px;flex:none}
+.pbw .momchip .n:empty{display:none}
+.pbw .momchip[aria-pressed="true"]{color:var(--accent)}
 .pbw input[type=search]{font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:11px 14.5px;min-width:0;width:288px;max-width:100%}
 .pbw .ledger{background:var(--surface);border:1px solid var(--line);border-radius:17px;overflow:hidden}
 .pbw .head,.pbw .row-btn{display:grid;grid-template-columns:minmax(0,2.1fr) 153.5px minmax(0,1.7fr) minmax(0,1.35fr) minmax(0,1.35fr) 21.5px;gap:17px;align-items:center;padding:11px 19px}
@@ -236,6 +240,9 @@
 .pbw .altwrap>.detail{padding:0}
 /* Confidence: several stored setups agree on the target */
 .pbw .flag.agree{color:var(--up);background:var(--up-soft)}
+/* Momentum: RSI backs this setup's direction, so it is actionable now. */
+.pbw .flag.mom{color:var(--accent);background:var(--accent-soft);display:inline-flex;align-items:center;gap:4px;white-space:nowrap;flex:none}
+.pbw .flag.mom .bolt{width:11px;height:11px;flex:none}
 .pbw .agree-note{grid-column:1/-1;font-size:14px;color:var(--muted)}
 .pbw .agree-note b{color:var(--up);font-weight:600}
 
