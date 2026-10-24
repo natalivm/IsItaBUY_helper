@@ -67,9 +67,9 @@ Group assignment depends on rating + market cap + RS rating + RS trend (see `cla
 
 If a stock's rating or group changed, evaluate whether `rsRating`, `rsTrend`, or `ratingOverride` also need updating to reflect current market conditions.
 
-### Pattern Break Watchlist prices (home page)
+### Pattern Break Watchlist prices (`#watchlist`)
 
-The home page ledger reads `data/patternWatchlist.ts`. The same `update_prices.py` run (logic in `pattern_watchlist.py`) also:
+The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatchlist.ts`. The same `update_prices.py` run (logic in `pattern_watchlist.py`) also:
 
 - refreshes every entry's `price` / `priceDate` (the expanded panel's **Now** row and all `%` figures read these), including watchlist-only symbols like SPY/TSLA that have no `stocks/` file;
 - checks targets: a `confirmed` setup (or its `alt`) whose target was **touched** by any daily bar since the last check (low ≤ target for downward, high ≥ target for upward) is flipped to `stage: "target"` with `stageDate` = that day. A bar that stops just short still counts: the touch carries a tolerance of **0.5% of the target** (`TARGET_TOL` in `pattern_watchlist.py`), so a move that ends thirteen cents above a $53.37 target is a target reached, not a miss. The margin is a fraction of the target rather than a fixed number of cents because the watchlist runs from sub-dollar names to four-figure ones. The bot only sees daily candles, so it catches intraday touches after the close; marking a hit manually earlier is fine, since the bot never reverts `"target"`;
@@ -102,6 +102,56 @@ The home page ledger reads `data/patternWatchlist.ts`. The same `update_prices.p
 ### Price Format
 
 Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripped (`348.00` → `348`, `348.40` → `348.4`).
+
+## Landing Page (weekly lists)
+
+`#` (no hash) is the **landing page** (`components/Landing.tsx`). The stock ledger
+moved to `#watchlist`; `#watchlist/TICKER` opens it with the search box pre-filled,
+which is what the landing page's "See TICKER in the watchlist" buttons link to.
+`#TICKER` is still a stock's detail page, and "Back" there returns to whichever
+list you came from.
+
+The landing page renders two lists, both read straight from `data/weeklyFeature.ts`
+— it computes nothing itself:
+
+- **Hottest setups** — at most 3 (`TOP_N`), picked by `weekly_feature.score_setup`
+  from the setups the watchlist actually shows (main + alt), skipping
+  auto-detected ones (red dot = not checked by hand) and "No clear pattern"
+  placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
+  momentum (+20 with, −25 against, same thresholds as `pattern_watchlist`),
+  trend agreement (+10 / −5), agreeing stored setups (+4 each, max +12), room to
+  target (0.6 per %, capped at 40%), reward/risk vs invalidation (+10 at ≥3x,
+  +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
+  target the price has already passed is dropped. Each card lists the reasons
+  that scored it — change the weights in `weekly_feature.py`, not the data file.
+- **Reporting this week** — covered stocks whose next earnings date falls in the
+  featured Mon–Fri, from Yahoo Finance, cached in `data/earningsCalendar.json`.
+  The cache is only ever added to, so a run that cannot reach Yahoo keeps last
+  week's dates instead of emptying the list. A stock file's hand-curated
+  `nextEarningsOn` fills a gap Yahoo leaves; it never overrides Yahoo.
+
+### Rebuilding the lists
+
+`.github/workflows/weekly-feature.yml` runs **Mondays at 9:23 AM UTC**, before
+the 9:30 AM ET open, and commits `data/weeklyFeature.ts` +
+`data/earningsCalendar.json`. It can also be triggered by hand from the
+**Actions** tab. Deploys chain off it the same way they chain off the price job.
+
+It needs no prices of its own: Friday's close is already in
+`data/patternWatchlist.ts` from the weekday price run, so the featured numbers
+are the latest close (the card section says which date).
+
+```bash
+python3 weekly_feature.py                   # dry run — print both lists
+python3 weekly_feature.py --apply           # write data/weeklyFeature.ts
+python3 weekly_feature.py --offline         # skip Yahoo, use the cached calendar
+python3 weekly_feature.py --week 2026-11-02 # pin the week (testing)
+python3 weekly_feature.py --top 5           # feature more than 3 setups
+python3 weekly_feature.py --include-auto    # let auto-detected setups compete
+```
+
+Yahoo is blocked from Claude Code's sandbox (same 403 proxy as the price API), so
+run it `--offline` here; the Action does the real fetch.
 
 ## Data Freshness Tracking
 

@@ -1,0 +1,38 @@
+name: Refresh Weekly Feature
+
+on:
+  schedule:
+    # Mondays at 9:23 AM UTC = 5:23 AM ET in summer / 4:23 AM ET in winter, so
+    # the landing page's two lists are rebuilt well before the 9:30 AM ET open
+    # even when GitHub runs the job an hour or two late. Friday's close is
+    # already in data/patternWatchlist.ts by then (the price bot runs weekdays
+    # at 21:47 UTC), so no price fetching is needed here — only the earnings
+    # calendar is pulled fresh.
+    - cron: '23 9 * * 1'
+  workflow_dispatch: # allows manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  weekly-feature:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rebuild the landing page's weekly lists
+        run: python3 weekly_feature.py --apply
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/weeklyFeature.ts data/earningsCalendar.json
+          git diff --cached --quiet && echo "No change to the weekly lists" && exit 0
+          WEEK=$(grep -o 'weekOf: "[0-9-]*"' data/weeklyFeature.ts | grep -o '[0-9-]\{10\}')
+          git commit -m "Refresh landing page for the week of ${WEEK:-$(date -u +%Y-%m-%d)}"
+          git push

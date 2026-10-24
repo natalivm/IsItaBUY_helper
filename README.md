@@ -24,6 +24,15 @@ npm run build   # outputs to dist/
 npm run preview # preview the production build locally
 ```
 
+## Pages
+
+- `#` — landing page: the week's three hottest setups and the covered stocks
+  reporting that week. Both lists are rebuilt every Monday before the open by
+  `weekly_feature.py` (`.github/workflows/weekly-feature.yml`).
+- `#watchlist` — the full Pattern Break Watchlist ledger. `#watchlist/NVDA`
+  opens it filtered to one symbol.
+- `#TICKER` — a stock's valuation page.
+
 ## GitHub Pages Deployment
 
 Deployments are automated via `.github/workflows/deploy-pages.yml` on every push to `main`/`master`.
