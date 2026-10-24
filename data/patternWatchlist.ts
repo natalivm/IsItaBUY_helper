@@ -4679,6 +4679,12 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { pattern: "Falling Wedge", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-22",
         confirm: 507.36, invalidation: 433.98, target: 561.66,
         note: "A daily falling wedge off the August high that broke up on Oct 5, confirmed above $507.36 the next day and ran through its $561.66 target on Oct 22." },
+      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-16",
+        confirm: 523.08, invalidation: 501.56, target: 539.31,
+        note: "Confirmed above $523.08, beyond the signal candle's high, and reached $539.31 on Oct 16. Not the daily descending channel stored above, which is a later one still at signal with its confirm up at $609.32 — this is the call that ran first." },
+      { pattern: "Hammer", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-12",
+        confirm: 511.43, invalidation: 497.0, target: 525.86,
+        note: "The earliest of the three and the smallest: confirmed above $511.43 on a weekly close and reached $525.86 on Oct 12. All three completed calls on this stock targeted $526 to $562 and the stock is now $604.18, which is the other side of the target question — close targets get reached, and then the move keeps going without you. Worth holding against the finding that our own targets sit too far out: further is not automatically wrong, it is a different trade, and what makes it wrong here is that a target nobody reaches leaves the setup open forever." },
     ],
     alt: {
       pattern: "Ascending Channel",
