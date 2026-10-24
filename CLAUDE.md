@@ -186,6 +186,29 @@ candle patterns worst of all, since a candle projects a candle-sized move. Lower
 did not change the reproduction score, so there is no measured gain to point at; the
 argument is only that the completed calls say the floor is in the wrong place.
 
+**The stored setups on a hand-posted stock are refreshed separately.** `--redo-auto`
+rebuilds the 65 machine-drawn *entries*; the ~250 auto setups hidden inside `more: [...]`
+on the 85 hand-posted stocks are a different population, and they feed the agreement
+badge, `weekly_feature`'s "+4 per agreeing setup" and `rank_setups`' target agreement.
+`python3 pattern_detect.py --redo-stored` (dry run) / `--redo-stored --apply` re-detects
+those **in place**: a setup is matched by (timeframe, pattern, direction) and only its
+levels are replaced. Use it rather than `--extras`, which calls `_strip_stored()` — that
+deletes the entire `more` list and rebuilds it, taking every hand-written stored setup
+with it (174 of them at the time of writing).
+
+**`auto: true` is the only thing protecting a hand-written setup.** A stored setup
+without the flag is never rewritten, whatever it looks like — and some of the unflagged
+ones plainly are machine-drawn (direction `"both"` is a shape only `_classify` produces).
+They stay anyway: the flag is the contract, and guessing against it is how hand-written
+prose gets eaten. A setup the fresh scan no longer finds is also left alone rather than
+deleted — 28 were, on this run.
+
+Every run of `--redo-stored` first writes `archive/handSetups-<date>.json`: the verbatim
+source of every stored setup on every hand-posted stock, `auto` flag included, plus each
+stock's `keyLevel` and `history`. It stores source text rather than parsed values, so a
+setup goes back exactly as it was written. `python3 pattern_detect.py --archive` writes
+one without changing anything.
+
 ### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.

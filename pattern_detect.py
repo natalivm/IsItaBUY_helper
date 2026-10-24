@@ -846,6 +846,137 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
     return summary
 
 
+# ---------------------------------------------------------------------------
+# Stored setups on hand-posted stocks
+# ---------------------------------------------------------------------------
+
+ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'archive')
+
+
+def _item_text(text, span):
+    """Source text of one `more` item, braces included."""
+    return text[span[0]:span[1] + 1]
+
+
+def _entry_parts(text, e):
+    """Every setup on an entry as (label, is_auto, source text, span)."""
+    out = []
+    f = e['fields']
+    if 'alt' in f:
+        a0, a1, _ = f['alt']
+        out.append(('alt', bool((e['alt'] or {}).get('auto', (0, 0, None))[2]), text[a0:a1], (a0, a1 - 1)))
+    for i, item in enumerate(e['more']):
+        sp = item['_span']
+        out.append((f'more[{i}]', bool(item.get('auto', (0, 0, None))[2]), _item_text(text, sp), (sp[0], sp[1])))
+    return out
+
+
+def archive_hand_setups(text, path=None, verbose=True):
+    """Write every setup on a hand-posted stock to a dated JSON file, verbatim.
+
+    A re-scan rewrites stored setups, and the only thing standing between a hand-written
+    one and the detector is its missing `auto` flag. This is the copy to splice back from
+    if that judgement turns out wrong: source text, not parsed values, so it goes back in
+    exactly as it was.
+    """
+    today = date.today().isoformat()
+    path = path or os.path.join(ARCHIVE_DIR, f'handSetups-{today}.json')
+    out = {}
+    for e in pw.parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        if m.get('auto'):
+            continue                                   # the whole entry is machine-drawn
+        rec = {'name': m.get('name'), 'main': None, 'setups': []}
+        for k in ('keyLevel', 'history'):
+            if k in e['fields']:
+                v0, v1, _ = e['fields'][k]
+                rec[k] = text[v0:v1]
+        for label, auto, src, _ in _entry_parts(text, e):
+            rec['setups'].append({'label': label, 'auto': auto, 'text': src})
+        out[m['ticker']] = rec
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    hand = sum(1 for r in out.values() for s in r['setups'] if not s['auto'])
+    auto = sum(1 for r in out.values() for s in r['setups'] if s['auto'])
+    with open(path, 'w') as fh:
+        json.dump({'generated': today,
+                   'note': 'Verbatim source of every stored setup on a hand-posted stock, '
+                           'taken before a re-scan. `auto: false` entries are the hand-written ones.',
+                   'stocks': out}, fh, indent=1, sort_keys=True)
+        fh.write('\n')
+    if verbose:
+        print(f"Archived {hand} hand-written and {auto} auto setups across {len(out)} stocks -> {path}")
+    return path
+
+
+def redo_stored(apply=False, refresh=False, verbose=True):
+    """Re-detect the stored (hidden) setups on hand-posted stocks, in place.
+
+    Only setups carrying `auto: true` are rewritten, and only where the fresh scan still
+    finds the same pattern on the same timeframe in the same direction — the levels are
+    replaced, the setup is not. Anything without the flag is left exactly as written:
+    `--extras` deletes the whole `more` list and rebuilds it, which takes the hand-written
+    setups with it.
+    """
+    now_et = pw._now_et()
+    text = open(pw.WATCHLIST_FILE).read()
+    archive_hand_setups(text, verbose=verbose)
+    cuts, n_hit, n_miss, n_hand = [], 0, 0, 0
+    for e in pw.parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        if m.get('auto'):
+            continue
+        parts = _entry_parts(text, e)
+        if not any(auto for _, auto, _, _ in parts):
+            n_hand += len(parts)
+            continue
+        try:
+            bars = {tf: get_bars(m['ticker'], tf, refresh) for tf in TIMEFRAMES}
+        except Exception as ex:
+            if verbose:
+                print(f"  {m['ticker']}: candles failed ({ex})")
+            continue
+        fresh = {(x['timeframe'], x['pattern'], x['direction']): x for x in detect(m['ticker'], bars, now_et)}
+        for label, auto, src, span in parts:
+            if not auto:
+                n_hand += 1
+                continue
+            old = _parse_item(src)
+            key = (old.get('timeframe'), old.get('pattern'), old.get('direction'))
+            new = fresh.get(key)
+            if not new:
+                n_miss += 1
+                if verbose:
+                    print(f"  {m['ticker']:<5} {label:<9} {' '.join(str(x) for x in key)}: gone from the fresh scan, left as is")
+                continue
+            indent = '      ' if label == 'alt' else '        '
+            body = ([f"{indent}auto: true,"] + _ts_setup(dict(new, note=new.get('note') or _note(new)), indent))
+            repl = '{\n' + '\n'.join(body) + '\n' + indent[:-2] + '}'
+            if repl != src:
+                cuts.append((span[0], span[1] + 1, repl))
+                n_hit += 1
+    if verbose:
+        print(f"\n{n_hit} stored setups re-detected, {n_miss} no longer found (left alone), "
+              f"{n_hand} hand-written (untouched).")
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    new_text = pw.annotate_agreement(new_text)
+    if not apply or new_text == text:
+        return n_hit
+    pw.sync_news(text, new_text, {}, now_et.date().isoformat(), apply=True)
+    with open(pw.WATCHLIST_FILE, 'w') as fh:
+        fh.write(new_text)
+    return n_hit
+
+
+def _parse_item(src):
+    """The scalar fields of one stored setup, from its source text."""
+    masked = pw._mask_strings(src)
+    depth = pw._depths(masked)
+    f = pw._fields(src, masked, depth, 1, len(src) - 1, 1)
+    return {k: v[2] for k, v in f.items()}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('--apply', action='store_true', help='add the detected setups to the watchlist')
@@ -855,7 +986,16 @@ def main():
     ap.add_argument('--add', nargs='*', default=[], help='extra watchlist-only tickers to scan (e.g. CBRS LIFE)')
     ap.add_argument('--redo-auto', action='store_true', help='re-detect every unreviewed auto entry')
     ap.add_argument('--extras', action='store_true', help='add detected extra setups to posted stocks (red dot)')
+    ap.add_argument('--redo-stored', action='store_true',
+                    help="re-detect the auto setups stored on hand-posted stocks, in place")
+    ap.add_argument('--archive', action='store_true', help='write archive/handSetups-<date>.json and stop')
     args = ap.parse_args()
+    if args.archive:
+        archive_hand_setups(open(pw.WATCHLIST_FILE).read())
+        return
+    if args.redo_stored:
+        redo_stored(apply=args.apply, refresh=args.refresh)
+        return
     if args.compare:
         compare(pw._now_et())
         return
