@@ -2185,8 +2185,8 @@
  },
  "ENPH|daily alt": {
   "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
   "ticker": "ENPH"
  },
  "ENPH|main": {
