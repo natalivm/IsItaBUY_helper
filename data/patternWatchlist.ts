@@ -12195,6 +12195,14 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $35.78 on Sep 23.",
     },
+    history: [
+      { pattern: "Falling Wedge", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-20",
+        confirm: 36.55, invalidation: 26.43, target: 41.17,
+        note: "The closest match in the whole comparison set: our own daily falling wedge on this chart confirms at $36.45 against their $36.55, three tenths of a percent apart, so it is unarguably the same break. From there theirs projects $41.17 and ours $50.33 — 12.6% of measured move against 38.1%. Price is $43.10, past theirs and short of ours, so theirs is finished and our copy is still marked confirmed." },
+      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-13",
+        confirm: 36.55, invalidation: 28.65, target: 40.43,
+        note: "Confirmed off the same $36.55 close as the wedge above — one break, two patterns reading it — and reached $40.43 a week earlier on Oct 13. Two independent objectives within 2% of each other is the kind of corroboration the agree band is meant to catch." }
+    ],
     more: [
       {
         auto: true,

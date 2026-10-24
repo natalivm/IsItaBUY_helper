@@ -135,8 +135,15 @@ fix is therefore not to shorten the projection. It is to stop treating an unreac
 target as a reason to keep a setup live, which is what `atRisk` and the "Break undone"
 chip already do and what the retirement rules should lean on harder.
 
-Smaller completed targets are not evidence of a better method either — METAs hammer
+Smaller completed targets are not evidence of a better method either — META's hammer
 reached a 2.2% objective because a candle pattern projects a candle-sized move.
+
+One number from the comparison does stand without needing the survivorship question
+settled: **on all six charts where a completed call has been recorded, our own setup for
+the same break is still open.** XOM, CVX, FRSH, LIFE, KMB, RBRK — in each case price
+reached their objective and stopped short of ours. That is a statement about the state of
+this ledger, not about whose method is better, and those six rows are exactly the ones
+that should have closed themselves.
 
 ### Working on the scripts: two traps
 
