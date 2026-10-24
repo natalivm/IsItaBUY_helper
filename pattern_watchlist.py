@@ -669,6 +669,36 @@ def _confirmed(close, level, down):
     return close < level * (1 - CONFIRM_TOL) if down else close > level * (1 + CONFIRM_TOL)
 
 
+# A break that confirms almost on top of its own target is not a trade: by the time the
+# call starts the move it predicts is already spent. LMT's daily ascending channel asked
+# for a close above $608.00 for a $610.97 target -- half a percent of room. Measured from
+# the confirmation level, not the signal, because that is the level you would act on.
+MIN_ROOM = 0.10
+
+
+def _narrowest(s):
+    """(room, level, target) for the tightest of a setup's level/target pairs, or None.
+
+    A two-way setup is measured on both sides and judged at its narrower one.
+    """
+    if s.get('direction') == 'both':
+        pairs = [(s.get('breakUp'), s.get('goalUp')), (s.get('breakDown'), s.get('goalDown'))]
+    else:
+        level = s.get('confirm') if s.get('confirm') is not None else s.get('signal')
+        pairs = [(level, s.get('target'))]
+    rows = [(abs(g - lvl) / lvl, lvl, g) for lvl, g in pairs if lvl and g is not None and lvl > 0]
+    return min(rows) if rows else None
+
+
+def setup_room(s):
+    """Distance from a setup's confirmation level to its target, as a fraction of that level.
+
+    `None` when the setup carries no level pair to measure.
+    """
+    row = _narrowest(s)
+    return row[0] if row else None
+
+
 def _reached(direction, target, high=None, low=None):
     """Did this bar reach the target, give or take the tolerance?
 
@@ -899,7 +929,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
         with open(path, 'w') as fh:
             fh.write(new_text)
 
-    return {'momentum': momentum,
+    return {'momentum': momentum, 'thin': thin_setups(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'review': review, 'news': news}
 
@@ -1196,6 +1226,82 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
 
 # ── Report ──
 
+def thin_setups(text):
+    """Every stored setup whose target sits inside MIN_ROOM of its confirmation level.
+
+    Rows are (ticker, label, pattern, timeframe, stage, level, target, room, auto).
+    """
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, sv, pos in _setups(e):
+            row = _narrowest(sv)
+            if row is None or row[0] >= MIN_ROOM:
+                continue
+            room, level, target = row
+            # `auto` is a stock-level flag: a stock marked auto does not repeat it on each
+            # stored setup, so either place counts (see CLAUDE.md, "two traps").
+            auto = bool(main.get('auto')) or bool(sv.get('auto'))
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
+                        sv.get('timeframe') or main.get('timeframe'), sv.get('stage'),
+                        level, target, room, auto))
+    return out
+
+
+def drop_thin(apply=False, path=WATCHLIST_FILE):
+    """Remove auto-detected setups with too little room between confirmation and target.
+
+    Only the hidden ones (`more[]`) and a second setup go quietly -- nothing was shown for
+    them and nothing is lost, since a rescan would no longer produce them. A thin *main*
+    setup, and anything posted by hand, is listed for review instead: those are calls
+    someone made, and replacing one is a decision, not a clean-up.
+    """
+    with open(path) as fh:
+        text = fh.read()
+    cuts, dropped, review = [], [], []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        t_ = main['ticker']
+        keep_alt, stored, hit = e['alt'], [], []
+        for label, sv, pos in _setups(e):
+            room = setup_room(sv)
+            thin = room is not None and room < MIN_ROOM
+            auto = bool(main.get('auto')) or bool(sv.get('auto'))
+            if thin and (label == 'main' or not auto):
+                review.append(f"{t_} ({label}): {room * 100:.1f}% from confirmation to target"
+                              f" — posted by hand, replace it or leave it")
+                thin = False
+            if '_span' in pos:
+                (hit if thin else stored).append(pos)
+            elif thin and label.endswith(' alt'):
+                keep_alt = None
+                hit.append(pos)
+        if not hit:
+            continue
+        alt_auto = bool(keep_alt and keep_alt.get('auto', (0, 0, None))[2])
+        if keep_alt is None and e['alt'] is not None and stored:
+            # The second setup is a visible slot: promote the best stored one on the same
+            # timeframe rather than leaving the stock with one setup, as prune_finished does.
+            tf = e['alt']['timeframe'][2] if 'timeframe' in e['alt'] else main.get('timeframe')
+            keep_alt = next((p for p in stored if (p['timeframe'][2] if 'timeframe' in p else main.get('timeframe')) == tf), None)
+            if keep_alt is not None:
+                stored.remove(keep_alt)
+                alt_auto = True
+        for pos in hit:
+            dropped.append(f"{t_} ({pos.get('timeframe', (0, 0, None))[2]} "
+                           f"{pos.get('pattern', (0, 0, main.get('pattern')))[2]})")
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, e['fields'], keep_alt, stored,
+                                             bool(main.get('auto')), alt_auto)))
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return dropped, review
+
+
 def print_watchlist_report(result, missing, apply):
     print(f"\n{'='*72}\nPATTERN WATCHLIST ({os.path.relpath(WATCHLIST_FILE)})\n")
     mode = "Updated" if apply else "Would update"
@@ -1231,6 +1337,14 @@ def print_watchlist_report(result, missing, apply):
             print(f"  Momentum against the setup ({len(against)}) — wait or re-read:")
             print("    " + ", ".join(f"{s} {r:.0f}" for s, r, _, _ in sorted(against, key=lambda m: -m[1])))
 
+    thin = result.get('thin') or []
+    if thin:
+        print(f"\n📏 Too little room (target within {MIN_ROOM * 100:.0f}% of the confirmation level):")
+        for sym, label, pattern, tf, stage, level, target, room, auto in sorted(thin, key=lambda r: r[7]):
+            tag = "auto" if auto else "posted"
+            print(f"  {sym:<6} {tf:<7} {str(pattern):<20} {str(stage):<9} "
+                  f"${_fmt_price(level)} → ${_fmt_price(target)}  {room * 100:4.1f}%  ({tag})")
+        print("  Run with --thin to drop the auto-detected ones.")
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:
@@ -1248,7 +1362,19 @@ if __name__ == "__main__":
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
     ap.add_argument("--bars", action="store_true", help="only (re)download the chart candles into public/bars/ (network)")
     ap.add_argument("--prune", action="store_true", help="remove finished setups (target reached / failed) and post them to News")
+    ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     args = ap.parse_args()
+    if args.thin:
+        gone, look = drop_thin(apply=args.apply)
+        print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} thin auto setup(s)."
+              + ("\n  " + "\n  ".join(gone) if gone else ""))
+        if look:
+            print("\nPosted by hand, left alone:")
+            for line in look:
+                print(f"  {line}")
+        if gone and not args.apply:
+            print("\nRun with --thin --apply to remove them.")
+        raise SystemExit(0)
     if args.prune:
         rep_, news_ = prune_finished(apply=args.apply)
         print("\n".join(rep_) or "Nothing to prune.")

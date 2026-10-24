@@ -119,6 +119,12 @@ def _classify(up, lo, start, end):
     return None
 
 
+def _roomy(setup):
+    """The setup, or None when its target sits inside pw.MIN_ROOM of its confirmation level."""
+    room = pw.setup_room(setup)
+    return None if room is not None and room < pw.MIN_ROOM else setup
+
+
 def _stage(bars, n, pattern, up, lo, start, A):
     """Walk the completed candles after the pattern formed. Returns a dict or None if finished/failed."""
     t, h, l, c = bars['t'], bars['h'], bars['l'], bars['c']
@@ -168,16 +174,16 @@ def _stage(bars, n, pattern, up, lo, start, A):
         if two_way:
             if lo.at(last) - height < MIN_TARGET * lo.at(last):
                 return None                      # implausible goal down
-            return {'direction': 'both', 'stage': 'forming',
-                    'breakUp': _r(up.at(last)), 'breakDown': _r(lo.at(last)),
-                    'goalUp': _r(up.at(last) + height), 'goalDown': _r(lo.at(last) - height)}
+            return _roomy({'direction': 'both', 'stage': 'forming',
+                           'breakUp': _r(up.at(last)), 'breakDown': _r(lo.at(last)),
+                           'goalUp': _r(up.at(last) + height), 'goalDown': _r(lo.at(last) - height)})
         d = 'down' if pattern == 'Rising Wedge' else 'up'
         brk, far = (lo, up) if d == 'down' else (up, lo)
         if d == 'down' and brk.at(last) - height < MIN_TARGET * brk.at(last):
             return None                          # implausible projection
-        return {'direction': d, 'stage': 'forming', 'signal': _r(brk.at(last)),
-                'invalidation': _r(far.at(last)),
-                'target': _r(brk.at(last) - height if d == 'down' else brk.at(last) + height)}
+        return _roomy({'direction': d, 'stage': 'forming', 'signal': _r(brk.at(last)),
+                       'invalidation': _r(far.at(last)),
+                       'target': _r(brk.at(last) - height if d == 'down' else brk.at(last) + height)})
     if sig['i'] < n - 1 - RECENT[bars['tf']]:
         return None                              # stale break
     d = sig['dir']
@@ -207,7 +213,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
         out.update(stage='confirmed', stageDate=t[sig['conf']])
     else:
         out.update(stage='signal', stageDate=t[sig['i']])
-    return out
+    return _roomy(out)
 
 
 def detect_lines(bars, tf, n, all_found=None):
@@ -393,6 +399,8 @@ def detect_candle(bars, tf, n):
         s = {'pattern': kind, 'timeframe': tf, 'direction': direction,
              'confirm': _r(extreme), 'invalidation': _r(inval), 'target': _r(target)}
         s.update({'stage': 'confirmed', 'stageDate': t[conf]} if conf else {'stage': 'forming'})
+        if _roomy(s) is None:
+            continue                             # target too close to the confirmation level
         return s
     return None
 
