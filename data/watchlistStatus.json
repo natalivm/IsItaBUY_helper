@@ -6569,16 +6569,10 @@
   "stage": "confirmed",
   "ticker": "VRT"
  },
- "VRT|daily alt": {
-  "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "VRT"
- },
  "VRT|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "VRT"
  },
  "VRT|weekly Descending Channel": {
@@ -6603,6 +6597,12 @@
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
+  "ticker": "VRT"
+ },
+ "VRT|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Descending Channel (weekly)",
+  "stage": "forming",
   "ticker": "VRT"
  },
  "VST|daily Ascending Channel": {
