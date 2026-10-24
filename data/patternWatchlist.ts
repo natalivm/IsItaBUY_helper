@@ -13937,6 +13937,14 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Oct 23 gave a signal; it needs a close beyond $130.82 to confirm.",
     },
+    history: [
+      { pattern: "Rising Wedge", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-15",
+        confirm: 119.93, invalidation: 144.92, target: 107.4,
+        note: "A bearish call that paid, which is rarer than it should be in this set: confirmed below $119.93, beyond the signal candle's low, and reached $107.40 on Oct 15. Our own daily rising wedge is a different drawing — confirm $97.02 — but the instructive part is the size of the move each projects. Theirs ran $119.93 to $107.40, a 10.4% measured move. Ours runs $97.02 to $52.09, a 46.3% one. Same pattern type, same chart, four times the projection." },
+      { pattern: "Descending Channel", timeframe: "weekly", direction: "down", stage: "failed", stageDate: "2026-03-02",
+        confirm: 55.58, invalidation: 33.13,
+        note: "The most expensive failure on record here. The channel confirmed below $55.58 and then closed back inside the broken boundary, which ends it — and the stock is $128.74 now, well over twice where the break was confirmed. A confirmed bearish break on a stock that then more than doubled is the shape of loss that matters, and the backtest's negative expectancy on down-breaks is made of setups like this one." }
+    ],
     more: [
       {
         pattern: "Descending Channel",

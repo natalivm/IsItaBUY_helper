@@ -104,6 +104,36 @@ behind as it strips them, which was tried and backed out — 124 of 149 stocks c
 unchecked setup somewhere, so a dot covering them fires on almost every row and stops
 discriminating. If that broader signal is ever wanted, that is where it goes.
 
+### The measured move is too long
+
+Completed setups from the source tool are recorded as `history` rows, and comparing
+them against the detector's own reading of the same chart turns up one consistent
+defect. The break levels agree — confirms have matched to the cent on CVX and CRWD,
+and within 2% on FRSH — but **the measured move the detector projects off those lines
+is 1.4x to 4.4x the one the source tool projects**, median 2.45x over the four cases
+where both readings exist:
+
+| | our move | theirs | ratio |
+|---|---|---|---|
+| XOM weekly falling wedge | 20.3% | 13.6% | 1.49x |
+| CVX weekly descending channel | 34.2% | 10.0% | 3.41x |
+| FRSH weekly descending channel | 47.8% | 33.1% | 1.44x |
+| RBRK daily rising wedge | 46.3% | 10.4% | 4.43x |
+
+The cost is not that the targets are ambitious. It is that **a target nobody reaches
+leaves the setup open forever**, which is where the stale "confirmed" rows come from:
+price walks to the real objective, stops, and our copy still reads as running. FRSH is
+the clearest case — at $15.49 it is past the $14.40 that was actually reached and short
+of our $15.71, and it was leading the landing page on 40.7% of room that no longer
+existed.
+
+LMT argues the other way and is worth keeping in view: its three completed calls all
+targeted $526-562 and the stock is now $604.18, so short targets close cleanly and then
+leave the move behind. The fix is therefore not "make targets shorter" but "make them
+reachable" — and it belongs in `_stage`'s height calculation in `pattern_detect.py`,
+not in any of the thresholds, which measured optimal (see the 10% stop section for how
+that sweep ran).
+
 ### Working on the scripts: two traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.
