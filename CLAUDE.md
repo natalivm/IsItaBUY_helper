@@ -129,6 +129,17 @@ The landing page renders two lists, both read straight from `data/weeklyFeature.
   The cache is only ever added to, so a run that cannot reach Yahoo keeps last
   week's dates instead of emptying the list. A stock file's hand-curated
   `nextEarningsOn` fills a gap Yahoo leaves; it never overrides Yahoo.
+  Laid out as one column per weekday; a card opens that stock's setup
+  (`#watchlist/TICKER`). The setup shown on a card is read **live** from
+  `data/patternWatchlist.ts`, not stored in `weeklyFeature.ts`: stages move with
+  the daily price run while this list is only rewritten weekly. A card reading
+  "Needs updating" or carrying a red dot is the signal that stock is going into
+  earnings without a checked setup.
+
+The ledger's ⚡ chip sorts by **daily RSI, highest first** (no reading sorts
+last). Every row shows its RSI; the bolt and the accent colour mark only the
+setups momentum backs (≥60 for a long, ≤40 for a short), so the badge still
+says "actionable" while the order stays a plain number.
 
 ### Rebuilding the lists
 

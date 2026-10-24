@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { TickerDefinition } from '../types';
 import { WEEKLY_FEATURE, HotSetup, EarningsEvent } from '../data/weeklyFeature';
+import { PATTERN_STOCKS, PatternStock } from '../data/patternWatchlist';
 import { fmt, pct, day, status, Pill } from './PatternWatchlist';
 import './Landing.css';
 
@@ -8,13 +9,24 @@ import './Landing.css';
 // week before Monday's open by weekly_feature.py:
 //   · the week's hottest setups (max 3), each opening the watchlist pre-filtered
 //     to that symbol, and
-//   · the covered stocks reporting earnings during the week.
-// Everything it renders comes from data/weeklyFeature.ts — no scoring here.
+//   · the covered stocks reporting earnings during the week, each row opening
+//     that stock's setup in the watchlist.
+// The two lists come from data/weeklyFeature.ts — no scoring here. The setup
+// shown beside an earnings row is read live from data/patternWatchlist.ts
+// instead: stages move with the daily price run, and this list is only
+// rewritten weekly.
 
 const SLOT: Record<EarningsEvent['time'], string> = {
   bmo: 'Before the open',
   amc: 'After the close',
   tbd: 'Time not set',
+};
+
+// The weekday columns are too narrow for the full wording.
+const SHORT_SLOT: Record<EarningsEvent['time'], string> = {
+  bmo: 'BMO',
+  amc: 'AMC',
+  tbd: 'TBD',
 };
 
 const cap = (t: string) => t[0].toUpperCase() + t.slice(1);
@@ -79,26 +91,57 @@ const HotCard: React.FC<{ h: HotSetup; onOpenWatchlist: (ticker: string) => void
   );
 };
 
+const EarningsRow: React.FC<{
+  e: EarningsEvent;
+  setup?: PatternStock;
+  onOpenWatchlist: (ticker: string) => void;
+}> = ({ e, setup, onOpenWatchlist }) => {
+  const st = status(setup ?? null);
+  return (
+    <li>
+      <button className="erow" onClick={() => onOpenWatchlist(e.ticker)}
+        title={`Open ${e.ticker}'s setup in the watchlist`}>
+        <span className="etop">
+          <b>{e.ticker}</b>
+          <span className="slot" title={SLOT[e.time] + (e.estimated ? ' (date not confirmed)' : '')}>
+            {SHORT_SLOT[e.time]}{e.estimated && '*'}
+          </span>
+        </span>
+        <span className="ename">{e.name}</span>
+        <Pill st={st} text={st.mid} />
+        <span className="epat">
+          {setup ? `${setup.pattern} · ${cap(setup.timeframe)}` : 'No setup posted yet'}
+          {setup?.auto && <i className="auto-dot" title="Auto-detected: check by hand" />}
+        </span>
+      </button>
+    </li>
+  );
+};
+
 interface LandingProps {
   tickers: Record<string, TickerDefinition>;
   /** Open the watchlist, optionally pre-filtered to one symbol. */
   onOpenWatchlist: (ticker?: string) => void;
-  onOpenStock: (ticker: string) => void;
   headerControls?: React.ReactNode;
 }
 
-const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, onOpenStock, headerControls }) => {
+const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, headerControls }) => {
   const { weekOf, weekEnd, hot, earnings } = WEEKLY_FEATURE;
+
+  const setups = useMemo(() => new Map(PATTERN_STOCKS.map(s => [s.ticker, s])), []);
 
   // Every featured setup is scored off the same run, so one date covers them all.
   const pricedOn = hot.find(h => h.priceDate)?.priceDate;
 
-  // Earnings read as a week, so they are grouped by the day they land on.
   const byDay = useMemo(() => {
-    const days = new Map<string, EarningsEvent[]>();
-    earnings.forEach(e => days.set(e.date, [...(days.get(e.date) ?? []), e]));
-    return [...days.entries()].sort(([a], [b]) => a.localeCompare(b));
-  }, [earnings]);
+    const monday = new Date(weekOf + 'T12:00:00');
+    return [0, 1, 2, 3, 4].map(i => {
+      const d = new Date(monday);
+      d.setDate(d.getDate() + i);
+      const iso = d.toISOString().slice(0, 10);
+      return { iso, evs: earnings.filter(e => e.date === iso) };
+    });
+  }, [earnings, weekOf]);
 
   return (
     <div className="pbw lnd">
@@ -136,32 +179,30 @@ const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, onOpenStock
         <section>
           <div className="sec-head">
             <h2>Reporting this week</h2>
-            <p>Stocks we cover with earnings between {span(weekOf, weekEnd)}.</p>
+            <p>
+              Stocks we cover with earnings between {span(weekOf, weekEnd)}, by the day
+              they report, with the setup each one carries into it. A card opens that
+              setup in the watchlist. <b>BMO</b> before the open, <b>AMC</b> after the
+              close; <b>*</b> marks a date Yahoo has not confirmed.
+            </p>
           </div>
-          {byDay.length === 0 ? (
+          {earnings.length === 0 ? (
             <div className="empty">No covered stock reports this week.</div>
           ) : (
             <div className="earn">
-              {byDay.map(([date, evs]) => (
-                <div className="eday" key={date}>
-                  <h3>{weekday(date)}</h3>
-                  <ul>
-                    {evs.map(e => (
-                      <li key={e.ticker}>
-                        <button
-                          className="erow"
-                          disabled={!tickers[e.ticker]}
-                          onClick={() => onOpenStock(e.ticker)}
-                        >
-                          <span className="sym"><b>{e.ticker}</b><span>{e.name}</span></span>
-                          <span className="slot">
-                            {SLOT[e.time]}
-                            {e.estimated && <em title="Yahoo has not confirmed this date yet"> · estimated</em>}
-                          </span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+              {byDay.map(({ iso, evs }) => (
+                <div className="eday" key={iso}>
+                  <h3>{weekday(iso)}</h3>
+                  {evs.length === 0
+                    ? <p className="enone">Nothing we cover</p>
+                    : (
+                      <ul>
+                        {evs.map(e => (
+                          <EarningsRow key={e.ticker} e={e} setup={setups.get(e.ticker)}
+                            onOpenWatchlist={onOpenWatchlist} />
+                        ))}
+                      </ul>
+                    )}
                 </div>
               ))}
             </div>

@@ -172,7 +172,6 @@ const App: React.FC = () => {
           <Landing
             tickers={tickers}
             onOpenWatchlist={ticker => navigateTo(WATCHLIST, ticker)}
-            onOpenStock={navigateTo}
             headerControls={panelControls}
           />
         ) : USE_LEGACY_HOME ? (
