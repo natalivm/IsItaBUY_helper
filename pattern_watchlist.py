@@ -274,7 +274,7 @@ def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=Non
 
 STAGE_LABEL = {
     'forming': 'Waiting for a break', 'signal': 'Break pending', 'confirmed': 'Break confirmed',
-    'retest': 'Retest in progress',
+    'retest': 'Retest in progress', 'atRisk': 'At risk',
     'target': 'Target reached', 'failed': 'Pattern failed', 'update': 'Needs updating',
 }
 
@@ -793,6 +793,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
         text = fh.read()
     entries = parse_watchlist(text)
     edits, price_changes, target_hits, needs_update, review = [], [], [], [], []
+    at_risk, back_inside = [], []   # confirmed breaks that closed past invalidation, and ones that came back
     bot_notes = {}  # "TICKER|label" → (date, news text) for changes this run made
     momentum = []   # (sym, rsi, 'with'/'against'/'neutral', direction) for the hot-momentum report
 
@@ -838,6 +839,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
         for label, s, pos in _setups(e):
             stage, direction = s.get('stage'), s.get('direction')
             key, what = f"{sym}|{label}", _describe(s, main)
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
 
             # A confirmed break that has come back to its boundary: report it so it can
             # be marked `retest` by hand. Never set here -- an automatic flag would flip
@@ -848,7 +850,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                     review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
                                   f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
             # A retest is a confirmed break, so it keeps running the target check.
-            if stage in ('confirmed', 'retest') and direction in ('up', 'down'):
+            if stage in ('confirmed', 'retest', 'atRisk') and direction in ('up', 'down'):
                 since = max(old_date, s.get('stageDate') or old_date)
                 hit = _target_hit(s, q['bars'], since, price)
                 if hit:
@@ -858,11 +860,36 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                     bot_notes[key] = (hit_date, f"Hit target ${_fmt_price(s['target'])}.")
                     continue
                 inv = s.get('invalidation')
-                if is_close and inv is not None and ((direction == 'down' and price > inv) or (direction == 'up' and price < inv)):
-                    review.append(f"{sym} ({label}): closed ${new_price} beyond invalidation ${_fmt_price(inv)} — check for follow-through / mark failed")
+                # The first leg of the failure test: a completed close on the setup's own
+                # timeframe, back past invalidation. Only the follow-through close is left,
+                # so the setup is flagged `atRisk` rather than left reading "confirmed".
+                # Unlike `retest` this is safe to set here -- it turns on a completed close,
+                # not on price brushing a line, so it cannot flip back and forth intraday.
+                # Marking it failed stays a human call: see prune_finished / _finished.
+                if is_close and inv is not None and _period_closed(tf, date):
+                    past = (direction == 'down' and price > inv) or (direction == 'up' and price < inv)
+                    if past and stage != 'atRisk':
+                        # Same bookkeeping as `update`: stageDate keeps the date the break was
+                        # confirmed, so the rail still reads right and a return inside restores
+                        # the stage cleanly. The at-risk date goes in updateDate.
+                        edits += _stage_edits(text, pos, 'atRisk', None, {
+                            'prevStage': stage, 'updateDate': date,
+                            'updateNote': f"Closed back past invalidation ${_fmt_price(inv)} ({_short_date(date)})."})
+                        at_risk.append((sym, label, inv, new_price))
+                        bot_notes[key] = (date, f"Closed ${new_price} back past invalidation "
+                                                f"${_fmt_price(inv)}; needs a follow-through close to fail.")
+                        continue
+                    if not past and stage == 'atRisk':
+                        back = s.get('prevStage') or 'confirmed'
+                        edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
+                        back_inside.append((sym, label, inv, new_price, back))
+                        bot_notes[key] = (date, f"Closed ${new_price} back inside ${_fmt_price(inv)}; "
+                                                f"the break is intact again.")
+                        continue
+                    if past:
+                        review.append(f"{sym} ({label}): still past invalidation ${_fmt_price(inv)} at ${new_price} — a follow-through close marks it failed")
 
             reason = _pending_break(s, price)
-            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
             if reason and not is_close:
                 review.append(f"{sym} ({label}): trading at ${new_price} past a limit — market still open; only the close counts, re-check after 16:00 ET")
                 continue
@@ -889,7 +916,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
 
     return {'momentum': momentum,
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
-            'review': review, 'news': news}
+            'at_risk': at_risk, 'back_inside': back_inside, 'review': review, 'news': news}
 
 
 # ── News feed ──
@@ -1034,7 +1061,7 @@ def _finished(s, main, now_et, lines=None):
         return now_et.date().isoformat(), f"Target reached {_short_date(hit)}.", f"{t_} · setup closed", 'target'
     if stage == 'failed':
         return now_et.date().isoformat(), "Pattern failed.", f"{t_} · setup closed", 'failed'
-    if stage not in ('confirmed', 'retest') or s.get('direction') not in ('up', 'down'):
+    if stage not in ('confirmed', 'retest', 'atRisk') or s.get('direction') not in ('up', 'down'):
         return None
     tf = s.get('timeframe') or main.get('timeframe') or 'daily'
     bars = _load_chart_bars(t_, tf)
@@ -1196,6 +1223,14 @@ def print_watchlist_report(result, missing, apply):
         print(f"\n🔄 Needs updating ({'marked' if apply else 'would mark'} stage → update):")
         for sym, label, stage, note in result['needs_update']:
             print(f"  {sym:<6} {label:<12} {stage:<8} {note}")
+    if result.get('at_risk'):
+        print(f"\n⚠ At risk ({'marked' if apply else 'would mark'} stage → atRisk; a follow-through close marks it failed):")
+        for sym, label, inv, px in result['at_risk']:
+            print(f"  {sym:<6} {label:<12} closed ${px} back past invalidation ${_fmt_price(inv)}")
+    if result.get('back_inside'):
+        print(f"\n✓ Back inside ({'marked' if apply else 'would mark'} stage → confirmed again):")
+        for sym, label, inv, px, back in result['back_inside']:
+            print(f"  {sym:<6} {label:<12} closed ${px} back inside ${_fmt_price(inv)} → {back}")
     mom = result.get('momentum') or []
     if mom:
         hot = [m for m in mom if m[2] == 'with']

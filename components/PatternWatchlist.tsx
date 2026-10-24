@@ -18,7 +18,7 @@ const pct0 = (from: number, to: number) => (to - from) / from * 100;
 export const pct = (from: number, to: number) => { const p = pct0(from, to); return (p > 0 ? '+' : '') + p.toFixed(1) + '%'; };
 export const day = (s: string) => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash' | 'refresh';
+type IconName = 'down' | 'up' | 'check' | 'x' | 'target' | 'clock' | 'dash' | 'refresh' | 'alert';
 
 const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => {
   const style = color ? { color } : undefined;
@@ -36,6 +36,8 @@ const Icon: React.FC<{ name: IconName; color?: string }> = ({ name, color }) => 
       return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="3.6" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="1.2" fill="currentColor" /></svg>;
     case 'clock':
       return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.6" /><path d="M8 4.8V8l2.2 1.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>;
+    case 'alert':
+      return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="M8 4.4v4.3" style={knock} strokeWidth="1.8" strokeLinecap="round" /><circle cx="8" cy="11.3" r="1" style={{ fill: 'var(--surface)' }} /></svg>;
     case 'refresh':
       return <svg viewBox="0 0 16 16" fill="none" style={style}><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="M10.9 6.2A3.3 3.3 0 0 0 5 6.6M5.1 9.8a3.3 3.3 0 0 0 5.9-.4M10.9 4.2v2h-2M5.1 11.8v-2h2" style={knock} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
     case 'dash':
@@ -56,7 +58,7 @@ const Cross = () => (
   <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 6 8 8m0-8-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
 );
 
-type Group = 'confirmed' | 'pending' | 'update' | 'target' | 'failed' | 'none';
+type Group = 'confirmed' | 'atrisk' | 'pending' | 'update' | 'target' | 'failed' | 'none';
 // `mid` sits between `short` (ledger pill) and `label` (panel heading): it names
 // the direction without the sentence, for the setup cards in the expanded row.
 export interface Status { label: string; mid: string; short: string; cls: string; icon: IconName; group: Group }
@@ -71,13 +73,17 @@ export function status(s: { direction: string; stage: PatternStage } | null): St
     case 'confirmed': return { label: `${word} break confirmed`, mid: `${side} confirmed`, short: 'Confirmed', cls: tone, icon: 'check', group: 'confirmed' };
     // A confirmed break back on its boundary: still confirmed, grouped and coloured as such.
     case 'retest':    return { label: 'Retest in progress', mid: `${side} retest`, short: 'Retest', cls: tone, icon: 'check', group: 'confirmed' };
+    // The first leg of the failure test has fired: its own timeframe closed back past
+    // invalidation and only the follow-through close is outstanding. Amber, not red --
+    // the break has not failed, and the levels and the target are unchanged.
+    case 'atRisk':    return { label: 'At risk', mid: `${side} at risk`, short: 'At risk', cls: 'st-risk', icon: 'alert', group: 'atrisk' };
     case 'target':    return { label: 'Target reached', mid: 'Target hit', short: 'Target hit', cls: tone, icon: 'target', group: 'target' };
     case 'failed':    return { label: 'Pattern failed', mid: 'Failed', short: 'Failed', cls: 'st-fail', icon: 'x', group: 'failed' };
     case 'update':    return { label: 'Needs updating', mid: 'Needs update', short: 'Update', cls: 'st-upd', icon: 'refresh', group: 'update' };
   }
 }
 
-const GROUPS: [Group | 'all', string][] = [['all', 'All'], ['confirmed', 'Confirmed'], ['pending', 'Pending'], ['update', 'Needs update'], ['target', 'Target reached'], ['failed', 'Failed'], ['none', 'No data']];
+const GROUPS: [Group | 'all', string][] = [['all', 'All'], ['confirmed', 'Confirmed'], ['atrisk', 'At risk'], ['pending', 'Pending'], ['update', 'Needs update'], ['target', 'Target reached'], ['failed', 'Failed'], ['none', 'No data']];
 
 // A setup flagged "update" still renders its levels as of the stage it was in.
 function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: T): T {
@@ -236,7 +242,7 @@ export function undoneBy(
   price?: number,
 ): number | null {
   if (!a || price == null || a.confirm == null) return null;
-  if (a.stage !== 'confirmed' && a.stage !== 'retest') return null;
+  if (a.stage !== 'confirmed' && a.stage !== 'retest' && a.stage !== 'atRisk') return null;
   if (a.direction !== 'up' && a.direction !== 'down') return null;
   const past = a.direction === 'up' ? a.confirm - price : price - a.confirm;
   return past > 0 ? (past / a.confirm) * 100 : null;
@@ -346,7 +352,8 @@ const DirBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a:
   const SL = hasSig ? ['Forming', 'Signal', 'Confirmed', 'Target'] : ['Forming', 'Confirmed', 'Target'];
   const SK: PatternStage[] = hasSig ? STAGES : ['forming', 'confirmed', 'target'];
   // A retest sits on the Confirmed node of the rail -- it is the break being tested, not a step past it.
-  const railStage = a.stage === 'retest' ? 'confirmed' : a.stage === 'signal' && !hasSig ? 'forming' : a.stage;
+  const railStage = a.stage === 'retest' || a.stage === 'atRisk' ? 'confirmed'
+    : a.stage === 'signal' && !hasSig ? 'forming' : a.stage;
   const idx = a.stage === 'failed' ? -1 : SK.indexOf(railStage);
   const pending = a.stage === 'forming' || a.stage === 'signal';
   const target = a.target!, invalidation = a.invalidation!;

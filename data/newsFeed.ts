@@ -15,6 +15,20 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-23-AMAT-daily-alt-atRisk",
+    date: "Oct 23 2026",
+    tickers: ["AMAT"],
+    title: "AMAT · at risk (daily setup)",
+    text: "Closed $377.24 back past invalidation $391.8; needs a follow-through close to fail.",
+  },
+  {
+    id: "2026-10-23-GE-main-atRisk",
+    date: "Oct 23 2026",
+    tickers: ["GE"],
+    title: "GE · at risk",
+    text: "Closed $285.64 back past invalidation $291.81; needs a follow-through close to fail.",
+  },
+  {
     id: "2026-10-24-ASTS-daily-alt-removed",
     date: "Oct 24 2026",
     tickers: ["ASTS"],

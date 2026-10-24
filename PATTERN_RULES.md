@@ -28,9 +28,12 @@ last trading day). Regular-session prices only, never pre/after-market.
 | Signal (Pending) | A completed close beyond the break line. **Signal level** = the break line's value at that candle. A close back inside cancels the signal. |
 | Confirmed | A later completed close beyond the signal candle's extreme. **Confirm level** = the signal candle's low (downward break) or high (upward break). |
 | Retest | (Ours) A confirmed break that has come back to the boundary it broke, without a completed close back past it. The levels do not change — it is the same setup being tested. It resolves by walking away (back to Confirmed, on toward the target) or by failing. Marked **by hand**: the price run reports a confirmed setup sitting on its boundary but never sets or clears the stage, so a stock cannot flip between the two every session. Everything else treats it as Confirmed — same levels, same target and failure checks. |
+| At risk | (Ours) A confirmed break whose own timeframe has closed back past invalidation — the first leg of the failure test, with only the follow-through close outstanding. Set **and cleared by the price run**, unlike `retest`: it turns on a completed close rather than price brushing a line, so it cannot flicker session to session. A close back inside returns it to Confirmed. `stageDate` keeps the confirmation date and `updateDate` holds the at-risk date, as for Needs updating. Levels, target and failure rule are unchanged. Marking it **failed** stays a hand call. |
 | Target reached | Price *touches* the target (intraday high/low counts). |
 | Failed | A completed close back past invalidation, then a follow-through close beyond that candle's extreme. |
 | Needs updating | (Ours) A pending setup closed past one of its limits; a new setup must be posted. |
+
+Only a completed close on the setup's *own* timeframe counts for At risk, so a monthly setup trading past its invalidation mid-month stays Confirmed and the row shows "Monthly close pending" instead.
 
 **Target** = signal level ± the pattern's height (measured move), in the break
 direction. **Invalidation** = where the idea is wrong (per pattern, below).
