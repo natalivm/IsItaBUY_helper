@@ -1577,6 +1577,12 @@
   "stage": "confirmed",
   "ticker": "CVS"
  },
+ "DASH|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "DASH"
+ },
  "DASH|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
@@ -2246,7 +2252,7 @@
  "FTNT|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
-  "stage": "forming",
+  "stage": "update",
   "ticker": "FTNT"
  },
  "FTNT|daily alt": {
@@ -2282,7 +2288,7 @@
  "FTNT|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "forming",
+  "stage": "update",
   "ticker": "FTNT"
  },
  "GEV|main": {
