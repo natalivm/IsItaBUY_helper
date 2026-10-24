@@ -81,7 +81,7 @@ function asPrev<T extends { stage: PatternStage; prevStage?: PatternStage }>(x: 
 function chartSpec(s: { direction: string; stage: PatternStage; stageDate?: string; signal?: number; confirm?: number; invalidation?: number; target?: number }) {
   const dn = s.direction === 'down';
   const levels: ChartLevel[] = [];
-  if (s.target != null) levels.push({ price: s.target, label: s.stage === 'target' ? 'Reached' : 'Target', tone: 'up' });
+  if (s.target != null) levels.push({ price: s.target, label: s.stage === 'target' ? 'Reached' : 'Target', tone: 'target' });
   if (s.confirm != null) levels.push({ price: s.confirm, label: 'Confirm', tone: dn ? 'down' : 'up' });
   if (s.signal != null) levels.push({ price: s.signal, label: 'Signal', tone: 'muted' });
   if (s.invalidation != null) levels.push({ price: s.invalidation, label: 'Invalidation', tone: 'down', solid: true });
@@ -289,10 +289,10 @@ const BothBody: React.FC<{ s: PatternStock; a: AnySetup; st: Status }> = ({ s, a
         ))}
       </div>
       <SetupChart ticker={s.ticker} timeframe={tf} lines={a.lines} levels={[
-        { price: a.goalUp!, label: 'Goal up', tone: 'up' },
+        { price: a.goalUp!, label: 'Goal up', tone: 'target' },
         { price: a.breakUp!, label: 'Breaks up', tone: 'up' },
         { price: a.breakDown!, label: 'Breaks down', tone: 'down' },
-        { price: a.goalDown!, label: 'Goal down', tone: 'up' },
+        { price: a.goalDown!, label: 'Goal down', tone: 'target' },
       ]} />
     </div>
   );

@@ -9,6 +9,7 @@
   --wait:#e2b23f; --wait-soft:#372d17; --fail:#9aa0ae; --fail-soft:#272b35;
   --inset:#151922; --shade:rgba(0,0,0,.45);
   --trend:#a8915f;
+  --target:#c084fc;        /* bright purple: a setup's target / goal, on the chart */
   --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
@@ -22,6 +23,7 @@
   --wait:#a8780f; --wait-soft:#f8efd9; --fail:#6b7180; --fail-soft:#eceef2;
   --inset:#eef0f4; --shade:rgba(22,26,35,.10);
   --trend:#9a7b3c;
+  --target:#7c3aed;        /* deeper for contrast on white */
 }
 .pbw *{box-sizing:border-box}
 .pbw{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:18px;line-height:1.5;
