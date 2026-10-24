@@ -187,6 +187,32 @@ the rule **ranks and labels, it never deletes**:
   beyond 25%, so the landing page's three cards are setups to act on rather than
   the widest drawings on the board.
 
+**What the backtest says about it** (`python3 pattern_backtest.py`, 215 stocks,
+1,717 confirmed setups replayed walk-forward; stop distance derived from the
+stored `reward_pct / rr`):
+
+| stop at confirmation | closed | hit rate | median R | expectancy | per trade |
+|---|---|---|---|---|---|
+| ≤5% | 191 | 40% | 6.2 | +1.92R | +6.0% |
+| 5–10% | 379 | 58% | 1.1 | +0.24R | +1.9% |
+| 10–20% | 489 | 66% | 0.8 | +0.20R | +2.9% |
+| 20–35% | 298 | 65% | 0.7 | +0.09R | +2.2% |
+| >35% | 139 | 61% | 0.6 | −0.02R | −0.7% |
+
+**A tight stop hits its target less often, not more** — 40% against 66% for a
+wide one — and anyone reading hit rate alone would throw the rule out. It earns
+its place on reward instead: the tight ones pay 6.2x the risk when they work,
+and a setup whose stop is more than a third of the share price away has no
+expectancy left at all. Expectancy is `hit × medianR − (1 − hit)`, in units of
+the stop; the last column converts back to price at the bucket's median risk.
+
+Two things the numbers do **not** account for: the backtest's "loss" is the
+setup's own failure rule (a close back inside the broken line, or past
+invalidation plus a follow-through), which lands *beyond* the stop, so a real
+stopped-out loss is smaller than modelled; and the 221 setups still open at the
+end of the data are excluded, which drops more wide setups than tight ones
+because the tight ones resolve faster.
+
 ### Rebuilding the lists
 
 `.github/workflows/weekly-feature.yml` runs **Mondays at 9:23 AM UTC**, before
