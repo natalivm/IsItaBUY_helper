@@ -38,15 +38,6 @@ Only a completed close on the setup's *own* timeframe counts for At risk, so a m
 **Target** = signal level ± the pattern's height (measured move), in the break
 direction. **Invalidation** = where the idea is wrong (per pattern, below).
 
-**The 10% stop.** Invalidation is the stop, so how far it sits from price decides
-whether a setup is something to act on. Within **10% of price** it is; beyond
-that the pattern still says something true about where the stock is going and is
-kept for that, but it is not an entry, and the ledger says so — green pill on the
-distance inside the line, a muted cell outside it. Ten percent on every
-timeframe: a weekly pattern is drawn wider, but the loss is the same size of
-loss. Rules below set each pattern's invalidation on its own terms; this only
-sorts the results.
-
 **Several setups per stock.** Every pattern × timeframe that satisfies its rules
 is its own setup, and a stock can have several at once, even pointing opposite
 ways. Example, IREN: weekly Rising Wedge (down, confirmed), weekly Ascending

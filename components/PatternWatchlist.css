@@ -49,10 +49,6 @@
 .pbw .momchip .bolt{width:13px;height:13px;flex:none}
 .pbw .momchip .n:empty{display:none}
 .pbw .momchip[aria-pressed="true"]{color:var(--accent)}
-.pbw .stopchip{min-width:45.5px;justify-content:center;gap:4px}
-.pbw .stopchip .stopmark{width:13px;height:13px;flex:none}
-.pbw .stopchip .n:empty{display:none}
-.pbw .stopchip[aria-pressed="true"]{color:var(--accent)}
 .pbw input[type=search]{font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:11px 14.5px;min-width:0;width:288px;max-width:100%}
 .pbw .ledger{background:var(--surface);border:1px solid var(--line);border-radius:17px;overflow:hidden}
 .pbw .head,.pbw .row-btn{display:grid;grid-template-columns:minmax(0,2.1fr) 153.5px minmax(0,1.7fr) minmax(0,1.35fr) minmax(0,1.35fr) 21.5px;gap:17px;align-items:center;padding:11px 19px}
@@ -104,12 +100,6 @@
 .pbw .rung.now .k{color:var(--muted)}
 .pbw .k-inv{color:var(--down)}
 .pbw .k-tgt{color:var(--up)}
-/* The invalidation is the stop. Within 10% of price it is a level you could put an
-   order behind, so the distance reads as a solid number; wider than that the pattern
-   is still a true reading of the trend but not an entry, and the cell recedes. */
-.pbw .lvl.tight small.k-inv{color:var(--up);background:var(--up-soft);padding:1.5px 6px;border-radius:5px}
-.pbw .lvl.wide small.k-inv{color:var(--faint)}
-.pbw .lvl.wide b{color:var(--muted)}
 .pbw .k-lvl{color:var(--muted)}
 .pbw .note{margin:12px 0 0;font-size:15.5px;color:var(--faint)}
 .pbw .rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14.5px}

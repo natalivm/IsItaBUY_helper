@@ -54,14 +54,6 @@ const Bolt = () => (
   <svg className="bolt" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9 1.5 3.5 9.2h3.3L7 14.5 12.5 6.8H9.2L9 1.5Z" fill="currentColor" /></svg>
 );
 
-// Tight stop: a level with the price sitting just above it.
-const Stop = () => (
-  <svg className="stopmark" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M2.5 11.5h11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    <path d="M8 3v5.4M5.6 6.4 8 8.8l2.4-2.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 const Cross = () => (
   <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 6 8 8m0-8-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
 );
@@ -254,30 +246,6 @@ export function undoneBy(
   if (a.direction !== 'up' && a.direction !== 'down') return null;
   const past = a.direction === 'up' ? a.confirm - price : price - a.confirm;
   return past > 0 ? (past / a.confirm) * 100 : null;
-}
-
-// A setup's invalidation is its stop, and a stop you would never wear is not a
-// setup. Ten percent of price is the line: inside it the level is one you could
-// put an order behind, beyond it the pattern is still worth reading for where
-// the stock is going, but not for where to risk money. The same number on every
-// timeframe -- the loss does not know which chart the line was drawn on.
-export const MAX_STOP = 10;
-
-/** How far a setup's invalidation sits from price, as a % of price, or null.
- *
- *  Only a setup you could still take has a stop worth measuring: a target reached,
- *  a failure and a setup that needs updating are history, and an at-risk one has
- *  already closed past the level, which would otherwise read as the tightest stop
- *  on the ledger. Either-direction setups have no single invalidation either. */
-const STOPPABLE: PatternStage[] = ['forming', 'signal', 'confirmed', 'retest'];
-
-export function stopPct(
-  s: { invalidation?: number; stage?: PatternStage } | null | undefined,
-  price?: number,
-): number | null {
-  if (!s || price == null || s.invalidation == null) return null;
-  if (!s.stage || !STOPPABLE.includes(s.stage)) return null;
-  return (Math.abs(price - s.invalidation) / price) * 100;
 }
 
 const Undone: React.FC<{ pct: number | null; tf?: string }> = ({ pct, tf }) =>
@@ -677,17 +645,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
     );
   } else {
     const tCls = s.target! < s.price ? 'k-inv' : 'k-tgt';
-    const stop = stopPct(s, s.price);
-    const tight = stop != null && stop <= MAX_STOP;
     levels = (
       <>
         <span className="lvl"><small className={tCls}>{pct(s.price, s.target!)}</small><b className={tCls}>{fmt(s.target!)}</b></span>
-        <span className={`lvl${tight ? ' tight' : stop != null ? ' wide' : ''}`}
-          title={stop == null ? undefined : tight
-            ? `Stop is ${stop.toFixed(1)}% away — close enough to put an order behind`
-            : `Stop is ${stop.toFixed(0)}% away — read this one for where the stock is going, not for an entry`}>
-          <small className="k-inv">{pct(s.price, s.invalidation!)}</small><b>{fmt(s.invalidation!)}</b>
-        </span>
+        <span className="lvl"><small className="k-inv">{pct(s.price, s.invalidation!)}</small><b>{fmt(s.invalidation!)}</b></span>
       </>
     );
   }
@@ -776,9 +737,9 @@ interface PatternWatchlistProps {
 
 const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStock, headerControls, initialQuery = '' }) => {
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
-  const [sortBy, setSortBy] = useState<'default' | 'target' | 'stop' | 'momentum'>(() => {
+  const [sortBy, setSortBy] = useState<'default' | 'target' | 'momentum'>(() => {
     const p = readPref('pbw-sort', 'default');
-    return p === 'target' || p === 'stop' || p === 'momentum' ? p : 'default';
+    return p === 'target' || p === 'momentum' ? p : 'default';
   });
   const [query, setQuery] = useState(initialQuery);
   // One row open at a time: opening another closes the last, so the ledger
@@ -818,13 +779,6 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
     () => allRows.filter(r => momentumOf(r.setup?.rsi, r.setup?.direction) === 'with').length,
     [allRows],
   );
-  // How many rows carry a stop you could actually put an order behind -- shown on
-  // the stop chip when it is off. The rest of the ledger stays: a wide pattern is
-  // still a true reading of the trend, it is just not an entry.
-  const tightCount = useMemo(
-    () => allRows.filter(r => { const d = stopPct(r.setup, r.setup?.price); return d != null && d <= MAX_STOP; }).length,
-    [allRows],
-  );
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -832,12 +786,6 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
       (activeFilter === 'all' || status(r.setup).group === activeFilter) &&
       (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
-    if (sortBy === 'stop') {
-      // Tightest stop first; a setup with no single invalidation (either-direction,
-      // or no setup at all) has nothing to measure and sorts last.
-      const d = (r: Row) => stopPct(r.setup, r.setup?.price) ?? Infinity;
-      out.sort((a, b) => d(a) - d(b));
-    }
     if (sortBy === 'momentum') {
       // Straight RSI, strongest first; stocks with no reading go last. Whether
       // momentum backs a setup's direction still shows on the row's bolt badge,
@@ -874,11 +822,6 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
             <button className="chip pctchip" aria-pressed={sortBy === 'target'} title="Sort by highest % to target"
               onClick={() => { const next = sortBy === 'target' ? 'default' : 'target'; setSortBy(next); writePref('pbw-sort', next); }}>
               %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
-            </button>
-            <button className="chip stopchip" aria-pressed={sortBy === 'stop'}
-              title={`Sort by the tightest stop. The invalidation column marks the setups whose stop is within ${MAX_STOP}% of price — the ones worth an order rather than a read`}
-              onClick={() => { const next = sortBy === 'stop' ? 'default' : 'stop'; setSortBy(next); writePref('pbw-sort', next); }}>
-              <Stop /><span className="n">{sortBy === 'stop' ? '↓' : tightCount || ''}</span>
             </button>
             <button className="chip momchip" aria-pressed={sortBy === 'momentum'}
               title="Sort by daily RSI, highest first. The bolt marks setups RSI backs (≥60 for a long, ≤40 for a short)"

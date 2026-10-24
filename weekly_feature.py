@@ -99,8 +99,8 @@ def score_setup(s, agree_n, today):
       · how far along it is (a confirmed break beats one still forming),
       · whether daily RSI and the stock's own trend back its direction,
       · how many stored setups point at the same target,
-      · how much room is left to the target, how far away the stop is in its
-        own right, and how the two compare,
+      · how much room is left to the target, and how that compares with the
+        distance to invalidation,
       · how recently it moved.
     """
     stage, direction = s.get('stage'), s.get('direction')
@@ -147,15 +147,7 @@ def score_setup(s, agree_n, today):
 
     inval = s.get('invalidation')
     if inval:
-        risk = pw.stop_pct(price, inval)
-        # How far the stop is matters on its own, not only against the reward: three cards
-        # is a shortlist of what to act on this week, and a pattern whose invalidation sits
-        # a third of the share price away cannot be acted on at any reward ratio.
-        if risk <= pw.MAX_STOP:
-            score += 15
-            why.append(f"Invalidation is only {risk:.1f}% away — a stop you can actually wear")
-        elif risk > 25:
-            score -= 20
+        risk = abs(price - inval) / price * 100
         if risk > 0:
             rr = abs(room) / risk
             if rr >= 3:
