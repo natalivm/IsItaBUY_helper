@@ -12,14 +12,24 @@ For every watchlist entry it:
      The same check runs on the entry's `alt` setup (second timeframe).
 
 Pending setups (forming / signal, including either-direction ones) are checked
-against their price limits using the latest *close*. A close past either limit
-flips the setup to `stage: "update"` ("Needs updating": a new setup has to be
-posted) and records `prevStage`, `updateDate` + `updateNote` (`stageDate` is left as it was):
-  forming:  invalidation on one side, the signal level (or confirm, if there is
-            no signal level) on the other
-  signal:   the confirm level on one side, the signal level on the other (a close
-            back past it cancels the signal; invalidation if there is no signal level)
+against their price limits using the latest *close*. Each has a limit on either
+side, and which one the close crossed decides what happened:
+  forming:  invalidation behind, the signal level (or confirm, if there is no
+            signal level) ahead
+  signal:   the signal level behind (a close back past it cancels the signal;
+            invalidation if there is no signal level), the confirm level ahead
   both:     breakUp / breakDown
+A close past the limit *ahead* is the setup working, so it moves the setup on:
+to `signal` on a close past the signal level, to `confirmed` on a close past
+confirm -- `confirm` is the signal candle's low/high (PATTERN_RULES.md), so "a
+later close beyond confirm" and "beyond the signal candle's low" are one test,
+and confirmation needs a later bar than the one that signalled. `stageDate`
+moves to the closing date.
+A close past the limit *behind* is the setup coming apart, and only that flips
+it to `stage: "update"` ("Needs updating": a new setup has to be posted),
+recording `prevStage`, `updateDate` + `updateNote` (`stageDate` is left as it
+was). An either-direction setup that breaks is flagged the same way: it carries
+no signal, confirm or target, so a directional setup has to be drawn by hand.
 Only a close on the setup's own timeframe counts: daily setups are checked every
 run, weekly ones on Fridays, monthly ones on the month's last weekday. In between
 they are only listed for review.
@@ -738,20 +748,37 @@ def _target_hit(setup, bars, since, price):
 
 
 def _pending_break(s, price):
-    """Reason string if a forming/signal setup closed past one of its limits, else None."""
+    """(reason, next_stage) if a forming/signal setup closed past one of its limits, else (None, None).
+
+    A pending setup has a limit on each side, and which one the close crossed decides what
+    happened -- they are not the same event:
+
+      forward  (the signal level from `forming`, the confirm level from `signal`) is the
+               setup *working*. Crossing the signal level is a signal; crossing confirm is
+               a confirmation, because `confirm` is defined as the signal candle's low/high
+               (PATTERN_RULES.md), so "a later close beyond confirm" and "beyond the signal
+               candle's low" are the same test. `next_stage` names the stage it moved to.
+      backward (invalidation, or the signal level cancelling its own signal) is the setup
+               coming apart, and is the case that really does need a new one posted.
+               `next_stage` is None.
+
+    A `both`-direction setup that breaks also gets next_stage None: it carries breakUp /
+    goalUp / breakDown / goalDown and no signal, confirm or target, so a directional setup
+    has to be drawn by hand rather than synthesised here.
+    """
     stage, d = s.get('stage'), s.get('direction')
     if stage not in ('forming', 'signal'):
-        return None
+        return None, None
     p = _fmt_price(price)
     if d == 'both':
         up, dn = s.get('breakUp'), s.get('breakDown')
         if up is not None and price > up:
-            return f"closed ${p} above break-up ${_fmt_price(up)}"
+            return f"closed ${p} above break-up ${_fmt_price(up)}", None
         if dn is not None and price < dn:
-            return f"closed ${p} below break-down ${_fmt_price(dn)}"
-        return None
+            return f"closed ${p} below break-down ${_fmt_price(dn)}", None
+        return None, None
     if d not in ('up', 'down'):
-        return None
+        return None, None
     sig, conf, inv = s.get('signal'), s.get('confirm'), s.get('invalidation')
     if stage == 'forming':
         fwd_name, fwd = ('signal', sig) if sig is not None else ('confirm', conf)
@@ -760,15 +787,18 @@ def _pending_break(s, price):
         fwd_name, fwd = 'confirm', conf
         back_name, back = ('signal', sig) if sig is not None else ('invalidation', inv)
     down = d == 'down'
-    # Crossing `confirm` from the signal stage is a confirmation, so it needs the same
-    # margin the detector uses; the other limits stay a plain close.
-    crossed = _confirmed(price, fwd, down) if fwd_name == 'confirm' else ((down and price < fwd) or (not down and price > fwd))
-    if fwd is not None and crossed:
-        return f"closed ${p} {'below' if down else 'above'} {fwd_name} ${_fmt_price(fwd)}"
+    if fwd is not None:
+        # Crossing `confirm` is a confirmation, so it needs the same margin the detector
+        # uses; the other limits stay a plain close.
+        crossed = _confirmed(price, fwd, down) if fwd_name == 'confirm' else \
+            ((down and price < fwd) or (not down and price > fwd))
+        if crossed:
+            nxt = 'signal' if fwd_name == 'signal' else 'confirmed'
+            return f"closed ${p} {'below' if down else 'above'} {fwd_name} ${_fmt_price(fwd)}", nxt
     if back is not None and ((down and price > back) or (not down and price < back)):
         extra = ", signal cancelled" if back_name == 'signal' else ""
-        return f"closed ${p} back {'above' if down else 'below'} {back_name} ${_fmt_price(back)}{extra}"
-    return None
+        return f"closed ${p} back {'above' if down else 'below'} {back_name} ${_fmt_price(back)}{extra}", None
+    return None, None
 
 
 def _period_closed(timeframe, iso):
@@ -843,6 +873,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
     entries = parse_watchlist(text)
     edits, price_changes, target_hits, needs_update, review = [], [], [], [], []
     at_risk, back_inside = [], []   # confirmed breaks that closed past invalidation, and ones that came back
+    promoted = []                   # pending setups whose close carried them forward a stage
     bot_notes = {}  # "TICKER|label" → (date, news text) for changes this run made
     momentum = []   # (sym, rsi, 'with'/'against'/'neutral', direction) for the hot-momentum report
 
@@ -938,12 +969,26 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                     if past:
                         review.append(f"{sym} ({label}): still past invalidation ${_fmt_price(inv)} at ${new_price} — a follow-through close marks it failed")
 
-            reason = _pending_break(s, price)
+            reason, next_stage = _pending_break(s, price)
             if reason and not is_close:
                 review.append(f"{sym} ({label}): trading at ${new_price} past a limit — market still open; only the close counts, re-check after 16:00 ET")
                 continue
             if reason and not _period_closed(tf, date):
                 review.append(f"{sym} ({label}): {reason} — not a {tf} close yet; check at the {tf} close")
+                continue
+            # Confirmation needs a *later* close than the one that signalled, so a setup
+            # whose stageDate is this very bar waits for the next one.
+            if reason and next_stage and s.get('stageDate') == date:
+                review.append(f"{sym} ({label}): {reason} — same bar as the {stage}; confirmation needs a later close")
+                continue
+            if reason and next_stage:
+                # The setup moved forward, it did not come apart: crossing the signal level
+                # is a signal and crossing confirm is a confirmation. Safe to set here for
+                # the same reason `atRisk` is -- it turns on a completed close on the setup's
+                # own timeframe, not on price brushing a line, so it cannot flip intraday.
+                promoted.append((sym, label, stage, next_stage, reason))
+                edits += _stage_edits(text, pos, next_stage, date)
+                bot_notes[key] = (date, f"{reason[0].upper()}{reason[1:]}.")
                 continue
             if reason:
                 reason = reason[0].upper() + reason[1:]
@@ -966,7 +1011,8 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
 
     return {'momentum': momentum, 'thin': thin_setups(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
-            'at_risk': at_risk, 'back_inside': back_inside, 'review': review, 'news': news}
+            'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
+            'review': review, 'news': news}
 
 
 # ── News feed ──
@@ -1359,6 +1405,10 @@ def print_watchlist_report(result, missing, apply):
         print(f"\n🎯 Target reached ({'marked' if apply else 'would mark'} stage → target):")
         for sym, label, target, d in result['target_hits']:
             print(f"  {sym:<6} {label:<12} target ${_fmt_price(target)}  on {d}")
+    if result.get('promoted'):
+        print(f"\n➡ Moved forward ({'marked' if apply else 'would mark'} the new stage):")
+        for sym, label, was, now, note in result['promoted']:
+            print(f"  {sym:<6} {label:<12} {was} → {now:<9} {note}")
     if result['needs_update']:
         print(f"\n🔄 Needs updating ({'marked' if apply else 'would mark'} stage → update):")
         for sym, label, stage, note in result['needs_update']:
@@ -1447,5 +1497,5 @@ if __name__ == "__main__":
         raise SystemExit(0)
     res = update_watchlist(None, apply=args.apply, post_news=False if args.no_news else None)
     print_watchlist_report(res, [], args.apply)
-    if not args.apply and (res['news'] or res['needs_update'] or res['target_hits']):
+    if not args.apply and (res['news'] or res['needs_update'] or res['target_hits'] or res.get('promoted')):
         print("\nRun with --apply to write these changes.")
