@@ -15,6 +15,34 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-FTNT-daily-alt-signal",
+    date: "Oct 24 2026",
+    tickers: ["FTNT"],
+    title: "FTNT · new setup (daily setup)",
+    text: "Ascending Channel (daily), break pending.",
+  },
+  {
+    id: "2026-10-24-FTNT-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["FTNT"],
+    title: "FTNT · new setup",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
+    id: "2026-10-24-VRT-daily-alt-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["VRT"],
+    title: "VRT · new setup (daily setup)",
+    text: "Ascending Channel (daily), break confirmed.",
+  },
+  {
+    id: "2026-10-24-VRT-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["VRT"],
+    title: "VRT · new setup",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
     id: "2026-10-23-SIMO-main-target",
     date: "Oct 23 2026",
     tickers: ["SIMO"],

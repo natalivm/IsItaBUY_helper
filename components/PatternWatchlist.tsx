@@ -187,8 +187,10 @@ const Ladder: React.FC<{ rungs: Rung[]; price: number; priceDate: string }> = ({
   </div>
 );
 
-export const Pill: React.FC<{ st: Status }> = ({ st }) => (
-  <span className={`pill ${st.cls}`}><Icon name={st.icon} />{st.label}</span>
+// `text` overrides the sentence-long label for narrow layouts (the landing
+// page's weekday columns pass st.mid).
+export const Pill: React.FC<{ st: Status; text?: string }> = ({ st, text }) => (
+  <span className={`pill ${st.cls}`}><Icon name={st.icon} />{text ?? st.label}</span>
 );
 
 // "Daily / Weekly / Monthly close pending" is shown only while that candle is still open
@@ -653,11 +655,19 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />
           {s?.agree && s.agree.n > 1 && <span className="flag agree" title="Stored setups pointing to a similar target">{s.agree.n} agree</span>}
-          {s && momentumOf(s.rsi, s.direction) === 'with' && (
-            <span className="flag mom" title={`Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`}>
-              <Bolt />RSI {Math.round(s.rsi!)}
-            </span>
-          )}
+          {s?.rsi != null && (() => {
+            // The reading is on every row so the RSI sort reads as an order;
+            // the bolt and the accent are kept for the ones momentum backs.
+            const m = momentumOf(s.rsi, s.direction);
+            return (
+              <span className={`flag mom${m === 'with' ? '' : ' off'}`}
+                title={m === 'with'
+                  ? `Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`
+                  : `Daily RSI ${s.rsi!.toFixed(1)}`}>
+                {m === 'with' && <Bolt />}RSI {Math.round(s.rsi!)}
+              </span>
+            );
+          })()}
         </span>
         {levels}
         {open
@@ -736,15 +746,10 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
       (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
     if (sortBy === 'momentum') {
-      // Setups RSI actually backs first, strongest conviction (furthest from 50) at the top;
-      // then everything neutral; setups momentum argues against sink to the bottom.
-      const score = (r: Row) => {
-        const s = r.setup;
-        const m = momentumOf(s?.rsi, s?.direction);
-        const dist = s?.rsi == null ? -1 : Math.abs(s.rsi - 50);
-        return m === 'with' ? 2000 + dist : m === 'against' ? dist - 1000 : dist;
-      };
-      out.sort((a, b) => score(b) - score(a));
+      // Straight RSI, strongest first; stocks with no reading go last. Whether
+      // momentum backs a setup's direction still shows on the row's bolt badge,
+      // so the ranking stays a plain, readable number.
+      out.sort((a, b) => (b.setup?.rsi ?? -1) - (a.setup?.rsi ?? -1));
     }
     return out;
   }, [allRows, activeFilter, query, sortBy]);
@@ -778,7 +783,7 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
               %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
             </button>
             <button className="chip momchip" aria-pressed={sortBy === 'momentum'}
-              title="Sort by momentum: setups the daily RSI backs (≥60 for a long, ≤40 for a short) first"
+              title="Sort by daily RSI, highest first. The bolt marks setups RSI backs (≥60 for a long, ≤40 for a short)"
               onClick={() => { const next = sortBy === 'momentum' ? 'default' : 'momentum'; setSortBy(next); writePref('pbw-sort', next); }}>
               <Bolt /><span className="n">{sortBy === 'momentum' ? '↓' : hotCount || ''}</span>
             </button>
