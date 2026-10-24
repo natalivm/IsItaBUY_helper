@@ -119,5 +119,111 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       ]
     }
   ],
-  earnings: []
+  earnings: [
+    {
+      ticker: "CLS",
+      name: "Celestica Inc.",
+      date: "2026-10-26",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "GLW",
+      name: "Corning Inc",
+      date: "2026-10-27",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "SOFI",
+      name: "SoFi Technologies",
+      date: "2026-10-27",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "SPGI",
+      name: "S&P Global",
+      date: "2026-10-27",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "STX",
+      name: "Seagate Technology Holdings",
+      date: "2026-10-27",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "APH",
+      name: "Amphenol Corp",
+      date: "2026-10-28",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "VRT",
+      name: "Vertiv Holdings Co",
+      date: "2026-10-28",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "FTNT",
+      name: "Fortinet",
+      date: "2026-10-28",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "KLAC",
+      name: "KLA Corporation",
+      date: "2026-10-28",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "NOW",
+      name: "ServiceNow",
+      date: "2026-10-28",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "LLY",
+      name: "Eli Lilly and Company",
+      date: "2026-10-29",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "AMZN",
+      name: "Amazon.com",
+      date: "2026-10-29",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "INTC",
+      name: "Intel Corporation",
+      date: "2026-10-29",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "RDDT",
+      name: "Reddit, Inc.",
+      date: "2026-10-29",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "SNDK",
+      name: "SanDisk Corporation",
+      date: "2026-10-29",
+      estimated: false,
+      time: "amc"
+    }
+  ]
 };
