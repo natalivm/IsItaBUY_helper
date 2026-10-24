@@ -84,7 +84,7 @@ const InstallPrompt: React.FC = () => {
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         className="fixed bottom-4 left-4 right-4 z-50 max-w-md mx-auto"
       >
-        <div className="bg-surface-deep/95 backdrop-blur-lg border border-slate-700/60 rounded-2xl p-4 shadow-2xl shadow-black/40">
+        <div className="bg-surface-deep/95 backdrop-blur-lg border border-slate-700/60 rounded-2xl p-4">
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#ff007f]/10 flex items-center justify-center">
               {showIosPrompt ? (

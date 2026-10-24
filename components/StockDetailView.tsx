@@ -101,7 +101,7 @@ const StockDetailView: React.FC<Props> = ({
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="p-8 rounded-2xl border border-slate-800 bg-surface-card/80 shadow-2xl relative overflow-hidden group"
+              className="p-8 rounded-2xl border border-slate-800 bg-surface-card relative overflow-hidden group"
               style={{ borderLeftWidth: '3px', borderLeftColor: tc }}
             >
               <div
@@ -112,26 +112,26 @@ const StockDetailView: React.FC<Props> = ({
               <div className="flex flex-col gap-8 relative">
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-center">
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Entry CAGR</span>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Entry CAGR</span>
                     <span className="text-3xl font-black text-white">{pctFmt(currentProjection.cagrs[4]/100)}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Target</span>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Target</span>
                     <span className="text-3xl font-black" style={{ color: tc }}>{usd(currentProjection.pricePerShare)}</span>
                   </div>
                   {isEpsPe && tickerDef.baseEps ? (
                     <div className="flex flex-col">
-                      <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Fwd P/E</span>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Fwd P/E</span>
                       <span className="text-3xl font-black text-white">{(tickerDef.currentPrice / tickerDef.baseEps).toFixed(1)}x</span>
                     </div>
                   ) : (
                     <div className="flex flex-col">
-                      <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">WACC</span>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">WACC</span>
                       <span className="text-3xl font-black text-white">{pctFmt(currentProjection.w)}</span>
                     </div>
                   )}
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">RS Rating</span>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">RS Rating</span>
                     <div className="flex items-end gap-1">
                       <span className={cn(
                         "text-3xl font-black",
@@ -141,7 +141,7 @@ const StockDetailView: React.FC<Props> = ({
                     </div>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">AI Context</span>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">AI Context</span>
                     <div className={cn(
                       "text-xs font-black px-2 py-1 rounded border inline-block text-center whitespace-nowrap",
                       AI_IMPACT_BADGE[tickerDef.aiImpact]
@@ -160,7 +160,7 @@ const StockDetailView: React.FC<Props> = ({
                       onClick={() => setQuantOpen(o => !o)}
                       className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-800/40 transition-colors min-h-[44px]"
                     >
-                      <h3 className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2">
+                      <h3 className="text-xs font-bold text-amber-500 uppercase tracking-[0.18em] flex items-center gap-2">
                         <Info className="w-3 h-3" />
                         Quant Narrative
                       </h3>
@@ -190,7 +190,7 @@ const StockDetailView: React.FC<Props> = ({
                       onClick={() => setAlphaOpen(o => !o)}
                       className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-800/40 transition-colors min-h-[44px]"
                     >
-                      <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-2">
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-[0.18em] flex items-center gap-2">
                         <LayoutDashboard className="w-3 h-3" />
                         Why Buy / Risks
                       </h3>
@@ -209,7 +209,7 @@ const StockDetailView: React.FC<Props> = ({
                           <div className="px-4 pb-5 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                             {prose.reasonsToBuy && prose.reasonsToBuy.length > 0 && (
                               <div>
-                                <div className="text-xs font-black uppercase tracking-[0.2em] text-emerald-500 mb-3 flex items-center gap-2">
+                                <div className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-500 mb-3 flex items-center gap-2">
                                   <TrendingUp className="w-3.5 h-3.5" />
                                   Why Buy
                                 </div>
@@ -225,7 +225,7 @@ const StockDetailView: React.FC<Props> = ({
                             )}
                             {prose.risksToBuy && prose.risksToBuy.length > 0 && (
                               <div>
-                                <div className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-3 flex items-center gap-2">
+                                <div className="text-xs font-bold uppercase tracking-[0.14em] text-amber-500 mb-3 flex items-center gap-2">
                                   <AlertTriangle className="w-3.5 h-3.5" />
                                   Risks
                                 </div>
@@ -268,25 +268,25 @@ const StockDetailView: React.FC<Props> = ({
 
           {/* Sidebar */}
           <div className="space-y-8">
-            <div className="bg-surface-card border border-slate-800 rounded-2xl p-8 shadow-2xl sticky top-8 overflow-hidden">
+            <div className="bg-surface-card border border-slate-800 rounded-2xl p-8 sticky top-8 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-8 mt-1">Model Verdict</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-amber-500 mb-8 mt-1">Model Verdict</h3>
               <div className="space-y-6">
                 <div className="flex flex-col gap-1 border-b border-slate-800 pb-4">
-                  <span className="text-xs text-slate-400 uppercase font-black tracking-widest">5Y Prob-Weighted CAGR</span>
+                  <span className="text-xs text-slate-400 uppercase font-bold tracking-widest">5Y Prob-Weighted CAGR</span>
                   <span className="text-3xl font-black leading-none text-white">{pctFmt(investmentConclusion.cagr / 100)}</span>
                 </div>
                 <div className="flex flex-col gap-1 border-b border-slate-800 pb-4">
-                  <span className="text-xs text-slate-400 uppercase font-black tracking-widest">Blended Value</span>
+                  <span className="text-xs text-slate-400 uppercase font-bold tracking-widest">Blended Value</span>
                   <span className="text-3xl font-black leading-none" style={{ color: tc }}>{usd(investmentConclusion.pwAvg)}</span>
                 </div>
               </div>
             </div>
 
             {/* Live price chart (TradingView mini overview) */}
-            <div className="bg-surface-card border border-slate-800 rounded-2xl p-5 shadow-2xl overflow-hidden relative">
+            <div className="bg-surface-card border border-slate-800 rounded-2xl p-5 overflow-hidden relative">
               <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-amber-500 mb-3 mt-1">Price Chart</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-amber-500 mb-3 mt-1">Price Chart</h3>
               <TradingViewMiniChart ticker={tickerDef.ticker} themeColor={tc} height={220} />
             </div>
           </div>

@@ -331,7 +331,7 @@
 .pbw .pr-modal{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);
   display:grid;place-items:center;padding:max(16px,env(safe-area-inset-left,0px))}
 .pbw .pr-card{width:min(760px,100%);max-height:86vh;overflow:auto;background:var(--surface);
-  border:1px solid var(--line);border-radius:18px;padding:0 24px 24px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
+  border:1px solid var(--line);border-radius:18px;padding:0 24px 24px}
 .pbw .pr-card:focus{outline:none}
 .pbw .pr-top{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:18px 0 16px;background:var(--surface);border-bottom:1px solid var(--line);margin-bottom:20px}
