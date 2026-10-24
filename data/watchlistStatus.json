@@ -2621,10 +2621,22 @@
   "stage": "confirmed",
   "ticker": "GD"
  },
+ "GEV|daily Descending Channel": {
+  "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
+  "ticker": "GEV"
+ },
  "GEV|main": {
   "label": "main",
-  "setup": "Descending Channel (daily)",
-  "stage": "forming",
+  "setup": "Head & Shoulders (weekly)",
+  "stage": "confirmed",
+  "ticker": "GEV"
+ },
+ "GEV|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
   "ticker": "GEV"
  },
  "GE|daily Ascending Channel": {
