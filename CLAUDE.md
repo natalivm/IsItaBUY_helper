@@ -136,6 +136,13 @@ The landing page renders two lists, both read straight from `data/weeklyFeature.
   "Needs updating" or carrying a red dot is the signal that stock is going into
   earnings without a checked setup.
 
+The page animates with `motion/react` and honours `prefers-reduced-motion`:
+every number, sparkline and meter is present with motion off. Each featured
+card draws a 90-day sparkline from `public/bars/TICKER_daily.json` — the same
+candle files the expanded-row charts read, fetched lazily, so a missing file
+degrades to a shimmer placeholder rather than an error. The meter under the
+price shows where the close sits between invalidation (0%) and target (100%).
+
 The ledger's ⚡ chip sorts by **daily RSI, highest first** (no reading sorts
 last). Every row shows its RSI; the bolt and the accent colour mark only the
 setups momentum backs (≥60 for a long, ≤40 for a short), so the badge still
