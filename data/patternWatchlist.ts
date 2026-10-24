@@ -18316,7 +18316,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     history: [
       { pattern: "Falling Wedge", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-19",
         confirm: 158.71, invalidation: 123.02, target: 180.35,
-        note: "A wedge that paid. Confirmed on a weekly close above $158.71, beyond the signal candle's high, and reached $180.35 the week of Oct 19 — price has since carried on to $183.21. A completed move, not a new entry. Worth keeping for what it shows about drawing: the detector found this same wedge and measured it to $194.41, which the stock has not reached, so the identical pattern on the identical chart reads as finished or as still running depending only on where the two lines were put." }
+        note: "A wedge that paid. Confirmed on a weekly close above $158.71, beyond the signal candle's high, and reached $180.35 the week of Oct 19 — price has since carried on to $183.21. A completed move, not a new entry. Worth keeping for what it shows about drawing: the detector found this same wedge and measured it to $194.41, which the stock has not reached, so the identical pattern on the identical chart reads as finished or as still running depending only on where the two lines were put." },
+      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-12",
+        confirm: 151.76, invalidation: 121.8, target: 171.1,
+        note: "A different pattern pointing at the same move, and it paid a week earlier: confirmed above $151.76 and reached $171.10 on Oct 12. Two independent readings of one chart, both up, both finished — the channel first and then the wedge above. Their targets sit 5.4% apart, which is just outside the 5% the detector treats as agreement, so it would have scored these two as unrelated." }
     ],
     more: [
       {
