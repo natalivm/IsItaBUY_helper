@@ -153,7 +153,7 @@ def _stage(bars, n, pattern, up, lo, start, A):
                 sig = None                       # close back inside: signal cancelled
             continue
         target = sig['level'] + height if d == 'up' else sig['level'] - height
-        if pw._reached(d, target, h[i], l[i]):
+        if pw._reached(d, target, h[i], l[i]):   # same margin the daily run allows
             return None                          # target already reached: finished
     last = len(t) - 1
     if sig is None:
