@@ -9428,6 +9428,9 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     note: "Price has run up inside a rising channel since the April low, and the lower line is the real evidence here: fifteen touches since April, and no close more than 6.6% beneath it. Mid-October tested it properly — Oct 16, 19 and 20 all closed below the line, which was a downward signal, and Oct 21 closed back inside and cancelled it. At $257.57 price sits in the middle of the channel with nothing broken in either direction. A confirmed daily close above $298.67 opens $363.44; a confirmed close below $233.90 points to $169.13. Confirmation means a second close beyond the break candle's extreme, not just the first close through the line — the October round trip is exactly why.",
     history: [
+      { pattern: "Ascending Channel", timeframe: "weekly", direction: "up", stage: "failed", stageDate: "2026-10-12",
+        confirm: 263.87, invalidation: 251.87,
+        note: "A break that confirmed and then gave up. The weekly close cleared $263.87, beyond the signal candle's high, and a later weekly close came back inside the broken boundary — which for a channel is the whole failure test, no follow-through required. Price sits $257.57, between the two. A different death from the pair on CVX, which never signalled at all: this one earned its confirmation first, which is the failure mode that costs money." },
       { pattern: "Hammer", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-21",
         confirm: 229.24, invalidation: 221.36, target: 237.12,
         note: "The Oct 20 candle put a $4.90 lower wick under a $1.11 body and closed at $227.37, the classic hammer after a decline. Oct 21 closed at $239.34, above the $229.24 high, and ran to $242.90 intraday — past the $237.12 target on the same candle that confirmed it. A completed move, not a new entry." }
