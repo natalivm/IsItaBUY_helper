@@ -17,12 +17,12 @@ export const META = defineStock({
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 29.80,        // FY2026E GAAP EPS consensus post-Q3 (Oct 23 2026): Zacks $29.94, Yahoo $29.38, MarketBeat $30.01. FY27E $33.83 (was $34.55). Absorbs Q3's $9.89B legal charge. Prior: $30.40 (pre-Q3).
-  rsRating: 97,          // IBD RS per user, 10/11/2026 (was 22) — STALE: predates the -16% Oct 13->23 drawdown, needs a fresh IBD read
-  rsTrend: 'rising',     // flagged: price fell ~16% in two weeks, so 'rising' likely no longer holds
+  rsRating: 81,          // IBD RS per user, 10/24/2026 (was 97 on 10/11) — the Q3 reaction and the -16% Oct 13->23 drawdown cost it 16 points
+  rsTrend: 'falling',    // 97 -> 81 in under two weeks
   aiImpact: 'TAILWIND',
   updatedOn: '10/23',
   lastReportTag: 'Q3 2026',
-  dataReviewedOn: '2026-10-23',
+  dataReviewedOn: '2026-10-24',
   nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
   // ⚠ 2-FOR-1 EQUIVALENT SPLIT EFFECTIVE JAN 19 2027 — ACTION REQUIRED THEN
   // ─────────────────────────────────────────────────────────────────────────

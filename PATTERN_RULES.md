@@ -38,6 +38,18 @@ Only a completed close on the setup's *own* timeframe counts for At risk, so a m
 **Target** = signal level ± the pattern's height (measured move), in the break
 direction. **Invalidation** = where the idea is wrong (per pattern, below).
 
+**Enough room to be worth taking.** A setup whose target sits within **10%** of
+its confirmation level is skipped. The confirmation level is what you would act
+on, so that is where the room is measured from — LMT's daily ascending channel
+asked for a close above $608.00 for a $610.97 target, half a percent of move for
+a full call. The same floor applies on every timeframe: a weekly or monthly
+pattern that only promises 10% is worth less, not more, for the time it takes.
+A two-way (still forming) setup is measured on both of its sides and judged at
+the narrower one. `pattern_detect.py` will not emit a setup below the floor;
+`python3 pattern_watchlist.py --thin` lists the stored ones and drops the
+auto-detected ones (`--thin --apply`), leaving anything posted by hand for a
+human to replace.
+
 **Several setups per stock.** Every pattern × timeframe that satisfies its rules
 is its own setup, and a stock can have several at once, even pointing opposite
 ways. Example, IREN: weekly Rising Wedge (down, confirmed), weekly Ascending
