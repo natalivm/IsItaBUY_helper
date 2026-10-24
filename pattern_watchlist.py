@@ -181,7 +181,8 @@ def parse_watchlist(text):
     return entries
 
 
-def get_watchlist_tickers(path=WATCHLIST_FILE):
+def get_watchlist_tickers(path=None):
+    path = path or WATCHLIST_FILE
     if not os.path.exists(path):
         return []
     with open(path) as fh:
@@ -222,9 +223,9 @@ def fetch_daily_bars(symbols, headers, opener=None):
 
 # ── Chart candles ──
 
-def chart_timeframes(path=WATCHLIST_FILE):
+def chart_timeframes(path=None):
     """{ticker: {timeframes}} needed by the watchlist charts (main + alt setups)."""
-    with open(path) as fh:
+    with open(path or WATCHLIST_FILE) as fh:
         entries = parse_watchlist(fh.read())
     out = {}
     for e in entries:
@@ -264,11 +265,11 @@ def fetch_chart_bars(sym, timeframe, headers, opener=None):
     return [bars[k] for k in sorted(bars)]
 
 
-def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=None):
+def write_chart_bars(headers, path=None, bars_dir=BARS_DIR, opener=None):
     """Write public/bars/TICKER_timeframe.json for every watchlist chart. Returns (written, failed)."""
     os.makedirs(bars_dir, exist_ok=True)
     written, failed = [], []
-    for sym, tfs in sorted(chart_timeframes(path).items()):
+    for sym, tfs in sorted(chart_timeframes(path or WATCHLIST_FILE).items()):
         for tf in sorted(tfs):
             try:
                 bars = fetch_chart_bars(sym, tf, headers, opener)
@@ -860,14 +861,21 @@ def _stage_edits(text, pos, new_stage, on_date, extra=None):
     return edits
 
 
-def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FILE,
-                     snapshot_path=SNAPSHOT_FILE, today=None, now_et=None, post_news=None):
+def update_watchlist(quotes, apply=False, path=None, news_path=None,
+                     snapshot_path=None, today=None, now_et=None, post_news=None):
     """
     quotes: {sym: {'price', 'date', 'bars'}}; pass None to re-check against the stored prices.
     Returns a dict: price_changes [(sym, old, new)], target_hits, needs_update, review, news.
     """
     now_et = now_et or _now_et()
     today = today or now_et.date().isoformat()
+    # Resolved here, not in the signature: a default bound at import time cannot be
+    # redirected by setting WATCHLIST_FILE, which is how the pattern_lines entry points
+    # already behave -- and a test that redirects one but not the other writes to the
+    # real ledger.
+    path = path or WATCHLIST_FILE
+    news_path = news_path or NEWS_FILE
+    snapshot_path = snapshot_path or SNAPSHOT_FILE
     with open(path) as fh:
         text = fh.read()
     entries = parse_watchlist(text)
@@ -1057,7 +1065,7 @@ def status_map(text):
     return out
 
 
-def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE,
+def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=None, snapshot_path=None,
               paused=None):
     """Post one News item per status change since the last snapshot. Returns the items.
 
@@ -1067,6 +1075,8 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
     """
     if paused is None:
         paused = NEWS_PAUSED
+    news_path = news_path or NEWS_FILE
+    snapshot_path = snapshot_path or SNAPSHOT_FILE
     if os.path.exists(snapshot_path):
         with open(snapshot_path) as fh:
             before = json.load(fh)
@@ -1231,7 +1241,7 @@ def placeholder_entry(ticker, name, price, price_date, note, history=()):
             "  }")
 
 
-def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE):
+def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot_path=None):
     """Remove setups that are done (target reached or failed) and post one News item each.
 
     "Needs updating" setups are kept: they are the to-do list for posting a replacement.
@@ -1239,6 +1249,9 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
     and the case is reported (promotion is left to a human).
     """
     now_et = now_et or _now_et()
+    path = path or WATCHLIST_FILE
+    news_path = news_path or NEWS_FILE
+    snapshot_path = snapshot_path or SNAPSHOT_FILE
     with open(path) as fh:
         text = fh.read()
     cuts, notes, report = [], {}, []
@@ -1352,7 +1365,7 @@ def thin_setups(text):
     return out
 
 
-def drop_thin(apply=False, path=WATCHLIST_FILE):
+def drop_thin(apply=False, path=None):
     """Remove auto-detected setups with too little room between confirmation and target.
 
     Only the hidden ones (`more[]`) and a second setup go quietly -- nothing was shown for
@@ -1360,7 +1373,7 @@ def drop_thin(apply=False, path=WATCHLIST_FILE):
     setup, and anything posted by hand, is listed for review instead: those are calls
     someone made, and replacing one is a decision, not a clean-up.
     """
-    with open(path) as fh:
+    with open(path or WATCHLIST_FILE) as fh:
         text = fh.read()
     cuts, dropped, review = [], [], []
     for e in parse_watchlist(text):

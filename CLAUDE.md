@@ -306,6 +306,20 @@ A setup redrawn by a rescan loses the field and gets a fresh one on the next run
 correct: it is a different setup. **Nothing ranks on it yet** — it exists so that a stop
 rule, if one is ever wanted again, has a number that means what it says.
 
+**It will not record a number that cannot be a stop.** The level is read off a trendline,
+and a trendline can be degenerate. `_stop_fault` refuses three shapes: a level on the
+*winning* side of the entry (AVGO's weekly channel froze a short's stop below its own
+confirm), a risk wider than `MAX_STOP = 0.5` of the entry (STX: entry 700.39, line at the
+break 1420.58 — 103%, which is a steep line extended a long way, not a level anyone traded
+against), and two boundaries converged within `CONVERGED` near a wedge's apex, where which
+line the level belongs to is a coin flip. `relevel` already declined all three for the
+*live* level; freeze wrote them anyway, and being write-once it wrote them for good.
+The guards arrived after the backfill, so `python3 pattern_lines.py --recheck-stops` (dry
+run) / `--recheck-stops --apply` clears the ones already stored — 41 of 562 on the first
+pass. It only ever **removes** a value, never recomputes one: write-once is what makes the
+field mean anything, and a level recomputed months later off a since-refitted line would be
+a different number wearing the same name.
+
 ### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.
@@ -323,6 +337,17 @@ hand-posted ones for review; the daily report has the same list under "Too littl
 **Trendlines are fitted automatically** by `pattern_lines.py` (run by the daily price job for setups without lines; by hand: `python3 pattern_lines.py` dry run, `--apply` to write, `--refit` to replace existing). It reproduces the source tool's construction: lines run through swing highs (upper) / swing lows (lower), at least 1 candle each side; channels are parallel (two-pivot line + parallel through one pivot, or one pivot aimed at the stored level); wedges use two pivots per line; head & shoulders necklines run through the closes of the two troughs. A fit is only accepted when the lines reproduce the setup's own levels: signal = broken line at the signal candle (the candle whose high/low equals `confirm`), target = signal ± the pattern height where the lines start, invalidation ≈ a line's value at the latest candle; forming setups match their break levels at the latest candle. Setups it can't match (and Hammer / Head & Shoulders) are listed and left without lines. After posting a new channel/wedge setup, run `python3 pattern_lines.py --apply`.
 
 **Sloped invalidations track their line.** An invalidation is a trendline's value at the latest candle, so it moves a little every session while the stored number stays where it was written (this is why a level can read fine in the source tool and stale here). The daily job re-reads them after the candles and the fitter; by hand: `python3 pattern_lines.py --relevel` (dry run) / `--relevel --apply`. A **confirmed channel's** invalidation sits on the boundary it broke (upper line for an upward break, lower for a downward one) — its fail rule reads "back inside the broken boundary". While a channel is still **pending** there is nothing to fall back into, so the level that kills it is the *opposite* side of the channel, with the follow-through wording. A **wedge's** sits on the far side either way (lower line for an upward break, upper for a downward one). Auto-detected setups are skipped: `pattern_detect.py` derives their levels together and puts a pending channel's invalidation on the broken boundary instead, so re-reading them here would only fight the detector — a rescan redoes them. A level is left alone, and listed for review, when the setup isn't live (needs updating / target / failed), its two lines are within 3% of each other (near a wedge's apex, which line a level belongs to is a coin flip), the level is more than 8% off its line (it was set some other way), or the move would be under 1% (close enough — and a number entered by hand from the source tool isn't worth fighting over every run).
+
+**A channel changing stage switches which boundary its invalidation sits on**, and relevel
+handles that as its own case. When a pending channel confirms — by hand or by the daily
+run's promotion — the rule moves its level from the far side of the channel to the boundary
+it broke, a whole channel width away. Both guards above read that as "set some other way"
+and refused, so a promoted channel kept its pending stop for good and could never be flagged
+`atRisk`. Relevel now recognises it: if the stored level still sits on the line the *pending*
+rule named, that is a side switch rather than drift, and the level moves. It prints as `SIDE`
+rather than `LEVEL` — **re-read that setup's `failRule`**, which is hand-written prose
+quoting the old price and the pending follow-through wording, and is not rewritten for you.
+A wedge invalidates on the far side at every stage, so this never fires for one.
 
 ### Price Format
 

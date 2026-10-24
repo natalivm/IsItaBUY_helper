@@ -863,7 +863,11 @@ ARCHIVE_KEEP = 8                             # weekly runs, so about two months 
 
 
 def _trim_archive(keep=None):
-    """Drop all but the newest ARCHIVE_KEEP copies: the Friday job writes one a week."""
+    """Drop all but the newest ARCHIVE_KEEP copies: the Friday job writes one a week.
+
+    Runs *after* the new copy is written, not before: trimming first leaves ARCHIVE_KEEP
+    older files plus the one about to be created, which is one more than it says.
+    """
     old = sorted(glob.glob(os.path.join(ARCHIVE_DIR, 'handSetups-*.json')))[:-(keep or ARCHIVE_KEEP)]
     for f in old:
         os.remove(f)
@@ -895,10 +899,19 @@ def archive_hand_setups(text, path=None, verbose=True):
     one and the detector is its missing `auto` flag. This is the copy to splice back from
     if that judgement turns out wrong: source text, not parsed values, so it goes back in
     exactly as it was.
+
+    A second run on the same day gets its own `-2`, `-3`, ... file rather than overwriting
+    the first. The name is only a date, so without that the copy taken *before* the day's
+    rewrite is replaced by one taken after it -- destroying the only thing worth keeping
+    at the exact moment it is needed.
     """
     today = date.today().isoformat()
-    path = path or os.path.join(ARCHIVE_DIR, f'handSetups-{today}.json')
-    _trim_archive()
+    if path is None:
+        path = os.path.join(ARCHIVE_DIR, f'handSetups-{today}.json')
+        n = 2
+        while os.path.exists(path):
+            path = os.path.join(ARCHIVE_DIR, f'handSetups-{today}-{n}.json')
+            n += 1
     out = {}
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
@@ -921,6 +934,7 @@ def archive_hand_setups(text, path=None, verbose=True):
                            'taken before a re-scan. `auto: false` entries are the hand-written ones.',
                    'stocks': out}, fh, indent=1, sort_keys=True)
         fh.write('\n')
+    _trim_archive()
     if verbose:
         print(f"Archived {hand} hand-written and {auto} auto setups across {len(out)} stocks -> {path}")
     return path
@@ -937,7 +951,6 @@ def redo_stored(apply=False, refresh=False, verbose=True):
     """
     now_et = pw._now_et()
     text = open(pw.WATCHLIST_FILE).read()
-    archive_hand_setups(text, verbose=verbose)
     cuts, n_hit, n_miss, n_hand = [], 0, 0, 0
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
@@ -981,6 +994,9 @@ def redo_stored(apply=False, refresh=False, verbose=True):
     new_text = pw.annotate_agreement(new_text)
     if not apply or new_text == text:
         return n_hit
+    # Only now, with something actually about to be rewritten. Archiving on a dry run both
+    # writes a file the run promised not to and trims the older copies away.
+    archive_hand_setups(text, verbose=verbose)
     pw.sync_news(text, new_text, {}, now_et.date().isoformat(), apply=True)
     with open(pw.WATCHLIST_FILE, 'w') as fh:
         fh.write(new_text)
