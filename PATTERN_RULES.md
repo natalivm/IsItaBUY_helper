@@ -139,6 +139,42 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   ($79.88) closes, head Sep 8 $104.59; signal $77.99, target $54.01.
 - Inverse H&S follows by symmetry (not yet seen in our data).
 
+## 5b. Bull Flag / Bear Flag — NOT IMPLEMENTED
+
+The detector does not draw flags, and the reason is structural rather than a missing
+case: **a flag is the one pattern not measured by its own shape.** Channels, wedges and
+necklines all project the distance between their two lines; a flag projects the move that
+happened *before* it.
+
+Verified against the one completed call on record (CVX daily, target reached 2026-10-21):
+
+| | |
+|---|---|
+| pole | 2026-07-01 low $164.78 → 2026-08-13 high $198.10 = **$33.32** |
+| flag | 1 bar, 2.2% deep, low $193.75 |
+| pole projected off the flag low | 193.75 + 33.32 = **$227.07** |
+| the call's target | **$227.50** (0.2% away) |
+| the call's invalidation | $193.71 — the flag low |
+| what the detector produced | Descending Channel up, target **$305.60** — the corridor's own width, drawn over 56–101 bars at ~50% of price |
+
+So the rules a flag needs are:
+
+- **pole**: a sharp, near-uninterrupted advance (decline) into the flag's high (low).
+- **flag**: a short, shallow counter-trend drift — this one was 1 bar and 2.2%.
+- **target**: the pole projected from the flag's extreme, *not* the flag's height.
+- **invalidation**: the flag's own extreme, which makes for a very tight stop (2.2% here,
+  the tightest level in the ledger and exactly the shape the stop analysis favours).
+
+Two things block reusing the channel code for it. `_stage` has nowhere to express a
+measurement taken outside the pattern — `_height()` only ever asks how far apart the two
+lines are. And `MIN_SPAN` (20 bars daily) with `MIN_TOUCHES` (4) cannot represent a 1-bar
+flag at all; there is no room for four swing-point touches.
+
+**Deliberately not built yet: there is one labelled example.** Fitting a new pattern to a
+single case is how a detector ends up tuned to CVX, and every change that has gone in had
+8 to 22 completed calls behind it. When more completed flags are recorded as `history`
+rows, `pattern_reproduce.py` will measure this the way it measured the wedges.
+
 ## 6. Candle patterns (single- and multi-candle reversals)
 
 The pattern is the candle (or the two or three candles) itself — **no trendlines**.

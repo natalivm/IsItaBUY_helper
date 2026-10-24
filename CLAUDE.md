@@ -176,7 +176,9 @@ Baseline on the 20 calls whose candles reach back far enough:
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
 - **right pattern and direction: 15/20.** Three of the four misses are Hammers that
-  `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
+  `detect_hammer` does not find, and one is a Bull Flag, which is not implemented and is
+  not a tuning gap — see PATTERN_RULES.md §5b for why, and for the measuring rule verified
+  off the one completed flag on record.
 - **target: 6.7% median error** — 4.7% on wedges, 8.8% on channels, and 12 of the 15 now
   land inside both level tolerances against 8 before.
 
