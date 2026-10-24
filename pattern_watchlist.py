@@ -613,7 +613,7 @@ def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, a
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     if main_auto:
         rows.append("    auto: true,")
-    for k in ('price', 'priceDate'):
+    for k in ('trend', 'rsi', 'price', 'priceDate'):
         if k in f:
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     rows += _setup_text(text, main_pos, '    ', inherit=main_pattern)
