@@ -186,10 +186,11 @@ candle patterns worst of all, since a candle projects a candle-sized move. Lower
 did not change the reproduction score, so there is no measured gain to point at; the
 argument is only that the completed calls say the floor is in the wrong place.
 
-### Working on the scripts: two traps
+### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.
 - **The parser keeps array fields as spans, not values.** For `lines` (and `history`) `_setups()` gives you the position in the source text, and `s.get('lines')` is always `None`. To read trendlines use `pattern_lines.stored_lines(text, pos)`; to write them, splice the span. Anything guarded by `if s.get('lines')` never runs — which is currently true of the channel branch of `_finished()`, so channels fail by the generic close-past-invalidation-plus-follow-through rule rather than on one close back inside the broken line.
+- **`--redo-auto` rewrites the whole entry.** `_ts_entry()` builds an auto entry from scratch, so anything the detector doesn't write is gone unless it is carried over: `rsi` / `trend` (the price run's), `keyLevel` and `history` (hand-written, and `history` is the record of completed calls the reproduce harness trains on). That is what `KEEP_HEAD` / `KEEP_TAIL` and `_carry()` in `pattern_detect.py` are for — add any new entry-level field to one of them, or the next re-scan deletes it.
 
 **Setups need room.** A setup whose target is within **10%** of its confirmation
 level is skipped — `MIN_ROOM` in `pattern_watchlist.py`, enforced by

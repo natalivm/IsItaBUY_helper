@@ -1000,7 +1000,14 @@ def status_map(text):
 
 def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE,
               paused=None):
-    """Post one News item per status change since the last snapshot. Returns the items."""
+    """Post one News item per status change since the last snapshot. Returns the items.
+
+    `paused` defaults to the NEWS_PAUSED switch rather than to False, so the pause is
+    global: pattern_detect calls this too, and a caller that forgets the argument used
+    to post anyway while the feed was supposed to be quiet.
+    """
+    if paused is None:
+        paused = NEWS_PAUSED
     if os.path.exists(snapshot_path):
         with open(snapshot_path) as fh:
             before = json.load(fh)

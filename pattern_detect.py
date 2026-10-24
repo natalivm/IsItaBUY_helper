@@ -548,7 +548,7 @@ def _alt_ts(s, auto=False):
     return ["    alt: {"] + (["      auto: true,"] if auto else []) + _ts_setup(s, '      ') + ["    },"]
 
 
-def _ts_entry(ticker, name, price, price_date, setups):
+def _ts_entry(ticker, name, price, price_date, setups, keep=((), ())):
     shown, second, rest = split_display(setups) if setups else (None, None, [])
     setups = [x for x in (shown,) if x] + ([second] if second else []) + rest
     main = dict(setups[0]) if setups else {'pattern': 'No clear pattern', 'timeframe': 'daily',
@@ -560,12 +560,13 @@ def _ts_entry(ticker, name, price, price_date, setups):
     body = _ts_setup(main, '    ')
     # price / priceDate go after stageDate, like the posted setups
     at = next((i for i, x in enumerate(body) if x.strip().startswith(('signal', 'confirm', 'invalidation', 'target', 'breakUp', 'lines', 'note'))), len(body))
-    body[at:at] = [f"    price: {pw._fmt_price(price)},", f"    priceDate: {json.dumps(price_date)},"]
+    body[at:at] = [f"    price: {pw._fmt_price(price)},", f"    priceDate: {json.dumps(price_date)},"] + list(keep[0])
     lines += body
     if second:
         lines += _alt_ts(second)
     if rest:
         lines += _more_ts(rest)
+    lines += list(keep[1])                         # history / keyLevel survive a re-detection
     lines.append("  },")
     return "\n".join(lines) + "\n"
 
@@ -676,19 +677,38 @@ def fetch_name(ticker):
         return ticker
 
 
+# Entry-level fields that survive a re-detection: they are not the detector's to write.
+# `rsi` / `trend` come from the price run, `history` holds finished calls (a target we posted
+# and hit) and `keyLevel` is hand-written prose. Rewriting an entry used to drop all four.
+KEEP_HEAD = ('rsi', 'trend')       # scalars, kept beside price
+KEEP_TAIL = ('keyLevel', 'history')  # blocks, kept at the end
+
+
+def _carry(text, e):
+    """Source lines for the kept fields of an entry, as (beside price, at the end)."""
+    def lines(keys):
+        out = []
+        for k in keys:
+            if k in e['fields']:
+                v0, v1, _ = e['fields'][k]
+                out.append(f"    {k}: " + text[v0:v1] + ",")
+        return out
+    return lines(KEEP_HEAD), lines(KEEP_TAIL)
+
+
 def scan_targets(text, redo_auto=False):
-    """{ticker: (name, entry span or None)}: our stocks without a setup, plus placeholder entries
-    (and, with redo_auto, every unreviewed auto entry)."""
+    """{ticker: (name, entry span or None, lines to keep)}: our stocks without a setup, plus
+    placeholder entries (and, with redo_auto, every unreviewed auto entry)."""
     todo = {}
     have = set()
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
         have.add(m['ticker'])
         if m.get('pattern') == pw.NO_PATTERN or (redo_auto and m.get('auto')):
-            todo[m['ticker']] = (m.get('name', m['ticker']), e['span'])
+            todo[m['ticker']] = (m.get('name', m['ticker']), e['span'], _carry(text, e))
     for t, n in stock_universe().items():
         if t not in have:
-            todo[t] = (n, None)
+            todo[t] = (n, None, ([], []))
     return todo
 
 
@@ -752,11 +772,11 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
         text = _strip_stored(text)             # posted stocks: re-detect their stored setups too
     todo = scan_targets(text, redo_auto)
     for t, n in (extra or {}).items():
-        todo.setdefault(t, (n, None))
+        todo.setdefault(t, (n, None, ([], [])))
     if verbose:
         print(f"Scanning {len(todo)} stocks without a setup...\n")
     cuts, block, summary = [], '', []
-    for ticker, (name, span) in sorted(todo.items()):
+    for ticker, (name, span, keep) in sorted(todo.items()):
         try:
             bars = {tf: get_bars(ticker, tf, refresh) for tf in TIMEFRAMES}
         except Exception as e:
@@ -769,7 +789,7 @@ def run(apply=False, refresh=False, bulk=False, extra=None, verbose=True, redo_a
         d = bars['daily']
         if span is not None and not found:
             continue                              # still nothing: leave the placeholder
-        entry = _ts_entry(ticker, name, d['c'][-1], d['t'][-1], found)
+        entry = _ts_entry(ticker, name, d['c'][-1], d['t'][-1], found, keep)
         if span is not None:
             cuts.append((span[0], span[1] + 1, entry.strip().rstrip(',')))
         else:
