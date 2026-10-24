@@ -4395,6 +4395,17 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "Auto-detected falling wedge on the daily chart. A daily close beyond the line on Oct 22 gave a signal; it needs a close beyond $112.39 to confirm.",
     },
+    history: [
+      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-22",
+        confirm: 104.77, invalidation: 96.79, target: 110.01,
+        note: "Confirmed above $104.77 and reached $110.01 on Oct 22, with price now $110.15 — a move of 5.0% from the confirm, which is the smallest completed target in this whole set and still counted." },
+      { pattern: "Rising Wedge", timeframe: "weekly", direction: "down", stage: "target", stageDate: "2026-09-28",
+        confirm: 107.73, invalidation: 144.04, target: 94.6,
+        note: "The cleanest comparison yet. Our own weekly rising wedge on this chart confirms at $104.85 against their $107.73 — 2.7% apart, the same pattern on the same timeframe in the same direction — and then projects to $76.99 where theirs projects $94.60. A 26.6% measured move against a 12.2% one, 2.18x, and it was theirs that the stock actually reached on Sep 28." },
+      { pattern: "Head & Shoulders", timeframe: "daily", direction: "down", stage: "failed", stageDate: "2026-09-02",
+        confirm: 107.41, invalidation: 109.63,
+        note: "Confirmed below $107.41, beyond the signal candle's low, then closed back inside the broken boundary and ended. Price went on to $110.15. Note how little room there was between confirm and invalidation — $2.22, about 2% — which is the opposite of the wide-stop problem and did not save it." }
+    ],
     more: [
       {
         pattern: "Rising Wedge",

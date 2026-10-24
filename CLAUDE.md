@@ -110,15 +110,18 @@ Completed setups from the source tool are recorded as `history` rows, and compar
 them against the detector's own reading of the same chart turns up one consistent
 defect. The break levels agree — confirms have matched to the cent on CVX and CRWD,
 and within 2% on FRSH — but **the measured move the detector projects off those lines
-is 1.4x to 4.4x the one the source tool projects**, median 2.45x over the four cases
-where both readings exist:
+is 1.4x to 4.4x the one the source tool projects**, median 2.18x over the five cases
+where both readings exist. The last column is how far apart the two confirms sit --
+four of the five are inside 3%, so these are the same setup measured differently, not
+different setups:
 
-| | our move | theirs | ratio |
-|---|---|---|---|
-| XOM weekly falling wedge | 20.3% | 13.6% | 1.49x |
-| CVX weekly descending channel | 34.2% | 10.0% | 3.41x |
-| FRSH weekly descending channel | 47.8% | 33.1% | 1.44x |
-| RBRK daily rising wedge | 46.3% | 10.4% | 4.43x |
+| | our move | theirs | ratio | confirms apart |
+|---|---|---|---|---|
+| XOM weekly falling wedge | 20.3% | 13.6% | 1.49x | 1.9% |
+| CVX weekly descending channel | 34.2% | 10.0% | 3.41x | 0.0% |
+| FRSH weekly descending channel | 47.8% | 33.1% | 1.44x | 1.8% |
+| KMB weekly rising wedge | 26.6% | 12.2% | 2.18x | 2.7% |
+| RBRK daily rising wedge | 46.3% | 10.4% | 4.43x | 19.1% |
 
 The cost is not that the targets are ambitious. It is that **a target nobody reaches
 leaves the setup open forever**, which is where the stale "confirmed" rows come from:
