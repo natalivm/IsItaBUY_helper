@@ -995,9 +995,15 @@
   "stage": "confirmed",
   "ticker": "CAKE"
  },
+ "CAKE|daily alt": {
+  "label": "daily alt",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "CAKE"
+ },
  "CAKE|main": {
   "label": "main",
-  "setup": "Descending Channel (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "CAKE"
  },
