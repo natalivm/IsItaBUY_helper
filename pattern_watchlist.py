@@ -973,6 +973,19 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
             if reason and not is_close:
                 review.append(f"{sym} ({label}): trading at ${new_price} past a limit — market still open; only the close counts, re-check after 16:00 ET")
                 continue
+            # A pending setup whose target has already been touched is finished, whatever
+            # its timeframe. Waiting for a weekly or monthly close to say so would leave a
+            # call that has fully played out sitting on "forming" for weeks -- and the move
+            # ran through signal, confirm and target, so there is nothing left to judge.
+            # Targets count by touch on any daily bar, exactly as they do once confirmed.
+            if reason and next_stage:
+                done = _target_hit(s, q.get('bars') or daily, max(old_date, s.get('stageDate') or old_date), price)
+                if done:
+                    hit_date = date if done == 'today' else done
+                    target_hits.append((sym, label, s['target'], hit_date))
+                    edits += _stage_edits(text, pos, 'target', hit_date)
+                    bot_notes[key] = (hit_date, f"Hit target ${_fmt_price(s['target'])}.")
+                    continue
             if reason and not _period_closed(tf, date):
                 review.append(f"{sym} ({label}): {reason} — not a {tf} close yet; check at the {tf} close")
                 continue
