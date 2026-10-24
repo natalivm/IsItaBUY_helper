@@ -86,6 +86,16 @@ The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatc
 
 **Charts in the expanded rows** (`components/SetupChart.tsx`, TradingView `lightweight-charts`, loaded on first expand) read candles from `public/bars/TICKER_timeframe.json`. The price run rewrites these for every watchlist setup's timeframe (daily 1y, weekly 5y, monthly 10y, regular session only); refresh them by hand with `python3 pattern_watchlist.py --bars`. A setup's levels are drawn as labelled lines and its `stageDate` as a marker. Trendlines come from the setup's (or its `alt`'s) `lines: [{ from: ['YYYY-MM-DD', price], to: ['YYYY-MM-DD', price] }, …]`; the chart extends them to the newest candle.
 
+**When the detector runs.** A setup takes time to develop, so the daily price job does
+**not** go looking for new ones: `prune_finished` closes the setups that finished, which
+leaves those stocks a "No clear pattern" placeholder, and the plain `pattern_detect.run()`
+fills only those. Everything else is left to keep developing. **Friday is the
+re-evaluation** — the price run passes `redo_auto=True` (a superset of the placeholder
+scan, so it replaces the daily call rather than adding to it) and then `redo_stored()`, so
+every machine-drawn setup is redrawn on the week's closed candles. Neither path touches
+anything written by hand. The Friday run also writes `archive/handSetups-<date>.json`;
+`ARCHIVE_KEEP` holds the newest 8, about two months.
+
 **Auto-detected setups** (`pattern_detect.py`): stocks without a setup are scanned on the daily and weekly charts (weekly = main, steadier; daily = second setup) for the clearest channel / wedge / hammer per PATTERN_RULES.md, or get a pending "No clear pattern" placeholder. They carry `auto: true` and show a **red dot** until checked by hand — remove `auto: true` once verified.
 There are **two dots on a ledger row, deliberately the same signal twice**. One sits
 beside the **ticker**, so the Stock column can be scanned top to bottom for the stocks
