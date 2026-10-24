@@ -54,6 +54,28 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   generatedOn: "2026-10-24",
   hot: [
     {
+      ticker: "FRSH",
+      name: "Freshworks Inc.",
+      pattern: "Descending Channel",
+      timeframe: "daily",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-10-22",
+      price: 15.49,
+      priceDate: "2026-10-23",
+      target: 21.79,
+      invalidation: 14.2,
+      rsi: 73,
+      score: 112,
+      why: [
+        "Break confirmed on the daily chart",
+        "Daily RSI 73 backs the upside",
+        "The stock's own trend is up",
+        "40.7% from here to the target",
+        "About 4.9x more room to the target than to invalidation"
+      ]
+    },
+    {
       ticker: "NOW",
       name: "ServiceNow, Inc.",
       pattern: "Ascending Channel",
@@ -63,59 +85,37 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       stageDate: "2026-10-23",
       price: 158.96,
       priceDate: "2026-10-23",
-      target: 203.95,
+      target: 205.6,
       invalidation: 155.09,
       rsi: 70.1,
-      score: 105,
+      score: 105.6,
       why: [
         "Break confirmed on the daily chart",
         "Daily RSI 70 backs the upside",
         "The stock's own trend is up",
-        "28.3% from here to the target",
-        "About 11.6x more room to the target than to invalidation"
+        "29.3% from here to the target",
+        "About 12.1x more room to the target than to invalidation"
       ]
     },
     {
-      ticker: "ASTS",
-      name: "AST SpaceMobile",
+      ticker: "WDC",
+      name: "Western Digital Corporation",
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
       stage: "confirmed",
-      stageDate: "2026-10-14",
-      price: 39.79,
+      stageDate: "2026-10-13",
+      price: 343.67,
       priceDate: "2026-10-23",
-      target: 25.98,
-      invalidation: 46.61,
-      rsi: 31.4,
-      score: 103.8,
+      target: 244.43,
+      invalidation: 387.14,
+      rsi: 36,
+      score: 96.3,
       why: [
         "Break confirmed on the daily chart",
-        "Daily RSI 31 backs the downside",
+        "Daily RSI 36 backs the downside",
         "The stock's own trend is down",
-        "34.7% from here to the target"
-      ]
-    },
-    {
-      ticker: "FRSH",
-      name: "Freshworks Inc.",
-      pattern: "Ascending Channel",
-      timeframe: "daily",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-10-22",
-      price: 15.49,
-      priceDate: "2026-10-23",
-      target: 19.45,
-      invalidation: 14.35,
-      rsi: 73,
-      score: 103.3,
-      why: [
-        "Break confirmed on the daily chart",
-        "Daily RSI 73 backs the upside",
-        "The stock's own trend is up",
-        "25.6% from here to the target",
-        "About 3.5x more room to the target than to invalidation"
+        "28.9% from here to the target"
       ]
     }
   ],
