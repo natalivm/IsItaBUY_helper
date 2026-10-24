@@ -15,6 +15,27 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-ASTS-daily-alt-removed",
+    date: "Oct 24 2026",
+    tickers: ["ASTS"],
+    title: "ASTS · setup removed (daily setup)",
+    text: "No longer tracked.",
+  },
+  {
+    id: "2026-10-24-ASTS-main-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["ASTS"],
+    title: "ASTS · new setup",
+    text: "Descending Channel (daily), break confirmed.",
+  },
+  {
+    id: "2026-10-24-ASTS-weekly-alt-confirmed",
+    date: "Oct 24 2026",
+    tickers: ["ASTS"],
+    title: "ASTS · new setup (weekly setup)",
+    text: "Ascending Channel (weekly), break confirmed.",
+  },
+  {
     id: "2026-10-24-CRWD-weekly-alt-removed",
     date: "Oct 24 2026",
     tickers: ["CRWD"],
