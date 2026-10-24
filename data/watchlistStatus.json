@@ -5987,22 +5987,10 @@
   "stage": "confirmed",
   "ticker": "STX"
  },
- "STX|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "STX"
- },
  "STX|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
   "stage": "atRisk",
-  "ticker": "STX"
- },
- "STX|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
   "ticker": "STX"
  },
  "STX|main": {
