@@ -248,6 +248,23 @@ export function undoneBy(
   return past > 0 ? (past / a.confirm) * 100 : null;
 }
 
+/** How many setups on this stock the detector drew and nobody has checked yet.
+ *
+ *  The dot beside a pattern name marks only the setup on show. This counts the whole
+ *  stock, the hidden ones included, because the row is the only place you would ever
+ *  see them without opening it -- the point is to know which stocks are owed a look
+ *  without expanding all 149 of them.
+ *
+ *  The build moves alt and more into public/setups/TICKER.json, so they are not here
+ *  to count and `autoHidden` carries their tally instead; counting them directly is
+ *  the fallback for an unsplit build. Without that the dot would miss the 57 stocks
+ *  whose shown setup is checked but whose stored ones are not. */
+export function uncheckedCount(s: PatternStock | null | undefined): number {
+  if (!s) return 0;
+  const hidden = s.autoHidden ?? ((s.alt?.auto ? 1 : 0) + (s.more || []).filter(m => m.auto).length);
+  return (s.auto ? 1 : 0) + hidden;
+}
+
 const Undone: React.FC<{ pct: number | null; tf?: string }> = ({ pct, tf }) =>
   pct == null ? null : (
     <span
@@ -612,6 +629,21 @@ const toTarget = (s: PatternStock | null) => !s ? -Infinity : s.direction === 'b
   ? Math.max(Math.abs(pct0(s.price, s.goalUp!)), Math.abs(pct0(s.price, s.goalDown!)))
   : Math.abs(pct0(s.price, s.target!));
 
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** How well a row matches the search box: 0 is no match, higher is better.
+ *
+ *  A company name only counts at the start of a word. Searching "CAT" used to return
+ *  Verizon Communications, because "cat" sits inside the word -- which reads as the
+ *  wrong row opening rather than as a search hit. */
+function searchRank(r: Row, q: string): number {
+  const tk = r.ticker.toLowerCase();
+  if (tk === q) return 4;
+  if (tk.startsWith(q)) return 3;
+  if (new RegExp(`\\b${escapeRe(q)}`, 'i').test(r.name)) return 2;
+  return tk.includes(q) ? 1 : 0;
+}
+
 const readPref = (key: string, fallback: string) => {
   try { return localStorage.getItem(key) || fallback; } catch { return fallback; }
 };
@@ -621,6 +653,7 @@ const writePref = (key: string, value: string) => {
 
 const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle: () => void; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, open, onToggle, onOpenPage }) => {
   const s = row.setup, st = status(s), id = 'd-' + row.ticker;
+  const unchecked = uncheckedCount(s);
   const item = useRef<HTMLDivElement>(null);
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
 
@@ -679,6 +712,13 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
+          {unchecked > 0 && (
+            <i
+              className="auto-dot stock"
+              title={`${unchecked} setup${unchecked > 1 ? 's' : ''} on ${row.ticker} ${unchecked > 1 ? 'were' : 'was'} drawn by the detector and ${unchecked > 1 ? 'have' : 'has'} not been checked by hand`}
+              aria-label={`${unchecked} unchecked setup${unchecked > 1 ? 's' : ''}`}
+            />
+          )}
           <span>{row.name}</span>
         </span>
         <span className="stcell">
@@ -783,8 +823,10 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ tickers, onOpenStoc
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
     const out = allRows.filter(r =>
-      (activeFilter === 'all' || status(r.setup).group === activeFilter) &&
-      (!q || r.ticker.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)));
+      (activeFilter === 'all' || status(r.setup).group === activeFilter) && (!q || searchRank(r, q) > 0));
+    // With a query and no sort chosen, the best match leads: searching CAT should put
+    // Caterpillar first, not leave it under whatever the stored order happened to be.
+    if (q && sortBy === 'default') out.sort((a, b) => searchRank(b, q) - searchRank(a, q));
     if (sortBy === 'target') out.sort((a, b) => toTarget(b.setup) - toTarget(a.setup));
     if (sortBy === 'momentum') {
       // Straight RSI, strongest first; stocks with no reading go last. Whether

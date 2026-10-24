@@ -101,6 +101,11 @@ export interface PatternStock {
   lines?: PatternLine[];
   keyLevel?: { price: number; text: string };
   alt?: PatternAltSetup;
+  /** How many of this stock's hidden setups (alt + more) the detector drew and nobody
+   *  has checked. Written by the split-stored-setups build plugin, which moves those
+   *  setups into public/setups/TICKER.json -- the ledger row needs the tally without
+   *  fetching that file. Absent in an unsplit build, where alt/more can be counted. */
+  autoHidden?: number;
   history?: PatternHistoryEntry[];
   // Up to 5 setups are stored per stock; only the most valid (the main one) is shown.
   // The rest feed the "N agree" confidence badge when their targets match.

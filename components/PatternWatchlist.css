@@ -236,6 +236,12 @@
 }
 /* Auto-detected setups: red dot until checked by hand */
 .pbw .auto-dot{display:inline-block;flex:none;align-self:center;width:9px;height:9px;border-radius:50%;background:var(--down);box-shadow:0 0 0 3px color-mix(in srgb,var(--down) 22%,transparent)}
+/* The same dot on the row itself: this stock still carries machine-drawn setups that
+   nobody has checked, the stored ones included. The dot beside a pattern name marks
+   only the setup on show, and most unchecked setups never appear there -- without this
+   you would have to open all 149 rows to find them. Pulled tight to the ticker so it
+   reads as part of it rather than as another column. */
+.pbw .tk .auto-dot.stock{margin-left:-5px}
 .pbw .auto-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
 .pbw .altwrap>.detail{padding:0}
 /* Confidence: several stored setups agree on the target */
