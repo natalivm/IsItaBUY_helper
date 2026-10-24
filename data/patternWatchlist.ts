@@ -43,6 +43,10 @@ export interface PatternAltSetup {
   signal?: number;
   confirm?: number;
   invalidation?: number;
+  /** The invalidation as it stood on the day of the break, written once by
+   *  pattern_lines.freeze_stops() and never re-read: `invalidation` walks with its
+   *  trendline, so only this says what being wrong would have cost on entry. */
+  breakInvalidation?: number;
   target?: number;
   breakUp?: number;
   breakDown?: number;
@@ -93,6 +97,10 @@ export interface PatternStock {
   signal?: number;
   confirm?: number;
   invalidation?: number;
+  /** The invalidation as it stood on the day of the break, written once by
+   *  pattern_lines.freeze_stops() and never re-read: `invalidation` walks with its
+   *  trendline, so only this says what being wrong would have cost on entry. */
+  breakInvalidation?: number;
   target?: number;
   breakUp?: number;
   breakDown?: number;
