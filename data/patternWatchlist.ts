@@ -1213,17 +1213,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       price: 184.63,
       text: "Nothing on VRT is active — every reading here is waiting, which is a real state and not a gap in coverage. These two numbers, $184.63 beneath and $215.06 above, are what earnings on Oct 28 will pick between. The confirmed shorts kept in `more` are the older, far wider fits; their stops sit 25-60% away and they are not tradable as written."
     },
-    alt: {
-      pattern: "Descending Channel",
-      timeframe: "weekly",
-      direction: "both",
-      stage: "forming",
-      breakUp: 246.5,
-      breakDown: 148.84,
-      goalUp: 344.15,
-      goalDown: 51.19,
-      note: "The weekly version of the same waiting game, and a reminder of what scale does to these numbers: the channel is wide enough that its downside goal is $51.19, which is a projection rather than a price anyone should plan around. Treat $246.50 and $148.84 as the levels and ignore the goals.",
-    },
     more: [
       {
         pattern: "Descending Channel",
