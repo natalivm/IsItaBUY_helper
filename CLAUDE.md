@@ -177,7 +177,7 @@ Baseline on the 20 calls whose candles reach back far enough:
   anything is wrong.
 - **right pattern and direction: 15/20.** Three of the four misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
-- **target: 9.0% median error** — 4.7% on wedges, 9.9% on channels, and 10 of the 15 now
+- **target: 6.7% median error** — 4.7% on wedges, 8.8% on channels, and 12 of the 15 now
   land inside both level tolerances against 8 before.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
@@ -244,20 +244,29 @@ detector's channel was wider than the call's in **8 cases out of 8**, never narr
 Requiring each boundary to carry at least 2 touches (wedges already do, both their lines
 being fitted through two pivots, so this bites only channels):
 
-| | channel target error | overall | levels close | patterns rebuilt |
-|---|---|---|---|---|
-| 1 per side | 22.6% | 13.5% | 8/15 | 15/20 |
-| **2 per side** (current) | **9.9%** | **9.0%** | **10/15** | 15/20 |
-| 3 per side | 9.4% | 9.0% | — | 9/20 |
+| | channel target error | overall | levels close | patterns rebuilt | agrees with hand-posted |
+|---|---|---|---|---|---|
+| 1 per side | 22.6% | 13.5% | 8/15 | 15/20 | 79.0% |
+| 2 per side | 9.9% | 9.0% | 10/15 | 15/20 | 74.6% |
+| **2 per side, `SIDE_EXEMPT = 0.20`** (current) | **8.8%** | **6.7%** | **12/15** | 15/20 | 75.0% |
+| 3 per side | 9.4% | 9.0% | — | 9/20 | — |
 
-Channel error drops by more than half with no loss on the completed calls at all, and
-three per side collapses recall for nothing. **The cost is 4.4 points on the independent
-control** — reproducing the setups posted by hand falls from 79.0% to 74.6%, 11 of 252 —
-because some hand-drawn channels do rest on a single touch. That trade was taken
+Channel error drops by more than half with no loss on the completed calls, and three per
+side collapses recall for nothing.
+
+**`SIDE_EXEMPT` keeps the rule off narrow patterns**, where a single-touch boundary costs
+little in absolute width. It is not a free parameter fitted to the result: swept from 0 to
+100% the error falls to a flat optimum over 20–25% and then climbs back to *exactly* the
+no-rule baseline by 40% (13.5% / 22.6%), which is the shape the argument predicts and the
+reason to believe it. 0.20 is the near edge of that plateau, so the fewest single-touch
+channels are readmitted for the same gain.
+
+**The remaining cost is 4 points on the independent control** — reproducing the setups
+posted by hand is 75.0% against 79.0% with no rule, 10 of 252 — because some hand-drawn
+channels do rest on a single touch and are wider than the exemption. That trade was taken
 deliberately: the goal is the setups worth acting on, not every setup the rules can draw,
-and a boundary touched once is not a boundary. `SIDE_EXEMPT` (0 = off) can hand the
-single-touch channels back when they are narrow, if the recall is ever worth more than the
-width.
+and a boundary touched once is not a boundary. Raising `SIDE_EXEMPT` hands them back,
+at the width accuracy the table prices.
 
 ### Working on the scripts: three traps
 
