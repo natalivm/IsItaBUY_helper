@@ -270,6 +270,35 @@ deliberately: the goal is the setups worth acting on, not every setup the rules 
 and a boundary touched once is not a boundary. Raising `SIDE_EXEMPT` hands them back,
 at the width accuracy the table prices.
 
+### Stop distance: why the live invalidation cannot measure it
+
+A sloped invalidation is its line's value at the **latest** candle (see "Sloped
+invalidations track their line" above), so it walks every session. `invalidation` says
+where a setup dies *today*; it does not say what being wrong would have cost on entry.
+Both obvious ways of reading a stop off the ledger are therefore broken, and each fails
+in its own direction:
+
+- **Distance from today's price** finds THM, EME and MLM at 0.0% — that is price sitting
+  *on* the line, a setup about to be invalidated. Ranked tightest-first it promotes the
+  setups closest to dying.
+- **Distance from the confirm level** looked spectacular (reward/risk of 301x, 100x, 75x)
+  and is an artifact: a confirmed channel's invalidation sits on the boundary it broke, so
+  right after the break `confirm ≈ invalidation` by construction. Confirmed setups inside
+  2% had a median age of **10 days** against **46** for those beyond 20%. The number was
+  measuring elapsed time, not risk.
+
+**`breakInvalidation` is the fix**: the invalidation as it stood on the day of the break,
+written once by `pattern_lines.freeze_stops()` (`python3 pattern_lines.py --freeze-stops`,
+`--apply`; the daily run calls it after `relevel`) and never re-read. On the same test the
+age spread across stop buckets falls from 4.6x to 1.8x, and what is left is survivorship
+rather than drift — a tight stop resolves faster, so the tight setups still open are
+genuinely younger. Backfilled for 586 of 592 confirmed setups; the six that could not be
+recovered have no trendlines or no candles reaching their `stageDate`.
+
+A setup redrawn by a rescan loses the field and gets a fresh one on the next run, which is
+correct: it is a different setup. **Nothing ranks on it yet** — it exists so that a stop
+rule, if one is ever wanted again, has a number that means what it says.
+
 ### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.

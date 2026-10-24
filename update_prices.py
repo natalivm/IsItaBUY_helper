@@ -938,6 +938,12 @@ def main():
             if releveled:
                 print(f"Re-read {len(releveled)} invalidation(s) off their lines"
                       + (f"; {len(left)} left for review" if left else ""))
+            # ...and record where the invalidation stood at the break, before it walks any
+            # further. Write-once: the live level says where a setup dies today, this says
+            # what being wrong would have cost on entry.
+            frozen, _ = pattern_lines.freeze_stops(apply=True, verbose=False)
+            if frozen:
+                print(f"Recorded {len(frozen)} break level(s).")
             # Drop setups that are done (target reached / failed); each gets a News post.
             pruned, _ = pattern_watchlist.prune_finished(apply=True)
             if pruned:
