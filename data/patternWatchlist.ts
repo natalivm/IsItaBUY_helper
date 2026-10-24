@@ -61,9 +61,13 @@ export interface PatternHistoryEntry {
   direction: 'up' | 'down';
   stage: PatternStage;
   stageDate: string;
-  confirm: number;
+  /** Absent on a setup that failed while still forming: it never signalled, so no
+   *  confirm level was ever set and no measured move was ever projected. Only the
+   *  invalidation it died on and the signal it never reached are known. */
+  confirm?: number;
+  signal?: number;
   invalidation: number;
-  target: number;
+  target?: number;
   note?: string;
 }
 
@@ -18484,23 +18488,24 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed daily close back inside the broken boundary, below $201.57.",
       note: "Price broke the top of the April-October descending channel on Oct 8 and confirmed above $212.36 on Oct 12, adding about 8% in the two weeks since. The channel was wide, so the measured move is a long one at $270.36 \u2014 it agrees with the weekly break rather than arguing with it.",
     },
+    history: [
+      { pattern: "Bull Flag", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-21",
+        confirm: 198.1, invalidation: 193.71, target: 227.5,
+        note: "A flag that paid: confirmed above $198.10, beyond the signal candle's high, and reached $227.50 on Oct 21 with price carrying on to $233.21. Worth recording for a reason beyond the call itself — the detector cannot find this at all. Flags are not in its vocabulary, which runs to channels, wedges, head and shoulders and twelve candle patterns. No threshold tuning reaches a pattern that is not implemented." },
+      { pattern: "Rising Wedge", timeframe: "weekly", direction: "down", stage: "failed", stageDate: "2026-10-19",
+        signal: 212.78, invalidation: 226.74,
+        note: "Died before it ever signalled. The wedge needed a weekly close below $212.78 to start and instead closed above $226.74 with follow-through, which ends it. Nothing was ever confirmed and no target was ever projected, so there is no measured move to record — only the level it failed on." },
+      { pattern: "Descending Channel", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-12",
+        confirm: 201.63, invalidation: 173.47, target: 221.82,
+        note: "The same setup the detector still had running. Its confirm matches ours to the cent -- $201.63 -- so the break was read identically; what differs is the measured move. The source tool projected $221.82 and the stock reached it on Oct 12. Ours projected $270.51, which price has not seen, so our copy sat at confirmed while the call had in fact finished. Second case of this exact divergence after XOM, and both times our target was the further one." },
+      { pattern: "Falling Wedge", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-09-08",
+        confirm: 188.15, invalidation: 145.93, target: 215.38,
+        note: "Confirmed above $188.15 and reached $215.38 on Sep 8, the earliest of the four bullish calls that paid here. Its invalidation sat $145.93, 37% below the current price, which is a reminder that a wide stop does not stop a setup working -- it only makes it untradable while it does." },
+      { pattern: "Head & Shoulders", timeframe: "daily", direction: "down", stage: "failed", stageDate: "2026-10-16",
+        signal: 205.98, invalidation: 217.78,
+        note: "The same story three days earlier and one timeframe down: a neckline break below $205.98 that never came, killed by a daily close above $217.78 and a follow-through. Both failures here are bearish setups on a stock that rallied to $233.21 — which is the shape the backtest found across the whole sample, down-breaks carrying negative expectancy over a period the market spent rising." }
+    ],
     more: [
-      {
-        pattern: "Descending Channel",
-        timeframe: "weekly",
-        direction: "up",
-        stage: "confirmed",
-        stageDate: "2026-08-17",
-        signal: 197.33,
-        confirm: 201.63,
-        invalidation: 196.13,
-        target: 270.51,
-        lines: [
-          { from: ["2023-12-04", 214.17], to: ["2026-10-19", 196.13] },
-          { from: ["2023-12-04", 140.99], to: ["2026-10-19", 122.95] },
-        ],
-        note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $201.63 on Aug 17.",
-      },
       {
         pattern: "Rising Wedge",
         timeframe: "daily",
