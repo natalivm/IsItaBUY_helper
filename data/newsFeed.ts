@@ -15,6 +15,20 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "2026-10-24-CCJ-daily-alt-retest",
+    date: "Oct 24 2026",
+    tickers: ["CCJ"],
+    title: "CCJ · retest in progress (daily setup)",
+    text: "Previously break confirmed.",
+  },
+  {
+    id: "2026-10-24-HOOD-daily-alt-retest",
+    date: "Oct 24 2026",
+    tickers: ["HOOD"],
+    title: "HOOD · retest in progress (daily setup)",
+    text: "Previously break confirmed.",
+  },
+  {
     id: "2026-10-24-AMKR-daily-alt-signal",
     date: "Oct 24 2026",
     tickers: ["AMKR"],
