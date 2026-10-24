@@ -88,6 +88,11 @@ def _classify(up, lo, start, end):
         return None
     span = end - start
     mid = (up.at(end) + lo.at(end)) / 2
+    if mid <= 0:
+        # Both lines extrapolate to or below zero, so there is no price to measure
+        # against: at mid == 0 the division below raises, and at mid < 0 it quietly
+        # flips the sign of every reading that follows. Neither is a pattern.
+        return None
     trend = (su + sl) / 2 * span / mid           # relative move of the pattern's midline
     # Each line's own move across the pattern, as a fraction of where it started:
     # scale-free, so "flat" means the same thing on a $6 stock and a $600 one.

@@ -108,7 +108,10 @@ def backtest_stock(job):
         seen = set()
         for d in range(WARMUP[tf], n_all - 1, STEP[tf]):
             sub = _slice(bars, d + 1, tf)
-            cands = [x for x in (pd.detect_lines(sub, tf, d + 1), pd.detect_hammer(sub, tf, d + 1)) if x]
+            try:
+                cands = [x for x in (pd.detect_lines(sub, tf, d + 1), pd.detect_hammer(sub, tf, d + 1)) if x]
+            except Exception:
+                continue          # one bad slice out of thousands should not lose the whole run
             for s in cands:
                 if s['stage'] != 'confirmed':
                     continue
