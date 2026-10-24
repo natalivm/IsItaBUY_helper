@@ -3375,21 +3375,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-10-08", 279.02], to: ["2026-10-23", 305.3] },
     ],
     note: "The rising channel from the mid-September low, redrawn higher after price pushed through the old upper line. Price is pressing the top of it again. No break yet: a daily close above $331.89 or below $305.30 would start a signal, and the channel's width carries to $358.49 up or $278.70 down.",
-    alt: {
-      pattern: "Ascending Channel",
-      timeframe: "weekly",
-      direction: "both",
-      stage: "forming",
-      breakUp: 359.99,
-      breakDown: 282.84,
-      goalUp: 437.14,
-      goalDown: 205.7,
-      lines: [
-        { from: ["2026-07-20", 256.4], to: ["2026-10-19", 359.99] },
-        { from: ["2026-07-20", 179.25], to: ["2026-10-19", 282.84] },
-      ],
-      note: "The same advance seen on the weekly chart — a wider channel running up from the spring low. Price sits in the upper half of it. No break yet: a weekly close above $359.99 or below $282.84 would start a signal, carrying to $437.14 up or $205.70 down.",
-    },
     history: [
       { pattern: "Descending Channel", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-08-10",
         confirm: 192.9, invalidation: 141, target: 246.39,
