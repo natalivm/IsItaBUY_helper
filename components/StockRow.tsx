@@ -73,7 +73,7 @@ const StockRow: React.FC<Props> = ({ stock, tickerDef, animationIndex, onSelect 
       </div>
 
       {/* Rating label */}
-      <span className={cn("text-xs font-black uppercase tracking-widest flex-shrink-0 w-28", stock.color)}>
+      <span className={cn("text-xs font-bold uppercase tracking-widest flex-shrink-0 w-28", stock.color)}>
         {stock.label}
       </span>
 
