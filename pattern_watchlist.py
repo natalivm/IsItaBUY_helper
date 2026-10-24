@@ -50,6 +50,13 @@ _DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 WATCHLIST_FILE = os.path.join(_DATA_DIR, "patternWatchlist.ts")
 NEWS_FILE = os.path.join(_DATA_DIR, "newsFeed.ts")
 SNAPSHOT_FILE = os.path.join(_DATA_DIR, "watchlistStatus.json")
+
+# Pause the News feed while setups are being reworked by hand, so a session of edits does
+# not post a post per change. Stage changes still happen and the snapshot is still written,
+# so nothing floods the feed when this goes back to False -- the changes made while paused
+# simply never get a News item. Every run says loudly that it is paused. `--no-news` does
+# the same for a single run without touching this.
+NEWS_PAUSED = True
 # Candle files for the expanded-row charts, served with the site (public/ → dist/).
 BARS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "bars")
 # timeframe → (Yahoo interval, history range)
@@ -274,7 +281,7 @@ def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=Non
 
 STAGE_LABEL = {
     'forming': 'Waiting for a break', 'signal': 'Break pending', 'confirmed': 'Break confirmed',
-    'retest': 'Retest in progress',
+    'retest': 'Retest in progress', 'atRisk': 'At risk',
     'target': 'Target reached', 'failed': 'Pattern failed', 'update': 'Needs updating',
 }
 
@@ -824,7 +831,7 @@ def _stage_edits(text, pos, new_stage, on_date, extra=None):
 
 
 def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FILE,
-                     snapshot_path=SNAPSHOT_FILE, today=None, now_et=None):
+                     snapshot_path=SNAPSHOT_FILE, today=None, now_et=None, post_news=None):
     """
     quotes: {sym: {'price', 'date', 'bars'}}; pass None to re-check against the stored prices.
     Returns a dict: price_changes [(sym, old, new)], target_hits, needs_update, review, news.
@@ -835,6 +842,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
         text = fh.read()
     entries = parse_watchlist(text)
     edits, price_changes, target_hits, needs_update, review = [], [], [], [], []
+    at_risk, back_inside = [], []   # confirmed breaks that closed past invalidation, and ones that came back
     bot_notes = {}  # "TICKER|label" → (date, news text) for changes this run made
     momentum = []   # (sym, rsi, 'with'/'against'/'neutral', direction) for the hot-momentum report
 
@@ -880,6 +888,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
         for label, s, pos in _setups(e):
             stage, direction = s.get('stage'), s.get('direction')
             key, what = f"{sym}|{label}", _describe(s, main)
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
 
             # A confirmed break that has come back to its boundary: report it so it can
             # be marked `retest` by hand. Never set here -- an automatic flag would flip
@@ -890,7 +899,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                     review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
                                   f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
             # A retest is a confirmed break, so it keeps running the target check.
-            if stage in ('confirmed', 'retest') and direction in ('up', 'down'):
+            if stage in ('confirmed', 'retest', 'atRisk') and direction in ('up', 'down'):
                 since = max(old_date, s.get('stageDate') or old_date)
                 hit = _target_hit(s, q['bars'], since, price)
                 if hit:
@@ -900,11 +909,36 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                     bot_notes[key] = (hit_date, f"Hit target ${_fmt_price(s['target'])}.")
                     continue
                 inv = s.get('invalidation')
-                if is_close and inv is not None and ((direction == 'down' and price > inv) or (direction == 'up' and price < inv)):
-                    review.append(f"{sym} ({label}): closed ${new_price} beyond invalidation ${_fmt_price(inv)} — check for follow-through / mark failed")
+                # The first leg of the failure test: a completed close on the setup's own
+                # timeframe, back past invalidation. Only the follow-through close is left,
+                # so the setup is flagged `atRisk` rather than left reading "confirmed".
+                # Unlike `retest` this is safe to set here -- it turns on a completed close,
+                # not on price brushing a line, so it cannot flip back and forth intraday.
+                # Marking it failed stays a human call: see prune_finished / _finished.
+                if is_close and inv is not None and _period_closed(tf, date):
+                    past = (direction == 'down' and price > inv) or (direction == 'up' and price < inv)
+                    if past and stage != 'atRisk':
+                        # Same bookkeeping as `update`: stageDate keeps the date the break was
+                        # confirmed, so the rail still reads right and a return inside restores
+                        # the stage cleanly. The at-risk date goes in updateDate.
+                        edits += _stage_edits(text, pos, 'atRisk', None, {
+                            'prevStage': stage, 'updateDate': date,
+                            'updateNote': f"Closed back past invalidation ${_fmt_price(inv)} ({_short_date(date)})."})
+                        at_risk.append((sym, label, inv, new_price))
+                        bot_notes[key] = (date, f"Closed ${new_price} back past invalidation "
+                                                f"${_fmt_price(inv)}; needs a follow-through close to fail.")
+                        continue
+                    if not past and stage == 'atRisk':
+                        back = s.get('prevStage') or 'confirmed'
+                        edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
+                        back_inside.append((sym, label, inv, new_price, back))
+                        bot_notes[key] = (date, f"Closed ${new_price} back inside ${_fmt_price(inv)}; "
+                                                f"the break is intact again.")
+                        continue
+                    if past:
+                        review.append(f"{sym} ({label}): still past invalidation ${_fmt_price(inv)} at ${new_price} — a follow-through close marks it failed")
 
             reason = _pending_break(s, price)
-            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
             if reason and not is_close:
                 review.append(f"{sym} ({label}): trading at ${new_price} past a limit — market still open; only the close counts, re-check after 16:00 ET")
                 continue
@@ -923,7 +957,8 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
     for start, end, new in sorted(edits, key=lambda x: (x[0], x[1]), reverse=True):
         new_text = new_text[:start] + new + new_text[end:]
 
-    news = sync_news(text, new_text, bot_notes, today, apply=apply, news_path=news_path, snapshot_path=snapshot_path)
+    news = sync_news(text, new_text, bot_notes, today, apply=apply, news_path=news_path,
+                     snapshot_path=snapshot_path, paused=post_news is False or NEWS_PAUSED)
 
     if apply and new_text != text:
         with open(path, 'w') as fh:
@@ -931,7 +966,7 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
 
     return {'momentum': momentum, 'thin': thin_setups(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
-            'review': review, 'news': news}
+            'at_risk': at_risk, 'back_inside': back_inside, 'review': review, 'news': news}
 
 
 # ── News feed ──
@@ -963,7 +998,8 @@ def status_map(text):
     return out
 
 
-def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE):
+def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE,
+              paused=None):
     """Post one News item per status change since the last snapshot. Returns the items."""
     if os.path.exists(snapshot_path):
         with open(snapshot_path) as fh:
@@ -1004,8 +1040,10 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
     items.sort(key=lambda it: it['tickers'][0])
     items.sort(key=lambda it: it['id'][:10], reverse=True)  # newest first; id starts with the ISO date
     if apply:
-        if items:
+        if items and not paused:
             _prepend_news(items, news_path)
+        # The snapshot is written either way: it is what the next run diffs against, so
+        # leaving it stale would make every paused change post at once on resuming.
         with open(snapshot_path, 'w') as fh:
             json.dump(after, fh, indent=1, sort_keys=True)
             fh.write('\n')
@@ -1076,7 +1114,7 @@ def _finished(s, main, now_et, lines=None):
         return now_et.date().isoformat(), f"Target reached {_short_date(hit)}.", f"{t_} · setup closed", 'target'
     if stage == 'failed':
         return now_et.date().isoformat(), "Pattern failed.", f"{t_} · setup closed", 'failed'
-    if stage not in ('confirmed', 'retest') or s.get('direction') not in ('up', 'down'):
+    if stage not in ('confirmed', 'retest', 'atRisk') or s.get('direction') not in ('up', 'down'):
         return None
     tf = s.get('timeframe') or main.get('timeframe') or 'daily'
     bars = _load_chart_bars(t_, tf)
@@ -1217,7 +1255,7 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
     news = sync_news(text, new_text, notes, now_et.date().isoformat(), apply=apply,
-                     news_path=news_path, snapshot_path=snapshot_path)
+                     news_path=news_path, snapshot_path=snapshot_path, paused=NEWS_PAUSED)
     if apply and new_text != text:
         with open(path, 'w') as fh:
             fh.write(new_text)
@@ -1303,6 +1341,10 @@ def drop_thin(apply=False, path=WATCHLIST_FILE):
 
 
 def print_watchlist_report(result, missing, apply):
+    if NEWS_PAUSED:
+        print("\n⏸  News posting is PAUSED (NEWS_PAUSED in pattern_watchlist.py). Stage changes are\n"
+              "   still written and the snapshot still moves, so nothing is queued up for later —\n"
+              "   changes made while paused get no News item at all. Set it back to False to resume.")
     print(f"\n{'='*72}\nPATTERN WATCHLIST ({os.path.relpath(WATCHLIST_FILE)})\n")
     mode = "Updated" if apply else "Would update"
     print(f"{mode} {len(result['price_changes'])} watchlist price(s).")
@@ -1314,6 +1356,14 @@ def print_watchlist_report(result, missing, apply):
         print(f"\n🔄 Needs updating ({'marked' if apply else 'would mark'} stage → update):")
         for sym, label, stage, note in result['needs_update']:
             print(f"  {sym:<6} {label:<12} {stage:<8} {note}")
+    if result.get('at_risk'):
+        print(f"\n⚠ At risk ({'marked' if apply else 'would mark'} stage → atRisk; a follow-through close marks it failed):")
+        for sym, label, inv, px in result['at_risk']:
+            print(f"  {sym:<6} {label:<12} closed ${px} back past invalidation ${_fmt_price(inv)}")
+    if result.get('back_inside'):
+        print(f"\n✓ Back inside ({'marked' if apply else 'would mark'} stage → confirmed again):")
+        for sym, label, inv, px, back in result['back_inside']:
+            print(f"  {sym:<6} {label:<12} closed ${px} back inside ${_fmt_price(inv)} → {back}")
     mom = result.get('momentum') or []
     if mom:
         hot = [m for m in mom if m[2] == 'with']
@@ -1362,6 +1412,7 @@ if __name__ == "__main__":
     ap.add_argument("--apply", action="store_true", help="write changes (default is a dry run)")
     ap.add_argument("--bars", action="store_true", help="only (re)download the chart candles into public/bars/ (network)")
     ap.add_argument("--prune", action="store_true", help="remove finished setups (target reached / failed) and post them to News")
+    ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     args = ap.parse_args()
     if args.thin:
@@ -1387,7 +1438,7 @@ if __name__ == "__main__":
         ok, bad = write_chart_bars({"User-Agent": "Mozilla/5.0"})
         print(f"Wrote {len(ok)} chart file(s) to {os.path.relpath(BARS_DIR)}." + (f" Failed: {', '.join(bad)}" if bad else ""))
         raise SystemExit(0)
-    res = update_watchlist(None, apply=args.apply)
+    res = update_watchlist(None, apply=args.apply, post_news=False if args.no_news else None)
     print_watchlist_report(res, [], args.apply)
     if not args.apply and (res['news'] or res['needs_update'] or res['target_hits']):
         print("\nRun with --apply to write these changes.")

@@ -51,6 +51,8 @@ HEADERS = {
 TOP_N = 3
 
 # Stages a setup can be featured in: it still has somewhere to go.
+# `atRisk` is deliberately absent: a break whose own timeframe has closed back past
+# invalidation is the last thing to feature as a hot setup. `retest` is absent too.
 LIVE_STAGES = ("confirmed", "signal", "forming")
 
 

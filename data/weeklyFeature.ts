@@ -65,7 +65,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-23",
       target: 21.79,
       invalidation: 14.2,
-      rsi: 73,
+      rsi: 73.2,
       score: 112,
       why: [
         "Break confirmed on the daily chart",
@@ -87,7 +87,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-23",
       target: 205.6,
       invalidation: 155.09,
-      rsi: 70.1,
+      rsi: 70.3,
       score: 105.6,
       why: [
         "Break confirmed on the daily chart",
@@ -98,24 +98,25 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       ]
     },
     {
-      ticker: "WDC",
-      name: "Western Digital Corporation",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "down",
+      ticker: "CVX",
+      name: "Chevron Corporation",
+      pattern: "Ascending Channel",
+      timeframe: "weekly",
+      direction: "up",
       stage: "confirmed",
-      stageDate: "2026-10-13",
-      price: 343.67,
+      stageDate: "2026-10-19",
+      price: 233.21,
       priceDate: "2026-10-23",
-      target: 244.43,
-      invalidation: 387.14,
-      rsi: 36,
-      score: 96.3,
+      target: 273.38,
+      invalidation: 219.9,
+      rsi: 76.9,
+      score: 98.3,
       why: [
-        "Break confirmed on the daily chart",
-        "Daily RSI 36 backs the downside",
-        "The stock's own trend is down",
-        "28.9% from here to the target"
+        "Break confirmed on the weekly chart",
+        "Daily RSI 77 backs the upside",
+        "The stock's own trend is up",
+        "17.2% from here to the target",
+        "About 3.0x more room to the target than to invalidation"
       ]
     }
   ],
