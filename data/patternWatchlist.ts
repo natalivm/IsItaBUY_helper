@@ -1075,13 +1075,13 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-08",
     signal: 730.64,
     confirm: 721.30,
-    invalidation: 866.67,
+    invalidation: 887.11,
     target: 519.93,
     lines: [
       { from: ["2026-08-05", 601.0], to: ["2026-10-20", 871.78] },
       { from: ["2026-08-05", 390.28], to: ["2026-10-20", 852.83] },
     ],
-    failRule: "a completed daily close above $866.67, then a follow-through close above that candle's high.",
+    failRule: "a completed daily close above $887.11, then a follow-through close above that candle's high.",
     note: "A steep run from the September low near $550 narrowed into a rising wedge that topped out near $780. Price broke the lower line and confirmed with a daily close below $721.30, and is now trading just under that level.",
     more: [
       {
@@ -10923,6 +10923,19 @@ export const PATTERN_STOCKS: PatternStock[] = [
       note: "A monthly candle that opened at its low and closed at its high, no wick either end. It needs a monthly close above $242.93 to stay confirmed; price is well below that now and only just above the $158.38 invalidation.",
     },
     more: [
+      {
+        pattern: "Descending Channel",
+        timeframe: "daily",
+        direction: "both",
+        stage: "forming",
+        breakUp: 179.19,
+        breakDown: 121.21,
+        goalUp: 237.17,
+        goalDown: 63.23,
+        signalRule: "a completed daily close above $179.19 or below $121.21 starts a signal.",
+        confirmRule: "a later completed daily close beyond that signal candle's extreme.",
+        note: "A wide descending channel on the daily chart with price mid-range, so neither side has broken: a daily close above $179.19 or below $121.21 starts a signal. The channel is $57.98 tall, which is where both goals come from.",
+      },
       {
         auto: true,
         pattern: "Rising Wedge",
