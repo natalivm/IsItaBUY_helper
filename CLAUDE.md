@@ -177,8 +177,8 @@ Baseline on the 20 calls whose candles reach back far enough:
   anything is wrong.
 - **right pattern and direction: 15/20.** Three of the four misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
-- **target: 13.5% median error**, and that is the whole defect — 4.7% on wedges against
-  22.6% on channels.
+- **target: 9.0% median error** — 4.7% on wedges, 9.9% on channels, and 10 of the 15 now
+  land inside both level tolerances against 8 before.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
@@ -193,8 +193,8 @@ against the completed calls:
 Wedge error drops by well over half, and holds under every cutoff tested (at `BACK = 0`
 it reads 14.6% → 6.8%, at `BACK = 2` 11.4% → 4.2%). Channels do not move at all and
 cannot — their lines are parallel, so the height is the same wherever it is measured, and
-their 22.6% is a line-fitting problem rather than a height one. **Channels are now the
-whole of the remaining target error.**
+their error is a line-fitting problem rather than a height one — see **MIN_SIDE_TOUCHES**
+below, which is what fixed it.
 
 The cost is one setup, consistently: KLAC's daily rising wedge at `BACK = 1`, CVX's weekly
 falling wedge at `BACK = 0`. Both are lost to the same guard — a shorter target is more
@@ -234,6 +234,30 @@ source of every stored setup on every hand-posted stock, `auto` flag included, p
 stock's `keyLevel` and `history`. It stores source text rather than parsed values, so a
 setup goes back exactly as it was written. `python3 pattern_detect.py --archive` writes
 one without changing anything.
+
+**`MIN_SIDE_TOUCHES = 2`: both boundaries have to be touched.** A channel is one line
+through two swing points plus a *parallel through a single opposite pivot*, and nothing in
+the scoring objected to how far away that pivot sat. The result was a boundary price never
+came back to, and a channel as wide as its one outlier. On the completed calls the
+detector's channel was wider than the call's in **8 cases out of 8**, never narrower.
+
+Requiring each boundary to carry at least 2 touches (wedges already do, both their lines
+being fitted through two pivots, so this bites only channels):
+
+| | channel target error | overall | levels close | patterns rebuilt |
+|---|---|---|---|---|
+| 1 per side | 22.6% | 13.5% | 8/15 | 15/20 |
+| **2 per side** (current) | **9.9%** | **9.0%** | **10/15** | 15/20 |
+| 3 per side | 9.4% | 9.0% | — | 9/20 |
+
+Channel error drops by more than half with no loss on the completed calls at all, and
+three per side collapses recall for nothing. **The cost is 4.4 points on the independent
+control** — reproducing the setups posted by hand falls from 79.0% to 74.6%, 11 of 252 —
+because some hand-drawn channels do rest on a single touch. That trade was taken
+deliberately: the goal is the setups worth acting on, not every setup the rules can draw,
+and a boundary touched once is not a boundary. `SIDE_EXEMPT` (0 = off) can hand the
+single-touch channels back when they are narrow, if the recall is ever worth more than the
+width.
 
 ### Working on the scripts: three traps
 
