@@ -121,6 +121,20 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   ],
   earnings: [
     {
+      ticker: "VZ",
+      name: "Verizon Communications",
+      date: "2026-10-26",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "AMKR",
+      name: "Amkor Technology, Inc.",
+      date: "2026-10-26",
+      estimated: false,
+      time: "amc"
+    },
+    {
       ticker: "CLS",
       name: "Celestica Inc.",
       date: "2026-10-26",
@@ -128,8 +142,29 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "NUE",
+      name: "Nucor Corporation",
+      date: "2026-10-26",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "FCX",
+      name: "Freeport-McMoRan Inc.",
+      date: "2026-10-27",
+      estimated: false,
+      time: "bmo"
+    },
+    {
       ticker: "GLW",
       name: "Corning Inc",
+      date: "2026-10-27",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "KO",
+      name: "The Coca-Cola Company",
       date: "2026-10-27",
       estimated: false,
       time: "bmo"
@@ -149,6 +184,27 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "bmo"
     },
     {
+      ticker: "CAKE",
+      name: "Cheesecake Factory",
+      date: "2026-10-27",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "ENPH",
+      name: "Enphase Energy, Inc.",
+      date: "2026-10-27",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "HOOD",
+      name: "Robinhood Markets, Inc.",
+      date: "2026-10-27",
+      estimated: false,
+      time: "amc"
+    },
+    {
       ticker: "STX",
       name: "Seagate Technology Holdings",
       date: "2026-10-27",
@@ -156,8 +212,22 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "V",
+      name: "VISA Inc.",
+      date: "2026-10-27",
+      estimated: false,
+      time: "amc"
+    },
+    {
       ticker: "APH",
       name: "Amphenol Corp",
+      date: "2026-10-28",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "GEV",
+      name: "GE Vernova Inc.",
       date: "2026-10-28",
       estimated: false,
       time: "bmo"
@@ -177,8 +247,22 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "GOOGL",
+      name: "Alphabet Inc.",
+      date: "2026-10-28",
+      estimated: false,
+      time: "amc"
+    },
+    {
       ticker: "KLAC",
       name: "KLA Corporation",
+      date: "2026-10-28",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "MSFT",
+      name: "Microsoft Corp",
       date: "2026-10-28",
       estimated: false,
       time: "amc"
@@ -191,6 +275,20 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "CAT",
+      name: "Caterpillar Inc.",
+      date: "2026-10-29",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "LHX",
+      name: "L3Harris Technologies, Inc.",
+      date: "2026-10-29",
+      estimated: false,
+      time: "bmo"
+    },
+    {
       ticker: "LLY",
       name: "Eli Lilly and Company",
       date: "2026-10-29",
@@ -200,6 +298,13 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
     {
       ticker: "AMZN",
       name: "Amazon.com",
+      date: "2026-10-29",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "COIN",
+      name: "Coinbase Global, Inc.",
       date: "2026-10-29",
       estimated: false,
       time: "amc"
@@ -224,6 +329,41 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       date: "2026-10-29",
       estimated: false,
       time: "amc"
+    },
+    {
+      ticker: "CCJ",
+      name: "Cameco Corporation",
+      date: "2026-10-30",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "CVX",
+      name: "Chevron Corporation",
+      date: "2026-10-30",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "D",
+      name: "Dominion Energy, Inc.",
+      date: "2026-10-30",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "GD",
+      name: "General Dynamics Corporation",
+      date: "2026-10-30",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "XOM",
+      name: "Exxon Mobil Corporation",
+      date: "2026-10-30",
+      estimated: false,
+      time: "bmo"
     }
   ]
 };

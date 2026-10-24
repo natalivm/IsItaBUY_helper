@@ -134,7 +134,7 @@ const TabButton: React.FC<{ active: boolean; onClick: () => void; icon: React.Re
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center gap-1.5 px-3 py-2 text-xs font-black uppercase tracking-wide border-b-2 transition-colors',
+      'flex items-center gap-1.5 px-3 py-2 text-xs font-bold uppercase tracking-wide border-b-2 transition-colors',
       active
         ? 'border-amber-500 text-amber-400'
         : 'border-transparent text-slate-500 hover:text-slate-300'
@@ -168,7 +168,7 @@ const ReleaseNotesPanel: React.FC<Props> = ({ open, tab, onTabChange, onClose })
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: -20, opacity: 0, scale: 0.98 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="w-full max-w-lg bg-surface-deep border border-slate-700/60 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden"
+            className="w-full max-w-lg bg-surface-deep border border-slate-700/60 rounded-2xl overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-slate-700/60 px-2 pr-3">
@@ -266,7 +266,7 @@ export const WhatsNewToast: React.FC<ToastProps> = ({ onView, onDismiss }) => {
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         className="fixed bottom-4 left-4 right-4 z-50 max-w-md mx-auto"
       >
-        <div className="bg-surface-deep/95 backdrop-blur-lg border border-slate-700/60 rounded-2xl p-4 shadow-2xl shadow-black/40">
+        <div className="bg-surface-deep/95 backdrop-blur-lg border border-slate-700/60 rounded-2xl p-4">
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-amber-400" />

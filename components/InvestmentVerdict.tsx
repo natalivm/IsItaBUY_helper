@@ -143,14 +143,14 @@ const InvestmentVerdict: React.FC<Props> = ({
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.5 }}
-      className="mt-16 rounded-2xl border border-slate-800 bg-surface-card/80 shadow-2xl relative overflow-hidden"
+      className="mt-16 rounded-2xl border border-slate-800 bg-surface-card relative overflow-hidden"
     >
       <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: tc }} />
 
       {/* Always-visible: header + rating + metrics */}
       <div className="px-8 pt-5 pb-6">
         <div className="flex items-center justify-between mb-5">
-          <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-3">
+          <div className="text-xs font-bold text-amber-500 uppercase tracking-[0.18em] flex items-center gap-3">
             <span className="w-6 h-[2px] bg-amber-500/50" />
             Investment Verdict
           </div>
@@ -158,7 +158,7 @@ const InvestmentVerdict: React.FC<Props> = ({
 
         <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
           <div className="flex flex-col gap-1 shrink-0">
-            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Is it a Buy?</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Is it a Buy?</span>
             {(() => {
               const quantRating = tickerDef.ratingOverride
                 ? getInstitutionalRating(allProjections.base.pricePerShare, tickerDef.currentPrice)
@@ -170,7 +170,7 @@ const InvestmentVerdict: React.FC<Props> = ({
                     {verdictText}
                   </div>
                   {verdictText !== ourLabel && (
-                    <div className={cn('text-xs font-black uppercase tracking-widest mt-1', rd.subtextColor)}>
+                    <div className={cn('text-xs font-bold uppercase tracking-widest mt-1', rd.subtextColor)}>
                       {ourLabel}
                     </div>
                   )}
@@ -190,7 +190,7 @@ const InvestmentVerdict: React.FC<Props> = ({
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-1">
               {extraMetrics.map((m, i) => (
                 <div key={i} className="flex flex-col gap-1">
-                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{m.label}</span>
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{m.label}</span>
                   {m.value}
                   <span className="text-xs text-slate-400">{m.subtext}</span>
                 </div>
@@ -199,18 +199,18 @@ const InvestmentVerdict: React.FC<Props> = ({
           ) : (
             <div className="flex gap-8 flex-1">
               <div className="flex flex-col gap-0.5">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">5Y Base Target</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">5Y Base Target</span>
                 <span className="text-2xl font-black" style={{ color: tc }}>{usd(allProjections.base.pricePerShare)}</span>
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">PW Blended</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2">PW Blended</span>
                 <span className="text-base font-black text-slate-300">{usd(investmentConclusion.pwAvg)}</span>
               </div>
               <div className="w-px bg-slate-800 self-stretch" />
               <div className="flex flex-col gap-0.5">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Upside to Base</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Upside to Base</span>
                 <span className={cn('text-2xl font-black', momentumUpside >= 0 ? 'text-emerald-400' : 'text-red-400')}>
                   {momentumUpside >= 0 ? '+' : ''}{momentumUpside.toFixed(1)}%
                 </span>
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">5Y CAGR</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2">5Y CAGR</span>
                 <span className="text-base font-black text-slate-300">{pctFmt(investmentConclusion.cagr / 100)}</span>
               </div>
             </div>
@@ -223,7 +223,7 @@ const InvestmentVerdict: React.FC<Props> = ({
         onClick={() => setVerdictOpen(o => !o)}
         className="w-full flex items-center justify-between px-8 py-3 border-t border-slate-800/60 hover:bg-slate-800/30 transition-colors min-h-[44px]"
       >
-        <span className="text-xs font-black text-slate-500 uppercase tracking-[0.3em]">
+        <span className="text-xs font-bold text-slate-500 uppercase tracking-[0.16em]">
           {verdictOpen ? 'Hide analysis' : 'Read analysis'}
         </span>
         <ChevronDown className={cn('w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0', verdictOpen && 'rotate-180')} />
@@ -260,7 +260,7 @@ const InvestmentVerdict: React.FC<Props> = ({
                 const sourceLabel = b.overstatementSource === 'burry-published' ? 'Burry-published' : 'estimated full-SBC adjustment';
                 return (
                   <div className="pt-4 border-t border-slate-800/80">
-                    <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.16em] mb-3 flex items-center gap-2">
                       <AlertTriangle className="w-3 h-3 text-amber-400" />
                       <span>Burry-Adjusted Read</span>
                     </div>
@@ -284,7 +284,7 @@ const InvestmentVerdict: React.FC<Props> = ({
               {/* Key takeaways */}
               {keyTakeaways && keyTakeaways.length > 0 && (
                 <div className="pt-4 border-t border-slate-800/80">
-                  <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.16em] mb-4 flex items-center gap-2">
                     <Lightbulb className="w-3 h-3 text-amber-400" />
                     <span>What This Means For You</span>
                   </div>
@@ -321,7 +321,7 @@ const InvestmentVerdict: React.FC<Props> = ({
                 const spotMedianUpside = ((ac.targetMedian - tickerDef.currentPrice) / tickerDef.currentPrice * 100).toFixed(1);
                 return (
                   <div className="pt-4 border-t border-slate-800/80">
-                    <div className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.16em] mb-4 flex items-center gap-2">
                       <span className="w-5 h-[2px] bg-slate-600" />
                       Wall Street Consensus
                     </div>

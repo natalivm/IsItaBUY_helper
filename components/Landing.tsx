@@ -329,11 +329,16 @@ const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, headerContr
               Chart setups and five-year valuations, refreshed every session.
               Here is what the week looks like.
             </motion.p>
+            <motion.button className="all" onClick={() => onOpenWatchlist()} {...rise(3)}
+              whileHover={still ? undefined : { x: 3 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 24 }}>
+              Open the full watchlist<Arrow />
+            </motion.button>
           </div>
           {headerControls && <div className="hdr-ctl">{headerControls}</div>}
         </header>
 
-        <motion.div className="stats" {...rise(3)}>
+        <motion.div className="stats" {...rise(4)}>
           <Stat n={stats.covered} label="stocks covered" />
           <Stat n={stats.tracked} label="setups tracked" />
           <Stat n={stats.confirmed} label="breaks confirmed" tone="hot" />
@@ -364,14 +369,14 @@ const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, headerContr
           <div className="sec-head">
             <h2>Reporting this week</h2>
             <p>
-              Stocks we cover with earnings between {span(weekOf, weekEnd)}, by the day
-              they report, with the setup each one carries into it. A card opens that
-              setup in the watchlist. <b>BMO</b> before the open, <b>AMC</b> after the
-              close; <b>*</b> marks a date Yahoo has not confirmed.
+              Earnings between {span(weekOf, weekEnd)}, by the day they report, each
+              with the setup it carries into the print. A card opens that setup.
+              <b>BMO</b> before the open, <b>AMC</b> after the close; <b>*</b> marks a
+              date Yahoo has not confirmed.
             </p>
           </div>
           {earnings.length === 0 ? (
-            <div className="empty">No covered stock reports this week.</div>
+            <div className="empty">No reports scheduled this week.</div>
           ) : (
             <div className="earn">
               {byDay.map(({ iso, evs }, i) => {
@@ -399,11 +404,6 @@ const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, headerContr
             </div>
           )}
         </section>
-
-        <motion.button className="all" onClick={() => onOpenWatchlist()}
-          whileHover={still ? undefined : { x: 3 }} transition={{ type: 'spring', stiffness: 380, damping: 24 }}>
-          Open the full watchlist<Arrow />
-        </motion.button>
 
         <p className="foot">
           Both lists refresh every week before Monday's open. Targets are projections,

@@ -1,4 +1,9 @@
 {
+  "AMKR": {
+    "date": "2026-10-26",
+    "estimated": false,
+    "time": "amc"
+  },
   "AMZN": {
     "date": "2026-10-29",
     "estimated": false,
@@ -9,20 +14,80 @@
     "estimated": false,
     "time": "bmo"
   },
+  "CAKE": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "amc"
+  },
+  "CAT": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "CCJ": {
+    "date": "2026-10-30",
+    "estimated": false,
+    "time": "bmo"
+  },
   "CLS": {
     "date": "2026-10-26",
     "estimated": false,
     "time": "amc"
+  },
+  "COIN": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "amc"
+  },
+  "CVX": {
+    "date": "2026-10-30",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "D": {
+    "date": "2026-10-30",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "ENPH": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "amc"
+  },
+  "FCX": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "bmo"
   },
   "FTNT": {
     "date": "2026-10-28",
     "estimated": false,
     "time": "amc"
   },
+  "GD": {
+    "date": "2026-10-30",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "GEV": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "bmo"
+  },
   "GLW": {
     "date": "2026-10-27",
     "estimated": false,
     "time": "bmo"
+  },
+  "GOOGL": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
+  "HOOD": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "amc"
   },
   "INTC": {
     "date": "2026-10-29",
@@ -34,6 +99,16 @@
     "estimated": false,
     "time": "amc"
   },
+  "KO": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "LHX": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "bmo"
+  },
   "LLY": {
     "date": "2026-10-29",
     "estimated": false,
@@ -44,8 +119,18 @@
     "estimated": false,
     "time": "tbd"
   },
+  "MSFT": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
   "NOW": {
     "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
+  "NUE": {
+    "date": "2026-10-26",
     "estimated": false,
     "time": "amc"
   },
@@ -74,8 +159,18 @@
     "estimated": false,
     "time": "amc"
   },
+  "V": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "amc"
+  },
   "VRT": {
     "date": "2026-10-28",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "VZ": {
+    "date": "2026-10-26",
     "estimated": false,
     "time": "bmo"
   },
@@ -83,5 +178,10 @@
     "date": "2027-02-03",
     "estimated": false,
     "time": "tbd"
+  },
+  "XOM": {
+    "date": "2026-10-30",
+    "estimated": false,
+    "time": "bmo"
   }
 }

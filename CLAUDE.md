@@ -130,8 +130,15 @@ The landing page renders two lists, both read straight from `data/weeklyFeature.
   +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
   target the price has already passed is dropped. Each card lists the reasons
   that scored it — change the weights in `weekly_feature.py`, not the data file.
-- **Reporting this week** — covered stocks whose next earnings date falls in the
-  featured Mon–Fri, from Yahoo Finance, cached in `data/earningsCalendar.json`.
+- **Reporting this week** — every symbol the site tracks whose next earnings
+  date falls in the featured Mon–Fri, from Yahoo Finance, cached in
+  `data/earningsCalendar.json`. "Tracked" means anything in
+  `data/patternWatchlist.ts`, valuation page or not: a watchlist-only symbol
+  (XOM, CAT, MSFT …) has a setup to link to, which is all this list needs.
+  To cover a stock for earnings without writing a `defineStock`, add a
+  `pattern_watchlist.placeholder_entry` to the watchlist — `pattern_detect`
+  rescans every "No clear pattern" placeholder on the next run, so the real
+  setup, the candles and the price arrive with the daily job.
   The cache is only ever added to, so a run that cannot reach Yahoo keeps last
   week's dates instead of emptying the list. A stock file's hand-curated
   `nextEarningsOn` fills a gap Yahoo leaves; it never overrides Yahoo.

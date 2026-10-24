@@ -42,7 +42,7 @@ const DebtIndicator: React.FC<Props> = ({ tickerDef }) => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.35 }}
       className={cn(
-        'rounded-2xl border bg-surface-card/80 shadow-2xl relative overflow-hidden',
+        'rounded-2xl border bg-surface-card relative overflow-hidden',
         tier.border
       )}
     >
@@ -54,7 +54,7 @@ const DebtIndicator: React.FC<Props> = ({ tickerDef }) => {
         className="w-full flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-800/30 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="text-xs font-black text-sky-400 uppercase tracking-[0.4em] flex items-center gap-2">
+          <div className="text-xs font-bold text-sky-400 uppercase tracking-[0.18em] flex items-center gap-2">
             <ShieldCheck className="w-3 h-3" />
             Debt Safety Check
           </div>
@@ -88,7 +88,7 @@ const DebtIndicator: React.FC<Props> = ({ tickerDef }) => {
               {/* Metrics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Net Debt</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Net Debt</span>
                   <span className={cn('text-3xl font-black leading-none', d.netDebt <= 0 ? 'text-emerald-400' : 'text-white')}>
                     {fmt$M(d.netDebt)}
                   </span>
@@ -96,7 +96,7 @@ const DebtIndicator: React.FC<Props> = ({ tickerDef }) => {
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Net Debt / EBITDA</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Net Debt / EBITDA</span>
                   <span className={cn(
                     'text-3xl font-black leading-none',
                     leverageRatio === null ? 'text-slate-500' :
@@ -109,7 +109,7 @@ const DebtIndicator: React.FC<Props> = ({ tickerDef }) => {
                 </div>
 
                 <div className="flex flex-col col-span-2">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Analysis Depth</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Analysis Depth</span>
                   <span className="text-lg font-black leading-none text-white mt-1">{STEP_LABELS[step]}</span>
                   <span className="text-xs text-slate-500 mt-1">
                     {step < 3 ? 'No further analysis required' : missingData ? 'Some data missing — assumed best case' : 'All 3 conditions evaluated'}
@@ -120,7 +120,7 @@ const DebtIndicator: React.FC<Props> = ({ tickerDef }) => {
               {/* Step 3 conditions */}
               {step === 3 && conditions.length > 0 && (
                 <div className="p-4 rounded-lg border border-slate-800 bg-slate-900/40">
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3">Step 3 Conditions</div>
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">Step 3 Conditions</div>
                   <div className="space-y-3">
                     {conditions.map((c) => {
                       const PassIcon = c.passes === null ? HelpCircle : c.passes ? CheckCircle2 : XCircle;

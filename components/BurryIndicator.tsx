@@ -71,7 +71,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3 }}
       className={cn(
-        'rounded-2xl border bg-surface-card/80 shadow-2xl relative overflow-hidden',
+        'rounded-2xl border bg-surface-card relative overflow-hidden',
         tier.border
       )}
     >
@@ -83,7 +83,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
         className="w-full flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-800/30 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] flex items-center gap-2">
+          <div className="text-xs font-bold text-amber-500 uppercase tracking-[0.18em] flex items-center gap-2">
             <AlertTriangle className="w-3 h-3" />
             Burry SBC Indicator
           </div>
@@ -116,7 +116,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
         <div className="flex flex-col">
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
             Burry Coefficient
           </span>
           <span className={cn('text-3xl font-black leading-none', tier.color)}>
@@ -128,7 +128,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
         </div>
 
         <div className="flex flex-col">
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
             {usePublished ? 'Profit Overstatement' : 'SBC / GAAP NI'}
           </span>
           <span className="text-3xl font-black leading-none text-white">
@@ -140,7 +140,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
         </div>
 
         <div className="flex flex-col">
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
             Buyback vs SBC
           </span>
           {buybackVsSbc != null ? (
@@ -166,7 +166,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
         </div>
 
         <div className="flex flex-col">
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
             Multiple Haircut
           </span>
           {haircutApplies && reportedPe && adjustedPe ? (
@@ -195,12 +195,12 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
 
       {showAdjustedTarget && adjustedTarget != null && targetDeltaPct != null && (
         <div className="mb-6 p-4 rounded-lg border border-slate-800 bg-slate-900/40">
-          <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3">
+          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">
             Burry-Adjusted Valuation
           </div>
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 items-start sm:items-end">
             <div className="flex flex-col">
-              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">
                 Model PW Target
               </span>
               <span className="text-2xl font-black leading-none text-white">
@@ -212,7 +212,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
             <div className="text-2xl text-slate-600 hidden sm:block">→</div>
 
             <div className="flex flex-col">
-              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">
                 Burry-Adjusted Target
               </span>
               <span className={cn('text-3xl font-black leading-none', tier.color)}>
@@ -228,7 +228,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
             </div>
 
             <div className="flex flex-col">
-              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">
                 Haircut
               </span>
               <span className="text-2xl font-black leading-none text-amber-300">
@@ -239,7 +239,7 @@ const BurryIndicator: React.FC<Props> = ({ tickerDef, pwTarget, pwCagr }) => {
 
             {adjustedCagr != null && pwCagr != null && (
               <div className="flex flex-col">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">
                   Adjusted 5Y CAGR
                 </span>
                 <span

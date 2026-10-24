@@ -129,6 +129,7 @@
 .pbw.lnd .go .arr{transition:transform .2s}
 .pbw.lnd .go:hover .arr{transform:translateX(3px)}
 .pbw.lnd .all{align-self:flex-start;background:var(--fg);color:var(--bg)}
+.pbw.lnd .intro .all{margin-top:21px}
 .pbw.lnd .all:hover{opacity:.9}
 .pbw.lnd .arr{width:18px;height:18px;flex:none}
 .pbw.lnd .go:focus-visible,.pbw.lnd .all:focus-visible,.pbw.lnd .erow:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

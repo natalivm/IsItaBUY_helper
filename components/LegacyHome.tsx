@@ -58,13 +58,13 @@ const LegacyHome: React.FC<LegacyHomeProps> = ({ tickers, groupedData, updatesSe
       <div className="max-w-4xl mx-auto mb-12">
         <div className="flex items-center justify-between mb-6 pt-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-1">Sort</span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mr-1">Sort</span>
             {(['default', 'upside', 'rs'] as const).map(opt => (
               <button
                 key={opt}
                 onClick={() => setSortBy(opt)}
                 className={cn(
-                  "text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border transition-colors",
+                  "text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full border transition-colors",
                   sortBy === opt
                     ? "bg-amber-500/20 border-amber-500/60 text-amber-400"
                     : "border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600"
@@ -76,7 +76,7 @@ const LegacyHome: React.FC<LegacyHomeProps> = ({ tickers, groupedData, updatesSe
             <span className="w-px h-4 bg-slate-700 mx-1" />
             <button
               onClick={() => openPanel('notes')}
-              className="relative flex items-center gap-1 text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
+              className="relative flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
             >
               <ScrollText className="w-3 h-3" />
               Notes
@@ -86,7 +86,7 @@ const LegacyHome: React.FC<LegacyHomeProps> = ({ tickers, groupedData, updatesSe
             </button>
             <button
               onClick={() => openPanel('news')}
-              className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
+              className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
             >
               <Newspaper className="w-3 h-3" />
               News
@@ -130,7 +130,7 @@ const LegacyHome: React.FC<LegacyHomeProps> = ({ tickers, groupedData, updatesSe
             return (
               <div key={groupKey}>
                 <div className={cn("flex items-center gap-3 px-4 py-3 mt-6 first:mt-0 border-l-2", meta.border, meta.bg)}>
-                  <span className={cn("text-xs font-black uppercase tracking-[0.2em]", meta.accent)}>{meta.label}</span>
+                  <span className={cn("text-xs font-bold uppercase tracking-[0.14em]", meta.accent)}>{meta.label}</span>
                   <span className={cn("text-xs font-bold mono px-1.5 py-0.5 rounded bg-white/5", meta.accent)}>{stocks.length}</span>
                   <span className="flex-1 h-px bg-slate-700/40"></span>
                   <span className="text-xs text-slate-400 tracking-wide">{meta.desc}</span>

@@ -35,7 +35,7 @@ const StockPageHeader: React.FC<Props> = ({
       <motion.button
         whileHover={{ x: -5 }}
         onClick={onBack}
-        className="mb-12 flex items-center gap-3 text-xs font-black uppercase tracking-[0.25em] transition-all px-6 py-3 bg-[#1e293b]/50 hover:bg-[#1e293b] rounded-full border border-slate-700"
+        className="mb-12 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] transition-colors px-5 py-2.5 bg-surface-card hover:bg-slate-900 rounded-full border border-slate-800"
         style={{ color: tc }}
       >
         <ArrowLeft className="w-4 h-4" />
@@ -43,7 +43,7 @@ const StockPageHeader: React.FC<Props> = ({
       </motion.button>
 
       <header className="mb-12 border-b-2 pb-8" style={{ borderColor: tc }}>
-        <div className="text-xs font-black text-amber-500 uppercase tracking-[0.4em] mb-4 flex items-center gap-3">
+        <div className="text-xs font-bold text-amber-500 uppercase tracking-[0.18em] mb-4 flex items-center gap-3">
           <span className="w-12 h-[2px] bg-amber-500/50" />
           {tickerDef.name.toUpperCase()} {tickerDef.modelType.replace('_', ' ')}
         </div>
@@ -54,11 +54,11 @@ const StockPageHeader: React.FC<Props> = ({
               {tickerDef.ticker}
             </h1>
             <span className={cn(
-              "text-base font-black border rounded px-2 py-1 mb-1 flex-shrink-0",
+              "text-base font-bold border rounded-md px-2 py-1 mb-1 flex-shrink-0",
               rsRatingStyle(tickerDef.rsRating)
             )}>RS {tickerDef.rsRating}</span>
             {tickerDef.lastReportTag && (
-              <span className="text-xs font-black uppercase tracking-widest text-[#ffffff] border border-emerald-700/50 bg-emerald-950/70 rounded-full px-3 py-1 mb-1 flex-shrink-0">
+              <span className="text-xs font-bold uppercase tracking-[0.12em] text-white border border-emerald-700/50 bg-emerald-950/70 rounded-full px-3 py-1 mb-1 flex-shrink-0">
                 {tickerDef.lastReportTag} ✓
               </span>
             )}
@@ -72,12 +72,12 @@ const StockPageHeader: React.FC<Props> = ({
             ].map((m, i) => (
               <div
                 key={i}
-                className="px-5 py-3 bg-surface-card rounded-xl flex items-center gap-3 border"
+                className="px-5 py-3 bg-surface-card rounded-2xl flex items-center gap-3 border"
                 style={{ borderColor: `${tc}40` }}
               >
                 {m.icon}
                 <div className="flex flex-col">
-                  <span className="text-amber-500 font-black text-xs uppercase tracking-widest leading-none mb-1">{m.label}</span>
+                  <span className="text-amber-500 font-bold text-xs uppercase tracking-[0.12em] leading-none mb-1">{m.label}</span>
                   <span className={cn("text-lg font-bold leading-none", m.valueClass)}>{m.value}</span>
                   {m.subValue && <span className="text-slate-500 text-[10px] font-medium mt-0.5 leading-none">{m.subValue}</span>}
                 </div>
