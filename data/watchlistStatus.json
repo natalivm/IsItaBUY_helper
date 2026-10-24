@@ -2869,14 +2869,14 @@
  },
  "HOOD|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "retest",
+  "setup": "Falling Wedge (daily)",
+  "stage": "forming",
   "ticker": "HOOD"
  },
  "HOOD|main": {
   "label": "main",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+  "setup": "Descending Channel (daily)",
+  "stage": "retest",
   "ticker": "HOOD"
  },
  "HOOD|weekly Ascending Channel": {
