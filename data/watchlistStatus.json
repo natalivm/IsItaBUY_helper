@@ -413,15 +413,9 @@
   "stage": "atRisk",
   "ticker": "APH"
  },
- "APH|daily alt": {
-  "label": "daily alt",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "APH"
- },
  "APH|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
+  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "APH"
  },
@@ -447,6 +441,12 @@
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
   "stage": "signal",
+  "ticker": "APH"
+ },
+ "APH|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "forming",
   "ticker": "APH"
  },
  "APP|daily Ascending Channel": {
