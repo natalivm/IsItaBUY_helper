@@ -11,12 +11,6 @@
   "stage": "signal",
   "ticker": "AAOI"
  },
- "AAOI|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "AAOI"
- },
  "AAOI|daily alt": {
   "label": "daily alt",
   "setup": "Falling Wedge (daily)",
@@ -68,7 +62,7 @@
  "ADBE|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "ADBE"
  },
  "AGCO|daily Ascending Channel": {
@@ -122,7 +116,7 @@
  "AGCO|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "atRisk",
+  "stage": "confirmed",
   "ticker": "AGCO"
  },
  "AGCO|weekly Rising Wedge": {
@@ -188,7 +182,7 @@
  "ALOY|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "ALOY"
  },
  "ALOY|daily Descending Channel #2": {
@@ -233,10 +227,10 @@
   "stage": "signal",
   "ticker": "AMAT"
  },
- "AMAT|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
+ "AMAT|daily Descending Channel #3": {
+  "label": "daily Descending Channel #3",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "AMAT"
  },
  "AMAT|daily alt": {
@@ -266,7 +260,7 @@
  "AMD|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "AMD"
  },
  "AMD|main": {
@@ -332,7 +326,7 @@
  "AMZN|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "AMZN"
  },
  "AMZN|main": {
@@ -524,7 +518,7 @@
  "ARRY|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "ARRY"
  },
  "ARRY|daily Descending Channel #2": {
@@ -547,12 +541,6 @@
  },
  "ARRY|main": {
   "label": "main",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "signal",
-  "ticker": "ARRY"
- },
- "ARRY|weekly Ascending Channel": {
-  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "ARRY"
@@ -647,16 +635,16 @@
   "stage": "signal",
   "ticker": "AVGO"
  },
+ "AVGO|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
+  "ticker": "AVGO"
+ },
  "AVGO|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
   "stage": "forming",
-  "ticker": "AVGO"
- },
- "AVGO|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
   "ticker": "AVGO"
  },
  "AVGO|daily alt": {
@@ -667,18 +655,12 @@
  },
  "AVGO|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
+  "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "AVGO"
  },
  "AVGO|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "AVGO"
- },
- "AVGO|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
   "setup": "Ascending Channel (weekly)",
   "stage": "forming",
   "ticker": "AVGO"
@@ -695,6 +677,12 @@
   "stage": "forming",
   "ticker": "AVGO"
  },
+ "AVGO|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "AVGO"
+ },
  "AXON|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -703,6 +691,12 @@
  },
  "AXON|daily Descending Channel": {
   "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "AXON"
+ },
+ "AXON|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
   "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "AXON"
@@ -745,6 +739,12 @@
  },
  "AZO|daily Ascending Channel": {
   "label": "daily Ascending Channel",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
+  "ticker": "AZO"
+ },
+ "AZO|daily Ascending Channel #2": {
+  "label": "daily Ascending Channel #2",
   "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "AZO"
@@ -917,6 +917,12 @@
   "stage": "signal",
   "ticker": "CACI"
  },
+ "CACI|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
+  "ticker": "CACI"
+ },
  "CACI|daily alt": {
   "label": "daily alt",
   "setup": "Rising Wedge (daily)",
@@ -968,7 +974,7 @@
  "CAKE|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "CAKE"
  },
  "CAKE|daily alt": {
@@ -1018,6 +1024,18 @@
   "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "CAT"
+ },
+ "CAVA|daily Ascending Channel": {
+  "label": "daily Ascending Channel",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
+  "ticker": "CAVA"
+ },
+ "CAVA|daily Ascending Channel #2": {
+  "label": "daily Ascending Channel #2",
+  "setup": "Ascending Channel (daily)",
+  "stage": "forming",
+  "ticker": "CAVA"
  },
  "CAVA|daily Descending Channel": {
   "label": "daily Descending Channel",
@@ -1097,63 +1115,21 @@
   "stage": "confirmed",
   "ticker": "CBRS"
  },
- "CCJ|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "CCJ"
- },
- "CCJ|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "signal",
-  "ticker": "CCJ"
- },
- "CCJ|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "CCJ"
- },
- "CCJ|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "CCJ"
- },
  "CCJ|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "retest",
+  "setup": "Falling Wedge (daily)",
+  "stage": "forming",
   "ticker": "CCJ"
  },
  "CCJ|main": {
   "label": "main",
+  "setup": "Ascending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "CCJ"
+ },
+ "CCJ|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "CCJ"
- },
- "CCJ|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "CCJ"
- },
- "CCJ|weekly Descending Channel #2": {
-  "label": "weekly Descending Channel #2",
-  "setup": "Descending Channel (weekly)",
-  "stage": "signal",
-  "ticker": "CCJ"
- },
- "CCJ|weekly Descending Channel #3": {
-  "label": "weekly Descending Channel #3",
-  "setup": "Descending Channel (weekly)",
-  "stage": "forming",
-  "ticker": "CCJ"
- },
- "CCJ|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "CCJ"
  },
@@ -1220,7 +1196,7 @@
  "CIEN|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "CIEN"
  },
  "CIEN|daily Descending Channel": {
@@ -1238,7 +1214,7 @@
  "CIEN|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "CIEN"
  },
  "CIEN|daily Rising Wedge": {
@@ -1346,7 +1322,7 @@
  "COHR|daily Descending Channel #2": {
   "label": "daily Descending Channel #2",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "COHR"
  },
  "COHR|daily Rising Wedge": {
@@ -1514,7 +1490,7 @@
  "CRM|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "CRM"
  },
  "CRM|daily Rising Wedge": {
@@ -1538,7 +1514,7 @@
  "CRM|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "signal",
+  "stage": "confirmed",
   "ticker": "CRM"
  },
  "CRM|weekly Descending Channel #2": {
@@ -1667,12 +1643,6 @@
   "stage": "forming",
   "ticker": "CVX"
  },
- "CVX|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "CVX"
- },
  "DASH|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
@@ -1706,7 +1676,7 @@
  "DASH|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "DASH"
  },
  "DAVE|daily Ascending Channel": {
@@ -1727,15 +1697,15 @@
   "stage": "confirmed",
   "ticker": "DAVE"
  },
- "DAVE|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
+ "DAVE|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
   "stage": "confirmed",
   "ticker": "DAVE"
  },
  "DAVE|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "DAVE"
  },
@@ -1861,18 +1831,12 @@
  },
  "DELL|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
+  "setup": "Ascending Channel (weekly)",
   "stage": "signal",
   "ticker": "DELL"
  },
  "DELL|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "signal",
-  "ticker": "DELL"
- },
- "DELL|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
   "setup": "Ascending Channel (weekly)",
   "stage": "forming",
   "ticker": "DELL"
@@ -1881,6 +1845,12 @@
   "label": "weekly Inverted Hammer",
   "setup": "Inverted Hammer (weekly)",
   "stage": "forming",
+  "ticker": "DELL"
+ },
+ "DELL|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "signal",
   "ticker": "DELL"
  },
  "DE|daily Ascending Channel": {
@@ -1898,7 +1868,7 @@
  "DE|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "DE"
  },
  "DE|daily Rising Wedge": {
@@ -1927,6 +1897,12 @@
  },
  "DE|weekly Ascending Channel #2": {
   "label": "weekly Ascending Channel #2",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "confirmed",
+  "ticker": "DE"
+ },
+ "DE|weekly Ascending Channel #3": {
+  "label": "weekly Ascending Channel #3",
   "setup": "Ascending Channel (weekly)",
   "stage": "forming",
   "ticker": "DE"
@@ -1969,8 +1945,8 @@
  },
  "DUOL|main": {
   "label": "main",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "signal",
   "ticker": "DUOL"
  },
  "DUOL|weekly Ascending Channel": {
@@ -1983,6 +1959,12 @@
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
   "stage": "signal",
+  "ticker": "DUOL"
+ },
+ "DUOL|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "forming",
   "ticker": "DUOL"
  },
  "D|daily Ascending Channel": {
@@ -2045,6 +2027,12 @@
   "stage": "confirmed",
   "ticker": "D"
  },
+ "EME|daily Ascending Channel": {
+  "label": "daily Ascending Channel",
+  "setup": "Ascending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "EME"
+ },
  "EME|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
@@ -2063,20 +2051,20 @@
   "stage": "confirmed",
   "ticker": "EME"
  },
- "EME|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "EME"
- },
  "EME|daily alt": {
   "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
+  "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "EME"
  },
  "EME|main": {
   "label": "main",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "EME"
+ },
+ "EME|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "EME"
@@ -2096,12 +2084,6 @@
  "EME|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "EME"
- },
- "EME|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "EME"
  },
@@ -2423,10 +2405,10 @@
   "stage": "confirmed",
   "ticker": "FRSH"
  },
- "FRSH|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+ "FRSH|daily Ascending Channel #3": {
+  "label": "daily Ascending Channel #3",
+  "setup": "Ascending Channel (daily)",
+  "stage": "forming",
   "ticker": "FRSH"
  },
  "FRSH|daily Rising Wedge": {
@@ -2666,13 +2648,13 @@
  "GM|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "GM"
  },
  "GM|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "GM"
  },
  "GOOGL|daily Descending Channel": {
@@ -2720,6 +2702,12 @@
  "GXO|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "GXO"
+ },
+ "GXO|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
   "stage": "forming",
   "ticker": "GXO"
  },
@@ -2731,7 +2719,7 @@
  },
  "GXO|main": {
   "label": "main",
-  "setup": "Descending Channel (weekly)",
+  "setup": "Falling Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "GXO"
  },
@@ -2744,19 +2732,19 @@
  "GXO|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "GXO"
  },
- "GXO|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+ "GXO|weekly Descending Channel #2": {
+  "label": "weekly Descending Channel #2",
+  "setup": "Descending Channel (weekly)",
+  "stage": "forming",
   "ticker": "GXO"
  },
  "GXO|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "GXO"
  },
  "HOOD|daily Ascending Channel": {
@@ -2834,7 +2822,7 @@
  "HPE|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "HPE"
  },
  "HPE|daily Rising Wedge": {
@@ -2845,7 +2833,7 @@
  },
  "HPE|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "HPE"
  },
@@ -2897,6 +2885,18 @@
   "stage": "update",
   "ticker": "HTFL"
  },
+ "IBM|daily alt": {
+  "label": "daily alt",
+  "setup": "Ascending Channel (daily)",
+  "stage": "forming",
+  "ticker": "IBM"
+ },
+ "IBM|main": {
+  "label": "main",
+  "setup": "Falling Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "IBM"
+ },
  "INCY|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -2905,6 +2905,12 @@
  },
  "INCY|daily Descending Channel": {
   "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
+  "ticker": "INCY"
+ },
+ "INCY|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
   "setup": "Descending Channel (daily)",
   "stage": "forming",
   "ticker": "INCY"
@@ -3002,7 +3008,7 @@
  "INTU|daily alt": {
   "label": "daily alt",
   "setup": "Descending Channel (daily)",
-  "stage": "update",
+  "stage": "signal",
   "ticker": "INTU"
  },
  "INTU|main": {
@@ -3020,7 +3026,7 @@
  "INTU|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "INTU"
  },
  "IOVA|daily Ascending Channel": {
@@ -3143,16 +3149,22 @@
   "stage": "forming",
   "ticker": "JPM"
  },
+ "JPM|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
+  "setup": "Rising Wedge (daily)",
+  "stage": "signal",
+  "ticker": "JPM"
+ },
  "JPM|daily alt": {
   "label": "daily alt",
-  "setup": "Rising Wedge (daily)",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "JPM"
  },
  "JPM|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "signal",
+  "setup": "Descending Channel (weekly)",
+  "stage": "confirmed",
   "ticker": "JPM"
  },
  "JPM|weekly Ascending Channel": {
@@ -3161,16 +3173,16 @@
   "stage": "confirmed",
   "ticker": "JPM"
  },
- "JPM|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
+ "JPM|weekly Ascending Channel #2": {
+  "label": "weekly Ascending Channel #2",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "signal",
   "ticker": "JPM"
  },
- "JPM|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+ "JPM|weekly Ascending Channel #3": {
+  "label": "weekly Ascending Channel #3",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "forming",
   "ticker": "JPM"
  },
  "JPM|weekly Rising Wedge": {
@@ -3179,27 +3191,39 @@
   "stage": "forming",
   "ticker": "JPM"
  },
- "KKR|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "KKR"
- },
  "KKR|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "KKR"
  },
+ "KKR|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
+  "ticker": "KKR"
+ },
+ "KKR|daily Descending Channel #3": {
+  "label": "daily Descending Channel #3",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
+  "ticker": "KKR"
+ },
+ "KKR|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
+  "setup": "Rising Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "KKR"
+ },
  "KKR|daily alt": {
   "label": "daily alt",
-  "setup": "Rising Wedge (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "KKR"
  },
  "KKR|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
+  "setup": "Descending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "KKR"
  },
@@ -3209,14 +3233,14 @@
   "stage": "confirmed",
   "ticker": "KKR"
  },
- "KKR|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
+ "KKR|weekly Ascending Channel #2": {
+  "label": "weekly Ascending Channel #2",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "forming",
   "ticker": "KKR"
  },
- "KKR|weekly Descending Channel #2": {
-  "label": "weekly Descending Channel #2",
+ "KKR|weekly Descending Channel": {
+  "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
   "stage": "forming",
   "ticker": "KKR"
@@ -3227,46 +3251,10 @@
   "stage": "forming",
   "ticker": "KKR"
  },
- "KLAC|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "KLAC"
- },
- "KLAC|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "KLAC"
- },
- "KLAC|daily Descending Channel #2": {
-  "label": "daily Descending Channel #2",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "KLAC"
- },
- "KLAC|daily Descending Channel #3": {
-  "label": "daily Descending Channel #3",
-  "setup": "Descending Channel (daily)",
-  "stage": "forming",
-  "ticker": "KLAC"
- },
- "KLAC|daily alt": {
-  "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "KLAC"
- },
  "KLAC|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "KLAC"
- },
- "KLAC|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "forming",
+  "setup": "Falling Wedge (daily)",
+  "stage": "retest",
   "ticker": "KLAC"
  },
  "KMB|daily Ascending Channel": {
@@ -3281,20 +3269,32 @@
   "stage": "signal",
   "ticker": "KMB"
  },
- "KMB|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
+ "KMB|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "KMB"
  },
- "KMB|daily alt": {
-  "label": "daily alt",
+ "KMB|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
   "stage": "signal",
   "ticker": "KMB"
  },
+ "KMB|daily alt": {
+  "label": "daily alt",
+  "setup": "Rising Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "KMB"
+ },
  "KMB|main": {
   "label": "main",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "KMB"
+ },
+ "KMB|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "KMB"
@@ -3315,12 +3315,6 @@
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
   "stage": "signal",
-  "ticker": "KMB"
- },
- "KMB|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
   "ticker": "KMB"
  },
  "KO|daily Ascending Channel": {
@@ -3392,19 +3386,25 @@
  "KRMN|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "KRMN"
  },
  "KRMN|daily Descending Channel #2": {
   "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "KRMN"
+ },
+ "KRMN|daily Descending Channel #3": {
+  "label": "daily Descending Channel #3",
   "setup": "Descending Channel (daily)",
   "stage": "forming",
   "ticker": "KRMN"
  },
  "KRMN|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "signal",
+  "setup": "Falling Wedge (daily)",
+  "stage": "confirmed",
   "ticker": "KRMN"
  },
  "KRMN|main": {
@@ -3551,52 +3551,16 @@
   "stage": "confirmed",
   "ticker": "LITE"
  },
- "LLY|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "LLY"
- },
- "LLY|daily Ascending Channel #2": {
-  "label": "daily Ascending Channel #2",
-  "setup": "Ascending Channel (daily)",
-  "stage": "forming",
-  "ticker": "LLY"
- },
- "LLY|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "LLY"
- },
- "LLY|daily alt": {
-  "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "LLY"
- },
  "LLY|main": {
   "label": "main",
   "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "LLY"
- },
- "LLY|weekly Ascending Channel": {
-  "label": "weekly Ascending Channel",
-  "setup": "Ascending Channel (weekly)",
   "stage": "signal",
   "ticker": "LLY"
  },
- "LLY|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "forming",
-  "ticker": "LLY"
- },
- "LLY|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
+ "LLY|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "retest",
   "ticker": "LLY"
  },
  "LMND|daily Ascending Channel": {
@@ -3620,7 +3584,7 @@
  "LMND|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "signal",
+  "stage": "forming",
   "ticker": "LMND"
  },
  "LMND|main": {
@@ -3638,7 +3602,7 @@
  "LMND|weekly Descending Channel #2": {
   "label": "weekly Descending Channel #2",
   "setup": "Descending Channel (weekly)",
-  "stage": "signal",
+  "stage": "confirmed",
   "ticker": "LMND"
  },
  "LMND|weekly Descending Channel #3": {
@@ -3731,12 +3695,6 @@
   "stage": "confirmed",
   "ticker": "LRCX"
  },
- "LRCX|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "LRCX"
- },
  "MELI|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -3755,9 +3713,15 @@
   "stage": "forming",
   "ticker": "MELI"
  },
+ "MELI|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
+  "setup": "Rising Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "MELI"
+ },
  "MELI|daily alt": {
   "label": "daily alt",
-  "setup": "Rising Wedge (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "MELI"
  },
@@ -3830,13 +3794,13 @@
  "META|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "META"
  },
  "META|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "META"
  },
  "MLM|daily Ascending Channel": {
@@ -3848,7 +3812,19 @@
  "MLM|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "MLM"
+ },
+ "MLM|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
   "stage": "forming",
+  "ticker": "MLM"
+ },
+ "MLM|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
+  "stage": "confirmed",
   "ticker": "MLM"
  },
  "MLM|daily alt": {
@@ -3899,9 +3875,9 @@
   "stage": "confirmed",
   "ticker": "MNDY"
  },
- "MNDY|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
+ "MNDY|daily Descending Channel": {
+  "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "MNDY"
  },
@@ -3913,13 +3889,13 @@
  },
  "MNDY|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
+  "setup": "Falling Wedge (daily)",
   "stage": "confirmed",
   "ticker": "MNDY"
  },
  "MNDY|main": {
   "label": "main",
-  "setup": "Falling Wedge (weekly)",
+  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "MNDY"
  },
@@ -3935,20 +3911,26 @@
   "stage": "signal",
   "ticker": "MNDY"
  },
+ "MNDY|weekly Ascending Channel #3": {
+  "label": "weekly Ascending Channel #3",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "forming",
+  "ticker": "MNDY"
+ },
  "MNDY|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
   "stage": "signal",
   "ticker": "MNDY"
  },
- "MNDY|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "MNDY"
- },
  "MNST|daily Ascending Channel": {
   "label": "daily Ascending Channel",
+  "setup": "Ascending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "MNST"
+ },
+ "MNST|daily Ascending Channel #2": {
+  "label": "daily Ascending Channel #2",
   "setup": "Ascending Channel (daily)",
   "stage": "forming",
   "ticker": "MNST"
@@ -3956,36 +3938,42 @@
  "MNST|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "forming",
+  "stage": "signal",
   "ticker": "MNST"
  },
- "MNST|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
+ "MNST|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "MNST"
  },
  "MNST|daily alt": {
   "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
+  "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "MNST"
  },
  "MNST|main": {
   "label": "main",
-  "setup": "Falling Wedge (weekly)",
+  "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "MNST"
  },
  "MNST|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "MNST"
  },
- "MNST|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
-  "setup": "Ascending Channel (weekly)",
+ "MNST|weekly Descending Channel": {
+  "label": "weekly Descending Channel",
+  "setup": "Descending Channel (weekly)",
+  "stage": "signal",
+  "ticker": "MNST"
+ },
+ "MNST|weekly Descending Channel #2": {
+  "label": "weekly Descending Channel #2",
+  "setup": "Descending Channel (weekly)",
   "stage": "forming",
   "ticker": "MNST"
  },
@@ -4181,30 +4169,6 @@
   "stage": "confirmed",
   "ticker": "NFLX"
  },
- "NOW|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "NOW"
- },
- "NOW|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "NOW"
- },
- "NOW|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "NOW"
- },
- "NOW|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "NOW"
- },
  "NOW|daily alt": {
   "label": "daily alt",
   "setup": "Ascending Channel (daily)",
@@ -4213,32 +4177,20 @@
  },
  "NOW|main": {
   "label": "main",
-  "setup": "Descending Channel (weekly)",
+  "setup": "Falling Wedge (monthly)",
+  "stage": "signal",
+  "ticker": "NOW"
+ },
+ "NOW|monthly Ascending Channel": {
+  "label": "monthly Ascending Channel",
+  "setup": "Ascending Channel (monthly)",
   "stage": "confirmed",
   "ticker": "NOW"
  },
  "NOW|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "signal",
-  "ticker": "NOW"
- },
- "NOW|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "NOW"
- },
- "NOW|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "NOW"
- },
- "NOW|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "NOW"
  },
  "NUE|daily Ascending Channel": {
@@ -4364,7 +4316,7 @@
  "NVDA|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "NVDA"
  },
  "NVDA|daily Ascending Channel #2": {
@@ -4379,21 +4331,21 @@
   "stage": "confirmed",
   "ticker": "NVDA"
  },
- "NVDA|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
+ "NVDA|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
   "stage": "confirmed",
   "ticker": "NVDA"
  },
  "NVDA|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "NVDA"
  },
  "NVDA|main": {
   "label": "main",
-  "setup": "Descending Channel (weekly)",
+  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "NVDA"
  },
@@ -4409,16 +4361,16 @@
   "stage": "forming",
   "ticker": "NVDA"
  },
- "NVDA|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
+ "NVDA|weekly Descending Channel": {
+  "label": "weekly Descending Channel",
+  "setup": "Descending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "NVDA"
  },
- "NVDA|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
+ "NVDA|weekly Descending Channel #2": {
+  "label": "weekly Descending Channel #2",
+  "setup": "Descending Channel (weekly)",
+  "stage": "forming",
   "ticker": "NVDA"
  },
  "NVO|daily Ascending Channel": {
@@ -4427,10 +4379,22 @@
   "stage": "forming",
   "ticker": "NVO"
  },
- "NVO|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
+ "NVO|daily Descending Channel": {
+  "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "NVO"
+ },
+ "NVO|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "NVO"
+ },
+ "NVO|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
+  "stage": "forming",
   "ticker": "NVO"
  },
  "NVO|daily alt": {
@@ -4469,16 +4433,22 @@
   "stage": "forming",
   "ticker": "NVO"
  },
- "ONDS|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "ONDS"
- },
  "ONDS|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "ONDS"
+ },
+ "ONDS|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
+  "ticker": "ONDS"
+ },
+ "ONDS|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
+  "stage": "forming",
   "ticker": "ONDS"
  },
  "ONDS|daily Rising Wedge": {
@@ -4489,24 +4459,24 @@
  },
  "ONDS|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "ONDS"
  },
  "ONDS|main": {
   "label": "main",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "ONDS"
+ },
+ "ONDS|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "ONDS"
  },
  "ONDS|weekly Descending Channel": {
   "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "ONDS"
- },
- "ONDS|weekly Descending Channel #2": {
-  "label": "weekly Descending Channel #2",
   "setup": "Descending Channel (weekly)",
   "stage": "signal",
   "ticker": "ONDS"
@@ -4520,7 +4490,7 @@
  "ORCL|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "ORCL"
  },
  "ORCL|daily Descending Channel": {
@@ -4559,10 +4529,16 @@
   "stage": "confirmed",
   "ticker": "PAAS"
  },
- "PAAS|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
+ "PAAS|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "PAAS"
+ },
+ "PAAS|daily Descending Channel #3": {
+  "label": "daily Descending Channel #3",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "PAAS"
  },
  "PAAS|daily alt": {
@@ -4573,12 +4549,6 @@
  },
  "PAAS|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "PAAS"
- },
- "PAAS|weekly Ascending Channel": {
-  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "PAAS"
@@ -4599,6 +4569,12 @@
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
   "stage": "forming",
+  "ticker": "PAAS"
+ },
+ "PAAS|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
   "ticker": "PAAS"
  },
  "PANW|daily Ascending Channel": {
@@ -4643,10 +4619,16 @@
   "stage": "confirmed",
   "ticker": "PANW"
  },
- "PINS|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
+ "PINS|daily Descending Channel": {
+  "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "PINS"
+ },
+ "PINS|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "PINS"
  },
  "PINS|daily Falling Wedge": {
@@ -4655,9 +4637,15 @@
   "stage": "forming",
   "ticker": "PINS"
  },
+ "PINS|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
+  "setup": "Rising Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "PINS"
+ },
  "PINS|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "PINS"
  },
@@ -4736,7 +4724,7 @@
  "PLTR|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "forming",
+  "stage": "signal",
   "ticker": "PLTR"
  },
  "QQQ|daily Ascending Channel": {
@@ -4790,24 +4778,24 @@
  "Q|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "Q"
  },
  "Q|daily Descending Channel #2": {
   "label": "daily Descending Channel #2",
   "setup": "Descending Channel (daily)",
-  "stage": "signal",
+  "stage": "forming",
   "ticker": "Q"
  },
- "Q|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
+ "Q|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
   "stage": "confirmed",
   "ticker": "Q"
  },
  "Q|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "Q"
  },
@@ -4853,6 +4841,12 @@
   "stage": "confirmed",
   "ticker": "RBRK"
  },
+ "RBRK|daily Ascending Channel #3": {
+  "label": "daily Ascending Channel #3",
+  "setup": "Ascending Channel (daily)",
+  "stage": "forming",
+  "ticker": "RBRK"
+ },
  "RBRK|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
@@ -4889,58 +4883,22 @@
   "stage": "forming",
   "ticker": "RBRK"
  },
- "RDDT|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "signal",
-  "ticker": "RDDT"
- },
- "RDDT|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "RDDT"
- },
- "RDDT|daily Descending Channel #2": {
-  "label": "daily Descending Channel #2",
-  "setup": "Descending Channel (daily)",
-  "stage": "forming",
-  "ticker": "RDDT"
- },
- "RDDT|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "signal",
-  "ticker": "RDDT"
- },
  "RDDT|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "RDDT"
  },
  "RDDT|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "RDDT"
- },
- "RDDT|weekly Descending Channel": {
-  "label": "weekly Descending Channel",
-  "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "RDDT"
- },
- "RDDT|weekly Descending Channel #2": {
-  "label": "weekly Descending Channel #2",
-  "setup": "Descending Channel (weekly)",
-  "stage": "forming",
+  "setup": "Falling Wedge (daily)",
+  "stage": "retest",
   "ticker": "RDDT"
  },
  "RDDT|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "forming",
+  "stage": "signal",
   "ticker": "RDDT"
  },
  "RKLB|daily Ascending Channel": {
@@ -4983,6 +4941,12 @@
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
   "stage": "confirmed",
+  "ticker": "ROAD"
+ },
+ "ROAD|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
   "ticker": "ROAD"
  },
  "ROAD|daily Falling Wedge": {
@@ -5186,19 +5150,19 @@
  "SHOP|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "signal",
+  "stage": "confirmed",
   "ticker": "SHOP"
  },
  "SHOP|daily Ascending Channel #2": {
   "label": "daily Ascending Channel #2",
   "setup": "Ascending Channel (daily)",
-  "stage": "forming",
+  "stage": "signal",
   "ticker": "SHOP"
  },
- "SHOP|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+ "SHOP|daily Ascending Channel #3": {
+  "label": "daily Ascending Channel #3",
+  "setup": "Ascending Channel (daily)",
+  "stage": "forming",
   "ticker": "SHOP"
  },
  "SHOP|daily Rising Wedge": {
@@ -5209,18 +5173,24 @@
  },
  "SHOP|daily alt": {
   "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "SHOP"
  },
  "SHOP|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
+  "setup": "Falling Wedge (weekly)",
   "stage": "signal",
   "ticker": "SHOP"
  },
  "SHOP|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "signal",
+  "ticker": "SHOP"
+ },
+ "SHOP|weekly Ascending Channel #2": {
+  "label": "weekly Ascending Channel #2",
   "setup": "Ascending Channel (weekly)",
   "stage": "forming",
   "ticker": "SHOP"
@@ -5228,12 +5198,6 @@
  "SHOP|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "signal",
-  "ticker": "SHOP"
- },
- "SHOP|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
   "stage": "signal",
   "ticker": "SHOP"
  },
@@ -5300,13 +5264,13 @@
  "SMCI|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "SMCI"
  },
- "SMCI|daily Ascending Channel #2": {
-  "label": "daily Ascending Channel #2",
-  "setup": "Ascending Channel (daily)",
-  "stage": "forming",
+ "SMCI|daily Descending Channel": {
+  "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
   "ticker": "SMCI"
  },
  "SMCI|daily Falling Wedge": {
@@ -5323,7 +5287,7 @@
  },
  "SMCI|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "SMCI"
  },
@@ -5379,6 +5343,18 @@
   "label": "main",
   "setup": "Rising Wedge (weekly)",
   "stage": "signal",
+  "ticker": "SMWB"
+ },
+ "SMWB|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "confirmed",
+  "ticker": "SMWB"
+ },
+ "SMWB|weekly Ascending Channel #2": {
+  "label": "weekly Ascending Channel #2",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "forming",
   "ticker": "SMWB"
  },
  "SNDK|daily Rising Wedge": {
@@ -5462,13 +5438,13 @@
  "SNPS|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "SNPS"
  },
- "SNPS|daily Descending Channel #2": {
-  "label": "daily Descending Channel #2",
-  "setup": "Descending Channel (daily)",
-  "stage": "forming",
+ "SNPS|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
+  "stage": "confirmed",
   "ticker": "SNPS"
  },
  "SNPS|daily Rising Wedge": {
@@ -5479,7 +5455,7 @@
  },
  "SNPS|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
+  "setup": "Descending Channel (daily)",
   "stage": "confirmed",
   "ticker": "SNPS"
  },
@@ -5517,6 +5493,18 @@
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
   "stage": "signal",
+  "ticker": "SOFI"
+ },
+ "SOFI|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
+  "ticker": "SOFI"
+ },
+ "SOFI|daily Descending Channel #3": {
+  "label": "daily Descending Channel #3",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
   "ticker": "SOFI"
  },
  "SOFI|daily Rising Wedge": {
@@ -5654,7 +5642,7 @@
  "SPOT|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
-  "stage": "atRisk",
+  "stage": "confirmed",
   "ticker": "SPOT"
  },
  "SPOT|daily alt": {
@@ -5708,13 +5696,13 @@
  "SPY|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "SPY"
  },
  "SPY|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "forming",
+  "stage": "signal",
   "ticker": "SPY"
  },
  "STRL|daily Falling Wedge": {
@@ -5744,7 +5732,7 @@
  "STX|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "atRisk",
+  "stage": "confirmed",
   "ticker": "STX"
  },
  "STX|main": {
@@ -5786,7 +5774,7 @@
  "TEAM|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "TEAM"
  },
  "TEAM|main": {
@@ -5869,6 +5857,12 @@
  },
  "THM|main": {
   "label": "main",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "THM"
+ },
+ "THM|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "THM"
@@ -5891,18 +5885,6 @@
   "stage": "forming",
   "ticker": "THM"
  },
- "THM|weekly Rising Wedge": {
-  "label": "weekly Rising Wedge",
-  "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
-  "ticker": "THM"
- },
- "TLN|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "signal",
-  "ticker": "TLN"
- },
  "TLN|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
@@ -5915,6 +5897,12 @@
   "stage": "forming",
   "ticker": "TLN"
  },
+ "TLN|daily Falling Wedge": {
+  "label": "daily Falling Wedge",
+  "setup": "Falling Wedge (daily)",
+  "stage": "forming",
+  "ticker": "TLN"
+ },
  "TLN|daily Rising Wedge": {
   "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
@@ -5923,8 +5911,8 @@
  },
  "TLN|daily alt": {
   "label": "daily alt",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
   "ticker": "TLN"
  },
  "TLN|main": {
@@ -5972,7 +5960,7 @@
  "TSLA|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "signal",
+  "stage": "confirmed",
   "ticker": "TSLA"
  },
  "TSLA|weekly Ascending Channel #2": {
@@ -5984,7 +5972,7 @@
  "TSLA|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "TSLA"
  },
  "TSLA|weekly alt": {
@@ -5996,7 +5984,7 @@
  "TWLO|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "TWLO"
  },
  "TWLO|daily Ascending Channel #2": {
@@ -6026,7 +6014,7 @@
  "TWLO|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "TWLO"
  },
  "TWLO|weekly Ascending Channel #2": {
@@ -6056,6 +6044,12 @@
  "UBER|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "UBER"
+ },
+ "UBER|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
   "stage": "forming",
   "ticker": "UBER"
  },
@@ -6073,6 +6067,12 @@
  },
  "UBER|main": {
   "label": "main",
+  "setup": "Descending Channel (weekly)",
+  "stage": "confirmed",
+  "ticker": "UBER"
+ },
+ "UBER|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "UBER"
@@ -6080,17 +6080,11 @@
  "UBER|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "UBER"
  },
  "UBER|weekly Descending Channel #2": {
   "label": "weekly Descending Channel #2",
-  "setup": "Descending Channel (weekly)",
-  "stage": "signal",
-  "ticker": "UBER"
- },
- "UBER|weekly Descending Channel #3": {
-  "label": "weekly Descending Channel #3",
   "setup": "Descending Channel (weekly)",
   "stage": "forming",
   "ticker": "UBER"
@@ -6134,7 +6128,7 @@
  "UMAC|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "signal",
+  "stage": "confirmed",
   "ticker": "UMAC"
  },
  "UMAC|weekly Ascending Channel #2": {
@@ -6181,6 +6175,12 @@
  },
  "VAL|daily Ascending Channel": {
   "label": "daily Ascending Channel",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
+  "ticker": "VAL"
+ },
+ "VAL|daily Ascending Channel #2": {
+  "label": "daily Ascending Channel #2",
   "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "VAL"
@@ -6341,21 +6341,21 @@
   "stage": "confirmed",
   "ticker": "VST"
  },
- "VST|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "VST"
- },
- "VST|daily alt": {
-  "label": "daily alt",
+ "VST|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
   "stage": "signal",
   "ticker": "VST"
  },
+ "VST|daily alt": {
+  "label": "daily alt",
+  "setup": "Falling Wedge (daily)",
+  "stage": "confirmed",
+  "ticker": "VST"
+ },
  "VST|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
+  "setup": "Descending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "VST"
  },
@@ -6375,6 +6375,12 @@
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
   "stage": "forming",
+  "ticker": "VST"
+ },
+ "VST|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
   "ticker": "VST"
  },
  "VZ|main": {
@@ -6455,10 +6461,22 @@
   "stage": "confirmed",
   "ticker": "WWD"
  },
+ "WWD|daily Descending Channel": {
+  "label": "daily Descending Channel",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "WWD"
+ },
+ "WWD|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
+  "stage": "forming",
+  "ticker": "WWD"
+ },
  "WWD|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "forming",
   "ticker": "WWD"
  },
  "WWD|daily alt": {
@@ -6469,18 +6487,12 @@
  },
  "WWD|main": {
   "label": "main",
-  "setup": "Rising Wedge (weekly)",
+  "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "WWD"
  },
  "WWD|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "WWD"
- },
- "WWD|weekly Ascending Channel #2": {
-  "label": "weekly Ascending Channel #2",
   "setup": "Ascending Channel (weekly)",
   "stage": "forming",
   "ticker": "WWD"
@@ -6494,6 +6506,12 @@
  "WWD|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "WWD"
+ },
+ "WWD|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "WWD"
  },
@@ -6542,12 +6560,6 @@
  "XOM|weekly Descending Channel": {
   "label": "weekly Descending Channel",
   "setup": "Descending Channel (weekly)",
-  "stage": "confirmed",
-  "ticker": "XOM"
- },
- "XOM|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "XOM"
  },
@@ -6602,19 +6614,19 @@
  "ZS|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "signal",
   "ticker": "ZS"
  },
  "ZS|daily Ascending Channel #2": {
   "label": "daily Ascending Channel #2",
   "setup": "Ascending Channel (daily)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "ZS"
  },
- "ZS|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+ "ZS|daily Ascending Channel #3": {
+  "label": "daily Ascending Channel #3",
+  "setup": "Ascending Channel (daily)",
+  "stage": "forming",
   "ticker": "ZS"
  },
  "ZS|daily Rising Wedge": {
@@ -6625,8 +6637,8 @@
  },
  "ZS|daily alt": {
   "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
-  "stage": "signal",
+  "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
   "ticker": "ZS"
  },
  "ZS|main": {
@@ -6656,7 +6668,7 @@
  "ZS|weekly Rising Wedge": {
   "label": "weekly Rising Wedge",
   "setup": "Rising Wedge (weekly)",
-  "stage": "atRisk",
+  "stage": "confirmed",
   "ticker": "ZS"
  }
 }

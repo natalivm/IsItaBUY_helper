@@ -104,10 +104,132 @@ behind as it strips them, which was tried and backed out — 124 of 149 stocks c
 unchecked setup somewhere, so a dot covering them fires on almost every row and stops
 discriminating. If that broader signal is ever wanted, that is where it goes.
 
-### Working on the scripts: two traps
+### Targets: what the completed setups actually say
+
+Completed setups from the source tool are recorded as `history` rows. Comparing them
+against the detector's reading of the same chart looked at first like a clean defect —
+the break levels agree (confirms have matched to the cent on CVX and CRWD, and within
+3% on XOM, FRSH and KMB) while the measured move off those same lines runs 1.4x to
+4.4x longer, median 2.18x over five matched pairs.
+
+**That comparison is confounded and the 2.18x should not be used.** Every pair sets one
+of our *live* setups against one of their *completed* ones, and a setup completes partly
+because its target was short enough to reach. Controlling for it:
+
+| | n | median move |
+|---|---|---|
+| live setups posted from the source tool | 525 | 30.1% |
+| live setups the detector drew | 247 | 38.9% |
+| **completed** setups from the source tool | 18 | **12.1%** |
+
+The source tool's own live setups project 30.1% and the ones that finish average 12.1%.
+Same tool, same method — the gap is survivorship, not error. Against that control the
+detector projects **1.29x** the source tool, not 2.18x, and even that may be composition
+rather than method.
+
+What survives is more interesting than the original claim: **a measured-move target is
+usually not reached, in either system.** Long-target setups mostly do not resolve, which
+is why the ledger accumulates "confirmed" rows whose price walked away — FRSH led the
+landing page on 40.7% of room to a target that had effectively already played out. The
+fix is therefore not to shorten the projection. It is to stop treating an unreached
+target as a reason to keep a setup live, which is what `atRisk` and the "Break undone"
+chip already do and what the retirement rules should lean on harder.
+
+Smaller completed targets are not evidence of a better method either — META's hammer
+reached a 2.2% objective because a candle pattern projects a candle-sized move.
+
+One number from the comparison does stand without needing the survivorship question
+settled: **on all six charts where a completed call has been recorded, our own setup for
+the same break is still open.** XOM, CVX, FRSH, LIFE, KMB, RBRK — in each case price
+reached their objective and stopped short of ours. That is a statement about the state of
+this ledger, not about whose method is better, and those six rows are exactly the ones
+that should have closed themselves.
+
+### Training on the calls that completed
+
+`pattern_reproduce.py` scores the detector against the source tool's finished calls,
+which are recorded as `history` rows in `data/patternWatchlist.ts`. For each one it
+replays the chart up to the day the call completed, runs the detector on exactly those
+candles, and asks whether it rebuilds that setup. Every label is a setup that paid, so
+unlike the distribution comparisons there is no survivorship to correct for.
+
+**The replay stops one bar before the completion day** (`BACK` in `pattern_reproduce.py`,
+`--back N` to change it). The completion bar is the one that reached the target, so
+including it hands the detector a chart on which the move is already over — and `_stage`
+discards a setup whose target has been reached. The shorter and more accurate the
+projection, the more often that fires, so at `BACK = 0` the setups that survive to be
+scored are disproportionately the ones that over-project. That flattered the exact number
+being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
+
+Baseline on the 20 calls whose candles reach back far enough:
+
+- **confirm level: 0.0% median error.** The break detection is exact — this is not where
+  anything is wrong.
+- **right pattern and direction: 15/20.** Three of the four misses are Hammers that
+  `detect_hammer` does not find, and one is a Bull Flag, which is not implemented.
+- **target: 13.5% median error**, and that is the whole defect — 4.7% on wedges against
+  22.6% on channels.
+
+**`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
+the measured move. The height used to be taken at the pattern's *start*, where a
+converging wedge is at its widest, so the projection was the full mouth of it. Measured
+against the completed calls:
+
+| | wedges | channels | patterns rebuilt |
+|---|---|---|---|
+| `start` | 11.4% | 22.6% | 16/20 |
+| **`mean`** (current) | **4.7%** | 22.6% | 15/20 |
+
+Wedge error drops by well over half, and holds under every cutoff tested (at `BACK = 0`
+it reads 14.6% → 6.8%, at `BACK = 2` 11.4% → 4.2%). Channels do not move at all and
+cannot — their lines are parallel, so the height is the same wherever it is measured, and
+their 22.6% is a line-fitting problem rather than a height one. **Channels are now the
+whole of the remaining target error.**
+
+The cost is one setup, consistently: KLAC's daily rising wedge at `BACK = 1`, CVX's weekly
+falling wedge at `BACK = 0`. Both are lost to the same guard — a shorter target is more
+often one the chart has already reached, and `_stage` then discards the setup as finished.
+That is the detector being right in a way the harness scores as a miss, and it is the
+honest price of the change. It also costs about 2 points on the held-out half of the
+agreement-with-hand-posted metric (32.7% to 30.9%); the train half fell much further,
+which is noise at n=63.
+
+**`pw.MIN_ROOM = 0.10` looks too high and has not been changed.** Six of the 22 completed
+calls had less than 10% between confirm and target — META's hammer at 2.2%, LMT's at
+2.8%, LMT's daily descending channel at 3.1%, CRWD's hammer at 3.4%, KMB's channel at
+5.0%, NBIS's at 8.1% — so the floor would have discarded 27% of the setups that worked,
+candle patterns worst of all, since a candle projects a candle-sized move. Lowering it
+did not change the reproduction score, so there is no measured gain to point at; the
+argument is only that the completed calls say the floor is in the wrong place.
+
+**The stored setups on a hand-posted stock are refreshed separately.** `--redo-auto`
+rebuilds the 65 machine-drawn *entries*; the ~250 auto setups hidden inside `more: [...]`
+on the 85 hand-posted stocks are a different population, and they feed the agreement
+badge, `weekly_feature`'s "+4 per agreeing setup" and `rank_setups`' target agreement.
+`python3 pattern_detect.py --redo-stored` (dry run) / `--redo-stored --apply` re-detects
+those **in place**: a setup is matched by (timeframe, pattern, direction) and only its
+levels are replaced. Use it rather than `--extras`, which calls `_strip_stored()` — that
+deletes the entire `more` list and rebuilds it, taking every hand-written stored setup
+with it (174 of them at the time of writing).
+
+**`auto: true` is the only thing protecting a hand-written setup.** A stored setup
+without the flag is never rewritten, whatever it looks like — and some of the unflagged
+ones plainly are machine-drawn (direction `"both"` is a shape only `_classify` produces).
+They stay anyway: the flag is the contract, and guessing against it is how hand-written
+prose gets eaten. A setup the fresh scan no longer finds is also left alone rather than
+deleted — 28 were, on this run.
+
+Every run of `--redo-stored` first writes `archive/handSetups-<date>.json`: the verbatim
+source of every stored setup on every hand-posted stock, `auto` flag included, plus each
+stock's `keyLevel` and `history`. It stores source text rather than parsed values, so a
+setup goes back exactly as it was written. `python3 pattern_detect.py --archive` writes
+one without changing anything.
+
+### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.
 - **The parser keeps array fields as spans, not values.** For `lines` (and `history`) `_setups()` gives you the position in the source text, and `s.get('lines')` is always `None`. To read trendlines use `pattern_lines.stored_lines(text, pos)`; to write them, splice the span. Anything guarded by `if s.get('lines')` never runs — which is currently true of the channel branch of `_finished()`, so channels fail by the generic close-past-invalidation-plus-follow-through rule rather than on one close back inside the broken line.
+- **`--redo-auto` rewrites the whole entry.** `_ts_entry()` builds an auto entry from scratch, so anything the detector doesn't write is gone unless it is carried over: `rsi` / `trend` (the price run's), `keyLevel` and `history` (hand-written, and `history` is the record of completed calls the reproduce harness trains on). That is what `KEEP_HEAD` / `KEEP_TAIL` and `_carry()` in `pattern_detect.py` are for — add any new entry-level field to one of them, or the next re-scan deletes it.
 
 **Setups need room.** A setup whose target is within **10%** of its confirmation
 level is skipped — `MIN_ROOM` in `pattern_watchlist.py`, enforced by
