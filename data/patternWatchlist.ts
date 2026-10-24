@@ -18313,6 +18313,11 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed daily close back inside the broken boundary, below $161.81.",
       note: "The daily chart had been grinding down a descending channel since March. Oct 5 closed above the upper line at $163.92 and Oct 8 confirmed above $164.74. Price has climbed to $183.21 since, which is about half the distance to the $201.71 measured move.",
     },
+    history: [
+      { pattern: "Falling Wedge", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-19",
+        confirm: 158.71, invalidation: 123.02, target: 180.35,
+        note: "A wedge that paid. Confirmed on a weekly close above $158.71, beyond the signal candle's high, and reached $180.35 the week of Oct 19 — price has since carried on to $183.21. A completed move, not a new entry. Worth keeping for what it shows about drawing: the detector found this same wedge and measured it to $194.41, which the stock has not reached, so the identical pattern on the identical chart reads as finished or as still running depending only on where the two lines were put." }
+    ],
     more: [
       {
         pattern: "Ascending Channel",
@@ -18345,22 +18350,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
           { from: ["2026-03-30", 134.95], to: ["2026-10-23", 137.26] },
         ],
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $165.95 on Oct 8.",
-      },
-      {
-        pattern: "Falling Wedge",
-        timeframe: "weekly",
-        direction: "up",
-        stage: "confirmed",
-        stageDate: "2026-08-17",
-        signal: 157.03,
-        confirm: 161.67,
-        invalidation: 125.32,
-        target: 194.41,
-        lines: [
-          { from: ["2026-02-16", 182.53], to: ["2026-10-19", 146.83] },
-          { from: ["2026-02-16", 145.15], to: ["2026-10-19", 125.32] },
-        ],
-        note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $161.67 on Aug 17.",
       },
       {
         pattern: "Descending Channel",
