@@ -248,23 +248,6 @@ export function undoneBy(
   return past > 0 ? (past / a.confirm) * 100 : null;
 }
 
-/** How many setups on this stock the detector drew and nobody has checked yet.
- *
- *  The dot beside a pattern name marks only the setup on show. This counts the whole
- *  stock, the hidden ones included, because the row is the only place you would ever
- *  see them without opening it -- the point is to know which stocks are owed a look
- *  without expanding all 149 of them.
- *
- *  The build moves alt and more into public/setups/TICKER.json, so they are not here
- *  to count and `autoHidden` carries their tally instead; counting them directly is
- *  the fallback for an unsplit build. Without that the dot would miss the 57 stocks
- *  whose shown setup is checked but whose stored ones are not. */
-export function uncheckedCount(s: PatternStock | null | undefined): number {
-  if (!s) return 0;
-  const hidden = s.autoHidden ?? ((s.alt?.auto ? 1 : 0) + (s.more || []).filter(m => m.auto).length);
-  return (s.auto ? 1 : 0) + hidden;
-}
-
 const Undone: React.FC<{ pct: number | null; tf?: string }> = ({ pct, tf }) =>
   pct == null ? null : (
     <span
@@ -653,7 +636,6 @@ const writePref = (key: string, value: string) => {
 
 const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle: () => void; onOpenPage: (ticker: string) => void }> = ({ row, hasPage, open, onToggle, onOpenPage }) => {
   const s = row.setup, st = status(s), id = 'd-' + row.ticker;
-  const unchecked = uncheckedCount(s);
   const item = useRef<HTMLDivElement>(null);
   const dash = <span className="lvl"><b className="faintb">—</b></span>;
 
@@ -712,11 +694,14 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
               <b>{row.ticker}</b>
             </button>
           ) : <b>{row.ticker}</b>}
-          {unchecked > 0 && (
+          {/* One dot per row, beside the ticker so the Stock column can be scanned for
+              the stocks still owed a look. It speaks for the setup this row is showing;
+              the expanded panel carries its own dot on each setup. */}
+          {s?.auto && (
             <i
               className="auto-dot stock"
-              title={`${unchecked} setup${unchecked > 1 ? 's' : ''} on ${row.ticker} ${unchecked > 1 ? 'were' : 'was'} drawn by the detector and ${unchecked > 1 ? 'have' : 'has'} not been checked by hand`}
-              aria-label={`${unchecked} unchecked setup${unchecked > 1 ? 's' : ''}`}
+              title={`The setup shown for ${row.ticker} was drawn by the detector — its lines and levels have not been checked by hand`}
+              aria-label="Unchecked setup"
             />
           )}
           <span>{row.name}</span>
@@ -728,9 +713,10 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
         </span>
         <span className="meta">
           {s && <span className="txt">{s.pattern} · {cap(s.timeframe || 'daily')}</span>}
-          {/* The dot marks THIS setup as machine-drawn, never the stock: a stock can carry a
-              hand-posted setup and an auto-detected one at once, and a price refresh never
-              earns one. It sits with the pattern for that reason. */}
+          {/* The second of the row's two dots, and deliberately so: the one by the ticker
+              makes the Stock column scannable for what is owed a look, this one says which
+              reading is machine-drawn. A stock can carry a hand-posted setup and an
+              auto-detected one at once, and a price refresh never earns either. */}
           {s?.auto && <i className="auto-dot" title="This setup was auto-detected — its lines and levels have not been checked by hand" aria-label="Auto-detected setup" />}
           <Flag text={s ? flagFor(s.timeframe, s.flag) : undefined} />
           <Flag text={s?.tag} keyFlag />

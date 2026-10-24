@@ -88,42 +88,18 @@ function splitStoredSetups() {
 
     transform(code: string, id: string) {
       if (!id.replace(/\\/g, '/').endsWith(WATCHLIST)) return null;
-
-      // Where each stock's entry begins, so a count can be left behind once per stock
-      // rather than once per removed block.
-      const entryAt: number[] = [];
-      const reTicker = /\n  \{\n    ticker: "[A-Z.]+"/g;
-      let e: RegExpExecArray | null;
-      while ((e = reTicker.exec(code))) entryAt.push(e.index);
-
-      const cuts: { from: number; to: number; auto: number; entry: number }[] = [];
+      let out = '';
+      let i = 0;
       const re = /\n[ \t]*(alt|more):\s*[[{]/g;
       let m: RegExpExecArray | null;
       while ((m = re.exec(code))) {
         const [, end] = spanOf(code, m.index + m[0].length - 1);
         let j = end;
         if (code[j] === ',') j++;
-        // The ledger row has to be able to say "this stock is owed a look" without
-        // fetching the file these setups are moving into, so carry the tally across.
-        const auto = (code.slice(m.index, j).match(/\bauto:\s*true\b/g) || []).length;
-        let entry = 0;
-        while (entry + 1 < entryAt.length && entryAt[entry + 1] < m.index) entry++;
-        cuts.push({ from: m.index, to: j, auto, entry });
+        out += code.slice(i, m.index);
+        i = j;
         re.lastIndex = j;
       }
-
-      const hidden = new Map<number, number>();
-      for (const c of cuts) hidden.set(c.entry, (hidden.get(c.entry) || 0) + c.auto);
-
-      let out = '';
-      let i = 0;
-      cuts.forEach((c, k) => {
-        out += code.slice(i, c.from);
-        const last = k + 1 === cuts.length || cuts[k + 1].entry !== c.entry;
-        const n = hidden.get(c.entry) || 0;
-        if (last && n > 0) out += `\n    autoHidden: ${n},`;
-        i = c.to;
-      });
       return { code: out + code.slice(i), map: null };
     },
   };
