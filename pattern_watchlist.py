@@ -1618,81 +1618,131 @@ def _same_call(a, b):
     return bool(ta and tb) and abs(ta - tb) / tb <= DUPE
 
 
-def dedupe_setups(apply=False, path=None):
-    """Keep one setup per claim: swap a duplicated alt, then drop duplicated stored ones.
+def _claim_rank(sv, price=None):
+    """How good a setup is, for deciding which of two identical claims survives.
 
-    The visible slots come first. When main and alt make the same call the second slot is
-    wasted, so a stored setup that says something different is promoted into it and the old
-    alt is demoted rather than deleted -- it is still a valid reading, just not worth a
-    slot. Then any stored setup duplicating what is now on show is dropped outright, since
-    a rescan would redraw it and `agree` already carries the corroboration.
+    Hand-posted first, then the further-along stage, then reward:risk. The slot a setup
+    happens to occupy is NOT part of this: keeping the main just because it is the main
+    deleted FRSH's hand-posted confirmed break in favour of a machine-drawn signal, and
+    took the landing page's top-scored card with it.
+    """
+    conf, inv, tgt = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
+    rr = 0.0
+    if conf and inv and tgt and inv != conf:
+        rr = abs(tgt - conf) / abs(inv - conf)
+    return (1 if sv.get('auto') else 0, _STAGE_RANK.get(sv.get('stage'), 9), -rr)
+
+
+def dedupe_setups(apply=False, path=None):
+    """Keep one setup per claim, and keep the BEST one wherever it sits.
+
+    Setups projecting the same move within DUPE are grouped; the strongest by _claim_rank
+    survives and the rest go. If the survivor was stored while a weaker copy held a visible
+    slot, it takes that slot -- a duplicate is removed by promoting the better reading, never
+    by deleting it for sitting in the wrong place.
     """
     path = path or WATCHLIST_FILE
     with open(path) as fh:
         text = fh.read()
+    swapped, dropped = [], []
+    # Backfilling an emptied alt slot can itself create a fresh duplicate, so one pass does
+    # not converge. Repeat until nothing changes -- it settled on the second pass in
+    # practice, and the bound only guards against a cycle.
+    for _ in range(6):
+        text, sw, dr = _dedupe_pass(text)
+        swapped += sw
+        dropped += dr
+        if not (sw or dr):
+            break
+    if apply:
+        with open(path, 'w') as fh:
+            fh.write(text)
+    return swapped, dropped
+
+
+def _dedupe_pass(text):
     cuts, swapped, dropped = [], [], []
     for e in parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
-        tk, main = m.get('ticker'), m
-        alt_pos, alt_auto = e['alt'], bool(e['alt'] and e['alt'].get('auto', (0, 0, None))[2])
-        live = [(lb, sv, pos) for lb, sv, pos in _setups(e) if not sv.get('dormant')]
+        tk = m.get('ticker')
+
+        def vals(pos):
+            return {k: v[2] for k, v in pos.items() if k != '_span'}
+
+        slots = [('main', e['fields'])]
+        if e['alt'] is not None:
+            slots.append(('alt', e['alt']))
         stored = [pos for lb, sv, pos in _setups(e) if '_span' in pos]
-        alt_vals = {k: v[2] for k, v in alt_pos.items()} if alt_pos else None
-        changed = False
+        every = slots + [('stored', pos) for pos in stored]
+        every = [(kind, pos) for kind, pos in every if not vals(pos).get('dormant')]
 
-        # 1. the row saying one thing twice
-        if alt_vals and _same_call(main, alt_vals):
-            def _val(pos):
-                return {k: v[2] for k, v in pos.items() if k != '_span'}
-            options = [pos for pos in stored
-                       if not _same_call(main, _val(pos)) and not _val(pos).get('dormant')]
-            if options:
-                cur_tf = alt_vals.get('timeframe')
-                price = main.get('price') or 0
-
-                def score(pos):
-                    v = _val(pos)
-                    tgt = v.get('target') or v.get('goalUp') or 0
-                    return (0 if v.get('timeframe') == cur_tf else 1,
-                            1 if v.get('auto') else 0,
-                            _STAGE_RANK.get(v.get('stage'), 9),
-                            abs(tgt - price) / price if (tgt and price) else 9)
-                pick = min(options, key=score)
-                pv = _val(pick)
-                stored = [p for p in stored if p is not pick] + [alt_pos]
-                swapped.append(f"{tk}: alt was the same call as main (${_fmt_price(main.get('target'))} "
-                               f"vs ${_fmt_price(alt_vals.get('target'))}) — promoted "
-                               f"{pv.get('timeframe')} {pv.get('pattern')} instead")
-                alt_pos, alt_auto = pick, bool(pv.get('auto'))
-                alt_vals = pv
-                changed = True
-
-        # 2. stored setups repeating what is on show
-        shown = [main] + ([alt_vals] if alt_vals else [])
-        keep = []
-        for pos in stored:
-            v = {k: val[2] for k, val in pos.items() if k != '_span'}
-            # No `_span` check here: an alt just demoted into the stored list has none, and
-            # it is exactly the setup most likely to repeat the row -- being demoted for
-            # repeating it is how it got here.
-            if not v.get('dormant') and any(_same_call(v, s) for s in shown):
-                dropped.append(f"{tk}: {v.get('timeframe')} {v.get('pattern')} "
-                               f"tgt ${_fmt_price(v.get('target'))} — same call as the row")
-                changed = True
+        # group identical claims
+        groups, used = [], set()
+        for i, (kind, pos) in enumerate(every):
+            if i in used:
                 continue
-            keep.append(pos)
+            grp = [(kind, pos)]
+            used.add(i)
+            for j, (k2, p2) in enumerate(every):
+                if j in used:
+                    continue
+                if _same_call(vals(pos), vals(p2)):
+                    grp.append((k2, p2))
+                    used.add(j)
+            if len(grp) > 1:
+                groups.append(grp)
+        if not groups:
+            continue
+
+        main_pos, alt_pos = e['fields'], e['alt']
+        keep_stored = list(stored)
+        changed = False
+        for grp in groups:
+            best = min(grp, key=lambda kp: _claim_rank(vals(kp[1]), m.get('price')))
+            held = [kind for kind, _ in grp if kind in ('main', 'alt')]
+            # The best copy takes the highest slot the group holds. Guarding the headline
+            # instead -- "the main never disappears" -- let FRSH keep a machine-drawn signal
+            # on the row while the hand-posted confirmed break sat beside it saying the same
+            # thing, which is the duplication this is supposed to remove.
+            if held:
+                slot = 'main' if 'main' in held else 'alt'
+                bv = vals(best[1])
+                cur = main_pos if slot == 'main' else alt_pos
+                if cur is not best[1]:
+                    swapped.append(f"{tk}: {slot} was the weaker copy of the same call — promoted "
+                                   f"{bv.get('timeframe')} {bv.get('pattern')} ({bv.get('stage')}) into it")
+                    if slot == 'main':
+                        main_pos = best[1]
+                        # It may have been the alt. Vacate that slot or the row shows the
+                        # same setup in both, which is the fault this routine exists to fix.
+                        if alt_pos is best[1]:
+                            alt_pos = None
+                    else:
+                        alt_pos = best[1]
+                    changed = True
+                keep_stored = [p for p in keep_stored if p is not best[1]]
+            for kind, pos in grp:
+                if pos is best[1]:
+                    continue
+                lv = vals(pos)
+                if alt_pos is pos:
+                    alt_pos = None
+                keep_stored = [p for p in keep_stored if p is not pos]
+                dropped.append(f"{tk}: {lv.get('timeframe')} {lv.get('pattern')} "
+                               f"({lv.get('stage')}) tgt ${_fmt_price(lv.get('target'))} — same call, weaker")
+                changed = True
         if not changed:
             continue
+        if alt_pos is None and keep_stored:
+            alt_pos = keep_stored.pop(0)
         a, b = e['span']
-        cuts.append((a, b + 1, rebuild_entry(text, e, e['fields'], alt_pos, keep,
-                                             bool(main.get('auto')), alt_auto)))
+        cuts.append((a, b + 1, rebuild_entry(text, e, main_pos, alt_pos, keep_stored,
+                                             bool(vals(main_pos).get('auto')),
+                                             bool(alt_pos and vals(alt_pos).get('auto')))))
     new_text = text
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
-    if apply and new_text != text:
-        with open(path, 'w') as fh:
-            fh.write(new_text)
-    return swapped, dropped
+    return new_text, swapped, dropped
 
 
 def cap_setups(apply=False, path=None):

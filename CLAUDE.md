@@ -543,25 +543,37 @@ Worse, its **main and alt both said it** — $20.99 against $21.79 — so the ro
 its visible slots on one claim. `agree` already counts corroboration, so repeating it costs
 the slot and tells you nothing the badge did not.
 
-`dedupe_setups()` treats targets within `DUPE` (5%) in the same direction as the same call,
-and acts in two steps:
+`dedupe_setups()` groups setups projecting the same move within `DUPE` (5%) in the same
+direction, keeps the **best** one by `_claim_rank` and drops the rest. The survivor takes
+the highest slot the group held, so a duplicate is removed by promoting the better reading,
+never by deleting one for sitting in the wrong place.
 
-- **A duplicated alt is swapped, not deleted.** A stored setup saying something different
-  is promoted into the slot and the old alt is demoted, since it is still a valid reading
-  — just not worth a slot. The pick prefers the alt's own timeframe, then hand-posted over
-  machine-drawn, then the further-along stage, then the nearest target. 27 of 28 stocks had
-  a stored setup that qualified.
-- **Stored setups repeating what is on show are dropped**, since a rescan would redraw them
-  and `agree` carries the corroboration. 80 went in two passes.
+`_claim_rank` is **hand-posted first, then the further-along stage, then reward:risk** —
+and deliberately *not* which slot a setup occupies. 43 slots were swapped and 103 duplicates
+dropped, taking the ledger from 779 live setups to 565.
 
 An **either-direction** setup is never a duplicate: it is watching for a break both ways,
 which is a different claim from a directional target even when one of its goals lands
-nearby. That is what FRSH's second slot became.
+nearby.
 
-**The demoted alt has no `_span`,** and the first version's drop check required one — so
-the setup most likely to repeat the row escaped the test that existed to catch it, FRSH
-keeping both $20.99 and $21.79. Being demoted for repeating the row is how it got into the
-stored list; it has to be checked there.
+**Two bugs here cost the landing page its top card, and both came from protecting a slot
+instead of ranking the setup.** The first version preferred whatever held the main slot, so
+on FRSH it kept a *machine-drawn `signal`* at $20.99 and deleted the *hand-posted
+`confirmed`* break at $21.79 — which was the week's highest-scored setup, featured on the
+landing page, leaving that card pointing at a setup no longer in the ledger. Replacing that
+with "the headline never disappears" only moved the fault: FRSH then kept both copies. The
+rule has to be that the best copy wins and takes the slot.
+
+The second: promoting the **alt** into the main slot has to vacate the alt, or the row
+shows one setup in both places — the exact fault this routine exists to remove.
+
+**It loops to convergence**, because backfilling an emptied alt slot can create a fresh
+duplicate: four stocks (JPM, Q, SHOP, THM) were clean only after a second pass. Re-running
+it now reports 0 and 0.
+
+**Re-run `weekly_feature.py` after any pass that deletes setups.** `data/weeklyFeature.ts`
+stores a snapshot of each featured setup and the landing page looks it up live by pattern,
+timeframe and direction; deleting the setup it names leaves a card with nothing behind it.
 
 ### Six readings per stock, and what happens to the finished ones
 

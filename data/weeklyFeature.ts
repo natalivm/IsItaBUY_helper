@@ -76,47 +76,47 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       ]
     },
     {
-      ticker: "ANET",
-      name: "Arista Networks",
+      ticker: "ROAD",
+      name: "Construction Partners, Inc.",
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
       stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 172.37,
+      stageDate: "2026-09-28",
+      price: 83.04,
       priceDate: "2026-10-23",
-      target: 126.57,
-      invalidation: 186.08,
-      rsi: 34.1,
-      score: 103.9,
+      target: 34.43,
+      invalidation: 99.15,
+      rsi: 36.3,
+      score: 108,
       why: [
         "Break confirmed on the weekly chart",
-        "Daily RSI 34 backs the downside",
+        "Daily RSI 36 backs the downside",
         "The stock's own trend is down",
-        "26.6% from here to the target",
-        "About 3.3x more room to the target than to invalidation"
+        "58.5% from here to the target",
+        "About 3.0x more room to the target than to invalidation"
       ]
     },
     {
-      ticker: "CVX",
-      name: "Chevron Corporation",
-      pattern: "Ascending Channel",
-      timeframe: "weekly",
+      ticker: "D",
+      name: "Dominion Energy, Inc.",
+      pattern: "Descending Channel",
+      timeframe: "daily",
       direction: "up",
       stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 233.21,
+      stageDate: "2026-10-12",
+      price: 65.2,
       priceDate: "2026-10-23",
-      target: 273.38,
-      invalidation: 219.9,
-      rsi: 76.9,
-      score: 98.3,
+      target: 94.09,
+      invalidation: 58.46,
+      rsi: 61.7,
+      score: 108,
       why: [
-        "Break confirmed on the weekly chart",
-        "Daily RSI 77 backs the upside",
+        "Break confirmed on the daily chart",
+        "Daily RSI 62 backs the upside",
         "The stock's own trend is up",
-        "17.2% from here to the target",
-        "About 3.0x more room to the target than to invalidation"
+        "44.3% from here to the target",
+        "About 4.3x more room to the target than to invalidation"
       ]
     }
   ],
@@ -244,8 +244,8 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       ticker: "STRL",
       name: "Sterling Infrastructure, Inc.",
       date: "2026-10-28",
-      time: "tbd",
-      estimated: false
+      estimated: false,
+      time: "tbd"
     },
     {
       ticker: "FTNT",
