@@ -1121,6 +1121,12 @@
   "stage": "confirmed",
   "ticker": "D"
  },
+ "D|weekly Falling Wedge": {
+  "label": "weekly Falling Wedge",
+  "setup": "Falling Wedge (weekly)",
+  "stage": "signal",
+  "ticker": "D"
+ },
  "D|weekly alt": {
   "label": "weekly alt",
   "setup": "Ascending Channel (weekly)",

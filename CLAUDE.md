@@ -663,6 +663,21 @@ never by deleting one for sitting in the wrong place.
 and deliberately *not* which slot a setup occupies. 43 slots were swapped and 103 duplicates
 dropped, taking the ledger from 779 live setups to 565.
 
+**It drops slot occupants only; a stored copy is never deleted.** `annotate_agreement` sets
+the agreement badge from "stored setups in the same direction, on any timeframe, pointing to
+a target within 5%" — word for word the test `_same_call` applies here — so dropping them
+deleted the evidence the badge exists to show. The two routines were defined identically and
+pulled against each other. D is the case: its weekly falling wedge, redrawn on current
+candles and signalling 0.7% from spot, was folded into the daily channel for landing 2.8%
+from its target, and the row then had nothing to agree with it. It reads
+`agree: {n: 2, lo: 73.45, hi: 75.49}` again.
+
+The fault this routine was written for was a **row** spending both of its visible slots on
+one claim, which is FRSH, so that is what it guards. A stored copy costs no slot and is
+corroboration. Redrawing a stale setup on current candles is the better move than dropping
+it either way — the source tool's D wedge confirmed in June at a level price has since
+failed at, while the same pattern on today's candles confirms 0.7% away.
+
 An **either-direction** setup is never a duplicate: it is watching for a break both ways,
 which is a different claim from a directional target even when one of its goals lands
 nearby.
