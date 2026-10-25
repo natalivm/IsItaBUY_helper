@@ -224,12 +224,20 @@ def _stage(bars, n, pattern, up, lo, start, A):
            'invalidation': _r(inv), 'target': _r(target)}
     if 'conf' in sig:
         broken = up if d == 'up' else lo
+        # The far line *at the bar being tested*. `inv` above is that line at the latest
+        # candle, which is the right level to store but the wrong one to judge history
+        # with: a sloped line has moved since, always away from where the bar sat, so the
+        # test was strictly harder to trip than the rule it implements and the scan kept
+        # wedges alive that had already failed. 60 of 186 confirmed wedges have the two
+        # readings more than 5% apart somewhere in the window this walks. The channel
+        # branch below already indexes per bar.
+        far_line = lo if d == 'up' else up
         for i in range(sig['conf'] + 1, n):
             if two_way:
                 # channels and triangles fail on one completed close back inside the broken line
                 if (d == 'up' and c[i] < broken.at(i)) or (d == 'down' and c[i] > broken.at(i)):
                     return None
-            elif i + 1 < n and ((d == 'down' and c[i] > inv and c[i + 1] > h[i]) or (d == 'up' and c[i] < inv and c[i + 1] < l[i])):
+            elif i + 1 < n and ((d == 'down' and c[i] > far_line.at(i) and c[i + 1] > h[i]) or (d == 'up' and c[i] < far_line.at(i) and c[i + 1] < l[i])):
                 return None                      # wedges: past invalidation + a follow-through close
         out.update(stage='confirmed', stageDate=t[sig['conf']])
     else:

@@ -802,6 +802,38 @@ def _pending_break(s, price):
     return None, None
 
 
+def _signal_candle_level(bars, iso, timeframe, direction):
+    """`confirm` for a setup that has just signalled: the signal candle's high / low.
+
+    A forming setup carries no `confirm`, and cannot: `confirm` *is* the signal candle's
+    extreme (PATTERN_RULES.md), and until something breaks there is no such candle. So the
+    close that promotes forming → signal is also the close that first makes the level
+    knowable, and it has to be written then — a setup left at `signal` with no `confirm`
+    has no level ahead of it and can never be confirmed, only cancelled. 92 of the 253
+    pending directional setups were in exactly that shape.
+
+    The candle is the setup's own, not the day's: a weekly setup signalling on Friday
+    confirms against that week's high, so the daily bars of the period are folded together.
+    `None` when the bars do not cover the period, and the caller then leaves `confirm`
+    unset rather than guessing a level the whole call hangs on.
+    """
+    if direction not in ('up', 'down') or not bars:
+        return None
+    d = _date.fromisoformat(iso)
+    if timeframe == 'weekly':
+        first = d - timedelta(days=d.weekday())
+    elif timeframe == 'monthly':
+        first = d.replace(day=1)
+    else:
+        first = d
+    lo_iso, hi_iso = first.isoformat(), iso
+    highs = [b[1] for b in bars if lo_iso <= b[0] <= hi_iso and b[1] is not None]
+    lows = [b[2] for b in bars if lo_iso <= b[0] <= hi_iso and b[2] is not None]
+    if not highs or not lows:
+        return None
+    return float(_fmt_price(max(highs) if direction == 'up' else min(lows)))
+
+
 def _period_closed(timeframe, iso):
     """True if a bar dated `iso` is a closing bar for this timeframe (holidays not modelled)."""
     d = _date.fromisoformat(iso)
@@ -1007,8 +1039,20 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
                 # is a signal and crossing confirm is a confirmation. Safe to set here for
                 # the same reason `atRisk` is -- it turns on a completed close on the setup's
                 # own timeframe, not on price brushing a line, so it cannot flip intraday.
+                # A setup promoted to `signal` out of `forming` has no `confirm` yet, and
+                # the bar that signalled is the one that sets it. Without this the setup
+                # arrives at `signal` with nothing ahead of it and can never confirm.
+                extra = None
+                if next_stage == 'signal' and s.get('confirm') is None:
+                    lvl = _signal_candle_level(q.get('bars') or daily, date, tf, direction)
+                    if lvl is not None:
+                        extra = {'confirm': lvl}
+                    else:
+                        review.append(f"{sym} ({label}): {reason}, but the candles do not reach "
+                                      f"{date} — set `confirm` by hand (the signal candle's "
+                                      f"{'high' if direction == 'up' else 'low'}) or it cannot confirm")
                 promoted.append((sym, label, stage, next_stage, reason))
-                edits += _stage_edits(text, pos, next_stage, date)
+                edits += _stage_edits(text, pos, next_stage, date, extra)
                 bot_notes[key] = (date, f"{reason[0].upper()}{reason[1:]}.")
                 continue
             if reason:
