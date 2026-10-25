@@ -401,6 +401,28 @@ pass. It only ever **removes** a value, never recomputes one: write-once is what
 field mean anything, and a level recomputed months later off a since-refitted line would be
 a different number wearing the same name.
 
+### Too tall to draw: the height cap does not apply to what you post
+
+`HEIGHT_VS` and `MAX_HEIGHT` stop the detector drawing a pattern taller than the price it
+spans. Nothing applied that test to a hand-posted setup, and in one week three turned up
+projecting 96%, 67% and 60% falls — CRDO's weekly channel, STRL's and ENVA's. Each has the
+same cause: drawn from an origin where its lower boundary extrapolates to near nothing.
+ENVA's starts at **$1.60** in February 2025 while the stock traded at $114.86, and the
+lowest low over the whole span is $79.41, so that line was never within $78 of price.
+
+The touches do not catch them. ENVA's lower line picks up two, CRDO's two — both late, once
+a rising line has climbed to meet price, which is the shape `MIN_SIDE_TOUCHES` passes
+honestly. Only the height cap sees it.
+
+`geometry_faults()` reports them under **📐 Too tall to draw**: a hand-posted setup with
+lines whose height exceeds `GEOMETRY_CAP` of the close where its lines begin. It changes
+nothing — the break and the direction are usually right and only the number under them is
+wrong, which is a judgement about redrawing rather than a stage change.
+
+The right fix when one appears is the construction, not the level: measure the pattern over
+the span that holds the move. ENVA's channel over 2026 alone (a $129.25-$267.45 range)
+projects to about $101-122 against the $54.55 its full span gave.
+
 ### Stranded setups: confirmed breaks nothing can retire
 
 A setup fails on a close past invalidation plus a follow-through. When that level is half

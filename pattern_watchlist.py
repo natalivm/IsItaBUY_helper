@@ -1075,6 +1075,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             fh.write(new_text)
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
+            'geometry': geometry_faults(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
             'review': review, 'news': news}
@@ -1387,6 +1388,47 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
 
 # ── Report ──
 
+# Three hand-posted channels found in one week -- CRDO's, STRL's and ENVA's -- projected
+# targets of 96%, 67% and 60% down because each was drawn from an origin where its lower
+# boundary extrapolated to near nothing. The detector refuses these: MAX_HEIGHT caps a
+# pattern at a fraction of the close where it starts. Nothing applied that check to a setup
+# posted by hand, so this reports them rather than changing them.
+GEOMETRY_CAP = {'daily': 0.6, 'weekly': 0.7, 'monthly': 0.8}
+
+
+def geometry_faults(text):
+    """Hand-posted setups our own detector would refuse to draw, by height.
+
+    Rows are (ticker, label, pattern, timeframe, height, price_at_start, ratio, target).
+    """
+    import pattern_lines as _pl
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, sv, pos in _setups(e):
+            if bool(main.get('auto')) or bool(sv.get('auto')) or 'lines' not in pos:
+                continue                                  # the detector polices its own
+            lines = _pl.stored_lines(text, pos)
+            if not lines or len(lines) < 2:
+                continue
+            tf = sv.get('timeframe') or main.get('timeframe')
+            cap = GEOMETRY_CAP.get(tf)
+            b = _pl.load_bars(main['ticker'], tf) if cap else None
+            if not b:
+                continue
+            try:
+                i0 = b['t'].index(lines[0][0][0])
+            except ValueError:
+                continue
+            height = abs(lines[0][0][1] - lines[1][0][1])
+            start = b['c'][i0]
+            if not start or height <= cap * start:
+                continue
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
+                        tf, height, start, height / start, sv.get('target')))
+    return out
+
+
 # A confirmed break whose price has gone back past the level that confirmed it, far
 # enough that the setup is no longer the read it was -- and whose invalidation is too
 # distant to ever retire it. The failure rule needs a close past invalidation, so when
@@ -1580,6 +1622,13 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} {str(stage):<9} "
                   f"${_fmt_price(level)} → ${_fmt_price(target)}  {room * 100:4.1f}%  ({tag})")
         print("  Run with --thin to drop the auto-detected ones.")
+    geom = result.get('geometry') or []
+    if geom:
+        print("\n📐 Too tall to draw (hand-posted; the detector would reject these on MAX_HEIGHT —")
+        print("   the measured move is arithmetic, not a forecast):")
+        for sym, label, pattern, tf, height, start, ratio, tgt in sorted(geom, key=lambda r: -r[6]):
+            print(f"  {sym:<6} {tf:<7} {str(pattern):<20} height ${_fmt_price(height)} vs ${_fmt_price(start)} "
+                  f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
     stranded = result.get('stranded') or []
     if stranded:
         print(f"\n🪦 Stranded (break undone by >{STRANDED_UNDONE * 100:.0f}% with an invalidation >{STRANDED_STOP * 100:.0f}% away —")
