@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { TickerDefinition } from '../types';
 import { WEEKLY_FEATURE, HotSetup, EarningsEvent } from '../data/weeklyFeature';
 import { PATTERN_STOCKS, PatternStock } from '../data/patternWatchlist';
-import { fmt, pct, day, status, Pill } from './PatternWatchlist';
+import { fmt, pct, day, status, Pill } from './setupStatus';
 import './Landing.css';
 
 // Landing page — the first thing a visitor sees. Two lists, both rebuilt once a
@@ -272,7 +271,10 @@ function countdown(iso: string): string | null {
 // ── Page ──
 
 interface LandingProps {
-  tickers: Record<string, TickerDefinition>;
+  /** How many stocks have a valuation page — the "covered" stat, and the only thing this
+   *  page ever needed from the stock definitions. Passed as a count so the landing route
+   *  does not pull them in. */
+  covered: number;
   /** Open the watchlist, optionally pre-filtered to one symbol. */
   onOpenWatchlist: (ticker?: string) => void;
   headerControls?: React.ReactNode;
@@ -288,7 +290,7 @@ const Stat: React.FC<{ n: number; label: string; tone?: string }> = ({ n, label,
   );
 };
 
-const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, headerControls }) => {
+const Landing: React.FC<LandingProps> = ({ covered, onOpenWatchlist, headerControls }) => {
   const { weekOf, weekEnd, hot, earnings } = WEEKLY_FEATURE;
   const still = useReducedMotion();
 
@@ -301,8 +303,8 @@ const Landing: React.FC<LandingProps> = ({ tickers, onOpenWatchlist, headerContr
       if (s.stage === 'confirmed') confirmed += 1;
       if (s.alt?.stage === 'confirmed') confirmed += 1;
     });
-    return { covered: Object.keys(tickers).length, tracked, confirmed, reporting: earnings.length };
-  }, [tickers, earnings]);
+    return { covered, tracked, confirmed, reporting: earnings.length };
+  }, [covered, earnings]);
 
   // Every featured setup is scored off the same run, so one date covers them all.
   const pricedOn = hot.find(h => h.priceDate)?.priceDate;

@@ -1417,12 +1417,6 @@
  },
  "CRDO|main": {
   "label": "main",
-  "setup": "Support Shelf (daily)",
-  "stage": "forming",
-  "ticker": "CRDO"
- },
- "CRDO|weekly Ascending Channel": {
-  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "CRDO"
@@ -4697,12 +4691,6 @@
   "stage": "retest",
   "ticker": "RDDT"
  },
- "RDDT|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "update",
-  "ticker": "RDDT"
- },
  "RKLB|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
@@ -5452,12 +5440,6 @@
   "setup": "Descending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "SPOT"
- },
- "SPY|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
-  "ticker": "SPY"
  },
  "SPY|daily alt": {
   "label": "daily alt",

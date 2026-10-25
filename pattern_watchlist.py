@@ -181,7 +181,8 @@ def parse_watchlist(text):
     return entries
 
 
-def get_watchlist_tickers(path=WATCHLIST_FILE):
+def get_watchlist_tickers(path=None):
+    path = path or WATCHLIST_FILE
     if not os.path.exists(path):
         return []
     with open(path) as fh:
@@ -222,9 +223,9 @@ def fetch_daily_bars(symbols, headers, opener=None):
 
 # ── Chart candles ──
 
-def chart_timeframes(path=WATCHLIST_FILE):
+def chart_timeframes(path=None):
     """{ticker: {timeframes}} needed by the watchlist charts (main + alt setups)."""
-    with open(path) as fh:
+    with open(path or WATCHLIST_FILE) as fh:
         entries = parse_watchlist(fh.read())
     out = {}
     for e in entries:
@@ -264,11 +265,11 @@ def fetch_chart_bars(sym, timeframe, headers, opener=None):
     return [bars[k] for k in sorted(bars)]
 
 
-def write_chart_bars(headers, path=WATCHLIST_FILE, bars_dir=BARS_DIR, opener=None):
+def write_chart_bars(headers, path=None, bars_dir=BARS_DIR, opener=None):
     """Write public/bars/TICKER_timeframe.json for every watchlist chart. Returns (written, failed)."""
     os.makedirs(bars_dir, exist_ok=True)
     written, failed = [], []
-    for sym, tfs in sorted(chart_timeframes(path).items()):
+    for sym, tfs in sorted(chart_timeframes(path or WATCHLIST_FILE).items()):
         for tf in sorted(tfs):
             try:
                 bars = fetch_chart_bars(sym, tf, headers, opener)
@@ -801,6 +802,38 @@ def _pending_break(s, price):
     return None, None
 
 
+def _signal_candle_level(bars, iso, timeframe, direction):
+    """`confirm` for a setup that has just signalled: the signal candle's high / low.
+
+    A forming setup carries no `confirm`, and cannot: `confirm` *is* the signal candle's
+    extreme (PATTERN_RULES.md), and until something breaks there is no such candle. So the
+    close that promotes forming → signal is also the close that first makes the level
+    knowable, and it has to be written then — a setup left at `signal` with no `confirm`
+    has no level ahead of it and can never be confirmed, only cancelled. 92 of the 253
+    pending directional setups were in exactly that shape.
+
+    The candle is the setup's own, not the day's: a weekly setup signalling on Friday
+    confirms against that week's high, so the daily bars of the period are folded together.
+    `None` when the bars do not cover the period, and the caller then leaves `confirm`
+    unset rather than guessing a level the whole call hangs on.
+    """
+    if direction not in ('up', 'down') or not bars:
+        return None
+    d = _date.fromisoformat(iso)
+    if timeframe == 'weekly':
+        first = d - timedelta(days=d.weekday())
+    elif timeframe == 'monthly':
+        first = d.replace(day=1)
+    else:
+        first = d
+    lo_iso, hi_iso = first.isoformat(), iso
+    highs = [b[1] for b in bars if lo_iso <= b[0] <= hi_iso and b[1] is not None]
+    lows = [b[2] for b in bars if lo_iso <= b[0] <= hi_iso and b[2] is not None]
+    if not highs or not lows:
+        return None
+    return float(_fmt_price(max(highs) if direction == 'up' else min(lows)))
+
+
 def _period_closed(timeframe, iso):
     """True if a bar dated `iso` is a closing bar for this timeframe (holidays not modelled)."""
     d = _date.fromisoformat(iso)
@@ -860,14 +893,21 @@ def _stage_edits(text, pos, new_stage, on_date, extra=None):
     return edits
 
 
-def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FILE,
-                     snapshot_path=SNAPSHOT_FILE, today=None, now_et=None, post_news=None):
+def update_watchlist(quotes, apply=False, path=None, news_path=None,
+                     snapshot_path=None, today=None, now_et=None, post_news=None):
     """
     quotes: {sym: {'price', 'date', 'bars'}}; pass None to re-check against the stored prices.
     Returns a dict: price_changes [(sym, old, new)], target_hits, needs_update, review, news.
     """
     now_et = now_et or _now_et()
     today = today or now_et.date().isoformat()
+    # Resolved here, not in the signature: a default bound at import time cannot be
+    # redirected by setting WATCHLIST_FILE, which is how the pattern_lines entry points
+    # already behave -- and a test that redirects one but not the other writes to the
+    # real ledger.
+    path = path or WATCHLIST_FILE
+    news_path = news_path or NEWS_FILE
+    snapshot_path = snapshot_path or SNAPSHOT_FILE
     with open(path) as fh:
         text = fh.read()
     entries = parse_watchlist(text)
@@ -999,8 +1039,20 @@ def update_watchlist(quotes, apply=False, path=WATCHLIST_FILE, news_path=NEWS_FI
                 # is a signal and crossing confirm is a confirmation. Safe to set here for
                 # the same reason `atRisk` is -- it turns on a completed close on the setup's
                 # own timeframe, not on price brushing a line, so it cannot flip intraday.
+                # A setup promoted to `signal` out of `forming` has no `confirm` yet, and
+                # the bar that signalled is the one that sets it. Without this the setup
+                # arrives at `signal` with nothing ahead of it and can never confirm.
+                extra = None
+                if next_stage == 'signal' and s.get('confirm') is None:
+                    lvl = _signal_candle_level(q.get('bars') or daily, date, tf, direction)
+                    if lvl is not None:
+                        extra = {'confirm': lvl}
+                    else:
+                        review.append(f"{sym} ({label}): {reason}, but the candles do not reach "
+                                      f"{date} — set `confirm` by hand (the signal candle's "
+                                      f"{'high' if direction == 'up' else 'low'}) or it cannot confirm")
                 promoted.append((sym, label, stage, next_stage, reason))
-                edits += _stage_edits(text, pos, next_stage, date)
+                edits += _stage_edits(text, pos, next_stage, date, extra)
                 bot_notes[key] = (date, f"{reason[0].upper()}{reason[1:]}.")
                 continue
             if reason:
@@ -1057,7 +1109,7 @@ def status_map(text):
     return out
 
 
-def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE,
+def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=None, snapshot_path=None,
               paused=None):
     """Post one News item per status change since the last snapshot. Returns the items.
 
@@ -1067,6 +1119,8 @@ def sync_news(old_text, new_text, bot_notes, today, apply=False, news_path=NEWS_
     """
     if paused is None:
         paused = NEWS_PAUSED
+    news_path = news_path or NEWS_FILE
+    snapshot_path = snapshot_path or SNAPSHOT_FILE
     if os.path.exists(snapshot_path):
         with open(snapshot_path) as fh:
             before = json.load(fh)
@@ -1231,7 +1285,7 @@ def placeholder_entry(ticker, name, price, price_date, note, history=()):
             "  }")
 
 
-def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS_FILE, snapshot_path=SNAPSHOT_FILE):
+def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot_path=None):
     """Remove setups that are done (target reached or failed) and post one News item each.
 
     "Needs updating" setups are kept: they are the to-do list for posting a replacement.
@@ -1239,6 +1293,9 @@ def prune_finished(apply=False, now_et=None, path=WATCHLIST_FILE, news_path=NEWS
     and the case is reported (promotion is left to a human).
     """
     now_et = now_et or _now_et()
+    path = path or WATCHLIST_FILE
+    news_path = news_path or NEWS_FILE
+    snapshot_path = snapshot_path or SNAPSHOT_FILE
     with open(path) as fh:
         text = fh.read()
     cuts, notes, report = [], {}, []
@@ -1352,7 +1409,7 @@ def thin_setups(text):
     return out
 
 
-def drop_thin(apply=False, path=WATCHLIST_FILE):
+def drop_thin(apply=False, path=None):
     """Remove auto-detected setups with too little room between confirmation and target.
 
     Only the hidden ones (`more[]`) and a second setup go quietly -- nothing was shown for
@@ -1360,7 +1417,7 @@ def drop_thin(apply=False, path=WATCHLIST_FILE):
     setup, and anything posted by hand, is listed for review instead: those are calls
     someone made, and replacing one is a decision, not a clean-up.
     """
-    with open(path) as fh:
+    with open(path or WATCHLIST_FILE) as fh:
         text = fh.read()
     cuts, dropped, review = [], [], []
     for e in parse_watchlist(text):

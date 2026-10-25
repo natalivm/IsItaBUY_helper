@@ -4,7 +4,7 @@ import { GROUP_ORDER, GROUP_META, StockGroup } from '../constants';
 import { cn } from '../utils';
 import StockRow, { StockRowData } from './StockRow';
 import ThemeToggle from './ThemeToggle';
-import { PanelTab } from './ReleaseNotesPanel';
+import { PanelTab } from './releaseNotes';
 import { ScrollText, Newspaper } from 'lucide-react';
 
 // Previous home page (grouped PRIME / TURBO / WATCH / AVOID list), kept so the

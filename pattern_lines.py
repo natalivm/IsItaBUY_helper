@@ -372,24 +372,41 @@ def relevel(apply=False, verbose=True, now_et=None):
             if abs(mine - other) < CONVERGED * abs(inv):
                 odd.append((name, inv, mine, 'its two lines are within %.0f%% of each other' % (CONVERGED * 100)))
                 continue
-            # Creep is a line read a few sessions ago; a level far off it was set some other
-            # way (or the setup needs a human), so don't quietly move it.
-            if abs(mine - inv) > DRIFT * abs(inv):
-                odd.append((name, inv, mine, 'that is %.0f%% away — too far to be the same line' % (abs(mine - inv) / abs(inv) * 100)))
-                continue
-            if abs(mine - inv) > abs(other - inv):
-                odd.append((name, inv, mine, 'the other line (%.2f) is nearer' % other))
-                continue
+            # A channel confirming moves its invalidation from the far side of the channel to
+            # the boundary it broke, so the stored level is left sitting on the *other* line --
+            # a whole channel width away from the one the rule now names. The two guards below
+            # both read that as "set some other way" and refuse, which left a promoted channel
+            # reading its pending stop for good. It is not drift and it is not a stray number:
+            # the level is still exactly on a line, just no longer the one that applies. A
+            # wedge invalidates on the far side at every stage, so `was == want` there and this
+            # never fires for one.
+            was = invalidation_line(pattern, s.get('direction'), 'forming')
+            switched = was is not None and was != want and abs(other - inv) <= DRIFT * abs(inv)
+            if not switched:
+                # Creep is a line read a few sessions ago; a level far off it was set some other
+                # way (or the setup needs a human), so don't quietly move it.
+                if abs(mine - inv) > DRIFT * abs(inv):
+                    odd.append((name, inv, mine, 'that is %.0f%% away — too far to be the same line' % (abs(mine - inv) / abs(inv) * 100)))
+                    continue
+                if abs(mine - inv) > abs(other - inv):
+                    odd.append((name, inv, mine, 'the other line (%.2f) is nearer' % other))
+                    continue
             new = pw._fmt_price(mine)
-            moved.append((name, inv, float(new), bars['t'][i]))
+            moved.append((name, inv, float(new), bars['t'][i], switched))
             edits.append((pos['invalidation'][0], pos['invalidation'][1], new))
 
+    switches = [m for m in moved if m[4]]
     if verbose:
-        for name, old, new, when in moved:
-            print(f"LEVEL {name}: invalidation {old} → {new} (its line at {when})")
+        for name, old, new, when, sw in moved:
+            if sw:
+                print(f"SIDE  {name}: invalidation {old} → {new} — it confirmed, so the level moved to "
+                      f"the boundary it broke. Re-read its failRule: the old one quotes {old}.")
+            else:
+                print(f"LEVEL {name}: invalidation {old} → {new} (its line at {when})")
         for name, inv, mine, why in odd:
             print(f"SKIP  {name}: invalidation {inv} vs its line at {mine:.2f} — {why}")
-        print(f"\n{len(moved)} invalidation(s) re-read, {len(odd)} left for a human.")
+        print(f"\n{len(moved)} invalidation(s) re-read ({len(switches)} moved to the other boundary), "
+              f"{len(odd)} left for a human.")
     if apply and edits:
         for a, b, v in sorted(edits, key=lambda x: x[0], reverse=True):
             text = text[:a] + v + text[b:]
@@ -398,6 +415,37 @@ def relevel(apply=False, verbose=True, now_et=None):
         if verbose:
             print(f"Wrote {len(moved)} invalidation(s) to {os.path.relpath(pw.WATCHLIST_FILE)}.")
     return moved, odd
+
+
+MAX_STOP = 0.5        # risk wider than half the entry is a broken line, not a stop
+
+
+def _stop_fault(stop, confirm, direction, lines, want, t, i):
+    """Why `stop` cannot be this setup's risk-on-entry, or None if it can.
+
+    Three ways a trendline hands back a number that is not a stop:
+
+      wrong side   the level sits where the trade would be winning. A long is stopped
+                   *below* its entry and a short *above* it; anything else is a line
+                   read off the wrong boundary or a direction that was never right.
+      too wide     more than MAX_STOP of the entry. Nobody risks 103% of their entry
+                   (STX: entry 700.39, line at the break 1420.58) -- that is a steep
+                   line extended a long way, not a level anybody traded against.
+      converged    the two boundaries sit on top of each other near a wedge's apex, so
+                   which one the level belongs to is a coin flip. `relevel` declines
+                   these for the live level on the same grounds.
+    """
+    if direction in ('up', 'down') and confirm:
+        if (direction == 'up' and stop >= confirm) or (direction == 'down' and stop <= confirm):
+            return 'it sits on the winning side of the entry %s' % pw._fmt_price(confirm)
+        risk = abs(confirm - stop) / confirm
+        if risk > MAX_STOP:
+            return 'that is %.0f%% of the entry — a line this steep is not a stop' % (risk * 100)
+    if lines and len(lines) >= 2 and want is not None:
+        mine, other = line_value(lines[want], t, i), line_value(lines[1 - want], t, i)
+        if abs(mine - other) < CONVERGED * abs(stop or 1):
+            return 'its two lines are within %.0f%% of each other at the break' % (CONVERGED * 100)
+    return None
 
 
 def freeze_stops(apply=False, verbose=True):
@@ -413,6 +461,13 @@ def freeze_stops(apply=False, verbose=True):
 
     Only ever added, never re-read: that is the whole point. A setup redrawn by a rescan
     loses the field and gets a fresh one from its new lines on the next run.
+
+    What it will not record is a number that cannot be a stop. The level is read off a
+    trendline, and a trendline can be degenerate -- converged on its pair, or sloped so
+    steeply that its value at the break is on the wrong side of the entry or a whole
+    entry's width away from it. `relevel` already refuses those for the live level and
+    reports them; this used to write them anyway, and being write-once it wrote them for
+    good. `_stop_fault` is that same scepticism, applied before the field is created.
     """
     with open(pw.WATCHLIST_FILE) as fh:
         text = fh.read()
@@ -443,6 +498,11 @@ def freeze_stops(apply=False, verbose=True):
                 skipped.append((name, f'candles do not reach {sd}'))
                 continue
             at = pw._fmt_price(line_value(lines[want], bars['t'], i))
+            fault = _stop_fault(float(at), s.get('confirm'), s.get('direction'),
+                                lines, want, bars['t'], i)
+            if fault:
+                skipped.append((name, f'{at} at the break: {fault}'))
+                continue
             b = pos['invalidation'][1]
             edits.append((b, b, f", breakInvalidation: {at}"))
             done.append((name, s.get('invalidation'), float(at), sd))
@@ -458,6 +518,58 @@ def freeze_stops(apply=False, verbose=True):
         with open(pw.WATCHLIST_FILE, 'w') as fh:
             fh.write(text)
     return done, skipped
+
+
+def recheck_stops(apply=False, verbose=True):
+    """Drop the `breakInvalidation` values that `_stop_fault` would not write today.
+
+    The guards arrived after the field had already been backfilled onto 562 setups, so
+    the ones a degenerate line produced are sitting in the data. This only ever *removes*
+    a value, never rewrites one: write-once is what makes the field mean anything, and a
+    level recomputed months later off a line that has since been refitted would be a
+    different number wearing the same name. A setup that loses it here gets a fresh one
+    from `freeze_stops` only if it is ever redrawn, which is the right outcome -- better
+    no stop than a stop on the winning side of the entry.
+    """
+    with open(pw.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    edits, dropped = [], []
+    for e in pw.parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, s, pos in pw._setups(e):
+            stop = s.get('breakInvalidation')
+            if stop is None or 'breakInvalidation' not in pos:
+                continue
+            pattern = s.get('pattern') or main.get('pattern') or ''
+            want = invalidation_line(pattern, s.get('direction'), 'confirmed')
+            lines = stored_lines(text, pos)
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            bars = load_bars(main['ticker'], tf) or {}
+            t = bars.get('t') or []
+            # The break's own candle, so the converged test is read where the level was.
+            sd = s.get('stageDate')
+            i = next((k for k, d in enumerate(t) if d >= sd), len(t) - 1) if sd and t else -1
+            fault = _stop_fault(stop, s.get('confirm'), s.get('direction'),
+                                lines if t else None, want, t, i)
+            if not fault:
+                continue
+            # Cut the field and the ", " that joins it to the invalidation before it.
+            a, b = pos['breakInvalidation'][0], pos['breakInvalidation'][1]
+            a = text.rfind('breakInvalidation', 0, a)
+            while a > 0 and text[a - 1] in ' ,\n\t':
+                a -= 1
+            edits.append((a, b))
+            dropped.append((f"{main['ticker']} ({label}, {pattern})", stop, fault))
+    if verbose:
+        for name, stop, why in dropped:
+            print(f"DROP  {name}: breakInvalidation {stop} — {why}")
+        print(f"\n{len(dropped)} break level(s) {'dropped' if apply else 'would be dropped'}.")
+    if apply and edits:
+        for a, b in sorted(edits, reverse=True):
+            text = text[:a] + text[b:]
+        with open(pw.WATCHLIST_FILE, 'w') as fh:
+            fh.write(text)
+    return dropped
 
 
 def run(apply=False, refit=False, verbose=True):
@@ -522,8 +634,12 @@ if __name__ == '__main__':
                     help="re-read sloped invalidations off their lines instead of fitting")
     ap.add_argument('--freeze-stops', action='store_true',
                     help="record each confirmed setup's invalidation as it stood at the break")
+    ap.add_argument('--recheck-stops', action='store_true',
+                    help="drop stored break levels a degenerate line produced (removes only)")
     args = ap.parse_args()
-    if args.freeze_stops:
+    if args.recheck_stops:
+        recheck_stops(apply=args.apply)
+    elif args.freeze_stops:
         freeze_stops(apply=args.apply)
     elif args.relevel:
         relevel(apply=args.apply)
