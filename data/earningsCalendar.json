@@ -94,6 +94,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "IREN": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
   "KLAC": {
     "date": "2026-10-28",
     "estimated": false,

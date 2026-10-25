@@ -113,6 +113,36 @@ the relevel; inventing a pattern to fit is worse.
 valid; it differs by *horizon*, not correctness. Read the geometry report as a horizon
 label.
 
+## A bottom you cannot see yet
+
+**When the indicators disagree, do not resolve it — post a `forming` setup.** IREN is the
+case: a turn-up dot three bars ago at z −2.63, which `hlGate` cannot suppress because the
+AR(1) fit found no reversion to gate, against Hurst 0.57 and a variance ratio of 1.20
+saying the series is persistent. One half says bottoming, the other says fading this
+loses. Nothing decides it until the bottom is actually in.
+
+A `forming` stage makes no claim, which is exactly the right claim to make here. An
+either-direction setup says it better still: it is watching for a break both ways, which
+is the honest description of a stock that can keep falling or turn.
+
+**The trend stays the working hypothesis and the reversion is its invalidation.** The
+stock is bearish, so bearish is what we assume; what would prove us wrong is the bottom
+forming. That is a setup with a level on each side, not a directional call with a target.
+
+**The half-life time-boxes the hypothesis.** It says how many bars this series has taken
+to close half the gap to its mean, and the Pine's own convention is a lookback of about
+twice it — so roughly 2× half-life is when a reversion should have shown itself. Past
+that, the setup has not been proven wrong, it has stopped being a reversion story.
+
+Where there is no half-life at all (`phi ≥ 1`, the fit finding no pull to the mean) there
+is no time-box, and that is worth more than it looks: it is the same statement as "this is
+not a reversion story", arriving from the fit rather than from Hurst.
+
+**Do not reconcile a panel reading to a port without checking the timeframe.** IREN read
+`phi = 1.0172` on daily candles, no half-life; a 10.5-bar half-life needs `phi ≈ 0.936`.
+That is not a rounding gap, it is a different series — an intraday chart, which
+`public/bars/` does not carry. Say so rather than tuning a number until the two agree.
+
 ## Targets
 
 **Test `confirm ± height` before blaming the target.** If the arithmetic reproduces, the
