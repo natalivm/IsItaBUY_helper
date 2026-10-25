@@ -1753,6 +1753,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "INTC",
     name: "Intel Corp",
+    keyLevel: {
+      price: 85.71,
+      text: "The Matrix buy stop on the daily, with price at $86.96 just above it. The 4h reads reverting with a turn-up dot while the daily reads trending and suppresses its own — the bottom is a 4h claim, and daily candles cannot see it.",
+    },
     trend: "down",
     rsi: 33.2,
     price: 86.96,
