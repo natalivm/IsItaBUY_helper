@@ -474,7 +474,14 @@ is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
 
 - **inside `STOP_FLOOR` (5%) of spot** — the line has decayed to zero;
 - **beyond `STOP_BEYOND` (15%) outside every price the stock has traded**;
-- **on the winning side of the entry** — a long whose stop sits above its own confirm.
+- **on the winning side of the entry** — a long whose stop sits above its own confirm. The
+  comparison is against **`breakInvalidation`**, the stop as it stood on the break day, not the
+  live `invalidation`. A live level is a trendline read at the latest candle, so on a descending
+  channel it walks down with the line and crosses below a short's entry once the break has paid:
+  a trailing stop past breakeven, not a fault. Against the live level the test fired on exactly
+  two of 348 confirmed setups — ASTS's daily channel and LHX's — and was wrong both times.
+  Comparing it to *price* instead is a different test and a worse one: it flags every `atRisk`
+  setup, which is the stage that already says price has reached the stop.
 
 A fourth shape is the one that actually disqualifies most setups, and it is a ratio rather
 than a distance. **`MIN_RR = 1.0`**: when the target is nearer than the stop, being right

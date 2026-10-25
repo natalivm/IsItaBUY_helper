@@ -2286,8 +2286,17 @@ def stop_fault(sv, price, rng):
                         f"it has traded (low ${_fmt_price(rng[0])})")
     conf, dirn = sv.get('confirm'), sv.get('direction')
     if conf and dirn in ('up', 'down'):
-        if (inv > conf) if dirn == 'up' else (inv < conf):
-            return 'dead', f"${_fmt_price(inv)} sits on the winning side of the ${_fmt_price(conf)} entry"
+        # Compare the entry against the stop as it stood ON the entry, which is what
+        # `breakInvalidation` freezes. A live `invalidation` is a trendline read at the latest
+        # candle, so on a descending channel it walks down with the line and crosses below a
+        # short's entry once the break has paid — a trailing stop past breakeven, not a fault.
+        # Against the live level this branch fired twice across 348 confirmed setups (ASTS,
+        # LHX) and was wrong both times. Comparing it to price instead is a different test and
+        # a worse one: it flags every `atRisk` setup, which is the stage that already says so.
+        entry_stop = sv.get('breakInvalidation') or inv
+        if (entry_stop > conf) if dirn == 'up' else (entry_stop < conf):
+            return 'dead', (f"${_fmt_price(entry_stop)} sits on the winning side of the "
+                            f"${_fmt_price(conf)} entry")
         tgt = sv.get('target')
         # A down setup's target belongs below its entry and an up setup's above it. SMCI's
         # weekly rising wedge broke down at $31.43 and projected $37.31 — a short aiming

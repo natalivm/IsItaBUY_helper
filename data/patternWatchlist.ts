@@ -5547,6 +5547,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirmRule: "a later completed daily close below $46.23, beyond the signal candle's low.",
     failRule: "a completed daily close back inside the broken boundary, above $45.87.",
     note: "The channel price had been sliding down since early August broke through its own floor in mid-October: Oct 13 closed below the lower line, and Oct 14 confirmed below $46.23. It has not bounced since — $39.79 with daily RSI at 31, and the boundary has fallen to $45.87, so the break still has room before anything puts price back inside. Target $30.69. This is the live read on ASTS; the bullish wedge in Finished below is what it replaced.",
+    keyLevel: {
+      price: 36.08,
+      text: "$36.08 is the only price under $42 buyers have defended — one weekly low from Sep 2025, never a closing zone. The $30.69 target sits below it, so the break has to clear that shelf first."
+    },
     alt: {
       pattern: "Ascending Channel",
       timeframe: "weekly",
