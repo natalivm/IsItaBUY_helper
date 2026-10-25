@@ -962,8 +962,9 @@ The landing page renders two lists, both read straight from `data/weeklyFeature.
   +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
   target the price has already passed is dropped. Change the weights in
   `weekly_feature.py`, not the data file.
-  The card itself is deliberately short — ticker, sparkline, price → target,
-  the meter, pattern and RSI. The `why` reasons that used to be bulleted on it
+  The card itself is deliberately short — ticker, stage and RSI together under
+  the name, then sparkline, price → target, the meter and the pattern. Stage and
+  momentum share a row because they answer the same question: whether to act. The `why` reasons that used to be bulleted on it
   are still computed and still printed by the dry run, but are no longer written
   to `weeklyFeature.ts`: nothing rendered them, and that file is in the
   always-loaded first chunk.

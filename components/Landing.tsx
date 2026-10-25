@@ -195,7 +195,10 @@ const HotCard: React.FC<{ h: HotSetup; rank: number; onOpenWatchlist: (ticker: s
           <b>{h.ticker}</b>
           <span>{h.name}</span>
         </div>
-        <Pill st={st} text={st.mid} />
+        <div className="hot-tags">
+          <Pill st={st} text={st.mid} />
+          {h.rsi != null && <RsiBar rsi={h.rsi} dn={dn} />}
+        </div>
       </div>
 
       <Sparkline ticker={h.ticker} dn={dn} />
@@ -211,7 +214,6 @@ const HotCard: React.FC<{ h: HotSetup; rank: number; onOpenWatchlist: (ticker: s
 
       <div className="hot-meta">
         <span className="pat">{h.pattern} · {cap(h.timeframe)}</span>
-        {h.rsi != null && <RsiBar rsi={h.rsi} dn={dn} />}
       </div>
 
       <button className="go" onClick={() => onOpenWatchlist(h.ticker)}>

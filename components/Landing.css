@@ -79,6 +79,8 @@
 .pbw.lnd .hot .sym{display:flex;flex-direction:column;gap:2px;min-width:0;max-width:100%}
 .pbw.lnd .hot .sym b{font-family:var(--f-display);font-weight:800;font-size:25px;letter-spacing:-.01em;line-height:1.1}
 .pbw.lnd .hot .sym span{color:var(--muted);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Stage and momentum sit together under the ticker: both say whether to act. */
+.pbw.lnd .hot-tags{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
 
 .pbw.lnd .spark{position:relative;display:block;width:100%;height:52px;color:var(--tone)}
 .pbw.lnd .spark svg{display:block;width:100%;height:100%}
