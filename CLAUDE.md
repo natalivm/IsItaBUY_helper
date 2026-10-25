@@ -533,11 +533,25 @@ record of *completed* calls and is the label set `pattern_reproduce.py` trains o
 that never resolved is not a label, and filing one there would quietly corrupt the training
 data. `dormant` leaves the setup exactly where it is.
 
-Three conditions, all required:
+There are **two shapes**, and they shelve for opposite reasons.
 
-- confirmed more than `DORMANT_AGE` (120) days ago;
-- price more than `DORMANT_UNDONE` (25%) back past the confirm, **against** the setup;
-- the stock's own `trend` opposed to the setup's direction.
+**One: the break happened and the chart moved on.** Three conditions, all required —
+confirmed more than `DORMANT_AGE` (120) days ago; price more than `DORMANT_UNDONE` (25%)
+back past the confirm, **against** the setup; and the stock's own `trend` opposed to the
+setup's direction.
+
+**Two: nothing has broken and nothing is close to breaking.** A pending setup is only worth
+watching if its trigger is somewhere price might actually go. ANET's monthly ascending
+channel breaks down at $119.76 and up at $204.55 against a $172.37 close — **31% below or
+19% above before anything at all happens**. That is not a setup waiting for a break, it is
+a drawing waiting for a different year. `REACH` (15%) shelves it on the distance to its
+*nearest* trigger, and `REACH_WAKE` (10%) brings it back, the gap between them being
+hysteresis so a setup hovering at the line does not flip every session. This one needs no
+clock: a brand-new drawing 40% from price is no more actionable than an old one.
+
+55 setups are shelved on this test against 1 on the first, which is the proportion to
+expect — the ledger accumulates far more drawings that never came near a trigger than
+breaks that went stale.
 
 **A flat trend does not count.** Shelving on "not moving" retires setups that are merely
 waiting, which is the ENVA mistake in another costume. CACI's weekly rising wedge is 125
@@ -548,8 +562,8 @@ not `up`.
 ledger showing a setup it has been told to hide. Those are reported and left for a human to
 replace, the same policy `--thin` and `--deadstops` use.
 
-**Waking does not resume the setup — it asks for a redraw.** One close back past the
-confirm level, in the setup's own direction, is the trigger, and it needs no threshold and
+**Waking a *confirmed* setup does not resume it — it asks for a redraw.** One close back
+past the confirm level, in the setup's own direction, is the trigger, and it needs no threshold and
 no clock: the break re-forming is the signal, not elapsed time. But a break that re-forms
 four months later is a *different* break on a different chart, and the shelved levels were
 measured off a pattern that is now stale — the target most of all. So waking clears the
@@ -560,6 +574,11 @@ the old pattern's.
 Coming back as a live `confirmed` call would be the worse failure of the two this section
 guards against: a shelved setup merely clutters the row, while a resurrected one puts
 arithmetic nobody re-checked back in front of you wearing a confirmed badge.
+
+**A pending setup wakes unchanged**, and the reason is the same one read the other way: its
+stage still says `forming`, which makes no claim. Nothing broke, so there is no stale
+verdict to present as live — only a level to watch, and `--redo-auto` refreshes the
+machine-drawn ones every Friday anyway.
 
 The UI counts them rather than listing them (`shelved` in `components/PatternWatchlist.tsx`,
 a muted line under the setup list carrying each `dormantNote` on hover), so a shelved

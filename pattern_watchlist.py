@@ -1452,6 +1452,27 @@ def geometry_faults(text):
 DORMANT_AGE = 120           # days since the break confirmed
 DORMANT_UNDONE = 0.25       # price this far back past the confirm, against the setup
 
+# The second shape of "not the read any more", and it needs no clock at all. A setup that
+# has not broken yet is only worth watching if its trigger is somewhere price might go.
+# ANET's monthly ascending channel breaks down at $119.76 and up at $204.55 against a
+# $172.37 close: 31% below or 19% above before anything at all happens. That is not a setup
+# waiting for a break, it is a drawing waiting for a different year.
+REACH = 0.15                # nearest trigger further than this: not actionable
+REACH_WAKE = 0.10           # ...and nearer than this brings it back (hysteresis, so a
+                            # setup hovering at the line does not flip every session)
+
+
+def _reach_of(sv, price):
+    """Distance from price to the nearest level that would start this pending setup."""
+    if not price:
+        return None
+    if sv.get('direction') == 'both':
+        levels = [sv.get('breakUp'), sv.get('breakDown')]
+    else:
+        levels = [sv.get('signal') or sv.get('confirm')]
+    levels = [x for x in levels if x]
+    return min(abs(x - price) / price for x in levels) if levels else None
+
 
 def _undone_by(sv, price):
     """How far price has travelled back past the confirm level, against the setup."""
@@ -1533,9 +1554,15 @@ def shelve_dormant(apply=False, path=None, today=None):
             indent = ' ' * (len(text[line_start:s0]) - len(text[line_start:s0].lstrip()))
             line_end = text.index('\n', s1) + 1
             if sv.get('dormant'):
-                undone = _undone_by(sv, price)
-                if undone is None or undone > 0:
-                    continue
+                pending = sv.get('stage') in ('forming', 'signal')
+                if pending:
+                    reach = _reach_of(sv, price)
+                    if reach is None or reach > REACH_WAKE:
+                        continue
+                else:
+                    undone = _undone_by(sv, price)
+                    if undone is None or undone > 0:
+                        continue
                 # Waking does NOT resume the old setup. Its target was measured off a
                 # pattern that is months stale by now, and a break re-forming after that
                 # long is a different break on a different chart — the levels have to be
@@ -1553,6 +1580,13 @@ def shelve_dormant(apply=False, path=None, today=None):
                 if b <= a:
                     continue
                 edits.append((a, b, ''))                      # drop the three dormant fields
+                if pending:
+                    # Nothing broke, so nothing stale is being presented as live: the stage
+                    # still reads `forming`, which already says no claim is being made. It
+                    # goes back exactly as it was.
+                    woken.append(f"{tk} ({label}): price is within {REACH_WAKE * 100:.0f}% of its "
+                                 f"trigger again — back on the list as {sv.get('stage')}")
+                    continue
                 edits.append((s0, s1, '"update"'))            # stage: confirmed -> update
                 note = (f"Woken {today}: price closed back past the ${_fmt_price(sv.get('confirm'))} "
                         f"break, so the read is live again — but it was shelved on "
@@ -1565,9 +1599,26 @@ def shelve_dormant(apply=False, path=None, today=None):
                 woken.append(f"{tk} ({label}): back past ${_fmt_price(sv.get('confirm'))} — "
                              f"woken as `update`, the levels need redrawing")
                 continue
-            sd, d = sv.get('stageDate'), sv.get('direction')
+            stage, d = sv.get('stage'), sv.get('direction')
+            # Out of reach: nothing has broken and nothing is close to breaking.
+            if stage in ('forming', 'signal'):
+                reach = _reach_of(sv, price)
+                if reach is None or reach <= REACH:
+                    continue
+                if label == 'main' or label.endswith(' alt'):
+                    continue
+                note = (f"Shelved {today}: nothing has broken and the nearest trigger is "
+                        f"{reach * 100:.0f}% away, so there is no break to watch for yet. "
+                        f"It comes back when price is within {REACH_WAKE * 100:.0f}% of it.")
+                ins = (f"{indent}dormant: true,\n{indent}dormantSince: \"{today}\",\n"
+                       f"{indent}dormantNote: {json.dumps(note, ensure_ascii=False)},\n")
+                edits.append((line_end, line_end, ins))
+                shelved.append(f"{tk} ({label}, {sv.get('timeframe')} {sv.get('pattern')}): "
+                               f"out of reach, nearest trigger {reach * 100:.0f}% away")
+                continue
+            sd = sv.get('stageDate')
             undone = _undone_by(sv, price)
-            if sv.get('stage') != 'confirmed' or not sd or undone is None or undone <= DORMANT_UNDONE:
+            if stage != 'confirmed' or not sd or undone is None or undone <= DORMANT_UNDONE:
                 continue
             # The main and alt slots ARE the row. Hiding one would leave the ledger showing
             # a setup it has been told not to show, so those stay and get listed instead.
