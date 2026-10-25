@@ -8,6 +8,7 @@ export const STRL = defineStock({
   updatedOn: '10/23',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
+  nextEarningsOn: '2026-10-28',   // Q3 2026, after the close (per user, Oct 25 2026); Yahoo has no date for STRL
   currentPrice: 355.3,
   fairPriceRange: '$700 - $1,000',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 30.59,              // stockanalysis (Oct 2026)
@@ -41,8 +42,10 @@ export const STRL = defineStock({
   // $355.30, -65% from the $1,005.68 high and -30.6% in a month, and NO
   // earnings has happened. The October sessions gap -0.9% to -4.4% and close
   // -4.7% to -9.7%: intraday selling, not a results reaction. Q2 on Aug 4
-  // gapped -13.3% for comparison — earnings gap, de-ratings grind. Q3 is still
-  // ahead, early November on the Feb/May/Aug cadence.
+  // gapped -13.3% for comparison — earnings gap, de-ratings grind. Q3 lands
+  // OCT 28 2026 after the close, three sessions from this note — earlier than
+  // the Feb/May/Aug gap cadence suggested, so do not date the next one off
+  // that pattern either.
   //
   // So this is multiple compression on forward expectations, which is exactly
   // risksToBuy[0]: "a hyperscaler spending pause would simultaneously crush
@@ -52,6 +55,9 @@ export const STRL = defineStock({
   //
   // What the price implies: at 25× FY27E, $355 needs EPS of $14.21 against the
   // modelled $25.41 — a 44% cut. That is a buildout stalling, not slowing.
+  // Which means Oct 28 is not a routine print: the market has already marked
+  // the multiple down to a level that needs estimates cut almost in half, and
+  // the guide is what the company either defends or withdraws that evening.
   // MODEL INPUTS ARE DELIBERATELY UNCHANGED. baseEps $20.04 and epsCagr
   // [6,14,19] are Q2 numbers and a guide the company has not withdrawn;
   // re-cutting them from a chart would be marking to the tape. Q3 is what
