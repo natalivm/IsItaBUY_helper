@@ -4113,23 +4113,18 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "A multi-year falling wedge from the early-2024 high near $18 bottomed around $2 in 2025. Price broke out on the monthly chart, confirmed with a monthly close above $4.76, then surged to about $14 — 196% from the confirm and 57% of the way to the $21.26 target. The $0.23 invalidation is the base of the wedge and cannot fire; it is kept deliberately. This is not a drawing waiting to be wrong but a call that is working, the source tool draws it identically, and on a bullish break out of a multi-year base the unreachable floor is the base itself. It will keep appearing on the dead-stop list, which is what that list is for.",
     keyLevel: {
       price: 12.62,
-      text: "Consolidating $12.62-$15.37 after a 196% run from the $4.76 confirm, 57% of the way to $21.26. Holding $12.62 keeps it a pause; losing it makes it a top. The $0.23 invalidation is the wedge's base, not a stop anyone trades."
+      text: "$13.59 is the daily channel's lower boundary, 3.5% under spot, and what the consolidation has to hold — below it the channel points to $8.58. Above $18.61 it resumes toward $23.63. The monthly wedge's $0.23 is its base, not a stop anyone trades."
     },
     alt: {
-      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "both",
       stage: "forming",
-      breakUp: 17.71,
-      breakDown: 12.72,
-      goalUp: 24.37,
-      goalDown: 6.06,
-      lines: [
-        { from: ["2026-06-04", 4.58], to: ["2026-10-20", 17.31] },
-        { from: ["2026-06-04", -2.08], to: ["2026-10-20", 12.27] },
-      ],
-      note: "Auto-detected ascending channel on the daily chart. No break yet: a daily close above $17.31 or below $12.27 would start a signal.",
+      breakUp: 18.61,
+      breakDown: 13.59,
+      goalUp: 23.63,
+      goalDown: 8.58,
+      note: "From the source tool on Oct 26, replacing our own machine-drawn version of the same channel whose lower boundary started at minus $2.08 — a negative price, which set a $6.06 downside goal off a width no chart could carry. Theirs is a $5.02 width: a daily close above $18.61 points to $23.63, below $13.59 to $8.58. The $13.59 is the live number, 3.5% under spot, and it is what the consolidation has to hold. Lines are left off rather than drawn backwards from the levels.",
     },
   },
   {
