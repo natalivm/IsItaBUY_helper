@@ -112,6 +112,17 @@ auto-detected one at the same time without either inheriting the other's status,
 you post has no dot, and a price refresh never adds one — `update_prices.py` touches
 `price`, `priceDate`, `rsi` and `trend` and never writes `auto`.
 
+**The green dot is the counterpart: checked, and the print it was checked for has not
+happened yet.** `checkedOn: 'YYYY-MM-DD'` on the entry records a hand check of that
+stock's setups against the charts. `checkedAhead()` in `components/PatternWatchlist.tsx`
+shows a green dot while `data/earningsCalendar.json` has a date for the ticker that is
+still ahead of today — so the dot **expires on the print rather than after N days**, which
+is the point: what makes a check stale is the numbers landing, not time passing. A stock
+with no known earnings date never earns one, there being nothing to be ahead of, and an
+`auto` setup on the shown row always wins the slot, since a row cannot be both owed a look
+and already looked at. `checkedOn` is in `KEEP_HEAD`, so a rescan carries it; nothing
+writes it automatically.
+
 The row dots cannot see the stored setups: the build moves `alt` and `more` into
 `public/setups/TICKER.json` (the `split-stored-setups` plugin in `vite.config.ts`) and
 an expanded row fetches them. Counting those would need the plugin to leave a tally

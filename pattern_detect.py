@@ -705,7 +705,7 @@ def fetch_name(ticker):
 # Entry-level fields that survive a re-detection: they are not the detector's to write.
 # `rsi` / `trend` come from the price run, `history` holds finished calls (a target we posted
 # and hit) and `keyLevel` is hand-written prose. Rewriting an entry used to drop all four.
-KEEP_HEAD = ('rsi', 'trend')       # scalars, kept beside price
+KEEP_HEAD = ('rsi', 'trend', 'checkedOn')   # scalars, kept beside price
 KEEP_TAIL = ('keyLevel', 'history')  # blocks, kept at the end
 
 
