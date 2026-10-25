@@ -449,6 +449,27 @@ def _stop_fault(stop, confirm, direction, lines, want, t, i):
     return None
 
 
+def _lines_dated(lines, bar_dates, up, dn, upto, tol=0.005):
+    """The bar index where these lines last stood at `up` / `dn`, or None.
+
+    A stored break pair far from the lines today is either a stale reading of *these* lines
+    or a reading of different ones, and the distance is the same either way. If the pair
+    matches the lines at some earlier bar it is the first, and re-reading it is a refresh
+    rather than a guess at which drawing is right.
+    """
+    for n in range(upto - 1, -1, -1):
+        vals = []
+        for (d0, v0), (d1, v1) in lines:
+            a, b = bar_dates.index(d0) if d0 in bar_dates else None, bar_dates.index(d1) if d1 in bar_dates else None
+            if a is None or b is None or a == b:
+                return None
+            vals.append(v1 + (v1 - v0) / (b - a) * (n - b))
+        hi, lo = max(vals), min(vals)
+        if abs(hi - up) <= tol * abs(up) and abs(lo - dn) <= tol * abs(dn):
+            return n
+    return None
+
+
 def relevel_breaks(apply=False, verbose=True, now_et=None):
     """Re-read each either-direction channel's breakUp / breakDown off its lines.
 
@@ -467,7 +488,7 @@ def relevel_breaks(apply=False, verbose=True, now_et=None):
     now_et = now_et or pw._now_et()
     with open(pw.WATCHLIST_FILE) as fh:
         text = fh.read()
-    edits, moved, odd = [], [], []
+    edits, moved, odd, stale = [], [], [], []
     for e in pw.parse_watchlist(text):
         main = {k: v[2] for k, v in e['fields'].items()}
         for label, s, pos in pw._setups(e):
@@ -498,9 +519,19 @@ def relevel_breaks(apply=False, verbose=True, now_et=None):
                 continue
             far = max(abs(new_up - up) / abs(up), abs(new_dn - dn) / abs(dn))
             if far > DRIFT:
-                odd.append((name, up, dn, new_up, new_dn,
-                            'that is %.0f%% away — too far to be the same lines' % (far * 100)))
-                continue
+                # Distance alone cannot tell a stale level from a different drawing, and
+                # reading it as "different" was wrong on the one case it fired: UMAC's stored
+                # 18.20 / 14.55 was simply old, and the 15.86 / 12.22 this wanted to write is
+                # exactly what the source tool publishes. On a channel falling 2.4% a day,
+                # seven sessions is 16%. Age is the discriminator — if the stored pair sits on
+                # these same lines at some earlier bar, it is this drawing, just behind.
+                back = _lines_dated(lines, bars['t'], up, dn, i)
+                if back is None:
+                    odd.append((name, up, dn, new_up, new_dn,
+                                'that is %.0f%% away and matches no earlier bar — a different drawing'
+                                % (far * 100)))
+                    continue
+                stale.append((name, bars['t'][back], bars['t'][i]))
             moved.append((name, up, dn, new_up, new_dn, bars['t'][i]))
             edits.append((pos['breakUp'][0], pos['breakUp'][1], pw._fmt_price(new_up)))
             edits.append((pos['breakDown'][0], pos['breakDown'][1], pw._fmt_price(new_dn)))
@@ -514,6 +545,8 @@ def relevel_breaks(apply=False, verbose=True, now_et=None):
         for name, up, dn, nu, nd, when in moved:
             print(f"BREAK {name}: up {up} → {pw._fmt_price(nu)}, down {dn} → {pw._fmt_price(nd)} "
                   f"(its lines at {when})")
+        for name, was, now in stale:
+            print(f"STALE {name}: its stored pair is these lines at {was}, not {now} — re-read, not redrawn")
         for name, up, dn, nu, nd, why in odd:
             print(f"SKIP  {name}: breaks {up}/{dn} vs its lines at {nu:.2f}/{nd:.2f} — {why}")
         print(f"\n{len(moved)} break level pair(s) re-read, {len(odd)} left for a human.")

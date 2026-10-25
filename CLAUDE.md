@@ -853,9 +853,17 @@ detector places a pending channel's invalidation on a different boundary, so re-
 fight it. There is no such disagreement here — these are the same two values the detector
 writes — and waiting for Friday's rescan is a week of drift on a level checked daily.
 
-Guards mirror `relevel`: under `MIN_MOVE` is left alone, past `DRIFT` is listed rather than
-moved. 5 pairs moved on the first pass (XOP, HTFL, FTNT, PANW, IOVA) and UMAC was refused at
-16% — far enough that its lines and its levels are not the same drawing, which needs a human.
+Guards mirror `relevel`: under `MIN_MOVE` is left alone, past `DRIFT` is checked for age.
+5 pairs moved on the first pass (XOP, HTFL, FTNT, PANW, IOVA) and UMAC was refused at 16%.
+
+**That refusal was wrong, and `_lines_dated` is why it no longer happens.** The guard read a
+level far from its line as a different drawing, but distance cannot tell that from a level
+that is merely old: UMAC's stored 18.20 / 14.55 matches *its own lines* four bars back, and
+the 15.86 / 12.22 the relevel wanted is exactly what the source tool publishes for that
+setup. On a channel falling 2.4% a day, seven sessions is 16%. So a pair past `DRIFT` is now
+searched backwards along the same lines — if it sits on them at an earlier bar it is this
+drawing behind the times and is re-read (printed as `STALE`), and only a pair matching no
+earlier bar is still refused as a different drawing.
 
 **The break test reads the lines, not the stored pair.** `update_watchlist` runs before the
 candles are written, so whatever `relevel_breaks` last wrote is already a run old by the time
