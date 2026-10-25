@@ -768,11 +768,18 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
     return p === 'target' || p === 'momentum' ? p : 'default';
   });
   const [query, setQuery] = useState(initialQuery);
+  // `#watchlist/TICKER` names one stock; typing in the box is a search. They used to be
+  // the same thing, which worked only while tickers were long: "D" for Dominion matched
+  // every ticker containing a d and every company name with a word starting with one, so
+  // the landing page's "See D in the watchlist" opened 22 rows. `picked` holds the ticker
+  // the route named and is cleared the moment the box is edited, so the link selects and
+  // the box still searches.
+  const [picked, setPicked] = useState(initialQuery);
   // One row open at a time: opening another closes the last, so the ledger
   // never turns into a stack of panels.
   const [openTicker, setOpenTicker] = useState<string | null>(null);
 
-  useEffect(() => { setQuery(initialQuery); }, [initialQuery]);
+  useEffect(() => { setQuery(initialQuery); setPicked(initialQuery); }, [initialQuery]);
 
   // Escape closes the open row, wherever focus happens to be.
   useEffect(() => {
@@ -811,8 +818,13 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
+    // Only when the ledger actually holds that ticker: a route naming a stock that is not
+    // here falls back to the search, rather than showing an empty page.
+    const sel = picked.trim().toLowerCase();
+    const exact = sel && allRows.some(r => r.ticker.toLowerCase() === sel) ? sel : '';
     const out = allRows.filter(r =>
-      (activeFilter === 'all' || status(r.setup).group === activeFilter) && (!q || searchRank(r, q) > 0));
+      (activeFilter === 'all' || status(r.setup).group === activeFilter)
+      && (exact ? r.ticker.toLowerCase() === exact : (!q || searchRank(r, q) > 0)));
     // With a query and no sort chosen, the best match leads: searching CAT should put
     // Caterpillar first, not leave it under whatever the stored order happened to be.
     if (q && sortBy === 'default') out.sort((a, b) => searchRank(b, q) - searchRank(a, q));
@@ -824,7 +836,7 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
       out.sort((a, b) => (b.setup?.rsi ?? -1) - (a.setup?.rsi ?? -1));
     }
     return out;
-  }, [allRows, activeFilter, query, sortBy]);
+  }, [allRows, activeFilter, query, picked, sortBy]);
 
   const asOf = useMemo(() => PATTERN_STOCKS.map(s => s.priceDate).sort().pop(), []);
 
@@ -860,7 +872,8 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
               <Bolt /><span className="n">{sortBy === 'momentum' ? '↓' : hotCount || ''}</span>
             </button>
           </div>
-          <input type="search" value={query} onChange={e => setQuery(e.target.value)}
+          <input type="search" value={query}
+            onChange={e => { setQuery(e.target.value); setPicked(''); }}
             placeholder="Search ticker or company" aria-label="Search ticker or company" />
         </div>
 

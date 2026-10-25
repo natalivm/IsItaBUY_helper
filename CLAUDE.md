@@ -941,8 +941,17 @@ Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripp
 ## Landing Page (weekly lists)
 
 `#` (no hash) is the **landing page** (`components/Landing.tsx`). The stock ledger
-moved to `#watchlist`; `#watchlist/TICKER` opens it with the search box pre-filled,
-which is what the landing page's "See TICKER in the watchlist" buttons link to.
+moved to `#watchlist`; `#watchlist/TICKER` opens it on that stock, which is what the
+landing page's "See TICKER in the watchlist" buttons and the earnings cards link to.
+
+**That route selects a ticker; it does not run a search.** It used to do both — the
+ticker went into the search box and `searchRank` filtered on it — which worked only
+while tickers were long. `D` for Dominion matched every ticker containing a d and every
+company name with a word starting with one, so the button opened 22 rows and read as an
+unfiltered ledger. `picked` in `PatternWatchlist.tsx` holds the ticker the route named
+and filters on an exact match, and is cleared the moment the search box is edited, so
+the link selects and the box still searches. A route naming a ticker the ledger does not
+hold falls back to the search rather than showing an empty page.
 `#TICKER` is still a stock's detail page, and "Back" there returns to whichever
 list you came from.
 
