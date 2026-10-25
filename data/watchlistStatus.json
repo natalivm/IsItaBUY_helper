@@ -457,8 +457,14 @@
  },
  "APP|main": {
   "label": "main",
-  "setup": "Falling Wedge (weekly)",
+  "setup": "Falling Wedge (daily)",
   "stage": "confirmed",
+  "ticker": "APP"
+ },
+ "APP|weekly Falling Wedge": {
+  "label": "weekly Falling Wedge",
+  "setup": "Falling Wedge (weekly)",
+  "stage": "failed",
   "ticker": "APP"
  },
  "ARM|daily Descending Channel": {
