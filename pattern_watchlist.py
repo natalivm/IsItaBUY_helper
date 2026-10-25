@@ -552,7 +552,12 @@ def _trend(bars):
     return 'flat'
 
 
-HEADER_KEYS = ('ticker', 'name', 'auto', 'trend', 'rsi', 'price', 'priceDate')
+# Entry-level fields: they belong to the stock, not to whichever setup is on top, so
+# `_setup_text` must not emit them and `rebuild_entry` has to re-emit them itself.
+# `checkedOn` was missing from both, so promoting a different setup into the main slot
+# dropped the stock's hand-check date and leaked it into the alt -- which `tsc` caught,
+# `checkedOn` not being a field PatternAltSetup has.
+HEADER_KEYS = ('ticker', 'name', 'auto', 'checkedOn', 'trend', 'rsi', 'price', 'priceDate')
 SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
 
 
@@ -633,7 +638,7 @@ def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, a
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     if main_auto:
         rows.append("    auto: true,")
-    for k in ('trend', 'rsi', 'price', 'priceDate'):
+    for k in ('checkedOn', 'trend', 'rsi', 'price', 'priceDate'):
         if k in f:
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     rows += _setup_text(text, main_pos, '    ', inherit=main_pattern)
@@ -1076,6 +1081,8 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
             'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
+            'stretched': stretched_setups(new_text),
+            'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
             'review': review, 'news': news}
@@ -1353,17 +1360,23 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
             tf = alt_pos['timeframe'][2] if 'timeframe' in alt_pos else 'daily'
             alt_pos = take(tf)
             alt_auto = alt_pos is not None
-        # Keep the setups you posted yourself: a target you called and hit, or a pattern that
-        # failed, is worth having on the page instead of vanishing.
+        # A finished call leaves the page. It used to be kept as a `history` row so a target
+        # you called and hit still showed under Finished, but the ledger is for readings to
+        # act on and a completed one is a record. What it is still needed for is training:
+        # pattern_reproduce.py scores the detector against calls that paid, so the ones that
+        # reached their target are written to data/completedCalls.json on the way out.
         keep = []
         if posted:
             for label, r in done.items():
                 sv = next((v for lb, v, pos in setups if lb == label and '_span' not in pos), None)
-                if sv is None or sv.get('auto'):
+                if sv is None or sv.get('auto') or r[3] != 'target':
                     continue
-                row = history_entry(sv, main, r[0], r[3])
-                if row:
-                    keep.append(row)
+                # A setup already marked `target` by hand carries the real date on its own
+                # stageDate; r[0] is only when the run noticed. The harness replays the
+                # chart up to the completion day, so taking the later date hands it bars
+                # from after the call was over.
+                when = sv.get('stageDate') if sv.get('stage') == 'target' else r[0]
+                record_completed(t_, sv, when or r[0])
         a, b = e['span']
         if main_pos is None:
             reason = done['main'][1].rstrip('.')
@@ -1436,6 +1449,781 @@ def geometry_faults(text):
 # is still trading towards. LITE carried two of these: a daily channel confirmed down in
 # August that then rallied 32% above its confirm, kept alive by an invalidation 57% above
 # the highest price the stock had ever traded.
+# ── Capping how many setups a stock shows ──
+#
+# Ten readings on one stock is not ten pieces of information, it is one chart described ten
+# ways. SETUP_CAP keeps a stock to six, and finished rows go first — a call that completed
+# is a record, not a thing to act on.
+#
+# A completed call IS the training data, though: `pattern_reproduce.py` scores the detector
+# against every `history` row with stage "target", and CVX alone carried 3 of the 27 labels
+# on record. So those are EXPORTED to data/completedCalls.json before being cut, and the
+# harness reads both places. Deleting them outright would have quietly removed 11% of the
+# evidence every tuning decision in this file rests on.
+
+SETUP_CAP = 6
+COMPLETED_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "completedCalls.json")
+_HIST_ROW = re.compile(
+    r'\{ pattern: "([^"]+)", timeframe: "(\w+)", direction: "(\w+)", stage: "(\w+)", '
+    r'stageDate: "([\d-]+)",\s*\n\s*confirm: ([\d.]+), invalidation: ([\d.]+), target: ([\d.]+)')
+
+
+def _history_rows(text, e):
+    """(stage, start, end, source) for each row of this entry's `history` array."""
+    if 'history' not in e['fields']:
+        return []
+    h0, h1, _ = e['fields']['history']
+    seg = text[h0:h1]
+    out, depth, start = [], 0, None
+    for i, ch in enumerate(seg):
+        if ch == '{':
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0 and start is not None:
+                src = seg[start:i + 1]
+                m = re.search(r'stage: "(\w+)"', src)
+                out.append((m.group(1) if m else '?', h0 + start, h0 + i + 1, src))
+                start = None
+    return out
+
+
+def export_completed(text, path=None):
+    """Append every `history` row with stage "target" to the completed-calls file.
+
+    Keyed by (ticker, pattern, timeframe, stageDate) so repeated runs do not duplicate.
+    Returns the rows added.
+    """
+    path = path or COMPLETED_FILE
+    have = []
+    if os.path.exists(path):
+        with open(path) as fh:
+            have = json.load(fh)
+    seen = {(r['ticker'], r['pattern'], r['timeframe'], r['stageDate']) for r in have}
+    added = []
+    for e in parse_watchlist(text):
+        tk = e['fields'].get('ticker', (0, 0, None))[2]
+        for stage, a, b, src in _history_rows(text, e):
+            if stage != 'target':
+                continue
+            m = _HIST_ROW.search(src)
+            if not m:
+                continue
+            row = {'ticker': tk, 'pattern': m.group(1), 'timeframe': m.group(2),
+                   'direction': m.group(3), 'stage': m.group(4), 'stageDate': m.group(5),
+                   'confirm': float(m.group(6)), 'invalidation': float(m.group(7)),
+                   'target': float(m.group(8))}
+            key = (tk, row['pattern'], row['timeframe'], row['stageDate'])
+            if key in seen:
+                continue
+            seen.add(key)
+            have.append(row)
+            added.append(row)
+    if added:
+        have.sort(key=lambda r: (r['ticker'], r['stageDate']))
+        with open(path, 'w') as fh:
+            json.dump(have, fh, indent=2)
+            fh.write('\n')
+    return added
+
+
+def _cap_plan(text, e):
+    """(history rows to drop, live setup positions to drop) for one entry, or ([], [])."""
+    m = {k: v[2] for k, v in e['fields'].items()}
+    live = [(lb, sv, pos) for lb, sv, pos in _setups(e) if not sv.get('dormant')]
+    hist = _history_rows(text, e)
+    excess = len(live) + len(hist) - SETUP_CAP
+    if excess <= 0:
+        return [], [], len(live) + len(hist)
+    drop_hist, drop_live = [], []
+    for want in ('failed', 'target'):          # finished first: failures, then paid calls
+        for row in hist:
+            if excess and row[0] == want and row not in drop_hist:
+                drop_hist.append(row)
+                excess -= 1
+    for lb, sv, pos in reversed(live):         # then surplus, never the two visible slots
+        if not excess:
+            break
+        if lb == 'main' or lb.endswith(' alt') or '_span' not in pos:
+            continue
+        drop_live.append(pos)
+        excess -= 1
+    return drop_hist, drop_live, len(live) + len(hist)
+
+
+def record_completed(ticker, sv, finish_date, path=None):
+    """Append one completed call to the labels file, if it is not already there."""
+    conf, inv, tgt = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
+    if not (conf and inv and tgt):
+        return False
+    path = path or COMPLETED_FILE
+    have = []
+    if os.path.exists(path):
+        with open(path) as fh:
+            have = json.load(fh)
+    row = {'ticker': ticker, 'pattern': sv.get('pattern'), 'timeframe': sv.get('timeframe'),
+           'direction': sv.get('direction'), 'stage': 'target', 'stageDate': finish_date,
+           'confirm': conf, 'invalidation': inv, 'target': tgt}
+    key = (row['ticker'], row['pattern'], row['timeframe'], row['stageDate'])
+    if any((r['ticker'], r['pattern'], r['timeframe'], r['stageDate']) == key for r in have):
+        return False
+    have.append(row)
+    have.sort(key=lambda r: (r['ticker'], r['stageDate']))
+    with open(path, 'w') as fh:
+        json.dump(have, fh, indent=2)
+        fh.write('\n')
+    return True
+
+
+def strip_history(apply=False, path=None):
+    """Export every completed call, then remove `history` from the ledger entirely.
+
+    The array stays in the type so old data still parses; nothing writes one any more.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    exported = export_completed(text)
+    cuts, touched = [], []
+    for e in parse_watchlist(text):
+        if 'history' not in e['fields']:
+            continue
+        tk = e['fields'].get('ticker', (0, 0, None))[2]
+        h0, h1, _ = e['fields']['history']
+        ls = text.rfind('\n', 0, text.rfind('history', 0, h0)) + 1
+        le = h1
+        while le < len(text) and text[le] in ', ':
+            le += 1
+        if le < len(text) and text[le] == '\n':
+            le += 1
+        n = len(_history_rows(text, e))
+        cuts.append((ls, le, ''))
+        touched.append(f"{tk}: {n} finished row(s) removed")
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return touched, exported
+
+
+# ── Stretched: momentum so strong it is its own risk ──
+#
+# RSI past STRETCH_HI behind a long (or STRETCH_LO behind a short) is the setup's own
+# momentum taken to the point where it becomes a reason for caution: the move is extended
+# and a snap back toward the mean is on the table. It is **a risk, not a forecast** --
+# price can stay overbought far longer than it looks sustainable -- so it changes no score
+# and demotes nothing. What it needs is to be visible, and most of all when something is
+# scheduled that could be the trigger. CVX is the case in point: RSI 76.9 behind a
+# confirmed upward break, reporting in five days.
+
+STRETCH_HI = 72
+STRETCH_LO = 28
+STRETCH_SOON = 7        # days to earnings that makes the stretch worth naming
+
+
+def stretch_of(sv, rsi):
+    """'stretched' when the setup's own direction is backed by an extreme RSI, else None."""
+    d, = (sv.get('direction'),)
+    if rsi is None or d not in ('up', 'down'):
+        return None
+    if d == 'up' and rsi >= STRETCH_HI:
+        return 'overbought'
+    if d == 'down' and rsi <= STRETCH_LO:
+        return 'oversold'
+    return None
+
+
+def stretched_setups(text, calendar=None, today=None):
+    """Shown setups riding an extreme RSI, with days to the next print where known.
+
+    Rows are (ticker, timeframe, pattern, direction, rsi, kind, days_to_earnings | None).
+    """
+    today = today or _now_et().date()
+    if calendar is None:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "earningsCalendar.json")
+        calendar = {}
+        if os.path.exists(path):
+            with open(path) as fh:
+                calendar = json.load(fh)
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk, rsi = m.get('ticker'), m.get('rsi')
+        due = (calendar.get(tk) or {}).get('date')
+        days = None
+        if due:
+            try:
+                days = (_date.fromisoformat(due) - today).days
+            except ValueError:
+                days = None
+        for label, sv, pos in list(_setups(e))[:2]:
+            if sv.get('dormant'):
+                continue
+            kind = stretch_of(sv, rsi)
+            if kind:
+                out.append((tk, sv.get('timeframe'), sv.get('pattern'), sv.get('direction'),
+                            rsi, kind, days))
+    # the ones with a scheduled trigger first, then by how extreme
+    out.sort(key=lambda r: (r[6] if r[6] is not None and r[6] >= 0 else 999,
+                            -r[4] if r[3] == 'up' else r[4]))
+    return out
+
+
+# ── Which two setups the row shows ──
+#
+# The visible slots used to be whatever the stored order happened to put first, and the
+# dedupe's backfill took `keep_stored.pop(0)`. CVX ended up with a main projecting $273.38
+# up and an alt projecting $172.26 down: the row contradicting itself because of list
+# order. The slots are the most valuable thing on the page, so they go to the best setups.
+#
+# The weights are weekly_feature.score_setup's, deliberately -- the landing page ranks the
+# week's hottest setups the same way, and a row disagreeing with that list about which of
+# its own setups is best would be its own kind of bug. Two terms are added here that the
+# featured list does not need: a tight stop is worth something on its own, and a setup
+# nobody has checked should not hold a slot over one that has been.
+
+SLOT_TIGHT = 0.10           # risk inside this fraction of the entry counts as tight
+SLOT_FLOOR = 0.01           # ...and inside this it is not tight, it is about to die
+
+
+def slot_score(sv, stock):
+    """How much this setup deserves one of the two visible slots. Higher is better."""
+    stage = sv.get('stage')
+    direction = sv.get('direction')
+    price = stock.get('price')
+    rsi, trend = stock.get('rsi'), stock.get('trend')
+    if sv.get('dormant') or not price:
+        return -1e9
+
+    score = {'confirmed': 40, 'retest': 34, 'signal': 25, 'atRisk': 8,
+             'update': -20, 'forming': 12}.get(stage, 0)
+
+    target = sv.get('target')
+    if direction == 'both':
+        # Watching both ways is a real reading, but it is not a call: no direction to back
+        # with momentum and no single target to measure. It sits below a directional setup
+        # of the same stage rather than being excluded.
+        score -= 8
+        target = None
+
+    if direction in ('up', 'down'):
+        mom = _momentum(rsi, direction)
+        if mom == 'with':
+            score += 20                       # RSI over 60 behind a long, under 40 behind a short
+        elif mom == 'against':
+            score -= 25
+        if trend == direction:
+            score += 10
+        elif trend in ('up', 'down'):
+            score -= 5
+        # Trend and momentum disagreeing with a setup is worse than the sum of the two.
+        # One of them against is a setup fighting something; both against, on a stock
+        # moving hard the other way, is a reading that does not belong on the row at all
+        # while a setup going with the move exists.
+        if mom == 'against' and trend in ('up', 'down') and trend != direction:
+            score -= 15
+
+    inval = sv.get('invalidation')
+    if target and direction in ('up', 'down'):
+        room = (target - price) / price * 100
+        if (direction == 'up' and room <= 0) or (direction == 'down' and room >= 0):
+            score -= 30                       # the target is already behind price
+        else:
+            score += min(abs(room), 40) * 0.6
+        # Risk is measured from the ENTRY, not from today's price. Measuring from price
+        # reproduces the artifact CLAUDE.md records under "Stop distance": CVX's weekly
+        # down channel sits 0.15% from its own invalidation, which scored as a reward:risk
+        # of 369x and a tight stop, when what it actually means is a setup one close from
+        # dying. `breakInvalidation` is the stop as it stood on the day of the break, which
+        # is the number that means what it says; confirm-to-invalidation is the fallback.
+        entry = sv.get('confirm') or price
+        stop = sv.get('breakInvalidation') or inval
+        if stop and entry:
+            risk = abs(entry - stop) / entry * 100
+            if risk > 0:
+                rr = abs(room) / risk
+                score += 15 if rr >= 3 else 10 if rr >= 2 else 5 if rr >= 1 else -20
+                # A tight stop is worth something by itself -- it is the difference between
+                # a setup you can size and a direction you can only hold an opinion about.
+                # Below SLOT_FLOOR it is not tight, it is degenerate.
+                if SLOT_FLOOR * 100 <= risk <= SLOT_TIGHT * 100:
+                    score += 10
+        # Price already on top of the level that kills it: whatever the projection says,
+        # this is not one of the two readings a row should lead with.
+        if inval and abs(price - inval) / price < SLOT_FLOOR:
+            score -= 25
+
+    if sv.get('auto'):
+        score -= 15                           # unchecked: never over a setup someone read
+
+    return score
+
+
+def reslot_setups(apply=False, path=None):
+    """Put the two best setups on the row, the rest in `more`.
+
+    The second slot must say something the first does not -- `_same_call` duplicates are
+    skipped -- so the row carries two readings rather than one twice.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    cuts, moved = [], []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk = m.get('ticker')
+
+        def vals(pos):
+            return {k: v[2] for k, v in pos.items() if k != '_span'}
+
+        every = [e['fields']] + ([e['alt']] if e['alt'] is not None else []) \
+            + [pos for lb, sv, pos in _setups(e) if '_span' in pos]
+        live = [pos for pos in every if not vals(pos).get('dormant')]
+        if len(live) < 2:
+            continue
+        ranked = sorted(live, key=lambda pos: -slot_score(vals(pos), m))
+        best = ranked[0]
+        second = next((pos for pos in ranked[1:] if not _same_call(vals(pos), vals(best))), None)
+        if second is None:
+            second = ranked[1] if len(ranked) > 1 else None
+        if best is e['fields'] and second is e['alt']:
+            continue
+        rest = [pos for pos in every if pos is not best and pos is not second]
+        bv, sv2 = vals(best), vals(second) if second else {}
+        moved.append(f"{tk}: {bv.get('timeframe')} {bv.get('pattern')} ({bv.get('stage')}, "
+                     f"{slot_score(bv, m):.0f}) + {sv2.get('timeframe')} {sv2.get('pattern')} "
+                     f"({sv2.get('stage')}, {slot_score(sv2, m):.0f})")
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, best, second, rest,
+                                             bool(bv.get('auto')), bool(sv2.get('auto')))))
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return moved
+
+
+# ── One claim per slot ──
+#
+# FRSH carried six setups of which five projected $19-22: the same read, drawn five ways.
+# Worse, its main and alt both said it, so the row spent both its visible slots on one
+# claim. `agree` already counts the corroboration, so repeating it costs the slot and
+# tells you nothing the badge did not.
+
+DUPE = 0.05        # targets this close, in the same direction, are the same call
+_STAGE_RANK = {'confirmed': 0, 'retest': 1, 'atRisk': 2, 'signal': 3, 'forming': 4}
+
+
+def _same_call(a, b):
+    """Do these two setups project the same move?"""
+    if a.get('direction') != b.get('direction') or a.get('direction') not in ('up', 'down'):
+        return False
+    ta, tb = a.get('target'), b.get('target')
+    return bool(ta and tb) and abs(ta - tb) / tb <= DUPE
+
+
+def _claim_rank(sv, price=None):
+    """How good a setup is, for deciding which of two identical claims survives.
+
+    Hand-posted first, then the further-along stage, then reward:risk. The slot a setup
+    happens to occupy is NOT part of this: keeping the main just because it is the main
+    deleted FRSH's hand-posted confirmed break in favour of a machine-drawn signal, and
+    took the landing page's top-scored card with it.
+    """
+    conf, inv, tgt = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
+    rr = 0.0
+    if conf and inv and tgt and inv != conf:
+        rr = abs(tgt - conf) / abs(inv - conf)
+    return (1 if sv.get('auto') else 0, _STAGE_RANK.get(sv.get('stage'), 9), -rr)
+
+
+def dedupe_setups(apply=False, path=None):
+    """Keep one setup per claim, and keep the BEST one wherever it sits.
+
+    Setups projecting the same move within DUPE are grouped; the strongest by _claim_rank
+    survives and the rest go. If the survivor was stored while a weaker copy held a visible
+    slot, it takes that slot -- a duplicate is removed by promoting the better reading, never
+    by deleting it for sitting in the wrong place.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    swapped, dropped = [], []
+    # Backfilling an emptied alt slot can itself create a fresh duplicate, so one pass does
+    # not converge. Repeat until nothing changes -- it settled on the second pass in
+    # practice, and the bound only guards against a cycle.
+    for _ in range(6):
+        text, sw, dr = _dedupe_pass(text)
+        swapped += sw
+        dropped += dr
+        if not (sw or dr):
+            break
+    if apply:
+        with open(path, 'w') as fh:
+            fh.write(text)
+    return swapped, dropped
+
+
+def _dedupe_pass(text):
+    cuts, swapped, dropped = [], [], []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk = m.get('ticker')
+
+        def vals(pos):
+            return {k: v[2] for k, v in pos.items() if k != '_span'}
+
+        slots = [('main', e['fields'])]
+        if e['alt'] is not None:
+            slots.append(('alt', e['alt']))
+        stored = [pos for lb, sv, pos in _setups(e) if '_span' in pos]
+        every = slots + [('stored', pos) for pos in stored]
+        every = [(kind, pos) for kind, pos in every if not vals(pos).get('dormant')]
+
+        # group identical claims
+        groups, used = [], set()
+        for i, (kind, pos) in enumerate(every):
+            if i in used:
+                continue
+            grp = [(kind, pos)]
+            used.add(i)
+            for j, (k2, p2) in enumerate(every):
+                if j in used:
+                    continue
+                if _same_call(vals(pos), vals(p2)):
+                    grp.append((k2, p2))
+                    used.add(j)
+            if len(grp) > 1:
+                groups.append(grp)
+        if not groups:
+            continue
+
+        main_pos, alt_pos = e['fields'], e['alt']
+        keep_stored = list(stored)
+        changed = False
+        for grp in groups:
+            best = min(grp, key=lambda kp: _claim_rank(vals(kp[1]), m.get('price')))
+            held = [kind for kind, _ in grp if kind in ('main', 'alt')]
+            # The best copy takes the highest slot the group holds. Guarding the headline
+            # instead -- "the main never disappears" -- let FRSH keep a machine-drawn signal
+            # on the row while the hand-posted confirmed break sat beside it saying the same
+            # thing, which is the duplication this is supposed to remove.
+            if held:
+                slot = 'main' if 'main' in held else 'alt'
+                bv = vals(best[1])
+                cur = main_pos if slot == 'main' else alt_pos
+                if cur is not best[1]:
+                    swapped.append(f"{tk}: {slot} was the weaker copy of the same call — promoted "
+                                   f"{bv.get('timeframe')} {bv.get('pattern')} ({bv.get('stage')}) into it")
+                    if slot == 'main':
+                        main_pos = best[1]
+                        # It may have been the alt. Vacate that slot or the row shows the
+                        # same setup in both, which is the fault this routine exists to fix.
+                        if alt_pos is best[1]:
+                            alt_pos = None
+                    else:
+                        alt_pos = best[1]
+                    changed = True
+                keep_stored = [p for p in keep_stored if p is not best[1]]
+            for kind, pos in grp:
+                if pos is best[1]:
+                    continue
+                lv = vals(pos)
+                if alt_pos is pos:
+                    alt_pos = None
+                keep_stored = [p for p in keep_stored if p is not pos]
+                dropped.append(f"{tk}: {lv.get('timeframe')} {lv.get('pattern')} "
+                               f"({lv.get('stage')}) tgt ${_fmt_price(lv.get('target'))} — same call, weaker")
+                changed = True
+        if not changed:
+            continue
+        if alt_pos is None and keep_stored:
+            alt_pos = keep_stored.pop(0)
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, main_pos, alt_pos, keep_stored,
+                                             bool(vals(main_pos).get('auto')),
+                                             bool(alt_pos and vals(alt_pos).get('auto')))))
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    return new_text, swapped, dropped
+
+
+def cap_setups(apply=False, path=None):
+    """Hold every stock to SETUP_CAP shown readings, finished rows going first.
+
+    Order of removal: `history` rows that failed, then `history` rows that reached their
+    target (exported to data/completedCalls.json first, so the reproduce harness keeps
+    them), then surplus live setups from the end of the stored order. Dormant setups are
+    not counted -- they are already out of the ledger -- and the main and alt slots are
+    never cut, being the row itself.
+
+    Done in two passes. A history row is a span *inside* an entry while dropping a live
+    setup rewrites the whole entry, so doing both to one stock in a single pass splices
+    overlapping ranges and corrupts the file. The first pass removes history, the second
+    re-parses the result and removes setups.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    exported = export_completed(text)
+    counts = {}
+
+    cuts = []
+    for e in parse_watchlist(text):
+        tk = e['fields'].get('ticker', (0, 0, None))[2]
+        drop_hist, drop_live, shown = _cap_plan(text, e)
+        if drop_hist or drop_live:
+            counts[tk] = [shown, len(drop_hist), len(drop_live)]
+        for stage, a, b, src in drop_hist:
+            nxt = b
+            while nxt < len(text) and text[nxt] in ', \n':
+                nxt += 1
+            cuts.append((a, nxt, ''))
+    for a, b, repl in sorted(cuts, reverse=True):
+        text = text[:a] + repl + text[b:]
+
+    cuts = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        _, drop_live, _ = _cap_plan(text, e)
+        if not drop_live:
+            continue
+        keep = [pos for lb, sv, pos in _setups(e) if '_span' in pos and pos not in drop_live]
+        alt = e['alt']
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, e['fields'], alt, keep,
+                                             bool(m.get('auto')),
+                                             bool(alt and alt.get('auto', (0, 0, None))[2]))))
+    for a, b, repl in sorted(cuts, reverse=True):
+        text = text[:a] + repl + text[b:]
+
+    report = [f"{tk}: {v[0]} -> {SETUP_CAP}  ({v[1]} finished, {v[2]} surplus setup(s))"
+              for tk, v in counts.items()]
+    if apply:
+        with open(path, 'w') as fh:
+            fh.write(text)
+    return report, exported
+
+
+# ── Dormant setups: valid, but no longer what the chart is saying ──
+#
+# A confirmed break that price has walked a long way back past, months ago, on a stock now
+# trending the other way, is not wrong — it just is not the read any more. NOW's monthly
+# ascending channel confirmed down on 2026-02-02 at $113.13 and still carries a $39.08
+# target while the stock sits at $158.96 in an uptrend, its break 40% undone. Leaving that
+# on the row says something about ServiceNow that nobody believes.
+#
+# Shelving is NOT the same as finishing. `history` holds completed calls and is the label
+# set pattern_reproduce.py trains on, so a setup that never resolved must not go there.
+# `dormant` keeps it in place, out of sight, and wakes it the moment the break re-forms.
+
+DORMANT_AGE = 120           # days since the break confirmed
+DORMANT_UNDONE = 0.25       # price this far back past the confirm, against the setup
+
+# The second shape of "not the read any more", and it needs no clock at all. A setup that
+# has not broken yet is only worth watching if its trigger is somewhere price might go.
+# ANET's monthly ascending channel breaks down at $119.76 and up at $204.55 against a
+# $172.37 close: 31% below or 19% above before anything at all happens. That is not a setup
+# waiting for a break, it is a drawing waiting for a different year.
+REACH = 0.15                # nearest trigger further than this: not actionable
+REACH_WAKE = 0.10           # ...and nearer than this brings it back (hysteresis, so a
+                            # setup hovering at the line does not flip every session)
+
+
+def _reach_of(sv, price):
+    """Distance from price to the nearest level that would start this pending setup."""
+    if not price:
+        return None
+    if sv.get('direction') == 'both':
+        levels = [sv.get('breakUp'), sv.get('breakDown')]
+    else:
+        levels = [sv.get('signal') or sv.get('confirm')]
+    levels = [x for x in levels if x]
+    return min(abs(x - price) / price for x in levels) if levels else None
+
+
+def _undone_by(sv, price):
+    """How far price has travelled back past the confirm level, against the setup."""
+    conf, d = sv.get('confirm'), sv.get('direction')
+    if not (price and conf) or d not in ('up', 'down'):
+        return None
+    return (price - conf) / conf if d == 'down' else (conf - price) / conf
+
+
+def dormant_candidates(text, today=None):
+    """Confirmed setups old enough, undone enough, and against the stock's own trend.
+
+    Rows are (ticker, label, timeframe, pattern, direction, age, undone, auto).
+    """
+    today = today or _now_et().date()
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        price, trend = m.get('price'), m.get('trend')
+        for label, sv, pos in _setups(e):
+            if sv.get('stage') != 'confirmed' or sv.get('dormant'):
+                continue
+            sd, d = sv.get('stageDate'), sv.get('direction')
+            undone = _undone_by(sv, price)
+            if not sd or undone is None or undone <= DORMANT_UNDONE:
+                continue
+            try:
+                age = (today - _date.fromisoformat(sd)).days
+            except ValueError:
+                continue
+            if age <= DORMANT_AGE:
+                continue
+            # The stock has to be going the other way. A flat trend is not an uptrend, and
+            # shelving on "not moving" would retire setups that are merely waiting.
+            if not ((trend == 'up' and d == 'down') or (trend == 'down' and d == 'up')):
+                continue
+            out.append((m.get('ticker'), label, sv.get('timeframe'), sv.get('pattern'),
+                        d, age, undone, bool(m.get('auto')) or bool(sv.get('auto'))))
+    return out
+
+
+def wake_candidates(text):
+    """Dormant setups whose break has re-formed: price is back past the confirm level."""
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        price = m.get('price')
+        for label, sv, pos in _setups(e):
+            if not sv.get('dormant'):
+                continue
+            undone = _undone_by(sv, price)
+            if undone is not None and undone <= 0:
+                out.append((m.get('ticker'), label, sv.get('timeframe'), sv.get('pattern'),
+                            sv.get('direction'), sv.get('confirm'), price))
+    return out
+
+
+def shelve_dormant(apply=False, path=None, today=None):
+    """Mark stale confirmed breaks dormant, and wake any whose break has re-formed.
+
+    Writes `dormant` beside the setup's own `stage`, so it travels with the setup rather
+    than with the stock. Waking clears the three fields and sets `stage: "update"` — the
+    break re-forming months later is a different break on a different chart, so the setup
+    comes back as a call to redraw rather than as a live one carrying its old target.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    today = today or _now_et().date()
+    shelved, woken, edits = [], [], []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk, price, trend = m.get('ticker'), m.get('price'), m.get('trend')
+        for label, sv, pos in _setups(e):
+            if 'stage' not in pos:
+                continue
+            s0, s1, _ = pos['stage']
+            line_start = text.rfind('\n', 0, s0) + 1
+            indent = ' ' * (len(text[line_start:s0]) - len(text[line_start:s0].lstrip()))
+            line_end = text.index('\n', s1) + 1
+            if sv.get('dormant'):
+                pending = sv.get('stage') in ('forming', 'signal')
+                if pending:
+                    reach = _reach_of(sv, price)
+                    if reach is None or reach > REACH_WAKE:
+                        continue
+                else:
+                    undone = _undone_by(sv, price)
+                    if undone is None or undone > 0:
+                        continue
+                # Waking does NOT resume the old setup. Its target was measured off a
+                # pattern that is months stale by now, and a break re-forming after that
+                # long is a different break on a different chart — the levels have to be
+                # drawn again. So it comes back as `update` ("Needs updating"), which is
+                # already the ledger's word for "post a new setup", rather than as a live
+                # confirmed call carrying arithmetic nobody re-checked.
+                a = line_end
+                b = a
+                while True:
+                    nxt = text.index('\n', b) + 1 if '\n' in text[b:] else len(text)
+                    if text[b:nxt].lstrip().startswith(('dormant:', 'dormantSince:', 'dormantNote:')):
+                        b = nxt
+                    else:
+                        break
+                if b <= a:
+                    continue
+                edits.append((a, b, ''))                      # drop the three dormant fields
+                if pending:
+                    # Nothing broke, so nothing stale is being presented as live: the stage
+                    # still reads `forming`, which already says no claim is being made. It
+                    # goes back exactly as it was.
+                    woken.append(f"{tk} ({label}): price is within {REACH_WAKE * 100:.0f}% of its "
+                                 f"trigger again — back on the list as {sv.get('stage')}")
+                    continue
+                edits.append((s0, s1, '"update"'))            # stage: confirmed -> update
+                note = (f"Woken {today}: price closed back past the ${_fmt_price(sv.get('confirm'))} "
+                        f"break, so the read is live again — but it was shelved on "
+                        f"{sv.get('dormantSince')} and these levels are the old pattern's. "
+                        f"Redraw it on the current chart; the target in particular will move.")
+                ins = (f"{indent}prevStage: \"{sv.get('stage')}\",\n"
+                       f"{indent}updateDate: \"{today}\",\n"
+                       f"{indent}updateNote: {json.dumps(note, ensure_ascii=False)},\n")
+                edits.append((line_end, line_end, ins))
+                woken.append(f"{tk} ({label}): back past ${_fmt_price(sv.get('confirm'))} — "
+                             f"woken as `update`, the levels need redrawing")
+                continue
+            stage, d = sv.get('stage'), sv.get('direction')
+            # Out of reach: nothing has broken and nothing is close to breaking.
+            if stage in ('forming', 'signal'):
+                reach = _reach_of(sv, price)
+                if reach is None or reach <= REACH:
+                    continue
+                if label == 'main' or label.endswith(' alt'):
+                    continue
+                note = (f"Shelved {today}: nothing has broken and the nearest trigger is "
+                        f"{reach * 100:.0f}% away, so there is no break to watch for yet. "
+                        f"It comes back when price is within {REACH_WAKE * 100:.0f}% of it.")
+                ins = (f"{indent}dormant: true,\n{indent}dormantSince: \"{today}\",\n"
+                       f"{indent}dormantNote: {json.dumps(note, ensure_ascii=False)},\n")
+                edits.append((line_end, line_end, ins))
+                shelved.append(f"{tk} ({label}, {sv.get('timeframe')} {sv.get('pattern')}): "
+                               f"out of reach, nearest trigger {reach * 100:.0f}% away")
+                continue
+            sd = sv.get('stageDate')
+            undone = _undone_by(sv, price)
+            if stage != 'confirmed' or not sd or undone is None or undone <= DORMANT_UNDONE:
+                continue
+            # The main and alt slots ARE the row. Hiding one would leave the ledger showing
+            # a setup it has been told not to show, so those stay and get listed instead.
+            if label == 'main' or label.endswith(' alt'):
+                continue
+            try:
+                age = (today - _date.fromisoformat(sd)).days
+            except ValueError:
+                continue
+            if age <= DORMANT_AGE:
+                continue
+            if not ((trend == 'up' and d == 'down') or (trend == 'down' and d == 'up')):
+                continue
+            note = (f"Shelved {today}: confirmed {sd}, {age} days ago, and price has gone "
+                    f"{undone * 100:.0f}% back past the ${_fmt_price(sv.get('confirm'))} break while the "
+                    f"stock trends {trend}. Still valid — it wakes on a close back past the break.")
+            ins = (f"{indent}dormant: true,\n{indent}dormantSince: \"{today}\",\n"
+                   f"{indent}dormantNote: {json.dumps(note, ensure_ascii=False)},\n")
+            edits.append((line_end, line_end, ins))
+            shelved.append(f"{tk} ({label}, {sv.get('timeframe')} {sv.get('pattern')}): "
+                           f"{age}d old, break {undone * 100:.0f}% undone, stock trends {trend}")
+    new_text = text
+    for a, b, repl in sorted(edits, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return shelved, woken
+
+
 # ── Invalidations that are not prices ──
 #
 # An invalidation is a trendline's value at the latest candle, and a sloped line extended
@@ -1786,6 +2574,25 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} height ${_fmt_price(height)} vs ${_fmt_price(start)} "
                   f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
     stranded = result.get('stranded') or []
+    if result.get('stretched'):
+        soon = [r for r in result['stretched'] if r[6] is not None and 0 <= r[6] <= STRETCH_SOON]
+        if soon:
+            print(f"\n⚠ Stretched into a print (RSI past {STRETCH_HI}/{STRETCH_LO} behind the setup's own")
+            print("   direction, with earnings inside a week — the move is extended and the print")
+            print("   is a plausible trigger for a snap back. A caution, not a reason to fade):")
+            for tk, tf, pat, d, rsi, kind, days in soon:
+                print(f"  {tk:<6} RSI {rsi:5.1f} {kind:<10} {str(tf):<7} {str(pat):<19} reports in {days}d")
+    if result.get('wake'):
+        print("\n⏰ Woken as `update` (the break has re-formed, but the shelved levels are the old")
+        print("   pattern's — redraw on the current chart, the target especially):")
+        for tk, label, tf, pat, d, conf, price in result['wake']:
+            print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} back past ${_fmt_price(conf)} at ${_fmt_price(price)}")
+    if result.get('dormant'):
+        print(f"\n😴 Shelve candidates (confirmed over {DORMANT_AGE}d ago, break >{DORMANT_UNDONE * 100:.0f}% undone,")
+        print("   stock trending the other way — valid, but not what the chart says now):")
+        for tk, label, tf, pat, d, age, undone, auto in result['dormant']:
+            print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {age}d old, {undone * 100:.0f}% undone" + ("  (auto)" if auto else ""))
+        print("  Run `python3 pattern_watchlist.py --dormant --apply` to shelve them.")
     if result.get('dead_stops'):
         dead = [r for r in result['dead_stops'] if r[5] == 'dead']
         wide = [r for r in result['dead_stops'] if r[5] == 'wide']
@@ -1834,7 +2641,66 @@ if __name__ == "__main__":
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
+    ap.add_argument("--reslot", action="store_true", help="give the two visible slots to the best setups on each stock")
+    ap.add_argument("--dedupe", action="store_true", help=f"keep one setup per claim: swap an alt that repeats the main, drop stored setups whose target is within {DUPE * 100:.0f}% of a shown one")
+    ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
+    ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
+    ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.reslot:
+        moved = reslot_setups(apply=args.apply)
+        print(f"{'Reslotted' if args.apply else 'Would reslot'} {len(moved)} stock(s):")
+        for line in moved[:25]:
+            print(f"  {line}")
+        if len(moved) > 25:
+            print(f"  ... and {len(moved) - 25} more")
+        if moved and not args.apply:
+            print("\nRun with --reslot --apply to write them.")
+        raise SystemExit(0)
+    if args.dedupe:
+        swapped, dropped = dedupe_setups(apply=args.apply)
+        print(f"{'Swapped' if args.apply else 'Would swap'} {len(swapped)} duplicated alt slot(s):")
+        for line in swapped:
+            print(f"  {line}")
+        print(f"\n{'Dropped' if args.apply else 'Would drop'} {len(dropped)} stored duplicate(s):")
+        for line in dropped[:20]:
+            print(f"  {line}")
+        if len(dropped) > 20:
+            print(f"  ... and {len(dropped) - 20} more")
+        if (swapped or dropped) and not args.apply:
+            print("\nRun with --dedupe --apply to write them.")
+        raise SystemExit(0)
+    if args.strip_history:
+        touched, exported = strip_history(apply=args.apply)
+        print(f"Exported {len(exported)} new completed call(s) to {os.path.relpath(COMPLETED_FILE)}.")
+        print(f"{'Removed' if args.apply else 'Would remove'} history from {len(touched)} stock(s):")
+        for line in touched:
+            print(f"  {line}")
+        if touched and not args.apply:
+            print("\nRun with --strip-history --apply to write it.")
+        raise SystemExit(0)
+    if args.cap:
+        rep, exported = cap_setups(apply=args.apply)
+        if exported:
+            print(f"Exported {len(exported)} completed call(s) to {os.path.relpath(COMPLETED_FILE)} first.")
+        print(f"{'Capped' if args.apply else 'Would cap'} {len(rep)} stock(s):")
+        for line in rep:
+            print(f"  {line}")
+        if rep and not args.apply:
+            print("\nRun with --cap --apply to write them.")
+        raise SystemExit(0)
+    if args.dormant:
+        shelved, woken = shelve_dormant(apply=args.apply)
+        print(f"{'Shelved' if args.apply else 'Would shelve'} {len(shelved)} setup(s):")
+        for line in shelved:
+            print(f"  {line}")
+        if woken:
+            print(f"\n{'Woke' if args.apply else 'Would wake'} {len(woken)}:")
+            for line in woken:
+                print(f"  {line}")
+        if (shelved or woken) and not args.apply:
+            print("\nRun with --dormant --apply to write them.")
+        raise SystemExit(0)
     if args.deadstops:
         gone, look = drop_dead_stops(apply=args.apply)
         print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} setup(s) with an unusable stop"

@@ -396,6 +396,19 @@ const RSI_BULL = 60;
 const RSI_BEAR = 40;
 
 type Momentum = 'with' | 'against' | 'neutral';
+// Past these, the momentum backing a setup is extended enough to be its own risk: the
+// move is stretched and a snap back toward the mean is on the table. It is a RISK, not a
+// forecast — price can stay overbought far longer than it looks sustainable — so it never
+// demotes a setup or changes its score. It is marked, and most of all when a print is
+// scheduled that could be the trigger.
+const RSI_STRETCH_HI = 72;
+const RSI_STRETCH_LO = 28;
+const stretchedBy = (rsi: number | undefined, dir: PatternDirection | undefined) =>
+  rsi == null ? null
+    : dir === 'up' && rsi >= RSI_STRETCH_HI ? 'overbought'
+      : dir === 'down' && rsi <= RSI_STRETCH_LO ? 'oversold'
+        : null;
+
 const momentumOf = (rsi: number | undefined, dir: PatternDirection | undefined): Momentum => {
   if (rsi == null || (dir !== 'up' && dir !== 'down')) return 'neutral';
   if (rsi >= RSI_BULL) return dir === 'up' ? 'with' : 'against';
@@ -480,6 +493,13 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       pattern: m.pattern ?? s.pattern, tf: m.timeframe, auto: m.auto,
     }));
 
+    // Shelved readings are kept in the data and out of the list: still valid, but old
+    // enough and far enough undone that showing them says something about the stock that
+    // nobody believes. They come back when the break does.
+    const awake = live.filter(e => !(e.kind === 'setup' && e.a.dormant));
+    live.length = 0;
+    live.push(...awake);
+
     // more[] can repeat a setup that is already the main one or the alt.
     const seen = new Set<string>();
     const unique = live.filter(e => {
@@ -523,6 +543,13 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
     return out;
   }, [s, extra]);
 
+  // Counted but not listed: the point of shelving is that the reading is out of the way.
+  // A line saying how many exist keeps them from disappearing without trace.
+  const shelved = useMemo(() => {
+    const all: AnySetup[] = [s as AnySetup, ...(extra.alt ? [extra.alt] : []), ...(extra.more ?? [])];
+    return all.filter(a => a.dormant);
+  }, [s, extra]);
+
   const [sel, setSel] = useState(entries[0].key);
   const cur = entries.find(e => e.key === sel) ?? entries[0];
 
@@ -534,7 +561,15 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
 
   return (
     <div className="dsplit">
-      <SetupList ticker={s.ticker} entries={entries} sel={cur.key} onSel={setSel} />
+      <div className="dlist">
+        <SetupList ticker={s.ticker} entries={entries} sel={cur.key} onSel={setSel} />
+        {shelved.length > 0 && (
+          <p className="shelved" title={shelved.map(a => a.dormantNote).filter(Boolean).join('\n\n')}>
+            {shelved.length} shelved reading{shelved.length > 1 ? 's' : ''} — still valid, long
+            since undone, and waiting for the break to re-form.
+          </p>
+        )}
+      </div>
       <div className="dpanel">
         {panel}
         {s.keyLevel && (
@@ -682,12 +717,18 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
             // The reading is on every row so the RSI sort reads as an order;
             // the bolt and the accent are kept for the ones momentum backs.
             const m = momentumOf(s.rsi, s.direction);
+            const stretch = stretchedBy(s.rsi, s.direction);
             return (
-              <span className={`flag mom${m === 'with' ? '' : ' off'}`}
-                title={m === 'with'
-                  ? `Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`
-                  : `Daily RSI ${s.rsi!.toFixed(1)}`}>
-                {m === 'with' && <Bolt />}RSI {Math.round(s.rsi!)}
+              <span className={`flag mom${m === 'with' ? '' : ' off'}${stretch ? ' stretched' : ''}`}
+                title={stretch
+                  ? `Daily RSI ${s.rsi!.toFixed(1)} — ${stretch}. The move still backs this `
+                    + `${s.direction === 'up' ? 'long' : 'short'}, but it is extended enough that a `
+                    + `snap back toward the mean is a real risk. It can stay ${stretch} longer than `
+                    + `it looks sustainable, so this is a caution rather than a signal to fade.`
+                  : m === 'with'
+                    ? `Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`
+                    : `Daily RSI ${s.rsi!.toFixed(1)}`}>
+                {m === 'with' && <Bolt />}RSI {Math.round(s.rsi!)}{stretch ? ' ⚠' : ''}
               </span>
             );
           })()}

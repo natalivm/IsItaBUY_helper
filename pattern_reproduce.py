@@ -45,15 +45,36 @@ ROW = re.compile(
 
 
 def labels():
-    """Every completed call on record, with the ticker it belongs to."""
+    """Every completed call on record, with the ticker it belongs to.
+
+    Read from two places and de-duplicated. The ledger's own `history` rows are the live
+    source, but SETUP_CAP deletes those once a stock carries too many, so every completed
+    call is also exported to data/completedCalls.json before it is cut. Reading only the
+    ledger would silently shrink the training set every time a busy stock is tidied — CVX
+    alone was 3 of 27.
+    """
     text = open(pw.WATCHLIST_FILE).read()
     spans = [(m.group(1), m.start()) for m in re.finditer(r'ticker: "([A-Z.]+)"', text)]
-    out = []
+    out, seen = [], set()
+
+    def add(tk, pattern, tf, direction, date, confirm, invalidation, target):
+        key = (tk, pattern, tf, date)
+        if key in seen:
+            return
+        seen.add(key)
+        out.append({'ticker': tk, 'pattern': pattern, 'tf': tf, 'dir': direction,
+                    'date': date, 'confirm': confirm,
+                    'invalidation': invalidation, 'target': target})
+
     for m in ROW.finditer(text):
         tk = [t for t, at in spans if at < m.start()][-1]
-        out.append({'ticker': tk, 'pattern': m.group(1), 'tf': m.group(2), 'dir': m.group(3),
-                    'date': m.group(4), 'confirm': float(m.group(5)),
-                    'invalidation': float(m.group(6)), 'target': float(m.group(7))})
+        add(tk, m.group(1), m.group(2), m.group(3), m.group(4),
+            float(m.group(5)), float(m.group(6)), float(m.group(7)))
+    if os.path.exists(pw.COMPLETED_FILE):
+        with open(pw.COMPLETED_FILE) as fh:
+            for r in json.load(fh):
+                add(r['ticker'], r['pattern'], r['timeframe'], r['direction'],
+                    r['stageDate'], r['confirm'], r['invalidation'], r['target'])
     return out
 
 

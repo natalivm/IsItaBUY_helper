@@ -247,8 +247,16 @@
    green looked at and still current, nothing at all for a stock with no print due. */
 .pbw .check-dot{display:inline-block;flex:none;align-self:center;width:9px;height:9px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px color-mix(in srgb,var(--up) 22%,transparent)}
 .pbw .tk .check-dot.stock{margin-left:-5px}
+/* Shelved readings are counted, not listed: a setup months past its break on a stock now
+   trending the other way is still valid, but putting it on the list says something about
+   the stock nobody believes. The note explains each one on hover. */
+.pbw .shelved{margin:10px 2px 0;font-size:12.5px;line-height:1.45;color:var(--faint);cursor:help}
 .pbw .auto-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
 .pbw .altwrap>.detail{padding:0}
+/* Momentum extended far enough to be its own risk. Keeps the momentum colour -- the move
+   is still with the setup -- and adds a warning outline, because this is a caution about
+   the move continuing rather than a reason to read it the other way. */
+.pbw .flag.mom.stretched{box-shadow:inset 0 0 0 1px var(--wait)}
 /* Confidence: several stored setups agree on the target */
 .pbw .flag.agree{color:var(--up);background:var(--up-soft)}
 /* A confirmed break price has given back: muted, not alarming -- the setup has not failed,
@@ -275,6 +283,8 @@
 .pbw .dsplit .pr-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
 .pbw .dsplit .chart-box{height:330px}
 
+/* Wraps the setup list and the shelved-count line; it is the grid's first column. */
+.pbw .dlist{min-width:0}
 .pbw .slist{display:flex;flex-direction:column;gap:14px;min-width:0}
 .pbw .sl-head{font:700 12.5px/1 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 .pbw .sl-group{display:flex;flex-direction:column;gap:7px}

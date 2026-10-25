@@ -83,7 +83,7 @@ The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatc
 
 - uses **regular-session prices only** (9:30–16:00 ET), never pre/post-market. Close-based checks (needs updating, invalidation) are skipped while that day's session is still open, so a run before 16:00 ET never re-labels a setup on an intraday price; target touches count from regular-session highs/lows. The Action runs at 21:47 UTC, after the close year-round.
 
-- **removes finished setups**: target reached (touched any time since confirmation) or failed (a completed close past invalidation plus a follow-through close), each with one News post saying why. A setup **you posted** (not auto-detected) is kept as a `history` row instead of vanishing, so a call that played out still shows under **Finished** on its stock — a target you called and hit is worth keeping. The stock's `keyLevel` and any existing history survive a setup being replaced too. "Needs updating" setups stay until a replacement is posted. By hand: `python3 pattern_watchlist.py --prune` (dry run) / `--prune --apply`.
+- **removes finished setups**: target reached (touched any time since confirmation) or failed (a completed close past invalidation plus a follow-through close), each with one News post saying why. A finished call leaves the page: the ledger is for readings to act on, and a completed one is a record. What it is still needed for is training, so a hand-posted setup that **reached its target** is written to `data/completedCalls.json` on the way out (`record_completed()`), which is where `pattern_reproduce.py` reads its labels. The stock's `keyLevel` survives a setup being replaced. "Needs updating" setups stay until a replacement is posted. By hand: `python3 pattern_watchlist.py --prune` (dry run) / `--prune --apply`.
 
 **Every status change goes to the News feed** (`data/newsFeed.ts`, newest first). The script diffs the watchlist against `data/watchlistStatus.json`, so hand edits (a new setup, a re-posted setup, a setup marked failed or removed) are posted too, not just the bot's own changes. **After editing any setup's `stage` by hand, run `python3 pattern_watchlist.py --apply`** (no network; re-checks stored prices and posts the changes), and commit `data/`. The daily price run does the same automatically. A new News post also triggers the in-app "What's New" toast.
 
@@ -132,7 +132,7 @@ discriminating. If that broader signal is ever wanted, that is where it goes.
 
 ### Targets: what the completed setups actually say
 
-Completed setups from the source tool are recorded as `history` rows. Comparing them
+Completed setups from the source tool are recorded in `data/completedCalls.json`. Comparing them
 against the detector's reading of the same chart looked at first like a clean defect —
 the break levels agree (confirms have matched to the cent on CVX and CRWD, and within
 3% on XOM, FRSH and KMB) while the measured move off those same lines runs 1.4x to
@@ -174,7 +174,8 @@ that should have closed themselves.
 ### Training on the calls that completed
 
 `pattern_reproduce.py` scores the detector against the source tool's finished calls,
-which are recorded as `history` rows in `data/patternWatchlist.ts`. For each one it
+which live in `data/completedCalls.json` (`labels()` also still reads any `history` rows
+left in the ledger, de-duplicated, so older data keeps working). For each one it
 replays the chart up to the day the call completed, runs the detector on exactly those
 candles, and asks whether it rebuilds that setup. Every label is a setup that paid, so
 unlike the distribution comparisons there is no survivorship to correct for.
@@ -513,6 +514,236 @@ the detector builds a setup now run the same test, so a rescan cannot draw one o
 again — without it Friday's redraw would hand back most of what was just removed. It judges
 against the range of the chart the pattern was drawn on, which is the right scope for "has
 this line left the chart", and is cheaper than re-reading the longest candle file.
+
+### Finished calls are not on the ledger at all
+
+`history` is gone from `data/patternWatchlist.ts` — 23 rows across 17 stocks, removed by
+`strip_history()` after `export_completed()` had written every one of them to
+`data/completedCalls.json`. Nothing writes a `history` row any more: `prune_finished` calls
+`record_completed()` instead, which appends the call to the labels file and lets it leave
+the page.
+
+The split is the point. **The ledger is for readings to act on; a completed call is a
+record, and the only thing still reading it is the training harness.** Keeping both in one
+file meant a stock's row grew without limit as its calls finished, and meant that tidying
+the ledger quietly cost the detector its evidence — which is exactly what capping CVX would
+have done.
+
+`labels()` reads the JSON file *and* any `history` rows still present, de-duplicated on
+(ticker, pattern, timeframe, date), so the count is stable across the move and older data
+keeps working. It was 27 before the strip and 27 after.
+
+The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
+row reappears from an archive — it simply has no writer.
+
+### Stretched: momentum strong enough to be its own risk
+
+RSI past **72** behind a long, or **28** behind a short, is the setup's own momentum taken
+to the point where it becomes a reason for caution: the move is extended and a snap back
+toward the mean is on the table.
+
+**It is a risk, not a forecast, and it changes no score.** Price can stay overbought far
+longer than it looks sustainable, so nothing here demotes a setup or reads it the other
+way — a confirmed break with RSI 77 behind it is still the best reading on its stock. What
+the stretch needs is to be *visible*, and most of all when something is scheduled that
+could be the trigger.
+
+CVX is the case: RSI 76.9 behind a confirmed upward break, **reporting Oct 30**. Going into
+a print stretched is a different proposition from going into one mid-range, and the print is
+the first scheduled event that could end the run. Eight shown setups are stretched with a
+print inside a week — CVX and XOM overbought, STRL, VRT and CAT oversold.
+
+`stretch_of()` and `stretched_setups()` in `pattern_watchlist.py`; the daily run prints the
+ones with a print inside `STRETCH_SOON` (7 days) under **⚠**. In the UI the momentum chip
+keeps its colour — the move is still with the setup — and gains a warning outline and a ⚠,
+with the caution spelled out on hover.
+
+### Which two setups the row shows
+
+The two visible slots are the most valuable thing on a row, and they used to go to whatever
+the stored order happened to put first — the dedupe's backfill literally took the first
+item. CVX ended up with a main projecting **$273.38 up** and an alt projecting **$172.26
+down**: the row contradicting itself because of list order, on a stock with RSI 76.9 in an
+uptrend.
+
+`slot_score()` ranks every non-dormant setup and `reslot_setups()` gives the slots to the
+best two that are not the same call. The weights are `weekly_feature.score_setup`'s
+deliberately — stage, RSI backing the direction, trend agreement, room to target,
+reward:risk — because a row disagreeing with the featured list about which of its own
+setups is best would be its own kind of bug. Two terms are added that the featured list
+does not need: a **tight stop** is worth something by itself, and an **unchecked** setup
+(`auto`) never holds a slot over one someone has read.
+
+**Trend and momentum disagreeing with a setup is worse than the sum of the two.** One of
+them against is a setup fighting something; both against, on a stock moving hard the other
+way, is a reading that does not belong on the row while a setup going with the move exists
+— so that case takes a further −15. It is what finally separated CVX's readings: its two
+downward setups fell from 51 and 34 to **36 and 19** against 105 and 60 for the upward
+pair. 24 shown setups still fight both, which is fine where the stock holds nothing better.
+
+**Risk is measured from the entry, not from today's price**, and that single choice is what
+fixed CVX. Measured from price, its weekly *down* channel sat 0.15% from its own
+invalidation, which scored as a reward:risk of **369x plus a tight-stop bonus** — and what
+it actually means is a setup one close from dying. This is the artifact recorded under
+"Stop distance" above, reproduced by writing the obvious thing. `breakInvalidation` is
+preferred, confirm-to-invalidation is the fallback, and `SLOT_FLOOR` (1%) marks where a
+stop stops being tight and starts being degenerate; price sitting that close to its own
+invalidation takes a penalty rather than a bonus.
+
+**Opposite directions on one row are not in themselves wrong** — 52 of 150 rows carry them,
+and the AMKR lesson is that setups pointing both ways differ by horizon rather than
+contradicting. What was wrong on CVX was a *weak* down setup outranking a *strong* up one.
+
+`python3 pattern_watchlist.py --reslot` (dry run) / `--reslot --apply`; the daily run calls
+it after the dedupe, so it chooses between distinct readings rather than copies. 114 stocks
+moved on the first pass and the second reports 0.
+
+**Entry-level fields have to be listed in `HEADER_KEYS` or promoting a setup eats them.**
+`checkedOn` was in neither `HEADER_KEYS` nor `rebuild_entry`'s own emission list, so
+replacing a main dropped the stock's hand-check date *and* leaked it into the alt — where
+`tsc` caught it, `checkedOn` not being a field `PatternAltSetup` has. CLS and COIN lost
+theirs before the fix. `tag` surfaced the same way and was genuinely per-setup, so it was
+added to `PatternAltSetup` rather than moved to the header. **The typecheck is the thing
+that catches this**, which is the practical reason `@types/react` and `npm run lint` earn
+their keep.
+
+### One claim per slot
+
+FRSH carried six setups of which five projected $19-22: the same read drawn five ways.
+Worse, its **main and alt both said it** — $20.99 against $21.79 — so the row spent both
+its visible slots on one claim. `agree` already counts corroboration, so repeating it costs
+the slot and tells you nothing the badge did not.
+
+`dedupe_setups()` groups setups projecting the same move within `DUPE` (5%) in the same
+direction, keeps the **best** one by `_claim_rank` and drops the rest. The survivor takes
+the highest slot the group held, so a duplicate is removed by promoting the better reading,
+never by deleting one for sitting in the wrong place.
+
+`_claim_rank` is **hand-posted first, then the further-along stage, then reward:risk** —
+and deliberately *not* which slot a setup occupies. 43 slots were swapped and 103 duplicates
+dropped, taking the ledger from 779 live setups to 565.
+
+An **either-direction** setup is never a duplicate: it is watching for a break both ways,
+which is a different claim from a directional target even when one of its goals lands
+nearby.
+
+**Two bugs here cost the landing page its top card, and both came from protecting a slot
+instead of ranking the setup.** The first version preferred whatever held the main slot, so
+on FRSH it kept a *machine-drawn `signal`* at $20.99 and deleted the *hand-posted
+`confirmed`* break at $21.79 — which was the week's highest-scored setup, featured on the
+landing page, leaving that card pointing at a setup no longer in the ledger. Replacing that
+with "the headline never disappears" only moved the fault: FRSH then kept both copies. The
+rule has to be that the best copy wins and takes the slot.
+
+The second: promoting the **alt** into the main slot has to vacate the alt, or the row
+shows one setup in both places — the exact fault this routine exists to remove.
+
+**It loops to convergence**, because backfilling an emptied alt slot can create a fresh
+duplicate: four stocks (JPM, Q, SHOP, THM) were clean only after a second pass. Re-running
+it now reports 0 and 0.
+
+**Re-run `weekly_feature.py` after any pass that deletes setups.** `data/weeklyFeature.ts`
+stores a snapshot of each featured setup and the landing page looks it up live by pattern,
+timeframe and direction; deleting the setup it names leaves a card with nothing behind it.
+
+### Six readings per stock, and what happens to the finished ones
+
+Ten readings on one stock is not ten pieces of information, it is one chart described ten
+ways. CVX carried **13** — eight live setups and five finished. `SETUP_CAP = 6` holds a
+stock to six, counting live setups plus `history` rows and ignoring dormant ones, which are
+already out of the ledger. 55 of 150 stocks were over it.
+
+Removal order, finished first: `history` rows that **failed**, then `history` rows that
+reached their **target**, then surplus live setups from the end of the stored order. The
+main and alt slots are never cut — they are the row.
+
+**A completed call is the training data, so it is exported before it is cut.**
+`pattern_reproduce.py` scores the detector against every completed call with
+`stage: "target"`, and CVX alone held **3 of the 27 labels on record**. Deleting those
+outright would have quietly removed 11% of the evidence every tuning decision in this file
+rests on — the `HEIGHT_REF`, `MIN_SIDE_TOUCHES` and `SIDE_EXEMPT` tables included, which
+name CVX by ticker. `export_completed()` writes them to `data/completedCalls.json` first
+and `labels()` reads both places, de-duplicated on (ticker, pattern, timeframe, date). The
+count after capping is still 27.
+
+**It runs in two passes, and has to.** A history row is a span *inside* an entry while
+dropping a live setup rewrites the whole entry through `rebuild_entry`, so doing both to
+one stock in a single splice overlaps the ranges and corrupts the file — which it did on
+the first attempt, leaving unbalanced brackets. Pass one removes history, pass two
+re-parses the result and removes setups.
+
+`python3 pattern_watchlist.py --cap` (dry run) / `--cap --apply`; the daily price run calls
+it after the detector, so the cap holds without anyone remembering it.
+
+### Dormant setups: valid, but not what the chart is saying any more
+
+A confirmed break that price walked a long way back past, months ago, on a stock now
+trending the other way, is not *wrong* — it just is not the read. NOW's monthly ascending
+channel confirmed down on 2026-02-02 at $113.13 and still carries a $39.08 target while the
+stock sits at $158.96 in an uptrend, its break **41% undone**. Leaving that on the row says
+something about ServiceNow nobody believes.
+
+`dormant: true` (plus `dormantSince` and `dormantNote`) shelves it: kept in the data, out
+of the ledger, woken the moment the break re-forms. `shelve_dormant()` in
+`pattern_watchlist.py` both sets and clears it — `python3 pattern_watchlist.py --dormant`
+(dry run) / `--dormant --apply`, and the daily run reports candidates under **😴** and
+wakes under **⏰**.
+
+**Shelving is not finishing, and `history` is not where these go.** That array is the
+record of *completed* calls and is the label set `pattern_reproduce.py` trains on; a setup
+that never resolved is not a label, and filing one there would quietly corrupt the training
+data. `dormant` leaves the setup exactly where it is.
+
+There are **two shapes**, and they shelve for opposite reasons.
+
+**One: the break happened and the chart moved on.** Three conditions, all required —
+confirmed more than `DORMANT_AGE` (120) days ago; price more than `DORMANT_UNDONE` (25%)
+back past the confirm, **against** the setup; and the stock's own `trend` opposed to the
+setup's direction.
+
+**Two: nothing has broken and nothing is close to breaking.** A pending setup is only worth
+watching if its trigger is somewhere price might actually go. ANET's monthly ascending
+channel breaks down at $119.76 and up at $204.55 against a $172.37 close — **31% below or
+19% above before anything at all happens**. That is not a setup waiting for a break, it is
+a drawing waiting for a different year. `REACH` (15%) shelves it on the distance to its
+*nearest* trigger, and `REACH_WAKE` (10%) brings it back, the gap between them being
+hysteresis so a setup hovering at the line does not flip every session. This one needs no
+clock: a brand-new drawing 40% from price is no more actionable than an old one.
+
+55 setups are shelved on this test against 1 on the first, which is the proportion to
+expect — the ledger accumulates far more drawings that never came near a trigger than
+breaks that went stale.
+
+**A flat trend does not count.** Shelving on "not moving" retires setups that are merely
+waiting, which is the ENVA mistake in another costume. CACI's weekly rising wedge is 125
+days old with its break 37% undone and stays listed for exactly that reason — trend `flat`,
+not `up`.
+
+**The main and alt slots are never shelved.** They are the row; hiding one would leave the
+ledger showing a setup it has been told to hide. Those are reported and left for a human to
+replace, the same policy `--thin` and `--deadstops` use.
+
+**Waking a *confirmed* setup does not resume it — it asks for a redraw.** One close back
+past the confirm level, in the setup's own direction, is the trigger, and it needs no threshold and
+no clock: the break re-forming is the signal, not elapsed time. But a break that re-forms
+four months later is a *different* break on a different chart, and the shelved levels were
+measured off a pattern that is now stale — the target most of all. So waking clears the
+three dormant fields and sets `stage: "update"`, which is already the ledger's word for
+"post a new setup", with an `updateNote` saying when it was shelved and that the levels are
+the old pattern's.
+
+Coming back as a live `confirmed` call would be the worse failure of the two this section
+guards against: a shelved setup merely clutters the row, while a resurrected one puts
+arithmetic nobody re-checked back in front of you wearing a confirmed badge.
+
+**A pending setup wakes unchanged**, and the reason is the same one read the other way: its
+stage still says `forming`, which makes no claim. Nothing broke, so there is no stale
+verdict to present as live — only a level to watch, and `--redo-auto` refreshes the
+machine-drawn ones every Friday anyway.
+
+The UI counts them rather than listing them (`shelved` in `components/PatternWatchlist.tsx`,
+a muted line under the setup list carrying each `dormantNote` on hover), so a shelved
+reading never vanishes without trace.
 
 ### Stranded setups: confirmed breaks nothing can retire
 
