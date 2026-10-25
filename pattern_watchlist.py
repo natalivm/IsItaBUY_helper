@@ -1075,7 +1075,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             fh.write(new_text)
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
-            'geometry': geometry_faults(new_text),
+            'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
             'review': review, 'news': news}
@@ -1436,6 +1436,143 @@ def geometry_faults(text):
 # is still trading towards. LITE carried two of these: a daily channel confirmed down in
 # August that then rallied 32% above its confirm, kept alive by an invalidation 57% above
 # the highest price the stock had ever traded.
+# ── Invalidations that are not prices ──
+#
+# An invalidation is a trendline's value at the latest candle, and a sloped line extended
+# past the pattern leaves the range of prices the stock has ever traded: downward it decays
+# toward zero (ALAB's daily falling wedge froze a stop at $0.02 on a $257 stock), upward it
+# climbs past the all-time high (DAVE's daily ascending channel at $546.90 against a $491.07
+# high). Either way the fail rule can never fire, so the setup sits on the ledger forever —
+# this is the mechanism behind most of what `stranded_setups` finds one symptom of.
+#
+# `_stop_fault` in pattern_lines.py already refuses to FREEZE such a level into
+# `breakInvalidation`. Nothing was checking the live `invalidation`, which is what the UI
+# shows and what the fail rule reads.
+
+STOP_FLOOR = 0.05           # a stop inside this fraction of spot is not a level, it is zero
+STOP_RISK = 0.50            # beyond this much of the entry it is a direction, not a stop
+# A stop just outside the traded range is correct, not broken: on a stock at its highs the
+# place for a short's stop is a little above the high. QQQ's $764.44 against a $762.86 high
+# is 0.2% out and perfectly tradeable, where DAVE's $546.90 against $491.07 is 11% out and
+# a level price has no reason to visit. Only count it once it clears this margin.
+STOP_BEYOND = 0.15
+_RANGE_CACHE = {}
+
+
+def traded_range(ticker):
+    """(lowest low, highest high) over the longest candle file on disk, or None."""
+    if ticker in _RANGE_CACHE:
+        return _RANGE_CACHE[ticker]
+    out = None
+    for tf in ('monthly', 'weekly', 'daily'):
+        d = _load_chart_bars(ticker, tf)
+        if d and d.get('l') and d.get('h'):
+            out = (min(d['l']), max(d['h']))
+            break
+    _RANGE_CACHE[ticker] = out
+    return out
+
+
+def stop_fault(sv, price, rng):
+    """Why this setup's invalidation cannot act as a stop, or None if it can.
+
+    Returns (severity, reason): 'dead' for a level that is not a price at all, so the
+    failure rule can never fire, and 'wide' for a real level too far away to trade against.
+    """
+    inv = sv.get('breakUp') if sv.get('direction') == 'both' else sv.get('invalidation')
+    if inv is None or not price:
+        return None
+    if inv <= STOP_FLOOR * price:
+        return 'dead', f"${_fmt_price(inv)} is {inv / price * 100:.1f}% of spot — the line has decayed to zero"
+    if rng and inv > rng[1] * (1 + STOP_BEYOND):
+        return 'dead', (f"${_fmt_price(inv)} is {inv / rng[1] * 100 - 100:.0f}% above every price "
+                        f"it has traded (high ${_fmt_price(rng[1])})")
+    if rng and inv < rng[0] * (1 - STOP_BEYOND):
+        return 'dead', (f"${_fmt_price(inv)} is {100 - inv / rng[0] * 100:.0f}% below every price "
+                        f"it has traded (low ${_fmt_price(rng[0])})")
+    conf, dirn = sv.get('confirm'), sv.get('direction')
+    if conf and dirn in ('up', 'down'):
+        if (inv > conf) if dirn == 'up' else (inv < conf):
+            return 'dead', f"${_fmt_price(inv)} sits on the winning side of the ${_fmt_price(conf)} entry"
+        if abs(inv - conf) / conf > STOP_RISK:
+            return 'wide', f"risking {abs(inv - conf) / conf * 100:.0f}% of the entry"
+    return None
+
+
+def dead_stops(text):
+    """Setups whose invalidation is not a usable price.
+
+    Rows are (ticker, label, pattern, timeframe, stage, severity, reason, auto).
+    """
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price, tk = main.get('price'), main.get('ticker')
+        rng = traded_range(tk) if tk else None
+        for label, sv, pos in _setups(e):
+            fault = stop_fault(sv, price, rng)
+            if not fault:
+                continue
+            sev, why = fault
+            auto = bool(main.get('auto')) or bool(sv.get('auto'))
+            out.append((tk, label, sv.get('pattern') or main.get('pattern'),
+                        sv.get('timeframe') or main.get('timeframe'),
+                        sv.get('stage'), sev, why, auto))
+    return out
+
+
+def drop_dead_stops(apply=False, path=None):
+    """Remove auto-detected setups whose invalidation is not a price; list the rest.
+
+    Same policy as drop_thin: the hidden machine-drawn ones go quietly because a rescan
+    would redraw them anyway, while a main setup or anything posted by hand is listed for
+    review — replacing a call someone made is a decision, not a clean-up. Only 'dead'
+    faults are dropped; a merely wide stop is a judgement call and is reported, never cut.
+    """
+    with open(path or WATCHLIST_FILE) as fh:
+        text = fh.read()
+    cuts, dropped, review = [], [], []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        t_, price = main['ticker'], main.get('price')
+        rng = traded_range(t_)
+        keep_alt, stored, hit = e['alt'], [], []
+        for label, sv, pos in _setups(e):
+            fault = stop_fault(sv, price, rng)
+            bad = bool(fault) and fault[0] == 'dead'
+            auto = bool(main.get('auto')) or bool(sv.get('auto'))
+            if bad and (label == 'main' or not auto):
+                review.append(f"{t_} ({label}, {sv.get('timeframe')} {sv.get('pattern')}): {fault[1]}")
+                bad = False
+            if '_span' in pos:
+                (hit if bad else stored).append(pos)
+            elif bad and label.endswith(' alt'):
+                keep_alt = None
+                hit.append(pos)
+        if not hit:
+            continue
+        alt_auto = bool(keep_alt and keep_alt.get('auto', (0, 0, None))[2])
+        if keep_alt is None and e['alt'] is not None and stored:
+            tf = e['alt']['timeframe'][2] if 'timeframe' in e['alt'] else main.get('timeframe')
+            keep_alt = next((p for p in stored if (p['timeframe'][2] if 'timeframe' in p else main.get('timeframe')) == tf), None)
+            if keep_alt is not None:
+                stored.remove(keep_alt)
+                alt_auto = True
+        for pos in hit:
+            dropped.append(f"{t_} ({pos.get('timeframe', (0, 0, None))[2]} "
+                           f"{pos.get('pattern', (0, 0, main.get('pattern')))[2]})")
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, e['fields'], keep_alt, stored,
+                                             bool(main.get('auto')), alt_auto)))
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path or WATCHLIST_FILE, 'w') as fh:
+            fh.write(new_text)
+    return dropped, review
+
+
 STRANDED_UNDONE = 0.10      # price this far back past the confirm level
 STRANDED_STOP = 0.40        # ...and an invalidation at least this far from price
 
@@ -1630,6 +1767,18 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} height ${_fmt_price(height)} vs ${_fmt_price(start)} "
                   f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
     stranded = result.get('stranded') or []
+    if result.get('dead_stops'):
+        dead = [r for r in result['dead_stops'] if r[5] == 'dead']
+        wide = [r for r in result['dead_stops'] if r[5] == 'wide']
+        if dead:
+            print("\n🚫 Stop is not a price (the failure rule can never fire — a sloped line")
+            print("   extended past its pattern leaves the range the stock trades in):")
+            for tk, label, pat, tf, stage, _sev, why, auto in dead:
+                print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {why}" + ("  (auto)" if auto else ""))
+            print("  Run `python3 pattern_watchlist.py --deadstops --apply` to drop the auto ones.")
+        if wide:
+            print(f"\n📏 Stop further than {STOP_RISK * 100:.0f}% of the entry ({len(wide)} setups) — a real")
+            print("   level, but a direction rather than a trade.")
     if stranded:
         print(f"\n🪦 Stranded (break undone by >{STRANDED_UNDONE * 100:.0f}% with an invalidation >{STRANDED_STOP * 100:.0f}% away —")
         print("   nothing can retire these; post a replacement or mark them `update` by hand):")
@@ -1661,7 +1810,19 @@ if __name__ == "__main__":
     ap.add_argument("--prune", action="store_true", help="remove finished setups (target reached / failed) and post them to News")
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
+    ap.add_argument("--deadstops", action="store_true", help="remove auto-detected setups whose invalidation is not a usable price")
     args = ap.parse_args()
+    if args.deadstops:
+        gone, look = drop_dead_stops(apply=args.apply)
+        print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} setup(s) whose stop is not a price."
+              + ("\n  " + "\n  ".join(gone) if gone else ""))
+        if look:
+            print("\nPosted by hand or holding the row, left alone:")
+            for line in look:
+                print(f"  {line}")
+        if gone and not args.apply:
+            print("\nRun with --deadstops --apply to remove them.")
+        raise SystemExit(0)
     if args.thin:
         gone, look = drop_thin(apply=args.apply)
         print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} thin auto setup(s)."

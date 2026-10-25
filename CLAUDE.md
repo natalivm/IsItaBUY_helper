@@ -460,6 +460,42 @@ invalidations cannot retire them — rather than as a queue of errors to fix. Th
 redrawing are still the ones where the arithmetic came out absurd (STRL's $15.67, ENVA's
 $54.55), which is the `confirm ± height` test above, not the height ratio.
 
+### Invalidations that are not prices
+
+An invalidation is a trendline read at the latest candle, so a **sloped line extended past
+its own pattern walks out of the range the stock trades in**. Downward it decays toward
+zero — ALAB's daily falling wedge carried a stop of **$0.02** on a $257 stock — and upward
+it climbs past the all-time high, as DAVE's daily ascending channel did at $546.90 against
+a $491.07 high. Either way the failure rule can never fire, so the setup is immortal. This
+is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
+
+`stop_fault()` in `pattern_watchlist.py` names three shapes it cannot be:
+
+- **inside `STOP_FLOOR` (5%) of spot** — the line has decayed to zero;
+- **beyond `STOP_BEYOND` (15%) outside every price the stock has traded**;
+- **on the winning side of the entry** — a long whose stop sits above its own confirm.
+
+A fourth, `STOP_RISK` (50% of the entry), is reported as **📏** but never cut: a wide stop
+is a direction rather than a trade, and that is a judgement call.
+
+**The 15% margin is the whole difficulty of the test.** A stop just outside the traded
+range is *correct*, not broken: on a stock at its highs the place for a short's stop is a
+little above the high. QQQ's $764.44 against a $762.86 high is 0.2% out and perfectly
+tradeable; DAVE's is 11% out and a level price has no reason to visit. Without the margin
+the check flagged 204 setups, nearly all of them fine. With it, 59 — 43 machine-drawn and
+16 posted by hand.
+
+`python3 pattern_watchlist.py --deadstops` (dry run) / `--deadstops --apply` drops the
+auto-detected ones and lists the rest, the same policy `--thin` uses: a main setup or
+anything hand-posted is a call someone made, and replacing one is a decision rather than a
+clean-up. The daily report prints both lists under **🚫** and **📏**.
+
+**`_stoppable()` in `pattern_detect.py` is what stops the cleanup repeating.** Both places
+the detector builds a setup now run the same test, so a rescan cannot draw one of these
+again — without it Friday's redraw would hand back most of what was just removed. It judges
+against the range of the chart the pattern was drawn on, which is the right scope for "has
+this line left the chart", and is cheaper than re-reading the longest candle file.
+
 ### Stranded setups: confirmed breaks nothing can retire
 
 A setup fails on a close past invalidation plus a follow-through. When that level is half

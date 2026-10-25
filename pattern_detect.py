@@ -134,6 +134,21 @@ def _roomy(setup):
     return None if room is not None and room < pw.MIN_ROOM else setup
 
 
+def _stoppable(setup, price, rng):
+    """The setup, or None when its invalidation is not a price anything can trade against.
+
+    An invalidation is a trendline read at the latest candle, and a sloped line extended
+    past its own pattern walks out of the range the stock trades in — down toward zero, or
+    up past the all-time high. The failure rule then can never fire and the setup is
+    immortal. pattern_watchlist.stop_fault owns the test; this keeps a rescan from drawing
+    one in the first place, so the cleanup it feeds does not have to be repeated weekly.
+    """
+    if setup is None:
+        return None
+    fault = pw.stop_fault(setup, price, rng)
+    return None if fault and fault[0] == 'dead' else setup
+
+
 def _stage(bars, n, pattern, up, lo, start, A):
     """Walk the completed candles after the pattern formed. Returns a dict or None if finished/failed."""
     t, h, l, c = bars['t'], bars['h'], bars['l'], bars['c']
@@ -251,7 +266,9 @@ def _stage(bars, n, pattern, up, lo, start, A):
         out.update(stage='confirmed', stageDate=t[sig['conf']])
     else:
         out.update(stage='signal', stageDate=t[sig['i']])
-    return _roomy(out)
+    # The range the pattern was drawn on is the right scope for "has this line left the
+    # chart": a stop outside it is one no candle here can reach.
+    return _stoppable(_roomy(out), c[n - 1], (min(l[:n]), max(h[:n])))
 
 
 def detect_lines(bars, tf, n, all_found=None):
@@ -445,6 +462,8 @@ def detect_candle(bars, tf, n):
         s.update({'stage': 'confirmed', 'stageDate': t[conf]} if conf else {'stage': 'forming'})
         if _roomy(s) is None:
             continue                             # target too close to the confirmation level
+        if _stoppable(s, c[n - 1], (min(l[:n]), max(h[:n]))) is None:
+            continue                             # invalidation is not a price anything trades
         return s
     return None
 
