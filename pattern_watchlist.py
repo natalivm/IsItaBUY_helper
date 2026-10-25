@@ -1437,6 +1437,167 @@ def geometry_faults(text):
 # is still trading towards. LITE carried two of these: a daily channel confirmed down in
 # August that then rallied 32% above its confirm, kept alive by an invalidation 57% above
 # the highest price the stock had ever traded.
+# ── Capping how many setups a stock shows ──
+#
+# Ten readings on one stock is not ten pieces of information, it is one chart described ten
+# ways. SETUP_CAP keeps a stock to six, and finished rows go first — a call that completed
+# is a record, not a thing to act on.
+#
+# A completed call IS the training data, though: `pattern_reproduce.py` scores the detector
+# against every `history` row with stage "target", and CVX alone carried 3 of the 27 labels
+# on record. So those are EXPORTED to data/completedCalls.json before being cut, and the
+# harness reads both places. Deleting them outright would have quietly removed 11% of the
+# evidence every tuning decision in this file rests on.
+
+SETUP_CAP = 6
+COMPLETED_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "completedCalls.json")
+_HIST_ROW = re.compile(
+    r'\{ pattern: "([^"]+)", timeframe: "(\w+)", direction: "(\w+)", stage: "(\w+)", '
+    r'stageDate: "([\d-]+)",\s*\n\s*confirm: ([\d.]+), invalidation: ([\d.]+), target: ([\d.]+)')
+
+
+def _history_rows(text, e):
+    """(stage, start, end, source) for each row of this entry's `history` array."""
+    if 'history' not in e['fields']:
+        return []
+    h0, h1, _ = e['fields']['history']
+    seg = text[h0:h1]
+    out, depth, start = [], 0, None
+    for i, ch in enumerate(seg):
+        if ch == '{':
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0 and start is not None:
+                src = seg[start:i + 1]
+                m = re.search(r'stage: "(\w+)"', src)
+                out.append((m.group(1) if m else '?', h0 + start, h0 + i + 1, src))
+                start = None
+    return out
+
+
+def export_completed(text, path=None):
+    """Append every `history` row with stage "target" to the completed-calls file.
+
+    Keyed by (ticker, pattern, timeframe, stageDate) so repeated runs do not duplicate.
+    Returns the rows added.
+    """
+    path = path or COMPLETED_FILE
+    have = []
+    if os.path.exists(path):
+        with open(path) as fh:
+            have = json.load(fh)
+    seen = {(r['ticker'], r['pattern'], r['timeframe'], r['stageDate']) for r in have}
+    added = []
+    for e in parse_watchlist(text):
+        tk = e['fields'].get('ticker', (0, 0, None))[2]
+        for stage, a, b, src in _history_rows(text, e):
+            if stage != 'target':
+                continue
+            m = _HIST_ROW.search(src)
+            if not m:
+                continue
+            row = {'ticker': tk, 'pattern': m.group(1), 'timeframe': m.group(2),
+                   'direction': m.group(3), 'stage': m.group(4), 'stageDate': m.group(5),
+                   'confirm': float(m.group(6)), 'invalidation': float(m.group(7)),
+                   'target': float(m.group(8))}
+            key = (tk, row['pattern'], row['timeframe'], row['stageDate'])
+            if key in seen:
+                continue
+            seen.add(key)
+            have.append(row)
+            added.append(row)
+    if added:
+        have.sort(key=lambda r: (r['ticker'], r['stageDate']))
+        with open(path, 'w') as fh:
+            json.dump(have, fh, indent=2)
+            fh.write('\n')
+    return added
+
+
+def _cap_plan(text, e):
+    """(history rows to drop, live setup positions to drop) for one entry, or ([], [])."""
+    m = {k: v[2] for k, v in e['fields'].items()}
+    live = [(lb, sv, pos) for lb, sv, pos in _setups(e) if not sv.get('dormant')]
+    hist = _history_rows(text, e)
+    excess = len(live) + len(hist) - SETUP_CAP
+    if excess <= 0:
+        return [], [], len(live) + len(hist)
+    drop_hist, drop_live = [], []
+    for want in ('failed', 'target'):          # finished first: failures, then paid calls
+        for row in hist:
+            if excess and row[0] == want and row not in drop_hist:
+                drop_hist.append(row)
+                excess -= 1
+    for lb, sv, pos in reversed(live):         # then surplus, never the two visible slots
+        if not excess:
+            break
+        if lb == 'main' or lb.endswith(' alt') or '_span' not in pos:
+            continue
+        drop_live.append(pos)
+        excess -= 1
+    return drop_hist, drop_live, len(live) + len(hist)
+
+
+def cap_setups(apply=False, path=None):
+    """Hold every stock to SETUP_CAP shown readings, finished rows going first.
+
+    Order of removal: `history` rows that failed, then `history` rows that reached their
+    target (exported to data/completedCalls.json first, so the reproduce harness keeps
+    them), then surplus live setups from the end of the stored order. Dormant setups are
+    not counted -- they are already out of the ledger -- and the main and alt slots are
+    never cut, being the row itself.
+
+    Done in two passes. A history row is a span *inside* an entry while dropping a live
+    setup rewrites the whole entry, so doing both to one stock in a single pass splices
+    overlapping ranges and corrupts the file. The first pass removes history, the second
+    re-parses the result and removes setups.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    exported = export_completed(text)
+    counts = {}
+
+    cuts = []
+    for e in parse_watchlist(text):
+        tk = e['fields'].get('ticker', (0, 0, None))[2]
+        drop_hist, drop_live, shown = _cap_plan(text, e)
+        if drop_hist or drop_live:
+            counts[tk] = [shown, len(drop_hist), len(drop_live)]
+        for stage, a, b, src in drop_hist:
+            nxt = b
+            while nxt < len(text) and text[nxt] in ', \n':
+                nxt += 1
+            cuts.append((a, nxt, ''))
+    for a, b, repl in sorted(cuts, reverse=True):
+        text = text[:a] + repl + text[b:]
+
+    cuts = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        _, drop_live, _ = _cap_plan(text, e)
+        if not drop_live:
+            continue
+        keep = [pos for lb, sv, pos in _setups(e) if '_span' in pos and pos not in drop_live]
+        alt = e['alt']
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, e['fields'], alt, keep,
+                                             bool(m.get('auto')),
+                                             bool(alt and alt.get('auto', (0, 0, None))[2]))))
+    for a, b, repl in sorted(cuts, reverse=True):
+        text = text[:a] + repl + text[b:]
+
+    report = [f"{tk}: {v[0]} -> {SETUP_CAP}  ({v[1]} finished, {v[2]} surplus setup(s))"
+              for tk, v in counts.items()]
+    if apply:
+        with open(path, 'w') as fh:
+            fh.write(text)
+    return report, exported
+
+
 # ── Dormant setups: valid, but no longer what the chart is saying ──
 #
 # A confirmed break that price has walked a long way back past, months ago, on a stock now
@@ -2058,8 +2219,19 @@ if __name__ == "__main__":
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
+    ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.cap:
+        rep, exported = cap_setups(apply=args.apply)
+        if exported:
+            print(f"Exported {len(exported)} completed call(s) to {os.path.relpath(COMPLETED_FILE)} first.")
+        print(f"{'Capped' if args.apply else 'Would cap'} {len(rep)} stock(s):")
+        for line in rep:
+            print(f"  {line}")
+        if rep and not args.apply:
+            print("\nRun with --cap --apply to write them.")
+        raise SystemExit(0)
     if args.dormant:
         shelved, woken = shelve_dormant(apply=args.apply)
         print(f"{'Shelved' if args.apply else 'Would shelve'} {len(shelved)} setup(s):")

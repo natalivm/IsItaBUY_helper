@@ -514,6 +514,35 @@ again — without it Friday's redraw would hand back most of what was just remov
 against the range of the chart the pattern was drawn on, which is the right scope for "has
 this line left the chart", and is cheaper than re-reading the longest candle file.
 
+### Six readings per stock, and what happens to the finished ones
+
+Ten readings on one stock is not ten pieces of information, it is one chart described ten
+ways. CVX carried **13** — eight live setups and five finished. `SETUP_CAP = 6` holds a
+stock to six, counting live setups plus `history` rows and ignoring dormant ones, which are
+already out of the ledger. 55 of 150 stocks were over it.
+
+Removal order, finished first: `history` rows that **failed**, then `history` rows that
+reached their **target**, then surplus live setups from the end of the stored order. The
+main and alt slots are never cut — they are the row.
+
+**A completed call is the training data, so it is exported before it is cut.**
+`pattern_reproduce.py` scores the detector against every `history` row with
+`stage: "target"`, and CVX alone held **3 of the 27 labels on record**. Deleting those
+outright would have quietly removed 11% of the evidence every tuning decision in this file
+rests on — the `HEIGHT_REF`, `MIN_SIDE_TOUCHES` and `SIDE_EXEMPT` tables included, which
+name CVX by ticker. `export_completed()` writes them to `data/completedCalls.json` first
+and `labels()` reads both places, de-duplicated on (ticker, pattern, timeframe, date). The
+count after capping is still 27.
+
+**It runs in two passes, and has to.** A history row is a span *inside* an entry while
+dropping a live setup rewrites the whole entry through `rebuild_entry`, so doing both to
+one stock in a single splice overlaps the ranges and corrupts the file — which it did on
+the first attempt, leaving unbalanced brackets. Pass one removes history, pass two
+re-parses the result and removes setups.
+
+`python3 pattern_watchlist.py --cap` (dry run) / `--cap --apply`; the daily price run calls
+it after the detector, so the cap holds without anyone remembering it.
+
 ### Dormant setups: valid, but not what the chart is saying any more
 
 A confirmed break that price walked a long way back past, months ago, on a stock now

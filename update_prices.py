@@ -962,6 +962,18 @@ def main():
             if friday:
                 n = pattern_detect.redo_stored(apply=True, verbose=False)
                 print(f"Friday re-evaluation: {len(new_setups)} entries and {n} stored setups redrawn.")
+            # Shelve readings the chart has stopped agreeing with, wake any whose break
+            # has re-formed, then hold every stock to SETUP_CAP. The cap runs last so it
+            # counts what is actually left, and it exports completed calls before cutting
+            # them -- those are the reproduce harness's labels.
+            shelved, woken = pattern_watchlist.shelve_dormant(apply=True)
+            if shelved or woken:
+                print(f"Shelved {len(shelved)} setup(s), woke {len(woken)}.")
+            capped, exported = pattern_watchlist.cap_setups(apply=True)
+            if capped:
+                print(f"Capped {len(capped)} stock(s) to {pattern_watchlist.SETUP_CAP} readings"
+                      + (f"; exported {len(exported)} completed call(s) first." if exported else "."))
+
             # Refresh the "N agree" summaries on the shown setups.
             with open(pattern_watchlist.WATCHLIST_FILE) as fh:
                 wl_text = fh.read()
