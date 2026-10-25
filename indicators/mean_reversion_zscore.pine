@@ -1,0 +1,174 @@
+//@version=6
+// Mean Reversion — z-score oscillator with turn dots, a half-life readout and a regime gate.
+//
+// The line is a z-score: how far price sits from its own rolling mean, measured in standard
+// deviations of that same window. 0 is the mean, +2 is "two sigma rich", -2 "two sigma cheap".
+//
+// Defaults are set to match the IA-Mean-Reversion pane on PLTR 2h, read off the chart:
+//   · drawn as a line, not a filled area (switch to Area for the mountains look)
+//   · a zone either side of zero, roughly 0.382 to 0.618, rather than bands out at 2 and 3
+//   · dots on every pivot that happens outside that zone, which is why there are so many of them
+//   · no regime gate — that pane dotted straight through the PLTR run that never reverted
+// The gate is still here and still the most useful thing in the file; it is just off by default so
+// the output matches. Turn it on and the dots during a trend disappear.
+//
+// The rest of the reasoning is in README-mean-reversion.md:
+//   · z-score, not raw distance — a $5 stretch means nothing until you know the stock's own spread
+//   · half-life from an AR(1) / Ornstein-Uhlenbeck fit, because knowing a series reverts is not
+//     enough: a 5-bar snapback and a 50-bar grind are both "mean reverting" and only one is
+//     tradeable on your timeframe. It also sets the lookback — convention is about 2x half-life.
+//   · dots mark the turn, not the extreme. Being stretched is not a signal; rolling over is.
+indicator("Mean Reversion (z-score)", "MeanRev", overlay = false, max_labels_count = 500)
+
+// ───────────── Inputs ─────────────
+const string GRP_Z   = "Oscillator"
+const string GRP_SIG = "Turn dots"
+const string GRP_REG = "Regime gate"
+const string GRP_VIS = "Look"
+
+const string D_PEAK  = "At the turn (confirms later)"
+const string D_CROSS = "On the way back (immediate)"
+const string P_LINE  = "Line"
+const string P_AREA  = "Area (mountains)"
+
+src      = input.source(close, "Source", group = GRP_Z)
+len      = input.int(50, "Lookback", minval = 5, group = GRP_Z, tooltip = "Bars for the mean and the standard deviation. The convention is roughly twice the half-life — the table shows what that would be for this symbol right now, so you can match it.")
+smoothLn = input.int(5, "Smooth over", minval = 1, maxval = 50, group = GRP_Z, tooltip = "EMA applied to the z-score. A raw z-score on 2h data is jagged and throws off a pivot every few bars; the reference pane draws a visibly smoother line with longer arcs. Raised from 3 to 5 after comparing the two panes on PLTR 2h side by side — eyeballed against a screenshot, not fitted to data. 1 turns it off.")
+zoneIn   = input.float(0.382, "Zone from ±", minval = 0.0, step = 0.01, group = GRP_Z, inline = "lv")
+zoneOut  = input.float(0.618, "to ±", minval = 0.01, step = 0.01, group = GRP_Z, inline = "lv", tooltip = "The shaded zone either side of zero, and the threshold a pivot must be beyond to earn a dot.\n\nThese defaults are measured off the PLTR screenshot, where the bands sit near 0.382 and 0.618 — fib numbers, which fits how the rest of this desk's levels are built, though I am reading pixels, not source.\n\nThe textbook mean-reversion setting is 2.0 and 3.0: entry at two sigma, abandon past three. That gives far fewer dots and is the better starting point if you are trading this rather than matching the reference.")
+
+dotMode  = input.string(D_PEAK, "Dot sits", options = [D_PEAK, D_CROSS], group = GRP_SIG, tooltip = "\"At the turn\" puts the dot on the actual peak or trough, like the reference pane, but it can only be drawn once the next few bars confirm the turn — so it appears late and must not be read as a live entry. \"On the way back\" fires the moment z re-crosses the zone edge: worse price, honest timing.")
+confirm  = input.int(3, "Bars either side of the turn", minval = 1, maxval = 20, group = GRP_SIG, tooltip = "How many bars must be lower (for a peak) on both sides. Also how many bars late the dot appears. Raise it for fewer, larger turns.")
+newExt   = input.bool(true, "Only on a new extreme", group = GRP_SIG, tooltip = "Within one trip outside the zone, a dot fires on the first turn and then only on a turn that goes further than any before it. So a shallow dip and the deeper low that follows both get marked, but a shallower wiggle afterwards does not add a third. Turn it off and every qualifying pivot gets a dot, which runs about four times denser than the reference pane.")
+
+hlGate   = input.bool(true, "Hide dots when the half-life is longer than the lookback", group = GRP_REG, tooltip = "The half-life is how many bars this symbol has taken to close half the gap to its mean. When that is longer than the window being measured, the oscillator is tracking a drift it will not finish inside the lookback, and fading it is hopeless.\n\nMU on daily reads a half-life near 200 bars against a 50-bar lookback — about ten months to come halfway back — and its May 2026 red dot sat directly under a move from 430 to 900. PLTR on 2h reads 20 to 30 bars against the same 50, comfortably inside, so its dots are untouched by this.\n\nUnlike the trending filter below, this one is on by default: a half-life four times the lookback is not a close call.")
+gateOn   = input.bool(false, "Hide dots when the symbol is trending", group = GRP_REG, tooltip = "Off by default so the output matches the reference pane, which has no such filter. Turning it on is the one real improvement here: through a strong trend the z-score pins at an extreme and every fade loses, which is exactly what your own notes describe on AMD (\"smashed out\") and PLTR (\"no quit and did not mean revert\").")
+vrLag    = input.int(4, "Variance ratio horizon (q)", minval = 2, maxval = 50, group = GRP_REG, tooltip = "Compares the variance of q-bar moves with q times the variance of 1-bar moves. Below 1, moves partly cancel: mean reverting. Above 1, they compound: trending.")
+hurstMx  = input.float(0.5, "Trade only while Hurst <", minval = 0.3, maxval = 0.7, step = 0.01, group = GRP_REG, tooltip = "Hurst is derived from the same variance ratio: H = 0.5 x (1 + ln(VR) / ln(q)). Below 0.5 is anti-persistent (reverting), 0.5 is a random walk, above is persistent (trending). Estimates are sensitive to q — change it and the reading moves, so do not tune it per symbol.")
+
+plotAs   = input.string(P_LINE, "Draw as", options = [P_LINE, P_AREA], group = GRP_VIS, tooltip = "Line matches the PLTR pane. Area gives the filled mountains from the AMD chart — same numbers, different fill.")
+upCol    = input.color(#4a7dff, "Rich", group = GRP_VIS, inline = "c")
+dnCol    = input.color(#4a7dff, "Cheap", group = GRP_VIS, inline = "c")
+hiDot    = input.color(#f23645, "Turn down", group = GRP_VIS, inline = "d")
+loDot    = input.color(#089981, "Turn up", group = GRP_VIS, inline = "d")
+showTbl  = input.bool(true, "Stats table", group = GRP_VIS)
+
+// ───────────── Oscillator ─────────────
+// Every ta.* call sits at the top level throughout this file: they keep rolling state, so a call
+// skipped on one bar because a ternary took the other branch corrupts the series from there on.
+float mean = ta.sma(src, len)
+float sd   = ta.stdev(src, len)
+float zRaw = sd > 0 ? (src - mean) / sd : 0.0
+float zEma = ta.ema(zRaw, smoothLn)
+float z    = smoothLn > 1 ? zEma : zRaw
+
+// ───────────── Half-life (AR(1) / Ornstein-Uhlenbeck) ─────────────
+// Regress this bar's change in z on last bar's z: dz = a + b * z[1]. b is negative for a reverting
+// series; phi = 1 + b is the AR(1) persistence and the half-life is -ln2 / ln(phi). phi >= 1 means
+// the fit found no pull back towards the mean at all, so there is no half-life to report.
+float zPrev = z[1]
+float dz    = z - z[1]
+float sdP   = ta.stdev(zPrev, len)
+float sdD   = ta.stdev(dz, len)
+float corrD = ta.correlation(zPrev, dz, len)
+float slope = sdP > 0 ? corrD * sdD / sdP : na
+float phi   = na(slope) ? na : 1 + slope
+float halfL = not na(phi) and phi > 0 and phi < 1 ? -math.log(2) / math.log(phi) : na
+
+// ───────────── Regime: variance ratio and Hurst ─────────────
+// Var(q-bar returns) against q x Var(1-bar returns). Under a random walk variance grows linearly
+// with the horizon and the ratio is 1; sub-linear growth (< 1) is the mean-reverting case.
+float r1    = src > 0 and src[1] > 0 ? math.log(src / src[1]) : na
+float rq    = src > 0 and src[vrLag] > 0 ? math.log(src / src[vrLag]) : na
+float sdR1  = ta.stdev(r1, len)
+float sdRq  = ta.stdev(rq, len)
+float v1    = math.pow(sdR1, 2)
+float vq    = math.pow(sdRq, 2)
+float vr    = v1 > 0 and not na(vq) ? vq / (vrLag * v1) : na
+float hurst = not na(vr) and vr > 0 ? 0.5 * (1 + math.log(vr) / math.log(vrLag)) : na
+bool  revert = na(hurst) or hurst < hurstMx
+
+// ───────────── Turn dots ─────────────
+// Being stretched is not a signal; rolling over is. Either a confirmed pivot in z (drawn back on
+// the peak, late) or z crossing back inside the zone (on time). The reference pane dots pivots of
+// every size as long as they happen outside the zone, which is why the default zone edge is low.
+float ph = ta.pivothigh(z, confirm, confirm)
+float pl = ta.pivotlow(z, confirm, confirm)
+bool  peakHi  = not na(ph) and ph >= zoneIn
+bool  peakLo  = not na(pl) and pl <= -zoneIn
+bool  crossHi = z < zoneIn and z[1] >= zoneIn
+bool  crossLo = z > -zoneIn and z[1] <= -zoneIn
+
+bool  usePeak = dotMode == D_PEAK
+bool  slowRev = not na(halfL) and halfL > len
+bool  gate    = (not gateOn or revert) and (not hlGate or not slowRev)
+int   dotOff  = usePeak ? -confirm : 0
+
+// A dot per new extreme. The first turn outside the zone is marked; after that only a turn that
+// goes further than any before it in the same trip gets one. A shallow first dip therefore never
+// hides the real low behind it — both are marked — while a shallower wiggle afterwards is ignored.
+// Everything is judged on the pivot's own bar (z[confirm]): by the time a pivot confirms, z has
+// often already come back inside the zone, and resetting on the live bar would close the trip
+// before its own pivots had a chance to confirm.
+float zAtDot = usePeak ? z[confirm] : z
+var float hiBest = na
+var float loBest = na
+if zAtDot < zoneIn
+    hiBest := na
+if zAtDot > -zoneIn
+    loBest := na
+
+float hiVal = usePeak ? ph : z
+float loVal = usePeak ? pl : z
+bool  rawHi = usePeak ? peakHi : crossHi
+bool  rawLo = usePeak ? peakLo : crossLo
+bool  newHi = na(hiBest) or hiVal > hiBest
+bool  newLo = na(loBest) or loVal < loBest
+
+bool  dotHi = gate and rawHi and (not newExt or newHi)
+bool  dotLo = gate and rawLo and (not newExt or newLo)
+if rawHi and newHi
+    hiBest := hiVal
+if rawLo and newLo
+    loBest := loVal
+
+// ───────────── Plots ─────────────
+// plot()'s style argument must be a constant, so both styles are plotted and the unused one is fed
+// na. The line is always drawn; in Area mode the fill sits under it.
+bool  asArea = plotAs == P_AREA
+color zFill  = z >= 0 ? color.new(upCol, 72) : color.new(dnCol, 72)
+plot(asArea ? z : na, "z-score fill", color = zFill, style = plot.style_area)
+plot(z, "z-score", color = z >= 0 ? upCol : dnCol, linewidth = 1)
+
+// Bands are plots rather than hlines: hline() only takes a const or an input, so -zoneIn is not a
+// legal argument to it.
+hline(0, "mean", color = color.new(color.gray, 40), linestyle = hline.style_dotted)
+pEu = plot(zoneIn, "zone inner rich", color = color.new(hiDot, 55))
+pSu = plot(zoneOut, "zone outer rich", color = color.new(hiDot, 55))
+pEl = plot(-zoneIn, "zone inner cheap", color = color.new(loDot, 55))
+pSl = plot(-zoneOut, "zone outer cheap", color = color.new(loDot, 55))
+fill(pEu, pSu, color = color.new(hiDot, 78), title = "rich zone")
+fill(pEl, pSl, color = color.new(loDot, 78), title = "cheap zone")
+
+plotshape(dotHi ? (usePeak ? ph : z) : na, "Turn down", shape.circle, location.absolute, hiDot, offset = dotOff, size = size.tiny)
+plotshape(dotLo ? (usePeak ? pl : z) : na, "Turn up", shape.circle, location.absolute, loDot, offset = dotOff, size = size.tiny)
+
+alertcondition(dotHi, "Mean reversion: turn down", "Stretched rich and rolling over")
+alertcondition(dotLo, "Mean reversion: turn up", "Stretched cheap and turning up")
+
+// ───────────── Stats ─────────────
+var table t = table.new(position.top_right, 2, 6, bgcolor = color.new(color.black, 25))
+tRow(table tb, int r, string k, string v, color c) =>
+    tb.cell(0, r, k, text_color = color.gray, text_size = size.small, text_halign = text.align_left)
+    tb.cell(1, r, v, text_color = c, text_size = size.small, text_halign = text.align_right)
+
+if showTbl and barstate.islast
+    string reg  = na(hurst) ? "unknown" : revert ? "reverting" : "trending — fades are dangerous"
+    color  regC = na(hurst) ? color.gray : revert ? loDot : hiDot
+    tRow(t, 0, "z-score", str.tostring(z, "#.00"), math.abs(z) >= zoneIn ? (z > 0 ? hiDot : loDot) : color.white)
+    tRow(t, 1, "half-life (bars)", na(halfL) ? "no pull to the mean" : str.tostring(halfL, "#.0") + (slowRev ? "  slower than the lookback" : ""), slowRev ? hiDot : color.white)
+    float want = na(halfL) ? na : math.round(halfL * 2)
+    tRow(t, 2, "→ lookback ≈ 2x", na(want) ? "—" : str.tostring(want, "#") + (math.abs(want - len) > len * 0.25 ? "  (now " + str.tostring(len) + ")" : ""), color.white)
+    tRow(t, 3, "variance ratio q=" + str.tostring(vrLag), na(vr) ? "—" : str.tostring(vr, "#.00"), color.white)
+    tRow(t, 4, "Hurst", na(hurst) ? "—" : str.tostring(hurst, "#.00"), regC)
+    tRow(t, 5, "regime", reg, regC)
