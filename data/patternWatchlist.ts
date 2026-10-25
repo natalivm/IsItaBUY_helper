@@ -11750,6 +11750,27 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed weekly close back inside the broken boundary, above $66.35.",
       note: "The channel up from January 2025 broke down in September — the week of Sep 7 closed below the lower line at $65.19 and Sep 14 confirmed below $64.36. Price bottomed near $59.44 and has come all the way back: the week of Oct 19 closed at $65.20, above the confirmation and under 2% from the $66.35 line, with daily RSI at 62. The $57.28 target is still on the board, but this break is close to being taken back.",
     },
+    more: [
+      {
+        pattern: "Falling Wedge",
+        timeframe: "weekly",
+        direction: "up",
+        stage: "signal",
+        stageDate: "2026-10-19",
+        signal: 63.92,
+        confirm: 65.66,
+        invalidation: 59.21,
+        target: 75.49,
+        lines: [
+          { from: ["2026-05-04", 79.47], to: ["2026-10-19", 63.92] },
+          { from: ["2026-05-04", 61.04], to: ["2026-10-19", 59.21] },
+        ],
+        signalRule: "a completed weekly close above $63.92; a close back inside cancels it.",
+        confirmRule: "a later completed weekly close above $65.66, beyond the signal candle's high.",
+        failRule: "a completed weekly close below $59.21, then a follow-through close below that candle's low.",
+        note: "Redrawn on current candles rather than kept at the source tool's June levels. Theirs confirmed above $68.97 on Jun 22 and then came undone — price fell to $59.44 by Oct 1 — so its trigger sits 5.8% above spot and has already failed once. This one signalled in the week of Oct 19, which closed $65.20 above the falling boundary at $63.92, and confirms on a weekly close above that week's $65.66 high: 0.7% away, and the weekly confirmation of the same move the daily channel already broke. Target $75.49.",
+      },
+    ],
   },
   {
     ticker: "GD",
