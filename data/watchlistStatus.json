@@ -5474,13 +5474,13 @@
  "STRL|daily Falling Wedge": {
   "label": "daily Falling Wedge",
   "setup": "Falling Wedge (daily)",
-  "stage": "confirmed",
+  "stage": "update",
   "ticker": "STRL"
  },
  "STRL|main": {
   "label": "main",
   "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "update",
   "ticker": "STRL"
  },
  "STRL|weekly alt": {
