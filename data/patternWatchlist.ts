@@ -6284,6 +6284,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     name: "CrowdStrike Holdings, Inc.",
     price: 257.57,
     priceDate: "2026-10-23",
+    checkedOn: "2026-10-25",
     rsi: 56.2,
     trend: "up",
     pattern: "Ascending Channel",
@@ -6299,8 +6300,8 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-04-24", 108.89], to: ["2026-10-23", 233.9] },
     ],
     keyLevel: {
-      price: 264.15,
-      text: "$264.15 turned price back in October and is the first thing in the way. Above it the next reference is the $286.99 record, which the channel's top is anchored to."
+      price: 261.21,
+      text: "$261.21 is the Oct 14 gap and the nearest thing in the way, 1.4% up, with spot sitting inside the gap rather than through it. $264.15 turned price back in October and is the next reference, then the $286.99 record."
     },
     note: "Price has run up inside a rising channel since the April low, and the lower line is the real evidence here: fifteen touches since April, and no close more than 6.6% beneath it. Mid-October tested it properly — Oct 16, 19 and 20 all closed below the line, which was a downward signal, and Oct 21 closed back inside and cancelled it. At $257.57 price sits in the middle of the channel with nothing broken in either direction. A confirmed daily close above $298.67 opens $363.44; a confirmed close below $233.90 points to $169.13. Confirmation means a second close beyond the break candle's extreme, not just the first close through the line — the October round trip is exactly why.",
   },
