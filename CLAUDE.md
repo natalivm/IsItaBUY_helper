@@ -125,6 +125,13 @@ with no known earnings date never earns one, there being nothing to be ahead of,
 and already looked at. `checkedOn` is in `KEEP_HEAD`, so a rescan carries it; nothing
 writes it automatically.
 
+**A check also expires when price breaks against the reading it was made on** — see
+RULEBOOK.md. The green dot's earnings rule says a check dies when the numbers land; the
+same logic says it dies when the chart stops saying what it said. The expiry condition is
+the checked setup's own `failRule`, so record which setup carries the check when you clear
+a stock's dots. Not wired up: nothing re-flags a row automatically today, so this is a rule
+for hand edits until something enforces it.
+
 The row dots cannot see the stored setups: the build moves `alt` and `more` into
 `public/setups/TICKER.json` (the `split-stored-setups` plugin in `vite.config.ts`) and
 an expanded row fetches them. Counting those would need the plugin to leave a tally

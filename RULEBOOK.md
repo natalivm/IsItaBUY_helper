@@ -48,6 +48,32 @@ hand-written and quote the numbers that were true when they were written. STRL's
 said $731.25 — the target of a wedge retired days earlier — while the stock traded at
 $355.30.
 
+## The dots: what a check is worth, and when it expires
+
+**A red dot means newly generated and not yet read, nothing else.** It is not a quality
+mark and not a permanent label. Once a stock's shown setups have been checked by hand, the
+`auto: true` comes off them and the dot goes — that is the documented procedure and it is
+the only thing that clears it.
+
+**A check expires on the event that makes it stale, never on a clock.** `checkedAhead()`
+already does this for earnings: the green dot lives while `data/earningsCalendar.json` has
+a date for the ticker still ahead of today, because what makes a reading stale is the
+numbers landing, not time passing.
+
+**A price event ends a check the same way a print does.** If the stock breaks *against*
+the reading the check was made on, the check is spent and the row is owed a fresh look —
+bring the red dot back. PLTR is the case: it was checked on Oct 25 with a bullish daily
+falling wedge as the live read, so a completed close below its $180.41 invalidation plus
+the follow-through its `failRule` names is what re-flags it. The check said "I have read
+this chart and this is what it says"; once the chart says something else, the check is a
+statement about a chart that no longer exists.
+
+**Apply this to every hand-check from here on.** When you clear a stock's dots, you are
+asserting a reading, so note which setup carries it — the fail rule of the checked setup
+is the expiry condition. A stock with neither a known earnings date nor a live checked
+setup has nothing to expire against and earns no green dot, which is correct rather than a
+gap.
+
 ## Taking levels from the source tool
 
 **Reproduce every level from our own candles before writing it.** Their signal candle's

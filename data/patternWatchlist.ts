@@ -4446,7 +4446,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "PLTR",
     name: "Palantir Technologies Inc.",
-    auto: true,
+    keyLevel: {
+      price: 184.45,
+      text: "The Oct 16 low, and the hinge between the two daily wedges. Above $201.34 the falling wedge signals toward $228.04 and new highs past $212.94; a close below $184.45 confirms the rising wedge toward $173.14.",
+    },
     checkedOn: "2026-10-25",
     trend: "up",
     rsi: 55.0,
@@ -4468,7 +4471,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $194.68 on Oct 5.",
     alt: {
-      auto: true,
       pattern: "Rising Wedge",
       timeframe: "weekly",
       direction: "down",
