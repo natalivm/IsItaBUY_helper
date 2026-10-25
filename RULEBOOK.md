@@ -89,6 +89,14 @@ the follow-through its `failRule` names is what re-flags it. The check said "I h
 this chart and this is what it says"; once the chart says something else, the check is a
 statement about a chart that no longer exists.
 
+**A check also expires the moment any of the stock's setups is replaced by an
+auto-generated one.** The check was made against the setups as they stood; swapping one
+for a machine drawing nobody has read makes it a check of something that is no longer
+there. Clear `checkedOn` in the same edit that writes the replacement — not as a courtesy
+but because the green dot would otherwise vouch for a reading the detector produced after
+the person stopped looking. This is the third way a check dies, alongside the print and
+the break, and it is the only one a script can cause.
+
 **Apply this to every hand-check from here on.** When you clear a stock's dots, you are
 asserting a reading, so note which setup carries it — the fail rule of the checked setup
 is the expiry condition. A stock with neither a known earnings date nor a live checked

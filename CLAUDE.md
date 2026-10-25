@@ -131,7 +131,10 @@ today**: the only candidate was ENVA, and it was the `_closing_in` false positiv
 report now filters, which is why that guard matters here too. The green dot's earnings rule says a check dies when the numbers land; the
 same logic says it dies when the chart stops saying what it said. The expiry condition is
 the checked setup's own `failRule`, so record which setup carries the check when you clear
-a stock's dots. Not wired up: nothing re-flags a row automatically today, so this is a rule
+a stock's dots. A check also dies when any of the stock's setups is replaced by an
+auto-detected one — `checkedOn` must be cleared in the same edit that writes the
+replacement, since the green dot would otherwise vouch for a drawing made after the person
+stopped looking. That is the one expiry a script can cause, so it is the one to wire first. Not wired up: nothing re-flags a row automatically today, so this is a rule
 for hand edits until something enforces it.
 
 The row dots cannot see the stored setups: the build moves `alt` and `more` into
