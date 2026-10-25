@@ -887,7 +887,7 @@ A wedge invalidates on the far side at every stage, so this never fires for one.
 
 `#` is the landing page, and it used to download the whole app — all 95 stock definitions,
 the valuation model, the ledger and the notes drawer, none of which it renders. The routes
-past it are `React.lazy` now, and the first chunk is 514 KB / 151 KB gzipped against 944 KB
+past it are `React.lazy` now, and the first chunk is 462 KB / 140 KB gzipped against 944 KB
 / 293 KB before.
 
 | chunk | carries | fetched when |
@@ -941,16 +941,24 @@ list you came from.
 The landing page renders two lists, both read straight from `data/weeklyFeature.ts`
 — it computes nothing itself:
 
-- **Hottest setups** — at most 3 (`TOP_N`), picked by `weekly_feature.score_setup`
-  from the setups the watchlist actually shows (main + alt), skipping
-  auto-detected ones (red dot = not checked by hand) and "No clear pattern"
-  placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
+- **Hottest setups** — **two shortlists, `TOP_N` (3) each way: bullish above,
+  bearish below**, each ranked and numbered on its own. Ranking both together
+  let one side take every slot, which reads as a market call rather than a list
+  of setups; the scoring is unchanged and only the pool is split. Picked by
+  `weekly_feature.score_setup` from the setups the watchlist actually shows
+  (main + alt), skipping auto-detected ones (red dot = not checked by hand) and
+  "No clear pattern" placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
   momentum (+20 with, −25 against, same thresholds as `pattern_watchlist`),
   trend agreement (+10 / −5), agreeing stored setups (+4 each, max +12), room to
   target (0.6 per %, capped at 40%), reward/risk vs invalidation (+10 at ≥3x,
   +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
-  target the price has already passed is dropped. Each card lists the reasons
-  that scored it — change the weights in `weekly_feature.py`, not the data file.
+  target the price has already passed is dropped. Change the weights in
+  `weekly_feature.py`, not the data file.
+  The card itself is deliberately short — ticker, sparkline, price → target,
+  the meter, pattern and RSI. The `why` reasons that used to be bulleted on it
+  are still computed and still printed by the dry run, but are no longer written
+  to `weeklyFeature.ts`: nothing rendered them, and that file is in the
+  always-loaded first chunk.
 - **Reporting this week** — every symbol the site tracks whose next earnings
   date falls in the featured Mon–Fri, from Yahoo Finance, cached in
   `data/earningsCalendar.json`. "Tracked" means anything in

@@ -7,7 +7,7 @@ import './Landing.css';
 
 // Landing page — the first thing a visitor sees. Two lists, both rebuilt once a
 // week before Monday's open by weekly_feature.py:
-//   · the week's hottest setups (max 3), each opening the watchlist pre-filtered
+//   · the week's hottest setups (3 bullish + 3 bearish), each opening the watchlist
 //     to that symbol, and
 //   · the covered stocks reporting earnings during the week, each card opening
 //     that stock's setup in the watchlist.
@@ -214,10 +214,6 @@ const HotCard: React.FC<{ h: HotSetup; rank: number; onOpenWatchlist: (ticker: s
         {h.rsi != null && <RsiBar rsi={h.rsi} dn={dn} />}
       </div>
 
-      <ul className="hot-why">
-        {h.why.map(w => <li key={w}>{w}</li>)}
-      </ul>
-
       <button className="go" onClick={() => onOpenWatchlist(h.ticker)}>
         See {h.ticker} in the watchlist<Arrow />
       </button>
@@ -351,19 +347,31 @@ const Landing: React.FC<LandingProps> = ({ covered, onOpenWatchlist, headerContr
           <div className="sec-head">
             <h2><span className="flame" aria-hidden="true" />Hottest setups</h2>
             <p>
-              The most actionable breaks on the watchlist, ranked on stage, momentum,
-              trend agreement and the room left to target.
+              The three best breaks each way, ranked on stage, momentum, trend agreement
+              and the room left to target.
             </p>
             {pricedOn && <div className="asof">Prices as of {day(pricedOn)} · 90-day history shown</div>}
           </div>
           {hot.length === 0 ? (
             <div className="empty">No setup cleared the bar this week. The full watchlist is still there.</div>
           ) : (
-            <div className="hot-grid">
-              {hot.map((h, i) => (
-                <HotCard key={h.ticker} h={h} rank={i} onOpenWatchlist={onOpenWatchlist} />
-              ))}
-            </div>
+            // Two shortlists rather than one: ranking both directions together let a
+            // one-sided week take every slot, which reads as a market call instead of a
+            // list of setups. Each side is ranked on its own and numbered from 1.
+            ([['up', 'Bullish'], ['down', 'Bearish']] as const).map(([side, label]) => {
+              const picks = hot.filter(h => (h.direction === 'down') === (side === 'down'));
+              if (!picks.length) return null;
+              return (
+                <div className="hot-side" key={side}>
+                  <h3 className={`side-head ${side}`}>{label}</h3>
+                  <div className="hot-grid">
+                    {picks.map((h, i) => (
+                      <HotCard key={h.ticker} h={h} rank={i} onOpenWatchlist={onOpenWatchlist} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })
           )}
         </section>
 
