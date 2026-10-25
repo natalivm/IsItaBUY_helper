@@ -4113,7 +4113,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "A multi-year falling wedge from the early-2024 high near $18 bottomed around $2 in 2025. Price broke out on the monthly chart, confirmed with a monthly close above $4.76, then surged to about $14 — 196% from the confirm and 57% of the way to the $21.26 target. The $0.23 invalidation is the base of the wedge and cannot fire; it is kept deliberately. This is not a drawing waiting to be wrong but a call that is working, the source tool draws it identically, and on a bullish break out of a multi-year base the unreachable floor is the base itself. It will keep appearing on the dead-stop list, which is what that list is for.",
     keyLevel: {
       price: 12.62,
-      text: "$13.59 is the daily channel's lower boundary, 3.5% under spot, and what the consolidation has to hold — below it the channel points to $8.58. Above $18.61 it resumes toward $23.63. The monthly wedge's $0.23 is its base, not a stop anyone trades."
+      text: "$13.59-13.64 is the line: the daily channel's floor and the rising wedge's confirm, 0.4% apart and 3.5% under spot. Below it they point to $8.58 and $11.68; above $18.61 the channel resumes toward $23.63. Nothing has closed under it yet."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -4126,6 +4126,23 @@ export const PATTERN_STOCKS: PatternStock[] = [
       goalDown: 8.58,
       note: "From the source tool on Oct 26, replacing our own machine-drawn version of the same channel whose lower boundary started at minus $2.08 — a negative price, which set a $6.06 downside goal off a width no chart could carry. Theirs is a $5.02 width: a daily close above $18.61 points to $23.63, below $13.59 to $8.58. The $13.59 is the live number, 3.5% under spot, and it is what the consolidation has to hold. Lines are left off rather than drawn backwards from the levels.",
     },
+    more: [
+      {
+        pattern: "Rising Wedge",
+        timeframe: "daily",
+        direction: "down",
+        stage: "signal",
+        stageDate: "2026-10-22",
+        signal: 14.2,
+        confirm: 13.64,
+        invalidation: 15.48,
+        target: 11.68,
+        signalRule: "a completed daily close below $14.20; a close back inside cancels it.",
+        confirmRule: "a later completed daily close below $13.64, beyond the signal candle's low.",
+        failRule: "a completed daily close above $15.48, then a follow-through close above that candle's high.",
+        note: "From the source tool on Oct 26, and the risk the row was missing. Oct 22 closed $14.14 below the rising wedge's $14.20 lower line and its $13.64 low is the confirm; nothing has closed under it since, so this is signalled and not confirmed. Our own detector drew the same wedge independently off the same candles — confirm $13.64 to the cent, signal $14.30, invalidation $15.38, target $11.13 — which is why the reading is here rather than the arithmetic being argued over. Note where it lands: the wedge confirms below $13.64 and the daily channel breaks down at $13.59, 0.4% apart. Two separate patterns naming one trigger.",
+      },
+    ],
   },
   {
     ticker: "IBM",

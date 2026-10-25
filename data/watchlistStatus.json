@@ -1685,6 +1685,12 @@
   "stage": "forming",
   "ticker": "INTU"
  },
+ "IOVA|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
+  "setup": "Rising Wedge (daily)",
+  "stage": "signal",
+  "ticker": "IOVA"
+ },
  "IOVA|daily alt": {
   "label": "daily alt",
   "setup": "Ascending Channel (daily)",
