@@ -188,22 +188,26 @@ projection, the more often that fires, so at `BACK = 0` the setups that survive 
 scored are disproportionately the ones that over-project. That flattered the exact number
 being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
 
-Baseline on the 24 calls whose candles reach back far enough:
+Baseline on the 26 calls whose candles reach back far enough:
 
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
-- **right pattern and direction: 18/24.** Most of the misses are Hammers that
+- **right pattern and direction: 17/26.** Most of the misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented and is
   not a tuning gap — see PATTERN_RULES.md §5b for why, and for the measuring rule verified
   off the one completed flag on record.
-- **target: 4.8% median error**, with 14 of the 18 inside both level tolerances.
+- **target: 6.7% median error**, with 13 of the 17 inside both level tolerances.
 
-The tables below were measured on the 20 calls on record at the time. Four more have since
-been added and the headline has only improved — 6.7% at 23 labels, 4.8% at 24. None of them
-was used to tune anything, so each is an out-of-sample check rather than a re-fit. The most
-recent, STRL's daily ascending channel (confirmed below $480.23, reached $419.52 on
-2026-10-15), is the cleanest reproduction on record: **0.0% confirm error and 0.7% on the
-target**.
+The tables below were measured on the 20 calls on record at the time. Everything since is an
+out-of-sample check rather than a re-fit, and the headline has moved both ways — 6.7% at 23
+labels, 4.8% at 24, 6.7% at 26. The cleanest reproduction on record is STRL's daily ascending
+channel (confirmed below $480.23, reached $419.52 on 2026-10-15) at **0.0% confirm error and
+0.7% on the target**; the worst of the recent ones is ASTS's daily ascending channel
+(confirmed below $62.31, reached $45.90 on 2026-10-14), where the detector finds the right
+pattern and direction and the confirm within 3.3% but over-projects the target by **26.5%**.
+That is the long-target failure the "Targets" section above describes, caught on a label
+rather than argued from distributions — and it is one chart, which is the whole point of the
+n-is-23 section below.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
@@ -831,6 +835,51 @@ hand-posted ones for review; the daily report has the same list under "Too littl
 
 **Sloped invalidations track their line.** An invalidation is a trendline's value at the latest candle, so it moves a little every session while the stored number stays where it was written (this is why a level can read fine in the source tool and stale here). The daily job re-reads them after the candles and the fitter; by hand: `python3 pattern_lines.py --relevel` (dry run) / `--relevel --apply`. A **confirmed channel's** invalidation sits on the boundary it broke (upper line for an upward break, lower for a downward one) — its fail rule reads "back inside the broken boundary". While a channel is still **pending** there is nothing to fall back into, so the level that kills it is the *opposite* side of the channel, with the follow-through wording. A **wedge's** sits on the far side either way (lower line for an upward break, upper for a downward one). Auto-detected setups are skipped: `pattern_detect.py` derives their levels together and puts a pending channel's invalidation on the broken boundary instead, so re-reading them here would only fight the detector — a rescan redoes them. A level is left alone, and listed for review, when the setup isn't live (needs updating / target / failed), its two lines are within 3% of each other (near a wedge's apex, which line a level belongs to is a coin flip), the level is more than 8% off its line (it was set some other way), or the move would be under 1% (close enough — and a number entered by hand from the source tool isn't worth fighting over every run).
 
+**Either-direction break levels go stale the same way, and that one changes a stage.**
+`breakUp` / `breakDown` are the two lines read at the latest candle — `pattern_detect`
+writes them as `up.at(last)` / `lo.at(last)` — and the pending check reads them every run to
+decide whether a setup broke. Nothing re-read them, so on a climbing channel the stored pair
+drifts below the lines and an ordinary close looks like a break. TEAM's daily channel climbs
+$2.79 a bar: its stored $226.80 sat 5% under the line's real $237.65, a $227.61 close was
+marked "needs updating", and the next run deleted the setup — while the source tool still
+read it as forming.
+
+`python3 pattern_lines.py --relevel-breaks` (dry run) / `--relevel-breaks --apply`; the daily
+run calls it after `relevel`. It moves `goalUp` / `goalDown` by the same amount, so the
+projection keeps its height rather than snapping to a number the stored one never had — which
+for a channel's parallel lines reproduces the detector's `+ height` exactly. **Auto-detected
+setups are re-read here, unlike in `relevel`**: the exception there exists because the
+detector places a pending channel's invalidation on a different boundary, so re-reading would
+fight it. There is no such disagreement here — these are the same two values the detector
+writes — and waiting for Friday's rescan is a week of drift on a level checked daily.
+
+Guards mirror `relevel`: under `MIN_MOVE` is left alone, past `DRIFT` is checked for age.
+5 pairs moved on the first pass (XOP, HTFL, FTNT, PANW, IOVA) and UMAC was refused at 16%.
+
+**That refusal was wrong, and `_lines_dated` is why it no longer happens.** The guard read a
+level far from its line as a different drawing, but distance cannot tell that from a level
+that is merely old: UMAC's stored 18.20 / 14.55 matches *its own lines* four bars back, and
+the 15.86 / 12.22 the relevel wanted is exactly what the source tool publishes for that
+setup. On a channel falling 2.4% a day, seven sessions is 16%. So a pair past `DRIFT` is now
+searched backwards along the same lines — if it sits on them at an earlier bar it is this
+drawing behind the times and is re-read (printed as `STALE`), and only a pair matching no
+earlier bar is still refused as a different drawing.
+
+**The break test reads the lines, not the stored pair.** `update_watchlist` runs before the
+candles are written, so whatever `relevel_breaks` last wrote is already a run old by the time
+the check reads it — a bar of lag on top of a level that is only a cache. `_live_breaks()`
+recomputes the pair from the setup's own lines at the latest completed candle and hands that
+to `_pending_break`, so the cache's age stops mattering: TEAM's $226.80 against a $227.61
+close reads as a break before the fix and as nothing after it, the lines standing at $233.10.
+A daily series is missing the bar that just closed, so `date` is appended for that timeframe
+only; a weekly or monthly series already carries the bar holding it.
+
+It falls back to the stored pair whenever the lines cannot say better — no lines, no candles,
+anchors off the chart, or a live value more than `BREAK_DRIFT` (8%) away, which is UMAC's
+case: its lines and its levels are not the same drawing, and reconciling them is a human's
+job rather than the break test's. `relevel_breaks` is still what keeps the *displayed* level
+honest; this only decides the stage.
+
 **A channel changing stage switches which boundary its invalidation sits on**, and relevel
 handles that as its own case. When a pending channel confirms — by hand or by the daily
 run's promotion — the rule moves its level from the far side of the channel to the boundary
@@ -846,7 +895,7 @@ A wedge invalidates on the far side at every stage, so this never fires for one.
 
 `#` is the landing page, and it used to download the whole app — all 95 stock definitions,
 the valuation model, the ledger and the notes drawer, none of which it renders. The routes
-past it are `React.lazy` now, and the first chunk is 514 KB / 151 KB gzipped against 944 KB
+past it are `React.lazy` now, and the first chunk is 462 KB / 140 KB gzipped against 944 KB
 / 293 KB before.
 
 | chunk | carries | fetched when |
@@ -900,16 +949,25 @@ list you came from.
 The landing page renders two lists, both read straight from `data/weeklyFeature.ts`
 — it computes nothing itself:
 
-- **Hottest setups** — at most 3 (`TOP_N`), picked by `weekly_feature.score_setup`
-  from the setups the watchlist actually shows (main + alt), skipping
-  auto-detected ones (red dot = not checked by hand) and "No clear pattern"
-  placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
+- **Hottest setups** — **two shortlists, `TOP_N` (3) each way: bullish above,
+  bearish below**, each ranked and numbered on its own. Ranking both together
+  let one side take every slot, which reads as a market call rather than a list
+  of setups; the scoring is unchanged and only the pool is split. Picked by
+  `weekly_feature.score_setup` from the setups the watchlist actually shows
+  (main + alt), skipping auto-detected ones (red dot = not checked by hand) and
+  "No clear pattern" placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
   momentum (+20 with, −25 against, same thresholds as `pattern_watchlist`),
   trend agreement (+10 / −5), agreeing stored setups (+4 each, max +12), room to
   target (0.6 per %, capped at 40%), reward/risk vs invalidation (+10 at ≥3x,
   +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
-  target the price has already passed is dropped. Each card lists the reasons
-  that scored it — change the weights in `weekly_feature.py`, not the data file.
+  target the price has already passed is dropped. Change the weights in
+  `weekly_feature.py`, not the data file.
+  The card itself is deliberately short — ticker, stage and RSI together under
+  the name, then sparkline, price → target, the meter and the pattern. Stage and
+  momentum share a row because they answer the same question: whether to act. The `why` reasons that used to be bulleted on it
+  are still computed and still printed by the dry run, but are no longer written
+  to `weeklyFeature.ts`: nothing rendered them, and that file is in the
+  always-loaded first chunk.
 - **Reporting this week** — every symbol the site tracks whose next earnings
   date falls in the featured Mon–Fri, from Yahoo Finance, cached in
   `data/earningsCalendar.json`. "Tracked" means anything in

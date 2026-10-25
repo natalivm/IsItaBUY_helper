@@ -21,8 +21,6 @@ export interface HotSetup {
   /** Daily Wilder RSI-14 at the time of the run. */
   rsi?: number;
   score: number;
-  /** Plain-language reasons the setup made the shortlist. */
-  why: string[];
 }
 
 /** A covered stock reporting earnings during the featured week. */
@@ -54,28 +52,6 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   generatedOn: "2026-10-25",
   hot: [
     {
-      ticker: "VRT",
-      name: "Vertiv Holdings Co",
-      pattern: "Descending Channel",
-      timeframe: "weekly",
-      direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 194.32,
-      priceDate: "2026-10-23",
-      target: 94.69,
-      invalidation: 213.03,
-      rsi: 27.9,
-      score: 112,
-      why: [
-        "Break confirmed on the weekly chart",
-        "Daily RSI 28 backs the downside",
-        "The stock's own trend is down",
-        "51.3% from here to the target",
-        "About 5.3x more room to the target than to invalidation"
-      ]
-    },
-    {
       ticker: "FRSH",
       name: "Freshworks Inc.",
       pattern: "Descending Channel",
@@ -88,14 +64,52 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       target: 21.79,
       invalidation: 14.2,
       rsi: 73,
-      score: 112,
-      why: [
-        "Break confirmed on the daily chart",
-        "Daily RSI 73 backs the upside",
-        "The stock's own trend is up",
-        "40.7% from here to the target",
-        "About 4.9x more room to the target than to invalidation"
-      ]
+      score: 112
+    },
+    {
+      ticker: "D",
+      name: "Dominion Energy, Inc.",
+      pattern: "Descending Channel",
+      timeframe: "daily",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-10-12",
+      price: 65.2,
+      priceDate: "2026-10-23",
+      target: 94.09,
+      invalidation: 58.46,
+      rsi: 61.7,
+      score: 108
+    },
+    {
+      ticker: "AZO",
+      name: "AutoZone",
+      pattern: "Descending Channel",
+      timeframe: "weekly",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-10-19",
+      price: 3200.76,
+      priceDate: "2026-10-23",
+      target: 4211.42,
+      invalidation: 2894.72,
+      rsi: 65.6,
+      score: 106.9
+    },
+    {
+      ticker: "VRT",
+      name: "Vertiv Holdings Co",
+      pattern: "Descending Channel",
+      timeframe: "weekly",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-10-19",
+      price: 194.32,
+      priceDate: "2026-10-23",
+      target: 94.69,
+      invalidation: 213.03,
+      rsi: 27.9,
+      score: 112
     },
     {
       ticker: "ROAD",
@@ -110,14 +124,22 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       target: 34.43,
       invalidation: 99.15,
       rsi: 36.3,
-      score: 108,
-      why: [
-        "Break confirmed on the weekly chart",
-        "Daily RSI 36 backs the downside",
-        "The stock's own trend is down",
-        "58.5% from here to the target",
-        "About 3.0x more room to the target than to invalidation"
-      ]
+      score: 108
+    },
+    {
+      ticker: "CCJ",
+      name: "Cameco Corporation",
+      pattern: "Ascending Channel",
+      timeframe: "weekly",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-09-28",
+      price: 78.6,
+      priceDate: "2026-10-23",
+      target: 18.99,
+      invalidation: 92.02,
+      rsi: 33.8,
+      score: 108
     }
   ],
   earnings: [

@@ -48,7 +48,7 @@ HEADERS = {
 }
 
 # How many setups the landing page features.
-TOP_N = 3
+TOP_N = 3     # per direction: the landing page shows this many bullish and this many bearish
 
 # Stages a setup can be featured in: it still has somewhere to go.
 # `atRisk` is deliberately absent: a break whose own timeframe has closed back past
@@ -167,7 +167,12 @@ def score_setup(s, agree_n, today):
 
 
 def hot_setups(text, limit=TOP_N, include_auto=False, today=None):
-    """The `limit` hottest setups, at most one per stock, highest score first.
+    """The hottest setups: `limit` upward then `limit` downward, at most one per stock.
+
+    Ranking the two together let one side take every slot — a week where the
+    best breaks all point down reads as a market call rather than a shortlist,
+    and the reader loses the other half of the board. Scoring is unchanged and
+    each side is still ordered by it; only the pool is split.
 
     Only the two setups the site actually shows (main + alt) are considered,
     and auto-detected ones are skipped unless asked for: they carry a red dot
@@ -212,10 +217,12 @@ def hot_setups(text, limit=TOP_N, include_auto=False, today=None):
                 'invalidation': s.get('invalidation'),
                 'rsi': s.get('rsi'),
                 'score': round(score, 1),
-                'why': why,
+                'why': why,          # printed by the dry run; not written to the TS file
             })
     out.sort(key=lambda h: -h['score'])
-    return out[:limit]
+    up = [h for h in out if h['direction'] != 'down'][:limit]
+    dn = [h for h in out if h['direction'] == 'down'][:limit]
+    return up + dn
 
 
 # ── Earnings calendar ──
@@ -414,8 +421,6 @@ export interface HotSetup {
   /** Daily Wilder RSI-14 at the time of the run. */
   rsi?: number;
   score: number;
-  /** Plain-language reasons the setup made the shortlist. */
-  why: string[];
 }
 
 /** A covered stock reporting earnings during the featured week. */
@@ -453,7 +458,7 @@ def main():
     ap.add_argument('--apply', action='store_true', help='write data/weeklyFeature.ts')
     ap.add_argument('--offline', action='store_true', help='skip Yahoo; use the cached calendar')
     ap.add_argument('--week', help='Monday of the week to build (YYYY-MM-DD), for testing')
-    ap.add_argument('--top', type=int, default=TOP_N, help=f'how many setups to feature (default {TOP_N})')
+    ap.add_argument('--top', type=int, default=TOP_N, help=f'how many setups to feature per direction (default {TOP_N})')
     ap.add_argument('--include-auto', action='store_true',
                     help='also consider auto-detected setups (red dot: not checked by hand)')
     args = ap.parse_args()
@@ -467,12 +472,15 @@ def main():
     with open(pw.WATCHLIST_FILE) as fh:
         text = fh.read()
     hot = hot_setups(text, limit=args.top, include_auto=args.include_auto)
-    print(f"Hottest setups ({len(hot)}):")
-    for h in hot:
-        print(f"  {h['ticker']:<6} {h['score']:>6}  {h['stage']:<9} {h['timeframe']:<7} "
-              f"{h['direction']:<4} {h['pattern']}")
-        for w in h['why']:
-            print(f"           · {w}")
+    for side, label in (('up', 'Bullish'), ('down', 'Bearish')):
+        picks = [h for h in hot if (h['direction'] == 'down') == (side == 'down')]
+        print(f"{label} ({len(picks)}):")
+        for h in picks:
+            print(f"  {h['ticker']:<6} {h['score']:>6}  {h['stage']:<9} {h['timeframe']:<7} "
+                  f"{h['pattern']}")
+            for w in h['why']:
+                print(f"           · {w}")
+        print()
 
     names = stock_tickers()
     print(f"\nEarnings for {len(names)} tracked symbols:")
@@ -488,7 +496,7 @@ def main():
         'weekOf': monday,
         'weekEnd': friday,
         'generatedOn': pw._now_et().date().isoformat(),
-        'hot': hot,
+        'hot': [{k: v for k, v in h.items() if k != 'why'} for h in hot],
         'earnings': rows,
     }
     out = render(feature)

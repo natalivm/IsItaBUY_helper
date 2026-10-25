@@ -306,5 +306,16 @@
     "confirm": 158.71,
     "invalidation": 123.02,
     "target": 180.35
+  },
+  {
+    "ticker": "ASTS",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-14",
+    "confirm": 62.31,
+    "invalidation": 89.36,
+    "target": 45.9
   }
 ]

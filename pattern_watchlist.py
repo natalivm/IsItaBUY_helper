@@ -753,6 +753,52 @@ def _target_hit(setup, bars, since, price):
     return None
 
 
+BREAK_DRIFT = 0.08    # live break levels this far from the stored pair are a different drawing
+
+
+def _live_breaks(s, text, pos, sym, tf, now_et, date):
+    """`s` with breakUp / breakDown read off its own lines at the latest completed candle.
+
+    The stored pair is a cache of exactly this value — `pattern_detect` writes it as the two
+    lines at the last bar and `pattern_lines.relevel_breaks` refreshes it — but that refresh
+    runs *after* this pass, so the levels reaching the break test are always a run old. On a
+    steep channel that is enough to turn an ordinary close into a break: TEAM's daily channel
+    climbs $2.79 a bar and a $227.61 close was read as a break of a stale $226.80 while the
+    line itself stood at $237.65. Reading the lines here removes the lag rather than shrinking
+    it; the stored pair remains what the UI shows and the fallback for a setup without lines.
+
+    Falls back to the stored pair whenever the lines cannot say better: no lines, no candles,
+    anchors off the chart, or a live value more than `BREAK_DRIFT` from the stored one — that
+    last being UMAC's case, where the lines and the levels are not the same drawing and a
+    human has to reconcile them rather than the break test picking a side.
+    """
+    up, dn = s.get('breakUp'), s.get('breakDown')
+    if s.get('direction') != 'both' or up is None or dn is None:
+        return s
+    lines = stored_lines(text, pos)
+    bars = _load_chart_bars(sym, tf)
+    if not lines or len(lines) < 2 or not bars or not bars.get('t'):
+        return s
+    t = list(bars['t'])
+    # The candle files are rewritten after this pass, so a daily series is missing the bar
+    # that just closed. A weekly or monthly series already carries the bar holding `date`.
+    if tf == 'daily' and date > t[-1]:
+        t.append(date)
+    i = _completed_count(t, tf, now_et) - 1
+    if i < 0:
+        return s
+    at = {d: n for n, d in enumerate(t)}
+    vals = []
+    for (d0, v0), (d1, v1) in lines:
+        if d0 not in at or d1 not in at or at[d1] == at[d0]:
+            return s
+        vals.append(v1 + (v1 - v0) / (at[d1] - at[d0]) * (i - at[d1]))
+    live_up, live_dn = max(vals), min(vals)
+    if abs(live_up - up) > BREAK_DRIFT * abs(up) or abs(live_dn - dn) > BREAK_DRIFT * abs(dn):
+        return s
+    return {**s, 'breakUp': live_up, 'breakDown': live_dn}
+
+
 def _pending_break(s, price):
     """(reason, next_stage) if a forming/signal setup closed past one of its limits, else (None, None).
 
@@ -1014,7 +1060,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
                     if past:
                         review.append(f"{sym} ({label}): still past invalidation ${_fmt_price(inv)} at ${new_price} — a follow-through close marks it failed")
 
-            reason, next_stage = _pending_break(s, price)
+            reason, next_stage = _pending_break(_live_breaks(s, text, pos, sym, tf, now_et, date), price)
             if reason and not is_close:
                 review.append(f"{sym} ({label}): trading at ${new_price} past a limit — market still open; only the close counts, re-check after 16:00 ET")
                 continue
@@ -1315,8 +1361,14 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
         done, stored_live, edits = {}, [], []
         for label, sv, pos in setups:
             r = _finished(sv, main, now_et, stored_lines(text, pos))
-            if '_span' in pos:                    # stored (hidden): finished / cancelled ones drop quietly
-                if not r and sv.get('stage') != 'update':
+            if '_span' in pos:                    # stored (hidden): finished ones drop quietly
+                # `update` is kept here too, matching the docstring and the shown setups. It
+                # used to be dropped as "cancelled", which deleted the flag the run before had
+                # just written — LITE's weekly falling wedge and TEAM's either-direction channel
+                # were both flagged on Oct 23 and gone on Oct 25, before anyone could read them.
+                # "Needs updating" asks a human for a replacement, so the run that asks cannot
+                # also be the one that forgets.
+                if not r:
                     stored_live.append(pos)
                 continue
             if not r:
