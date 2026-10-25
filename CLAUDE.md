@@ -104,6 +104,11 @@ anything written by hand. The Friday run also writes `archive/handSetups-<date>.
 `ARCHIVE_KEEP` holds the newest 8, about two months.
 
 **Auto-detected setups** (`pattern_detect.py`): stocks without a setup are scanned on the daily and weekly charts (weekly = main, steadier; daily = second setup) for the clearest channel / wedge / hammer per PATTERN_RULES.md, or get a pending "No clear pattern" placeholder. They carry `auto: true` and show a **red dot** until checked by hand — remove `auto: true` once verified.
+A red dot belongs to the **setup**, not to the stock: every auto-detected setup carries
+one wherever it is drawn, and only removing its `auto: true` clears it. The green dot
+belongs to the stock, so the two are independent and a checked stock showing a machine
+drawing displays both.
+
 There are **two dots on a ledger row, deliberately the same signal twice**. One sits
 beside the **ticker**, so the Stock column can be scanned top to bottom for the stocks
 still owed a look; the other sits beside the **pattern name**, where it says which
@@ -114,16 +119,27 @@ auto-detected one at the same time without either inheriting the other's status,
 you post has no dot, and a price refresh never adds one — `update_prices.py` touches
 `price`, `priceDate`, `rsi` and `trend` and never writes `auto`.
 
-**The green dot is the counterpart: checked, and the print it was checked for has not
-happened yet.** `checkedOn: 'YYYY-MM-DD'` on the entry records a hand check of that
-stock's setups against the charts. `checkedAhead()` in `components/PatternWatchlist.tsx`
-shows a green dot while `data/earningsCalendar.json` has a date for the ticker that is
-still ahead of today — so the dot **expires on the print rather than after N days**, which
-is the point: what makes a check stale is the numbers landing, not time passing. A stock
-with no known earnings date never earns one, there being nothing to be ahead of, and an
-`auto` setup on the shown row always wins the slot, since a row cannot be both owed a look
-and already looked at. `checkedOn` is in `KEEP_HEAD`, so a rescan carries it; nothing
-writes it automatically.
+**The green dot is the counterpart: somebody looked.** `checkedOn: 'YYYY-MM-DD'` on the
+entry records a hand check of that stock's setups against the charts, and
+`components/PatternWatchlist.tsx` shows the dot on `!auto && checkedOn` — nothing else.
+**It is not tied to earnings.** It was once, through a `checkedAhead()` helper that only
+showed the dot while `data/earningsCalendar.json` had a future date for the ticker, and
+that was removed: it hid the dot on every stock with no date on file, which is most of
+them. A check is a check. An `auto` setup on the shown row still wins the slot, since a
+row cannot be both owed a look and already looked at. `checkedOn` is in `KEEP_HEAD`, so a
+rescan carries it; nothing writes it automatically.
+
+**Two things end a check, both in RULEBOOK.md: any of the stock's setups being refreshed
+by auto generation (clear `checkedOn` in the same edit), and price breaking against the
+reading it was made on (bring the red dot back).** Tested against the 17 stocks carrying `checkedOn`, **nothing is expired
+today**: the only candidate was ENVA, and it was the `_closing_in` false positive the 💀
+report now filters, which is why that guard matters here too. The expiry condition is
+the checked setup's own `failRule`, so record which setup carries the check when you clear
+a stock's dots. A check also dies when any of the stock's setups is replaced by an
+auto-detected one — `checkedOn` must be cleared in the same edit that writes the
+replacement, since the green dot would otherwise vouch for a drawing made after the person
+stopped looking. That is the one expiry a script can cause, so it is the one to wire first. Not wired up: nothing re-flags a row automatically today, so this is a rule
+for hand edits until something enforces it.
 
 The row dots cannot see the stored setups: the build moves `alt` and `more` into
 `public/setups/TICKER.json` (the `split-stored-setups` plugin in `vite.config.ts`) and
@@ -419,6 +435,73 @@ pass. It only ever **removes** a value, never recomputes one: write-once is what
 field mean anything, and a level recomputed months later off a since-refitted line would be
 a different number wearing the same name.
 
+### A stop that does not walk: `profileStop`
+
+`price_profile.py` builds a **time-at-price (TPO) profile** from the candles in
+`public/bars/`. The original Market Profile counts time rather than volume — every bar
+contributes one count to each price bin its range covers — and that is the variant we can
+build, because `write_chart_bars` keeps `t/o/h/l/c` and drops volume at aggregation. The
+cost is explicit and belongs beside every level it produces: **a quiet drift through a
+price counts exactly as much as a capitulation through it.** A POC here says price spent a
+long time there, never that a lot changed hands there. Adding volume to the fetch is what
+would turn this from a proxy into the real measure.
+
+It reports POC, VAH/VAL (70% value area grown pairwise from the POC), HVN bands, and thin
+bands split into `pocket` (thick price both sides — price slices through) and `shelf` (thin
+to one end of the range). Bands rather than local extrema, because a thin *tail* is a real
+shape and a trough-between-peaks rule cannot express it.
+
+**The window is the parameter, not a detail.** PANW is the case. Over a year of daily
+candles the profile puts $380 inside the year's thickest band ($321–$387) with nothing thin
+until $414 — price sitting mid-value with resistance overhead. Over three months the same
+candles say the opposite: agreement ends at $377.83 and $385–$407 is a plateau of 6–8 bars
+out of 81 against a median of 12, with price closed at $380.55 right on that edge. The
+second reading is the one that matched a hand read of the volume profile. A long window
+buries a recent thinness under months of older trade, so `--months` is usually what you
+want.
+
+**`profileStop`** (`write_stops()`, `python3 price_profile.py --stops [--apply]`) records,
+on each confirmed setup, the near edge of the nearest HVN band beyond its entry — a stop
+sheltered behind agreed price. The profile reads only candles **before** the break, so the
+level is what the chart said when the trade started. 230 of 351 confirmed setups have one;
+the other 121 have no agreed price beyond their entry in the window.
+
+**Nothing ranks on it**, the same posture `breakInvalidation` was added under. It is
+recorded because it is the only stop on a row that does not walk. Median risk from entry,
+by setup age:
+
+| age | live invalidation | `breakInvalidation` | `profileStop` |
+|---|---|---|---|
+| 0–15 days | 7.1% | 5.3% | 14.0% |
+| 15–45 | 13.0% | 4.7% | 12.4% |
+| 45–120 | 20.7% | 6.4% | 10.9% |
+| 120+ | 31.2% | 8.0% | 12.4% |
+
+The live level spreads 4.4x with age — that is the trendline walking, not risk. Freezing it
+cuts the spread to 1.5x. This one does not drift at all, because it is not read off a line.
+
+**And it is touched half as often.** Of the confirmed setups the ledger still shows as
+live, price had already traded through the frozen stop on **141 of 319 (44%)** and through
+this one on **50 of 230 (22%)** — head to head on the 213 carrying both, the frozen stop
+was touched and this one survived 53 times against 17 the other way, while being more than
+twice as wide. Not a break-bar artifact either: only 28 of the 141 were touched on the
+break bar, 98 were four or more bars later.
+
+**The test that says otherwise is blind, and knowing why matters more than the result.**
+Replayed against `completedCalls.json`, the stored invalidation stopped out of 0 of 24 and
+this one out of 1 of 17 — apparently the opposite verdict. Every label in that file reached
+its target, so it is a set of calls that did not pull back, and no stop gets hit on those.
+It can show a stop was too tight and can never show one was too wide. Same survivorship
+trap as the 2.18x comparison above, and the reason the live-setup measurement is the one to
+read.
+
+**Why the loser half is missing at all**: the ledger holds **351 confirmed setups and 1
+marked `failed`**, against 30 that reached target. Hand-posted failures are not deleted —
+they are marked `failed` and kept on screen — so nothing is being thrown away. The fail
+rule simply almost never fires, because the invalidation is usually too far away to reach.
+A stop nothing can hit produces no failures, which is why a winners-only label set is all
+there is. That is upstream of any stop field and worth more than one.
+
 ### Too tall to draw: the height cap does not apply to what you post
 
 `HEIGHT_VS` and `MAX_HEIGHT` stop the detector drawing a pattern taller than the price it
@@ -515,18 +598,66 @@ range is *correct*, not broken: on a stock at its highs the place for a short's 
 little above the high. QQQ's $764.44 against a $762.86 high is 0.2% out and perfectly
 tradeable; DAVE's is 11% out and a level price has no reason to visit. Without the margin
 the check flagged 204 setups, nearly all of them fine. With it, 59 — 43 machine-drawn and
-16 posted by hand.
+16 posted by hand. (Those counts are from when the check was written; after the redraws and cleanups since, the current list is 2 — one stop above every traded price and one decayed to zero — plus 44 failing the reward:risk test below.)
 
 `python3 pattern_watchlist.py --deadstops` (dry run) / `--deadstops --apply` drops the
-auto-detected ones and lists the rest, the same policy `--thin` uses: a main setup or
-anything hand-posted is a call someone made, and replacing one is a decision rather than a
-clean-up. The daily report prints both lists under **🚫** and **📏**.
+auto-detected ones and lists the rest, the same policy `--thin` uses. The daily report
+prints both lists under **🚫** and **📏**. **RULEBOOK.md now allows the detector to replace
+a hand-posted setup once it is on one of these lists** (archiving its prose first); until
+that is wired up, these stay listed rather than replaced.
 
 **`_stoppable()` in `pattern_detect.py` is what stops the cleanup repeating.** Both places
 the detector builds a setup now run the same test, so a rescan cannot draw one of these
 again — without it Friday's redraw would hand back most of what was just removed. It judges
 against the range of the chart the pattern was drawn on, which is the right scope for "has
 this line left the chart", and is cheaper than re-reading the longest candle file.
+
+### The fail rule cannot fire, and what now reports instead
+
+The ledger holds **351 confirmed calls and 1 marked `failed`**, against 30 that reached
+target. That is not a 99.7% hit rate — it is a stop nothing can reach.
+
+Replayed across the 348 confirmed setups whose candles reach their break, comparing each
+bar's close against the **invalidation line read at that bar** (not today's value, which
+would be a different test):
+
+- **6** have ever closed past their own invalidation since the break;
+- **0** of those got the follow-through the rule also requires.
+
+So the blocker is the first condition, not the follow-through, and the cause is the one
+this file already describes twice: a confirmed break's invalidation sits on the boundary
+it broke, that boundary keeps moving the way the break went, and it outruns price
+indefinitely. "Stranded" and "invalidations that are not prices" are the same fault seen
+from other angles; this is what it costs.
+
+**`failing_setups()` reports the second path.** A close past `profileStop` — a price the
+stock actually traded, so it can be reached — plus a follow-through beyond that candle.
+Printed in the daily report under **💀**.
+
+| stop tested | closed past | + follow-through | hand-posted | holding a slot |
+|---|---|---|---|---|
+| `breakInvalidation` | 98 | 54 | 32 | 28 |
+| **`profileStop`** | 37 | **15** | 11 | 8 |
+
+(22 before `_closing_in`, below.)
+
+The frozen stop was not chosen despite firing more than twice as often: price has already
+traded through it on **141 of 319** setups the ledger still shows as live, against **50 of
+230** for the profile stop, so most of those 54 would be false closes. Firing more is only
+better if the extra firings are right.
+
+**A setup still travelling toward its target has not failed**, whatever a stop touched
+months ago says, so `_closing_in` filters these the same way it filters the stranded list.
+That is what takes 22 to 15, and ENVA is the case both times: its weekly rising wedge
+confirmed down at $145.08, rallied to $267 — through its stop in April — and is now
+falling toward the $119.67 target the source tool and a human reading both still call
+correct. It was also the only hand-check the expiry rule flagged, and flagging it was
+wrong.
+
+**It reports and never edits**, which is the existing policy for failure and the right one
+here: 8 of the 15 hold a visible slot, MSFT, AMZN and CRWV mains among them. Closing a
+call someone is reading is a decision. Mark them `failed` by hand, then run
+`python3 pattern_watchlist.py --apply` so the change is posted.
 
 ### Finished calls are not on the ledger at all
 
@@ -635,6 +766,37 @@ invalidation takes a penalty rather than a bonus.
 **Opposite directions on one row are not in themselves wrong** — 52 of 150 rows carry them,
 and the AMKR lesson is that setups pointing both ways differ by horizon rather than
 contradicting. What was wrong on CVX was a *weak* down setup outranking a *strong* up one.
+
+**The second slot now prefers the other direction, within `SLOT_OPPOSITE` (10) of the
+setup that would otherwise hold it.** The slot's job is to say something the first does
+not, and the most useful thing it can say is what would kill the first; a second reading
+the same way is corroboration, which `agree` already counts and which cost FRSH both its
+slots. The number is argued rather than fitted — the curve is smooth, 36% of rows read
+both ways with no rule and 62% at a margin of 50, with no gap anywhere to stop at — so it
+is set to the size of the trend-agreement term, trading exactly one "the trend agrees with
+this" worth of score for showing the other side. 12 rows moved and the second pass reports
+0; the swaps are all near-peers (BKNG 67.1 → 64.0, NUE 65.4 → 60.5). PLTR is the case that
+prompted it: without the rule Monday's run would have given both its slots to bullish
+readings and pushed the bear case into stored.
+
+**A confirmed break that price has walked back past loses the credit its stage claims.**
+The UI has shown this for ages as the "Break undone %" chip and the ranking never saw it:
+INTC carried an auto weekly falling wedge confirmed up at $95.94 with price $86.96 — 9.4%
+undone — outranking a forming wedge whose trigger sat 3.6% away, and IREN two setups 40%
+and 44% undone doing the same. `SLOT_UNDONE` (80, capped at `SLOT_UNDONE_CAP` 0.5) scales
+it so a break has lost half the `confirmed` credit by `DORMANT_UNDONE` (25%) and all of it
+by 50%, which is where it is worth no more than a setup that never broke. 223 of 356
+confirmed setups are untouched because their break is working; 7 rows moved.
+
+**A row carrying `checkedOn` is left alone entirely.** The scoring cannot express "the
+bearish call is the hypothesis and the forming bounce is what would end it" — a forming
+setup scores 12 against a working confirmed break's 40 and always loses — so a row someone
+composed by hand has to be protected rather than re-ranked. IREN is the case: set by hand
+to a weekly rising wedge over a daily falling wedge, and the next pass wanted to swap the
+wedge for a second bearish channel. 20 of 150 rows are exempt. It is not permanent: a
+check expires on the earnings print, on price breaking against the reading it was made on,
+and on any setup being replaced by an auto-detected one, and reslot resumes the moment it
+does.
 
 `python3 pattern_watchlist.py --reslot` (dry run) / `--reslot --apply`; the daily run calls
 it after the dedupe, so it chooses between distinct readings rather than copies. 114 stocks
@@ -777,8 +939,9 @@ days old with its break 37% undone and stays listed for exactly that reason — 
 not `up`.
 
 **The main and alt slots are never shelved.** They are the row; hiding one would leave the
-ledger showing a setup it has been told to hide. Those are reported and left for a human to
-replace, the same policy `--thin` and `--deadstops` use.
+ledger showing a setup it has been told to hide. Those are reported rather than hidden —
+and a dormant-eligible hand-posted setup is now one the detector may replace, per
+RULEBOOK.md, which is the point: shelving a slot is wrong, replacing it is not.
 
 **Waking a *confirmed* setup does not resume it — it asks for a redraw.** One close back
 past the confirm level, in the setup's own direction, is the trigger, and it needs no threshold and
@@ -828,9 +991,9 @@ price against its close 40 sessions back and drops those. It took the list from 
 the three it removed were all of this shape.
 
 Nothing is marked automatically. The auto-detected ones are candidates for Friday's
-redraw, which replaces their levels where the fresh scan still finds the same pattern; the
-hand-posted ones need a replacement posted, since only a human can say whether the chart
-still means what it did. The UI already shows the condition as the **Break undone %** chip
+redraw, which replaces their levels where the fresh scan still finds the same pattern. A
+stranded hand-posted setup is stale by RULEBOOK.md's definition, so it is replaceable too
+rather than waiting on a human — that wait is what stranded them. The UI already shows the condition as the **Break undone %** chip
 (`undoneBy()` in `components/PatternWatchlist.tsx`) — what was missing was anything that
 listed them.
 

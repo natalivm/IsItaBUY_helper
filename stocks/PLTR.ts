@@ -6,6 +6,8 @@ export const PLTR = defineStock({
   sector: 'AI / Data Analytics Software',
   themeColor: '#0ea5e9',
   updatedOn: '10/23',
+  nextEarningsOn: '2026-11-02',   // Q3 2026, after the close; per Benzinga Oct 2026 and
+                                  // unconfirmed by Palantir IR. Yahoo overrides this when it has a date.
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   currentPrice: 196.75,

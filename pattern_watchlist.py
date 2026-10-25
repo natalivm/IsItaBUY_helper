@@ -1740,6 +1740,9 @@ def stretched_setups(text, calendar=None, today=None):
 
 SLOT_TIGHT = 0.10           # risk inside this fraction of the entry counts as tight
 SLOT_FLOOR = 0.01           # ...and inside this it is not tight, it is about to die
+SLOT_OPPOSITE = 10          # score given up to let the second slot read the other way
+SLOT_UNDONE = 80            # a confirmed break that price has walked back past loses this
+SLOT_UNDONE_CAP = 0.5       # ...up to the whole of the confirmed stage credit
 
 
 def slot_score(sv, stock):
@@ -1778,6 +1781,20 @@ def slot_score(sv, stock):
         # while a setup going with the move exists.
         if mom == 'against' and trend in ('up', 'down') and trend != direction:
             score -= 15
+
+    # A confirmed break that price has walked back past is not as confirmed as its stage
+    # says. The UI has shown this for ages as the "Break undone %" chip and the ranking
+    # never saw it: INTC carried an auto weekly falling wedge confirmed up at $95.94 with
+    # price $86.96 -- 9.4% undone -- outranking a forming wedge whose trigger sat 3.6%
+    # away, and IREN two setups 40% and 44% undone outranking the same. Scaled so that at
+    # DORMANT_UNDONE (25%) a break has lost half the credit `confirmed` gave it, and by
+    # 50% all of it, which is where it is worth no more than a setup that never broke.
+    conf_level = sv.get('confirm')
+    if stage in ('confirmed', 'retest') and conf_level and direction in ('up', 'down'):
+        undone = ((price - conf_level) / conf_level if direction == 'down'
+                  else (conf_level - price) / conf_level)
+        if undone > 0:
+            score -= min(undone, SLOT_UNDONE_CAP) * SLOT_UNDONE
 
     inval = sv.get('invalidation')
     if target and direction in ('up', 'down'):
@@ -1832,6 +1849,20 @@ def reslot_setups(apply=False, path=None):
         def vals(pos):
             return {k: v[2] for k, v in pos.items() if k != '_span'}
 
+        # A row someone has read is a row someone composed. `checkedOn` is the record of
+        # that, so reslot leaves it alone: the scoring cannot express "the bearish call is
+        # the hypothesis and the forming bounce is what would end it", because a forming
+        # setup scores 12 against a working confirmed break's 40 and always loses. IREN is
+        # the case -- hand-set to a weekly rising wedge over a daily falling wedge, and
+        # the next pass wanted to replace the wedge with a second bearish channel.
+        #
+        # This is not a permanent exemption. A check expires on the earnings print, on
+        # price breaking against the reading it was made on, and on any of the stock's
+        # setups being replaced by an auto-detected one -- and reslot resumes the moment
+        # it does.
+        if m.get('checkedOn'):
+            continue
+
         every = [e['fields']] + ([e['alt']] if e['alt'] is not None else []) \
             + [pos for lb, sv, pos in _setups(e) if '_span' in pos]
         live = [pos for pos in every if not vals(pos).get('dormant')]
@@ -1839,9 +1870,27 @@ def reslot_setups(apply=False, path=None):
             continue
         ranked = sorted(live, key=lambda pos: -slot_score(vals(pos), m))
         best = ranked[0]
-        second = next((pos for pos in ranked[1:] if not _same_call(vals(pos), vals(best))), None)
-        if second is None:
-            second = ranked[1] if len(ranked) > 1 else None
+        cands = [pos for pos in ranked[1:] if not _same_call(vals(pos), vals(best))]
+        second = cands[0] if cands else (ranked[1] if len(ranked) > 1 else None)
+        # The second slot's job is to say something the first does not, and the most useful
+        # thing it can say is what would kill the first. A second reading the same way is
+        # corroboration, which `agree` already counts and which cost FRSH both its slots;
+        # a reading the other way is the bear case under a bull call. So among the
+        # non-duplicate candidates, one pointing the other way takes the slot when it is
+        # within SLOT_OPPOSITE of the one that would otherwise have it.
+        #
+        # 10 is argued rather than fitted -- the curve is smooth, 36% of rows read both
+        # ways with no rule and 62% at a margin of 50, with no gap anywhere to stop at. It
+        # is the size of the trend-agreement term, so the rule trades exactly one "the
+        # trend agrees with this" worth of score for showing the other side, and cannot
+        # promote a setup that is materially worse.
+        bd = vals(best).get('direction')
+        if second is not None and bd in ('up', 'down'):
+            base = slot_score(vals(second), m)
+            opp = [pos for pos in cands if vals(pos).get('direction') in ('up', 'down')
+                   and vals(pos).get('direction') != bd]
+            if opp and slot_score(vals(opp[0]), m) >= base - SLOT_OPPOSITE:
+                second = opp[0]
         if best is e['fields'] and second is e['alt']:
             continue
         rest = [pos for pos in every if pos is not best and pos is not second]
@@ -2468,6 +2517,64 @@ def _closing_in(ticker, sv, tf, price, tgt, back=40):
     return (price < then) if tgt < price else (price > then)
 
 
+def failing_setups(text):
+    """Confirmed setups whose price has closed past `profileStop` and followed through.
+
+    The ledger's own fail rule tests the invalidation, which is a trendline read at the
+    latest candle — on a confirmed break that line keeps moving the way the break went, so
+    it outruns price and the rule can never fire. Replayed across 348 confirmed setups,
+    exactly **6** have ever closed past their own invalidation line since the break and
+    **none** of those got the follow-through. That is why the ledger holds 351 confirmed
+    calls and 1 marked `failed`: not a 99.7% hit rate, a stop nothing can reach.
+
+    `profileStop` can be reached, because it is a price the stock actually traded. Using
+    it as a second, independent path to failure — a close past it, then a follow-through
+    beyond that candle — flags 22 setups against the frozen stop's 54. The frozen stop was
+    not chosen despite firing more: price has already traded through it on 141 of 319
+    setups the ledger still shows as live, against 50 of 230 for this one, so most of
+    those 54 would be false closes.
+
+    This only ever **reports**. 13 of the 22 hold a visible slot, MSFT, AMZN and TSLA
+    mains among them, and closing a call someone is reading is a decision rather than a
+    clean-up. Rows are (ticker, label, pattern, timeframe, stop, hit date, auto, shown).
+    """
+    import price_profile as pp
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, sv, _pos in _setups(e):
+            if sv.get('stage') != 'confirmed' or sv.get('dormant'):
+                continue
+            stop, d = sv.get('profileStop'), sv.get('direction')
+            tf, sd = sv.get('timeframe') or main.get('timeframe'), sv.get('stageDate')
+            if not (stop and sd) or d not in ('up', 'down'):
+                continue
+            bars = pp.load_bars(main['ticker'], tf)
+            if not bars or sd not in bars['t']:
+                continue
+            j = bars['t'].index(sd)
+            c, h, l = bars['c'], bars['h'], bars['l']
+            past = lambda k: (c[k] < stop) if d == 'up' else (c[k] > stop)
+            hit = next((k for k in range(j, len(c)) if past(k)), None)
+            if hit is None:
+                continue
+            if not any(((c[k] < l[hit]) if d == 'up' else (c[k] > h[hit]))
+                       for k in range(hit + 1, len(c))):
+                continue
+            # A setup still travelling toward its target has not failed, whatever a stop
+            # touched months ago says. This is the same error `_closing_in` was written for
+            # on the stranded list, and ENVA is the same case: its weekly rising wedge
+            # confirmed down at $145.08, rallied to $267 — through this stop in April —
+            # and is now falling toward its $119.67 target, which the source tool and a
+            # human reading of the chart both still call correct.
+            if _closing_in(main['ticker'], sv, tf, main.get('price'), sv.get('target')):
+                continue
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'), tf,
+                        stop, bars['t'][hit], bool(sv.get('auto')),
+                        label == 'main' or label.endswith('alt')))
+    return out
+
+
 def stranded_setups(text):
     """Confirmed setups whose break is undone and whose invalidation cannot reach price.
 
@@ -2687,6 +2794,15 @@ def print_watchlist_report(result, missing, apply):
             tag = "auto" if auto else "posted"
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} confirmed {str(when):<12} "
                   f"${_fmt_price(conf)} → ${_fmt_price(price)}  {undone * 100:4.0f}% past, stop {stop * 100:3.0f}%  ({tag})")
+    failing = failing_setups(text)
+    if failing:
+        print(f"\n💀 Closed past the shelter stop ({len(failing)} setups) — a close past `profileStop`")
+        print("   and a follow-through beyond it. The invalidation rule cannot reach these:")
+        print("   6 of 348 confirmed setups have ever closed past their own invalidation line,")
+        print("   and none followed through. Nothing is marked; mark them `failed` by hand:")
+        for sym, label, pattern, tf, stop, when, auto, shown in sorted(failing):
+            print(f"  {sym:<6} {str(tf):<7} {str(pattern):<20} stop ${_fmt_price(stop)}"
+                  f"  first close past {when}" + ("  (auto)" if auto else "") + ("  SHOWN" if shown else ""))
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:

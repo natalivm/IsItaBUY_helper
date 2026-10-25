@@ -21,14 +21,87 @@ gets eaten.
 **A setup the fresh scan no longer finds is left alone.** Not finding it again is not the
 same as it being wrong.
 
-**Replacing a hand-posted call is a decision, not a clean-up.** `--thin`, `--deadstops`
-and `--dormant` all drop the auto-detected ones and *list* the rest. Keep that split in
-anything new: a script may tidy what it drew, and may only report on what a person drew.
+**A hand-posted setup ends three ways, and a script may reach only two of them.** The
+price update may mark it `target` when price gets there, or `failed` when it is
+invalidated. Nothing else about it is a script's to change — not its levels, not its
+stage, not its slot.
+
+**The third way is replacement by the detector, and only once the setup has gone stale.**
+Stale means the reading is no longer live: flagged `update`, dormant, or stranded. A
+hand-posted call that is none of those is still a call someone made, and stays untouched.
+
+**A dead stop and too little room are not staleness, and the measurement is conclusive.**
+Those two started on the list above and came off it. Taken as replacement triggers they
+catch 64 hand-posted setups across 45 stocks, 31 of them holding a visible slot — and
+among them PLTR's daily rising wedge, posted hours earlier at the source tool's own
+levels; all four AMKR setups, which the user confirmed as right and differing only in
+"timeframe of reaching the target"; IOVA's monthly wedge, which this rulebook already
+defends by name; and CLS's and DAVE's, verified the same day. A rule whose first run
+deletes every call its author validated that week is not a staleness rule.
+
+The reason is a distinction worth keeping: `--deadstops` and `--thin` judge **whether the
+trade is worth taking**, `update` / `dormant` / `stranded` judge **whether the reading is
+still live**. Only the second kind licenses a replacement. AMKR's direction is right and
+its numbers are a long-horizon projection; IOVA's stop cannot fire because the break
+already paid. Both are poor trades and correct readings.
+
+**So the rule stands and has nothing to do.** Under the narrowed definition there are 44
+candidates: 43 already `dormant` — shelved, invisible, and replacing one would destroy the
+path that wakes it when its break re-forms — and one stranded, AMKR's weekly falling
+wedge, which the user validated. It stays unwired because there is no work for it, not
+because it is hard. The ledger was never stuck on hand-posted setups being unreplaceable;
+it was stuck on the fail rule being unreachable, which is a different fix.
+
+This replaces the older rule that a script "may tidy what it drew and may only report on
+what a person drew". That rule is what left the ledger with **1 failure in 351 confirmed
+calls**: a stuck row could only be replaced by a human, and the human did not come back, so
+nothing ever closed. Reporting a stale call and leaving it is not caution, it is a row that
+stays wrong forever.
+
+**Replacement archives the prose first.** `archive/handSetups-<date>.json` already stores
+the verbatim source of every stored setup; a replaced hand-posted setup goes there before
+the detector's own note takes its place. Recoverable rather than preserved in place — a
+`note` quoting levels that no longer exist is worse than no note, and the archive is what
+makes the swap safe to automate at all.
 
 **Re-read the prose when a setup changes.** `note`, `failRule` and `keyLevel` are
 hand-written and quote the numbers that were true when they were written. STRL's keyLevel
 said $731.25 — the target of a wedge retired days earlier — while the stock traded at
 $355.30.
+
+## The dots
+
+**Green dot on a stock you have checked.** `checkedOn: 'YYYY-MM-DD'` on the entry, and
+`components/PatternWatchlist.tsx` shows the dot on `!auto && checkedOn`. Nothing else gates
+it — not earnings, not a clock, not a date on file. It was once gated on a future earnings
+date and that was removed, because it hid the check on every stock without one, which is
+most of them.
+
+**The green dot is cancelled if any of the stock's setups is refreshed by auto
+generation.** Clear `checkedOn` in the same edit that writes the replacement. The check was
+made against the setups as they stood, so a machine drawing nobody has read makes it a
+check of something that is no longer there, and the dot would otherwise vouch for a reading
+produced after the person stopped looking. This is the only expiry a script can cause,
+which makes it the one to wire first.
+
+**A red dot is on every auto-generated setup, always.** It is a property of the setup,
+not of the stock: wherever that setup is drawn — the ledger row, the expanded panel, a
+landing-page card — it carries its dot until someone reads it and takes the `auto: true`
+off. Removing the flag is the only thing that clears it.
+
+**So the two dots are independent and can show together.** Red describes a setup, green
+describes a stock. A stock you have checked can still be showing a machine drawing on one
+of its slots, and the row should say both things rather than hiding one behind the other.
+
+**A break against the checked reading brings the red dot back.** If the stock breaks
+*against* the reading the check was made on, the row is owed a fresh look. PLTR is the
+case: checked on Oct 25 with a bullish daily falling wedge as the live read, so a completed
+close below its $180.41 invalidation plus the follow-through its `failRule` names is what
+re-flags it. The check said "I have read this chart and this is what it says"; once the
+chart says something else, it is a statement about a chart that no longer exists.
+
+**So when you clear a stock's dots, note which setup carries the check** — that setup's
+fail rule is the condition that brings the red dot back.
 
 ## Taking levels from the source tool
 
@@ -47,6 +120,36 @@ the relevel; inventing a pattern to fit is worse.
 243% of the close it starts from and is a setup the source tool and a human both call
 valid; it differs by *horizon*, not correctness. Read the geometry report as a horizon
 label.
+
+## A bottom you cannot see yet
+
+**When the indicators disagree, do not resolve it — post a `forming` setup.** IREN is the
+case: a turn-up dot three bars ago at z −2.63, which `hlGate` cannot suppress because the
+AR(1) fit found no reversion to gate, against Hurst 0.57 and a variance ratio of 1.20
+saying the series is persistent. One half says bottoming, the other says fading this
+loses. Nothing decides it until the bottom is actually in.
+
+A `forming` stage makes no claim, which is exactly the right claim to make here. An
+either-direction setup says it better still: it is watching for a break both ways, which
+is the honest description of a stock that can keep falling or turn.
+
+**The trend stays the working hypothesis and the reversion is its invalidation.** The
+stock is bearish, so bearish is what we assume; what would prove us wrong is the bottom
+forming. That is a setup with a level on each side, not a directional call with a target.
+
+**The half-life time-boxes the hypothesis.** It says how many bars this series has taken
+to close half the gap to its mean, and the Pine's own convention is a lookback of about
+twice it — so roughly 2× half-life is when a reversion should have shown itself. Past
+that, the setup has not been proven wrong, it has stopped being a reversion story.
+
+Where there is no half-life at all (`phi ≥ 1`, the fit finding no pull to the mean) there
+is no time-box, and that is worth more than it looks: it is the same statement as "this is
+not a reversion story", arriving from the fit rather than from Hurst.
+
+**Do not reconcile a panel reading to a port without checking the timeframe.** IREN read
+`phi = 1.0172` on daily candles, no half-life; a 10.5-bar half-life needs `phi ≈ 0.936`.
+That is not a rounding gap, it is a different series — an intraday chart, which
+`public/bars/` does not carry. Say so rather than tuning a number until the two agree.
 
 ## Targets
 
@@ -87,6 +190,14 @@ many of them holding a visible slot. Redraw them.
 highs by definition, so reaching past the range is what a measured move on a stock with
 momentum behind it should do. 80 setups are in that shape and none is a defect. Do not
 apply the stop test to them.
+
+**A break that has already paid is the exception.** IOVA's monthly falling wedge confirmed
+at $4.76 and price is $14.09 — 196% up, 57% of the way to its $21.26 target — on a $0.23
+invalidation at the base of the wedge. The stop cannot fire, but this is not a drawing
+waiting to be wrong; it is a call that is working, and the source tool draws it identically.
+On a bullish break out of a multi-year base the unreachable floor *is* the base, and what
+matters instead is where the consolidation holds. Keep it, say so in the note, and let it
+keep appearing on the dead-stop list — that list is for review, not for deletion.
 
 **Distance still decides, direction only says where to look.** `STOP_BEYOND` (15%) exists
 because a stop just outside the range is *correct* on a stock at its highs: QQQ's $764.44
