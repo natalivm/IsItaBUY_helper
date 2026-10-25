@@ -357,6 +357,15 @@ def detect_lines(bars, tf, n, all_found=None):
 
 def _make_setup(bars, tf, pattern, u, d, start, A, st, touches, score):
     t, last = bars['t'], len(bars['t']) - 1
+    # A boundary at or below zero is not a line anything could have touched, so every
+    # height and target measured off it is arithmetic rather than geometry. IOVA's daily
+    # channel ran its lower line from minus $2.08, which set the width at $6.66 and a
+    # $6.06 downside goal on a $14 stock; the source tool's drawing of the same channel is
+    # $5.02 wide. Five setups on the ledger carry one, STX's weekly channel at minus
+    # $296.48. This is a harder test than `_stoppable`'s: that one asks whether the stop
+    # has left the traded range, this asks whether the line is a price at all.
+    if min(u.at(start), u.at(last), d.at(start), d.at(last)) <= 0:
+        return None
     return {'pattern': pattern, 'timeframe': tf, **st, 'score': score,
             'quality': {'touches': touches, 'span': A - start,
                         'height_pct': round((u.at(start) - d.at(start)) / bars['c'][A] * 100, 1)},
