@@ -544,7 +544,14 @@ Everything that explains *how an indicator works*, *what a harness measured* or 
 file already records* belongs in CLAUDE.md, not on a stock.
 
 Seven had grown past 1200 (CLS to 2791) and were cut by about half; the repeated valuation
-caveat came off 23 rows. The median is 625 characters now against 939 before.
+caveat came off 23 rows. The median is 625 characters now against 939 before, and the
+longest is 1169.
+
+CRDO is the honest exception and worth knowing why: most of its length is the swing-low
+evidence for *never a resting bid* — five of seven lows closing in the lower half of the
+day's range. That is the argument, not padding, and cutting it leaves an instruction with
+nothing behind it. Where prose resists trimming, check whether what remains is evidence
+before cutting further.
 
 **Write the text with real newlines, not `\n`.** Fifteen keyLevels written through a shell
 heredoc stored a literal backslash-n and displayed it to the reader. `json.dumps` on a
