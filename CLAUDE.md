@@ -326,6 +326,35 @@ corroboration, not proof, and that a few points of median error between two conf
 a reason to prefer one. Re-run the bootstrap before moving anything on the strength of a
 table alone, and treat new completed calls as the thing that would actually settle it.
 
+**`HEIGHT_VS = 'start'`: judge a pattern's height where the price was.** `MAX_HEIGHT`
+caps how tall a pattern may be relative to price, but it was measured against the close at
+the pattern's **last anchor** — and for a rising pattern price has climbed by then, so the
+same height is a smaller fraction of it. CRDO's weekly ascending channel came in at 69% of
+that close, under the 70% cap, while being **106% of the lowest close it spans**: a channel
+wider than the share price, with its lower boundary at $40.77 in February when the lowest
+low on the chart was $86.49. It had to be demoted by hand.
+
+Judged against the close at the pattern's *start* instead:
+
+| | target | channels | inside both tolerances | patterns | agrees with hand-posted | rejects CRDO |
+|---|---|---|---|---|---|---|
+| `last` (was) | 6.7% | 8.8% | 13 | 17/23 | 76.4% | no |
+| **`start`** (current) | **5.0%** | 8.8% | 13 | 17/23 | 74.8% | yes |
+| `mean` | 5.0% | 8.8% | 13 | 17/23 | 76.4% | **no** |
+| `min` | 4.6% | 6.1% | 15 | 16/23 | 71.7% | yes |
+
+`mean` was rejected despite costing nothing: it improves the metric without fixing the case
+that prompted the change, which is tuning to the scoreboard rather than to the problem.
+`min` buys a further 0.4 points of target error and two more setups inside tolerance, but
+costs three times the agreement (12 setups against 4), loses CRWV's weekly rising wedge,
+and leaves CRDO's weekly chart with **no** reading at all — accuracy bought by declining to
+read the chart. `start` fixes the case for 1.6 points, 4 setups of 254.
+
+Note what this is *not*: the touches were not the problem. CRDO's lower boundary is touched
+at bars 7 and 22 of a 36-bar span — properly spread, and `MIN_SIDE_TOUCHES` passes it
+honestly. A rising line can be far below price at the start and still be touched later as it
+catches up, which is why the width test has to be anchored where the pattern begins.
+
 ### Stop distance: why the live invalidation cannot measure it
 
 A sloped invalidation is its line's value at the **latest** candle (see "Sloped
