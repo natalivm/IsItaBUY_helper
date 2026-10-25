@@ -37,6 +37,7 @@ MAX_PER_TF = 5                               # setups stored per timeframe; the 
 AGREE = 0.05                                 # targets within 5% of each other agree
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
 MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
+HEIGHT_VS = 'last'                           # price the pattern height is judged against
 MIN_SIDE_TOUCHES = 2                         # touches required on EACH boundary of a pattern
 SIDE_EXEMPT = 0.20                           # ...unless the pattern is this narrow vs price
 MIN_TARGET = 0.3                             # a downward target must stay above 30% of the signal
@@ -152,7 +153,15 @@ def _stage(bars, n, pattern, up, lo, start, A):
             return ((up.at(start) - lo.at(start)) + (up.at(at) - lo.at(at))) / 2
         return up.at(start) - lo.at(start)
     height = _height(start)
-    if height > MAX_HEIGHT[bars['tf']] * c[A]:
+    # What the height is judged against. `last` (the close at the final anchor) flatters a
+    # rising pattern: by then price has climbed, so the same height is a smaller fraction of
+    # it. CRDO's weekly channel was 101 points tall while the stock traded at 121 and its
+    # lower boundary started at $40.77 -- 69% of the last anchor's close, under the cap, and
+    # 106% of the lowest close it spans. A pattern wider than the share price is not a
+    # pattern, so measure it where the price actually was.
+    ref = {'last': c[A], 'start': c[start],
+           'min': min(c[start:A + 1]), 'mean': sum(c[start:A + 1]) / (A + 1 - start)}[HEIGHT_VS]
+    if height > MAX_HEIGHT[bars['tf']] * ref:
         return None                              # implausibly tall for this timeframe
     sig = None
     for i in range(A + 1, n):

@@ -1417,6 +1417,12 @@
  },
  "CRDO|main": {
   "label": "main",
+  "setup": "Support Shelf (daily)",
+  "stage": "forming",
+  "ticker": "CRDO"
+ },
+ "CRDO|weekly Ascending Channel": {
+  "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
   "ticker": "CRDO"
