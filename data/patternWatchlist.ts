@@ -3429,7 +3429,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-06-08", 770.22], to: ["2026-10-19", 99.14] },
     ],
     failRule: "a completed weekly close below $99.14, then a follow-through close below that candle's low.",
-    note: "After peaking near $1,000 in June, price slid in a falling wedge and broke out of it in September, confirming with a weekly close above $516.95. It is now $355.30 — 31% below the level that confirmed it, and 65% off the high. The $99.14 invalidation is a line extrapolated to 28% of spot, so the failure rule could never fire and this would have read `confirmed` on a $731.25 target the whole way down. Marked for replacement rather than left standing; the daily wedge stored below is the same break on the faster chart and the same problem. What the stretch is worth is a separate question from whether the wedge is alive: price is more oversold than at any point on file (z -2.95 raw on a 50-bar window, -3.29 at the Oct 23 close, against a median of -2.57 for the ten most oversold days of the year) and the MeanRev panel still reads no pull to the mean, Hurst .51, variance ratio 1.04 — a random walk, not a spring. Deeply stretched and statistically unreverting at once is the honest reading.",
+    note: "After peaking near $1,000 in June, price slid in a falling wedge and broke out of it in September, confirming with a weekly close above $516.95. It is now $355.30 — 31% below the level that confirmed it, and 65% off the high. The $99.14 invalidation is a line extrapolated to 28% of spot, so the failure rule could never fire and this would have read `confirmed` on a $731.25 target the whole way down. Marked for replacement rather than left standing; the daily wedge stored below is the same break on the faster chart and the same problem. What the stretch is worth is a separate question from whether the wedge is alive: price is more oversold than at any point on file (z -2.95 raw on a 50-bar window, -3.29 at the Oct 23 close, against a median of -2.57 for the ten most oversold days of the year) and the MeanRev panel still reads no pull to the mean, Hurst .51, variance ratio 1.04 — a random walk, not a spring. Deeply stretched and statistically unreverting at once is the honest reading. On where it settles: $355.30 sits inside the shelf this stock spent two years building, $300-450, and the floor of that shelf is sharp — $300-325 carries 36 daily sessions and $325-350 carries 35, against 5 in $275-300. A consolidation here has somewhere to stand; a break under $300 does not.",
     alt: {
       pattern: "Ascending Channel",
       timeframe: "weekly",
@@ -3439,13 +3439,18 @@ export const PATTERN_STOCKS: PatternStock[] = [
       signal: 571.00,
       confirm: 509.03,
       invalidation: 669.72, breakInvalidation: 581.97,
-      target: 15.67,
+      target: 300.00,
       lines: [
         { from: ["2026-04-06", 917.93], to: ["2026-10-19", 1225.06] },
         { from: ["2026-04-06", 362.59], to: ["2026-10-19", 669.72] },
       ],
-      note: "A long rising channel from 2025 broke down after the June top and confirmed with a weekly close below $509.03. **Its $15.67 target should not be used.** The channel is 555 points tall against a stock that traded near 500 when it broke — a height larger than the share price, which is the same defect HEIGHT_VS was added to catch in the detector and which no rule screens out of a hand-posted setup. A measured move that lands 96% down is arithmetic, not a forecast. The break itself was real and the direction has been right; treat the level as the reading and ignore the number below it. Its $669.72 invalidation is 88% above spot, so this setup cannot be retired by rule either.",
+      note: "A long rising channel from 2025 broke down after the June top and confirmed with a weekly close below $509.03. **The target is not a measured move and should not be read as one.** The channel's own height projects $15.67, a 96.3% fall — the source tool computes that figure too, so it is the construction rather than a transcription error: the channel is 555 points tall against a stock trading near 446 when the lines start, 124% of its own price, because a multi-year rising channel's lower boundary begins near zero. Our detector would refuse to draw it at all (MAX_HEIGHT caps a weekly pattern at 70% of the close where it starts, and this is 112%), which is one of the few places these rules are stricter than the source. $300.00 replaces it as a structural level: below $355.30 the daily bars thin out fast — $300-325 holds 36 sessions and $325-350 holds 35, while $275-300 holds only 5. That is where this stock stops having been. The break and the direction were right; only the number under them was not.",
     },
+    history: [
+      { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-15",
+        confirm: 480.23, invalidation: 522.92, target: 419.52,
+        note: "Confirmed below $480.23, beyond the signal candle's low, and reached $419.52 on Oct 15. Price has since run on to $355.30, well past the objective. The invalidation sat at $522.92, 47.2% above where the call ended \u2014 a wide stop on a move that paid, which is the shape the stop analysis keeps finding." },
+    ],
     more: [
       {
         auto: true,
