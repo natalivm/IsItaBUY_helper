@@ -17868,6 +17868,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     priceDate: "2026-10-23",
     rsi: 41.3,
     trend: "flat",
+    keyLevel: {
+      price: 139.11,
+      text: "$139.11 is the low this base is built on, and the base is the thing worth tracking rather than any one of the ten setups stored here. Four successively higher lows since: $139.11 on Jul 31, $146.02 on Aug 18, $161.18 on Sep 16, $165.80 on Oct 15. The range is contracting with them — $139.11-$193.81 across Jun-Aug, 39% wide, against $161.18-$208.33 across Sep-Oct at 29%. The MeanRev panel agrees the character has changed: Hurst .33 and a variance ratio of .63 are the most firmly mean-reverting readings on this ledger (CRDO .55, STRL .51 with no pull to the mean at all), and z is only -0.69, so this is a stock resting rather than a stock stretched. The Matrix dashboard has MA direction UP while price is still below the average — the turn showing in the slope before the price. What it is not yet is a trend: the last 40 sessions are -13.8%, a pullback inside the base from the September high near $208, and the base is unproven until that high goes. EARNINGS OCT 29 is what decides it, and the ten setups here span $87.24 to $272.64, which is the ledger having no view rather than several."
+    },
     signal: 145.55,
     confirm: 191.36,
     invalidation: 110.75, breakInvalidation: 130.08,
