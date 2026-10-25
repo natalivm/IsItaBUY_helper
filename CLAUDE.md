@@ -857,10 +857,20 @@ Guards mirror `relevel`: under `MIN_MOVE` is left alone, past `DRIFT` is listed 
 moved. 5 pairs moved on the first pass (XOP, HTFL, FTNT, PANW, IOVA) and UMAC was refused at
 16% — far enough that its lines and its levels are not the same drawing, which needs a human.
 
-**One bar of lag remains.** `update_watchlist` does the stage check and runs *before* the
-candles are written, so the levels it reads are always one run old — this takes the error
-from unbounded to a single bar (~1.1% on TEAM's channel), it does not remove it. Closing it
-properly means the break test reading the line's value directly instead of a stored level.
+**The break test reads the lines, not the stored pair.** `update_watchlist` runs before the
+candles are written, so whatever `relevel_breaks` last wrote is already a run old by the time
+the check reads it — a bar of lag on top of a level that is only a cache. `_live_breaks()`
+recomputes the pair from the setup's own lines at the latest completed candle and hands that
+to `_pending_break`, so the cache's age stops mattering: TEAM's $226.80 against a $227.61
+close reads as a break before the fix and as nothing after it, the lines standing at $233.10.
+A daily series is missing the bar that just closed, so `date` is appended for that timeframe
+only; a weekly or monthly series already carries the bar holding it.
+
+It falls back to the stored pair whenever the lines cannot say better — no lines, no candles,
+anchors off the chart, or a live value more than `BREAK_DRIFT` (8%) away, which is UMAC's
+case: its lines and its levels are not the same drawing, and reconciling them is a human's
+job rather than the break test's. `relevel_breaks` is still what keeps the *displayed* level
+honest; this only decides the stage.
 
 **A channel changing stage switches which boundary its invalidation sits on**, and relevel
 handles that as its own case. When a pending channel confirms — by hand or by the daily
