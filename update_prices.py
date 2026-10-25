@@ -969,6 +969,9 @@ def main():
             shelved, woken = pattern_watchlist.shelve_dormant(apply=True)
             if shelved or woken:
                 print(f"Shelved {len(shelved)} setup(s), woke {len(woken)}.")
+            swapped, dupes = pattern_watchlist.dedupe_setups(apply=True)
+            if swapped or dupes:
+                print(f"Dedupe: {len(swapped)} alt slot(s) swapped, {len(dupes)} repeat(s) dropped.")
             capped, exported = pattern_watchlist.cap_setups(apply=True)
             if capped:
                 print(f"Capped {len(capped)} stock(s) to {pattern_watchlist.SETUP_CAP} readings"

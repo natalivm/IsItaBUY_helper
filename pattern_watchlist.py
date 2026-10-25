@@ -1599,6 +1599,102 @@ def strip_history(apply=False, path=None):
     return touched, exported
 
 
+# ── One claim per slot ──
+#
+# FRSH carried six setups of which five projected $19-22: the same read, drawn five ways.
+# Worse, its main and alt both said it, so the row spent both its visible slots on one
+# claim. `agree` already counts the corroboration, so repeating it costs the slot and
+# tells you nothing the badge did not.
+
+DUPE = 0.05        # targets this close, in the same direction, are the same call
+_STAGE_RANK = {'confirmed': 0, 'retest': 1, 'atRisk': 2, 'signal': 3, 'forming': 4}
+
+
+def _same_call(a, b):
+    """Do these two setups project the same move?"""
+    if a.get('direction') != b.get('direction') or a.get('direction') not in ('up', 'down'):
+        return False
+    ta, tb = a.get('target'), b.get('target')
+    return bool(ta and tb) and abs(ta - tb) / tb <= DUPE
+
+
+def dedupe_setups(apply=False, path=None):
+    """Keep one setup per claim: swap a duplicated alt, then drop duplicated stored ones.
+
+    The visible slots come first. When main and alt make the same call the second slot is
+    wasted, so a stored setup that says something different is promoted into it and the old
+    alt is demoted rather than deleted -- it is still a valid reading, just not worth a
+    slot. Then any stored setup duplicating what is now on show is dropped outright, since
+    a rescan would redraw it and `agree` already carries the corroboration.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    cuts, swapped, dropped = [], [], []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk, main = m.get('ticker'), m
+        alt_pos, alt_auto = e['alt'], bool(e['alt'] and e['alt'].get('auto', (0, 0, None))[2])
+        live = [(lb, sv, pos) for lb, sv, pos in _setups(e) if not sv.get('dormant')]
+        stored = [pos for lb, sv, pos in _setups(e) if '_span' in pos]
+        alt_vals = {k: v[2] for k, v in alt_pos.items()} if alt_pos else None
+        changed = False
+
+        # 1. the row saying one thing twice
+        if alt_vals and _same_call(main, alt_vals):
+            def _val(pos):
+                return {k: v[2] for k, v in pos.items() if k != '_span'}
+            options = [pos for pos in stored
+                       if not _same_call(main, _val(pos)) and not _val(pos).get('dormant')]
+            if options:
+                cur_tf = alt_vals.get('timeframe')
+                price = main.get('price') or 0
+
+                def score(pos):
+                    v = _val(pos)
+                    tgt = v.get('target') or v.get('goalUp') or 0
+                    return (0 if v.get('timeframe') == cur_tf else 1,
+                            1 if v.get('auto') else 0,
+                            _STAGE_RANK.get(v.get('stage'), 9),
+                            abs(tgt - price) / price if (tgt and price) else 9)
+                pick = min(options, key=score)
+                pv = _val(pick)
+                stored = [p for p in stored if p is not pick] + [alt_pos]
+                swapped.append(f"{tk}: alt was the same call as main (${_fmt_price(main.get('target'))} "
+                               f"vs ${_fmt_price(alt_vals.get('target'))}) — promoted "
+                               f"{pv.get('timeframe')} {pv.get('pattern')} instead")
+                alt_pos, alt_auto = pick, bool(pv.get('auto'))
+                alt_vals = pv
+                changed = True
+
+        # 2. stored setups repeating what is on show
+        shown = [main] + ([alt_vals] if alt_vals else [])
+        keep = []
+        for pos in stored:
+            v = {k: val[2] for k, val in pos.items() if k != '_span'}
+            # No `_span` check here: an alt just demoted into the stored list has none, and
+            # it is exactly the setup most likely to repeat the row -- being demoted for
+            # repeating it is how it got here.
+            if not v.get('dormant') and any(_same_call(v, s) for s in shown):
+                dropped.append(f"{tk}: {v.get('timeframe')} {v.get('pattern')} "
+                               f"tgt ${_fmt_price(v.get('target'))} — same call as the row")
+                changed = True
+                continue
+            keep.append(pos)
+        if not changed:
+            continue
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, e['fields'], alt_pos, keep,
+                                             bool(main.get('auto')), alt_auto)))
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return swapped, dropped
+
+
 def cap_setups(apply=False, path=None):
     """Hold every stock to SETUP_CAP shown readings, finished rows going first.
 
@@ -2277,10 +2373,24 @@ if __name__ == "__main__":
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
+    ap.add_argument("--dedupe", action="store_true", help=f"keep one setup per claim: swap an alt that repeats the main, drop stored setups whose target is within {DUPE * 100:.0f}% of a shown one")
     ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
     ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.dedupe:
+        swapped, dropped = dedupe_setups(apply=args.apply)
+        print(f"{'Swapped' if args.apply else 'Would swap'} {len(swapped)} duplicated alt slot(s):")
+        for line in swapped:
+            print(f"  {line}")
+        print(f"\n{'Dropped' if args.apply else 'Would drop'} {len(dropped)} stored duplicate(s):")
+        for line in dropped[:20]:
+            print(f"  {line}")
+        if len(dropped) > 20:
+            print(f"  ... and {len(dropped) - 20} more")
+        if (swapped or dropped) and not args.apply:
+            print("\nRun with --dedupe --apply to write them.")
+        raise SystemExit(0)
     if args.strip_history:
         touched, exported = strip_history(apply=args.apply)
         print(f"Exported {len(exported)} new completed call(s) to {os.path.relpath(COMPLETED_FILE)}.")

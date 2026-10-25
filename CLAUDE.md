@@ -536,6 +536,33 @@ keeps working. It was 27 before the strip and 27 after.
 The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
 row reappears from an archive — it simply has no writer.
 
+### One claim per slot
+
+FRSH carried six setups of which five projected $19-22: the same read drawn five ways.
+Worse, its **main and alt both said it** — $20.99 against $21.79 — so the row spent both
+its visible slots on one claim. `agree` already counts corroboration, so repeating it costs
+the slot and tells you nothing the badge did not.
+
+`dedupe_setups()` treats targets within `DUPE` (5%) in the same direction as the same call,
+and acts in two steps:
+
+- **A duplicated alt is swapped, not deleted.** A stored setup saying something different
+  is promoted into the slot and the old alt is demoted, since it is still a valid reading
+  — just not worth a slot. The pick prefers the alt's own timeframe, then hand-posted over
+  machine-drawn, then the further-along stage, then the nearest target. 27 of 28 stocks had
+  a stored setup that qualified.
+- **Stored setups repeating what is on show are dropped**, since a rescan would redraw them
+  and `agree` carries the corroboration. 80 went in two passes.
+
+An **either-direction** setup is never a duplicate: it is watching for a break both ways,
+which is a different claim from a directional target even when one of its goals lands
+nearby. That is what FRSH's second slot became.
+
+**The demoted alt has no `_span`,** and the first version's drop check required one — so
+the setup most likely to repeat the row escaped the test that existed to catch it, FRSH
+keeping both $20.99 and $21.79. Being demoted for repeating the row is how it got into the
+stored list; it has to be checked there.
+
 ### Six readings per stock, and what happens to the finished ones
 
 Ten readings on one stock is not ten pieces of information, it is one chart described ten
