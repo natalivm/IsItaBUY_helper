@@ -536,6 +536,25 @@ keeps working. It was 27 before the strip and 27 after.
 The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
 row reappears from an archive — it simply has no writer.
 
+### keyLevel prose: short enough to read on the row
+
+A `keyLevel` is read beside a chart, not instead of one. Keep it to **roughly 600-1000
+characters** — the level, why it is the level, and the one risk that would change it.
+Everything that explains *how an indicator works*, *what a harness measured* or *what this
+file already records* belongs in CLAUDE.md, not on a stock.
+
+Seven had grown past 1200 (CLS to 2791) and were cut by about half; the repeated valuation
+caveat came off 23 rows. The median is 625 characters now against 939 before.
+
+**Write the text with real newlines, not `\n`.** Fifteen keyLevels written through a shell
+heredoc stored a literal backslash-n and displayed it to the reader. `json.dumps` on a
+Python string with real newlines produces the right escaping; hand-written `\\n` inside a
+heredoc does not.
+
+**Re-read the `price` when a setup is replaced.** It is a level, not a label: STRL's said
+$731.25, the target of a falling wedge that had been retired, while the stock traded at
+$355.30. It is $393.09 now — the invalidation of the setup actually on the row.
+
 ### Stretched: momentum strong enough to be its own risk
 
 RSI past **72** behind a long, or **28** behind a short, is the setup's own momentum taken
@@ -933,6 +952,13 @@ run it `--offline` here; the Action does the real fetch.
 Prices auto-refresh daily, but everything else (fundamentals, RS, overrides, Burry/debt blocks) is hand-curated and goes stale silently. **`updatedOn` is NOT a freshness signal** — `update_prices.py` resets it to today on every price run. The real signal is **`dataReviewedOn`** (`'YYYY-MM-DD'`), which the price bot never touches.
 
 **Whenever you refresh a stock's fundamentals / RS / override after checking its latest earnings, set `dataReviewedOn` to that date.**
+
+Two caveats are true of **every** multiple quoted in a `keyLevel` and so belong here rather
+than repeated on each stock: a "multiple at the high" uses the high against *today's*
+forward estimate, which makes it a ceiling on the historical reading wherever estimates have
+risen since; and the model inputs are the last reported quarter, so a multiple stands
+against estimates the coming print can move. That paragraph was pasted onto 23 rows and has
+been removed from all of them.
 
 Run the review-queue report any time (it only reads — never changes values):
 
