@@ -1753,10 +1753,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "INTC",
     name: "Intel Corp",
-    keyLevel: {
-      price: 85.71,
-      text: "The Matrix buy stop on the daily, with price at $86.96 just above it. The 4h reads reverting with a turn-up dot while the daily reads trending and suppresses its own — the bottom is a 4h claim, and daily candles cannot see it.",
-    },
     trend: "down",
     rsi: 33.2,
     price: 86.96,
@@ -1772,8 +1768,8 @@ export const PATTERN_STOCKS: PatternStock[] = [
     target: 72.58,
     note: "Price climbed a rising channel from the late-August low near $85 to a top around $127. It broke the lower line and confirmed with a daily close below $104, then slid into the low $90s.",
     keyLevel: {
-      price: 72.58,
-      text: "Down 39% and still 57.2x — the fall has not bought cheapness. The daily channel is confirmed down to $72.58 and nobody has checked it.",
+      price: 85.71,
+      text: "Down 39% and still 57.2x. The daily channel is confirmed down to $72.58; $85.71 is the Matrix buy stop, with price just above it. The 4h reads reverting with a turn-up dot, the daily trending — the bottom is a 4h claim.",
     },
     alt: {
       auto: true,
