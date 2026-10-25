@@ -589,7 +589,7 @@ range is *correct*, not broken: on a stock at its highs the place for a short's 
 little above the high. QQQ's $764.44 against a $762.86 high is 0.2% out and perfectly
 tradeable; DAVE's is 11% out and a level price has no reason to visit. Without the margin
 the check flagged 204 setups, nearly all of them fine. With it, 59 — 43 machine-drawn and
-16 posted by hand.
+16 posted by hand. (Those counts are from when the check was written; after the redraws and cleanups since, the current list is 2 — one stop above every traded price and one decayed to zero — plus 44 failing the reward:risk test below.)
 
 `python3 pattern_watchlist.py --deadstops` (dry run) / `--deadstops --apply` drops the
 auto-detected ones and lists the rest, the same policy `--thin` uses. The daily report

@@ -27,9 +27,30 @@ invalidated. Nothing else about it is a script's to change — not its levels, n
 stage, not its slot.
 
 **The third way is replacement by the detector, and only once the setup has gone stale.**
-Stale is what the existing reports already name: flagged `update`, dormant-eligible, a
-dead stop, stranded, or too little room. A hand-posted call that is none of those is still
-a call someone made, and stays untouched.
+Stale means the reading is no longer live: flagged `update`, dormant, or stranded. A
+hand-posted call that is none of those is still a call someone made, and stays untouched.
+
+**A dead stop and too little room are not staleness, and the measurement is conclusive.**
+Those two started on the list above and came off it. Taken as replacement triggers they
+catch 64 hand-posted setups across 45 stocks, 31 of them holding a visible slot — and
+among them PLTR's daily rising wedge, posted hours earlier at the source tool's own
+levels; all four AMKR setups, which the user confirmed as right and differing only in
+"timeframe of reaching the target"; IOVA's monthly wedge, which this rulebook already
+defends by name; and CLS's and DAVE's, verified the same day. A rule whose first run
+deletes every call its author validated that week is not a staleness rule.
+
+The reason is a distinction worth keeping: `--deadstops` and `--thin` judge **whether the
+trade is worth taking**, `update` / `dormant` / `stranded` judge **whether the reading is
+still live**. Only the second kind licenses a replacement. AMKR's direction is right and
+its numbers are a long-horizon projection; IOVA's stop cannot fire because the break
+already paid. Both are poor trades and correct readings.
+
+**So the rule stands and has nothing to do.** Under the narrowed definition there are 44
+candidates: 43 already `dormant` — shelved, invisible, and replacing one would destroy the
+path that wakes it when its break re-forms — and one stranded, AMKR's weekly falling
+wedge, which the user validated. It stays unwired because there is no work for it, not
+because it is hard. The ledger was never stuck on hand-posted setups being unreplaceable;
+it was stuck on the fail rule being unreachable, which is a different fix.
 
 This replaces the older rule that a script "may tidy what it drew and may only report on
 what a person drew". That rule is what left the ledger with **1 failure in 351 confirmed
