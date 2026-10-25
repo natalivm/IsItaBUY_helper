@@ -1527,7 +1527,12 @@ def print_watchlist_report(result, missing, apply):
         for line in result['review']:
             print(f"  {line}")
     if result['news']:
-        print(f"\n📰 News feed ({'posted' if apply else 'would post'} {len(result['news'])}):")
+        # `apply` alone is not enough: with NEWS_PAUSED set, an --apply run computes the
+        # items and writes none of them, and saying "posted" there sends you looking for
+        # entries in newsFeed.ts that are not in it.
+        posted = apply and not NEWS_PAUSED
+        print(f"\n📰 News feed ({'posted' if posted else 'would post'} {len(result['news'])}"
+              + (", paused" if apply and NEWS_PAUSED else "") + "):")
         for it in result['news']:
             print(f"  {it['date']}  {it['title']} — {it['text']}")
     if missing:
