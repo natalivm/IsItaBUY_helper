@@ -14,10 +14,27 @@ read off a screenshot — nothing in this repo runs them yet.
 Our candles (`public/bars/TICKER_{daily,weekly,monthly}.json`) carry `t/o/h/l/c` and **no
 volume**, so anything volume-based is out.
 
-**MeanRev: all of it.** z-score, the AR(1) half-life, the variance ratio and Hurst are
-plain arithmetic on closes. A 50-bar z computed here already landed within a few tenths of
-the panel's reading on NOW and CRDO, the difference being the 5-bar EMA smoothing the
-indicator applies and this repo does not.
+**MeanRev: verified, not just portable.** Reproduced against the live panel on CLS (NYSE,
+50-bar lookback):
+
+| | panel | port |
+|---|---|---|
+| variance ratio q=4 | .99 | **0.99** |
+| Hurst | .50 | **0.50** |
+| half-life | 118.3 | **117.0** |
+| z-score | −1.56 | −2.20 raw, the gap being the 5-bar EMA |
+
+**The half-life must be fitted to the SMOOTHED z**, not the raw one — that single choice
+moves it from 11.3 bars to 117.0. Not a near-miss but an order of magnitude, and worth
+knowing before porting the rest: a rolling statistic computed on the wrong series is a
+different number, not an approximate one.
+
+**Run it on the listing you trade.** CLS gives a different *verdict* on each line. TSX/CAD
+reads half-life 57.7, variance ratio 1.14, Hurst .55 — "trending, fades are dangerous" —
+while NYSE/USD reads 118.3, .99, .50 and says "reverting". Same company, same day, opposite
+labels, because the FX layer is part of the series. Both still trip `hlGate` (half-life above
+the 50-bar lookback), so neither plots a turn dot, which is why that chart shows no bottoming
+signal on either.
 
 **Matrix BTR: the daily and weekly parts.** On those timeframes `fastChart` is false, so
 the profile resolves to a 9/80/160 cloud shifted 3 bars and a **55 SMA** — which is what
