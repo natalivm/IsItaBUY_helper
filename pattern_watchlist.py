@@ -2531,6 +2531,14 @@ def failing_setups(text):
             if not any(((c[k] < l[hit]) if d == 'up' else (c[k] > h[hit]))
                        for k in range(hit + 1, len(c))):
                 continue
+            # A setup still travelling toward its target has not failed, whatever a stop
+            # touched months ago says. This is the same error `_closing_in` was written for
+            # on the stranded list, and ENVA is the same case: its weekly rising wedge
+            # confirmed down at $145.08, rallied to $267 — through this stop in April —
+            # and is now falling toward its $119.67 target, which the source tool and a
+            # human reading of the chart both still call correct.
+            if _closing_in(main['ticker'], sv, tf, main.get('price'), sv.get('target')):
+                continue
             out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'), tf,
                         stop, bars['t'][hit], bool(sv.get('auto')),
                         label == 'main' or label.endswith('alt')))

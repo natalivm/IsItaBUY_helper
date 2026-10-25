@@ -126,7 +126,9 @@ and already looked at. `checkedOn` is in `KEEP_HEAD`, so a rescan carries it; no
 writes it automatically.
 
 **A check also expires when price breaks against the reading it was made on** — see
-RULEBOOK.md. The green dot's earnings rule says a check dies when the numbers land; the
+RULEBOOK.md. Tested against the 17 stocks carrying `checkedOn`, **nothing is expired
+today**: the only candidate was ENVA, and it was the `_closing_in` false positive the 💀
+report now filters, which is why that guard matters here too. The green dot's earnings rule says a check dies when the numbers land; the
 same logic says it dies when the chart stops saying what it said. The expiry condition is
 the checked setup's own `failRule`, so record which setup carries the check when you clear
 a stock's dots. Not wired up: nothing re-flags a row automatically today, so this is a rule
@@ -628,15 +630,25 @@ Printed in the daily report under **💀**.
 | stop tested | closed past | + follow-through | hand-posted | holding a slot |
 |---|---|---|---|---|
 | `breakInvalidation` | 98 | 54 | 32 | 28 |
-| **`profileStop`** | 37 | **22** | 14 | 13 |
+| **`profileStop`** | 37 | **15** | 11 | 8 |
+
+(22 before `_closing_in`, below.)
 
 The frozen stop was not chosen despite firing more than twice as often: price has already
 traded through it on **141 of 319** setups the ledger still shows as live, against **50 of
 230** for the profile stop, so most of those 54 would be false closes. Firing more is only
 better if the extra firings are right.
 
+**A setup still travelling toward its target has not failed**, whatever a stop touched
+months ago says, so `_closing_in` filters these the same way it filters the stranded list.
+That is what takes 22 to 15, and ENVA is the case both times: its weekly rising wedge
+confirmed down at $145.08, rallied to $267 — through its stop in April — and is now
+falling toward the $119.67 target the source tool and a human reading both still call
+correct. It was also the only hand-check the expiry rule flagged, and flagging it was
+wrong.
+
 **It reports and never edits**, which is the existing policy for failure and the right one
-here: 13 of the 22 hold a visible slot, MSFT, AMZN and TSLA mains among them. Closing a
+here: 8 of the 15 hold a visible slot, MSFT, AMZN and CRWV mains among them. Closing a
 call someone is reading is a decision. Mark them `failed` by hand, then run
 `python3 pattern_watchlist.py --apply` so the change is posted.
 
