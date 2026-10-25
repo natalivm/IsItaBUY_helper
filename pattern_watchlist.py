@@ -1081,6 +1081,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
             'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
+            'stretched': stretched_setups(new_text),
             'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
@@ -1609,6 +1610,69 @@ def strip_history(apply=False, path=None):
     return touched, exported
 
 
+# ── Stretched: momentum so strong it is its own risk ──
+#
+# RSI past STRETCH_HI behind a long (or STRETCH_LO behind a short) is the setup's own
+# momentum taken to the point where it becomes a reason for caution: the move is extended
+# and a snap back toward the mean is on the table. It is **a risk, not a forecast** --
+# price can stay overbought far longer than it looks sustainable -- so it changes no score
+# and demotes nothing. What it needs is to be visible, and most of all when something is
+# scheduled that could be the trigger. CVX is the case in point: RSI 76.9 behind a
+# confirmed upward break, reporting in five days.
+
+STRETCH_HI = 72
+STRETCH_LO = 28
+STRETCH_SOON = 7        # days to earnings that makes the stretch worth naming
+
+
+def stretch_of(sv, rsi):
+    """'stretched' when the setup's own direction is backed by an extreme RSI, else None."""
+    d, = (sv.get('direction'),)
+    if rsi is None or d not in ('up', 'down'):
+        return None
+    if d == 'up' and rsi >= STRETCH_HI:
+        return 'overbought'
+    if d == 'down' and rsi <= STRETCH_LO:
+        return 'oversold'
+    return None
+
+
+def stretched_setups(text, calendar=None, today=None):
+    """Shown setups riding an extreme RSI, with days to the next print where known.
+
+    Rows are (ticker, timeframe, pattern, direction, rsi, kind, days_to_earnings | None).
+    """
+    today = today or _now_et().date()
+    if calendar is None:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "earningsCalendar.json")
+        calendar = {}
+        if os.path.exists(path):
+            with open(path) as fh:
+                calendar = json.load(fh)
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk, rsi = m.get('ticker'), m.get('rsi')
+        due = (calendar.get(tk) or {}).get('date')
+        days = None
+        if due:
+            try:
+                days = (_date.fromisoformat(due) - today).days
+            except ValueError:
+                days = None
+        for label, sv, pos in list(_setups(e))[:2]:
+            if sv.get('dormant'):
+                continue
+            kind = stretch_of(sv, rsi)
+            if kind:
+                out.append((tk, sv.get('timeframe'), sv.get('pattern'), sv.get('direction'),
+                            rsi, kind, days))
+    # the ones with a scheduled trigger first, then by how extreme
+    out.sort(key=lambda r: (r[6] if r[6] is not None and r[6] >= 0 else 999,
+                            -r[4] if r[3] == 'up' else r[4]))
+    return out
+
+
 # ── Which two setups the row shows ──
 #
 # The visible slots used to be whatever the stored order happened to put first, and the
@@ -1647,14 +1711,21 @@ def slot_score(sv, stock):
         target = None
 
     if direction in ('up', 'down'):
-        if _momentum(rsi, direction) == 'with':
+        mom = _momentum(rsi, direction)
+        if mom == 'with':
             score += 20                       # RSI over 60 behind a long, under 40 behind a short
-        elif _momentum(rsi, direction) == 'against':
+        elif mom == 'against':
             score -= 25
         if trend == direction:
             score += 10
         elif trend in ('up', 'down'):
             score -= 5
+        # Trend and momentum disagreeing with a setup is worse than the sum of the two.
+        # One of them against is a setup fighting something; both against, on a stock
+        # moving hard the other way, is a reading that does not belong on the row at all
+        # while a setup going with the move exists.
+        if mom == 'against' and trend in ('up', 'down') and trend != direction:
+            score -= 15
 
     inval = sv.get('invalidation')
     if target and direction in ('up', 'down'):
@@ -2503,6 +2574,14 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} height ${_fmt_price(height)} vs ${_fmt_price(start)} "
                   f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
     stranded = result.get('stranded') or []
+    if result.get('stretched'):
+        soon = [r for r in result['stretched'] if r[6] is not None and 0 <= r[6] <= STRETCH_SOON]
+        if soon:
+            print(f"\n⚠ Stretched into a print (RSI past {STRETCH_HI}/{STRETCH_LO} behind the setup's own")
+            print("   direction, with earnings inside a week — the move is extended and the print")
+            print("   is a plausible trigger for a snap back. A caution, not a reason to fade):")
+            for tk, tf, pat, d, rsi, kind, days in soon:
+                print(f"  {tk:<6} RSI {rsi:5.1f} {kind:<10} {str(tf):<7} {str(pat):<19} reports in {days}d")
     if result.get('wake'):
         print("\n⏰ Woken as `update` (the break has re-formed, but the shelved levels are the old")
         print("   pattern's — redraw on the current chart, the target especially):")

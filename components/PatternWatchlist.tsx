@@ -396,6 +396,19 @@ const RSI_BULL = 60;
 const RSI_BEAR = 40;
 
 type Momentum = 'with' | 'against' | 'neutral';
+// Past these, the momentum backing a setup is extended enough to be its own risk: the
+// move is stretched and a snap back toward the mean is on the table. It is a RISK, not a
+// forecast — price can stay overbought far longer than it looks sustainable — so it never
+// demotes a setup or changes its score. It is marked, and most of all when a print is
+// scheduled that could be the trigger.
+const RSI_STRETCH_HI = 72;
+const RSI_STRETCH_LO = 28;
+const stretchedBy = (rsi: number | undefined, dir: PatternDirection | undefined) =>
+  rsi == null ? null
+    : dir === 'up' && rsi >= RSI_STRETCH_HI ? 'overbought'
+      : dir === 'down' && rsi <= RSI_STRETCH_LO ? 'oversold'
+        : null;
+
 const momentumOf = (rsi: number | undefined, dir: PatternDirection | undefined): Momentum => {
   if (rsi == null || (dir !== 'up' && dir !== 'down')) return 'neutral';
   if (rsi >= RSI_BULL) return dir === 'up' ? 'with' : 'against';
@@ -704,12 +717,18 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
             // The reading is on every row so the RSI sort reads as an order;
             // the bolt and the accent are kept for the ones momentum backs.
             const m = momentumOf(s.rsi, s.direction);
+            const stretch = stretchedBy(s.rsi, s.direction);
             return (
-              <span className={`flag mom${m === 'with' ? '' : ' off'}`}
-                title={m === 'with'
-                  ? `Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`
-                  : `Daily RSI ${s.rsi!.toFixed(1)}`}>
-                {m === 'with' && <Bolt />}RSI {Math.round(s.rsi!)}
+              <span className={`flag mom${m === 'with' ? '' : ' off'}${stretch ? ' stretched' : ''}`}
+                title={stretch
+                  ? `Daily RSI ${s.rsi!.toFixed(1)} — ${stretch}. The move still backs this `
+                    + `${s.direction === 'up' ? 'long' : 'short'}, but it is extended enough that a `
+                    + `snap back toward the mean is a real risk. It can stay ${stretch} longer than `
+                    + `it looks sustainable, so this is a caution rather than a signal to fade.`
+                  : m === 'with'
+                    ? `Daily RSI ${s.rsi!.toFixed(1)} backs this ${s.direction === 'up' ? 'long' : 'short'} — actionable now`
+                    : `Daily RSI ${s.rsi!.toFixed(1)}`}>
+                {m === 'with' && <Bolt />}RSI {Math.round(s.rsi!)}{stretch ? ' ⚠' : ''}
               </span>
             );
           })()}

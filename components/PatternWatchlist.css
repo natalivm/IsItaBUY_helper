@@ -253,6 +253,10 @@
 .pbw .shelved{margin:10px 2px 0;font-size:12.5px;line-height:1.45;color:var(--faint);cursor:help}
 .pbw .auto-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
 .pbw .altwrap>.detail{padding:0}
+/* Momentum extended far enough to be its own risk. Keeps the momentum colour -- the move
+   is still with the setup -- and adds a warning outline, because this is a caution about
+   the move continuing rather than a reason to read it the other way. */
+.pbw .flag.mom.stretched{box-shadow:inset 0 0 0 1px var(--wait)}
 /* Confidence: several stored setups agree on the target */
 .pbw .flag.agree{color:var(--up);background:var(--up-soft)}
 /* A confirmed break price has given back: muted, not alarming -- the setup has not failed,

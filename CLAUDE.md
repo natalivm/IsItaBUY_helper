@@ -536,6 +536,28 @@ keeps working. It was 27 before the strip and 27 after.
 The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
 row reappears from an archive — it simply has no writer.
 
+### Stretched: momentum strong enough to be its own risk
+
+RSI past **72** behind a long, or **28** behind a short, is the setup's own momentum taken
+to the point where it becomes a reason for caution: the move is extended and a snap back
+toward the mean is on the table.
+
+**It is a risk, not a forecast, and it changes no score.** Price can stay overbought far
+longer than it looks sustainable, so nothing here demotes a setup or reads it the other
+way — a confirmed break with RSI 77 behind it is still the best reading on its stock. What
+the stretch needs is to be *visible*, and most of all when something is scheduled that
+could be the trigger.
+
+CVX is the case: RSI 76.9 behind a confirmed upward break, **reporting Oct 30**. Going into
+a print stretched is a different proposition from going into one mid-range, and the print is
+the first scheduled event that could end the run. Eight shown setups are stretched with a
+print inside a week — CVX and XOM overbought, STRL, VRT and CAT oversold.
+
+`stretch_of()` and `stretched_setups()` in `pattern_watchlist.py`; the daily run prints the
+ones with a print inside `STRETCH_SOON` (7 days) under **⚠**. In the UI the momentum chip
+keeps its colour — the move is still with the setup — and gains a warning outline and a ⚠,
+with the caution spelled out on hover.
+
 ### Which two setups the row shows
 
 The two visible slots are the most valuable thing on a row, and they used to go to whatever
@@ -551,6 +573,13 @@ reward:risk — because a row disagreeing with the featured list about which of 
 setups is best would be its own kind of bug. Two terms are added that the featured list
 does not need: a **tight stop** is worth something by itself, and an **unchecked** setup
 (`auto`) never holds a slot over one someone has read.
+
+**Trend and momentum disagreeing with a setup is worse than the sum of the two.** One of
+them against is a setup fighting something; both against, on a stock moving hard the other
+way, is a reading that does not belong on the row while a setup going with the move exists
+— so that case takes a further −15. It is what finally separated CVX's readings: its two
+downward setups fell from 51 and 34 to **36 and 19** against 105 and 60 for the upward
+pair. 24 shown setups still fight both, which is fine where the stock holds nothing better.
 
 **Risk is measured from the entry, not from today's price**, and that single choice is what
 fixed CVX. Measured from price, its weekly *down* channel sat 0.15% from its own
