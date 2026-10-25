@@ -3806,7 +3806,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ticker: "PANW",
     name: "Palo Alto Networks, Inc.",
     trend: "flat",
-    checkedOn: "2026-10-26",
+    checkedOn: "2026-10-25",
     rsi: 52.6,
     price: 380.55,
     priceDate: "2026-10-23",
@@ -3823,6 +3823,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     failRule: "a completed weekly close above $473.46, then a follow-through close above that candle's high.",
     note: "The same advance read as a wedge, its two lines converging. Price at $380.55 sits a hair above the $378.09 lower line; a weekly close below it would start a downside signal, and the measured move off the wedge's mouth reaches $258.98.",
+    keyLevel: {
+      price: 378.09,
+      text: "$378.09 is 0.6% below spot and decides it: a weekly close under signals the rising wedge toward $258.98. Above, the unfilled Oct 14 gap back to $397.03 is the first objective. Price sits between the two into Tuesday's print."
+    },
     alt: {
       pattern: "Ascending Channel",
       timeframe: "weekly",
