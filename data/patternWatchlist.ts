@@ -4091,6 +4091,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ticker: "IOVA",
     name: "Iovance Biotherapeutics, Inc.",
     trend: "up",
+    checkedOn: "2026-10-25",
     rsi: 59.4,
     price: 14.09,
     priceDate: "2026-10-23",
@@ -4109,7 +4110,11 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2023-10-01", 3.21], to: ["2026-10-01", 0.24] },
     ],
     failRule: "a completed monthly close below $0.23, then a follow-through close below that candle's low.",
-    note: "A multi-year falling wedge from the early-2024 high near $18 bottomed around $2 in 2025. Price broke out on the monthly chart, confirmed with a monthly close above $4.76, then surged to about $14. The invalidation at $0.23 is far below because it sits at the base of the wedge.",
+    note: "A multi-year falling wedge from the early-2024 high near $18 bottomed around $2 in 2025. Price broke out on the monthly chart, confirmed with a monthly close above $4.76, then surged to about $14 — 196% from the confirm and 57% of the way to the $21.26 target. The $0.23 invalidation is the base of the wedge and cannot fire; it is kept deliberately. This is not a drawing waiting to be wrong but a call that is working, the source tool draws it identically, and on a bullish break out of a multi-year base the unreachable floor is the base itself. It will keep appearing on the dead-stop list, which is what that list is for.",
+    keyLevel: {
+      price: 12.62,
+      text: "Consolidating $12.62-$15.37 after a 196% run from the $4.76 confirm, 57% of the way to $21.26. Holding $12.62 keeps it a pause; losing it makes it a top. The $0.23 invalidation is the wedge's base, not a stop anyone trades."
+    },
     alt: {
       auto: true,
       pattern: "Ascending Channel",

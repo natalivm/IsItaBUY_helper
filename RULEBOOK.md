@@ -88,6 +88,14 @@ highs by definition, so reaching past the range is what a measured move on a sto
 momentum behind it should do. 80 setups are in that shape and none is a defect. Do not
 apply the stop test to them.
 
+**A break that has already paid is the exception.** IOVA's monthly falling wedge confirmed
+at $4.76 and price is $14.09 — 196% up, 57% of the way to its $21.26 target — on a $0.23
+invalidation at the base of the wedge. The stop cannot fire, but this is not a drawing
+waiting to be wrong; it is a call that is working, and the source tool draws it identically.
+On a bullish break out of a multi-year base the unreachable floor *is* the base, and what
+matters instead is where the consolidation holds. Keep it, say so in the note, and let it
+keep appearing on the dead-stop list — that list is for review, not for deletion.
+
 **Distance still decides, direction only says where to look.** `STOP_BEYOND` (15%) exists
 because a stop just outside the range is *correct* on a stock at its highs: QQQ's $764.44
 against a $762.86 high is 0.2% out and perfectly tradeable, while DAVE's is 11% out and a
