@@ -552,7 +552,12 @@ def _trend(bars):
     return 'flat'
 
 
-HEADER_KEYS = ('ticker', 'name', 'auto', 'trend', 'rsi', 'price', 'priceDate')
+# Entry-level fields: they belong to the stock, not to whichever setup is on top, so
+# `_setup_text` must not emit them and `rebuild_entry` has to re-emit them itself.
+# `checkedOn` was missing from both, so promoting a different setup into the main slot
+# dropped the stock's hand-check date and leaked it into the alt -- which `tsc` caught,
+# `checkedOn` not being a field PatternAltSetup has.
+HEADER_KEYS = ('ticker', 'name', 'auto', 'checkedOn', 'trend', 'rsi', 'price', 'priceDate')
 SKIP_KEYS = HEADER_KEYS + ('alt', 'more', 'history', 'keyLevel', '_span')
 
 
@@ -633,7 +638,7 @@ def rebuild_entry(text, e, main_pos, alt_pos=None, stored=(), main_auto=False, a
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     if main_auto:
         rows.append("    auto: true,")
-    for k in ('trend', 'rsi', 'price', 'priceDate'):
+    for k in ('checkedOn', 'trend', 'rsi', 'price', 'priceDate'):
         if k in f:
             rows.append(f"    {k}: {text[f[k][0]:f[k][1]]},")
     rows += _setup_text(text, main_pos, '    ', inherit=main_pattern)
@@ -1604,6 +1609,135 @@ def strip_history(apply=False, path=None):
     return touched, exported
 
 
+# ── Which two setups the row shows ──
+#
+# The visible slots used to be whatever the stored order happened to put first, and the
+# dedupe's backfill took `keep_stored.pop(0)`. CVX ended up with a main projecting $273.38
+# up and an alt projecting $172.26 down: the row contradicting itself because of list
+# order. The slots are the most valuable thing on the page, so they go to the best setups.
+#
+# The weights are weekly_feature.score_setup's, deliberately -- the landing page ranks the
+# week's hottest setups the same way, and a row disagreeing with that list about which of
+# its own setups is best would be its own kind of bug. Two terms are added here that the
+# featured list does not need: a tight stop is worth something on its own, and a setup
+# nobody has checked should not hold a slot over one that has been.
+
+SLOT_TIGHT = 0.10           # risk inside this fraction of the entry counts as tight
+SLOT_FLOOR = 0.01           # ...and inside this it is not tight, it is about to die
+
+
+def slot_score(sv, stock):
+    """How much this setup deserves one of the two visible slots. Higher is better."""
+    stage = sv.get('stage')
+    direction = sv.get('direction')
+    price = stock.get('price')
+    rsi, trend = stock.get('rsi'), stock.get('trend')
+    if sv.get('dormant') or not price:
+        return -1e9
+
+    score = {'confirmed': 40, 'retest': 34, 'signal': 25, 'atRisk': 8,
+             'update': -20, 'forming': 12}.get(stage, 0)
+
+    target = sv.get('target')
+    if direction == 'both':
+        # Watching both ways is a real reading, but it is not a call: no direction to back
+        # with momentum and no single target to measure. It sits below a directional setup
+        # of the same stage rather than being excluded.
+        score -= 8
+        target = None
+
+    if direction in ('up', 'down'):
+        if _momentum(rsi, direction) == 'with':
+            score += 20                       # RSI over 60 behind a long, under 40 behind a short
+        elif _momentum(rsi, direction) == 'against':
+            score -= 25
+        if trend == direction:
+            score += 10
+        elif trend in ('up', 'down'):
+            score -= 5
+
+    inval = sv.get('invalidation')
+    if target and direction in ('up', 'down'):
+        room = (target - price) / price * 100
+        if (direction == 'up' and room <= 0) or (direction == 'down' and room >= 0):
+            score -= 30                       # the target is already behind price
+        else:
+            score += min(abs(room), 40) * 0.6
+        # Risk is measured from the ENTRY, not from today's price. Measuring from price
+        # reproduces the artifact CLAUDE.md records under "Stop distance": CVX's weekly
+        # down channel sits 0.15% from its own invalidation, which scored as a reward:risk
+        # of 369x and a tight stop, when what it actually means is a setup one close from
+        # dying. `breakInvalidation` is the stop as it stood on the day of the break, which
+        # is the number that means what it says; confirm-to-invalidation is the fallback.
+        entry = sv.get('confirm') or price
+        stop = sv.get('breakInvalidation') or inval
+        if stop and entry:
+            risk = abs(entry - stop) / entry * 100
+            if risk > 0:
+                rr = abs(room) / risk
+                score += 15 if rr >= 3 else 10 if rr >= 2 else 5 if rr >= 1 else -20
+                # A tight stop is worth something by itself -- it is the difference between
+                # a setup you can size and a direction you can only hold an opinion about.
+                # Below SLOT_FLOOR it is not tight, it is degenerate.
+                if SLOT_FLOOR * 100 <= risk <= SLOT_TIGHT * 100:
+                    score += 10
+        # Price already on top of the level that kills it: whatever the projection says,
+        # this is not one of the two readings a row should lead with.
+        if inval and abs(price - inval) / price < SLOT_FLOOR:
+            score -= 25
+
+    if sv.get('auto'):
+        score -= 15                           # unchecked: never over a setup someone read
+
+    return score
+
+
+def reslot_setups(apply=False, path=None):
+    """Put the two best setups on the row, the rest in `more`.
+
+    The second slot must say something the first does not -- `_same_call` duplicates are
+    skipped -- so the row carries two readings rather than one twice.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    cuts, moved = [], []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk = m.get('ticker')
+
+        def vals(pos):
+            return {k: v[2] for k, v in pos.items() if k != '_span'}
+
+        every = [e['fields']] + ([e['alt']] if e['alt'] is not None else []) \
+            + [pos for lb, sv, pos in _setups(e) if '_span' in pos]
+        live = [pos for pos in every if not vals(pos).get('dormant')]
+        if len(live) < 2:
+            continue
+        ranked = sorted(live, key=lambda pos: -slot_score(vals(pos), m))
+        best = ranked[0]
+        second = next((pos for pos in ranked[1:] if not _same_call(vals(pos), vals(best))), None)
+        if second is None:
+            second = ranked[1] if len(ranked) > 1 else None
+        if best is e['fields'] and second is e['alt']:
+            continue
+        rest = [pos for pos in every if pos is not best and pos is not second]
+        bv, sv2 = vals(best), vals(second) if second else {}
+        moved.append(f"{tk}: {bv.get('timeframe')} {bv.get('pattern')} ({bv.get('stage')}, "
+                     f"{slot_score(bv, m):.0f}) + {sv2.get('timeframe')} {sv2.get('pattern')} "
+                     f"({sv2.get('stage')}, {slot_score(sv2, m):.0f})")
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, best, second, rest,
+                                             bool(bv.get('auto')), bool(sv2.get('auto')))))
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return moved
+
+
 # ── One claim per slot ──
 #
 # FRSH carried six setups of which five projected $19-22: the same read, drawn five ways.
@@ -2428,11 +2562,22 @@ if __name__ == "__main__":
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
+    ap.add_argument("--reslot", action="store_true", help="give the two visible slots to the best setups on each stock")
     ap.add_argument("--dedupe", action="store_true", help=f"keep one setup per claim: swap an alt that repeats the main, drop stored setups whose target is within {DUPE * 100:.0f}% of a shown one")
     ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
     ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.reslot:
+        moved = reslot_setups(apply=args.apply)
+        print(f"{'Reslotted' if args.apply else 'Would reslot'} {len(moved)} stock(s):")
+        for line in moved[:25]:
+            print(f"  {line}")
+        if len(moved) > 25:
+            print(f"  ... and {len(moved) - 25} more")
+        if moved and not args.apply:
+            print("\nRun with --reslot --apply to write them.")
+        raise SystemExit(0)
     if args.dedupe:
         swapped, dropped = dedupe_setups(apply=args.apply)
         print(f"{'Swapped' if args.apply else 'Would swap'} {len(swapped)} duplicated alt slot(s):")

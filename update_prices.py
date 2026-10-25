@@ -970,6 +970,11 @@ def main():
             if shelved or woken:
                 print(f"Shelved {len(shelved)} setup(s), woke {len(woken)}.")
             swapped, dupes = pattern_watchlist.dedupe_setups(apply=True)
+            # Then hand the two visible slots to the best setups on each stock. After the
+            # dedupe, so it is choosing between distinct readings rather than copies.
+            moved = pattern_watchlist.reslot_setups(apply=True)
+            if moved:
+                print(f"Reslotted {len(moved)} stock(s) to their best two setups.")
             if swapped or dupes:
                 print(f"Dedupe: {len(swapped)} alt slot(s) swapped, {len(dupes)} repeat(s) dropped.")
             capped, exported = pattern_watchlist.cap_setups(apply=True)

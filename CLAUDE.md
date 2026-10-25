@@ -536,6 +536,48 @@ keeps working. It was 27 before the strip and 27 after.
 The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
 row reappears from an archive — it simply has no writer.
 
+### Which two setups the row shows
+
+The two visible slots are the most valuable thing on a row, and they used to go to whatever
+the stored order happened to put first — the dedupe's backfill literally took the first
+item. CVX ended up with a main projecting **$273.38 up** and an alt projecting **$172.26
+down**: the row contradicting itself because of list order, on a stock with RSI 76.9 in an
+uptrend.
+
+`slot_score()` ranks every non-dormant setup and `reslot_setups()` gives the slots to the
+best two that are not the same call. The weights are `weekly_feature.score_setup`'s
+deliberately — stage, RSI backing the direction, trend agreement, room to target,
+reward:risk — because a row disagreeing with the featured list about which of its own
+setups is best would be its own kind of bug. Two terms are added that the featured list
+does not need: a **tight stop** is worth something by itself, and an **unchecked** setup
+(`auto`) never holds a slot over one someone has read.
+
+**Risk is measured from the entry, not from today's price**, and that single choice is what
+fixed CVX. Measured from price, its weekly *down* channel sat 0.15% from its own
+invalidation, which scored as a reward:risk of **369x plus a tight-stop bonus** — and what
+it actually means is a setup one close from dying. This is the artifact recorded under
+"Stop distance" above, reproduced by writing the obvious thing. `breakInvalidation` is
+preferred, confirm-to-invalidation is the fallback, and `SLOT_FLOOR` (1%) marks where a
+stop stops being tight and starts being degenerate; price sitting that close to its own
+invalidation takes a penalty rather than a bonus.
+
+**Opposite directions on one row are not in themselves wrong** — 52 of 150 rows carry them,
+and the AMKR lesson is that setups pointing both ways differ by horizon rather than
+contradicting. What was wrong on CVX was a *weak* down setup outranking a *strong* up one.
+
+`python3 pattern_watchlist.py --reslot` (dry run) / `--reslot --apply`; the daily run calls
+it after the dedupe, so it chooses between distinct readings rather than copies. 114 stocks
+moved on the first pass and the second reports 0.
+
+**Entry-level fields have to be listed in `HEADER_KEYS` or promoting a setup eats them.**
+`checkedOn` was in neither `HEADER_KEYS` nor `rebuild_entry`'s own emission list, so
+replacing a main dropped the stock's hand-check date *and* leaked it into the alt — where
+`tsc` caught it, `checkedOn` not being a field `PatternAltSetup` has. CLS and COIN lost
+theirs before the fix. `tag` surfaced the same way and was genuinely per-setup, so it was
+added to `PatternAltSetup` rather than moved to the header. **The typecheck is the thing
+that catches this**, which is the practical reason `@types/react` and `npm run lint` earn
+their keep.
+
 ### One claim per slot
 
 FRSH carried six setups of which five projected $19-22: the same read drawn five ways.

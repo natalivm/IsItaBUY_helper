@@ -54,6 +54,28 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   generatedOn: "2026-10-25",
   hot: [
     {
+      ticker: "VRT",
+      name: "Vertiv Holdings Co",
+      pattern: "Descending Channel",
+      timeframe: "weekly",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-10-19",
+      price: 194.32,
+      priceDate: "2026-10-23",
+      target: 94.69,
+      invalidation: 213.03,
+      rsi: 27.9,
+      score: 112,
+      why: [
+        "Break confirmed on the weekly chart",
+        "Daily RSI 28 backs the downside",
+        "The stock's own trend is down",
+        "51.3% from here to the target",
+        "About 5.3x more room to the target than to invalidation"
+      ]
+    },
+    {
       ticker: "FRSH",
       name: "Freshworks Inc.",
       pattern: "Descending Channel",
@@ -95,28 +117,6 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
         "The stock's own trend is down",
         "58.5% from here to the target",
         "About 3.0x more room to the target than to invalidation"
-      ]
-    },
-    {
-      ticker: "D",
-      name: "Dominion Energy, Inc.",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-10-12",
-      price: 65.2,
-      priceDate: "2026-10-23",
-      target: 94.09,
-      invalidation: 58.46,
-      rsi: 61.7,
-      score: 108,
-      why: [
-        "Break confirmed on the daily chart",
-        "Daily RSI 62 backs the upside",
-        "The stock's own trend is up",
-        "44.3% from here to the target",
-        "About 4.3x more room to the target than to invalidation"
       ]
     }
   ],
