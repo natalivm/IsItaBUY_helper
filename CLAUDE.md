@@ -538,20 +538,22 @@ row reappears from an archive — it simply has no writer.
 
 ### keyLevel prose: short enough to read on the row
 
-A `keyLevel` is read beside a chart, not instead of one. Keep it to **roughly 600-1000
-characters** — the level, why it is the level, and the one risk that would change it.
-Everything that explains *how an indicator works*, *what a harness measured* or *what this
-file already records* belongs in CLAUDE.md, not on a stock.
+A `keyLevel` is read beside a chart, not instead of one. Keep it to **under 700
+characters**, three short paragraphs at most: the level, why it is the level, and the one
+risk that would change it. Everything explaining *how an indicator works*, *what a harness
+measured* or *what this file already records* belongs in CLAUDE.md, not on a stock.
 
-Seven had grown past 1200 (CLS to 2791) and were cut by about half; the repeated valuation
-caveat came off 23 rows. The median is 625 characters now against 939 before, and the
-longest is 1169.
+They were cut twice. First the seven past 1200 (CLS at 2791) came down by about half and
+the repeated valuation caveat came off 23 rows; then everything still over 1000 was cut
+again. The median is **574** now against 939 at the start, the mean 541, and the longest
+794.
 
-CRDO is the honest exception and worth knowing why: most of its length is the swing-low
-evidence for *never a resting bid* — five of seven lows closing in the lower half of the
-day's range. That is the argument, not padding, and cutting it leaves an instruction with
-nothing behind it. Where prose resists trimming, check whether what remains is evidence
-before cutting further.
+The second pass is the instructive one. The first stopped at CRDO because its length was
+the swing-low evidence behind *never a resting bid* — argument rather than padding, and
+cutting it leaves an instruction with nothing under it. That was true and still too
+generous: the claim survives in one clause (*five of seven swing lows closed in the lower
+half of the day's range*) and the paragraph around it was restatement. **Evidence earns its
+space once, not for every sentence that leans on it.**
 
 **Write the text with real newlines, not `\n`.** Fifteen keyLevels written through a shell
 heredoc stored a literal backslash-n and displayed it to the reader. `json.dumps` on a
