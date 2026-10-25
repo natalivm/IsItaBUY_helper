@@ -70,6 +70,41 @@ stock has traded.
 both `slot_score` and `weekly_feature.score_setup`, so a bad number buys the row and the
 landing page. D's fix dropped it from the #2 bullish card to below the cutoff.
 
+## A price the stock has never traded
+
+**Which side it is on decides whether it is a fault.** A level beyond the whole traded
+range is normal in one direction and fatal in the other, and the two must not be checked
+the same way.
+
+**A bearish setup's stop above the all-time high cannot fire.** The failure rule needs a
+close past it, so the setup can only be wrong if the stock makes a new high — which means
+it is not wrong at any price it has ever traded. META's weekly channel sat on $1052.30
+against a $796.25 high, confirmed in November 2025, carrying a $475.78 target no price
+could ever retire. Across the ledger 60 bearish setups have a stop that needs a new high,
+many of them holding a visible slot. Redraw them.
+
+**A bullish setup's target above the all-time high is the point.** A breakout goes to new
+highs by definition, so reaching past the range is what a measured move on a stock with
+momentum behind it should do. 80 setups are in that shape and none is a defect. Do not
+apply the stop test to them.
+
+**Distance still decides, direction only says where to look.** `STOP_BEYOND` (15%) exists
+because a stop just outside the range is *correct* on a stock at its highs: QQQ's $764.44
+against a $762.86 high is 0.2% out and perfectly tradeable, while DAVE's is 11% out and a
+level price has no reason to visit. Without the margin the check flagged 204 setups, nearly
+all of them fine.
+
+**A rising boundary buys time, not a fix.** Replacing one walking stop with another only
+defers the fault: META's redrawn daily channel has a stop inside the range today and
+climbing $4.93 a bar, so it leaves the range in about three weeks. Where every bearish
+reading on a chart hangs off a rising line, say so in the note rather than pretending the
+redraw settled it.
+
+**`breakInvalidation` is write-once, so a hand redraw must clear it.** A rescan drops the
+field and the next run writes a fresh one; editing a setup's levels in place does not, so
+the frozen stop stays behind from the setup that used to be there. META's redraw kept
+$685.31 and read as a short's stop below its own entry until the field was removed.
+
 ## Thresholds and scores
 
 **Measure the population before moving a threshold.** `TARGET_TOL` missed D's head and

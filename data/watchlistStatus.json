@@ -2083,7 +2083,7 @@
  },
  "META|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
+  "setup": "Ascending Channel (daily)",
   "stage": "confirmed",
   "ticker": "META"
  },
