@@ -480,6 +480,13 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
       pattern: m.pattern ?? s.pattern, tf: m.timeframe, auto: m.auto,
     }));
 
+    // Shelved readings are kept in the data and out of the list: still valid, but old
+    // enough and far enough undone that showing them says something about the stock that
+    // nobody believes. They come back when the break does.
+    const awake = live.filter(e => !(e.kind === 'setup' && e.a.dormant));
+    live.length = 0;
+    live.push(...awake);
+
     // more[] can repeat a setup that is already the main one or the alt.
     const seen = new Set<string>();
     const unique = live.filter(e => {
@@ -523,6 +530,13 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
     return out;
   }, [s, extra]);
 
+  // Counted but not listed: the point of shelving is that the reading is out of the way.
+  // A line saying how many exist keeps them from disappearing without trace.
+  const shelved = useMemo(() => {
+    const all: AnySetup[] = [s as AnySetup, ...(extra.alt ? [extra.alt] : []), ...(extra.more ?? [])];
+    return all.filter(a => a.dormant);
+  }, [s, extra]);
+
   const [sel, setSel] = useState(entries[0].key);
   const cur = entries.find(e => e.key === sel) ?? entries[0];
 
@@ -534,7 +548,15 @@ const Detail: React.FC<{ s: PatternStock; st: Status }> = ({ s, st }) => {
 
   return (
     <div className="dsplit">
-      <SetupList ticker={s.ticker} entries={entries} sel={cur.key} onSel={setSel} />
+      <div className="dlist">
+        <SetupList ticker={s.ticker} entries={entries} sel={cur.key} onSel={setSel} />
+        {shelved.length > 0 && (
+          <p className="shelved" title={shelved.map(a => a.dormantNote).filter(Boolean).join('\n\n')}>
+            {shelved.length} shelved reading{shelved.length > 1 ? 's' : ''} — still valid, long
+            since undone, and waiting for the break to re-form.
+          </p>
+        )}
+      </div>
       <div className="dpanel">
         {panel}
         {s.keyLevel && (

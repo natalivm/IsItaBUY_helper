@@ -514,6 +514,49 @@ again — without it Friday's redraw would hand back most of what was just remov
 against the range of the chart the pattern was drawn on, which is the right scope for "has
 this line left the chart", and is cheaper than re-reading the longest candle file.
 
+### Dormant setups: valid, but not what the chart is saying any more
+
+A confirmed break that price walked a long way back past, months ago, on a stock now
+trending the other way, is not *wrong* — it just is not the read. NOW's monthly ascending
+channel confirmed down on 2026-02-02 at $113.13 and still carries a $39.08 target while the
+stock sits at $158.96 in an uptrend, its break **41% undone**. Leaving that on the row says
+something about ServiceNow nobody believes.
+
+`dormant: true` (plus `dormantSince` and `dormantNote`) shelves it: kept in the data, out
+of the ledger, woken the moment the break re-forms. `shelve_dormant()` in
+`pattern_watchlist.py` both sets and clears it — `python3 pattern_watchlist.py --dormant`
+(dry run) / `--dormant --apply`, and the daily run reports candidates under **😴** and
+wakes under **⏰**.
+
+**Shelving is not finishing, and `history` is not where these go.** That array is the
+record of *completed* calls and is the label set `pattern_reproduce.py` trains on; a setup
+that never resolved is not a label, and filing one there would quietly corrupt the training
+data. `dormant` leaves the setup exactly where it is.
+
+Three conditions, all required:
+
+- confirmed more than `DORMANT_AGE` (120) days ago;
+- price more than `DORMANT_UNDONE` (25%) back past the confirm, **against** the setup;
+- the stock's own `trend` opposed to the setup's direction.
+
+**A flat trend does not count.** Shelving on "not moving" retires setups that are merely
+waiting, which is the ENVA mistake in another costume. CACI's weekly rising wedge is 125
+days old with its break 37% undone and stays listed for exactly that reason — trend `flat`,
+not `up`.
+
+**The main and alt slots are never shelved.** They are the row; hiding one would leave the
+ledger showing a setup it has been told to hide. Those are reported and left for a human to
+replace, the same policy `--thin` and `--deadstops` use.
+
+Waking is the mirror and needs no threshold: one close back past the confirm level, in the
+setup's own direction, removes all three fields so the setup reads exactly as it did
+before. That is what "bring it back if we fail" means — the break re-forming is the signal,
+not elapsed time.
+
+The UI counts them rather than listing them (`shelved` in `components/PatternWatchlist.tsx`,
+a muted line under the setup list carrying each `dormantNote` on hover), so a shelved
+reading never vanishes without trace.
+
 ### Stranded setups: confirmed breaks nothing can retire
 
 A setup fails on a close past invalidation plus a follow-through. When that level is half

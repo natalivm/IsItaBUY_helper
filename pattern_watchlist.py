@@ -1076,6 +1076,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
             'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
+            'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
             'review': review, 'news': news}
@@ -1436,6 +1437,150 @@ def geometry_faults(text):
 # is still trading towards. LITE carried two of these: a daily channel confirmed down in
 # August that then rallied 32% above its confirm, kept alive by an invalidation 57% above
 # the highest price the stock had ever traded.
+# ── Dormant setups: valid, but no longer what the chart is saying ──
+#
+# A confirmed break that price has walked a long way back past, months ago, on a stock now
+# trending the other way, is not wrong — it just is not the read any more. NOW's monthly
+# ascending channel confirmed down on 2026-02-02 at $113.13 and still carries a $39.08
+# target while the stock sits at $158.96 in an uptrend, its break 40% undone. Leaving that
+# on the row says something about ServiceNow that nobody believes.
+#
+# Shelving is NOT the same as finishing. `history` holds completed calls and is the label
+# set pattern_reproduce.py trains on, so a setup that never resolved must not go there.
+# `dormant` keeps it in place, out of sight, and wakes it the moment the break re-forms.
+
+DORMANT_AGE = 120           # days since the break confirmed
+DORMANT_UNDONE = 0.25       # price this far back past the confirm, against the setup
+
+
+def _undone_by(sv, price):
+    """How far price has travelled back past the confirm level, against the setup."""
+    conf, d = sv.get('confirm'), sv.get('direction')
+    if not (price and conf) or d not in ('up', 'down'):
+        return None
+    return (price - conf) / conf if d == 'down' else (conf - price) / conf
+
+
+def dormant_candidates(text, today=None):
+    """Confirmed setups old enough, undone enough, and against the stock's own trend.
+
+    Rows are (ticker, label, timeframe, pattern, direction, age, undone, auto).
+    """
+    today = today or _now_et().date()
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        price, trend = m.get('price'), m.get('trend')
+        for label, sv, pos in _setups(e):
+            if sv.get('stage') != 'confirmed' or sv.get('dormant'):
+                continue
+            sd, d = sv.get('stageDate'), sv.get('direction')
+            undone = _undone_by(sv, price)
+            if not sd or undone is None or undone <= DORMANT_UNDONE:
+                continue
+            try:
+                age = (today - _date.fromisoformat(sd)).days
+            except ValueError:
+                continue
+            if age <= DORMANT_AGE:
+                continue
+            # The stock has to be going the other way. A flat trend is not an uptrend, and
+            # shelving on "not moving" would retire setups that are merely waiting.
+            if not ((trend == 'up' and d == 'down') or (trend == 'down' and d == 'up')):
+                continue
+            out.append((m.get('ticker'), label, sv.get('timeframe'), sv.get('pattern'),
+                        d, age, undone, bool(m.get('auto')) or bool(sv.get('auto'))))
+    return out
+
+
+def wake_candidates(text):
+    """Dormant setups whose break has re-formed: price is back past the confirm level."""
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        price = m.get('price')
+        for label, sv, pos in _setups(e):
+            if not sv.get('dormant'):
+                continue
+            undone = _undone_by(sv, price)
+            if undone is not None and undone <= 0:
+                out.append((m.get('ticker'), label, sv.get('timeframe'), sv.get('pattern'),
+                            sv.get('direction'), sv.get('confirm'), price))
+    return out
+
+
+def shelve_dormant(apply=False, path=None, today=None):
+    """Mark stale confirmed breaks dormant, and wake any whose break has re-formed.
+
+    Writes `dormant` beside the setup's own `stage`, so it travels with the setup rather
+    than with the stock. Waking removes the three fields outright: a setup that is live
+    again should read exactly as it did before it was shelved.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    today = today or _now_et().date()
+    shelved, woken, edits = [], [], []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk, price, trend = m.get('ticker'), m.get('price'), m.get('trend')
+        for label, sv, pos in _setups(e):
+            if 'stage' not in pos:
+                continue
+            s0, s1, _ = pos['stage']
+            line_start = text.rfind('\n', 0, s0) + 1
+            indent = ' ' * (len(text[line_start:s0]) - len(text[line_start:s0].lstrip()))
+            line_end = text.index('\n', s1) + 1
+            if sv.get('dormant'):
+                undone = _undone_by(sv, price)
+                if undone is None or undone > 0:
+                    continue
+                # wake it: strip dormant, dormantSince and dormantNote
+                a = line_end
+                b = a
+                while True:
+                    nxt = text.index('\n', b) + 1 if '\n' in text[b:] else len(text)
+                    if text[b:nxt].lstrip().startswith(('dormant:', 'dormantSince:', 'dormantNote:')):
+                        b = nxt
+                    else:
+                        break
+                if b > a:
+                    edits.append((a, b, ''))
+                    woken.append(f"{tk} ({label}): price is back past ${_fmt_price(sv.get('confirm'))} — the break has re-formed")
+                continue
+            sd, d = sv.get('stageDate'), sv.get('direction')
+            undone = _undone_by(sv, price)
+            if sv.get('stage') != 'confirmed' or not sd or undone is None or undone <= DORMANT_UNDONE:
+                continue
+            # The main and alt slots ARE the row. Hiding one would leave the ledger showing
+            # a setup it has been told not to show, so those stay and get listed instead.
+            if label == 'main' or label.endswith(' alt'):
+                continue
+            try:
+                age = (today - _date.fromisoformat(sd)).days
+            except ValueError:
+                continue
+            if age <= DORMANT_AGE:
+                continue
+            if not ((trend == 'up' and d == 'down') or (trend == 'down' and d == 'up')):
+                continue
+            note = (f"Shelved {today}: confirmed {sd}, {age} days ago, and price has gone "
+                    f"{undone * 100:.0f}% back past the ${_fmt_price(sv.get('confirm'))} break while the "
+                    f"stock trends {trend}. Still valid — it wakes on a close back past the break.")
+            ins = (f"{indent}dormant: true,\n{indent}dormantSince: \"{today}\",\n"
+                   f"{indent}dormantNote: {json.dumps(note, ensure_ascii=False)},\n")
+            edits.append((line_end, line_end, ins))
+            shelved.append(f"{tk} ({label}, {sv.get('timeframe')} {sv.get('pattern')}): "
+                           f"{age}d old, break {undone * 100:.0f}% undone, stock trends {trend}")
+    new_text = text
+    for a, b, repl in sorted(edits, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return shelved, woken
+
+
 # ── Invalidations that are not prices ──
 #
 # An invalidation is a trendline's value at the latest candle, and a sloped line extended
@@ -1786,6 +1931,16 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} height ${_fmt_price(height)} vs ${_fmt_price(start)} "
                   f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
     stranded = result.get('stranded') or []
+    if result.get('wake'):
+        print("\n⏰ Woken (the break has re-formed — price is back past the level that confirmed it):")
+        for tk, label, tf, pat, d, conf, price in result['wake']:
+            print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} back past ${_fmt_price(conf)} at ${_fmt_price(price)}")
+    if result.get('dormant'):
+        print(f"\n😴 Shelve candidates (confirmed over {DORMANT_AGE}d ago, break >{DORMANT_UNDONE * 100:.0f}% undone,")
+        print("   stock trending the other way — valid, but not what the chart says now):")
+        for tk, label, tf, pat, d, age, undone, auto in result['dormant']:
+            print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {age}d old, {undone * 100:.0f}% undone" + ("  (auto)" if auto else ""))
+        print("  Run `python3 pattern_watchlist.py --dormant --apply` to shelve them.")
     if result.get('dead_stops'):
         dead = [r for r in result['dead_stops'] if r[5] == 'dead']
         wide = [r for r in result['dead_stops'] if r[5] == 'wide']
@@ -1834,7 +1989,20 @@ if __name__ == "__main__":
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
+    ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.dormant:
+        shelved, woken = shelve_dormant(apply=args.apply)
+        print(f"{'Shelved' if args.apply else 'Would shelve'} {len(shelved)} setup(s):")
+        for line in shelved:
+            print(f"  {line}")
+        if woken:
+            print(f"\n{'Woke' if args.apply else 'Would wake'} {len(woken)}:")
+            for line in woken:
+                print(f"  {line}")
+        if (shelved or woken) and not args.apply:
+            print("\nRun with --dormant --apply to write them.")
+        raise SystemExit(0)
     if args.deadstops:
         gone, look = drop_dead_stops(apply=args.apply)
         print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} setup(s) with an unusable stop"

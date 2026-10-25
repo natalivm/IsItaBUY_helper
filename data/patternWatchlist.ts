@@ -30,6 +30,12 @@ export type PatternAgree = { n: number; lo: number; hi: number; with: string[] }
 
 export interface PatternAltSetup {
   auto?: boolean;
+  /** See PatternStock.dormant: shelved, hidden from the ledger, woken by a close back
+   *  past the break. Lives on the setup rather than the stock, since one stock can hold
+   *  a stale reading and a live one at the same time. */
+  dormant?: boolean;
+  dormantSince?: string;
+  dormantNote?: string;
   agree?: PatternAgree;
   pattern?: string;
   timeframe: PatternTimeframe;
@@ -83,6 +89,14 @@ export interface PatternStock {
    *  green dot while a print is still ahead of it, and stops showing once that print
    *  has happened: a check made before the numbers is stale after them. */
   checkedOn?: string;
+  /** Shelved: still valid, but old enough and far enough undone that showing it misleads.
+   *  Hidden from the ledger and kept in the data, not moved to `history` — that array is
+   *  the record of COMPLETED calls pattern_reproduce.py trains on, and a setup that never
+   *  resolved is not a label. The daily run wakes it the moment price closes back past the
+   *  confirm level in the setup's own direction. */
+  dormant?: boolean;
+  dormantSince?: string;
+  dormantNote?: string;
   trend?: PatternTrend;        // the stock's own trend; orders the setup list
   rsi?: number;                // daily Wilder RSI-14; >=60 bullish, <=40 bearish momentum
   agree?: PatternAgree;
@@ -5082,6 +5096,9 @@ export const PATTERN_STOCKS: PatternStock[] = [
         timeframe: "monthly",
         direction: "down",
         stage: "confirmed",
+        dormant: true,
+        dormantSince: "2026-10-25",
+        dormantNote: "Shelved 2026-10-25: confirmed 2026-02-02, 265 days ago, and price has gone 41% back past the $113.13 break while the stock trends up. Still valid — it wakes on a close back past the break.",
         stageDate: "2026-02-02",
         signal: 153.51,
         confirm: 113.13,
