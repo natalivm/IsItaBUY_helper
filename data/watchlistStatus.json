@@ -1475,12 +1475,6 @@
   "stage": "forming",
   "ticker": "GLW"
  },
- "GM|daily alt": {
-  "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "failed",
-  "ticker": "GM"
- },
  "GM|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
@@ -1941,12 +1935,6 @@
   "label": "main",
   "setup": "Ascending Channel (weekly)",
   "stage": "confirmed",
-  "ticker": "LITE"
- },
- "LITE|weekly Falling Wedge": {
-  "label": "weekly Falling Wedge",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "update",
   "ticker": "LITE"
  },
  "LITE|weekly alt": {
@@ -3173,12 +3161,6 @@
   "stage": "confirmed",
   "ticker": "STX"
  },
- "TEAM|daily Ascending Channel": {
-  "label": "daily Ascending Channel",
-  "setup": "Ascending Channel (daily)",
-  "stage": "update",
-  "ticker": "TEAM"
- },
  "TEAM|daily alt": {
   "label": "daily alt",
   "setup": "Descending Channel (daily)",
@@ -3425,16 +3407,10 @@
   "stage": "forming",
   "ticker": "USAR"
  },
- "USAR|daily Rising Wedge": {
-  "label": "daily Rising Wedge",
-  "setup": "Rising Wedge (daily)",
-  "stage": "confirmed",
-  "ticker": "USAR"
- },
  "USAR|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
-  "stage": "failed",
+  "setup": "Rising Wedge (daily)",
+  "stage": "confirmed",
   "ticker": "USAR"
  },
  "USAR|main": {
