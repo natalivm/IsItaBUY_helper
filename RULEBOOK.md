@@ -76,12 +76,12 @@ mark and not a permanent label. Once a stock's shown setups have been checked by
 `auto: true` comes off them and the dot goes — that is the documented procedure and it is
 the only thing that clears it.
 
-**A check expires on the event that makes it stale, never on a clock.** `checkedAhead()`
-already does this for earnings: the green dot lives while `data/earningsCalendar.json` has
-a date for the ticker still ahead of today, because what makes a reading stale is the
-numbers landing, not time passing.
+**A check expires on the event that makes it stale, never on a clock, and never on the
+earnings print.** The dot was once gated on a future earnings date and that was removed:
+it hid the check on every stock with no date on file. A check is a check until something
+makes it wrong.
 
-**A price event ends a check the same way a print does.** If the stock breaks *against*
+**A price event is what ends one.** If the stock breaks *against*
 the reading the check was made on, the check is spent and the row is owed a fresh look —
 bring the red dot back. PLTR is the case: it was checked on Oct 25 with a bullish daily
 falling wedge as the live read, so a completed close below its $180.41 invalidation plus
@@ -94,14 +94,12 @@ auto-generated one.** The check was made against the setups as they stood; swapp
 for a machine drawing nobody has read makes it a check of something that is no longer
 there. Clear `checkedOn` in the same edit that writes the replacement — not as a courtesy
 but because the green dot would otherwise vouch for a reading the detector produced after
-the person stopped looking. This is the third way a check dies, alongside the print and
-the break, and it is the only one a script can cause.
+the person stopped looking. This is the second way a check dies, alongside the break
+against the reading, and it is the only one a script can cause.
 
 **Apply this to every hand-check from here on.** When you clear a stock's dots, you are
 asserting a reading, so note which setup carries it — the fail rule of the checked setup
-is the expiry condition. A stock with neither a known earnings date nor a live checked
-setup has nothing to expire against and earns no green dot, which is correct rather than a
-gap.
+is the expiry condition. A stock needs no earnings date to carry a green dot, and most do not have one.
 
 ## Taking levels from the source tool
 

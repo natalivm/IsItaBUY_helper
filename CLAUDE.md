@@ -114,22 +114,20 @@ auto-detected one at the same time without either inheriting the other's status,
 you post has no dot, and a price refresh never adds one — `update_prices.py` touches
 `price`, `priceDate`, `rsi` and `trend` and never writes `auto`.
 
-**The green dot is the counterpart: checked, and the print it was checked for has not
-happened yet.** `checkedOn: 'YYYY-MM-DD'` on the entry records a hand check of that
-stock's setups against the charts. `checkedAhead()` in `components/PatternWatchlist.tsx`
-shows a green dot while `data/earningsCalendar.json` has a date for the ticker that is
-still ahead of today — so the dot **expires on the print rather than after N days**, which
-is the point: what makes a check stale is the numbers landing, not time passing. A stock
-with no known earnings date never earns one, there being nothing to be ahead of, and an
-`auto` setup on the shown row always wins the slot, since a row cannot be both owed a look
-and already looked at. `checkedOn` is in `KEEP_HEAD`, so a rescan carries it; nothing
-writes it automatically.
+**The green dot is the counterpart: somebody looked.** `checkedOn: 'YYYY-MM-DD'` on the
+entry records a hand check of that stock's setups against the charts, and
+`components/PatternWatchlist.tsx` shows the dot on `!auto && checkedOn` — nothing else.
+**It is not tied to earnings.** It was once, through a `checkedAhead()` helper that only
+showed the dot while `data/earningsCalendar.json` had a future date for the ticker, and
+that was removed: it hid the dot on every stock with no date on file, which is most of
+them. A check is a check. An `auto` setup on the shown row still wins the slot, since a
+row cannot be both owed a look and already looked at. `checkedOn` is in `KEEP_HEAD`, so a
+rescan carries it; nothing writes it automatically.
 
-**A check also expires when price breaks against the reading it was made on** — see
+**A check expires when price breaks against the reading it was made on** — see
 RULEBOOK.md. Tested against the 17 stocks carrying `checkedOn`, **nothing is expired
 today**: the only candidate was ENVA, and it was the `_closing_in` false positive the 💀
-report now filters, which is why that guard matters here too. The green dot's earnings rule says a check dies when the numbers land; the
-same logic says it dies when the chart stops saying what it said. The expiry condition is
+report now filters, which is why that guard matters here too. The expiry condition is
 the checked setup's own `failRule`, so record which setup carries the check when you clear
 a stock's dots. A check also dies when any of the stock's setups is replaced by an
 auto-detected one — `checkedOn` must be cleared in the same edit that writes the
