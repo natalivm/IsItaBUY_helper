@@ -475,8 +475,26 @@ is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
 - **beyond `STOP_BEYOND` (15%) outside every price the stock has traded**;
 - **on the winning side of the entry** — a long whose stop sits above its own confirm.
 
-A fourth, `STOP_RISK` (50% of the entry), is reported as **📏** but never cut: a wide stop
-is a direction rather than a trade, and that is a judgement call.
+A fourth shape is the one that actually disqualifies most setups, and it is a ratio rather
+than a distance. **`MIN_RR = 1.0`**: when the target is nearer than the stop, being right
+pays less than being wrong costs, and the setup is not worth taking even when the read is
+correct. This replaced a 50%-of-entry distance rule, measured against the 74 setups that
+rule flagged — **92% of them had reward:risk under 1.0 and the median was 0.67**, so the
+distance test was finding this and calling it something else. The ratio also clears the
+cases distance got wrong in both directions: a tight stop on a tiny target still fails
+(HTFL's daily falling wedge risked 21% for 3.9% of upside, 0.18x), and a genuinely wide
+stop with a long target passes (AMKR's weekly falling wedge at 1.4x).
+
+It is a big filter — 41% of the ledger's setups sat under 1.0x — so it drops 183
+machine-drawn ones and leaves 99 hand-posted or row-holding ones listed. Check it against
+something known good before moving the threshold: every setup verified by hand on Oct 25
+(CLS, DAVE, NUE and AMKR's daily wedge) passes, which is the reason to believe 1.0 is in
+the right place.
+
+A fifth is logical rather than economic: **a target on the wrong side of the entry**. SMCI's
+weekly rising wedge broke down at $31.43 and projected $37.31 — a short aiming higher than
+it sold. The ratio test cannot see this on its own, since it takes the absolute distance and
+reads the setup as merely poor rather than impossible.
 
 **The 15% margin is the whole difficulty of the test.** A stop just outside the traded
 range is *correct*, not broken: on a stock at its highs the place for a short's stop is a

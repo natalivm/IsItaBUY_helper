@@ -1450,7 +1450,13 @@ def geometry_faults(text):
 # shows and what the fail rule reads.
 
 STOP_FLOOR = 0.05           # a stop inside this fraction of spot is not a level, it is zero
-STOP_RISK = 0.50            # beyond this much of the entry it is a direction, not a stop
+# What makes a stop unusable is not its distance but what it buys. Measured across the 74
+# setups the old 50%-of-entry rule flagged, 92% had reward:risk below 1.0 and the median was
+# 0.67 — so the threshold was finding setups that risk more than the target pays, and saying
+# "wide" about it. Ratio says the thing directly, and it clears cases the distance rule got
+# wrong in both directions: a tight stop on a tiny target still fails it, and a genuinely
+# wide stop with a long target (AMKR's weekly falling wedge at 1.4x) passes.
+MIN_RR = 1.0
 # A stop just outside the traded range is correct, not broken: on a stock at its highs the
 # place for a short's stop is a little above the high. QQQ's $764.44 against a $762.86 high
 # is 0.2% out and perfectly tradeable, where DAVE's $546.90 against $491.07 is 11% out and
@@ -1494,8 +1500,21 @@ def stop_fault(sv, price, rng):
     if conf and dirn in ('up', 'down'):
         if (inv > conf) if dirn == 'up' else (inv < conf):
             return 'dead', f"${_fmt_price(inv)} sits on the winning side of the ${_fmt_price(conf)} entry"
-        if abs(inv - conf) / conf > STOP_RISK:
-            return 'wide', f"risking {abs(inv - conf) / conf * 100:.0f}% of the entry"
+        tgt = sv.get('target')
+        # A down setup's target belongs below its entry and an up setup's above it. SMCI's
+        # weekly rising wedge broke down at $31.43 and projected $37.31 — a short aiming
+        # higher than it sold. The ratio test alone cannot see this, since it takes the
+        # absolute distance and reads the setup as merely poor rather than impossible.
+        if tgt and ((tgt > conf) if dirn == 'down' else (tgt < conf)):
+            return 'dead', (f"target ${_fmt_price(tgt)} is on the wrong side of the "
+                            f"${_fmt_price(conf)} entry for a {dirn} setup")
+        risk = abs(inv - conf)
+        if tgt and risk > 0:
+            rr = abs(tgt - conf) / risk
+            if rr < MIN_RR:
+                return 'wide', (f"reward:risk {rr:.2f}x — target ${_fmt_price(tgt)} is nearer than "
+                                f"the ${_fmt_price(inv)} stop, so being right pays less than being "
+                                f"wrong costs")
     return None
 
 
@@ -1539,7 +1558,7 @@ def drop_dead_stops(apply=False, path=None):
         keep_alt, stored, hit = e['alt'], [], []
         for label, sv, pos in _setups(e):
             fault = stop_fault(sv, price, rng)
-            bad = bool(fault) and fault[0] == 'dead'
+            bad = bool(fault)
             auto = bool(main.get('auto')) or bool(sv.get('auto'))
             if bad and (label == 'main' or not auto):
                 review.append(f"{t_} ({label}, {sv.get('timeframe')} {sv.get('pattern')}): {fault[1]}")
@@ -1777,8 +1796,12 @@ def print_watchlist_report(result, missing, apply):
                 print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {why}" + ("  (auto)" if auto else ""))
             print("  Run `python3 pattern_watchlist.py --deadstops --apply` to drop the auto ones.")
         if wide:
-            print(f"\n📏 Stop further than {STOP_RISK * 100:.0f}% of the entry ({len(wide)} setups) — a real")
-            print("   level, but a direction rather than a trade.")
+            print(f"\n📏 Reward:risk under {MIN_RR:.1f}x ({len(wide)} setups) — the target pays less than")
+            print("   the stop costs, so the setup is not worth taking even when it is right:")
+            for tk, label, pat, tf, stage, _sev, why, auto in wide[:12]:
+                print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {why}" + ("  (auto)" if auto else ""))
+            if len(wide) > 12:
+                print(f"  ... and {len(wide) - 12} more")
     if stranded:
         print(f"\n🪦 Stranded (break undone by >{STRANDED_UNDONE * 100:.0f}% with an invalidation >{STRANDED_STOP * 100:.0f}% away —")
         print("   nothing can retire these; post a replacement or mark them `update` by hand):")
@@ -1810,11 +1833,12 @@ if __name__ == "__main__":
     ap.add_argument("--prune", action="store_true", help="remove finished setups (target reached / failed) and post them to News")
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
-    ap.add_argument("--deadstops", action="store_true", help="remove auto-detected setups whose invalidation is not a usable price")
+    ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
     args = ap.parse_args()
     if args.deadstops:
         gone, look = drop_dead_stops(apply=args.apply)
-        print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} setup(s) whose stop is not a price."
+        print(f"{'Dropped' if args.apply else 'Would drop'} {len(gone)} setup(s) with an unusable stop"
+              f" (not a price, or reward:risk under {MIN_RR:.1f}x)."
               + ("\n  " + "\n  ".join(gone) if gone else ""))
         if look:
             print("\nPosted by hand or holding the row, left alone:")

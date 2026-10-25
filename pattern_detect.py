@@ -135,7 +135,8 @@ def _roomy(setup):
 
 
 def _stoppable(setup, price, rng):
-    """The setup, or None when its invalidation is not a price anything can trade against.
+    """The setup, or None when its stop is unusable: not a price anything can trade
+    against, or far enough away that being right pays less than being wrong costs.
 
     An invalidation is a trendline read at the latest candle, and a sloped line extended
     past its own pattern walks out of the range the stock trades in — down toward zero, or
@@ -145,8 +146,10 @@ def _stoppable(setup, price, rng):
     """
     if setup is None:
         return None
-    fault = pw.stop_fault(setup, price, rng)
-    return None if fault and fault[0] == 'dead' else setup
+    # Both faults, not just the impossible one: a setup risking more than its target pays
+    # is not worth drawing either, and leaving it to the weekly cleanup means the Friday
+    # rescan hands back everything the cleanup just removed.
+    return None if pw.stop_fault(setup, price, rng) else setup
 
 
 def _stage(bars, n, pattern, up, lo, start, A):
