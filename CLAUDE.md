@@ -775,6 +775,25 @@ this" worth of score for showing the other side. 12 rows moved and the second pa
 prompted it: without the rule Monday's run would have given both its slots to bullish
 readings and pushed the bear case into stored.
 
+**A confirmed break that price has walked back past loses the credit its stage claims.**
+The UI has shown this for ages as the "Break undone %" chip and the ranking never saw it:
+INTC carried an auto weekly falling wedge confirmed up at $95.94 with price $86.96 — 9.4%
+undone — outranking a forming wedge whose trigger sat 3.6% away, and IREN two setups 40%
+and 44% undone doing the same. `SLOT_UNDONE` (80, capped at `SLOT_UNDONE_CAP` 0.5) scales
+it so a break has lost half the `confirmed` credit by `DORMANT_UNDONE` (25%) and all of it
+by 50%, which is where it is worth no more than a setup that never broke. 223 of 356
+confirmed setups are untouched because their break is working; 7 rows moved.
+
+**A row carrying `checkedOn` is left alone entirely.** The scoring cannot express "the
+bearish call is the hypothesis and the forming bounce is what would end it" — a forming
+setup scores 12 against a working confirmed break's 40 and always loses — so a row someone
+composed by hand has to be protected rather than re-ranked. IREN is the case: set by hand
+to a weekly rising wedge over a daily falling wedge, and the next pass wanted to swap the
+wedge for a second bearish channel. 20 of 150 rows are exempt. It is not permanent: a
+check expires on the earnings print, on price breaking against the reading it was made on,
+and on any setup being replaced by an auto-detected one, and reslot resumes the moment it
+does.
+
 `python3 pattern_watchlist.py --reslot` (dry run) / `--reslot --apply`; the daily run calls
 it after the dedupe, so it chooses between distinct readings rather than copies. 114 stocks
 moved on the first pass and the second reports 0.

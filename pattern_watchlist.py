@@ -1741,6 +1741,8 @@ def stretched_setups(text, calendar=None, today=None):
 SLOT_TIGHT = 0.10           # risk inside this fraction of the entry counts as tight
 SLOT_FLOOR = 0.01           # ...and inside this it is not tight, it is about to die
 SLOT_OPPOSITE = 10          # score given up to let the second slot read the other way
+SLOT_UNDONE = 80            # a confirmed break that price has walked back past loses this
+SLOT_UNDONE_CAP = 0.5       # ...up to the whole of the confirmed stage credit
 
 
 def slot_score(sv, stock):
@@ -1779,6 +1781,20 @@ def slot_score(sv, stock):
         # while a setup going with the move exists.
         if mom == 'against' and trend in ('up', 'down') and trend != direction:
             score -= 15
+
+    # A confirmed break that price has walked back past is not as confirmed as its stage
+    # says. The UI has shown this for ages as the "Break undone %" chip and the ranking
+    # never saw it: INTC carried an auto weekly falling wedge confirmed up at $95.94 with
+    # price $86.96 -- 9.4% undone -- outranking a forming wedge whose trigger sat 3.6%
+    # away, and IREN two setups 40% and 44% undone outranking the same. Scaled so that at
+    # DORMANT_UNDONE (25%) a break has lost half the credit `confirmed` gave it, and by
+    # 50% all of it, which is where it is worth no more than a setup that never broke.
+    conf_level = sv.get('confirm')
+    if stage in ('confirmed', 'retest') and conf_level and direction in ('up', 'down'):
+        undone = ((price - conf_level) / conf_level if direction == 'down'
+                  else (conf_level - price) / conf_level)
+        if undone > 0:
+            score -= min(undone, SLOT_UNDONE_CAP) * SLOT_UNDONE
 
     inval = sv.get('invalidation')
     if target and direction in ('up', 'down'):
@@ -1832,6 +1848,20 @@ def reslot_setups(apply=False, path=None):
 
         def vals(pos):
             return {k: v[2] for k, v in pos.items() if k != '_span'}
+
+        # A row someone has read is a row someone composed. `checkedOn` is the record of
+        # that, so reslot leaves it alone: the scoring cannot express "the bearish call is
+        # the hypothesis and the forming bounce is what would end it", because a forming
+        # setup scores 12 against a working confirmed break's 40 and always loses. IREN is
+        # the case -- hand-set to a weekly rising wedge over a daily falling wedge, and
+        # the next pass wanted to replace the wedge with a second bearish channel.
+        #
+        # This is not a permanent exemption. A check expires on the earnings print, on
+        # price breaking against the reading it was made on, and on any of the stock's
+        # setups being replaced by an auto-detected one -- and reslot resumes the moment
+        # it does.
+        if m.get('checkedOn'):
+            continue
 
         every = [e['fields']] + ([e['alt']] if e['alt'] is not None else []) \
             + [pos for lb, sv, pos in _setups(e) if '_span' in pos]
