@@ -3386,7 +3386,7 @@
  "UMAC|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "forming",
+  "stage": "signal",
   "ticker": "UMAC"
  },
  "UMAC|daily Descending Channel #2": {
