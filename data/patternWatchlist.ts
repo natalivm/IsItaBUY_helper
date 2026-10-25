@@ -11724,12 +11724,12 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirm: 62.08,
     invalidation: 58.46,
     breakInvalidation: 60.5,
-    target: 72.94,
+    target: 73.45,
     lines: [
       { from: ["2026-03-06", 94.73], to: ["2026-10-23", 58.46] },
       { from: ["2026-03-06", 62.04], to: ["2026-10-23", 25.77] },
     ],
-    note: "The break is real — price closed above the falling upper boundary and confirmed above $62.08 on Oct 12 — but the measured move is not usable on this drawing, so the target is the prior high instead. Measured over the full span the lines cover, the height is $32.69 and the projection $94.09, 44% above spot on a utility, off a lower boundary extrapolating to $25.77 against an all-time low of $55.85. Measured over the span that holds the actual move the channel is only $2.65 wide and projects $64.06, below spot. $72.94 is the July 17 high, the last level price turned at, and the weekly falling wedge below reaches $73.45 independently.",
+    note: "The break is real — price closed above the falling upper boundary and confirmed above $62.08 on Oct 12 — but the measured move is not usable on this drawing, so the target is the level instead. Over the full span the lines cover the height is $32.69 and the projection $94.09, 44% above spot on a utility, off a lower boundary extrapolating to $25.77 against an all-time low of $55.85. Over the span that holds the actual move the channel is $2.65 wide and projects $64.06, below spot. $73.45 is where the source tool's weekly falling wedge reaches, just past the $72.99 July high: the prior high is the level to clear and a little overshoot is expected rather than a problem.",
     alt: {
       pattern: "Ascending Channel",
       timeframe: "weekly",
@@ -11750,28 +11750,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed weekly close back inside the broken boundary, above $66.35.",
       note: "The channel up from January 2025 broke down in September — the week of Sep 7 closed below the lower line at $65.19 and Sep 14 confirmed below $64.36. Price bottomed near $59.44 and has come all the way back: the week of Oct 19 closed at $65.20, above the confirmation and under 2% from the $66.35 line, with daily RSI at 62. The $57.28 target is still on the board, but this break is close to being taken back.",
     },
-    more: [
-      {
-        pattern: "Falling Wedge",
-        timeframe: "weekly",
-        direction: "up",
-        stage: "confirmed",
-        stageDate: "2026-06-22",
-        signal: 65.02,
-        confirm: 68.97,
-        invalidation: 56.82,
-        breakInvalidation: 58.07,
-        target: 73.45,
-        lines: [
-          { from: ["2026-02-02", 67.96], to: ["2026-10-19", 60.71] },
-          { from: ["2026-02-02", 59.53], to: ["2026-10-19", 56.82] },
-        ],
-        signalRule: "a completed weekly close above $65.02; a close back inside cancels it.",
-        confirmRule: "a later completed weekly close above $68.97, beyond the signal candle's high.",
-        failRule: "a completed weekly close below $56.82, then a follow-through close below that candle's low.",
-        note: "Re-posted from the source tool on Oct 25, a stage further along than our own reading had it. The week of May 18 is the signal candle — it closed $67.67 above the falling upper boundary at $65.02 — and its $68.97 high is the confirm, which the week of Jun 22 cleared at $69.39. Target $73.45 is the signal plus the $8.43 wedge height, 12.7% from spot. The break then came undone: price fell to $59.44 by Oct 1 and is only now back at $65.20, below its own confirm, so this is a bull case being re-established rather than one in progress.",
-      },
-    ],
   },
   {
     ticker: "GD",
