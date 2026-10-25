@@ -6,10 +6,33 @@ export const ENVA = defineStock({
   sector: 'FinTech / Lending',
   themeColor: '#3b82f6',
   updatedOn: '10/23',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-11',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-25',
   currentPrice: 165.07,
-  fairPriceRange: '$215 - $285',  // stockanalysis.com analyst target range (Oct 7 2026)
+  fairPriceRange: '$215 - $285',  // stockanalysis.com analyst target range (Oct 7 2026) — PRE-Q3, see the Oct 2026 note
+  // Q3 2026 (reported Oct 22 2026, the session before a -6.6% day)
+  // ─────────────────────────────────────────────────────────────────────────
+  // The quarter was good on every operating line. Revenue $1.01B (+26%, first
+  // time above $1B); adj. EPS $4.48 (+33%) against a ~$4.40 estimate; GAAP
+  // diluted EPS $4.06 vs $3.03, a touch under a $4.10 estimate. Net income
+  // $107M (+34%). Originations +31% to $2.6B, combined receivables +30% to
+  // $5.9B. CREDIT IMPROVED: net charge-off ratio 8.1% from 8.5%, net revenue
+  // margin 61% from 57%. Q4 guided to revenue +25% and adj. EPS +30-35%.
+  // $46M repurchased in Q3, $252M of authorisation left.
+  //
+  // And the stock fell. That is the thing worth recording: ENVA's earnings
+  // test has happened and the company passed it, where STRL's is still ahead.
+  // Sequencing holds too — Q2 adj. EPS $4.31, Q3 $4.48, both +33%.
+  //
+  // So nothing in the fundamentals deteriorated; the multiple did. At $165.07
+  // against the $17.27 FY26E base that is 9.6x, and 7.9x on the $20.96 FY27E —
+  // already at the BASE exitPE of 10 in the scenarios below, with the bear case
+  // at 7. baseEps is LEFT AT 17.27: Q3 beat, so if anything it is conservative,
+  // but the post-print consensus was not available here and a number nobody
+  // published is not an input. analystConsensus and fairPriceRange are Oct 7,
+  // before the print and before most of the fall — treat them as stale rather
+  // than as 30% upside.
+  // ─────────────────────────────────────────────────────────────────────────
   shares0: 24.7,         // Q1 2026: ~110K shares repurchased; was 24.8M
   rev25: 3200,           // FY2025 net revenue ~$3.2B (Q4'25: $839M × annualized); Q1 2026 was record $875M
   fcfMargin25: 0.110,   // ~11% net margin (adj EPS $11.52 / rev $3.2B)

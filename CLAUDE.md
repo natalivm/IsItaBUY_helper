@@ -112,6 +112,17 @@ auto-detected one at the same time without either inheriting the other's status,
 you post has no dot, and a price refresh never adds one — `update_prices.py` touches
 `price`, `priceDate`, `rsi` and `trend` and never writes `auto`.
 
+**The green dot is the counterpart: checked, and the print it was checked for has not
+happened yet.** `checkedOn: 'YYYY-MM-DD'` on the entry records a hand check of that
+stock's setups against the charts. `checkedAhead()` in `components/PatternWatchlist.tsx`
+shows a green dot while `data/earningsCalendar.json` has a date for the ticker that is
+still ahead of today — so the dot **expires on the print rather than after N days**, which
+is the point: what makes a check stale is the numbers landing, not time passing. A stock
+with no known earnings date never earns one, there being nothing to be ahead of, and an
+`auto` setup on the shown row always wins the slot, since a row cannot be both owed a look
+and already looked at. `checkedOn` is in `KEEP_HEAD`, so a rescan carries it; nothing
+writes it automatically.
+
 The row dots cannot see the stored setups: the build moves `alt` and `more` into
 `public/setups/TICKER.json` (the `split-stored-setups` plugin in `vite.config.ts`) and
 an expanded row fetches them. Counting those would need the plugin to leave a tally
@@ -176,19 +187,22 @@ projection, the more often that fires, so at `BACK = 0` the setups that survive 
 scored are disproportionately the ones that over-project. That flattered the exact number
 being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
 
-Baseline on the 23 calls whose candles reach back far enough:
+Baseline on the 24 calls whose candles reach back far enough:
 
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
-- **right pattern and direction: 17/23.** Most of the misses are Hammers that
+- **right pattern and direction: 18/24.** Most of the misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented and is
   not a tuning gap — see PATTERN_RULES.md §5b for why, and for the measuring rule verified
   off the one completed flag on record.
-- **target: 6.7% median error**, with 13 of the 17 inside both level tolerances.
+- **target: 4.8% median error**, with 14 of the 18 inside both level tolerances.
 
-The tables below were measured on the 20 calls on record at the time. Three more have
-since been added, and the headline held at **6.7% on all 23** — the extra labels were not
-used to tune anything, so that is an out-of-sample check rather than a re-fit.
+The tables below were measured on the 20 calls on record at the time. Four more have since
+been added and the headline has only improved — 6.7% at 23 labels, 4.8% at 24. None of them
+was used to tune anything, so each is an out-of-sample check rather than a re-fit. The most
+recent, STRL's daily ascending channel (confirmed below $480.23, reached $419.52 on
+2026-10-15), is the cleanest reproduction on record: **0.0% confirm error and 0.7% on the
+target**.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
@@ -326,6 +340,35 @@ corroboration, not proof, and that a few points of median error between two conf
 a reason to prefer one. Re-run the bootstrap before moving anything on the strength of a
 table alone, and treat new completed calls as the thing that would actually settle it.
 
+**`HEIGHT_VS = 'start'`: judge a pattern's height where the price was.** `MAX_HEIGHT`
+caps how tall a pattern may be relative to price, but it was measured against the close at
+the pattern's **last anchor** — and for a rising pattern price has climbed by then, so the
+same height is a smaller fraction of it. CRDO's weekly ascending channel came in at 69% of
+that close, under the 70% cap, while being **106% of the lowest close it spans**: a channel
+wider than the share price, with its lower boundary at $40.77 in February when the lowest
+low on the chart was $86.49. It had to be demoted by hand.
+
+Judged against the close at the pattern's *start* instead:
+
+| | target | channels | inside both tolerances | patterns | agrees with hand-posted | rejects CRDO |
+|---|---|---|---|---|---|---|
+| `last` (was) | 6.7% | 8.8% | 13 | 17/23 | 76.4% | no |
+| **`start`** (current) | **5.0%** | 8.8% | 13 | 17/23 | 74.8% | yes |
+| `mean` | 5.0% | 8.8% | 13 | 17/23 | 76.4% | **no** |
+| `min` | 4.6% | 6.1% | 15 | 16/23 | 71.7% | yes |
+
+`mean` was rejected despite costing nothing: it improves the metric without fixing the case
+that prompted the change, which is tuning to the scoreboard rather than to the problem.
+`min` buys a further 0.4 points of target error and two more setups inside tolerance, but
+costs three times the agreement (12 setups against 4), loses CRWV's weekly rising wedge,
+and leaves CRDO's weekly chart with **no** reading at all — accuracy bought by declining to
+read the chart. `start` fixes the case for 1.6 points, 4 setups of 254.
+
+Note what this is *not*: the touches were not the problem. CRDO's lower boundary is touched
+at bars 7 and 22 of a 36-bar span — properly spread, and `MIN_SIDE_TOUCHES` passes it
+honestly. A rising line can be far below price at the start and still be touched later as it
+catches up, which is why the width test has to be anchored where the pattern begins.
+
 ### Stop distance: why the live invalidation cannot measure it
 
 A sloped invalidation is its line's value at the **latest** candle (see "Sloped
@@ -368,6 +411,86 @@ run) / `--recheck-stops --apply` clears the ones already stored — 41 of 562 on
 pass. It only ever **removes** a value, never recomputes one: write-once is what makes the
 field mean anything, and a level recomputed months later off a since-refitted line would be
 a different number wearing the same name.
+
+### Too tall to draw: the height cap does not apply to what you post
+
+`HEIGHT_VS` and `MAX_HEIGHT` stop the detector drawing a pattern taller than the price it
+spans. Nothing applied that test to a hand-posted setup, and in one week three turned up
+projecting 96%, 67% and 60% falls — CRDO's weekly channel, STRL's and ENVA's. Each has the
+same cause: drawn from an origin where its lower boundary extrapolates to near nothing.
+ENVA's starts at **$1.60** in February 2025 while the stock traded at $114.86, and the
+lowest low over the whole span is $79.41, so that line was never within $78 of price.
+
+The touches do not catch them. ENVA's lower line picks up two, CRDO's two — both late, once
+a rising line has climbed to meet price, which is the shape `MIN_SIDE_TOUCHES` passes
+honestly. Only the height cap sees it.
+
+`geometry_faults()` reports them under **📐 Too tall to draw**: a hand-posted setup with
+lines whose height exceeds `GEOMETRY_CAP` of the close where its lines begin. It changes
+nothing — the break and the direction are usually right, which makes redrawing a judgement
+rather than a stage change.
+
+**A flagged drawing does not mean a wrong target.** The check tests the lines, not the
+arithmetic, and the two come apart. CLS's weekly channel is flagged at 242% — its lower
+boundary starts at $58.05 when the stock traded near $66 — but its $202.43 target does not
+follow from those lines at all (the confirm at $296.12 less the $160.05 height is $136.07).
+The number was set some other way and is defensible; only the geometry is broken. STRL's
+$15.67 and ENVA's $54.55 *were* the arithmetic, which is what made them absurd. Check
+whether `confirm ± height` reproduces the stored target before concluding the target is
+the problem.
+
+The right fix when one appears is the construction, not the level: measure the pattern over
+the span that holds the move. ENVA's channel over 2026 alone (a $129.25-$267.45 range)
+projects to about $101-122 against the $54.55 its full span gave.
+
+**But the source tool draws them this way too, so the flag is not a defect report.** AMKR's
+weekly ascending channel was re-imported from the source tool verbatim on Oct 25 — their
+signal $60.45, confirm $42.66, invalidation $75.96, target $16.48 — and it reads **243%**,
+worse than the 159% our own drawing of the same channel gave. Their invalidation sits 78%
+above their own confirm; no fit makes that narrow. Their weekly falling wedge on the same
+stock comes in at 75% and lands on the **🪦 Stranded** list as well. Both are setups the
+user confirmed as valid, their words being that all four AMKR setups are right and differ
+only in "timeframe of reaching the target".
+
+So a tall drawing is the signature of a **long-horizon** setup, not a mis-drawn one: a
+multi-year channel is wide relative to where it began because the stock has multiplied
+since. 13 of the 36 stocks reporting in the week of Oct 26 carry one. Read the report as a
+horizon label — these are the rows whose targets will not resolve this quarter and whose
+invalidations cannot retire them — rather than as a queue of errors to fix. The cases worth
+redrawing are still the ones where the arithmetic came out absurd (STRL's $15.67, ENVA's
+$54.55), which is the `confirm ± height` test above, not the height ratio.
+
+### Stranded setups: confirmed breaks nothing can retire
+
+A setup fails on a close past invalidation plus a follow-through. When that level is half
+the share price away, the rule can never fire — so a confirmed break whose price has gone
+back past the level that confirmed it sits in the ledger forever, on a target nobody is
+trading towards. LITE carried two: a daily ascending channel confirmed down in August
+whose price then rallied **32% above its confirm** before falling back, kept alive by an
+invalidation 57% above the highest price the stock had ever traded.
+
+`stranded_setups()` in `pattern_watchlist.py` reports them, and the daily run prints the
+list under **🪦 Stranded**. The test is both conditions at once: the break undone by more
+than `STRANDED_UNDONE` (10%) *and* an invalidation more than `STRANDED_STOP` (40%) from
+price. Either alone is normal — a sloped invalidation on an old break runs away from price
+by design, which is why 123 of 560 confirmed setups have one outside every price the stock
+has traded, and that is not a defect. The intersection is 9.
+
+**A setup still travelling toward its target is not stranded**, whatever the snapshot
+says. Both tests above are instants, and an instant cannot tell a setup that was abandoned
+from one whose price overshot the wrong way and is now coming back. ENVA's weekly rising
+wedge confirmed down at $145.08, rallied to $267, and sits at $165.07 falling — 14% above
+the confirm, so it read stranded, while in fact it is heading for its $119.67 target, which
+is what the source tool and a human reading of the chart both say. `_closing_in()` compares
+price against its close 40 sessions back and drops those. It took the list from 6 to 3, and
+the three it removed were all of this shape.
+
+Nothing is marked automatically. The auto-detected ones are candidates for Friday's
+redraw, which replaces their levels where the fresh scan still finds the same pattern; the
+hand-posted ones need a replacement posted, since only a human can say whether the chart
+still means what it did. The UI already shows the condition as the **Break undone %** chip
+(`undoneBy()` in `components/PatternWatchlist.tsx`) — what was missing was anything that
+listed them.
 
 ### Working on the scripts: three traps
 

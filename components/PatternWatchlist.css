@@ -242,6 +242,11 @@
    you would have to open all 149 rows to find them. Pulled tight to the ticker so it
    reads as part of it rather than as another column. */
 .pbw .tk .auto-dot.stock{margin-left:-5px}
+/* Checked ahead of the print: the same dot in the up colour. It sits in the slot the
+   red dot would take, so the Stock column reads as three states -- red owed a look,
+   green looked at and still current, nothing at all for a stock with no print due. */
+.pbw .check-dot{display:inline-block;flex:none;align-self:center;width:9px;height:9px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px color-mix(in srgb,var(--up) 22%,transparent)}
+.pbw .tk .check-dot.stock{margin-left:-5px}
 .pbw .auto-note{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
 .pbw .altwrap>.detail{padding:0}
 /* Confidence: several stored setups agree on the target */

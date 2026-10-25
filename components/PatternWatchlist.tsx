@@ -4,6 +4,20 @@ import { PATTERN_STOCKS, PatternStock, PatternAltSetup, PatternHistoryEntry, Pat
 import SetupChart, { ChartLevel, ChartMarker } from './SetupChart';
 import { fmt, pct, pct0, cap, day, status, Icon, Status, Group } from './setupStatus';
 import './PatternWatchlist.css';
+import EARNINGS from '../data/earningsCalendar.json';
+
+// Green dot: this stock's setups were checked by hand and its next print has not
+// happened yet. It expires on the print rather than after N days, because what makes
+// a check stale is the numbers landing, not time passing. A stock with no known
+// earnings date never earns one -- there is nothing to be ahead of.
+const CAL = EARNINGS as Record<string, { date?: string } | undefined>;
+function checkedAhead(ticker: string, checkedOn?: string): string | null {
+  if (!checkedOn) return null;
+  const due = CAL[ticker]?.date;
+  if (!due) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  return due >= today && checkedOn <= due ? due : null;
+}
 
 // Home page: one scannable ledger of tickers. Clicking the ticker opens the
 // stock's valuation page; clicking anywhere else on the row unfolds its
@@ -648,6 +662,19 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
               aria-label="Unchecked setup"
             />
           )}
+          {/* The counterpart, and deliberately exclusive with it: red says this row is
+              still owed a look, green says it got one and the print it was for is still
+              ahead. A row cannot be both, so an unchecked setup always wins the slot. */}
+          {!s?.auto && (() => {
+            const due = checkedAhead(row.ticker, row.checkedOn);
+            return due ? (
+              <i
+                className="check-dot stock"
+                title={`${row.ticker} was checked by hand on ${row.checkedOn}, ahead of its ${day(due)} print`}
+                aria-label="Checked ahead of earnings"
+              />
+            ) : null;
+          })()}
           <span>{row.name}</span>
         </span>
         <span className="stcell">

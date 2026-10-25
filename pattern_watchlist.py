@@ -1074,7 +1074,8 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
         with open(path, 'w') as fh:
             fh.write(new_text)
 
-    return {'momentum': momentum, 'thin': thin_setups(new_text),
+    return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
+            'geometry': geometry_faults(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
             'review': review, 'news': news}
@@ -1387,6 +1388,105 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
 
 # ── Report ──
 
+# Three hand-posted channels found in one week -- CRDO's, STRL's and ENVA's -- projected
+# targets of 96%, 67% and 60% down because each was drawn from an origin where its lower
+# boundary extrapolated to near nothing. The detector refuses these: MAX_HEIGHT caps a
+# pattern at a fraction of the close where it starts. Nothing applied that check to a setup
+# posted by hand, so this reports them rather than changing them.
+GEOMETRY_CAP = {'daily': 0.6, 'weekly': 0.7, 'monthly': 0.8}
+
+
+def geometry_faults(text):
+    """Hand-posted setups our own detector would refuse to draw, by height.
+
+    Rows are (ticker, label, pattern, timeframe, height, price_at_start, ratio, target).
+    """
+    import pattern_lines as _pl
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, sv, pos in _setups(e):
+            if bool(main.get('auto')) or bool(sv.get('auto')) or 'lines' not in pos:
+                continue                                  # the detector polices its own
+            lines = _pl.stored_lines(text, pos)
+            if not lines or len(lines) < 2:
+                continue
+            tf = sv.get('timeframe') or main.get('timeframe')
+            cap = GEOMETRY_CAP.get(tf)
+            b = _pl.load_bars(main['ticker'], tf) if cap else None
+            if not b:
+                continue
+            try:
+                i0 = b['t'].index(lines[0][0][0])
+            except ValueError:
+                continue
+            height = abs(lines[0][0][1] - lines[1][0][1])
+            start = b['c'][i0]
+            if not start or height <= cap * start:
+                continue
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
+                        tf, height, start, height / start, sv.get('target')))
+    return out
+
+
+# A confirmed break whose price has gone back past the level that confirmed it, far
+# enough that the setup is no longer the read it was -- and whose invalidation is too
+# distant to ever retire it. The failure rule needs a close past invalidation, so when
+# that level is half the share price away the setup stays `confirmed` on a target nobody
+# is still trading towards. LITE carried two of these: a daily channel confirmed down in
+# August that then rallied 32% above its confirm, kept alive by an invalidation 57% above
+# the highest price the stock had ever traded.
+STRANDED_UNDONE = 0.10      # price this far back past the confirm level
+STRANDED_STOP = 0.40        # ...and an invalidation at least this far from price
+
+
+def _closing_in(ticker, sv, tf, price, tgt, back=40):
+    """Has price moved toward this setup's target over the last `back` sessions?"""
+    try:
+        import pattern_lines as _pl
+        b = _pl.load_bars(ticker, 'daily')
+        if not b or len(b['c']) <= back:
+            return False
+        then = b['c'][-1 - back]
+    except Exception:
+        return False
+    return (price < then) if tgt < price else (price > then)
+
+
+def stranded_setups(text):
+    """Confirmed setups whose break is undone and whose invalidation cannot reach price.
+
+    Rows are (ticker, label, pattern, timeframe, stageDate, price, confirm, undone, stop, auto).
+    """
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price = main.get('price')
+        for label, sv, _pos in _setups(e):
+            if sv.get('stage') != 'confirmed':
+                continue
+            inv, conf, d = sv.get('invalidation'), sv.get('confirm'), sv.get('direction')
+            tgt, tf = sv.get('target'), sv.get('timeframe') or main.get('timeframe')
+            if not (price and inv and conf) or d not in ('up', 'down'):
+                continue
+            undone = (price - conf) / conf if d == 'down' else (conf - price) / conf
+            stop = abs(price - inv) / price
+            if undone < STRANDED_UNDONE or stop < STRANDED_STOP:
+                continue
+            # Both tests above are snapshots, and a snapshot cannot tell a setup that was
+            # abandoned from one whose price overshot the wrong way and is now coming back.
+            # ENVA's weekly rising wedge confirmed down at $145.08, rallied to $267, and is
+            # $165.07 falling: 14% above the confirm, so it read stranded, while in fact it
+            # is heading for its $119.67 target. A setup still travelling toward its target
+            # is not stranded whatever the snapshot says.
+            if tgt is not None and _closing_in(main['ticker'], sv, tf, price, tgt):
+                continue
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
+                        sv.get('timeframe') or main.get('timeframe'), sv.get('stageDate'),
+                        price, conf, undone, stop, bool(main.get('auto')) or bool(sv.get('auto'))))
+    return out
+
+
 def thin_setups(text):
     """Every stored setup whose target sits inside MIN_ROOM of its confirmation level.
 
@@ -1522,12 +1622,32 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} {str(stage):<9} "
                   f"${_fmt_price(level)} → ${_fmt_price(target)}  {room * 100:4.1f}%  ({tag})")
         print("  Run with --thin to drop the auto-detected ones.")
+    geom = result.get('geometry') or []
+    if geom:
+        print("\n📐 Too tall to draw (hand-posted; the detector would reject these on MAX_HEIGHT —")
+        print("   the measured move is arithmetic, not a forecast):")
+        for sym, label, pattern, tf, height, start, ratio, tgt in sorted(geom, key=lambda r: -r[6]):
+            print(f"  {sym:<6} {tf:<7} {str(pattern):<20} height ${_fmt_price(height)} vs ${_fmt_price(start)} "
+                  f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
+    stranded = result.get('stranded') or []
+    if stranded:
+        print(f"\n🪦 Stranded (break undone by >{STRANDED_UNDONE * 100:.0f}% with an invalidation >{STRANDED_STOP * 100:.0f}% away —")
+        print("   nothing can retire these; post a replacement or mark them `update` by hand):")
+        for sym, label, pattern, tf, when, price, conf, undone, stop, auto in sorted(stranded, key=lambda r: -r[7]):
+            tag = "auto" if auto else "posted"
+            print(f"  {sym:<6} {tf:<7} {str(pattern):<20} confirmed {str(when):<12} "
+                  f"${_fmt_price(conf)} → ${_fmt_price(price)}  {undone * 100:4.0f}% past, stop {stop * 100:3.0f}%  ({tag})")
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:
             print(f"  {line}")
     if result['news']:
-        print(f"\n📰 News feed ({'posted' if apply else 'would post'} {len(result['news'])}):")
+        # `apply` alone is not enough: with NEWS_PAUSED set, an --apply run computes the
+        # items and writes none of them, and saying "posted" there sends you looking for
+        # entries in newsFeed.ts that are not in it.
+        posted = apply and not NEWS_PAUSED
+        print(f"\n📰 News feed ({'posted' if posted else 'would post'} {len(result['news'])}"
+              + (", paused" if apply and NEWS_PAUSED else "") + "):")
         for it in result['news']:
             print(f"  {it['date']}  {it['title']} — {it['text']}")
     if missing:
