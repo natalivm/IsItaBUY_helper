@@ -3825,7 +3825,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The same advance read as a wedge, its two lines converging. Price at $380.55 sits a hair above the $378.09 lower line; a weekly close below it would start a downside signal, and the measured move off the wedge's mouth reaches $258.98.",
     keyLevel: {
       price: 378.09,
-      text: "$378.09 is 0.6% below spot and decides it: a weekly close under signals the rising wedge toward $258.98. Above, the unfilled Oct 14 gap back to $397.03 is the first objective. Price sits between the two into Tuesday's print."
+      text: "$378.09 is 0.6% below spot and decides it: a weekly close under signals the rising wedge toward $258.98. Above is thin trade to $397-400, where the Oct 14 gap and the volume shelf agree, and price has crossed that band in one session each way."
     },
     alt: {
       pattern: "Ascending Channel",
