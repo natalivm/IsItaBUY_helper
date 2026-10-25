@@ -548,10 +548,18 @@ not `up`.
 ledger showing a setup it has been told to hide. Those are reported and left for a human to
 replace, the same policy `--thin` and `--deadstops` use.
 
-Waking is the mirror and needs no threshold: one close back past the confirm level, in the
-setup's own direction, removes all three fields so the setup reads exactly as it did
-before. That is what "bring it back if we fail" means — the break re-forming is the signal,
-not elapsed time.
+**Waking does not resume the setup — it asks for a redraw.** One close back past the
+confirm level, in the setup's own direction, is the trigger, and it needs no threshold and
+no clock: the break re-forming is the signal, not elapsed time. But a break that re-forms
+four months later is a *different* break on a different chart, and the shelved levels were
+measured off a pattern that is now stale — the target most of all. So waking clears the
+three dormant fields and sets `stage: "update"`, which is already the ledger's word for
+"post a new setup", with an `updateNote` saying when it was shelved and that the levels are
+the old pattern's.
+
+Coming back as a live `confirmed` call would be the worse failure of the two this section
+guards against: a shelved setup merely clutters the row, while a resurrected one puts
+arithmetic nobody re-checked back in front of you wearing a confirmed badge.
 
 The UI counts them rather than listing them (`shelved` in `components/PatternWatchlist.tsx`,
 a muted line under the setup list carrying each `dormantNote` on hover), so a shelved

@@ -1513,8 +1513,9 @@ def shelve_dormant(apply=False, path=None, today=None):
     """Mark stale confirmed breaks dormant, and wake any whose break has re-formed.
 
     Writes `dormant` beside the setup's own `stage`, so it travels with the setup rather
-    than with the stock. Waking removes the three fields outright: a setup that is live
-    again should read exactly as it did before it was shelved.
+    than with the stock. Waking clears the three fields and sets `stage: "update"` — the
+    break re-forming months later is a different break on a different chart, so the setup
+    comes back as a call to redraw rather than as a live one carrying its old target.
     """
     path = path or WATCHLIST_FILE
     with open(path) as fh:
@@ -1535,7 +1536,12 @@ def shelve_dormant(apply=False, path=None, today=None):
                 undone = _undone_by(sv, price)
                 if undone is None or undone > 0:
                     continue
-                # wake it: strip dormant, dormantSince and dormantNote
+                # Waking does NOT resume the old setup. Its target was measured off a
+                # pattern that is months stale by now, and a break re-forming after that
+                # long is a different break on a different chart — the levels have to be
+                # drawn again. So it comes back as `update` ("Needs updating"), which is
+                # already the ledger's word for "post a new setup", rather than as a live
+                # confirmed call carrying arithmetic nobody re-checked.
                 a = line_end
                 b = a
                 while True:
@@ -1544,9 +1550,20 @@ def shelve_dormant(apply=False, path=None, today=None):
                         b = nxt
                     else:
                         break
-                if b > a:
-                    edits.append((a, b, ''))
-                    woken.append(f"{tk} ({label}): price is back past ${_fmt_price(sv.get('confirm'))} — the break has re-formed")
+                if b <= a:
+                    continue
+                edits.append((a, b, ''))                      # drop the three dormant fields
+                edits.append((s0, s1, '"update"'))            # stage: confirmed -> update
+                note = (f"Woken {today}: price closed back past the ${_fmt_price(sv.get('confirm'))} "
+                        f"break, so the read is live again — but it was shelved on "
+                        f"{sv.get('dormantSince')} and these levels are the old pattern's. "
+                        f"Redraw it on the current chart; the target in particular will move.")
+                ins = (f"{indent}prevStage: \"{sv.get('stage')}\",\n"
+                       f"{indent}updateDate: \"{today}\",\n"
+                       f"{indent}updateNote: {json.dumps(note, ensure_ascii=False)},\n")
+                edits.append((line_end, line_end, ins))
+                woken.append(f"{tk} ({label}): back past ${_fmt_price(sv.get('confirm'))} — "
+                             f"woken as `update`, the levels need redrawing")
                 continue
             sd, d = sv.get('stageDate'), sv.get('direction')
             undone = _undone_by(sv, price)
@@ -1932,7 +1949,8 @@ def print_watchlist_report(result, missing, apply):
                   f"at the start = {ratio * 100:3.0f}% (cap {GEOMETRY_CAP[tf] * 100:.0f}%)  target ${_fmt_price(tgt) if tgt else '—'}")
     stranded = result.get('stranded') or []
     if result.get('wake'):
-        print("\n⏰ Woken (the break has re-formed — price is back past the level that confirmed it):")
+        print("\n⏰ Woken as `update` (the break has re-formed, but the shelved levels are the old")
+        print("   pattern's — redraw on the current chart, the target especially):")
         for tk, label, tf, pat, d, conf, price in result['wake']:
             print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} back past ${_fmt_price(conf)} at ${_fmt_price(price)}")
     if result.get('dormant'):
