@@ -2,6 +2,8 @@
 
 See `.github/copilot-instructions.md` for full project conventions, stock definition format, and architecture.
 
+**`RULEBOOK.md` is the decision rules** — redraw vs delete, importing a level from the source tool, when a target is the problem and when the drawing is, what a script may delete, and when to ask rather than decide. This file says how the machinery works and `PATTERN_RULES.md` says how a pattern is drawn; read the rulebook before changing a setup by hand.
+
 ## Updating Stock Prices
 
 Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (line 8). Prices are updated automatically via GitHub Actions and can also be updated manually.
