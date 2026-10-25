@@ -14,9 +14,30 @@ sys.path.insert(0, '/home/user/IsItaBUY_helper')
 os.chdir('/home/user/IsItaBUY_helper')
 import pattern_detect as pd, pattern_watchlist as pw
 
+# Everything a sweep may move, and the module that owns it. Getting this list wrong is
+# silent: a knob missing from it is never restored between configs, so every later row
+# inherits the previous one's value -- and `MIN_ROOM` lives on pw, so the obvious
+# `setattr(pd, 'MIN_ROOM', x)` creates an attribute nothing reads and the sweep reports
+# "no change" for a parameter it never touched. That is how the floor came to be recorded
+# as costing nothing; swept properly it costs three of the completed calls.
 TUNABLE = ('TOUCH', 'MIN_TOUCHES', 'MIN_TARGET', 'FLAT', 'AGREE',
-           'WINDOW', 'MIN_SPAN', 'RECENT', 'MAX_HEIGHT', 'MAX_PER_TF')
+           'WINDOW', 'MIN_SPAN', 'RECENT', 'MAX_HEIGHT', 'MAX_PER_TF',
+           'HEIGHT_REF', 'MIN_SIDE_TOUCHES', 'SIDE_EXEMPT')
+PW_TUNABLE = ('MIN_ROOM', 'CONFIRM_TOL', 'TARGET_TOL')
+MODULES = {'pd': pd, 'pw': pw}
 DEFAULTS = {k: copy.deepcopy(getattr(pd, k)) for k in TUNABLE}
+DEFAULTS.update({'pw.' + k: copy.deepcopy(getattr(pw, k)) for k in PW_TUNABLE})
+
+
+def _set(key, value):
+    """Apply one override. `pw.MIN_ROOM` names a module; `MAX_HEIGHT.daily` a dict key."""
+    head, _, rest = key.partition('.')
+    if head in MODULES:
+        setattr(MODULES[head], rest, value)
+    elif rest:
+        getattr(pd, head)[rest] = value
+    else:
+        setattr(pd, head, value)
 
 ROW = re.compile(
     r'\{ pattern: "([^"]+)", timeframe: "(\w+)", direction: "(\w+)", stage: "target", '
@@ -61,15 +82,13 @@ def bars_until(ticker, tf, date, back=None):
 
 def score(overrides, verbose=False):
     for k, v in DEFAULTS.items():
-        setattr(pd, k, copy.deepcopy(v))
+        _set(k, copy.deepcopy(v))
     for k, v in overrides.items():
-        if '.' in k:
-            name, sub = k.split('.', 1); getattr(pd, name)[sub] = v
-        else:
-            setattr(pd, k, v)
+        _set(k, v)
     found = pat = lvl = 0
     usable = 0
     errs = []
+    by_kind = {'wedge': [], 'channel': [], 'other': []}
     for L in labels():
         bars = bars_until(L['ticker'], L['tf'], L['date'])
         if bars is None:
@@ -97,14 +116,21 @@ def score(overrides, verbose=False):
         ce = abs((best.get('confirm') or 0) - L['confirm']) / L['confirm'] * 100
         te = abs((best.get('target') or 0) - L['target']) / L['target'] * 100
         errs.append((ce, te))
+        by_kind['channel' if 'Channel' in L['pattern'] else
+                'wedge' if 'Wedge' in L['pattern'] else 'other'].append(te)
         if ce <= 3 and te <= 15:
             lvl += 1
         if verbose:
             print(f"    HIT  {L['ticker']:<5} {L['tf']:<7}{L['pattern']:<19}"
                   f"confirm off {ce:5.1f}%   target off {te:6.1f}%")
+    med = lambda xs: S.median(xs) if xs else None
     return {'usable': usable, 'anything': found, 'pattern': pat, 'levels': lvl,
-            'confirm_err': S.median([e[0] for e in errs]) if errs else None,
-            'target_err': S.median([e[1] for e in errs]) if errs else None}
+            'confirm_err': med([e[0] for e in errs]),
+            'target_err': med([e[1] for e in errs]),
+            # Per pattern family, because that is how the tuning tables in CLAUDE.md are
+            # written and they could not be regenerated from this harness without it.
+            'wedge_err': med(by_kind['wedge']), 'channel_err': med(by_kind['channel']),
+            'n_wedge': len(by_kind['wedge']), 'n_channel': len(by_kind['channel'])}
 
 
 if __name__ == '__main__':
@@ -118,4 +144,6 @@ if __name__ == '__main__':
     print(f"  produced the right pattern+direction: {r['pattern']}")
     print(f"  and levels close (confirm<=3%, target<=15%): {r['levels']}")
     print(f"  median confirm error {r['confirm_err']:.1f}%   median target error {r['target_err']:.1f}%")
+    print(f"    wedges {r['wedge_err']:.1f}% (n={r['n_wedge']})   "
+          f"channels {r['channel_err']:.1f}% (n={r['n_channel']})")
     print(f"  (replay stops {BACK} bar(s) before the completion day)")

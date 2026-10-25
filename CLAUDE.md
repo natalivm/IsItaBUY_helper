@@ -76,6 +76,7 @@ The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatc
   A **pending** setup counts too, as long as the same close carried it past its confirm level: the move ran through signal, confirm and target, so there is nothing left to judge and it is marked `target` on the day. It does **not** wait for its own timeframe's close — otherwise a monthly call that fully played out would sit on "forming" for weeks;
 - checks **pending** setups (forming / signal / either-direction) against the limit on either side of them. Which side the close crossed decides what happened, and the two are not the same event. Limits: forming = invalidation behind ↔ signal (or confirm if no signal level) ahead; signal = signal behind (a close back past it cancels the signal) ↔ confirm ahead; either-direction = breakDown ↔ breakUp.
   - a close past the limit **ahead** is the setup working, so it **moves on**: to `signal` past the signal level, to `confirmed` past confirm. `confirm` *is* the signal candle's low/high (see PATTERN_RULES.md), so "a later close beyond confirm" and "beyond the signal candle's low" are one test — which is why the bot can judge this itself. Confirmation needs a later bar than the one that signalled, so a close on the signal's own bar waits. `stageDate` moves to the closing date.
+    **Promoting out of `forming` also writes `confirm`**, from the candle that signalled — its high for an upward break, its low for a downward one, folded over the setup's own timeframe (a weekly setup signalling on Friday confirms against that week's high). A forming setup carries no `confirm` and cannot: there is no signal candle yet. Without writing it at the promotion, the setup lands on `signal` with nothing ahead of it and can never confirm, only cancel — 92 of the 253 pending directional setups were that shape. If the candles do not reach the day, `confirm` is left unset and the setup is listed for review rather than given a guessed level.
   - a close past the limit **behind** is the setup coming apart, and only that sets `stage: "update"` ("Needs updating": post a new setup), recording `prevStage` and `updateNote` (`stageDate` stays put). An either-direction setup that breaks is flagged the same way: it carries no signal, confirm or target, so the directional setup has to be drawn by hand.
   - Only a close on the setup's own timeframe counts: daily every run, weekly on Fridays, monthly on the month's last weekday. In between, it's listed for review only;
 - only *reports* (never edits) confirmed setups that **closed** beyond invalidation. Failure needs a follow-through close, so mark those manually.
@@ -213,13 +214,36 @@ honest price of the change. It also costs about 2 points on the held-out half of
 agreement-with-hand-posted metric (32.7% to 30.9%); the train half fell much further,
 which is noise at n=63.
 
-**`pw.MIN_ROOM = 0.10` looks too high and has not been changed.** Six of the 22 completed
-calls had less than 10% between confirm and target — META's hammer at 2.2%, LMT's at
-2.8%, LMT's daily descending channel at 3.1%, CRWD's hammer at 3.4%, KMB's channel at
-5.0%, NBIS's at 8.1% — so the floor would have discarded 27% of the setups that worked,
-candle patterns worst of all, since a candle projects a candle-sized move. Lowering it
-did not change the reproduction score, so there is no measured gain to point at; the
-argument is only that the completed calls say the floor is in the wrong place.
+**`pw.MIN_ROOM = 0.10` is costing three of the completed calls, and the measurement that
+said otherwise was broken.** Six of the 22 completed calls had less than 10% between
+confirm and target — META's hammer at 2.2%, LMT's at 2.8%, LMT's daily descending channel
+at 3.1%, CRWD's hammer at 3.4%, KMB's channel at 5.0%, NBIS's at 8.1% — so the floor
+discards 27% of the setups that worked, candle patterns worst of all, since a candle
+projects a candle-sized move.
+
+This used to read "lowering it did not change the reproduction score, so there is no
+measured gain to point at". That was an artifact: `_roomy` reads `pw.MIN_ROOM`, the
+harness applied overrides with `setattr(pd, ...)`, and `pd.MIN_ROOM` does not exist — the
+sweep created an attribute nothing reads and faithfully reported no change. Swept on the
+module that owns it:
+
+| `pw.MIN_ROOM` | overall | channels | wedges | levels close | patterns rebuilt |
+|---|---|---|---|---|---|
+| 0.00 | **4.6%** | 8.8% | 4.7% | **16/20** | **20/23** |
+| 0.05 | 6.7% | 8.8% | 4.7% | 13/17 | 17/23 |
+| **0.10** (current) | 6.7% | 8.8% | 4.7% | 13/17 | 17/23 |
+| 0.15 | 10.4% | 10.6% | 6.7% | 9/15 | 15/23 |
+
+The three calls the floor throws away are META's, LMT's and CRWD's hammers, and the
+detector rebuilds all three at **0.0% confirm error and 0.0% target error** — exact
+reproductions, discarded for being short. The prose argument was right and the number
+that appeared to contradict it never ran.
+
+**It has still not been changed**, because this harness cannot price the other side.
+It scores recall against calls that are known to have paid; it never sees the thin setups
+a lower floor would also admit, which is what the floor exists to keep off the ledger.
+Lowering it is a decision about how much clutter a hit is worth, and the number above is
+only one half of it.
 
 **The stored setups on a hand-posted stock are refreshed separately.** `--redo-auto`
 rebuilds the 65 machine-drawn *entries*; the ~250 auto setups hidden inside `more: [...]`
@@ -277,6 +301,31 @@ deliberately: the goal is the setups worth acting on, not every setup the rules 
 and a boundary touched once is not a boundary. Raising `SIDE_EXEMPT` hands them back,
 at the width accuracy the table prices.
 
+### How much of this is real: n is 23
+
+Every table above reproduces — re-measured on all 23 labels the overall column still reads
+13.5% → 9.0% → 6.7%, the channel column 9.9% and 8.8%, and the `SIDE_EXEMPT` sweep has
+exactly the predicted shape (flat optimum over 0.20–0.25, back to the no-rule baseline of
+13.5% from 0.40 and precisely on it by 0.50). **None of the three gains clears sampling
+noise.** Paired bootstrap over the labels, 4000 resamples, median target error:
+
+| change | n | observed | 95% CI |
+|---|---|---|---|
+| `HEIGHT_REF` start → mean (wedges) | 7 | +9.9 pts | [−5.5, +17.4] |
+| `MIN_SIDE_TOUCHES` 1 → 2 (channels) | 10 | +10.7 pts | [−11.9, +16.0] |
+| `SIDE_EXEMPT` 0 → 0.20 (all) | 17 | +2.3 pts | [0.0, +5.8] |
+
+Every interval touches or crosses zero. The `SIDE_EXEMPT` gain in particular moves the
+error of exactly **two** labels — LMT's channel (32.5% → 8.5%) and XOM's (10.4% → 2.4%) —
+so the flat optimum, real as its shape is, is a plateau produced by two charts.
+
+This does not make the settings wrong. Each was argued from what the construction *should*
+be — a boundary touched once is not a boundary; a converging wedge is not as wide as its
+mouth — and the measurements agree in direction every time. It means the tables are
+corroboration, not proof, and that a few points of median error between two configs is not
+a reason to prefer one. Re-run the bootstrap before moving anything on the strength of a
+table alone, and treat new completed calls as the thing that would actually settle it.
+
 ### Stop distance: why the live invalidation cannot measure it
 
 A sloped invalidation is its line's value at the **latest** candle (see "Sloped
@@ -306,6 +355,20 @@ A setup redrawn by a rescan loses the field and gets a fresh one on the next run
 correct: it is a different setup. **Nothing ranks on it yet** — it exists so that a stop
 rule, if one is ever wanted again, has a number that means what it says.
 
+**It will not record a number that cannot be a stop.** The level is read off a trendline,
+and a trendline can be degenerate. `_stop_fault` refuses three shapes: a level on the
+*winning* side of the entry (AVGO's weekly channel froze a short's stop below its own
+confirm), a risk wider than `MAX_STOP = 0.5` of the entry (STX: entry 700.39, line at the
+break 1420.58 — 103%, which is a steep line extended a long way, not a level anyone traded
+against), and two boundaries converged within `CONVERGED` near a wedge's apex, where which
+line the level belongs to is a coin flip. `relevel` already declined all three for the
+*live* level; freeze wrote them anyway, and being write-once it wrote them for good.
+The guards arrived after the backfill, so `python3 pattern_lines.py --recheck-stops` (dry
+run) / `--recheck-stops --apply` clears the ones already stored — 41 of 562 on the first
+pass. It only ever **removes** a value, never recomputes one: write-once is what makes the
+field mean anything, and a level recomputed months later off a since-refitted line would be
+a different number wearing the same name.
+
 ### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.
@@ -323,6 +386,60 @@ hand-posted ones for review; the daily report has the same list under "Too littl
 **Trendlines are fitted automatically** by `pattern_lines.py` (run by the daily price job for setups without lines; by hand: `python3 pattern_lines.py` dry run, `--apply` to write, `--refit` to replace existing). It reproduces the source tool's construction: lines run through swing highs (upper) / swing lows (lower), at least 1 candle each side; channels are parallel (two-pivot line + parallel through one pivot, or one pivot aimed at the stored level); wedges use two pivots per line; head & shoulders necklines run through the closes of the two troughs. A fit is only accepted when the lines reproduce the setup's own levels: signal = broken line at the signal candle (the candle whose high/low equals `confirm`), target = signal ± the pattern height where the lines start, invalidation ≈ a line's value at the latest candle; forming setups match their break levels at the latest candle. Setups it can't match (and Hammer / Head & Shoulders) are listed and left without lines. After posting a new channel/wedge setup, run `python3 pattern_lines.py --apply`.
 
 **Sloped invalidations track their line.** An invalidation is a trendline's value at the latest candle, so it moves a little every session while the stored number stays where it was written (this is why a level can read fine in the source tool and stale here). The daily job re-reads them after the candles and the fitter; by hand: `python3 pattern_lines.py --relevel` (dry run) / `--relevel --apply`. A **confirmed channel's** invalidation sits on the boundary it broke (upper line for an upward break, lower for a downward one) — its fail rule reads "back inside the broken boundary". While a channel is still **pending** there is nothing to fall back into, so the level that kills it is the *opposite* side of the channel, with the follow-through wording. A **wedge's** sits on the far side either way (lower line for an upward break, upper for a downward one). Auto-detected setups are skipped: `pattern_detect.py` derives their levels together and puts a pending channel's invalidation on the broken boundary instead, so re-reading them here would only fight the detector — a rescan redoes them. A level is left alone, and listed for review, when the setup isn't live (needs updating / target / failed), its two lines are within 3% of each other (near a wedge's apex, which line a level belongs to is a coin flip), the level is more than 8% off its line (it was set some other way), or the move would be under 1% (close enough — and a number entered by hand from the source tool isn't worth fighting over every run).
+
+**A channel changing stage switches which boundary its invalidation sits on**, and relevel
+handles that as its own case. When a pending channel confirms — by hand or by the daily
+run's promotion — the rule moves its level from the far side of the channel to the boundary
+it broke, a whole channel width away. Both guards above read that as "set some other way"
+and refused, so a promoted channel kept its pending stop for good and could never be flagged
+`atRisk`. Relevel now recognises it: if the stored level still sits on the line the *pending*
+rule named, that is a side switch rather than drift, and the level moves. It prints as `SIDE`
+rather than `LEVEL` — **re-read that setup's `failRule`**, which is hand-written prose
+quoting the old price and the pending follow-through wording, and is not rewritten for you.
+A wedge invalidates on the far side at every stage, so this never fires for one.
+
+## Bundle: what loads on which route
+
+`#` is the landing page, and it used to download the whole app — all 95 stock definitions,
+the valuation model, the ledger and the notes drawer, none of which it renders. The routes
+past it are `React.lazy` now, and the first chunk is 514 KB / 151 KB gzipped against 944 KB
+/ 293 KB before.
+
+| chunk | carries | fetched when |
+|---|---|---|
+| `index` | React, motion, `data/patternWatchlist.ts`, Landing | always |
+| `WhatsNewToast` | the toast | there is an unseen update |
+| `ReleaseNotesPanel` + `utils` | the drawer, `cn`, tailwind-merge | the drawer is first opened |
+| `PatternWatchlist` | the ledger | `#watchlist` |
+| `StockPage` | **all 95 stock definitions**, `constants.ts`, the projection service, the detail page | `#TICKER` |
+| `lightweight-charts` | the charting library | a row is first expanded |
+
+Three rules keep it that way, and breaking any one of them silently puts the stock
+definitions back in the first chunk:
+
+- **Nothing reachable from `App.tsx` or `Landing.tsx` may import `constants.ts`, `stocks/`
+  or `services/universe.ts`** — directly or through a helper. `utils.ts` counts: it imports
+  `StockGroup` from constants.
+- **What the list routes need from the stock files is `virtual:stock-catalog`**, one
+  `{ticker, name}` row per file in `stocks/`, served by `stockCatalog()` in `vite.config.ts`
+  (~3 KB against 555 KB). It is the landing page's "covered" count, the ledger's company
+  names, and the check that `#TICKER` is a real route. Nothing else needs it; the detail
+  page has the definitions themselves. The plugin fails the build if a file's `ticker` does
+  not match its filename, which `loadProse()` already depended on silently.
+- **A lazy route must not also be imported statically.** Landing pulling five helpers out of
+  `PatternWatchlist.tsx` was enough for rollup to give up on the split and bundle the whole
+  ledger; those live in `components/setupStatus.tsx` now. Rollup says so when it happens —
+  *"dynamically imported ... but also statically imported"* — and that warning is the signal
+  the split has silently reverted.
+
+Check it with `npx vite build` and look at `index-*.js`, or load the page and watch which
+`.js` the network panel fetches.
+
+**`npm run lint` only became real with `@types/react`.** It was missing, so `tsc --noEmit`
+treated every JSX element as `any` and checked no component props at all — a bogus prop on
+a typed component raised nothing. Installing `@types/react` / `@types/react-dom` turned up
+exactly zero pre-existing errors, so nothing was being hidden, but nothing was being caught
+either. Keep them: a route split is exactly the kind of change that trips prop errors.
 
 ### Price Format
 

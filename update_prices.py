@@ -954,7 +954,10 @@ def main():
             # machine-drawn setup is redrawn on the week's closed candles, the entries
             # (--redo-auto, a superset of the placeholder scan) and the setups stored on
             # hand-posted stocks alike. Neither path touches anything written by hand.
-            friday = datetime.now().weekday() == 4
+            # New York, like every other date in the watchlist: the Action runs at 21:47
+            # UTC where the two agree, but a hand-run from a machine east of UTC would
+            # otherwise re-evaluate on Thursday evening or miss Friday entirely.
+            friday = pattern_watchlist._now_et().weekday() == 4
             new_setups = pattern_detect.run(apply=True, verbose=False, redo_auto=friday)
             if friday:
                 n = pattern_detect.redo_stored(apply=True, verbose=False)

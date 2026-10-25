@@ -49,6 +49,53 @@ function spanOf(code: string, from: number): [number, number] {
   return [from, code.length];
 }
 
+// The landing page and the ledger need to know *which* stocks have a valuation page and
+// what they are called — a count, a name beside a ticker, and whether `#TICKER` is a real
+// route. Reaching that through `constants.ts` pulled all 95 stock definitions (555 KB, the
+// single biggest thing in the bundle) into the first chunk for a page that renders none of
+// them. This serves the same three facts as a ~3 KB virtual module read from the directory
+// listing, so the definitions stay in the detail route's own chunk.
+//
+// Built from the files rather than checked in, for the same reason `stocks/index.ts` globs
+// instead of listing: adding a stock is dropping in a file, and a catalog that needs a
+// second edit is a catalog that goes stale.
+const CATALOG_ID = 'virtual:stock-catalog';
+
+function stockCatalog() {
+  return {
+    name: 'stock-catalog',
+    resolveId(id: string) {
+      return id === CATALOG_ID ? '\0' + CATALOG_ID : null;
+    },
+    load(id: string) {
+      if (id !== '\0' + CATALOG_ID) return null;
+      const field = (src: string, key: string) =>
+        new RegExp(`^\\s*${key}:\\s*(['"])(.*?)\\1`, 'm').exec(src)?.[2];
+      const rows = fs.readdirSync('stocks')
+        .filter(f => f.endsWith('.ts') && !['index.ts', 'defineStock.ts'].includes(f))
+        .map(f => {
+          const src = fs.readFileSync(`stocks/${f}`, 'utf8');
+          const ticker = field(src, 'ticker');
+          const name = field(src, 'name');
+          if (!ticker || !name) throw new Error(`stock-catalog: stocks/${f} has no ticker/name`);
+          if (ticker !== f.slice(0, -3)) {
+            throw new Error(`stock-catalog: stocks/${f} declares ticker "${ticker}" — loadProse() resolves by filename, so they must match`);
+          }
+          return { ticker, name };
+        })
+        .sort((a, b) => a.ticker.localeCompare(b.ticker));
+      return `export const STOCK_CATALOG = ${JSON.stringify(rows)};\n`;
+    },
+    // Adding a stock is dropping a file in stocks/, and in dev that has to reach the
+    // catalog or the new ticker routes to the landing page until the server restarts.
+    handleHotUpdate(ctx: { file: string; server: any; modules: unknown[] }) {
+      if (!/[\\/]stocks[\\/][^\\/]+\.ts$/.test(ctx.file)) return;
+      const mod = ctx.server.moduleGraph.getModuleById('\0' + CATALOG_ID);
+      if (mod) ctx.server.moduleGraph.invalidateModule(mod);
+    },
+  };
+}
+
 function splitStoredSetups() {
   return {
     name: 'split-stored-setups',
@@ -112,6 +159,7 @@ export default defineConfig({
     host: '0.0.0.0',
   },
   plugins: [
+    stockCatalog(),
     splitStoredSetups(),
     react(),
     tailwindcss(),
