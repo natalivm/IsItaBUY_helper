@@ -3398,7 +3398,7 @@
  "LITE|daily Ascending Channel": {
   "label": "daily Ascending Channel",
   "setup": "Ascending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "update",
   "ticker": "LITE"
  },
  "LITE|main": {
@@ -3416,7 +3416,7 @@
  "LITE|weekly alt": {
   "label": "weekly alt",
   "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "update",
   "ticker": "LITE"
  },
  "LLY|main": {
