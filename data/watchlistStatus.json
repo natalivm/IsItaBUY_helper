@@ -269,6 +269,12 @@
   "stage": "forming",
   "ticker": "AMD"
  },
+ "AMKR|daily Ascending Channel": {
+  "label": "daily Ascending Channel",
+  "setup": "Ascending Channel (daily)",
+  "stage": "signal",
+  "ticker": "AMKR"
+ },
  "AMKR|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
@@ -287,15 +293,9 @@
   "stage": "forming",
   "ticker": "AMKR"
  },
- "AMKR|daily Falling Wedge": {
-  "label": "daily Falling Wedge",
-  "setup": "Falling Wedge (daily)",
-  "stage": "atRisk",
-  "ticker": "AMKR"
- },
  "AMKR|daily alt": {
   "label": "daily alt",
-  "setup": "Ascending Channel (daily)",
+  "setup": "Falling Wedge (daily)",
   "stage": "signal",
   "ticker": "AMKR"
  },
@@ -308,7 +308,7 @@
  "AMKR|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "forming",
+  "stage": "confirmed",
   "ticker": "AMKR"
  },
  "AMKR|weekly Rising Wedge": {
@@ -1280,7 +1280,7 @@
  "CLS|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "atRisk",
   "ticker": "CLS"
  },
  "CLS|weekly Rising Wedge": {

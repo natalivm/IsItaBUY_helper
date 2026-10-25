@@ -432,6 +432,23 @@ The right fix when one appears is the construction, not the level: measure the p
 the span that holds the move. ENVA's channel over 2026 alone (a $129.25-$267.45 range)
 projects to about $101-122 against the $54.55 its full span gave.
 
+**But the source tool draws them this way too, so the flag is not a defect report.** AMKR's
+weekly ascending channel was re-imported from the source tool verbatim on Oct 25 — their
+signal $60.45, confirm $42.66, invalidation $75.96, target $16.48 — and it reads **243%**,
+worse than the 159% our own drawing of the same channel gave. Their invalidation sits 78%
+above their own confirm; no fit makes that narrow. Their weekly falling wedge on the same
+stock comes in at 75% and lands on the **🪦 Stranded** list as well. Both are setups the
+user confirmed as valid, their words being that all four AMKR setups are right and differ
+only in "timeframe of reaching the target".
+
+So a tall drawing is the signature of a **long-horizon** setup, not a mis-drawn one: a
+multi-year channel is wide relative to where it began because the stock has multiplied
+since. 13 of the 36 stocks reporting in the week of Oct 26 carry one. Read the report as a
+horizon label — these are the rows whose targets will not resolve this quarter and whose
+invalidations cannot retire them — rather than as a queue of errors to fix. The cases worth
+redrawing are still the ones where the arithmetic came out absurd (STRL's $15.67, ENVA's
+$54.55), which is the `confirm ± height` test above, not the height ratio.
+
 ### Stranded setups: confirmed breaks nothing can retire
 
 A setup fails on a close past invalidation plus a follow-through. When that level is half
