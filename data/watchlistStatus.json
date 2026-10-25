@@ -2087,6 +2087,12 @@
   "stage": "confirmed",
   "ticker": "META"
  },
+ "META|weekly Descending Channel": {
+  "label": "weekly Descending Channel",
+  "setup": "Descending Channel (weekly)",
+  "stage": "forming",
+  "ticker": "META"
+ },
  "META|weekly Falling Wedge": {
   "label": "weekly Falling Wedge",
   "setup": "Falling Wedge (weekly)",

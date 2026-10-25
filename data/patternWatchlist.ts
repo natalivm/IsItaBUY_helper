@@ -787,6 +787,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ticker: "META",
     name: "Meta Platforms, Inc.",
     trend: "down",
+    checkedOn: "2026-10-25",
     rsi: 35.8,
     price: 642.62,
     priceDate: "2026-10-23",
@@ -826,7 +827,22 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed daily close above $887.11, then a follow-through close above that candle's high.",
       note: "A steep run from the September low near $550 narrowed into a rising wedge that topped out near $780. Price broke the lower line and confirmed with a daily close below $721.30, and is now trading just under that level.",
     },
+    keyLevel: {
+      price: 645.57,
+      text: "$645.57 is the weekly channel's confirm and spot sits just under it — where the short-term reads put the line too. Below keeps the bearish case; $677.25, 5.4% up, negates it, and a post-earnings rally into that is the one to doubt."
+    },
     more: [
+      {
+        pattern: "Descending Channel",
+        timeframe: "weekly",
+        direction: "both",
+        stage: "forming",
+        breakUp: 677.25,
+        breakDown: 442.85,
+        goalUp: 911.64,
+        goalDown: 208.46,
+        note: "From the source tool on Oct 26, and the reading this row was missing: the weekly chart as a descending channel price is still inside. A weekly close above $677.25 breaks it up toward $911.64, below $442.85 down toward $208.46. The $677.25 is the number that matters now — 5.4% above spot, it is where a bounce stops being a bounce. Width $234.40, so both goals are the channel projected off its own boundary rather than levels anyone has traded.",
+      },
       {
         auto: true,
         pattern: "Rising Wedge",
