@@ -835,6 +835,33 @@ hand-posted ones for review; the daily report has the same list under "Too littl
 
 **Sloped invalidations track their line.** An invalidation is a trendline's value at the latest candle, so it moves a little every session while the stored number stays where it was written (this is why a level can read fine in the source tool and stale here). The daily job re-reads them after the candles and the fitter; by hand: `python3 pattern_lines.py --relevel` (dry run) / `--relevel --apply`. A **confirmed channel's** invalidation sits on the boundary it broke (upper line for an upward break, lower for a downward one) — its fail rule reads "back inside the broken boundary". While a channel is still **pending** there is nothing to fall back into, so the level that kills it is the *opposite* side of the channel, with the follow-through wording. A **wedge's** sits on the far side either way (lower line for an upward break, upper for a downward one). Auto-detected setups are skipped: `pattern_detect.py` derives their levels together and puts a pending channel's invalidation on the broken boundary instead, so re-reading them here would only fight the detector — a rescan redoes them. A level is left alone, and listed for review, when the setup isn't live (needs updating / target / failed), its two lines are within 3% of each other (near a wedge's apex, which line a level belongs to is a coin flip), the level is more than 8% off its line (it was set some other way), or the move would be under 1% (close enough — and a number entered by hand from the source tool isn't worth fighting over every run).
 
+**Either-direction break levels go stale the same way, and that one changes a stage.**
+`breakUp` / `breakDown` are the two lines read at the latest candle — `pattern_detect`
+writes them as `up.at(last)` / `lo.at(last)` — and the pending check reads them every run to
+decide whether a setup broke. Nothing re-read them, so on a climbing channel the stored pair
+drifts below the lines and an ordinary close looks like a break. TEAM's daily channel climbs
+$2.79 a bar: its stored $226.80 sat 5% under the line's real $237.65, a $227.61 close was
+marked "needs updating", and the next run deleted the setup — while the source tool still
+read it as forming.
+
+`python3 pattern_lines.py --relevel-breaks` (dry run) / `--relevel-breaks --apply`; the daily
+run calls it after `relevel`. It moves `goalUp` / `goalDown` by the same amount, so the
+projection keeps its height rather than snapping to a number the stored one never had — which
+for a channel's parallel lines reproduces the detector's `+ height` exactly. **Auto-detected
+setups are re-read here, unlike in `relevel`**: the exception there exists because the
+detector places a pending channel's invalidation on a different boundary, so re-reading would
+fight it. There is no such disagreement here — these are the same two values the detector
+writes — and waiting for Friday's rescan is a week of drift on a level checked daily.
+
+Guards mirror `relevel`: under `MIN_MOVE` is left alone, past `DRIFT` is listed rather than
+moved. 5 pairs moved on the first pass (XOP, HTFL, FTNT, PANW, IOVA) and UMAC was refused at
+16% — far enough that its lines and its levels are not the same drawing, which needs a human.
+
+**One bar of lag remains.** `update_watchlist` does the stage check and runs *before* the
+candles are written, so the levels it reads are always one run old — this takes the error
+from unbounded to a single bar (~1.1% on TEAM's channel), it does not remove it. Closing it
+properly means the break test reading the line's value directly instead of a stored level.
+
 **A channel changing stage switches which boundary its invalidation sits on**, and relevel
 handles that as its own case. When a pending channel confirms — by hand or by the daily
 run's promotion — the rule moves its level from the far side of the channel to the boundary

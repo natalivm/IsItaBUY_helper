@@ -938,6 +938,13 @@ def main():
             if releveled:
                 print(f"Re-read {len(releveled)} invalidation(s) off their lines"
                       + (f"; {len(left)} left for review" if left else ""))
+            # An either-direction channel's breakUp / breakDown are its lines read the same
+            # way, and the stage check below reads them every run — so a stale pair turns an
+            # ordinary close into a "needs updating". Re-read them before that check runs.
+            rebroke, brk_left = pattern_lines.relevel_breaks(apply=True, verbose=False)
+            if rebroke:
+                print(f"Re-read {len(rebroke)} break level pair(s) off their lines"
+                      + (f"; {len(brk_left)} left for review" if brk_left else ""))
             # ...and record where the invalidation stood at the break, before it walks any
             # further. Write-once: the live level says where a setup dies today, this says
             # what being wrong would have cost on entry.

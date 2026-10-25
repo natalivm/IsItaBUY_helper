@@ -21,6 +21,7 @@ Setups we can't match (or patterns without trendlines, e.g. Hammer / H&S) are li
   python3 pattern_lines.py --apply    # write `lines` into setups that have none
   python3 pattern_lines.py --apply --refit   # also replace existing lines
   python3 pattern_lines.py --relevel [--apply]   # re-read sloped invalidations off the lines
+  python3 pattern_lines.py --relevel-breaks [--apply]  # same for either-direction break levels
 
 A sloped invalidation is a line's value at the latest candle, so it moves a
 little every session while the stored number stays where it was written. The
@@ -448,6 +449,84 @@ def _stop_fault(stop, confirm, direction, lines, want, t, i):
     return None
 
 
+def relevel_breaks(apply=False, verbose=True, now_et=None):
+    """Re-read each either-direction channel's breakUp / breakDown off its lines.
+
+    These are read every run to decide whether a pending setup broke, and they are the
+    lines' values at the latest candle — so on a climbing channel a level a few sessions
+    old reads low, and an ordinary close looks like a break. TEAM's daily channel climbs
+    $2.79 a bar: its stored $226.80 sat 5% under the line's real $237.65 and a $227.61
+    close was marked "needs updating" on a setup the source tool still read as forming.
+
+    Unlike the invalidation case this agrees with the detector rather than fighting it —
+    `pattern_detect` writes these as `up.at(last)` / `lo.at(last)`, the same values — so
+    auto-detected setups are re-read here too, instead of drifting until Friday's rescan.
+    The goals move by the same amount, which keeps the stored projection's height and
+    reproduces the detector's `+ height` exactly for a channel's parallel lines.
+    """
+    now_et = now_et or pw._now_et()
+    with open(pw.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    edits, moved, odd = [], [], []
+    for e in pw.parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, s, pos in pw._setups(e):
+            up, dn = s.get('breakUp'), s.get('breakDown')
+            pattern = s.get('pattern') or main.get('pattern') or ''
+            if s.get('direction') != 'both' or up is None or dn is None:
+                continue
+            if 'breakUp' not in pos or 'breakDown' not in pos:
+                continue
+            if s.get('stage') not in ('forming', 'signal') or s.get('dormant'):
+                continue
+            if 'Channel' not in pattern:          # the levels come off two parallel lines
+                continue
+            lines = stored_lines(text, pos)
+            if not lines or len(lines) < 2:
+                continue
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            bars = load_bars(main['ticker'], tf)
+            if not bars or not bars.get('t'):
+                continue
+            i = pw._completed_count(bars['t'], tf, now_et) - 1
+            if i < 0:
+                continue
+            a, b = line_value(lines[0], bars['t'], i), line_value(lines[1], bars['t'], i)
+            new_up, new_dn = max(a, b), min(a, b)
+            name = f"{main['ticker']} ({label}, {pattern}, {tf})"
+            if abs(new_up - up) <= MIN_MOVE * abs(up) and abs(new_dn - dn) <= MIN_MOVE * abs(dn):
+                continue
+            far = max(abs(new_up - up) / abs(up), abs(new_dn - dn) / abs(dn))
+            if far > DRIFT:
+                odd.append((name, up, dn, new_up, new_dn,
+                            'that is %.0f%% away — too far to be the same lines' % (far * 100)))
+                continue
+            moved.append((name, up, dn, new_up, new_dn, bars['t'][i]))
+            edits.append((pos['breakUp'][0], pos['breakUp'][1], pw._fmt_price(new_up)))
+            edits.append((pos['breakDown'][0], pos['breakDown'][1], pw._fmt_price(new_dn)))
+            # Carry the goals so the projection keeps its height rather than snapping to
+            # a level the stored one never had.
+            for key, delta in (('goalUp', new_up - up), ('goalDown', new_dn - dn)):
+                if s.get(key) is not None and key in pos:
+                    edits.append((pos[key][0], pos[key][1], pw._fmt_price(s[key] + delta)))
+
+    if verbose:
+        for name, up, dn, nu, nd, when in moved:
+            print(f"BREAK {name}: up {up} → {pw._fmt_price(nu)}, down {dn} → {pw._fmt_price(nd)} "
+                  f"(its lines at {when})")
+        for name, up, dn, nu, nd, why in odd:
+            print(f"SKIP  {name}: breaks {up}/{dn} vs its lines at {nu:.2f}/{nd:.2f} — {why}")
+        print(f"\n{len(moved)} break level pair(s) re-read, {len(odd)} left for a human.")
+    if apply and edits:
+        for a, b, v in sorted(edits, key=lambda x: x[0], reverse=True):
+            text = text[:a] + v + text[b:]
+        with open(pw.WATCHLIST_FILE, 'w') as fh:
+            fh.write(text)
+        if verbose:
+            print(f"Wrote {len(moved)} break level pair(s) to {os.path.relpath(pw.WATCHLIST_FILE)}.")
+    return moved, odd
+
+
 def freeze_stops(apply=False, verbose=True):
     """Record each confirmed setup's invalidation **as it stood at the break**.
 
@@ -630,6 +709,8 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('--apply', action='store_true', help='write lines into data/patternWatchlist.ts')
     ap.add_argument('--refit', action='store_true', help='also replace lines that already exist')
+    ap.add_argument('--relevel-breaks', action='store_true', dest='relevel_breaks',
+                    help="re-read either-direction channels' breakUp / breakDown off their lines")
     ap.add_argument('--relevel', action='store_true',
                     help="re-read sloped invalidations off their lines instead of fitting")
     ap.add_argument('--freeze-stops', action='store_true',
@@ -641,6 +722,8 @@ if __name__ == '__main__':
         recheck_stops(apply=args.apply)
     elif args.freeze_stops:
         freeze_stops(apply=args.apply)
+    elif args.relevel_breaks:
+        relevel_breaks(apply=args.apply)
     elif args.relevel:
         relevel(apply=args.apply)
     else:
