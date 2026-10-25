@@ -84,9 +84,14 @@ check of something that is no longer there, and the dot would otherwise vouch fo
 produced after the person stopped looking. This is the only expiry a script can cause,
 which makes it the one to wire first.
 
-**A red dot means newly generated and not yet read, nothing else.** It is not a quality
-mark and not a permanent label. Once a stock's shown setups have been checked by hand the
-`auto: true` comes off them and the dot goes — that is the only thing that clears it.
+**A red dot is on every auto-generated setup, always.** It is a property of the setup,
+not of the stock: wherever that setup is drawn — the ledger row, the expanded panel, a
+landing-page card — it carries its dot until someone reads it and takes the `auto: true`
+off. Removing the flag is the only thing that clears it.
+
+**So the two dots are independent and can show together.** Red describes a setup, green
+describes a stock. A stock you have checked can still be showing a machine drawing on one
+of its slots, and the row should say both things rather than hiding one behind the other.
 
 **A break against the checked reading brings the red dot back.** If the stock breaks
 *against* the reading the check was made on, the row is owed a fresh look. PLTR is the

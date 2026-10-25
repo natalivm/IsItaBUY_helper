@@ -683,12 +683,13 @@ const LedgerRow: React.FC<{ row: Row; hasPage: boolean; open: boolean; onToggle:
               aria-label="Unchecked setup"
             />
           )}
-          {/* The counterpart, and deliberately exclusive with it: red says this row is
-              still owed a look, green says somebody looked. A row cannot be both, so an
-              unchecked setup always wins the slot. Nothing expires it -- a check is a
-              check, and tying it to the next earnings date only hid it on the stocks
-              that have no date on file. */}
-          {!s?.auto && s?.checkedOn && (
+          {/* Independent of it, because they describe different things: a red dot is a
+              property of a SETUP -- it is on every auto-detected one, always, wherever it
+              is drawn -- and a green dot is a property of the STOCK, meaning somebody
+              checked it. A stock can be checked and still be showing a machine drawing,
+              so both can sit here at once. Nothing else gates the green one: not
+              earnings, not a clock. */}
+          {s?.checkedOn && (
             <i
               className="check-dot stock"
               title={`${row.ticker} was checked by hand on ${day(s.checkedOn)}`}

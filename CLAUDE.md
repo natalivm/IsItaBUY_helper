@@ -104,6 +104,11 @@ anything written by hand. The Friday run also writes `archive/handSetups-<date>.
 `ARCHIVE_KEEP` holds the newest 8, about two months.
 
 **Auto-detected setups** (`pattern_detect.py`): stocks without a setup are scanned on the daily and weekly charts (weekly = main, steadier; daily = second setup) for the clearest channel / wedge / hammer per PATTERN_RULES.md, or get a pending "No clear pattern" placeholder. They carry `auto: true` and show a **red dot** until checked by hand — remove `auto: true` once verified.
+A red dot belongs to the **setup**, not to the stock: every auto-detected setup carries
+one wherever it is drawn, and only removing its `auto: true` clears it. The green dot
+belongs to the stock, so the two are independent and a checked stock showing a machine
+drawing displays both.
+
 There are **two dots on a ledger row, deliberately the same signal twice**. One sits
 beside the **ticker**, so the Stock column can be scanned top to bottom for the stocks
 still owed a look; the other sits beside the **pattern name**, where it says which
