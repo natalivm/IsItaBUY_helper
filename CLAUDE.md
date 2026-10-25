@@ -474,7 +474,14 @@ is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
 
 - **inside `STOP_FLOOR` (5%) of spot** — the line has decayed to zero;
 - **beyond `STOP_BEYOND` (15%) outside every price the stock has traded**;
-- **on the winning side of the entry** — a long whose stop sits above its own confirm.
+- **on the winning side of the entry** — a long whose stop sits above its own confirm. The
+  comparison is against **`breakInvalidation`**, the stop as it stood on the break day, not the
+  live `invalidation`. A live level is a trendline read at the latest candle, so on a descending
+  channel it walks down with the line and crosses below a short's entry once the break has paid:
+  a trailing stop past breakeven, not a fault. Against the live level the test fired on exactly
+  two of 348 confirmed setups — ASTS's daily channel and LHX's — and was wrong both times.
+  Comparing it to *price* instead is a different test and a worse one: it flags every `atRisk`
+  setup, which is the stage that already says price has reached the stop.
 
 A fourth shape is the one that actually disqualifies most setups, and it is a ratio rather
 than a distance. **`MIN_RR = 1.0`**: when the target is nearer than the stop, being right
@@ -535,6 +542,35 @@ keeps working. It was 27 before the strip and 27 after.
 
 The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
 row reappears from an archive — it simply has no writer.
+
+### keyLevel prose: a thesis, not a novel
+
+A `keyLevel` is a **thesis** — one or two sentences, **under 250 characters**. The level,
+and what it decides. Nothing else.
+
+It ran to 2791 characters at its worst and took three passes to get here: cut the ones over
+1200 by half, then everything over 1000 again, then all 31 down to a thesis. 16,772
+characters became **4,799** — 71% gone — and the median is 154 against 939 at the start.
+
+Each pass defended what the next one deleted. The second kept CRDO's swing-low evidence as
+"the argument, not padding"; the third found the claim survives in one clause. The habit to
+watch is justifying prose by what it *contains* rather than by what the reader *needs*: a
+keyLevel is read beside a chart, and the chart carries the evidence. Write the number and
+what it decides, then stop.
+
+Everything that explains how an indicator works, what a harness measured, or what this file
+already records belongs in CLAUDE.md. The valuation caveat pasted onto 23 rows is the type
+case — true of every multiple anywhere, which is exactly why repeating it per stock bought
+nothing.
+
+**Write the text with real newlines, not `\n`.** Fifteen keyLevels written through a shell
+heredoc stored a literal backslash-n and displayed it. `json.dumps` on a Python string with
+real newlines escapes correctly; hand-written `\\n` inside a heredoc does not. (At thesis
+length most need no line break at all.)
+
+**Re-read the `price` when a setup is replaced.** It is a level, not a label: STRL's said
+$731.25, the target of a falling wedge retired days earlier, while the stock traded at
+$355.30.
 
 ### Stretched: momentum strong enough to be its own risk
 
@@ -933,6 +969,13 @@ run it `--offline` here; the Action does the real fetch.
 Prices auto-refresh daily, but everything else (fundamentals, RS, overrides, Burry/debt blocks) is hand-curated and goes stale silently. **`updatedOn` is NOT a freshness signal** — `update_prices.py` resets it to today on every price run. The real signal is **`dataReviewedOn`** (`'YYYY-MM-DD'`), which the price bot never touches.
 
 **Whenever you refresh a stock's fundamentals / RS / override after checking its latest earnings, set `dataReviewedOn` to that date.**
+
+Two caveats are true of **every** multiple quoted in a `keyLevel` and so belong here rather
+than repeated on each stock: a "multiple at the high" uses the high against *today's*
+forward estimate, which makes it a ceiling on the historical reading wherever estimates have
+risen since; and the model inputs are the last reported quarter, so a multiple stands
+against estimates the coming print can move. That paragraph was pasted onto 23 rows and has
+been removed from all of them.
 
 Run the review-queue report any time (it only reads — never changes values):
 
