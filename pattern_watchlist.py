@@ -1365,7 +1365,12 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                 sv = next((v for lb, v, pos in setups if lb == label and '_span' not in pos), None)
                 if sv is None or sv.get('auto') or r[3] != 'target':
                     continue
-                record_completed(t_, sv, r[0])
+                # A setup already marked `target` by hand carries the real date on its own
+                # stageDate; r[0] is only when the run noticed. The harness replays the
+                # chart up to the completion day, so taking the later date hands it bars
+                # from after the call was over.
+                when = sv.get('stageDate') if sv.get('stage') == 'target' else r[0]
+                record_completed(t_, sv, when or r[0])
         a, b = e['span']
         if main_pos is None:
             reason = done['main'][1].rstrip('.')

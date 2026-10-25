@@ -66,6 +66,17 @@
     "target": 14.4
   },
   {
+    "ticker": "FRSH",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-23",
+    "confirm": 10.82,
+    "invalidation": 8.81,
+    "target": 15.7
+  },
+  {
     "ticker": "FTNT",
     "pattern": "Ascending Channel",
     "timeframe": "monthly",
