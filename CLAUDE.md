@@ -603,6 +603,43 @@ again — without it Friday's redraw would hand back most of what was just remov
 against the range of the chart the pattern was drawn on, which is the right scope for "has
 this line left the chart", and is cheaper than re-reading the longest candle file.
 
+### The fail rule cannot fire, and what now reports instead
+
+The ledger holds **351 confirmed calls and 1 marked `failed`**, against 30 that reached
+target. That is not a 99.7% hit rate — it is a stop nothing can reach.
+
+Replayed across the 348 confirmed setups whose candles reach their break, comparing each
+bar's close against the **invalidation line read at that bar** (not today's value, which
+would be a different test):
+
+- **6** have ever closed past their own invalidation since the break;
+- **0** of those got the follow-through the rule also requires.
+
+So the blocker is the first condition, not the follow-through, and the cause is the one
+this file already describes twice: a confirmed break's invalidation sits on the boundary
+it broke, that boundary keeps moving the way the break went, and it outruns price
+indefinitely. "Stranded" and "invalidations that are not prices" are the same fault seen
+from other angles; this is what it costs.
+
+**`failing_setups()` reports the second path.** A close past `profileStop` — a price the
+stock actually traded, so it can be reached — plus a follow-through beyond that candle.
+Printed in the daily report under **💀**.
+
+| stop tested | closed past | + follow-through | hand-posted | holding a slot |
+|---|---|---|---|---|
+| `breakInvalidation` | 98 | 54 | 32 | 28 |
+| **`profileStop`** | 37 | **22** | 14 | 13 |
+
+The frozen stop was not chosen despite firing more than twice as often: price has already
+traded through it on **141 of 319** setups the ledger still shows as live, against **50 of
+230** for the profile stop, so most of those 54 would be false closes. Firing more is only
+better if the extra firings are right.
+
+**It reports and never edits**, which is the existing policy for failure and the right one
+here: 13 of the 22 hold a visible slot, MSFT, AMZN and TSLA mains among them. Closing a
+call someone is reading is a decision. Mark them `failed` by hand, then run
+`python3 pattern_watchlist.py --apply` so the change is posted.
+
 ### Finished calls are not on the ledger at all
 
 `history` is gone from `data/patternWatchlist.ts` — 23 rows across 17 stocks, removed by

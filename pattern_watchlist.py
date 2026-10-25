@@ -2487,6 +2487,56 @@ def _closing_in(ticker, sv, tf, price, tgt, back=40):
     return (price < then) if tgt < price else (price > then)
 
 
+def failing_setups(text):
+    """Confirmed setups whose price has closed past `profileStop` and followed through.
+
+    The ledger's own fail rule tests the invalidation, which is a trendline read at the
+    latest candle — on a confirmed break that line keeps moving the way the break went, so
+    it outruns price and the rule can never fire. Replayed across 348 confirmed setups,
+    exactly **6** have ever closed past their own invalidation line since the break and
+    **none** of those got the follow-through. That is why the ledger holds 351 confirmed
+    calls and 1 marked `failed`: not a 99.7% hit rate, a stop nothing can reach.
+
+    `profileStop` can be reached, because it is a price the stock actually traded. Using
+    it as a second, independent path to failure — a close past it, then a follow-through
+    beyond that candle — flags 22 setups against the frozen stop's 54. The frozen stop was
+    not chosen despite firing more: price has already traded through it on 141 of 319
+    setups the ledger still shows as live, against 50 of 230 for this one, so most of
+    those 54 would be false closes.
+
+    This only ever **reports**. 13 of the 22 hold a visible slot, MSFT, AMZN and TSLA
+    mains among them, and closing a call someone is reading is a decision rather than a
+    clean-up. Rows are (ticker, label, pattern, timeframe, stop, hit date, auto, shown).
+    """
+    import price_profile as pp
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, sv, _pos in _setups(e):
+            if sv.get('stage') != 'confirmed' or sv.get('dormant'):
+                continue
+            stop, d = sv.get('profileStop'), sv.get('direction')
+            tf, sd = sv.get('timeframe') or main.get('timeframe'), sv.get('stageDate')
+            if not (stop and sd) or d not in ('up', 'down'):
+                continue
+            bars = pp.load_bars(main['ticker'], tf)
+            if not bars or sd not in bars['t']:
+                continue
+            j = bars['t'].index(sd)
+            c, h, l = bars['c'], bars['h'], bars['l']
+            past = lambda k: (c[k] < stop) if d == 'up' else (c[k] > stop)
+            hit = next((k for k in range(j, len(c)) if past(k)), None)
+            if hit is None:
+                continue
+            if not any(((c[k] < l[hit]) if d == 'up' else (c[k] > h[hit]))
+                       for k in range(hit + 1, len(c))):
+                continue
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'), tf,
+                        stop, bars['t'][hit], bool(sv.get('auto')),
+                        label == 'main' or label.endswith('alt')))
+    return out
+
+
 def stranded_setups(text):
     """Confirmed setups whose break is undone and whose invalidation cannot reach price.
 
@@ -2706,6 +2756,15 @@ def print_watchlist_report(result, missing, apply):
             tag = "auto" if auto else "posted"
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} confirmed {str(when):<12} "
                   f"${_fmt_price(conf)} → ${_fmt_price(price)}  {undone * 100:4.0f}% past, stop {stop * 100:3.0f}%  ({tag})")
+    failing = failing_setups(text)
+    if failing:
+        print(f"\n💀 Closed past the shelter stop ({len(failing)} setups) — a close past `profileStop`")
+        print("   and a follow-through beyond it. The invalidation rule cannot reach these:")
+        print("   6 of 348 confirmed setups have ever closed past their own invalidation line,")
+        print("   and none followed through. Nothing is marked; mark them `failed` by hand:")
+        for sym, label, pattern, tf, stop, when, auto, shown in sorted(failing):
+            print(f"  {sym:<6} {str(tf):<7} {str(pattern):<20} stop ${_fmt_price(stop)}"
+                  f"  first close past {when}" + ("  (auto)" if auto else "") + ("  SHOWN" if shown else ""))
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:
