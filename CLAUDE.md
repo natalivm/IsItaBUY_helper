@@ -214,13 +214,36 @@ honest price of the change. It also costs about 2 points on the held-out half of
 agreement-with-hand-posted metric (32.7% to 30.9%); the train half fell much further,
 which is noise at n=63.
 
-**`pw.MIN_ROOM = 0.10` looks too high and has not been changed.** Six of the 22 completed
-calls had less than 10% between confirm and target — META's hammer at 2.2%, LMT's at
-2.8%, LMT's daily descending channel at 3.1%, CRWD's hammer at 3.4%, KMB's channel at
-5.0%, NBIS's at 8.1% — so the floor would have discarded 27% of the setups that worked,
-candle patterns worst of all, since a candle projects a candle-sized move. Lowering it
-did not change the reproduction score, so there is no measured gain to point at; the
-argument is only that the completed calls say the floor is in the wrong place.
+**`pw.MIN_ROOM = 0.10` is costing three of the completed calls, and the measurement that
+said otherwise was broken.** Six of the 22 completed calls had less than 10% between
+confirm and target — META's hammer at 2.2%, LMT's at 2.8%, LMT's daily descending channel
+at 3.1%, CRWD's hammer at 3.4%, KMB's channel at 5.0%, NBIS's at 8.1% — so the floor
+discards 27% of the setups that worked, candle patterns worst of all, since a candle
+projects a candle-sized move.
+
+This used to read "lowering it did not change the reproduction score, so there is no
+measured gain to point at". That was an artifact: `_roomy` reads `pw.MIN_ROOM`, the
+harness applied overrides with `setattr(pd, ...)`, and `pd.MIN_ROOM` does not exist — the
+sweep created an attribute nothing reads and faithfully reported no change. Swept on the
+module that owns it:
+
+| `pw.MIN_ROOM` | overall | channels | wedges | levels close | patterns rebuilt |
+|---|---|---|---|---|---|
+| 0.00 | **4.6%** | 8.8% | 4.7% | **16/20** | **20/23** |
+| 0.05 | 6.7% | 8.8% | 4.7% | 13/17 | 17/23 |
+| **0.10** (current) | 6.7% | 8.8% | 4.7% | 13/17 | 17/23 |
+| 0.15 | 10.4% | 10.6% | 6.7% | 9/15 | 15/23 |
+
+The three calls the floor throws away are META's, LMT's and CRWD's hammers, and the
+detector rebuilds all three at **0.0% confirm error and 0.0% target error** — exact
+reproductions, discarded for being short. The prose argument was right and the number
+that appeared to contradict it never ran.
+
+**It has still not been changed**, because this harness cannot price the other side.
+It scores recall against calls that are known to have paid; it never sees the thin setups
+a lower floor would also admit, which is what the floor exists to keep off the ledger.
+Lowering it is a decision about how much clutter a hit is worth, and the number above is
+only one half of it.
 
 **The stored setups on a hand-posted stock are refreshed separately.** `--redo-auto`
 rebuilds the 65 machine-drawn *entries*; the ~250 auto setups hidden inside `more: [...]`
@@ -277,6 +300,31 @@ channels do rest on a single touch and are wider than the exemption. That trade 
 deliberately: the goal is the setups worth acting on, not every setup the rules can draw,
 and a boundary touched once is not a boundary. Raising `SIDE_EXEMPT` hands them back,
 at the width accuracy the table prices.
+
+### How much of this is real: n is 23
+
+Every table above reproduces — re-measured on all 23 labels the overall column still reads
+13.5% → 9.0% → 6.7%, the channel column 9.9% and 8.8%, and the `SIDE_EXEMPT` sweep has
+exactly the predicted shape (flat optimum over 0.20–0.25, back to the no-rule baseline of
+13.5% from 0.40 and precisely on it by 0.50). **None of the three gains clears sampling
+noise.** Paired bootstrap over the labels, 4000 resamples, median target error:
+
+| change | n | observed | 95% CI |
+|---|---|---|---|
+| `HEIGHT_REF` start → mean (wedges) | 7 | +9.9 pts | [−5.5, +17.4] |
+| `MIN_SIDE_TOUCHES` 1 → 2 (channels) | 10 | +10.7 pts | [−11.9, +16.0] |
+| `SIDE_EXEMPT` 0 → 0.20 (all) | 17 | +2.3 pts | [0.0, +5.8] |
+
+Every interval touches or crosses zero. The `SIDE_EXEMPT` gain in particular moves the
+error of exactly **two** labels — LMT's channel (32.5% → 8.5%) and XOM's (10.4% → 2.4%) —
+so the flat optimum, real as its shape is, is a plateau produced by two charts.
+
+This does not make the settings wrong. Each was argued from what the construction *should*
+be — a boundary touched once is not a boundary; a converging wedge is not as wide as its
+mouth — and the measurements agree in direction every time. It means the tables are
+corroboration, not proof, and that a few points of median error between two configs is not
+a reason to prefer one. Re-run the bootstrap before moving anything on the strength of a
+table alone, and treat new completed calls as the thing that would actually settle it.
 
 ### Stop distance: why the live invalidation cannot measure it
 
