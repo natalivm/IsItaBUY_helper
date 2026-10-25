@@ -417,6 +417,15 @@ price. Either alone is normal — a sloped invalidation on an old break runs awa
 by design, which is why 123 of 560 confirmed setups have one outside every price the stock
 has traded, and that is not a defect. The intersection is 9.
 
+**A setup still travelling toward its target is not stranded**, whatever the snapshot
+says. Both tests above are instants, and an instant cannot tell a setup that was abandoned
+from one whose price overshot the wrong way and is now coming back. ENVA's weekly rising
+wedge confirmed down at $145.08, rallied to $267, and sits at $165.07 falling — 14% above
+the confirm, so it read stranded, while in fact it is heading for its $119.67 target, which
+is what the source tool and a human reading of the chart both say. `_closing_in()` compares
+price against its close 40 sessions back and drops those. It took the list from 6 to 3, and
+the three it removed were all of this shape.
+
 Nothing is marked automatically. The auto-detected ones are candidates for Friday's
 redraw, which replaces their levels where the fresh scan still finds the same pattern; the
 hand-posted ones need a replacement posted, since only a human can say whether the chart

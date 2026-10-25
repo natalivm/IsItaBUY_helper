@@ -1398,6 +1398,19 @@ STRANDED_UNDONE = 0.10      # price this far back past the confirm level
 STRANDED_STOP = 0.40        # ...and an invalidation at least this far from price
 
 
+def _closing_in(ticker, sv, tf, price, tgt, back=40):
+    """Has price moved toward this setup's target over the last `back` sessions?"""
+    try:
+        import pattern_lines as _pl
+        b = _pl.load_bars(ticker, 'daily')
+        if not b or len(b['c']) <= back:
+            return False
+        then = b['c'][-1 - back]
+    except Exception:
+        return False
+    return (price < then) if tgt < price else (price > then)
+
+
 def stranded_setups(text):
     """Confirmed setups whose break is undone and whose invalidation cannot reach price.
 
@@ -1411,11 +1424,20 @@ def stranded_setups(text):
             if sv.get('stage') != 'confirmed':
                 continue
             inv, conf, d = sv.get('invalidation'), sv.get('confirm'), sv.get('direction')
+            tgt, tf = sv.get('target'), sv.get('timeframe') or main.get('timeframe')
             if not (price and inv and conf) or d not in ('up', 'down'):
                 continue
             undone = (price - conf) / conf if d == 'down' else (conf - price) / conf
             stop = abs(price - inv) / price
             if undone < STRANDED_UNDONE or stop < STRANDED_STOP:
+                continue
+            # Both tests above are snapshots, and a snapshot cannot tell a setup that was
+            # abandoned from one whose price overshot the wrong way and is now coming back.
+            # ENVA's weekly rising wedge confirmed down at $145.08, rallied to $267, and is
+            # $165.07 falling: 14% above the confirm, so it read stranded, while in fact it
+            # is heading for its $119.67 target. A setup still travelling toward its target
+            # is not stranded whatever the snapshot says.
+            if tgt is not None and _closing_in(main['ticker'], sv, tf, price, tgt):
                 continue
             out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
                         sv.get('timeframe') or main.get('timeframe'), sv.get('stageDate'),

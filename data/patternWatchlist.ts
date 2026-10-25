@@ -9966,11 +9966,12 @@ export const PATTERN_STOCKS: PatternStock[] = [
         signal: 170.43,
         confirm: 163.65,
         invalidation: 286.30,
-        target: 54.55,
+        target: 130.00,
         lines: [
           { from: ["2025-02-03", 117.56], to: ["2026-10-19", 286.42] },
           { from: ["2025-02-03", 1.6], to: ["2026-10-19", 170.46] },
         ],
+        note: "The target is a structural level, not this channel's measured move. Its lower line starts at $1.60 in February 2025 — a multi-year rising channel's boundary extrapolates to near zero — so the height is $115.96 against a stock trading at $114.86 where the lines begin, 101% of its own price, and the measured move lands at $54.55. Our detector would refuse to draw it (MAX_HEIGHT caps a weekly pattern at 70% of the close where it starts). $130.00 replaces it: below spot the daily bands thin from 75 sessions in $160-170 to 25 in $140-150, then thicken again to 43 in $130-140, which is the next place this stock has actually traded.",
         signalRule: "a completed weekly close below $170.43; a close back inside cancels it.",
         confirmRule: "a later completed weekly close below $163.65, beyond the signal candle's low.",
         failRule: "a completed weekly close above $286.30, then a follow-through close above that candle's high.",
@@ -9986,7 +9987,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         signal: 170.26,
         confirm: 163.65,
         invalidation: 272.34,
-        target: 68.18,
+        target: 140.00,
         lines: [
           { from: ["2026-05-22", 259.47], to: ["2026-10-23", 272.34] },
           { from: ["2026-05-22", 157.39], to: ["2026-10-23", 170.26] },
