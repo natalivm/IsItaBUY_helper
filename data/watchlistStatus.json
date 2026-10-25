@@ -1121,16 +1121,16 @@
   "stage": "confirmed",
   "ticker": "D"
  },
- "D|weekly Ascending Channel": {
-  "label": "weekly Ascending Channel",
-  "setup": "Ascending Channel (weekly)",
+ "D|weekly Falling Wedge": {
+  "label": "weekly Falling Wedge",
+  "setup": "Falling Wedge (weekly)",
   "stage": "confirmed",
   "ticker": "D"
  },
  "D|weekly alt": {
   "label": "weekly alt",
-  "setup": "Falling Wedge (weekly)",
-  "stage": "signal",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "confirmed",
   "ticker": "D"
  },
  "EME|daily Falling Wedge": {
