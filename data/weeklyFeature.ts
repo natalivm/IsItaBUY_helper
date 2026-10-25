@@ -51,7 +51,7 @@ export interface WeeklyFeature {
 export const WEEKLY_FEATURE: WeeklyFeature = {
   weekOf: "2026-10-26",
   weekEnd: "2026-10-30",
-  generatedOn: "2026-10-24",
+  generatedOn: "2026-10-25",
   hot: [
     {
       ticker: "FRSH",
@@ -65,7 +65,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-23",
       target: 21.79,
       invalidation: 14.2,
-      rsi: 73.2,
+      rsi: 73,
       score: 112,
       why: [
         "Break confirmed on the daily chart",
@@ -76,25 +76,25 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       ]
     },
     {
-      ticker: "NOW",
-      name: "ServiceNow, Inc.",
+      ticker: "ANET",
+      name: "Arista Networks",
       pattern: "Ascending Channel",
-      timeframe: "daily",
-      direction: "up",
+      timeframe: "weekly",
+      direction: "down",
       stage: "confirmed",
-      stageDate: "2026-10-23",
-      price: 158.96,
+      stageDate: "2026-10-19",
+      price: 172.37,
       priceDate: "2026-10-23",
-      target: 205.6,
-      invalidation: 155.09,
-      rsi: 70.3,
-      score: 105.6,
+      target: 126.57,
+      invalidation: 186.08,
+      rsi: 34.1,
+      score: 103.9,
       why: [
-        "Break confirmed on the daily chart",
-        "Daily RSI 70 backs the upside",
-        "The stock's own trend is up",
-        "29.3% from here to the target",
-        "About 12.1x more room to the target than to invalidation"
+        "Break confirmed on the weekly chart",
+        "Daily RSI 34 backs the downside",
+        "The stock's own trend is down",
+        "26.6% from here to the target",
+        "About 3.3x more room to the target than to invalidation"
       ]
     },
     {
@@ -186,7 +186,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
     },
     {
       ticker: "CAKE",
-      name: "Cheesecake Factory",
+      name: "Cheesecake Factory (The)",
       date: "2026-10-27",
       estimated: false,
       time: "amc"
@@ -239,6 +239,13 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       date: "2026-10-28",
       estimated: false,
       time: "bmo"
+    },
+    {
+      ticker: "STRL",
+      name: "Sterling Infrastructure, Inc.",
+      date: "2026-10-28",
+      time: "tbd",
+      estimated: false
     },
     {
       ticker: "FTNT",
