@@ -83,7 +83,7 @@ The watchlist ledger (`#watchlist`, the app's main list) reads `data/patternWatc
 
 - uses **regular-session prices only** (9:30–16:00 ET), never pre/post-market. Close-based checks (needs updating, invalidation) are skipped while that day's session is still open, so a run before 16:00 ET never re-labels a setup on an intraday price; target touches count from regular-session highs/lows. The Action runs at 21:47 UTC, after the close year-round.
 
-- **removes finished setups**: target reached (touched any time since confirmation) or failed (a completed close past invalidation plus a follow-through close), each with one News post saying why. A setup **you posted** (not auto-detected) is kept as a `history` row instead of vanishing, so a call that played out still shows under **Finished** on its stock — a target you called and hit is worth keeping. The stock's `keyLevel` and any existing history survive a setup being replaced too. "Needs updating" setups stay until a replacement is posted. By hand: `python3 pattern_watchlist.py --prune` (dry run) / `--prune --apply`.
+- **removes finished setups**: target reached (touched any time since confirmation) or failed (a completed close past invalidation plus a follow-through close), each with one News post saying why. A finished call leaves the page: the ledger is for readings to act on, and a completed one is a record. What it is still needed for is training, so a hand-posted setup that **reached its target** is written to `data/completedCalls.json` on the way out (`record_completed()`), which is where `pattern_reproduce.py` reads its labels. The stock's `keyLevel` survives a setup being replaced. "Needs updating" setups stay until a replacement is posted. By hand: `python3 pattern_watchlist.py --prune` (dry run) / `--prune --apply`.
 
 **Every status change goes to the News feed** (`data/newsFeed.ts`, newest first). The script diffs the watchlist against `data/watchlistStatus.json`, so hand edits (a new setup, a re-posted setup, a setup marked failed or removed) are posted too, not just the bot's own changes. **After editing any setup's `stage` by hand, run `python3 pattern_watchlist.py --apply`** (no network; re-checks stored prices and posts the changes), and commit `data/`. The daily price run does the same automatically. A new News post also triggers the in-app "What's New" toast.
 
@@ -132,7 +132,7 @@ discriminating. If that broader signal is ever wanted, that is where it goes.
 
 ### Targets: what the completed setups actually say
 
-Completed setups from the source tool are recorded as `history` rows. Comparing them
+Completed setups from the source tool are recorded in `data/completedCalls.json`. Comparing them
 against the detector's reading of the same chart looked at first like a clean defect —
 the break levels agree (confirms have matched to the cent on CVX and CRWD, and within
 3% on XOM, FRSH and KMB) while the measured move off those same lines runs 1.4x to
@@ -174,7 +174,8 @@ that should have closed themselves.
 ### Training on the calls that completed
 
 `pattern_reproduce.py` scores the detector against the source tool's finished calls,
-which are recorded as `history` rows in `data/patternWatchlist.ts`. For each one it
+which live in `data/completedCalls.json` (`labels()` also still reads any `history` rows
+left in the ledger, de-duplicated, so older data keeps working). For each one it
 replays the chart up to the day the call completed, runs the detector on exactly those
 candles, and asks whether it rebuilds that setup. Every label is a setup that paid, so
 unlike the distribution comparisons there is no survivorship to correct for.
@@ -514,6 +515,27 @@ again — without it Friday's redraw would hand back most of what was just remov
 against the range of the chart the pattern was drawn on, which is the right scope for "has
 this line left the chart", and is cheaper than re-reading the longest candle file.
 
+### Finished calls are not on the ledger at all
+
+`history` is gone from `data/patternWatchlist.ts` — 23 rows across 17 stocks, removed by
+`strip_history()` after `export_completed()` had written every one of them to
+`data/completedCalls.json`. Nothing writes a `history` row any more: `prune_finished` calls
+`record_completed()` instead, which appends the call to the labels file and lets it leave
+the page.
+
+The split is the point. **The ledger is for readings to act on; a completed call is a
+record, and the only thing still reading it is the training harness.** Keeping both in one
+file meant a stock's row grew without limit as its calls finished, and meant that tidying
+the ledger quietly cost the detector its evidence — which is exactly what capping CVX would
+have done.
+
+`labels()` reads the JSON file *and* any `history` rows still present, de-duplicated on
+(ticker, pattern, timeframe, date), so the count is stable across the move and older data
+keeps working. It was 27 before the strip and 27 after.
+
+The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
+row reappears from an archive — it simply has no writer.
+
 ### Six readings per stock, and what happens to the finished ones
 
 Ten readings on one stock is not ten pieces of information, it is one chart described ten
@@ -526,7 +548,7 @@ reached their **target**, then surplus live setups from the end of the stored or
 main and alt slots are never cut — they are the row.
 
 **A completed call is the training data, so it is exported before it is cut.**
-`pattern_reproduce.py` scores the detector against every `history` row with
+`pattern_reproduce.py` scores the detector against every completed call with
 `stage: "target"`, and CVX alone held **3 of the 27 labels on record**. Deleting those
 outright would have quietly removed 11% of the evidence every tuning decision in this file
 rests on — the `HEIGHT_REF`, `MIN_SIDE_TOUCHES` and `SIDE_EXEMPT` tables included, which

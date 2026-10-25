@@ -591,11 +591,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-03-30", 67.15], to: ["2026-10-19", 136.37] },
     ],
     note: "The wider rising channel the same advance sits in, broken two weeks after the wedge: Jun 29 closed below the lower line for the signal and Jul 13 confirmed below $80.56. Its measured move points to $38.98, well under the wedge's target.",
-    history: [
-      { pattern: "Rising Wedge", timeframe: "weekly", direction: "down", stage: "target", stageDate: "2026-10-22",
-        confirm: 93.5, invalidation: 213.37, target: 53.37,
-        note: "The rising wedge that carried price through the spring broke down in June: the week of Jun 22 closed below the upper line for the signal, and Jun 29 closed at $81.75, under that week's $93.50 low. It ground lower ever since, and on Oct 22 traded down to $53.50 — thirteen cents from the $53.37 target, which counts as reaching it. A completed move, not a new entry; the weekly channel below is the one still running." }
-    ],
   },
   {
     ticker: "NBIS",
@@ -620,11 +615,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-04-27", 132.7], to: ["2026-10-19", 414.37] },
     ],
     note: "Price broke down out of a rising channel on the weekly chart and confirmed with a weekly close below $207.30. After a summer bounce toward $280 it rolled over again and is pressing toward the $144.29 target.",
-    history: [
-      { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-13",
-        confirm: 217.73, invalidation: 244.51, target: 200.06,
-        note: "Daily channel break confirmed below $217.73 and reached the $200.06 target. A completed move, not a new entry." }
-    ],
     more: [
       {
         auto: true,
@@ -842,14 +832,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $159.84 on Oct 5.",
     },
-    history: [
-      { pattern: "Hammer", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-21",
-        confirm: 149.04, invalidation: 140.66, target: 157.42,
-        note: "A hammer near $141 on Oct 15 — that candle's own high and low are the $149.04 confirmation and the $140.66 invalidation. Oct 21 closed at $159.31 to confirm it and ran to $166.18 intraday, past the $157.42 objective, in the same session. A candle pattern projects a candle-sized move. A completed move, not a new entry." },
-      { pattern: "Topping Tail", timeframe: "weekly", direction: "down", stage: "target", stageDate: "2026-10-12",
-        confirm: 158.62, invalidation: 176.42, target: 140.82,
-        note: "A topping tail on the weekly chart, confirmed on a weekly close below $158.62 and reached $140.82 during the week of Oct 12 — that week's low was $140.66. A completed move, not a new entry." }
-    ],
   },
   {
     ticker: "META",
@@ -875,8 +857,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     failRule: "a completed daily close above $887.11, then a follow-through close above that candle's high.",
     note: "A steep run from the September low near $550 narrowed into a rising wedge that topped out near $780. Price broke the lower line and confirmed with a daily close below $721.30, and is now trading just under that level.",
-    history: [
-    ],
     more: [
       {
         pattern: "Ascending Channel",
@@ -2842,11 +2822,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-10-08", 279.02], to: ["2026-10-23", 305.3] },
     ],
     note: "The rising channel from the mid-September low, redrawn higher after price pushed through the old upper line. Price is pressing the top of it again. No break yet: a daily close above $331.89 or below $305.30 would start a signal, and the channel's width carries to $358.49 up or $278.70 down.",
-    history: [
-      { pattern: "Descending Channel", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-08-10",
-        confirm: 192.9, invalidation: 141, target: 246.39,
-        note: "A channel that paid. Confirmed on a weekly close above $192.90, beyond the signal candle's high, and reached $246.39 the week of Aug 10. Price has carried on to $323.04 since — a completed move, not a new entry." }
-    ],
   },
   {
     ticker: "STRL",
@@ -2881,11 +2856,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       price: 731.25,
       text: "Reports Wed Oct 28, after the close. Down 65% from the $1,005.68 high before reporting at all: 50.2x FY26E at the high against 17.7x now. The compression half of the risk has run in full; the earnings half is untested, and Wednesday is the test. At 25x FY27E today's price needs EPS of about $14.21 against the modelled $25.41 — a 44% cut, which is a buildout stalling rather than slowing. The ledger carries no live setup: the weekly falling wedge reads Needs updating, so this goes into the print with nothing posted. RSI 24.0, the second most stretched name of the week. The multiple at the high is that high against today's FY26E, so it is a ceiling on the historical reading wherever estimates have risen since; the direction is right, the magnitude is not exact. Model inputs are Q2 2026, reviewed 2026-10-10 — nothing is marked to the coming quarter, so these multiples are against estimates this print can move.",
     },
-    history: [
-      { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-15",
-        confirm: 480.23, invalidation: 522.92, target: 419.52,
-        note: "Confirmed below $480.23, beyond the signal candle's low, and reached $419.52 on Oct 15. Price has since run on to $355.30, well past the objective. The invalidation sat at $522.92, 47.2% above where the call ended \u2014 a wide stop on a move that paid, which is the shape the stop analysis keeps finding." },
-    ],
     alt: {
       pattern: "Ascending Channel",
       timeframe: "weekly",
@@ -3386,11 +3356,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2025-12-01", 79.35], to: ["2026-10-19", 112.76] },
     ],
     note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $104.85 on Sep 7.",
-    history: [
-      { pattern: "Rising Wedge", timeframe: "weekly", direction: "down", stage: "target", stageDate: "2026-09-28",
-        confirm: 107.73, invalidation: 144.04, target: 94.6,
-        note: "The cleanest comparison yet. Our own weekly rising wedge on this chart confirms at $104.85 against their $107.73 — 2.7% apart, the same pattern on the same timeframe in the same direction — and then projects to $76.99 where theirs projects $94.60. A 26.6% measured move against a 12.2% one, 2.18x, and it was theirs that the stock actually reached on Sep 28." },
-      ],
     alt: {
       auto: true,
       pattern: "Ascending Channel",
@@ -3620,14 +3585,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-04-20", 503.6], to: ["2026-10-19", 381.99] },
     ],
     note: "The channel that carried LMT down from the March high broke upward in the week of Oct 12 and confirmed the week after, with price jumping to $604.18 on the back of earnings. The $537.64 upper line it broke is now the floor the break has to hold.",
-    history: [
-      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-16",
-        confirm: 523.08, invalidation: 501.56, target: 539.31,
-        note: "Confirmed above $523.08, beyond the signal candle's high, and reached $539.31 on Oct 16. Not the daily descending channel stored above, which is a later one still at signal with its confirm up at $609.32 — this is the call that ran first." },
-      { pattern: "Hammer", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-12",
-        confirm: 511.43, invalidation: 497.0, target: 525.86,
-        note: "The earliest of the three and the smallest: confirmed above $511.43 on a weekly close and reached $525.86 on Oct 12. All three completed calls on this stock targeted $526 to $562 and the stock is now $604.18, which is the other side of the target question — close targets get reached, and then the move keeps going without you. Worth holding against the finding that our own targets sit too far out: further is not automatically wrong, it is a different trade, and what makes it wrong here is that a target nobody reaches leaves the setup open forever." },
-    ],
     alt: {
       pattern: "Ascending Channel",
       timeframe: "daily",
@@ -4106,11 +4063,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "The same climb read on the weekly chart, where the channel is wider and the break levels sit further apart: a weekly close above $221.10 opens $270.98, one below $171.23 points to $121.35. The downside is the interesting number — at 4.9% away it is nearer than the daily channel's $167.59, so the slower chart is the one that breaks first if this rolls over, and the weekly bearish engulfing stored below confirms at $166.75. Three readings inside five dollars of each other. Treat the $121.35 goal as a projection rather than a price to plan around.",
     },
-    history: [
-      { pattern: "Ascending Channel", timeframe: "monthly", direction: "up", stage: "target", stageDate: "2026-10-01",
-        confirm: 138.11, invalidation: 132.08, target: 185.52,
-        note: "The monthly channel that carried Fortinet from the 2020 lows. It confirmed on a monthly close above $138.11, beyond the signal candle's high, and reached $185.52 in October — a completed move, not a new entry. The daily and weekly channels above are the ones still running." }
-    ],
     more: [
       {
         auto: true,
@@ -4177,11 +4129,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed weekly close above $473.46, then a follow-through close above that candle's high.",
       note: "The same advance read as a wedge, its two lines converging. Price at $380.55 sits a hair above the $378.09 lower line; a weekly close below it would start a downside signal, and the measured move off the wedge's mouth reaches $258.98.",
     },
-    history: [
-      { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-16",
-        confirm: 396.04, invalidation: 436.73, target: 359.59,
-        note: "Confirmed below $396.04, beyond the signal candle's low, and reached $359.59 on Oct 16. Price has bounced to $380.55 since — a completed move, not a new entry." }
-    ],
   },
   {
     ticker: "CAKE",
@@ -5044,11 +4991,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     failRule: "a completed weekly close below $155.77, then a follow-through close below that candle's low.",
     note: "A tall falling wedge on the weekly chart, running down from the spring high. Price sits near the lower line at $209.29 with no break yet: a weekly close above $302.79 would start an upside signal, and the wedge's mouth projects all the way to $515.89.",
-    history: [
-      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "failed", stageDate: "2026-10-16",
-        confirm: 318.45, invalidation: 229.95,
-        note: "Confirmed above $318.45, beyond the signal candle's high, then closed back inside the broken boundary on Oct 16 and ended. Price has gone on down to $209.29, well under the $229.95 boundary it broke. No target to record: the measured move was never reached." }
-    ],
   },
   {
     ticker: "GLW",
@@ -6120,11 +6062,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       failRule: "a completed weekly close back inside the broken boundary, above $59.46.",
       note: "The weekly version of the same collapse: the rising channel from the June low lost its floor, confirming below $47.57 in the week of Oct 12. It points the same way as the daily channel, which is the agreement worth having here. The $19.22 measured move is the channel's full width projected down and should be read as a direction rather than a price — the channel is wide enough that the number is not worth much on its own.",
     },
-    history: [
-      { pattern: "Falling Wedge", timeframe: "weekly", direction: "up", stage: "failed", stageDate: "2026-06-01",
-        confirm: 107.59, invalidation: 30.45, target: 139.67,
-        note: "Confirmed above $107.59 in the week of May 25, peaked at $133.86 that same week, and the very next week closed at $93.60 — back under its own confirmation and never above it again. Price is now $39.79, some 63% below the level that confirmed the break. It never met the written failure test, which needs a weekly close below $30.45, and that is the point: on a wedge this tall the invalidation sits so far away that the rule cannot retire a setup the market closed months ago." }
-    ],
   },
   {
     ticker: "AXON",
@@ -6975,14 +6912,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "The level price was turned back from in mid-October, and the first thing in the way of the upside. Above it the next reference is the $286.99 all-time high of Oct 6 — which is the very point the channel's upper line is anchored to, so any break of the channel top is a new high by definition. Rejection here puts the lower line near $233.90 back in play."
     },
     note: "Price has run up inside a rising channel since the April low, and the lower line is the real evidence here: fifteen touches since April, and no close more than 6.6% beneath it. Mid-October tested it properly — Oct 16, 19 and 20 all closed below the line, which was a downward signal, and Oct 21 closed back inside and cancelled it. At $257.57 price sits in the middle of the channel with nothing broken in either direction. A confirmed daily close above $298.67 opens $363.44; a confirmed close below $233.90 points to $169.13. Confirmation means a second close beyond the break candle's extreme, not just the first close through the line — the October round trip is exactly why.",
-    history: [
-      { pattern: "Ascending Channel", timeframe: "weekly", direction: "up", stage: "failed", stageDate: "2026-10-12",
-        confirm: 263.87, invalidation: 251.87,
-        note: "A break that confirmed and then gave up. The weekly close cleared $263.87, beyond the signal candle's high, and a later weekly close came back inside the broken boundary — which for a channel is the whole failure test, no follow-through required. Price sits $257.57, between the two. A different death from the pair on CVX, which never signalled at all: this one earned its confirmation first, which is the failure mode that costs money." },
-      { pattern: "Hammer", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-21",
-        confirm: 229.24, invalidation: 221.36, target: 237.12,
-        note: "The Oct 20 candle put a $4.90 lower wick under a $1.11 body and closed at $227.37, the classic hammer after a decline. Oct 21 closed at $239.34, above the $229.24 high, and ran to $242.90 intraday — past the $237.12 target on the same candle that confirmed it. A completed move, not a new entry." }
-    ],
   },
   {
     ticker: "DAVE",
@@ -8027,8 +7956,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2025-09-08", 6.57], to: ["2026-10-19", 7.16] },
     ],
     note: "Auto-detected ascending channel on the weekly chart. A weekly close beyond the line on Oct 19 gave a signal; it needs a close beyond $15.51 to confirm.",
-    history: [
-      ],
     alt: {
       pattern: "Descending Channel",
       timeframe: "daily",
@@ -8867,11 +8794,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       price: 134.29,
       text: "$134.29 is 7.8% below here and it is the whole question. Above it the September break is a wedge working off an overshoot, with $214.27 still the target. A close below it, followed through, and the break is finished — and the three targets this stock reached on the way down say the sellers have been right so far.\\n\\nOn valuation: down 53% from the $307.37 high, 56.5x FY26E then against 26.8x now — and at RSI 23.4 the most stretched name reporting this week. The daily falling wedge is on a retest of its break. Stretch and compression line up on the same side here, which is rarer than it sounds; what is missing is a turn. The multiple at the high is that high against today's FY26E, so it is a ceiling on the historical reading wherever estimates have risen since; the direction is right, the magnitude is not exact. Model inputs are Q4 FY26, reviewed 2026-10-11 — nothing is marked to the coming quarter, so these multiples are against estimates this print can move."
     },
-    history: [
-      { pattern: "Rising Wedge", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-22",
-        confirm: 189.44, invalidation: 223.52, target: 159.81,
-        note: "The wedge that carried price up through September broke down in October: a daily close below $189.44, beyond the signal candle's low, confirmed it. Oct 22 gapped from $154.80 to a $146.55 low, straight through the $159.81 target. A completed move, not a new entry — and it is the same selling the falling wedge above is now being retested by." }
-    ],
   },
   {
     ticker: "KRMN",
@@ -8932,14 +8854,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-06-17", 5.04], to: ["2026-10-23", 46.33] },
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $33.07 on Oct 1.",
-    history: [
-      { pattern: "Falling Wedge", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-20",
-        confirm: 36.55, invalidation: 26.43, target: 41.17,
-        note: "The closest match in the whole comparison set: our own daily falling wedge on this chart confirms at $36.45 against their $36.55, three tenths of a percent apart, so it is unarguably the same break. From there theirs projects $41.17 and ours $50.33 — 12.6% of measured move against 38.1%. Price is $43.10, past theirs and short of ours, so theirs is finished and our copy is still marked confirmed." },
-      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-13",
-        confirm: 36.55, invalidation: 28.65, target: 40.43,
-        note: "Confirmed off the same $36.55 close as the wedge above — one break, two patterns reading it — and reached $40.43 a week earlier on Oct 13. Two independent objectives within 2% of each other is the kind of corroboration the agree band is meant to catch." }
-    ],
     alt: {
       auto: true,
       pattern: "Descending Channel",
@@ -10249,14 +10163,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2024-08-05", 28.6], to: ["2026-10-19", 46.64] },
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close above $116.12 on Sep 28.",
-    history: [
-      { pattern: "Rising Wedge", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-15",
-        confirm: 119.93, invalidation: 144.92, target: 107.4,
-        note: "A bearish call that paid, which is rarer than it should be in this set: confirmed below $119.93, beyond the signal candle's low, and reached $107.40 on Oct 15. Our own daily rising wedge is a different drawing — confirm $97.02 — but the instructive part is the size of the move each projects. Theirs ran $119.93 to $107.40, a 10.4% measured move. Ours runs $97.02 to $52.09, a 46.3% one. Same pattern type, same chart, four times the projection." },
-      { pattern: "Descending Channel", timeframe: "weekly", direction: "down", stage: "failed", stageDate: "2026-03-02",
-        confirm: 55.58, invalidation: 33.13,
-        note: "The most expensive failure on record here. The channel confirmed below $55.58 and then closed back inside the broken boundary, which ends it — and the stock is $128.74 now, well over twice where the break was confirmed. A confirmed bearish break on a stock that then more than doubled is the shape of loss that matters, and the backtest's negative expectancy on down-breaks is made of setups like this one." }
-    ],
     more: [
       {
         pattern: "Descending Channel",
@@ -12378,11 +12284,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "The wider rising channel the same advance sits in, drawn off the spring low. Price is mid-channel after the September reversal, so neither side has broken: a weekly close above $365.38 or below $287.60 starts a signal.",
     },
-    history: [
-      { pattern: "Ascending Channel", timeframe: "daily", direction: "down", stage: "target", stageDate: "2026-10-16",
-        confirm: 346.15, invalidation: 429.53, target: 304.48,
-        note: "Daily channel break confirmed below $346.15 and reached the $304.48 target. A completed move, not a new entry." }
-    ],
   },
   {
     ticker: "VZ",
@@ -13468,14 +13369,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "The daily channel price has climbed since the September low, still intact and running near the top. No break yet: a daily close above $186.03 or below $177.62 would start a signal, and the channel's width carries to $194.44 up or $169.20 down.",
     },
-    history: [
-      { pattern: "Falling Wedge", timeframe: "weekly", direction: "up", stage: "target", stageDate: "2026-10-19",
-        confirm: 158.71, invalidation: 123.02, target: 180.35,
-        note: "A wedge that paid. Confirmed on a weekly close above $158.71, beyond the signal candle's high, and reached $180.35 the week of Oct 19 — price has since carried on to $183.21. A completed move, not a new entry. Worth keeping for what it shows about drawing: the detector found this same wedge and measured it to $194.41, which the stock has not reached, so the identical pattern on the identical chart reads as finished or as still running depending only on where the two lines were put." },
-      { pattern: "Descending Channel", timeframe: "daily", direction: "up", stage: "target", stageDate: "2026-10-12",
-        confirm: 151.76, invalidation: 121.8, target: 171.1,
-        note: "A different pattern pointing at the same move, and it paid a week earlier: confirmed above $151.76 and reached $171.10 on Oct 12. Two independent readings of one chart, both up, both finished — the channel first and then the wedge above. Their targets sit 5.4% apart, which is just outside the 5% the detector treats as agreement, so it would have scored these two as unrelated." }
-    ],
     more: [
       {
         pattern: "Ascending Channel",
@@ -13521,8 +13414,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
     confirmRule: "a later completed weekly close above $225.31, beyond the signal candle's high.",
     failRule: "a completed weekly close back inside the broken boundary, below $219.90.",
     note: "The same breakout as XOM, week for week: Oct 12 closed at $224.99 above the channel's upper line at $219.48, and Oct 19 confirmed at $233.21, past that week's $225.31 high. The channel has held since April 2024, so its width is worth something \u2014 the measured move is $273.38. Daily RSI is 77. A weekly close back below $219.90 ends it.",
-    history: [
-    ],
     alt: {
       pattern: "Descending Channel",
       timeframe: "daily",

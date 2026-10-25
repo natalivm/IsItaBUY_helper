@@ -1354,17 +1354,18 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
             tf = alt_pos['timeframe'][2] if 'timeframe' in alt_pos else 'daily'
             alt_pos = take(tf)
             alt_auto = alt_pos is not None
-        # Keep the setups you posted yourself: a target you called and hit, or a pattern that
-        # failed, is worth having on the page instead of vanishing.
+        # A finished call leaves the page. It used to be kept as a `history` row so a target
+        # you called and hit still showed under Finished, but the ledger is for readings to
+        # act on and a completed one is a record. What it is still needed for is training:
+        # pattern_reproduce.py scores the detector against calls that paid, so the ones that
+        # reached their target are written to data/completedCalls.json on the way out.
         keep = []
         if posted:
             for label, r in done.items():
                 sv = next((v for lb, v, pos in setups if lb == label and '_span' not in pos), None)
-                if sv is None or sv.get('auto'):
+                if sv is None or sv.get('auto') or r[3] != 'target':
                     continue
-                row = history_entry(sv, main, r[0], r[3])
-                if row:
-                    keep.append(row)
+                record_completed(t_, sv, r[0])
         a, b = e['span']
         if main_pos is None:
             reason = done['main'][1].rstrip('.')
@@ -1539,6 +1540,63 @@ def _cap_plan(text, e):
         drop_live.append(pos)
         excess -= 1
     return drop_hist, drop_live, len(live) + len(hist)
+
+
+def record_completed(ticker, sv, finish_date, path=None):
+    """Append one completed call to the labels file, if it is not already there."""
+    conf, inv, tgt = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
+    if not (conf and inv and tgt):
+        return False
+    path = path or COMPLETED_FILE
+    have = []
+    if os.path.exists(path):
+        with open(path) as fh:
+            have = json.load(fh)
+    row = {'ticker': ticker, 'pattern': sv.get('pattern'), 'timeframe': sv.get('timeframe'),
+           'direction': sv.get('direction'), 'stage': 'target', 'stageDate': finish_date,
+           'confirm': conf, 'invalidation': inv, 'target': tgt}
+    key = (row['ticker'], row['pattern'], row['timeframe'], row['stageDate'])
+    if any((r['ticker'], r['pattern'], r['timeframe'], r['stageDate']) == key for r in have):
+        return False
+    have.append(row)
+    have.sort(key=lambda r: (r['ticker'], r['stageDate']))
+    with open(path, 'w') as fh:
+        json.dump(have, fh, indent=2)
+        fh.write('\n')
+    return True
+
+
+def strip_history(apply=False, path=None):
+    """Export every completed call, then remove `history` from the ledger entirely.
+
+    The array stays in the type so old data still parses; nothing writes one any more.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    exported = export_completed(text)
+    cuts, touched = [], []
+    for e in parse_watchlist(text):
+        if 'history' not in e['fields']:
+            continue
+        tk = e['fields'].get('ticker', (0, 0, None))[2]
+        h0, h1, _ = e['fields']['history']
+        ls = text.rfind('\n', 0, text.rfind('history', 0, h0)) + 1
+        le = h1
+        while le < len(text) and text[le] in ', ':
+            le += 1
+        if le < len(text) and text[le] == '\n':
+            le += 1
+        n = len(_history_rows(text, e))
+        cuts.append((ls, le, ''))
+        touched.append(f"{tk}: {n} finished row(s) removed")
+    new_text = text
+    for a, b, repl in sorted(cuts, reverse=True):
+        new_text = new_text[:a] + repl + new_text[b:]
+    if apply and new_text != text:
+        with open(path, 'w') as fh:
+            fh.write(new_text)
+    return touched, exported
 
 
 def cap_setups(apply=False, path=None):
@@ -2219,9 +2277,19 @@ if __name__ == "__main__":
     ap.add_argument("--no-news", action="store_true", help="make no News posts this run (NEWS_PAUSED does the same, persistently)")
     ap.add_argument("--thin", action="store_true", help=f"remove auto-detected setups whose target is within {MIN_ROOM * 100:.0f}%% of their confirmation level")
     ap.add_argument("--deadstops", action="store_true", help=f"remove auto-detected setups whose stop is not a price, or whose reward:risk is under {MIN_RR:.1f}x")
+    ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
     ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.strip_history:
+        touched, exported = strip_history(apply=args.apply)
+        print(f"Exported {len(exported)} new completed call(s) to {os.path.relpath(COMPLETED_FILE)}.")
+        print(f"{'Removed' if args.apply else 'Would remove'} history from {len(touched)} stock(s):")
+        for line in touched:
+            print(f"  {line}")
+        if touched and not args.apply:
+            print("\nRun with --strip-history --apply to write it.")
+        raise SystemExit(0)
     if args.cap:
         rep, exported = cap_setups(apply=args.apply)
         if exported:
