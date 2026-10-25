@@ -1740,6 +1740,7 @@ def stretched_setups(text, calendar=None, today=None):
 
 SLOT_TIGHT = 0.10           # risk inside this fraction of the entry counts as tight
 SLOT_FLOOR = 0.01           # ...and inside this it is not tight, it is about to die
+SLOT_OPPOSITE = 10          # score given up to let the second slot read the other way
 
 
 def slot_score(sv, stock):
@@ -1839,9 +1840,27 @@ def reslot_setups(apply=False, path=None):
             continue
         ranked = sorted(live, key=lambda pos: -slot_score(vals(pos), m))
         best = ranked[0]
-        second = next((pos for pos in ranked[1:] if not _same_call(vals(pos), vals(best))), None)
-        if second is None:
-            second = ranked[1] if len(ranked) > 1 else None
+        cands = [pos for pos in ranked[1:] if not _same_call(vals(pos), vals(best))]
+        second = cands[0] if cands else (ranked[1] if len(ranked) > 1 else None)
+        # The second slot's job is to say something the first does not, and the most useful
+        # thing it can say is what would kill the first. A second reading the same way is
+        # corroboration, which `agree` already counts and which cost FRSH both its slots;
+        # a reading the other way is the bear case under a bull call. So among the
+        # non-duplicate candidates, one pointing the other way takes the slot when it is
+        # within SLOT_OPPOSITE of the one that would otherwise have it.
+        #
+        # 10 is argued rather than fitted -- the curve is smooth, 36% of rows read both
+        # ways with no rule and 62% at a margin of 50, with no gap anywhere to stop at. It
+        # is the size of the trend-agreement term, so the rule trades exactly one "the
+        # trend agrees with this" worth of score for showing the other side, and cannot
+        # promote a setup that is materially worse.
+        bd = vals(best).get('direction')
+        if second is not None and bd in ('up', 'down'):
+            base = slot_score(vals(second), m)
+            opp = [pos for pos in cands if vals(pos).get('direction') in ('up', 'down')
+                   and vals(pos).get('direction') != bd]
+            if opp and slot_score(vals(opp[0]), m) >= base - SLOT_OPPOSITE:
+                second = opp[0]
         if best is e['fields'] and second is e['alt']:
             continue
         rest = [pos for pos in every if pos is not best and pos is not second]

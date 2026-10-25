@@ -711,6 +711,18 @@ invalidation takes a penalty rather than a bonus.
 and the AMKR lesson is that setups pointing both ways differ by horizon rather than
 contradicting. What was wrong on CVX was a *weak* down setup outranking a *strong* up one.
 
+**The second slot now prefers the other direction, within `SLOT_OPPOSITE` (10) of the
+setup that would otherwise hold it.** The slot's job is to say something the first does
+not, and the most useful thing it can say is what would kill the first; a second reading
+the same way is corroboration, which `agree` already counts and which cost FRSH both its
+slots. The number is argued rather than fitted — the curve is smooth, 36% of rows read
+both ways with no rule and 62% at a margin of 50, with no gap anywhere to stop at — so it
+is set to the size of the trend-agreement term, trading exactly one "the trend agrees with
+this" worth of score for showing the other side. 12 rows moved and the second pass reports
+0; the swaps are all near-peers (BKNG 67.1 → 64.0, NUE 65.4 → 60.5). PLTR is the case that
+prompted it: without the rule Monday's run would have given both its slots to bullish
+readings and pushed the bear case into stored.
+
 `python3 pattern_watchlist.py --reslot` (dry run) / `--reslot --apply`; the daily run calls
 it after the dedupe, so it chooses between distinct readings rather than copies. 114 stocks
 moved on the first pass and the second reports 0.
