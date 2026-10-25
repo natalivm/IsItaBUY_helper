@@ -1987,6 +1987,16 @@ def _dedupe_pass(text):
                 if pos is best[1]:
                     continue
                 lv = vals(pos)
+                # A stored copy costs no slot, and it is exactly what `annotate_agreement`
+                # counts: "stored setups in the same direction, on any timeframe, pointing to
+                # a target within 5%" is word for word the test `_same_call` applies here. So
+                # dropping them deleted the evidence the agreement badge exists to show. D is
+                # the case: a weekly falling wedge redrawn on current candles, signalling 0.7%
+                # from spot, folded into the daily channel for landing 2.8% from its target.
+                # The fault this routine was written for was a *row* spending both visible
+                # slots on one claim (FRSH), so that is what it now guards.
+                if kind == 'stored':
+                    continue
                 if alt_pos is pos:
                     alt_pos = None
                 keep_stored = [p for p in keep_stored if p is not pos]

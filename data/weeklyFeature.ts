@@ -67,21 +67,6 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       score: 112
     },
     {
-      ticker: "D",
-      name: "Dominion Energy, Inc.",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-10-12",
-      price: 65.2,
-      priceDate: "2026-10-23",
-      target: 94.09,
-      invalidation: 58.46,
-      rsi: 61.7,
-      score: 108
-    },
-    {
       ticker: "AZO",
       name: "AutoZone",
       pattern: "Descending Channel",
@@ -95,6 +80,21 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       invalidation: 2894.72,
       rsi: 65.6,
       score: 106.9
+    },
+    {
+      ticker: "RBRK",
+      name: "Rubrik",
+      pattern: "Descending Channel",
+      timeframe: "weekly",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-09-28",
+      price: 128.74,
+      priceDate: "2026-10-23",
+      target: 171.49,
+      invalidation: 107.55,
+      rsi: 65.6,
+      score: 98.9
     },
     {
       ticker: "VRT",

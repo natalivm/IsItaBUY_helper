@@ -317,5 +317,16 @@
     "confirm": 62.31,
     "invalidation": 89.36,
     "target": 45.9
+  },
+  {
+    "ticker": "D",
+    "pattern": "Head & Shoulders",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-09-28",
+    "confirm": 65.22,
+    "invalidation": 67.78,
+    "target": 59.01
   }
 ]

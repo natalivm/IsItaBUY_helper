@@ -2,6 +2,8 @@
 
 See `.github/copilot-instructions.md` for full project conventions, stock definition format, and architecture.
 
+**`RULEBOOK.md` is the decision rules** — redraw vs delete, importing a level from the source tool, when a target is the problem and when the drawing is, what a script may delete, and when to ask rather than decide. This file says how the machinery works and `PATTERN_RULES.md` says how a pattern is drawn; read the rulebook before changing a setup by hand.
+
 ## Updating Stock Prices
 
 Stock prices are hard-coded as `currentPrice` in each `stocks/TICKER.ts` file (line 8). Prices are updated automatically via GitHub Actions and can also be updated manually.
@@ -663,6 +665,21 @@ never by deleting one for sitting in the wrong place.
 and deliberately *not* which slot a setup occupies. 43 slots were swapped and 103 duplicates
 dropped, taking the ledger from 779 live setups to 565.
 
+**It drops slot occupants only; a stored copy is never deleted.** `annotate_agreement` sets
+the agreement badge from "stored setups in the same direction, on any timeframe, pointing to
+a target within 5%" — word for word the test `_same_call` applies here — so dropping them
+deleted the evidence the badge exists to show. The two routines were defined identically and
+pulled against each other. D is the case: its weekly falling wedge, redrawn on current
+candles and signalling 0.7% from spot, was folded into the daily channel for landing 2.8%
+from its target, and the row then had nothing to agree with it. It reads
+`agree: {n: 2, lo: 73.45, hi: 75.49}` again.
+
+The fault this routine was written for was a **row** spending both of its visible slots on
+one claim, which is FRSH, so that is what it guards. A stored copy costs no slot and is
+corroboration. Redrawing a stale setup on current candles is the better move than dropping
+it either way — the source tool's D wedge confirmed in June at a level price has since
+failed at, while the same pattern on today's candles confirms 0.7% away.
+
 An **either-direction** setup is never a duplicate: it is watching for a break both ways,
 which is a different claim from a directional target even when one of its goals lands
 nearby.
@@ -941,8 +958,17 @@ Keep exact prices from Yahoo Finance (e.g., `348.47`). Trailing zeros are stripp
 ## Landing Page (weekly lists)
 
 `#` (no hash) is the **landing page** (`components/Landing.tsx`). The stock ledger
-moved to `#watchlist`; `#watchlist/TICKER` opens it with the search box pre-filled,
-which is what the landing page's "See TICKER in the watchlist" buttons link to.
+moved to `#watchlist`; `#watchlist/TICKER` opens it on that stock, which is what the
+landing page's "See TICKER in the watchlist" buttons and the earnings cards link to.
+
+**That route selects a ticker; it does not run a search.** It used to do both — the
+ticker went into the search box and `searchRank` filtered on it — which worked only
+while tickers were long. `D` for Dominion matched every ticker containing a d and every
+company name with a word starting with one, so the button opened 22 rows and read as an
+unfiltered ledger. `picked` in `PatternWatchlist.tsx` holds the ticker the route named
+and filters on an exact match, and is cleared the moment the search box is edited, so
+the link selects and the box still searches. A route naming a ticker the ledger does not
+hold falls back to the search rather than showing an empty page.
 `#TICKER` is still a stock's detail page, and "Back" there returns to whichever
 list you came from.
 
