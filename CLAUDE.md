@@ -188,22 +188,26 @@ projection, the more often that fires, so at `BACK = 0` the setups that survive 
 scored are disproportionately the ones that over-project. That flattered the exact number
 being measured: channels read 17.4% on the completion bar and 22.6% a bar earlier.
 
-Baseline on the 24 calls whose candles reach back far enough:
+Baseline on the 26 calls whose candles reach back far enough:
 
 - **confirm level: 0.0% median error.** The break detection is exact — this is not where
   anything is wrong.
-- **right pattern and direction: 18/24.** Most of the misses are Hammers that
+- **right pattern and direction: 17/26.** Most of the misses are Hammers that
   `detect_hammer` does not find, and one is a Bull Flag, which is not implemented and is
   not a tuning gap — see PATTERN_RULES.md §5b for why, and for the measuring rule verified
   off the one completed flag on record.
-- **target: 4.8% median error**, with 14 of the 18 inside both level tolerances.
+- **target: 6.7% median error**, with 13 of the 17 inside both level tolerances.
 
-The tables below were measured on the 20 calls on record at the time. Four more have since
-been added and the headline has only improved — 6.7% at 23 labels, 4.8% at 24. None of them
-was used to tune anything, so each is an out-of-sample check rather than a re-fit. The most
-recent, STRL's daily ascending channel (confirmed below $480.23, reached $419.52 on
-2026-10-15), is the cleanest reproduction on record: **0.0% confirm error and 0.7% on the
-target**.
+The tables below were measured on the 20 calls on record at the time. Everything since is an
+out-of-sample check rather than a re-fit, and the headline has moved both ways — 6.7% at 23
+labels, 4.8% at 24, 6.7% at 26. The cleanest reproduction on record is STRL's daily ascending
+channel (confirmed below $480.23, reached $419.52 on 2026-10-15) at **0.0% confirm error and
+0.7% on the target**; the worst of the recent ones is ASTS's daily ascending channel
+(confirmed below $62.31, reached $45.90 on 2026-10-14), where the detector finds the right
+pattern and direction and the confirm within 3.3% but over-projects the target by **26.5%**.
+That is the long-target failure the "Targets" section above describes, caught on a label
+rather than argued from distributions — and it is one chart, which is the whole point of the
+n-is-23 section below.
 
 **`HEIGHT_REF`** (`pattern_detect.py`) decides where a pattern's height is measured for
 the measured move. The height used to be taken at the pattern's *start*, where a
