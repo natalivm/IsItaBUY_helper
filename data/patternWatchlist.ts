@@ -1435,6 +1435,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "STX",
     name: "Seagate Technology Holdings",
+    checkedOn: "2026-10-25",
     trend: "down",
     rsi: 32.1,
     price: 630.49,
@@ -1462,7 +1463,6 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "Cheapest of the compressed names, 31.9x to 17.5x. The weekly channel is confirmed down to $548.46, but it is machine-drawn and that target is a multi-quarter number, not Tuesday's.",
     },
     alt: {
-      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -1477,7 +1477,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         { from: ["2026-05-19", 1077.47], to: ["2026-10-23", 1189.5] },
         { from: ["2026-05-19", 695.14], to: ["2026-10-23", 807.17] },
       ],
-      note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $770.06 on Oct 12.",
+      note: "The daily down reading, kept by hand over the other two. STX carried three daily down-confirmed setups — a rising wedge, a descending channel and this ascending channel — projecting into the same area; the user called this one the most accurate and the other two were dropped as duplicates. Confirmed below $770.06 on Oct 12, target $413.53.",
     },
     more: [
       {
