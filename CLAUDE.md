@@ -536,33 +536,34 @@ keeps working. It was 27 before the strip and 27 after.
 The `history` field stays in the TypeScript type and in `KEEP_TAIL`, so nothing breaks if a
 row reappears from an archive — it simply has no writer.
 
-### keyLevel prose: short enough to read on the row
+### keyLevel prose: a thesis, not a novel
 
-A `keyLevel` is read beside a chart, not instead of one. Keep it to **under 700
-characters**, three short paragraphs at most: the level, why it is the level, and the one
-risk that would change it. Everything explaining *how an indicator works*, *what a harness
-measured* or *what this file already records* belongs in CLAUDE.md, not on a stock.
+A `keyLevel` is a **thesis** — one or two sentences, **under 250 characters**. The level,
+and what it decides. Nothing else.
 
-They were cut twice. First the seven past 1200 (CLS at 2791) came down by about half and
-the repeated valuation caveat came off 23 rows; then everything still over 1000 was cut
-again. The median is **574** now against 939 at the start, the mean 541, and the longest
-794.
+It ran to 2791 characters at its worst and took three passes to get here: cut the ones over
+1200 by half, then everything over 1000 again, then all 31 down to a thesis. 16,772
+characters became **4,799** — 71% gone — and the median is 154 against 939 at the start.
 
-The second pass is the instructive one. The first stopped at CRDO because its length was
-the swing-low evidence behind *never a resting bid* — argument rather than padding, and
-cutting it leaves an instruction with nothing under it. That was true and still too
-generous: the claim survives in one clause (*five of seven swing lows closed in the lower
-half of the day's range*) and the paragraph around it was restatement. **Evidence earns its
-space once, not for every sentence that leans on it.**
+Each pass defended what the next one deleted. The second kept CRDO's swing-low evidence as
+"the argument, not padding"; the third found the claim survives in one clause. The habit to
+watch is justifying prose by what it *contains* rather than by what the reader *needs*: a
+keyLevel is read beside a chart, and the chart carries the evidence. Write the number and
+what it decides, then stop.
+
+Everything that explains how an indicator works, what a harness measured, or what this file
+already records belongs in CLAUDE.md. The valuation caveat pasted onto 23 rows is the type
+case — true of every multiple anywhere, which is exactly why repeating it per stock bought
+nothing.
 
 **Write the text with real newlines, not `\n`.** Fifteen keyLevels written through a shell
-heredoc stored a literal backslash-n and displayed it to the reader. `json.dumps` on a
-Python string with real newlines produces the right escaping; hand-written `\\n` inside a
-heredoc does not.
+heredoc stored a literal backslash-n and displayed it. `json.dumps` on a Python string with
+real newlines escapes correctly; hand-written `\\n` inside a heredoc does not. (At thesis
+length most need no line break at all.)
 
 **Re-read the `price` when a setup is replaced.** It is a level, not a label: STRL's said
-$731.25, the target of a falling wedge that had been retired, while the stock traded at
-$355.30. It is $393.09 now — the invalidation of the setup actually on the row.
+$731.25, the target of a falling wedge retired days earlier, while the stock traded at
+$355.30.
 
 ### Stretched: momentum strong enough to be its own risk
 

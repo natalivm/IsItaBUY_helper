@@ -401,7 +401,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     tag: "Flips up if $663 holds",
     keyLevel: {
       price: 663.02,
-      text: "The daily target ($638.57) sits just under the weekly setup's invalidation. If price holds above $663.02 on a weekly basis, the weekly upward break stays alive and the bias flips back up toward $1,436.78. A weekly close below $663.02 with follow-through would end the weekly setup."
+      text: "Hold $663.02 on a weekly close and the upward break stays alive toward $1,436.78; lose it with follow-through and the weekly setup is done."
     },
     alt: {
       auto: true,
@@ -900,7 +900,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close below $204.38 on Oct 19.",
     keyLevel: {
       price: 184.63,
-      text: "Nothing on VRT is active — every reading here is waiting, which is a real state and not a gap in coverage. These two numbers, $184.63 beneath and $215.06 above, are what earnings on Oct 28 will pick between. The confirmed shorts kept in `more` are the older, far wider fits; their stops sit 25-60% away and they are not tradable as written.\n\nOn valuation: down 49% from the $379.93 high, 56.7x FY26E then against 29.0x now. Half the multiple is gone and the chart has not picked a side — the daily channel is still forming, so there is no directional setup to carry into the print. RSI 27.9."
+      text: "Nothing is active here. $184.63 below and $215.06 above are what Wednesday's print picks between, with half the multiple already gone — 56.7x to 29.0x."
     },
     alt: {
       pattern: "Rising Wedge",
@@ -1065,7 +1065,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $206.12 on Sep 2.",
     keyLevel: {
       price: 116.03,
-      text: "$116.03 is the stop, deliberately below the $123-136 landing zone rather than inside it. $128.73 — the weekly falling wedge's floor — kills the upward structures, but a washout to the median $123.50 takes it out before the turn, and a stop the thesis expects to be hit is not a stop. $116.03 is the daily ascending channel's own target, February's $114.10 low just beneath.\n\nFrom a $138.92 entry that moves risk from 7.3% to 16.5% — half the size for the same money — and reward-to-risk against $171.36 from 3.2 to 1.4.\n\nEntry is a daily close back above $138.92, never a resting bid: five of seven swing lows this year closed in the lower half of the day's range."
+      text: "$116.03 is the stop, below the $123-136 landing zone rather than inside it: a stop the thesis expects to be hit is not a stop. Entry is a daily close back above $138.92, never a resting bid."
     },
     alt: {
       pattern: "Support Shelf",
@@ -1425,7 +1425,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $770.06 on Oct 12.",
     keyLevel: {
       price: 548.46,
-      text: "Reports Tue Oct 27. The cheapest of the compressed names: down 45% from $1,145.00, 31.9x FY26E then against 17.5x now. The weekly ascending channel is confirmed down and $548.46 is the measured move, 13% below spot. Two cautions — the shown setup is machine-drawn and unchecked, and that channel is one of the week's tall ones, so the target is a multi-quarter number rather than an earnings reaction. RSI 32.1.",
+      text: "Cheapest of the compressed names, 31.9x to 17.5x. The weekly channel is confirmed down to $548.46, but it is machine-drawn and that target is a multi-quarter number, not Tuesday's.",
     },
     alt: {
       pattern: "Ascending Channel",
@@ -1699,7 +1699,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Price climbed a rising channel from the late-August low near $85 to a top around $127. It broke the lower line and confirmed with a daily close below $104, then slid into the low $90s.",
     keyLevel: {
       price: 72.58,
-      text: "Reports Thu Oct 29. The odd one this week: down 39% from $142.35 and still 57.2x FY26E, against 93.7x at the high. The fall has not bought cheapness, which is the opposite of the setup on CLS or STX — there the multiple did the work, here it has barely started. The daily ascending channel is confirmed down to $72.58, 17% below spot, and that setup is unchecked. RSI 33.2.",
+      text: "Down 39% and still 57.2x — the fall has not bought cheapness. The daily channel is confirmed down to $72.58 and nobody has checked it.",
     },
     alt: {
       auto: true,
@@ -2321,7 +2321,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     name: "Alphabet Inc.",
     keyLevel: {
       price: 263.16,
-      text: "Reports Wed Oct 28. No valuation page, so chart only. The daily ascending channel is confirmed down to $263.16, 18% below spot, and the monthly rising wedge behind it is one of the week's tall ones — 91% of its starting price, projecting $193.93 over a horizon measured in quarters rather than on this print. RSI 31.8 says stretched, which is not the same as turned.",
+      text: "The daily channel is confirmed down to $263.16, 18% below spot. RSI 31.8 is stretched, which is not the same as turned.",
     },
     price: 320.21,
     priceDate: "2026-10-23",
@@ -2514,7 +2514,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $259.49 on Oct 5.",
     keyLevel: {
       price: 269.9,
-      text: "Reports Thu Oct 29. Barely touched: 14% off the $287.20 high, 34.6x FY26E then against 29.8x now. Almost nothing is priced out, so a miss has room to travel. The daily descending channel is confirmed up toward $269.90, but that reading is machine-drawn and unchecked — a red dot going into a print. RSI 44.0, which backs neither side.",
+      text: "14% off the high at 29.8x: almost nothing is priced out, so a miss has room to travel. The daily channel points to $269.90 but goes into the print unchecked.",
     },
     alt: {
       pattern: "Descending Channel",
@@ -2640,7 +2640,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Replaces the weekly falling wedge that had been reading Needs updating since the break came apart. Drawn on the July-October decline and confirmed on Oct 23: Oct 22 closed $372.83 below the $394.72 line for the signal, and Oct 23 closed $355.30 below that candle's $365.35 low to confirm. Both closes were checked against the candles. Risk 7.6% of the entry against 30% of room — a reward:risk of 3.95x, the tightest reading on this stock. Still carries a red dot: the break is verified, the channel's drawing is not.",
     keyLevel: {
       price: 393.09,
-      text: "Reports Wed Oct 28 after the close, down 65% from $1,005.68 before reporting at all — 17.7x FY26E against 50.2x at the high. The compression half has run; the earnings half is untested.\n\nThe daily descending channel confirmed down Oct 23: invalidation $393.09, target $255.84, risk 7.6% of entry against 30% of room — 3.95x. The break was checked against the candles, the drawing was not, so it keeps its red dot.\n\nRSI 24.0 puts the short past oversold, so Wednesday's print is the plausible trigger for a snap back. $393.09 is close enough to matter if the quarter is merely in line.",
+      text: "The daily channel confirmed down Oct 23 — $393.09 stop, $255.84 target, 3.95x. RSI 24 puts the short past oversold, so Wednesday's print is the trigger for a snap back.",
     },
     alt: {
       pattern: "Ascending Channel",
@@ -3761,7 +3761,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $152.77 on Jun 29.",
     keyLevel: {
       price: 167.59,
-      text: "$167.59 is the number to watch. It is the channel's lower line, it is the closer of the two breaks, and a daily close under it ends the climb that has held since July. Above it this is still an uptrend pausing.\n\nOn valuation: 9% off the $197.13 high, the shallowest drawdown of any name reporting this week. Valued on cash flow, so there is no multiple compression to lean on. The daily channel is still forming with no direction taken, so there is nothing posted to trade into the print."
+      text: "$167.59 is the channel's lower line and the nearer break. Under it the climb that has held since July ends; above it this is an uptrend pausing."
     },
     alt: {
       auto: true,
@@ -4131,7 +4131,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The first leg of the recovery, and nearly complete: the wedge confirmed above $234.14 on Oct 19, two days before Q3, and the print carried it from roughly $234 to $253.56. Its $257.86 target is 1.7% away, so this is a position to close rather than open. The invalidation at $206.28 is 18.6% below and has not been relevant since the break. The reason to hold the stock on the list is what comes after it — the channel below, and the June record above that.",
     keyLevel: {
       price: 270.29,
-      text: "The run at the highs goes through $270.29 — the channel's upper line, 6.6% up, opening $305.78. Worth being exact about how far that gets: IBM's record is $329.23, closed on Jun 2 2026 ($332.46 intraday), and $253.56 is 23% under it. So even the channel's full upside stops about 7% short of the record; getting back there needs this structure to break out and then be replaced by a larger one. On the other side $234.81 is the floor — a close under it points at $199.32 and puts price back beneath the level the wedge confirmed above."
+      text: "$270.29 opens $305.78 — still 7% short of the $329.23 record, so a run at the highs needs this structure replaced by a larger one. $234.81 is the floor."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -4216,7 +4216,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Shoulders either side of the $1,195.94 head in the week of Jul 6, with the neckline running through the two troughs between them — the Jun 8 and Jul 27 lows at $856.01 and $897.68. The week of Oct 12 closed at $921.20 below that line at $963.16, and Oct 19 confirmed at $815.00, under that week's $871.16 low. Head to neckline is $316.12, so the measured move is $647.04. Note the construction: the neckline is drawn through the troughs' lows here, not their closes as PATTERN_RULES section 5 specifies — through the closes it would sit at $1,068.28, a level price never reached, and nothing would ever have signalled.",
     keyLevel: {
       price: 871.16,
-      text: "One candle confirmed three setups. The Oct 12 week's low is the confirmation level for both weekly readings here, and the daily channel below signalled eleven days later — which is why the downside targets cluster: $647.04 from this, $682.71 from the daily channel, $568.09 from the wedge. A weekly close back above $969.11 is what breaks the agreement. Earnings are Wednesday Oct 28 before the open."
+      text: "One candle confirmed three setups, which is why the downside targets cluster at $647-683. A weekly close back above $969.11 is what breaks the agreement."
     },
     alt: {
       pattern: "Rising Wedge",
@@ -4495,7 +4495,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The break the monthly wedge has been waiting for, confirmed on Oct 23. Modest on its own — $167.45 is 5.3% away — but it is the tradable one: invalidation sits at $157.47, nine tenths of a percent under the close, because the channel boundary it broke is right beneath price. A daily close back inside and it is over, cheaply.",
     keyLevel: {
       price: 174.75,
-      text: "$174.75 is where the argument ends. It is the invalidation on the monthly ascending channel that confirmed its downward break back in February and still carries a $39.08 target — a monthly close above it kills the bear case outright. It sits just above the weekly channel's $172.72 break, so one weekly close through that area does two things at once: it starts the weekly signal and it takes the last bearish reading off the board.\n\nOn valuation: down 34% from the $239.62 high, 58.9x FY26E then against 39.1x now, which leaves it among the dearer names reporting. The monthly falling wedge has signalled up and RSI 70.1 backs it — the only compressed name this week whose momentum is with the setup."
+      text: "$174.75 is where the bear case ends: a monthly close above it kills the February break outright, and it sits just above the weekly channel's $172.72."
     },
     alt: {
       pattern: "Falling Wedge",
@@ -4636,7 +4636,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $131.63 on Oct 19.",
     keyLevel: {
       price: 134.27,
-      text: "The level the bullish side needs back. The daily falling wedge below is at risk, not dead — its floor is $134.27, about 9% above spot, and a daily close back above it returns the setup to confirmed on its own, with $190.19 still written on it. Earnings land Tuesday Oct 27 before the open, and a gap is exactly how that happens: this close is 9% away, the wedge's own confirmation at $160.99 is 30% away, and nothing between the two settles on a rule.\n\nOn valuation: down 54% from the $271.78 high, and still the richest of the compressed names at 37.6x FY26E against 82.6x at the high. The weekly rising wedge is confirmed down to $102.36. More has come out of the multiple than out of the chart. RSI 33.5."
+      text: "The wedge is at risk, not dead — a daily close back above $134.27 returns it to confirmed with $190.19 still on it. Tuesday's print is how a 9% gap happens."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -5223,7 +5223,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "A rising wedge with the flat roof section 3 allows: the upper line has barely moved since June, sitting at $90.03, while the floor climbed from $59.01 in May. It broke the way that shape usually does — the week of Oct 12 closed at $79.35 below the line at $80.91, and Oct 19 confirmed at $74.09, under that week's $78.37 low. Daily RSI is 32. The measured move takes the wedge's width where it started, $29.96, off the signal: $50.95. That is a long way down, which is why the alt below matters — this wedge sits inside a much larger channel whose floor has not gone.",
     keyLevel: {
       price: 70.7,
-      text: "The floor of the bigger weekly channel, 4.6% below spot, and the level that decides which of the two setups here is the real one. The wedge has already broken and points to $50.95; the channel it sits inside has not. Hold $70.70 and the channel is still intact, which puts the top of it at $97.35 back in play. Lose it on a weekly close and both readings agree for the first time. Earnings are Wednesday Oct 28 before the open.\n\nOn valuation: only 18% off the $89.93 high, 33.6x FY26E then against 27.6x now — a mild drawdown by this week's standards, while the weekly rising wedge is already confirmed down to $50.95. The chart is further along than the price damage, which is the shape that hurts if the print disappoints. RSI 32.7."
+      text: "Hold $70.70 and the weekly channel is intact with $97.35 in play. Lose it on a weekly close and the broken wedge's $50.95 and the channel agree for the first time."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -5337,7 +5337,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Our own reading of the break the shown setup describes: the same $270.40 confirmation, called a channel rather than a wedge, projecting $402.93 against their $327.61. Kept deliberately rather than replaced — a matched live pair on one chart is the cleanest evidence available about the projection gap.",
     keyLevel: {
       price: 235.67,
-      text: "The stock is weak on every measure that does not depend on a pattern: -65% from the $738.01 high, -16.3% over a month, -35.6% over three, and lower highs the whole way down — $622.00 in June, $576.46 in July, $437.79 and $335.45 in August, $338.34 in September. The MeanRev panel reads reverting, Hurst .31 with a 4.5-bar half-life, and that is the trap rather than the comfort: reversion to a mean falling 16% a month still loses money. The dip-buying record says the same. APP's last six swing lows returned +4.5%, -2.1%, +2.3%, -7.9%, +3.3% and -5.4% over the following five sessions — three of six negative, median about +1%. LITE's equivalent lows returned +6% to +18%. Same statistic, opposite answer, which is why the bottoming signature has to be measured per stock rather than assumed."
+      text: "Weak on every measure that does not need a pattern: -65% from the high and lower highs the whole way down. Reverting to a mean falling 16% a month still loses money."
     },
     alt: {
       pattern: "Falling Wedge",
@@ -6235,7 +6235,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $267.65 on Oct 23.",
     keyLevel: {
       price: 250.00,
-      text: "$250.00 is the level. Weekly trade is dense from $250 to $325 — 23 weeks in $250-275, 30 in $275-300, 35 in $300-325 — and thins hard below: 9 weeks in $225-250, 5 in $200-225. At $260.01 the stock sits on the bottom edge of where it has lived, with air beneath.\n\nReports Mon Oct 26 with no bottoming signal: hlGate suppresses every MeanRev turn dot, and Hurst .55 with a 1.14 variance ratio says trending, fades dangerous. Down 45% from $474.03, 23.0x FY26E against 41.9x at the high — but the weekly channel is still confirmed down. Cheap and still falling."
+      text: "$250.00 is the bottom edge of where this stock has lived — 88 weeks traded $250-325 against 14 below it. No bottoming signal yet: hlGate suppresses every turn dot."
     },
     alt: {
       pattern: "Rising Wedge",
@@ -6312,7 +6312,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     keyLevel: {
       price: 264.15,
-      text: "The level price was turned back from in mid-October, and the first thing in the way of the upside. Above it the next reference is the $286.99 all-time high of Oct 6 — which is the very point the channel's upper line is anchored to, so any break of the channel top is a new high by definition. Rejection here puts the lower line near $233.90 back in play."
+      text: "$264.15 turned price back in October and is the first thing in the way. Above it the next reference is the $286.99 record, which the channel's top is anchored to."
     },
     note: "Price has run up inside a rising channel since the April low, and the lower line is the real evidence here: fifteen touches since April, and no close more than 6.6% beneath it. Mid-October tested it properly — Oct 16, 19 and 20 all closed below the line, which was a downward signal, and Oct 21 closed back inside and cancelled it. At $257.57 price sits in the middle of the channel with nothing broken in either direction. A confirmed daily close above $298.67 opens $363.44; a confirmed close below $233.90 points to $169.13. Confirmation means a second close beyond the break candle's extreme, not just the first close through the line — the October round trip is exactly why.",
   },
@@ -6341,7 +6341,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $379.99 on Oct 22.",
     keyLevel: {
       price: 316.57,
-      text: "$316.57 is where this ends. The Oct 9 upward break confirmed above $354.43; Oct 23's -7.3% session put price back on that level, which is a retest rather than a failure — it does not fail until a close below $316.57.\n\nCan it reach $167? Yes, and that is traded ground: DAVE closed below it in January and below $200 in April, with a 52-week low of $152.21. But nothing is asking for it. Price sits on its 50-day mean, the triangle has not broken, and four levels matter first — $316.57, the $310.87 buy stop, $293.35, then the 200-day at $284.46. Five decisions away, not one.",
+      text: "The Oct 9 break is being retested, not failing — it does not end until a close below $316.57. $167 is traded ground, but five decisions away.",
     },
     alt: {
       pattern: "Descending Channel",
@@ -7820,7 +7820,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The wedge broke upward in September — Sep 21 closed $183.97 through the line and set the $185.94 high that defined the confirm, and Sep 22 closed $188.32 past it. Price ran to $197 by month end and has given all of it back since, down to $145.61 after the Oct 22 gap. That is the retest, and it is a deep one: the break is still technically alive but it has nothing left between here and $134.29, where it fails. Daily RSI 23 is as oversold as this stock gets.",
     keyLevel: {
       price: 134.29,
-      text: "$134.29 is 7.8% below here and it is the whole question. Above it the September break is a wedge working off an overshoot, with $214.27 still the target. A close below it, followed through, and the break is finished — and the three targets this stock reached on the way down say the sellers have been right so far.\n\nOn valuation: down 53% from the $307.37 high, 56.5x FY26E then against 26.8x now — and at RSI 23.4 the most stretched name reporting this week. The daily falling wedge is on a retest of its break. Stretch and compression line up on the same side here, which is rarer than it sounds; what is missing is a turn."
+      text: "$134.29 is the whole question: above it the September break is a wedge working off an overshoot with $214.27 on it, below it the break is finished."
     },
   },
   {
@@ -7947,7 +7947,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The bullish read, and it is two dollars from becoming real: the week of Oct 12 closed above $1,189.12 for the signal, and at $1,273.46 price sits 0.2% under the $1,275.88 that confirms it. One weekly close through that and the wedge is live toward $1,412.07. Daily RSI 62 is behind it. The rising wedge below is the reason this is not the only thing to read — both are weekly, both are alive, and they point opposite ways.",
     keyLevel: {
       price: 1275.88,
-      text: "$1,275.88 and $1,341.80 are the two numbers, and they are only 5% apart. The first confirms the bullish falling wedge. The second kills the bearish rising wedge that broke down in the summer and is retesting now. A weekly close above both and there is nothing bearish left on the chart; stuck between them, the two setups cancel out and the honest answer is that this is undecided.\n\nOn valuation: 4% off its $1,321.21 high, 36.7x FY26E then against 35.4x now. Nothing has been taken out of this one, which makes the print pure risk rather than an opportunity — the opposite of the STRL or KLAC setup. The weekly falling wedge has signalled up and RSI 62.0 backs it."
+      text: "$1,275.88 confirms the bullish wedge and $1,341.80 kills the bearish one, 5% apart. Between them the chart is honestly undecided."
     },
     alt: {
       pattern: "Rising Wedge",
@@ -9044,7 +9044,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The wedge broke up in October — Oct 7 closed $152.71 through the line and set the $154.52 high that defines the confirm, Oct 8 closed $156.47 past it — and ran to $164.94 by Oct 16. All of that is gone: Oct 23 closed $144.25, back at the line it broke. That is the retest, and it is the last of it. Invalidation is $141.15, three dollars and ten cents below the close, so this resolves within days rather than weeks. Target $173.56 if it holds.",
     keyLevel: {
       price: 141.15,
-      text: "The whole stock is inside a nine-dollar band. $141.15 kills the falling wedge above. $149.82 is the level the rising wedge closed below to confirm its downward break, and $144.25 sits between them. There is no version of the next week where both readings survive: a close under $141.15 with follow-through hands it to the bears and their $127.34, a close back over $149.82 and the bear case is the one in trouble.\n\nOn valuation: down 49% from the $282.95 high, 53.4x FY26E then against 27.2x now. The daily falling wedge is retesting its break toward $173.56, so the chart has turned where most of this group's has not. RSI 40.9."
+      text: "The stock sits inside a nine-dollar band: $141.15 kills the falling wedge, $149.82 the rising one. Both readings cannot survive next week."
     },
     alt: {
       pattern: "Rising Wedge",
@@ -9907,7 +9907,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $16.51 on Sep 28.",
     keyLevel: {
       price: 13.34,
-      text: "Reports Tue Oct 27. The de-rating has already happened: down 55% from the $32.73 high, 56x FY26E then against 24.8x now. What has not happened is the estimate cut that would justify it, and Tuesday is where that gets asked. The chart agrees with the bears — the weekly rising wedge is confirmed down to $13.34, 9% below spot — but that setup is machine-drawn and nobody has checked it, so it goes into the print carrying a red dot. RSI 38.6.",
+      text: "The de-rating has happened, 56x to 24.8x; the estimate cut that would justify it has not, and Tuesday asks. The weekly wedge points to $13.34, unchecked.",
     },
     alt: {
       pattern: "Ascending Channel",
@@ -9982,7 +9982,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $439.45 on Oct 21.",
     keyLevel: {
       price: 480.27,
-      text: "Reports Tue Oct 27. The exception in this week's tape: only 18% off its $547.82 high and carrying the strongest momentum of any name reporting, RSI 71.9. Nothing has been taken out of the price, so the print is the risk rather than the opportunity. The daily descending channel is confirmed up with $480.27 ahead of it, which is the level that says the move is still working. Valued on cash flow rather than a multiple, so there is no P/E compression to point at either way.",
+      text: "Only 18% off the high with the week's strongest momentum at RSI 71.9 — nothing is priced out, so the print is the risk. $480.27 says the move still works.",
     },
     alt: {
       pattern: "Falling Wedge",
@@ -10854,7 +10854,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The wide rising channel off the 2025 lows, broken down and confirmed on the week of Oct 12 with a weekly close below $42.66. The channel is wide, so the measured move is an aggressive $16.48 and the $75.96 invalidation sits 93% overhead — a level nothing will trade against. The direction is the evidence here; neither number is a stop. Levels taken from the source tool Oct 25.",
     keyLevel: {
       price: 40.19,
-      text: "$40.19 is the number. The daily falling wedge signalled Oct 23 at $38.89 on a $39.30 close and needs a later daily close above $40.19 — the signal candle's high — to confirm. That close lands on or after Monday's print. Target $46.30 (+17.8%) against a $35.10 stop (-10.7%): about 1.7x, and earnings decides it.\n\nStretched, watched, not yet turned. The 4h yellow dot is the bottom WATCH, not the BUY; the 1D white triangles are the extreme-low RSI signal, which fires even in a downtrend. Both timeframes gate off their turn dots and Matrix is still bearish. RSI 30.4 daily.",
+      text: "$40.19 confirms the falling wedge: target $46.30 against a $35.10 stop, 1.7x, and that close lands on or after Monday's print. Stretched, watched, not yet turned.",
     },
     alt: {
       pattern: "Ascending Channel",
@@ -10969,7 +10969,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $246.65 on Sep 28.",
     keyLevel: {
       price: 245.37,
-      text: "$245.37 is the number: above it the break survives Monday's print, below it on a close only the weekly setup remains. The daily descending channel confirmed up Oct 14 above $254.30 — target $282.50 (+9.4%) against that $245.37 invalidation (-4.9%), about 1.9x. The weekly channel has agreed since April at $289.91, so the two point within 3% of each other.\n\nThe indicators back it: Matrix Trend UP with a BUY on 10-05, RSI 55.3 with room either way, regime trending. The stored weekly rising wedge projecting $59.82 is not the bear case — it was retired by hand.",
+      text: "Above $245.37 the break survives Monday's print; below it on a close only the weekly remains. Daily and weekly agree within 3%, and the indicators back them.",
     },
     alt: {
       pattern: "Rising Wedge",
@@ -11031,7 +11031,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected rising wedge on the daily chart. A daily close beyond the line on Oct 23 gave a signal; it needs a close beyond $94.79 to confirm.",
     keyLevel: {
       price: 94.71,
-      text: "Everything on HOOD is standing on this. It is the boundary the September break came from and the line the retest is testing; the daily falling wedge's floor sits just beneath it at $93.14. A daily close below $94.71 ends the channel break, and a close below $93.14 takes the wedge with it. Earnings on Oct 27 after the close are what will settle it.\n\nNo valuation page, so chart only. The daily descending channel is on a retest toward $159.94, and the stored daily rising wedge points the other way at $47.73 — both tall enough to be horizon calls rather than earnings calls. RSI 36.5."
+      text: "Everything stands on $94.71 — the boundary September's break came from, with the wedge floor at $93.14 just beneath. Earnings on Oct 27 settle it."
     },
     alt: {
       pattern: "Descending Channel",
@@ -11112,7 +11112,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $88.96 on Aug 31.",
     keyLevel: {
       price: 95.37,
-      text: "Both setups on this stock die here. The topping tail's invalidation is the candle's own high at $95.37, and the daily channel's opposite boundary sits at $95.55 — two independent readings landing 0.2% apart, which makes this an unusually clean level for a stock whose RSI is still 59 and whose trend is still up."
+      text: "Both setups die here: the topping tail's invalidation at $95.37 and the channel's boundary at $95.55, 0.2% apart, while RSI is still 59 and the trend up."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -11303,7 +11303,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The channel up from the May low lost its floor in October: Oct 21 closed below the lower line at $70.94 and Oct 22 confirmed below $68.68. Price is $65.18 and the broken boundary has risen to $72.34, so there is room before anything puts it back inside. Target $51.68. Earnings land Tuesday Oct 27 before the open and can rewrite this: a gap through either level settles the setup without a close ever testing it, so treat the days either side of the print as outside the rules.",
     keyLevel: {
       price: 51.68,
-      text: "Reports Tue Oct 27. No valuation page, so chart only — and the stored setups point both ways at once: a weekly descending channel projecting $109.96 (+69%) and a weekly rising wedge projecting $25.17 (-61%), both tall enough that the detector would refuse to draw them. That is a horizon disagreement, not a contradiction, and neither number belongs to Tuesday. The shown daily ascending channel is confirmed down to $51.68. RSI 34.1.",
+      text: "The stored setups point both ways — $109.96 up, $25.17 down, both too tall to draw — which is a horizon disagreement, not a view. The shown channel is confirmed down to $51.68.",
     },
     alt: {
       pattern: "Rising Wedge",
@@ -11454,7 +11454,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The daily version of the same break, confirmed above $196.21 on Sep 21. Price has drifted down ever since and at $164.45 is roughly $6 above the broken boundary at $158.19. Daily RSI at 41 is not supporting the $242.35 target; this one is closer to failing than to running.",
     keyLevel: {
       price: 139.11,
-      text: "$139.11 is the low this base is built on, and the base is what matters rather than any of the ten setups stored here — they span $87.24 to $272.64, which is the ledger having no view rather than several.\n\nFour successively higher lows since: $139.11 Jul 31, $146.02 Aug 18, $161.18 Sep 16, $165.80 Oct 15, with the range contracting from 39% wide across Jun-Aug to 29% across Sep-Oct. MeanRev agrees the character has changed — Hurst .33 and a .63 variance ratio, the most firmly reverting on this ledger — and z is only -0.69: resting, not stretched.\n\nIt is not yet a trend. The last 40 sessions are -13.8% and the base is unproven until September's $208 high goes. Earnings Oct 29 decides it."
+      text: "$139.11 is the low the base is built on: four higher lows since, the range contracting 39% to 29%. Not a trend until September's $208 goes, and Oct 29 decides it."
     },
     alt: {
       pattern: "Rising Wedge",
@@ -11535,7 +11535,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The same break on the weekly chart, and it verifies the same way: the week of Sep 21 closed $88.07 under the $89.18 line with a $87.79 low, and Sep 28 closed $85.18 beneath it. Read the $18.99 target as what a channel this long projects, not as a forecast — it is 76% below here. The number to use is $92.02: a weekly close back above it ends this and the daily break with it.",
     keyLevel: {
       price: 75.43,
-      text: "$75.43 and $73.12 are $2.31 apart, and between them they decide this stock. $73.12 is the daily channel's target. $75.43 is where the falling wedge now forming dies. So the two live readings cannot both pay: if the channel finishes its move, the wedge has already failed on the way. That gap is also the only tight stop on the chart — the wedge risks 4% for a shot at $101.46, where both confirmed breaks have invalidations 33% and 17% away and are not enterable at all.\n\nNo valuation page, so chart only. The daily ascending channel is confirmed down to $73.12, and the weekly channel behind it is 172% of its starting price, projecting $18.99 on a $78 stock — a multi-year structure that this print cannot resolve either way. RSI 33.8."
+      text: "$73.12 is the channel's target and $75.43 where the forming wedge dies — $2.31 apart, so the two live readings cannot both pay. That gap is the only tight stop here."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -11639,7 +11639,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     rsi: 76.9,
     keyLevel: {
       price: 219.9,
-      text: "$219.90 is the level under the trade — the weekly channel's invalidation, 5.7% below spot.\n\nThe row leads with both upward readings because trend is up and RSI 76.9 backs them: the weekly ascending channel confirmed toward $273.38, the daily falling wedge toward $235.15. The two downward setups score 36 and 19 against 105 and 60.\n\nThat same RSI is the risk. Past 72 the move is extended enough that a snap back is on the table — a risk, not a forecast, since price can stay overbought longer than looks sustainable. Reports Fri Oct 30, the first scheduled event that could end the run.",
+      text: "Both slots are long because trend and RSI 76.9 back them, with $219.90 underneath. That same RSI is the risk, and Friday's print is the first thing that could end the run.",
     },
     price: 233.21,
     priceDate: "2026-10-23",
