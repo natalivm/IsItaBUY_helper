@@ -1074,7 +1074,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
         with open(path, 'w') as fh:
             fh.write(new_text)
 
-    return {'momentum': momentum, 'thin': thin_setups(new_text),
+    return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'promoted': promoted,
             'review': review, 'news': news}
@@ -1387,6 +1387,42 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
 
 # ── Report ──
 
+# A confirmed break whose price has gone back past the level that confirmed it, far
+# enough that the setup is no longer the read it was -- and whose invalidation is too
+# distant to ever retire it. The failure rule needs a close past invalidation, so when
+# that level is half the share price away the setup stays `confirmed` on a target nobody
+# is still trading towards. LITE carried two of these: a daily channel confirmed down in
+# August that then rallied 32% above its confirm, kept alive by an invalidation 57% above
+# the highest price the stock had ever traded.
+STRANDED_UNDONE = 0.10      # price this far back past the confirm level
+STRANDED_STOP = 0.40        # ...and an invalidation at least this far from price
+
+
+def stranded_setups(text):
+    """Confirmed setups whose break is undone and whose invalidation cannot reach price.
+
+    Rows are (ticker, label, pattern, timeframe, stageDate, price, confirm, undone, stop, auto).
+    """
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price = main.get('price')
+        for label, sv, _pos in _setups(e):
+            if sv.get('stage') != 'confirmed':
+                continue
+            inv, conf, d = sv.get('invalidation'), sv.get('confirm'), sv.get('direction')
+            if not (price and inv and conf) or d not in ('up', 'down'):
+                continue
+            undone = (price - conf) / conf if d == 'down' else (conf - price) / conf
+            stop = abs(price - inv) / price
+            if undone < STRANDED_UNDONE or stop < STRANDED_STOP:
+                continue
+            out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
+                        sv.get('timeframe') or main.get('timeframe'), sv.get('stageDate'),
+                        price, conf, undone, stop, bool(main.get('auto')) or bool(sv.get('auto'))))
+    return out
+
+
 def thin_setups(text):
     """Every stored setup whose target sits inside MIN_ROOM of its confirmation level.
 
@@ -1522,6 +1558,14 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} {str(stage):<9} "
                   f"${_fmt_price(level)} → ${_fmt_price(target)}  {room * 100:4.1f}%  ({tag})")
         print("  Run with --thin to drop the auto-detected ones.")
+    stranded = result.get('stranded') or []
+    if stranded:
+        print(f"\n🪦 Stranded (break undone by >{STRANDED_UNDONE * 100:.0f}% with an invalidation >{STRANDED_STOP * 100:.0f}% away —")
+        print("   nothing can retire these; post a replacement or mark them `update` by hand):")
+        for sym, label, pattern, tf, when, price, conf, undone, stop, auto in sorted(stranded, key=lambda r: -r[7]):
+            tag = "auto" if auto else "posted"
+            print(f"  {sym:<6} {tf:<7} {str(pattern):<20} confirmed {str(when):<12} "
+                  f"${_fmt_price(conf)} → ${_fmt_price(price)}  {undone * 100:4.0f}% past, stop {stop * 100:3.0f}%  ({tag})")
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:

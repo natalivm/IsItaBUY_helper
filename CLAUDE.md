@@ -398,6 +398,29 @@ pass. It only ever **removes** a value, never recomputes one: write-once is what
 field mean anything, and a level recomputed months later off a since-refitted line would be
 a different number wearing the same name.
 
+### Stranded setups: confirmed breaks nothing can retire
+
+A setup fails on a close past invalidation plus a follow-through. When that level is half
+the share price away, the rule can never fire — so a confirmed break whose price has gone
+back past the level that confirmed it sits in the ledger forever, on a target nobody is
+trading towards. LITE carried two: a daily ascending channel confirmed down in August
+whose price then rallied **32% above its confirm** before falling back, kept alive by an
+invalidation 57% above the highest price the stock had ever traded.
+
+`stranded_setups()` in `pattern_watchlist.py` reports them, and the daily run prints the
+list under **🪦 Stranded**. The test is both conditions at once: the break undone by more
+than `STRANDED_UNDONE` (10%) *and* an invalidation more than `STRANDED_STOP` (40%) from
+price. Either alone is normal — a sloped invalidation on an old break runs away from price
+by design, which is why 123 of 560 confirmed setups have one outside every price the stock
+has traded, and that is not a defect. The intersection is 9.
+
+Nothing is marked automatically. The auto-detected ones are candidates for Friday's
+redraw, which replaces their levels where the fresh scan still finds the same pattern; the
+hand-posted ones need a replacement posted, since only a human can say whether the chart
+still means what it did. The UI already shows the condition as the **Break undone %** chip
+(`undoneBy()` in `components/PatternWatchlist.tsx`) — what was missing was anything that
+listed them.
+
 ### Working on the scripts: three traps
 
 - **`auto` is a stock-level flag.** Only the `auto: true` directly on the entry decides posted-vs-auto; the stored setups inside `more: [...]` carry their own. A text search for `auto: true` matches both, so a stock that looks auto-detected may be one you posted by hand — ask the parser (`{k: v[2] for k, v in e['fields'].items()}`), not grep.
