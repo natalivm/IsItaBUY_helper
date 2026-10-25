@@ -69,37 +69,34 @@ hand-written and quote the numbers that were true when they were written. STRL's
 said $731.25 — the target of a wedge retired days earlier — while the stock traded at
 $355.30.
 
-## The dots: what a check is worth, and when it expires
+## The dots
+
+**Green dot on a stock you have checked.** `checkedOn: 'YYYY-MM-DD'` on the entry, and
+`components/PatternWatchlist.tsx` shows the dot on `!auto && checkedOn`. Nothing else gates
+it — not earnings, not a clock, not a date on file. It was once gated on a future earnings
+date and that was removed, because it hid the check on every stock without one, which is
+most of them.
+
+**The green dot is cancelled if any of the stock's setups is refreshed by auto
+generation.** Clear `checkedOn` in the same edit that writes the replacement. The check was
+made against the setups as they stood, so a machine drawing nobody has read makes it a
+check of something that is no longer there, and the dot would otherwise vouch for a reading
+produced after the person stopped looking. This is the only expiry a script can cause,
+which makes it the one to wire first.
 
 **A red dot means newly generated and not yet read, nothing else.** It is not a quality
-mark and not a permanent label. Once a stock's shown setups have been checked by hand, the
-`auto: true` comes off them and the dot goes — that is the documented procedure and it is
-the only thing that clears it.
+mark and not a permanent label. Once a stock's shown setups have been checked by hand the
+`auto: true` comes off them and the dot goes — that is the only thing that clears it.
 
-**A check expires on the event that makes it stale, never on a clock, and never on the
-earnings print.** The dot was once gated on a future earnings date and that was removed:
-it hid the check on every stock with no date on file. A check is a check until something
-makes it wrong.
+**A break against the checked reading brings the red dot back.** If the stock breaks
+*against* the reading the check was made on, the row is owed a fresh look. PLTR is the
+case: checked on Oct 25 with a bullish daily falling wedge as the live read, so a completed
+close below its $180.41 invalidation plus the follow-through its `failRule` names is what
+re-flags it. The check said "I have read this chart and this is what it says"; once the
+chart says something else, it is a statement about a chart that no longer exists.
 
-**A price event is what ends one.** If the stock breaks *against*
-the reading the check was made on, the check is spent and the row is owed a fresh look —
-bring the red dot back. PLTR is the case: it was checked on Oct 25 with a bullish daily
-falling wedge as the live read, so a completed close below its $180.41 invalidation plus
-the follow-through its `failRule` names is what re-flags it. The check said "I have read
-this chart and this is what it says"; once the chart says something else, the check is a
-statement about a chart that no longer exists.
-
-**A check also expires the moment any of the stock's setups is replaced by an
-auto-generated one.** The check was made against the setups as they stood; swapping one
-for a machine drawing nobody has read makes it a check of something that is no longer
-there. Clear `checkedOn` in the same edit that writes the replacement — not as a courtesy
-but because the green dot would otherwise vouch for a reading the detector produced after
-the person stopped looking. This is the second way a check dies, alongside the break
-against the reading, and it is the only one a script can cause.
-
-**Apply this to every hand-check from here on.** When you clear a stock's dots, you are
-asserting a reading, so note which setup carries it — the fail rule of the checked setup
-is the expiry condition. A stock needs no earnings date to carry a green dot, and most do not have one.
+**So when you clear a stock's dots, note which setup carries the check** — that setup's
+fail rule is the condition that brings the red dot back.
 
 ## Taking levels from the source tool
 

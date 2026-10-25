@@ -124,8 +124,9 @@ them. A check is a check. An `auto` setup on the shown row still wins the slot, 
 row cannot be both owed a look and already looked at. `checkedOn` is in `KEEP_HEAD`, so a
 rescan carries it; nothing writes it automatically.
 
-**A check expires when price breaks against the reading it was made on** — see
-RULEBOOK.md. Tested against the 17 stocks carrying `checkedOn`, **nothing is expired
+**Two things end a check, both in RULEBOOK.md: any of the stock's setups being refreshed
+by auto generation (clear `checkedOn` in the same edit), and price breaking against the
+reading it was made on (bring the red dot back).** Tested against the 17 stocks carrying `checkedOn`, **nothing is expired
 today**: the only candidate was ENVA, and it was the `_closing_in` false positive the 💀
 report now filters, which is why that guard matters here too. The expiry condition is
 the checked setup's own `failRule`, so record which setup carries the check when you clear
