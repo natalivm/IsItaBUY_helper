@@ -1315,8 +1315,14 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
         done, stored_live, edits = {}, [], []
         for label, sv, pos in setups:
             r = _finished(sv, main, now_et, stored_lines(text, pos))
-            if '_span' in pos:                    # stored (hidden): finished / cancelled ones drop quietly
-                if not r and sv.get('stage') != 'update':
+            if '_span' in pos:                    # stored (hidden): finished ones drop quietly
+                # `update` is kept here too, matching the docstring and the shown setups. It
+                # used to be dropped as "cancelled", which deleted the flag the run before had
+                # just written — LITE's weekly falling wedge and TEAM's either-direction channel
+                # were both flagged on Oct 23 and gone on Oct 25, before anyone could read them.
+                # "Needs updating" asks a human for a replacement, so the run that asks cannot
+                # also be the one that forgets.
+                if not r:
                     stored_live.append(pos)
                 continue
             if not r:
