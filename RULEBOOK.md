@@ -21,9 +21,27 @@ gets eaten.
 **A setup the fresh scan no longer finds is left alone.** Not finding it again is not the
 same as it being wrong.
 
-**Replacing a hand-posted call is a decision, not a clean-up.** `--thin`, `--deadstops`
-and `--dormant` all drop the auto-detected ones and *list* the rest. Keep that split in
-anything new: a script may tidy what it drew, and may only report on what a person drew.
+**A hand-posted setup ends three ways, and a script may reach only two of them.** The
+price update may mark it `target` when price gets there, or `failed` when it is
+invalidated. Nothing else about it is a script's to change — not its levels, not its
+stage, not its slot.
+
+**The third way is replacement by the detector, and only once the setup has gone stale.**
+Stale is what the existing reports already name: flagged `update`, dormant-eligible, a
+dead stop, stranded, or too little room. A hand-posted call that is none of those is still
+a call someone made, and stays untouched.
+
+This replaces the older rule that a script "may tidy what it drew and may only report on
+what a person drew". That rule is what left the ledger with **1 failure in 351 confirmed
+calls**: a stuck row could only be replaced by a human, and the human did not come back, so
+nothing ever closed. Reporting a stale call and leaving it is not caution, it is a row that
+stays wrong forever.
+
+**Replacement archives the prose first.** `archive/handSetups-<date>.json` already stores
+the verbatim source of every stored setup; a replaced hand-posted setup goes there before
+the detector's own note takes its place. Recoverable rather than preserved in place — a
+`note` quoting levels that no longer exist is worse than no note, and the archive is what
+makes the swap safe to automate at all.
 
 **Re-read the prose when a setup changes.** `note`, `failRule` and `keyLevel` are
 hand-written and quote the numbers that were true when they were written. STRL's keyLevel

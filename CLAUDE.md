@@ -419,6 +419,73 @@ pass. It only ever **removes** a value, never recomputes one: write-once is what
 field mean anything, and a level recomputed months later off a since-refitted line would be
 a different number wearing the same name.
 
+### A stop that does not walk: `profileStop`
+
+`price_profile.py` builds a **time-at-price (TPO) profile** from the candles in
+`public/bars/`. The original Market Profile counts time rather than volume — every bar
+contributes one count to each price bin its range covers — and that is the variant we can
+build, because `write_chart_bars` keeps `t/o/h/l/c` and drops volume at aggregation. The
+cost is explicit and belongs beside every level it produces: **a quiet drift through a
+price counts exactly as much as a capitulation through it.** A POC here says price spent a
+long time there, never that a lot changed hands there. Adding volume to the fetch is what
+would turn this from a proxy into the real measure.
+
+It reports POC, VAH/VAL (70% value area grown pairwise from the POC), HVN bands, and thin
+bands split into `pocket` (thick price both sides — price slices through) and `shelf` (thin
+to one end of the range). Bands rather than local extrema, because a thin *tail* is a real
+shape and a trough-between-peaks rule cannot express it.
+
+**The window is the parameter, not a detail.** PANW is the case. Over a year of daily
+candles the profile puts $380 inside the year's thickest band ($321–$387) with nothing thin
+until $414 — price sitting mid-value with resistance overhead. Over three months the same
+candles say the opposite: agreement ends at $377.83 and $385–$407 is a plateau of 6–8 bars
+out of 81 against a median of 12, with price closed at $380.55 right on that edge. The
+second reading is the one that matched a hand read of the volume profile. A long window
+buries a recent thinness under months of older trade, so `--months` is usually what you
+want.
+
+**`profileStop`** (`write_stops()`, `python3 price_profile.py --stops [--apply]`) records,
+on each confirmed setup, the near edge of the nearest HVN band beyond its entry — a stop
+sheltered behind agreed price. The profile reads only candles **before** the break, so the
+level is what the chart said when the trade started. 230 of 351 confirmed setups have one;
+the other 121 have no agreed price beyond their entry in the window.
+
+**Nothing ranks on it**, the same posture `breakInvalidation` was added under. It is
+recorded because it is the only stop on a row that does not walk. Median risk from entry,
+by setup age:
+
+| age | live invalidation | `breakInvalidation` | `profileStop` |
+|---|---|---|---|
+| 0–15 days | 7.1% | 5.3% | 14.0% |
+| 15–45 | 13.0% | 4.7% | 12.4% |
+| 45–120 | 20.7% | 6.4% | 10.9% |
+| 120+ | 31.2% | 8.0% | 12.4% |
+
+The live level spreads 4.4x with age — that is the trendline walking, not risk. Freezing it
+cuts the spread to 1.5x. This one does not drift at all, because it is not read off a line.
+
+**And it is touched half as often.** Of the confirmed setups the ledger still shows as
+live, price had already traded through the frozen stop on **141 of 319 (44%)** and through
+this one on **50 of 230 (22%)** — head to head on the 213 carrying both, the frozen stop
+was touched and this one survived 53 times against 17 the other way, while being more than
+twice as wide. Not a break-bar artifact either: only 28 of the 141 were touched on the
+break bar, 98 were four or more bars later.
+
+**The test that says otherwise is blind, and knowing why matters more than the result.**
+Replayed against `completedCalls.json`, the stored invalidation stopped out of 0 of 24 and
+this one out of 1 of 17 — apparently the opposite verdict. Every label in that file reached
+its target, so it is a set of calls that did not pull back, and no stop gets hit on those.
+It can show a stop was too tight and can never show one was too wide. Same survivorship
+trap as the 2.18x comparison above, and the reason the live-setup measurement is the one to
+read.
+
+**Why the loser half is missing at all**: the ledger holds **351 confirmed setups and 1
+marked `failed`**, against 30 that reached target. Hand-posted failures are not deleted —
+they are marked `failed` and kept on screen — so nothing is being thrown away. The fail
+rule simply almost never fires, because the invalidation is usually too far away to reach.
+A stop nothing can hit produces no failures, which is why a winners-only label set is all
+there is. That is upstream of any stop field and worth more than one.
+
 ### Too tall to draw: the height cap does not apply to what you post
 
 `HEIGHT_VS` and `MAX_HEIGHT` stop the detector drawing a pattern taller than the price it
@@ -518,9 +585,10 @@ the check flagged 204 setups, nearly all of them fine. With it, 59 — 43 machin
 16 posted by hand.
 
 `python3 pattern_watchlist.py --deadstops` (dry run) / `--deadstops --apply` drops the
-auto-detected ones and lists the rest, the same policy `--thin` uses: a main setup or
-anything hand-posted is a call someone made, and replacing one is a decision rather than a
-clean-up. The daily report prints both lists under **🚫** and **📏**.
+auto-detected ones and lists the rest, the same policy `--thin` uses. The daily report
+prints both lists under **🚫** and **📏**. **RULEBOOK.md now allows the detector to replace
+a hand-posted setup once it is on one of these lists** (archiving its prose first); until
+that is wired up, these stay listed rather than replaced.
 
 **`_stoppable()` in `pattern_detect.py` is what stops the cleanup repeating.** Both places
 the detector builds a setup now run the same test, so a rescan cannot draw one of these
@@ -777,8 +845,9 @@ days old with its break 37% undone and stays listed for exactly that reason — 
 not `up`.
 
 **The main and alt slots are never shelved.** They are the row; hiding one would leave the
-ledger showing a setup it has been told to hide. Those are reported and left for a human to
-replace, the same policy `--thin` and `--deadstops` use.
+ledger showing a setup it has been told to hide. Those are reported rather than hidden —
+and a dormant-eligible hand-posted setup is now one the detector may replace, per
+RULEBOOK.md, which is the point: shelving a slot is wrong, replacing it is not.
 
 **Waking a *confirmed* setup does not resume it — it asks for a redraw.** One close back
 past the confirm level, in the setup's own direction, is the trigger, and it needs no threshold and
@@ -828,9 +897,9 @@ price against its close 40 sessions back and drops those. It took the list from 
 the three it removed were all of this shape.
 
 Nothing is marked automatically. The auto-detected ones are candidates for Friday's
-redraw, which replaces their levels where the fresh scan still finds the same pattern; the
-hand-posted ones need a replacement posted, since only a human can say whether the chart
-still means what it did. The UI already shows the condition as the **Break undone %** chip
+redraw, which replaces their levels where the fresh scan still finds the same pattern. A
+stranded hand-posted setup is stale by RULEBOOK.md's definition, so it is replaceable too
+rather than waiting on a human — that wait is what stranded them. The UI already shows the condition as the **Break undone %** chip
 (`undoneBy()` in `components/PatternWatchlist.tsx`) — what was missing was anything that
 listed them.
 

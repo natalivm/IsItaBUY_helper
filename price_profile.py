@@ -193,10 +193,108 @@ def report(ticker, timeframe='daily', since=None, until=None, rows=None):
             'profile': p}
 
 
+# How much chart each timeframe's profile reads. See the window note above: a
+# profile asked about a current break wants a window near the length of the move.
+STOP_WINDOW = {'daily': 3, 'weekly': 12, 'monthly': 36}
+
+
+def _since(months, iso):
+    y, m = int(iso[:4]), int(iso[5:7]) - months
+    return '%04d-%02d-01' % (y + (m - 1) // 12, (m - 1) % 12 + 1)
+
+
+def shelter_stop(bars, timeframe, entry, direction, upto):
+    """The near edge of the nearest band of agreed price beyond `entry`.
+
+    `upto` is the last candle the profile may see — the bar before the break, so
+    the level is what the chart said when the trade started and no later.
+    """
+    p = build(bars, since=_since(STOP_WINDOW.get(timeframe, 12), upto), until=upto)
+    if not p:
+        return None
+    bands = [(price_of(p, a), price_of(p, b)) for a, b in nodes(p)[0]]
+    if direction == 'up':                      # long: shelter below agreed price
+        under = [lo for lo, hi in bands if hi < entry]
+        return max(under) if under else None
+    over = [hi for lo, hi in bands if lo > entry]
+    return min(over) if over else None
+
+
+def write_stops(apply=False, verbose=True):
+    """Record `profileStop` on every confirmed setup that does not have one.
+
+    Write-once, like `breakInvalidation`, though for a different reason: that one
+    is frozen because recomputing it off a since-refitted line would give a
+    different number wearing the same name, while this one is reproducible by
+    construction — the profile of candles before the break never changes. It is
+    written once anyway so that a redrawn setup gets a fresh level rather than
+    inheriting the old setup's, which is the mistake META's redraw made with
+    `breakInvalidation`.
+
+    **Nothing ranks on it.** It exists because it is the only stop on a row that
+    does not walk: an invalidation is a trendline at the latest candle and drifts
+    4.4x with age (7.1% of entry at 0-15 days, 31.2% past 120), freezing it cuts
+    that to 1.5x, and this does not drift at all. On the confirmed setups the
+    ledger still shows as live, price had already traded through the frozen stop
+    on 141 of 319 and through this one on 50 of 230.
+
+    No economic filter — not MIN_RR, not a distance cap. The field states where
+    agreed price is, which is a fact about the chart; whether that makes a trade
+    worth taking is a separate question and not this function's to answer.
+    """
+    with open(pw.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    edits, done, skipped = [], [], []
+    for e in pw.parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        for label, s, pos in pw._setups(e):
+            pattern = s.get('pattern') or main.get('pattern') or ''
+            name = f"{main['ticker']} ({label}, {pattern})"
+            if s.get('stage') != 'confirmed' or s.get('profileStop') is not None:
+                continue
+            entry, dirn = s.get('confirm'), s.get('direction')
+            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
+            sd = s.get('stageDate')
+            anchor = 'breakInvalidation' if 'breakInvalidation' in pos else 'invalidation'
+            if not (entry and dirn in ('up', 'down') and sd and anchor in pos):
+                continue
+            bars = load_bars(main['ticker'], tf)
+            if not bars or sd not in bars['t']:
+                skipped.append((name, f'candles do not reach {sd}'))
+                continue
+            i = bars['t'].index(sd)
+            if i == 0:
+                skipped.append((name, 'the break is the first candle on file'))
+                continue
+            at = shelter_stop(bars, tf, entry, dirn, bars['t'][i - 1])
+            if at is None:
+                skipped.append((name, 'no agreed price beyond the entry in the window'))
+                continue
+            at = pw._fmt_price(at)
+            b = pos[anchor][1]
+            edits.append((b, b, f", profileStop: {at}"))
+            done.append((name, entry, float(at), abs(float(at) - entry) / entry * 100))
+    if verbose:
+        for name, entry, at, risk in done:
+            print(f"SHELTER  {name}: entry {entry}, stop {at} ({risk:.1f}%)")
+        for name, why in skipped:
+            print(f"SKIP     {name}: {why}")
+        print(f"\n{len(done)} shelter stop(s) recorded, {len(skipped)} skipped.")
+    if apply and edits:
+        for a, b, v in sorted(edits, key=lambda x: x[0], reverse=True):
+            text = text[:a] + v + text[b:]
+        with open(pw.WATCHLIST_FILE, 'w') as fh:
+            fh.write(text)
+    return done, skipped
+
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('ticker')
+    ap.add_argument('ticker', nargs='?', help='omit with --stops')
+    ap.add_argument('--stops', action='store_true',
+                    help='record profileStop on confirmed setups in the ledger')
+    ap.add_argument('--apply', action='store_true', help='write them (default is a dry run)')
     ap.add_argument('--timeframe', default='daily', choices=('daily', 'weekly', 'monthly'))
     ap.add_argument('--since', help='first candle date to include (YYYY-MM-DD)')
     ap.add_argument('--months', type=int, help='include only the last N months (overrides --since)')
@@ -209,4 +307,9 @@ if __name__ == '__main__':
         m = today.month - args.months
         y = today.year + (m - 1) // 12
         since = today.replace(year=y, month=(m - 1) % 12 + 1, day=1).isoformat()
-    report(args.ticker, args.timeframe, since, args.until, args.rows)
+    if args.stops:
+        write_stops(apply=args.apply)
+    elif args.ticker:
+        report(args.ticker, args.timeframe, since, args.until, args.rows)
+    else:
+        ap.error('give a ticker, or --stops')
