@@ -2540,7 +2540,7 @@
  "PANW|weekly alt": {
   "label": "weekly alt",
   "setup": "Ascending Channel (weekly)",
-  "stage": "update",
+  "stage": "forming",
   "ticker": "PANW"
  },
  "PINS|daily Rising Wedge": {
