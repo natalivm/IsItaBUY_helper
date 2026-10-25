@@ -8793,6 +8793,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
     stageDate: "2026-10-19",
     price: 260.01,
     priceDate: "2026-10-23",
+        keyLevel: {
+      price: 250.00,
+      text: "Reports Mon Oct 26, and there is no bottoming signal yet — which the MeanRev panel is stating actively rather than by omission. Its half-life is 57.7 bars against a 50-bar lookback, and the indicator's own hlGate suppresses every turn dot when the half-life exceeds the window: it is saying this will not come halfway back inside the period being measured, so do not read a bottom off it. Hurst .55 and a variance ratio of 1.14 say trending, fades are dangerous. RSI is 27 daily and 19 on the hour, so the short timeframes are stretched while the regime is not.\n\n$250.00 is the level that matters below spot. Weekly trade is dense from $250 to $325 — 23 weeks in $250-275, 30 in $275-300, 35 in $300-325 — and thins hard underneath: 9 weeks in $225-250, 5 in $200-225. At $260.01 the stock sits on the bottom edge of where it has lived, with air below.\n\nWhich is also why the $202.43 target is not the error the geometry report implies. The channel's LINES are wrong — its lower boundary starts at $58.05 in March 2025 when the stock traded near $66, making the height 242% of that price — but $202.43 does not follow from them (296.12 minus the 160.05 height is 136.07). The target was set some other way and lands in thin air the stock last touched in the week of Sep 1 2025, which makes it quick to traverse rather than supported. The lines need redrawing; the number under them does not.\n\nNote the listing: our price is the USD line at $260.01. The TSX chart reads 364.40 in CAD, and its z-score of -1.38 is not comparable with the -2.20 these USD bars give — different series, different currency, plus the panel's 5-bar smoothing."
+    },
     rsi: 28.2,
     trend: "down",
     signal: 362.47,

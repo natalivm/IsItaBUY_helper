@@ -416,8 +416,17 @@ honestly. Only the height cap sees it.
 
 `geometry_faults()` reports them under **📐 Too tall to draw**: a hand-posted setup with
 lines whose height exceeds `GEOMETRY_CAP` of the close where its lines begin. It changes
-nothing — the break and the direction are usually right and only the number under them is
-wrong, which is a judgement about redrawing rather than a stage change.
+nothing — the break and the direction are usually right, which makes redrawing a judgement
+rather than a stage change.
+
+**A flagged drawing does not mean a wrong target.** The check tests the lines, not the
+arithmetic, and the two come apart. CLS's weekly channel is flagged at 242% — its lower
+boundary starts at $58.05 when the stock traded near $66 — but its $202.43 target does not
+follow from those lines at all (the confirm at $296.12 less the $160.05 height is $136.07).
+The number was set some other way and is defensible; only the geometry is broken. STRL's
+$15.67 and ENVA's $54.55 *were* the arithmetic, which is what made them absurd. Check
+whether `confirm ± height` reproduces the stored target before concluding the target is
+the problem.
 
 The right fix when one appears is the construction, not the level: measure the pattern over
 the span that holds the move. ENVA's channel over 2026 alone (a $129.25-$267.45 range)
