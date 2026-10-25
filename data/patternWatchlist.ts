@@ -3825,7 +3825,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     note: "The same advance read as a wedge, its two lines converging. Price at $380.55 sits a hair above the $378.09 lower line; a weekly close below it would start a downside signal, and the measured move off the wedge's mouth reaches $258.98.",
     keyLevel: {
       price: 378.09,
-      text: "$378.09 is 0.6% below spot and decides it: a weekly close under signals the rising wedge toward $258.98. Above is thin trade to $397-400, where the Oct 14 gap and the volume shelf agree, and price has crossed that band in one session each way."
+      text: "$378.09 is 0.6% below spot and decides it: a weekly close under signals the rising wedge toward $258.98. Above is thin trade to $397-400, where the Oct 14 gap and the volume shelf agree — the objective of the bounce, and where it is likely to stall."
     },
     alt: {
       pattern: "Ascending Channel",
@@ -6301,7 +6301,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     keyLevel: {
       price: 261.21,
-      text: "$261.21 is the Oct 14 gap and the nearest thing in the way, 1.4% up, with spot sitting inside the gap rather than through it. $264.15 turned price back in October and is the next reference, then the $286.99 record."
+      text: "$261.21 is the Oct 14 gap and the nearest thing in the way, 1.4% up, with spot inside the gap rather than through it. Filling it is what the bounce is for, not the start of a trend. $264.15 turned price back in October, then the $286.99 record."
     },
     note: "Price has run up inside a rising channel since the April low, and the lower line is the real evidence here: fifteen touches since April, and no close more than 6.6% beneath it. Mid-October tested it properly — Oct 16, 19 and 20 all closed below the line, which was a downward signal, and Oct 21 closed back inside and cancelled it. At $257.57 price sits in the middle of the channel with nothing broken in either direction. A confirmed daily close above $298.67 opens $363.44; a confirmed close below $233.90 points to $169.13. Confirmation means a second close beyond the break candle's extreme, not just the first close through the line — the October round trip is exactly why.",
   },
