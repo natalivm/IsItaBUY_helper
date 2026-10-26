@@ -163,8 +163,10 @@ function flagFor(timeframe: string | undefined, stored?: string) {
   return closePending(tf) ? `${cap(tf)} close pending` : undefined;
 }
 
+// `title` because these truncate: the Pattern column cannot hold every row's chips, so a
+// crowded row shows a stem and the hover carries the whole text.
 const Flag: React.FC<{ text?: string; keyFlag?: boolean }> = ({ text, keyFlag }) =>
-  text ? <span className={`flag${keyFlag ? ' key' : ''}`}>{text}</span> : null;
+  text ? <span className={`flag${keyFlag ? ' key' : ''}`} title={text}>{text}</span> : null;
 
 /** How far price has retraced back past the level that confirmed the break, as a %, or null.
  *

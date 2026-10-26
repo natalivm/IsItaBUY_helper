@@ -179,6 +179,19 @@
 
 /* App additions: header controls, ticker link to the valuation page, empty rows */
 .pbw .meta{overflow:hidden} /* two flags no longer spill into the Target column */
+/* ...but overflow:hidden clips from the RIGHT, and the RSI chip sits last, so a row
+   carrying a long flag ("Weekly close pending") lost the one number on it. Everything
+   to its left gives up width first: the pattern text absorbs the slack (flex 1 1 0),
+   the other flags ellipsize, and .flag.mom stays flex:none so the reading is whole or
+   not shown at all. */
+.pbw .meta .txt{flex:1 1 0}
+/* The flags truncate rather than vanish, and shrink all the way: the Pattern column is
+   230px while 79 of 153 rows want up to 451px of chips, so on a crowded row something
+   has to give and it is never the number. A floor under the flags (4.5em was tried, to
+   keep a readable "WEEKLY…" stem) hands the overflow straight back — 21 rows clipped
+   again at 960px — so they shrink without limit and `title` carries the full text on
+   hover instead. */
+.pbw .meta>.flag:not(.mom){min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
 .pbw .hdr-ctl{display:flex;align-items:center;gap:9.5px;flex-wrap:wrap}
 .pbw .ctl{appearance:none;position:relative;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:500 14.5px/1 var(--f-body);padding:8.5px 13px;border-radius:1199px;cursor:pointer}
 .pbw .ctl:hover{color:var(--fg)}
