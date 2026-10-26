@@ -203,7 +203,33 @@ moves rankings and lists that the ledger is read from:
   landing page prints the ratio in its reasons.
 
 Until they are rewired, read any reward:risk figure in this repo as what it is: a
-statement about where two lines sit, not about a trade.
+statement about where two lines sit, not about a trade. The section above says what the
+reference should be instead, and why the ledger cannot supply it yet.
+
+## The stop moves to the last target the move has already paid
+
+**Invalidation is a stop only while nothing has been reached.** Before any target on the
+stock has been met, the reading is unproven and nothing is banked, so the invalidation is
+the honest reference — being wrong costs what it costs. Once a target has been met, using
+it means giving the whole move back to find out you were wrong. By then you are too late.
+
+**After the first met target the stop sits just beyond it** — just above for a short, just
+below for a long. That is a price the move has already proved it can take out, so a return
+back through it says the move is failing, which is what a stop is for. AMZN is the case:
+shorting its weekly rising wedge at $248.60 against the $295.27 invalidation risks 19%,
+when the level that matters is the nearest objective price has already passed.
+
+**So reward:risk has two regimes and the setup's age decides which:**
+
+- nothing met yet → the invalidation is the reference, and the ratio means something
+- something met → the met target is the reference, and the invalidation is history
+
+**The ledger cannot do this yet, because it deletes the met targets.** `prune_finished`
+removes a setup once its target is reached and writes it to `data/completedCalls.json` —
+30 rows for the entire ledger, and **none for AMZN**, while the source tool shows three
+finished setups on that chart. The information this rule needs is exactly what we take off
+the page. Recording met targets per stock, and keeping them where a row can see them, is
+the prerequisite for computing a stop that means anything.
 
 ## A price the stock has never traded
 
