@@ -5,8 +5,8 @@ export const ITT = defineStock({
   name: 'ITT Inc.',
   sector: 'Diversified Industrials',
   themeColor: '#3b82f6',
-  currentPrice: 190.1,
-  updatedOn: '10/23',
+  currentPrice: 190.73,
+  updatedOn: '10/26',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$175 - $285',  // stockanalysis.com analyst target range (Sep 30 2026)

@@ -5,12 +5,12 @@ export const PLTR = defineStock({
   name: 'Palantir Technologies',
   sector: 'AI / Data Analytics Software',
   themeColor: '#0ea5e9',
-  updatedOn: '10/23',
+  updatedOn: '10/26',
   nextEarningsOn: '2026-11-02',   // Q3 2026, after the close; per Benzinga Oct 2026 and
                                   // unconfirmed by Palantir IR. Yahoo overrides this when it has a date.
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 196.75,
+  currentPrice: 198.84,
   fairPriceRange: '$80 - $265',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 2300,
   rev25: 4480,         // FY2025; FY26 guide $8.150-8.158B (+82%), FY27E consensus $12.31B (+51%)

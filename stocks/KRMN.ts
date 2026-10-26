@@ -5,8 +5,8 @@ export const KRMN = defineStock({
   name: 'Karman Holdings Inc.',
   sector: 'Aerospace, Defense, Hypersonics & Space Systems',
   themeColor: '#0d9488',
-  currentPrice: 36.65,
-  updatedOn: '10/23',
+  currentPrice: 37,
+  updatedOn: '10/26',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   fairPriceRange: '$63 - $100',  // stockanalysis.com analyst target range, Oct 8 2026

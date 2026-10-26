@@ -5,7 +5,7 @@ export const CRWD = defineStock({
   name: 'CrowdStrike Holdings',
   sector: 'Cybersecurity / Endpoint Security',
   themeColor: '#e33535',
-  currentPrice: 257.57,   // post 4-for-1 split (Jul 2 2026)
+  currentPrice: 261.83,   // post 4-for-1 split (Jul 2 2026)
   fairPriceRange: '$132 - $325',  // stockanalysis.com analyst target range (split-adjusted), Oct 9 2026
   shares0: 1010,        // split-adjusted: ~252M pre-split × 4 (4-for-1 split, Jul 2 2026)
   rev25: 4810,          // FY26A (Jan 2026); FY27E consensus $6.01B (+25%), FY28E $7.37B (+23%)
@@ -37,7 +37,7 @@ export const CRWD = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
 
 
-  updatedOn: '10/23',
+  updatedOn: '10/26',
   lastReportTag: 'Q2 FY27',
   dataReviewedOn: '2026-10-10',
 

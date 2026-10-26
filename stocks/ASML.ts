@@ -5,8 +5,8 @@ export const ASML = defineStock({
   name: 'ASML Holding',
   sector: 'Semiconductor Equipment · EUV Lithography',
   themeColor: '#0064d2',
-  updatedOn: '10/23',
-  currentPrice: 1571.8,
+  updatedOn: '10/26',
+  currentPrice: 1590.9,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$868 - $2,902',  // stockanalysis.com analyst target range (Oct 9 2026)

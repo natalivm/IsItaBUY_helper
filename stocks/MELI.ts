@@ -1,7 +1,7 @@
 import { defineStock } from './defineStock';
 
 export const MELI = defineStock({
-  updatedOn: '10/23',
+  updatedOn: '10/26',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   // Q2 2026 UPDATE (Aug 5, 2026)
@@ -29,7 +29,7 @@ export const MELI = defineStock({
   name: 'MercadoLibre',
   sector: 'E-Commerce / Fintech',
   themeColor: '#f59e0b',
-  currentPrice: 1810.15,
+  currentPrice: 1668.72,
   fairPriceRange: '$1,750 - $2,800',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 50.7,       // 50.70M shares outstanding at Jun 30, 2026
   rev25: 28900,
