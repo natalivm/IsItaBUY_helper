@@ -2638,6 +2638,184 @@ def trade_progress(sv, price, trend=None):
             'reward': (target - price) / price if d == 'up' else (price - target) / price}
 
 
+# ── Bullish setups waiting on the turn ──
+
+# How near a trigger has to be before the setup is worth queuing. A reversal takes price
+# up through a level; one 40% away needs the turn to have happened already, which is the
+# pre-trigger form of the 📐 caveat (COHR's weekly wedge reads the best reward on the
+# ledger and its trigger sits +44.7% away).
+REACHABLE = 0.15
+
+# How stale a turn-up dot may be and still count as "this is turning". The Pine confirms a
+# pivot CONFIRM bars after the fact, so a dot is three bars late before anyone sees it.
+TURN_FRESH = 30
+
+
+def bottoming(ticker, timeframe='daily'):
+    """What the mean-reversion and trend indicators say about this stock bottoming.
+
+    Returns None where there are no candles. `turnUpAgo` is how many bars back the last
+    confirmed turn-up pivot in z sits — the Pine's own "being stretched is not a signal;
+    rolling over is", so a recent dot is the evidence and a deep z alone is not.
+    """
+    try:
+        import reversion as _rv
+        import matrix_state as _ms
+    except ImportError:
+        return None
+    bars = _rv.load(ticker, timeframe)
+    if not bars:
+        return None
+    s = _rv.stats(bars)
+    if not s:
+        return None
+    mb = _ms.load(ticker, timeframe)
+    st = _ms.state(mb) if mb else None
+    turn = s.get('lastTurnUp')
+    return {'z': s['z'], 'halfLife': s['halfLife'], 'hurst': s['hurst'],
+            'reverting': s['hurst'] is None or s['hurst'] < 0.5,
+            'gated': s['gated'],
+            'turnUpAgo': turn[2] if turn else None, 'turnUpZ': turn[1] if turn else None,
+            'matrix': st['trend'] if st else None,
+            'vsMa': st['priceVsMa'] if st else None}
+
+
+def _is_bottoming(b, fresh=TURN_FRESH):
+    """Is this stock actually turning, or merely cheap?
+
+    Three conditions, and the Pine's own reasoning behind each. **z below its mean**: there
+    has to be something to revert *from*. **A confirmed turn-up pivot inside `fresh`
+    bars**: "being stretched is not a signal; rolling over is" — price can stay stretched
+    far longer than it looks sustainable, so the dot is the evidence and a deep z alone is
+    not. **A reverting regime** (Hurst < 0.5): fading a trending series is how you get run
+    over.
+
+    `gated` disqualifies too. The Pine hides its dots when the half-life exceeds the
+    lookback, on the grounds that a series which will not come halfway back inside the
+    window being measured is not one to fade — VZ's half-life reads 5602 bars. Honouring
+    the gate here keeps this list agreeing with the panel you read it against.
+    """
+    if not b or b.get('z') is None or b.get('turnUpAgo') is None:
+        return False
+    return (b['z'] < 0 and b['turnUpAgo'] <= fresh
+            and b['reverting'] and not b['gated'])
+
+
+def _bottoming_miss(b, fresh=TURN_FRESH):
+    """Why a stock that looks like it is turning fails `_is_bottoming` — or None.
+
+    Only for the ones with a *fresh, deep* turn, which is the shape where the filter
+    dropping them is worth seeing. IREN is the case: z −2.45 with a turn-up three bars
+    ago, the strongest bottoming reading on the board, and the Hurst gate refuses it as
+    trending. The gate is right about what it measures — fading a trending series is how
+    you get run over — but a falling wedge is not a fade: the break is the trade and the
+    trend's strength is part of the pattern. So this is a counter-trend entry rather than
+    a mean-reversion one, which is a thing to know about a row, not a reason to hide it.
+
+    Returns a short reason, never a verdict; these print under their own heading.
+    """
+    if not b or b.get('z') is None or b.get('turnUpAgo') is None:
+        return None
+    if b['z'] >= -1.0 or b['turnUpAgo'] > 10:
+        return None                      # not a strong enough reading to argue about
+    if _is_bottoming(b, fresh):
+        return None
+    if b['gated']:
+        return "half-life past the lookback — the panel hides its dots here"
+    if not b['reverting']:
+        return "Hurst says trending: the bounce is counter-trend, not a fade"
+    return None
+
+
+def reversal_setups(text, include_auto=False, reach=REACHABLE, bottoming_only=True):
+    """Upward setups positioned for a turn, with the evidence on whether the stock is turning.
+
+    Rows are dicts. The ledger question is "which bullish readings are ready", so this
+    keeps the ones whose trigger price can still be reached and reports, for each, what
+    `reversion.py` and `matrix_state.py` say about the stock bottoming. It decides
+    nothing: a turn-up dot is three bars late by construction and the indicators are
+    evidence to read beside the chart, not a signal to act on.
+    """
+    out = []
+    tall = {(r[0], r[1]) for r in geometry_faults(text)}
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price, trend = main.get('price'), main.get('trend')
+        for i, (label, sv, _pos) in enumerate(_setups(e)):
+            if sv.get('dormant') or i > 1:
+                continue
+            pattern = sv.get('pattern') or main.get('pattern')
+            if pattern == PLACEHOLDER or sv.get('stage') not in LIVE_STAGES:
+                continue
+            auto = bool(main.get('auto')) or bool(sv.get('auto'))
+            if auto and not include_auto:
+                continue
+            pg = trade_progress(sv, price, trend)
+            if pg is None or pg['dir'] != 'up' or pg['reward'] <= 0:
+                continue
+            to_trigger = (pg['entry'] - price) / price
+            if to_trigger > reach:
+                continue
+            out.append({'ticker': main['ticker'], 'label': label, 'pattern': pattern,
+                        'timeframe': sv.get('timeframe') or main.get('timeframe'),
+                        'stage': sv.get('stage'), 'price': price, 'trend': trend,
+                        'rsi': main.get('rsi'), 'auto': auto,
+                        'tall': (main['ticker'], label) in tall,
+                        'trigger': pg['entry'], 'target': pg['target'],
+                        'toTrigger': to_trigger, 'reward': pg['reward'],
+                        'move': pg['move'], 'done': pg['done'],
+                        'triggered': pg['done'] > 0,
+                        'bot': bottoming(main['ticker'])})
+    if bottoming_only:
+        for r in out:
+            r['nearMiss'] = _bottoming_miss(r['bot'])
+        out = [r for r in out if _is_bottoming(r['bot']) or r['nearMiss']]
+    # Nearest trigger first: at a turn, what matters is which levels price reaches soonest.
+    out.sort(key=lambda r: (abs(r['toTrigger']), -r['reward']))
+    return out
+
+
+def print_reversal(rows, top=25):
+    """The bullish queue, with the bottoming evidence beside each row."""
+    if not rows:
+        print("Nothing qualifies: no upward setup has a reachable trigger on a stock that is"
+              " turning.\n  `--all-setups` drops the bottoming filter and shows every"
+              " reachable trigger.")
+        return
+    print(f"{len(rows)} upward setup(s) with a reachable trigger, nearest first.\n")
+    print(f"  {'':8}{'stock':<7}{'tf':<8}{'pattern':<20}{'stage':<9}"
+          f"{'price':>9} {'trigger':>9} {'target':>9}  {'rwd':>6}  {'z':>6} {'turn':>6} {'regime':<10} matrix")
+    near = [r for r in rows if r.get('nearMiss')]
+    rows = [r for r in rows if not r.get('nearMiss')]
+    for r in rows[:top]:
+        b = r['bot'] or {}
+        z = f"{b['z']:.2f}" if b.get('z') is not None else '--'
+        turn = (f"{b['turnUpAgo']}b" if b.get('turnUpAgo') is not None else '--')
+        regime = ('reverting' if b.get('reverting') else 'trending') if b else '--'
+        mark = '→' if r['triggered'] else ' '
+        print(f"  {r['toTrigger'] * 100:+6.1f}% {mark}{r['ticker']:<7}{str(r['timeframe']):<8}"
+              f"{str(r['pattern']):<20}{str(r['stage']):<9}"
+              f"{'$' + _fmt_price(r['price']):>9} {'$' + _fmt_price(r['trigger']):>9}"
+              f" {'$' + _fmt_price(r['target']):>9}  {r['reward'] * 100:5.1f}%"
+              f"  {z:>6} {turn:>6} {regime:<10} {b.get('matrix') or '--'}"
+              + ("  📐" if r['tall'] else "") + ("  (auto)" if r['auto'] else ""))
+    if len(rows) > top:
+        print(f"  ... and {len(rows) - top} more")
+    print("\n  A negative trigger distance means price is already past it (→ = the move has"
+          " started).\n  z = mean-reversion score, turn = bars since the last confirmed turn-up"
+          " pivot\n  (three bars late by construction). Evidence to read beside the chart,"
+          " not a signal.")
+    if near:
+        print(f"\nStretched and turning, but the filter refuses them ({len(near)}) —"
+              " worth your own read:")
+        for r in near:
+            b = r['bot'] or {}
+            print(f"  {r['toTrigger'] * 100:+6.1f}%  {r['ticker']:<6}{str(r['timeframe']):<8}"
+                  f"{str(r['pattern']):<20}{str(r['stage']):<9} rwd {r['reward'] * 100:5.1f}%"
+                  f"  z {b['z']:+.2f}  turn {b['turnUpAgo']}b")
+            print(f"           {r['nearMiss']}")
+
+
 def _aligns(direction, trend):
     """'with' / 'flat' / 'against' — how the stock's trend reads for this direction.
 
@@ -3029,12 +3207,21 @@ if __name__ == "__main__":
     ap.add_argument("--dedupe", action="store_true", help=f"keep one setup per claim: swap an alt that repeats the main, drop stored setups whose target is within {DUPE * 100:.0f}% of a shown one")
     ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
     ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
+    ap.add_argument("--reversal", action="store_true", help="bullish setups whose trigger price is within reach, with what the mean-reversion and trend indicators say about the stock bottoming")
+    ap.add_argument("--reach", type=float, default=REACHABLE * 100, help="with --reversal: how far the trigger may sit from price, in %% (default {:.0f})".format(REACHABLE * 100))
     ap.add_argument("--reward", action="store_true", help="rank live setups by the move left from today's price to their target, trend-aligned first")
     ap.add_argument("--all-setups", action="store_true", dest="all_setups", help="with --reward: include the stored setups, not just the two a row shows")
     ap.add_argument("--include-auto", action="store_true", dest="include_auto", help="with --reward: let auto-detected (red dot) setups into the ranking")
     ap.add_argument("--top", type=int, default=20, help="with --reward: how many rows per bucket (default 20)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.reversal:
+        with open(WATCHLIST_FILE) as fh:
+            rows = reversal_setups(fh.read(), include_auto=args.include_auto,
+                                   reach=args.reach / 100,
+                                   bottoming_only=not args.all_setups)
+        print_reversal(rows, top=args.top)
+        raise SystemExit(0)
     if args.reward:
         with open(WATCHLIST_FILE) as fh:
             rows = reward_rank(fh.read(), shown_only=not args.all_setups,

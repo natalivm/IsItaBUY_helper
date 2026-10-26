@@ -806,6 +806,48 @@ after the 🪦 list — which is why the failing-setup list described above was 
 through its own flag. It reads `result['failing']` now, computed in `update_watchlist`
 beside `stranded` and the rest.
 
+### Bullish setups waiting on the turn
+
+`python3 pattern_watchlist.py --reversal` answers the question you ask near the end of a
+downtrend: **which bullish readings are ready for the reversal?** `reversal_setups()` keeps
+the upward setups whose trigger price is within `REACHABLE` (15%) of spot and attaches, for
+each, what `reversion.py` and `matrix_state.py` say about the stock actually bottoming.
+
+86 upward setups have a reachable trigger. Sorting those by trigger distance alone puts
+**overbought** names on top — ZS, XOM, VEEV, NOW and V all sit within 3% of an upward
+trigger while reading z +2.0 to +2.5 with their last turn-up 65–87 bars back and the matrix
+on POWER UP. Those are late in an *up*trend, not candidates for a turn. So the list filters
+on the bottoming evidence rather than the distance, and 15 rows survive.
+
+`_is_bottoming()` is the filter, and every condition is the Pine's own reasoning:
+
+- **z below its mean** — there has to be something to revert from;
+- **a confirmed turn-up pivot inside `TURN_FRESH` (30) bars** — *being stretched is not a
+  signal; rolling over is*. Price stays stretched far longer than it looks sustainable, so
+  the dot is the evidence and a deep z alone is not;
+- **a reverting regime** (Hurst < 0.5) — fading a trending series is how you get run over;
+- **not `gated`** — the panel hides its dots when the half-life exceeds the lookback, on
+  the grounds that a series which will not come halfway back inside the window being
+  measured is not one to fade. VZ's half-life reads 5602 bars. Honouring the gate keeps
+  this list agreeing with the panel it is read against.
+
+**The near-miss list is the point of the design.** A stock with a *fresh, deep* turn
+(z < −1, dot inside 10 bars) that the filter still refuses is printed under its own
+heading with the reason named, rather than dropped. IREN is the case: z −2.45 with a
+turn-up three bars ago, the strongest bottoming reading on the board, refused because
+Hurst reads trending. The gate is right about what it measures, and a falling wedge is not
+a fade — the break is the trade — so that row is a *counter-trend entry*, which is a thing
+to know about it rather than a reason to hide it. It earned the distinction the next
+session: **IREN fell another 3% pre-market**, which is the filter being right to withhold
+confidence and the near-miss list being right to keep showing the row.
+
+Loosening a threshold so a favourite passes is the failure mode this avoids. AVGO and AMZN
+pass on their own merits, and both were hand-identified as bottoming before the filter
+existed, which is the reason to believe it.
+
+`--all-setups` drops the bottoming filter, `--reach N` moves the 15%, `--include-auto`
+lets red-dot setups compete.
+
 ### Which two setups the row shows
 
 The two visible slots are the most valuable thing on a row, and they used to go to whatever
