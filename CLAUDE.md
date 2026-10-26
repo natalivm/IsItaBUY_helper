@@ -576,12 +576,22 @@ is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
   Comparing it to *price* instead is a different test and a worse one: it flags every `atRisk`
   setup, which is the stage that already says price has reached the stop.
 
-**RULEBOOK.md now says an invalidation is not a stop** — it marks a trend change, so a
-ratio taken from it to the target is not reward:risk, and the filter below is measuring two
-distances on a drawing rather than a trade. It still runs and still flags 51 setups; read
-those listings as geometry, not as a verdict, until it is rewired onto a real stop
-(`profileStop` or a swing pivot). The same caveat applies to `slot_score`'s reward:risk
-term and to `weekly_feature.score_setup`'s "+10 at ≥3x".
+**RULEBOOK.md says an invalidation is not a stop** — it marks a trend change, so a ratio
+taken from it to the target is not reward:risk. **All three places that did it have been
+rewired.** `weekly_feature.score_setup` dropped the term outright (see "Ranking on the
+break"); `stop_fault` and `slot_score` now measure risk from **`profileStop`**, the only
+stop on a row that is both a price the stock actually traded and one that does not walk
+with its trendline. Where a setup has no profile stop — 182 of 412 — the reward:risk terms
+are skipped rather than fed a substitute, because no stop means no reward:risk, and
+substituting a level that is not one is how the wrong number got here.
+
+**The new denominator was checked against the setups verified by hand before the threshold
+was trusted**, since `MIN_RR = 1.0` was calibrated on the old one. Of 43 such setups
+exactly one flips from pass to fail — INTC's weekly falling wedge, 1.24 → 0.55 — while
+**AMKR's weekly ascending channel goes 0.79 → 1.90 and CAT's 0.77 → 1.10**, both setups
+confirmed correct by hand and flagged by the old test. It was failing the calls that were
+right, which is the strongest reason to believe the change. The flagged list falls from 68
+to 40; the `dead` count is unaffected at 5, those branches being untouched.
 
 The rulebook also says *when* an invalidation is still a usable reference: only while no
 target on the stock has been met. After the first one is reached the stop belongs just
@@ -616,7 +626,7 @@ range is *correct*, not broken: on a stock at its highs the place for a short's 
 little above the high. QQQ's $764.44 against a $762.86 high is 0.2% out and perfectly
 tradeable; DAVE's is 11% out and a level price has no reason to visit. Without the margin
 the check flagged 204 setups, nearly all of them fine. With it, 59 — 43 machine-drawn and
-16 posted by hand. (Those counts are from when the check was written; after the redraws and cleanups since, the current list is 2 — one stop above every traded price and one decayed to zero — plus 44 failing the reward:risk test below.)
+16 posted by hand. (Those counts are from when the check was written; after the redraws and cleanups since, the current list is 5 dead plus 40 failing the reward:risk test below.)
 
 `python3 pattern_watchlist.py --deadstops` (dry run) / `--deadstops --apply` drops the
 auto-detected ones and lists the rest, the same policy `--thin` uses. The daily report
@@ -875,10 +885,25 @@ pair. 24 shown setups still fight both, which is fine where the stock holds noth
 fixed CVX. Measured from price, its weekly *down* channel sat 0.15% from its own
 invalidation, which scored as a reward:risk of **369x plus a tight-stop bonus** — and what
 it actually means is a setup one close from dying. This is the artifact recorded under
-"Stop distance" above, reproduced by writing the obvious thing. `breakInvalidation` is
-preferred, confirm-to-invalidation is the fallback, and `SLOT_FLOOR` (1%) marks where a
-stop stops being tight and starts being degenerate; price sitting that close to its own
-invalidation takes a penalty rather than a bonus.
+"Stop distance" above, reproduced by writing the obvious thing.
+
+**The stop is `profileStop` and nothing else.** It was `breakInvalidation` falling back to
+the live invalidation until the rulebook settled that an invalidation is not a stop; where
+no profile stop exists the reward:risk and tight-stop terms are skipped rather than fed a
+substitute. `SLOT_FLOOR` (1%) still marks where a stop stops being tight and starts being
+degenerate.
+
+**Price sitting on the invalidation means opposite things either side of the break**, and
+the flat −25 read only one of them. On a *pending* setup that level is what kills it, so
+price arriving there is the reading about to die. On a *confirmed* one it is the boundary
+the setup broke, so price coming back to it is the **retest** — which "Where you enter is
+the trade" calls the entry rather than the end: taken at the line, the same target is
+bought against a stop that is immediate. The penalty is now pending-only; `atRisk` already
+covers a confirmed setup that closes back *past* the level, which is the case it was
+reaching for.
+
+Rewiring both moved **49 rows**, none of them on a stock carrying `checkedOn` — the
+hand-composed rows stay exempt. It has not been applied.
 
 **Opposite directions on one row are not in themselves wrong** — 52 of 150 rows carry them,
 and the AMKR lesson is that setups pointing both ways differ by horizon rather than

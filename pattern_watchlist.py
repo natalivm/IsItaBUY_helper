@@ -1808,10 +1808,16 @@ def slot_score(sv, stock):
         # reproduces the artifact CLAUDE.md records under "Stop distance": CVX's weekly
         # down channel sits 0.15% from its own invalidation, which scored as a reward:risk
         # of 369x and a tight stop, when what it actually means is a setup one close from
-        # dying. `breakInvalidation` is the stop as it stood on the day of the break, which
-        # is the number that means what it says; confirm-to-invalidation is the fallback.
+        # dying.
+        #
+        # The stop is `profileStop` and nothing else. It used to be `breakInvalidation`
+        # falling back to the live invalidation, and RULEBOOK.md has since settled that an
+        # invalidation is not a stop at all — it marks a trend change, so a ratio taken
+        # from it is between two numbers that do not form a trade. Where no profile stop
+        # exists the terms are simply skipped: no stop means no reward:risk, and
+        # substituting a level that is not one is how the wrong number got here.
         entry = sv.get('confirm') or price
-        stop = sv.get('breakInvalidation') or inval
+        stop = sv.get('profileStop')
         if stop and entry:
             risk = abs(entry - stop) / entry * 100
             if risk > 0:
@@ -1822,9 +1828,16 @@ def slot_score(sv, stock):
                 # Below SLOT_FLOOR it is not tight, it is degenerate.
                 if SLOT_FLOOR * 100 <= risk <= SLOT_TIGHT * 100:
                     score += 10
-        # Price already on top of the level that kills it: whatever the projection says,
-        # this is not one of the two readings a row should lead with.
-        if inval and abs(price - inval) / price < SLOT_FLOOR:
+        # Price sitting on the invalidation means opposite things either side of the break,
+        # and the old flat -25 read only one of them. On a **pending** setup the level is
+        # what kills it, so price arriving there is the reading about to die. On a
+        # **confirmed** one the level is the boundary the setup broke, so price coming back
+        # to it is the retest — which RULEBOOK.md ("Where you enter is the trade") calls
+        # the entry rather than the end: taken at the line the same target is bought
+        # against a stop that is immediate. The ledger has `atRisk` for a confirmed setup
+        # that closes back **past** it, which is the case this penalty was reaching for.
+        if inval and abs(price - inval) / price < SLOT_FLOOR and stage not in (
+                'confirmed', 'retest'):
             score -= 25
 
     if sv.get('auto'):
@@ -2417,13 +2430,28 @@ def stop_fault(sv, price, rng):
         if tgt and ((tgt > conf) if dirn == 'down' else (tgt < conf)):
             return 'dead', (f"target ${_fmt_price(tgt)} is on the wrong side of the "
                             f"${_fmt_price(conf)} entry for a {dirn} setup")
-        risk = abs(inv - conf)
-        if tgt and risk > 0:
+        # Reward:risk needs a **stop**, and an invalidation is not one — RULEBOOK.md
+        # records that it marks a trend change, so a ratio taken from it is between two
+        # numbers that do not form a trade. `profileStop` is the only stop on a row that
+        # both is a price the stock actually traded and does not walk with its trendline.
+        #
+        # Measured against the setups verified by hand, the new denominator is the better
+        # one and the 1.0 threshold survives it: of 43, exactly one flips from pass to
+        # fail (INTC's weekly falling wedge, 1.24 → 0.55), while AMKR's weekly ascending
+        # channel goes 0.79 → 1.90 and CAT's 0.77 → 1.10 — both setups confirmed correct
+        # by hand and flagged by the old test. It was failing the calls that were right.
+        #
+        # Where there is no `profileStop` the setup is not tested at all (182 of 412).
+        # No stop means no reward:risk; substituting a level that is not a stop is how
+        # the wrong number got here in the first place.
+        stop = sv.get('profileStop')
+        risk = abs(stop - conf) if stop else 0
+        if tgt and stop and risk > 0:
             rr = abs(tgt - conf) / risk
             if rr < MIN_RR:
                 return 'wide', (f"reward:risk {rr:.2f}x — target ${_fmt_price(tgt)} is nearer than "
-                                f"the ${_fmt_price(inv)} stop, so being right pays less than being "
-                                f"wrong costs")
+                                f"the ${_fmt_price(stop)} profile stop, so being right pays less "
+                                f"than being wrong costs")
     return None
 
 
