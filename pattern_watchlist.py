@@ -1360,9 +1360,10 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
         posted = not main.get('auto')
         setups = _setups(e)
         done, stored_live, edits = {}, [], []
+        stored_gone = []
         for label, sv, pos in setups:
             r = _finished(sv, main, now_et, stored_lines(text, pos))
-            if '_span' in pos:                    # stored (hidden): finished ones drop quietly
+            if '_span' in pos:                    # stored (hidden): finished ones drop
                 # `update` is kept here too, matching the docstring and the shown setups. It
                 # used to be dropped as "cancelled", which deleted the flag the run before had
                 # just written — LITE's weekly falling wedge and TEAM's either-direction channel
@@ -1371,6 +1372,14 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                 # also be the one that forgets.
                 if not r:
                     stored_live.append(pos)
+                else:
+                    # ...but not quietly. A stored setup is dropped by being left out of
+                    # `stored_live` when the entry is rebuilt, which is invisible to the
+                    # caller: a run that removed five of them still printed "Nothing to
+                    # prune." Held until the cut is actually made, because the `edits`
+                    # path below returns without rebuilding and leaves the clean-up to the
+                    # next run — reporting here would name setups that are still there.
+                    stored_gone.append((label, r))
                 continue
             if not r:
                 continue
@@ -1441,6 +1450,8 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
         for label, r in done.items():
             notes[f"{t_}|{label}"] = r[:3]
             report.append(f"{t_} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
+        for label, r in stored_gone:
+            report.append(f"{t_} ({label}, stored): {r[2].split(' · ')[1]} — {r[1]}")
     new_text = text
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
