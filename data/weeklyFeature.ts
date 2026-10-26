@@ -59,12 +59,12 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       direction: "up",
       stage: "confirmed",
       stageDate: "2026-10-21",
-      price: 450.31,
-      priceDate: "2026-10-23",
+      price: 450.54,
+      priceDate: "2026-10-26",
       target: 534.91,
       invalidation: 382.64,
-      rsi: 71.9,
-      score: 105.9
+      rsi: 71.7,
+      score: 105.8
     },
     {
       ticker: "INTU",
@@ -74,12 +74,12 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       direction: "up",
       stage: "confirmed",
       stageDate: "2026-10-19",
-      price: 343.39,
-      priceDate: "2026-10-23",
+      price: 339.89,
+      priceDate: "2026-10-26",
       target: 528.19,
       invalidation: 282.06,
-      rsi: 64.1,
-      score: 104.9
+      rsi: 61.9,
+      score: 105.3
     },
     {
       ticker: "AZO",
@@ -89,12 +89,27 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       direction: "up",
       stage: "confirmed",
       stageDate: "2026-10-19",
-      price: 3200.76,
-      priceDate: "2026-10-23",
+      price: 3190.99,
+      priceDate: "2026-10-26",
       target: 4211.42,
       invalidation: 2894.72,
-      rsi: 65.6,
-      score: 104.8
+      rsi: 64.6,
+      score: 105
+    },
+    {
+      ticker: "EME",
+      name: "EMCOR Group, Inc.",
+      pattern: "Descending Channel",
+      timeframe: "daily",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-10-23",
+      price: 665.73,
+      priceDate: "2026-10-26",
+      target: 533.53,
+      invalidation: 671.99,
+      rsi: 33,
+      score: 108.8
     },
     {
       ticker: "ANET",
@@ -104,27 +119,12 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       direction: "down",
       stage: "confirmed",
       stageDate: "2026-10-19",
-      price: 172.37,
-      priceDate: "2026-10-23",
+      price: 177.2,
+      priceDate: "2026-10-26",
       target: 126.57,
       invalidation: 186.08,
-      rsi: 34.1,
-      score: 105.3
-    },
-    {
-      ticker: "NBIS",
-      name: "Nebius Group N.V.",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-10-22",
-      price: 158.74,
-      priceDate: "2026-10-23",
-      target: 98.69,
-      invalidation: 170.28,
-      rsi: 30.9,
-      score: 105.1
+      rsi: 38.6,
+      score: 107.3
     },
     {
       ticker: "APH",
@@ -134,12 +134,12 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       direction: "down",
       stage: "confirmed",
       stageDate: "2026-10-19",
-      price: 74.09,
-      priceDate: "2026-10-23",
+      price: 75.28,
+      priceDate: "2026-10-26",
       target: 50.95,
       invalidation: 90.03,
-      rsi: 32.7,
-      score: 104.5
+      rsi: 36.2,
+      score: 105.5
     }
   ],
   earnings: [
