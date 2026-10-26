@@ -2680,6 +2680,46 @@ def bottoming(ticker, timeframe='daily'):
             'vsMa': st['priceVsMa'] if st else None}
 
 
+def price_asof(text):
+    """(date, days_old) for the newest stored price in the ledger, or (None, None).
+
+    Both rankings are read off `price` / `priceDate`, which the daily job writes from the
+    regular-session close. Nothing here sees pre-market, deliberately — an intraday print
+    must not re-label a setup — so a gap moves the real board before the run does. MELI
+    ranked second on the bullish queue and was taken out of it by a 10% pre-market gap
+    through its own invalidation, on prices two days old. The header says how old they are
+    so the list is never read as live.
+    """
+    dates = []
+    for e in parse_watchlist(text):
+        d = e['fields'].get('priceDate')
+        if d and d[2]:
+            dates.append(d[2])
+    if not dates:
+        return None, None
+    newest = max(dates)
+    try:
+        # `datetime` here is the class, not the module: datetime.date is an unbound
+        # method and calling it raises TypeError, which this used to swallow into a
+        # silent "no age". `_date` is the one the module imports for this.
+        d0 = _date(*(int(x) for x in newest.split('-')))
+        return newest, (_now_et().date() - d0).days
+    except (ValueError, TypeError):
+        return newest, None
+
+
+def _asof_line(text):
+    """One line on how stale the prices these rankings read are."""
+    when, age = price_asof(text)
+    if not when:
+        return "Prices: none stored."
+    if age is None:
+        return f"Prices as of {when} (regular-session close; pre-market is never read)."
+    how = "today's close" if age == 0 else f"{age} day{'s' if age != 1 else ''} old"
+    warn = "  ⚠ a gap since then reorders this before the daily run does." if age and age >= 1 else ""
+    return f"Prices as of {when} — {how}; pre-market is never read.{warn}"
+
+
 def _is_bottoming(b, fresh=TURN_FRESH):
     """Is this stock actually turning, or merely cheap?
 
@@ -2775,14 +2815,17 @@ def reversal_setups(text, include_auto=False, reach=REACHABLE, bottoming_only=Tr
     return out
 
 
-def print_reversal(rows, top=25):
+def print_reversal(rows, top=25, asof=None):
     """The bullish queue, with the bottoming evidence beside each row."""
     if not rows:
         print("Nothing qualifies: no upward setup has a reachable trigger on a stock that is"
               " turning.\n  `--all-setups` drops the bottoming filter and shows every"
               " reachable trigger.")
         return
-    print(f"{len(rows)} upward setup(s) with a reachable trigger, nearest first.\n")
+    print(f"{len(rows)} upward setup(s) with a reachable trigger, nearest first.")
+    if asof:
+        print(asof)
+    print()
     print(f"  {'':8}{'stock':<7}{'tf':<8}{'pattern':<20}{'stage':<9}"
           f"{'price':>9} {'trigger':>9} {'target':>9}  {'rwd':>6}  {'z':>6} {'turn':>6} {'regime':<10} matrix")
     near = [r for r in rows if r.get('nearMiss')]
@@ -2912,13 +2955,15 @@ def _reward_line(row):
             + ("  📐" if tall else "") + ("  (auto)" if auto else ""))
 
 
-def print_reward_rank(rows, top=20):
+def print_reward_rank(rows, top=20, asof=None):
     """The ranking, trend-aligned setups first.
 
     The leading number is what is left from today's price. The middle pair is the trade
     itself — the whole signal→target move, and how much of it price has already taken.
     A setup showing 80% done has had its move and is a watch, not an entry.
     """
+    if asof:
+        print(asof)
     buckets = [('with', 'Trend agrees'), ('flat', 'Trend flat'), ('against', 'Trend against')]
     for key, heading in buckets:
         part = [r for r in rows if r[10] == key and r[0] > 0]
@@ -3217,20 +3262,22 @@ if __name__ == "__main__":
     args = ap.parse_args()
     if args.reversal:
         with open(WATCHLIST_FILE) as fh:
-            rows = reversal_setups(fh.read(), include_auto=args.include_auto,
-                                   reach=args.reach / 100,
-                                   bottoming_only=not args.all_setups)
-        print_reversal(rows, top=args.top)
+            wl = fh.read()
+        rows = reversal_setups(wl, include_auto=args.include_auto,
+                               reach=args.reach / 100,
+                               bottoming_only=not args.all_setups)
+        print_reversal(rows, top=args.top, asof=_asof_line(wl))
         raise SystemExit(0)
     if args.reward:
         with open(WATCHLIST_FILE) as fh:
-            rows = reward_rank(fh.read(), shown_only=not args.all_setups,
-                               include_auto=args.include_auto)
+            wl = fh.read()
+        rows = reward_rank(wl, shown_only=not args.all_setups,
+                           include_auto=args.include_auto)
         scope = "every stored setup" if args.all_setups else "the two setups each row shows"
         print(f"Reward to target from today's price — {scope}"
               + (", auto included" if args.include_auto else ", hand-checked only") + ".")
         print("Trend is the stock's own `trend`; a setup reading against it is listed last.")
-        print_reward_rank(rows, top=args.top)
+        print_reward_rank(rows, top=args.top, asof=_asof_line(wl))
         raise SystemExit(0)
     if args.reslot:
         moved = reslot_setups(apply=args.apply)
