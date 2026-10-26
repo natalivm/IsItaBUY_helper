@@ -1264,10 +1264,12 @@ The landing page renders two lists, both read straight from `data/weeklyFeature.
   "No clear pattern" placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
   momentum (+20 with, −25 against, same thresholds as `pattern_watchlist`),
   trend agreement (+10 / −5), agreeing stored setups (+4 each, max +12), room to
-  target (0.6 per %, capped at 40%), reward/risk vs invalidation (+10 at ≥3x,
-  +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
-  target the price has already passed is dropped. Change the weights in
-  `weekly_feature.py`, not the data file.
+  target as a **gate** (+12 at ≥15%, +6 at ≥6%, rejected below 6%), entry quality
+  (up to +12, falling to nothing by half-spent, −15 past half and −30 past 75%)
+  and freshness (+8 within 10 days, +4 within 30). A setup whose target the price
+  has already passed is dropped, and so is one `geometry_faults` flags. Change the
+  weights in `weekly_feature.py`, not the data file. See "Ranking on the break"
+  below for why two terms were removed.
   The card itself is deliberately short — ticker, stage and RSI together under
   the name, then sparkline, price → target, the meter and the pattern. Stage and
   momentum share a row because they answer the same question: whether to act. The `why` reasons that used to be bulleted on it
@@ -1304,6 +1306,59 @@ The ledger's ⚡ chip sorts by **daily RSI, highest first** (no reading sorts
 last). Every row shows its RSI; the bolt and the accent colour mark only the
 setups momentum backs (≥60 for a long, ≤40 for a short), so the badge still
 says "actionable" while the order stays a plain number.
+
+### Ranking on the break, not on the target
+
+The shortlist used to pay most for the longest projection, which is the one number this
+ledger has measured as unreliable. Against the completed calls the **confirm level
+reproduces at 0.0% median error** while the target runs 6.7% and mostly is not reached at
+all — the source tool's own live setups project 30.1% and the ones that finish deliver
+12.1%. So the scoring now ranks the break: how clean it is, how recent, whether the stock
+is rolling over the setup's way, and whether enough room is left to bother. Room is a
+gate, never a prize.
+
+**Two terms were removed.**
+
+*Reward:risk against the invalidation* (+10 at ≥3x) measured nothing. RULEBOOK.md records
+that an invalidation marks a trend change rather than a trade stop, so the ratio was
+between two numbers that do not form a trade. The same caveat still applies to `MIN_RR`
+and `slot_score`'s RR term, which are not yet rewired.
+
+*Room to target at 0.6 per % up to +24* was the single biggest weight, and it was a
+detector for the biggest drawing on the board: across the trend-aligned ledger the setups
+`geometry_faults` flags carry a median **40.7%** of room against **20.6%** for the rest.
+It is now flat credit above a threshold, and a flagged drawing is excluded from the
+shortlist outright — it stays in the ledger, where a tall drawing is a horizon label
+rather than a defect, but a target that will not resolve this quarter is not what a weekly
+list is for.
+
+**The turn dot replaced the RSI level as the momentum term**, at +20 with the setup and
+−20 against. `reversion.py`'s own rule is that *being stretched is not a signal; rolling
+over is*, so the evidence is the confirmed pivot in z rather than its depth; RSI stays at
++8 / −10 because it is what the ⚡ chip shows. A gated reading counts for nothing either
+way, so the list agrees with the panel it is read against.
+
+It changes the board, and each change is checkable:
+
+| | | |
+|---|---|---|
+| **FRSH** | was the #1 card | z +2.50 with a turn **down** 21 bars ago — a long with the stock rolling over against it, and 📐 besides |
+| **VRT, ROAD** | were featured bearish | z −2.30 and −1.30 with turn-**ups** 17 and 7 bars ago — shorts on stocks bouncing |
+| **SPGI, ANET, APH** | now featured | every one carries a confirmed turn its own way, trend and RSI agreeing, under 25% of its move spent |
+
+FRSH is the case that matters: the "Targets" section above already records it leading the
+landing page on 40.7% of room "to a target that had effectively already played out". The
+old scoring put it first for exactly the reason it should not have been there.
+
+**Entry quality is what orders the list.** With room reduced to a gate every other term is
+categorical, and nine setups tied at 98 — a ranking that does not rank. The tiebreaker had
+to be something we believe, and how much of the entry is still available is the one
+continuous quantity on a row that is not the target. `ENTRY_CREDIT` pays the whole 12 to a
+break that has not moved and nothing by half-spent; 76 of the top 80 now score distinctly.
+
+**Being stretched still changes no score.** SPGI leads on RSI 72 and z +1.50, which is the
+"Stretched" condition — a risk to be visible rather than a forecast, per that section, so
+the chip warns and the ranking does not demote it.
 
 ### Rebuilding the lists
 

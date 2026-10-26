@@ -2671,11 +2671,12 @@ def bottoming(ticker, timeframe='daily'):
         return None
     mb = _ms.load(ticker, timeframe)
     st = _ms.state(mb) if mb else None
-    turn = s.get('lastTurnUp')
+    up, dn = s.get('lastTurnUp'), s.get('lastTurnDown')
     return {'z': s['z'], 'halfLife': s['halfLife'], 'hurst': s['hurst'],
             'reverting': s['hurst'] is None or s['hurst'] < 0.5,
             'gated': s['gated'],
-            'turnUpAgo': turn[2] if turn else None, 'turnUpZ': turn[1] if turn else None,
+            'turnUpAgo': up[2] if up else None, 'turnUpZ': up[1] if up else None,
+            'turnDownAgo': dn[2] if dn else None, 'turnDownZ': dn[1] if dn else None,
             'matrix': st['trend'] if st else None,
             'vsMa': st['priceVsMa'] if st else None}
 
