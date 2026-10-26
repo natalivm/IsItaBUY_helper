@@ -219,6 +219,9 @@ guess.
 actionable again is price coming back to the level that defines it, which is why the
 ledger has a `retest` stage at all.
 
+Said the short way: **an invalidation says wait for price to come to its level before
+taking it.** It is a level to be met, not a level to be feared.
+
 **This reverses something CLAUDE.md records as settled.** Under "Stop distance" it rejects
 ranking by distance from price to invalidation because the test "finds THM, EME and MLM at
 0.0% — price sitting *on* the line, a setup about to be invalidated... ranked tightest-first
