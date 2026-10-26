@@ -1126,6 +1126,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             fh.write(new_text)
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
+            'failing': failing_setups(new_text), 'reward': reward_rank(new_text),
             'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
             'stretched': stretched_setups(new_text),
             'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
@@ -2575,6 +2576,194 @@ def failing_setups(text):
     return out
 
 
+# ── Reward to target: what is left to be made from here ──
+
+# A placeholder is a row holding a slot, not a reading.
+PLACEHOLDER = 'No clear pattern'
+
+# Stages that still make a live claim. `target` and `failed` are finished, and `update`
+# says the setup came apart and a replacement is owed, so none of the three has a target
+# worth measuring against.
+LIVE_STAGES = ('forming', 'signal', 'confirmed', 'retest', 'atRisk')
+
+
+def trade_progress(sv, price, trend=None):
+    """What the setup projected, how much of it price has already taken, and what is left.
+
+    Returns a dict, or None when the setup carries no measurable pair:
+
+      entry    the signal level — where the move starts being measured
+      target   where it ends
+      move     |target - entry| / entry, the whole projection as a fraction of the entry
+      done     how far price has come along that span, 1.0 at the target
+      left     1 - done, the share of the trade still on the table
+      reward   |target - price| / price, what is left in today's money
+
+    **Measured from the signal, not the invalidation.** The invalidation marks a trend
+    change rather than a trade stop (RULEBOOK.md), so a span taken from it is not a trade
+    and a ratio against it is not reward:risk. The signal is where the setup started
+    saying something, which makes signal → target the move it actually projected and
+    signal → price the part of it that has already happened.
+
+    `done` can exceed 1 (price past the target) or go negative (price back behind the
+    signal), and both are informative: the first is a call that should have closed, the
+    second a setup that has given back everything it made.
+    """
+    if not price or price <= 0:
+        return None
+    d = sv.get('direction')
+    if d == 'both':
+        # An either-direction setup has not chosen a side, so the trend picks one.
+        if trend == 'up':
+            d, entry, target = 'up', sv.get('breakUp'), sv.get('goalUp')
+        elif trend == 'down':
+            d, entry, target = 'down', sv.get('breakDown'), sv.get('goalDown')
+        else:
+            return None
+    elif d in ('up', 'down'):
+        target = sv.get('target')
+        # `signal` is the level the setup first spoke at. A forming setup can carry only
+        # a confirm, and a confirmed one only a signal, so either stands in for the other.
+        entry = sv.get('signal') if sv.get('signal') is not None else sv.get('confirm')
+    else:
+        return None
+    if target is None or not entry or entry <= 0:
+        return None
+    span = target - entry
+    if span == 0:
+        return None
+    done = (price - entry) / span
+    return {'dir': d, 'entry': entry, 'target': target,
+            'move': abs(span) / entry, 'done': done, 'left': 1 - done,
+            'reward': (target - price) / price if d == 'up' else (price - target) / price}
+
+
+def _aligns(direction, trend):
+    """'with' / 'flat' / 'against' — how the stock's trend reads for this direction.
+
+    A flat trend is neither: demoting on "not moving" retires setups that are merely
+    waiting, which RULEBOOK.md records as the ENVA mistake. It sorts below the aligned
+    ones rather than out of the list.
+    """
+    if trend not in ('up', 'down'):
+        return 'flat'
+    return 'with' if trend == direction else 'against'
+
+
+def reward_rank(text, shown_only=True, include_auto=False):
+    """Every live setup ranked by the move left from today's price to its target.
+
+    Rows are (reward, ticker, label, pattern, timeframe, stage, price, target, direction,
+    trend, align, auto, rsi, tall, progress) — `progress` being `trade_progress`'s dict,
+    which carries the signal→target move and how much of it is already gone. Sorted by
+    the reward left from today's price, best first.
+
+    `shown_only` keeps it to the two setups a row displays, which is what the ledger is
+    read on; the stored ones are corroboration and do not hold a slot.
+
+    **`tall` is the caveat this metric cannot do without.** Ranked raw, the biggest rewards
+    are the biggest drawings: of the 102 trend-aligned setups, the 13 whose geometry
+    `geometry_faults` flags carry a median 40.7% against 20.6% for the rest, and 5 of the
+    top 10 are flagged. CLAUDE.md reads a tall drawing as a *horizon* label rather than a
+    defect — a multi-year channel is wide because the stock has multiplied since it began —
+    so these are the rows whose targets will not resolve this quarter. The reward is real
+    and the wait is long, and the ranking says nothing about the second unless it is
+    marked.
+    """
+    tall = {(r[0], r[1]) for r in geometry_faults(text)}
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price, trend = main.get('price'), main.get('trend')
+        rsi = main.get('rsi')
+        stock_auto = bool(main.get('auto'))
+        for i, (label, sv, _pos) in enumerate(_setups(e)):
+            if shown_only and i > 1:          # main + alt are the row
+                continue
+            if sv.get('dormant'):
+                continue
+            pattern = sv.get('pattern') or main.get('pattern')
+            if pattern == PLACEHOLDER:
+                continue
+            if sv.get('stage') not in LIVE_STAGES:
+                continue
+            auto = stock_auto or bool(sv.get('auto'))
+            if auto and not include_auto:
+                continue
+            pg = trade_progress(sv, price, trend)
+            if pg is None:
+                continue
+            d = pg['dir']
+            out.append((pg['reward'], main['ticker'], label, pattern,
+                        sv.get('timeframe') or main.get('timeframe'), sv.get('stage'),
+                        price, pg['target'], d, trend, _aligns(d, trend), auto, rsi,
+                        (main['ticker'], label) in tall, pg))
+    out.sort(key=lambda r: -r[0])
+    return out
+
+
+PENDING_STAGES = ('forming', 'signal')
+
+
+def _done_text(pg, stage):
+    """How much of the signal→target move price has taken, in words where a number misleads.
+
+    A *forming* setup has not signalled, so price sitting behind the signal is the setup
+    working as intended rather than a move given back — "-97% done" on FTNT says only that
+    the trigger is most of a move away. The same reading on a *confirmed* setup is the
+    break undone, which is the condition `SLOT_UNDONE` and the "Break undone %" chip exist
+    for. Same arithmetic, opposite meaning, so the stage decides the wording.
+    """
+    done = pg['done']
+    if done < 0:
+        return "not triggered" if stage in PENDING_STAGES else "break undone"
+    if done > 1:
+        return "past target"
+    return f"{done * 100:.0f}% travelled"
+
+
+def _reward_line(row):
+    """One ranked setup: what is left from here, and how much of the move is already gone."""
+    (reward, tk, _lb, pat, tf, stage, price, target, d,
+     trend, _al, auto, rsi, tall, pg) = row
+    arrow = '↑' if d == 'up' else '↓'
+    return (f"  {reward * 100:6.1f}%  {tk:<6} {str(tf):<7} {str(pat):<20} {str(stage):<9}"
+            f" ${_fmt_price(price)} {arrow} ${_fmt_price(target)}"
+            f"  {pg['move'] * 100:3.0f}% move, {_done_text(pg, stage):<13}"
+            f"  RSI {rsi if rsi is not None else '--':>4}"
+            + ("  📐" if tall else "") + ("  (auto)" if auto else ""))
+
+
+def print_reward_rank(rows, top=20):
+    """The ranking, trend-aligned setups first.
+
+    The leading number is what is left from today's price. The middle pair is the trade
+    itself — the whole signal→target move, and how much of it price has already taken.
+    A setup showing 80% done has had its move and is a watch, not an entry.
+    """
+    buckets = [('with', 'Trend agrees'), ('flat', 'Trend flat'), ('against', 'Trend against')]
+    for key, heading in buckets:
+        part = [r for r in rows if r[10] == key and r[0] > 0]
+        if not part:
+            continue
+        print(f"\n{heading} ({len(part)}):")
+        for row in part[:top]:
+            print(_reward_line(row))
+        if len(part) > top:
+            print(f"  ... and {len(part) - top} more")
+        flagged = sum(1 for r in part[:top] if r[13])
+        if flagged:
+            print(f"  📐 = {flagged} of these {min(top, len(part))} are long-horizon drawings"
+                  " (geometry_faults): the reward is real, the wait is not this quarter.")
+    spent = [r for r in rows if r[0] <= 0]
+    if spent:
+        print(f"\nTarget already passed ({len(spent)}) — nothing left to make, these should close:")
+        for row in spent[:12]:
+            print(_reward_line(row))
+        if len(spent) > 12:
+            print(f"  ... and {len(spent) - 12} more")
+
+
 def stranded_setups(text):
     """Confirmed setups whose break is undone and whose invalidation cannot reach price.
 
@@ -2794,7 +2983,7 @@ def print_watchlist_report(result, missing, apply):
             tag = "auto" if auto else "posted"
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} confirmed {str(when):<12} "
                   f"${_fmt_price(conf)} → ${_fmt_price(price)}  {undone * 100:4.0f}% past, stop {stop * 100:3.0f}%  ({tag})")
-    failing = failing_setups(text)
+    failing = result.get('failing') or []
     if failing:
         print(f"\n💀 Closed past the shelter stop ({len(failing)} setups) — a close past `profileStop`")
         print("   and a follow-through beyond it. The invalidation rule cannot reach these:")
@@ -2803,6 +2992,14 @@ def print_watchlist_report(result, missing, apply):
         for sym, label, pattern, tf, stop, when, auto, shown in sorted(failing):
             print(f"  {sym:<6} {str(tf):<7} {str(pattern):<20} stop ${_fmt_price(stop)}"
                   f"  first close past {when}" + ("  (auto)" if auto else "") + ("  SHOWN" if shown else ""))
+    reward = [r for r in (result.get('reward') or []) if r[10] == 'with' and r[0] > 0]
+    if reward:
+        print(f"\n💰 Most left to make, trend agreeing ({len(reward)} setups) — what is still on")
+        print("   the table from today's price, with the whole signal→target move beside it and")
+        print("   how much of that move price has already taken:")
+        for row in reward[:8]:
+            print(_reward_line(row))
+        print("   📐 = long-horizon drawing. Full list: `python3 pattern_watchlist.py --reward`.")
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:
@@ -2832,8 +3029,22 @@ if __name__ == "__main__":
     ap.add_argument("--dedupe", action="store_true", help=f"keep one setup per claim: swap an alt that repeats the main, drop stored setups whose target is within {DUPE * 100:.0f}% of a shown one")
     ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
     ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
+    ap.add_argument("--reward", action="store_true", help="rank live setups by the move left from today's price to their target, trend-aligned first")
+    ap.add_argument("--all-setups", action="store_true", dest="all_setups", help="with --reward: include the stored setups, not just the two a row shows")
+    ap.add_argument("--include-auto", action="store_true", dest="include_auto", help="with --reward: let auto-detected (red dot) setups into the ranking")
+    ap.add_argument("--top", type=int, default=20, help="with --reward: how many rows per bucket (default 20)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.reward:
+        with open(WATCHLIST_FILE) as fh:
+            rows = reward_rank(fh.read(), shown_only=not args.all_setups,
+                               include_auto=args.include_auto)
+        scope = "every stored setup" if args.all_setups else "the two setups each row shows"
+        print(f"Reward to target from today's price — {scope}"
+              + (", auto included" if args.include_auto else ", hand-checked only") + ".")
+        print("Trend is the stock's own `trend`; a setup reading against it is listed last.")
+        print_reward_rank(rows, top=args.top)
+        raise SystemExit(0)
     if args.reslot:
         moved = reslot_setups(apply=args.apply)
         print(f"{'Reslotted' if args.apply else 'Would reslot'} {len(moved)} stock(s):")

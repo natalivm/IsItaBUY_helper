@@ -749,6 +749,63 @@ ones with a print inside `STRETCH_SOON` (7 days) under **⚠**. In the UI the mo
 keeps its colour — the move is still with the setup — and gains a warning outline and a ⚠,
 with the caution spelled out on hover.
 
+### How much is left to make, measured from the signal
+
+The ledger's scores answer "is this setup good". The question they do not answer is the
+one you ask before taking a trade: **how much of this move is still on the table?**
+`trade_progress()` and `reward_rank()` in `pattern_watchlist.py` answer it, and
+`python3 pattern_watchlist.py --reward` prints the ranking (the daily report carries the
+top 8 under **💰**).
+
+Three numbers per setup, all taken from the **signal**:
+
+- **reward** — `|target − price| / price`, what is left in today's money. This is the
+  ranking key.
+- **move** — `|target − signal| / signal`, the whole trade the pattern projected.
+- **travelled** — `(price − signal) / (target − signal)`, how much of that move price has
+  already taken.
+
+**The signal is the denominator, not the invalidation.** RULEBOOK.md records that an
+invalidation marks a trend change rather than a trade stop, so a span measured from it is
+not a trade and a ratio against it is not reward:risk — which is what `MIN_RR`,
+`slot_score`'s RR term and `weekly_feature`'s "+10 at ≥3x" are still doing. The signal is
+where the setup started saying something, so signal → target is the move it projected and
+signal → price is the part that has already happened.
+
+**`travelled` means opposite things at opposite stages, so it is printed in words.** A
+negative reading on a `forming` setup is the trigger still being ahead — FTNT's weekly
+channel reads −97%, which says only that price has most of a move to go before anything
+happens, and prints as *not triggered*. The identical arithmetic on a `confirmed` setup is
+the break given back, which is what `SLOT_UNDONE` and the "Break undone %" chip exist for,
+and prints as *break undone*. Two of the 102 trend-aligned setups are in that second state.
+
+Of the 79 trend-aligned confirmed setups, the median has **38% of its move behind it** and
+**26 are more than half spent** — those are rows whose headline reward is real but whose
+best entry was weeks ago, which is the "Where you enter is the trade" rule showing up as a
+number.
+
+**Alignment is a bucket, not a penalty.** The ranking splits on the stock's own `trend`:
+agreeing, flat, against. A flat trend is neither — demoting on "not moving" retires setups
+that are merely waiting, which is the ENVA mistake — so it sorts below the aligned ones
+rather than out of the list. 102 agree, 68 are flat, 34 read against.
+
+**📐 is the caveat the metric cannot do without.** Ranked raw, the biggest rewards are the
+biggest drawings: of the 102 trend-aligned setups the 13 that `geometry_faults` flags
+carry a **median 40.7% against 20.6%** for the rest, and 5 of the top 10 are flagged. A
+tall drawing is a *horizon* label rather than a defect (see "Too tall to draw"), so these
+are the rows whose targets will not resolve this quarter. The reward is real and the wait
+is long, and a ranking that does not mark them says nothing about the second.
+
+Auto-detected setups are excluded by default (a red dot is a reading nobody has checked);
+`--include-auto` lets them in, `--all-setups` reaches past the two a row shows, and
+`--top N` sets the depth.
+
+**The 💀 section had never printed.** `print_watchlist_report` called
+`failing_setups(text)` with no `text` in scope, so a full dry run died with a `NameError`
+after the 🪦 list — which is why the failing-setup list described above was only ever seen
+through its own flag. It reads `result['failing']` now, computed in `update_watchlist`
+beside `stranded` and the rest.
+
 ### Which two setups the row shows
 
 The two visible slots are the most valuable thing on a row, and they used to go to whatever
