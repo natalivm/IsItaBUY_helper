@@ -572,6 +572,13 @@ is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
   Comparing it to *price* instead is a different test and a worse one: it flags every `atRisk`
   setup, which is the stage that already says price has reached the stop.
 
+**RULEBOOK.md now says an invalidation is not a stop** — it marks a trend change, so a
+ratio taken from it to the target is not reward:risk, and the filter below is measuring two
+distances on a drawing rather than a trade. It still runs and still flags 51 setups; read
+those listings as geometry, not as a verdict, until it is rewired onto a real stop
+(`profileStop` or a swing pivot). The same caveat applies to `slot_score`'s reward:risk
+term and to `weekly_feature.score_setup`'s "+10 at ≥3x".
+
 A fourth shape is the one that actually disqualifies most setups, and it is a ratio rather
 than a distance. **`MIN_RR = 1.0`**: when the target is nearer than the stop, being right
 pays less than being wrong costs, and the setup is not worth taking even when the read is

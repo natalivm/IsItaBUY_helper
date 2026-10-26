@@ -173,6 +173,38 @@ stock has traded.
 both `slot_score` and `weekly_feature.score_setup`, so a bad number buys the row and the
 landing page. D's fix dropped it from the #2 bullish card to below the cutoff.
 
+## An invalidation is not a stop
+
+**It marks a trend change, not a trade.** The invalidation is where the reading stops being
+true — the pattern's thesis dies there. It is not where you would get out, it is not sized
+against anything, and nobody placed an order at it. Those are different questions and the
+level only answers the first.
+
+**So reward:risk measured from invalidation to target is not reward:risk.** It is the ratio
+of two distances on a drawing. `MIN_RR` currently flags **51 setups** on exactly that
+arithmetic, and every one of today's arguments about a "bad" setup rested on it: AMKR's
+main at 0.79x, PLTR's bear case at 0.48x, FCX's weekly against an $86.61 invalidation above
+the all-time high, CAT's pair at 45% and 74% overhead. None of those numbers mean what the
+label says.
+
+**A real stop is a price someone would trade against**, which is what `profileStop` is
+reaching for — the near edge of agreed price beyond the entry. A swing pivot is the other
+candidate. Both are prices the stock actually traded; an invalidation extended along a
+trendline is frequently not.
+
+**Three places violate this and are listed rather than ripped out**, because changing them
+moves rankings and lists that the ledger is read from:
+
+- `stop_fault`'s `MIN_RR = 1.0` — 51 of the current dead-stop listings, and the only
+  reason most of them are listed at all.
+- `slot_score`'s reward:risk term — `breakInvalidation` preferred, confirm-to-invalidation
+  as the fallback, so it is the same arithmetic deciding which two setups a row shows.
+- `weekly_feature.score_setup` — "+10 at ≥3x, +5 at ≥2x" against invalidation, and the
+  landing page prints the ratio in its reasons.
+
+Until they are rewired, read any reward:risk figure in this repo as what it is: a
+statement about where two lines sit, not about a trade.
+
 ## A price the stock has never traded
 
 **Which side it is on decides whether it is a fault.** A level beyond the whole traded
