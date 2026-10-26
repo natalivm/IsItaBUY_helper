@@ -402,7 +402,11 @@ in its own direction:
 
 - **Distance from today's price** finds THM, EME and MLM at 0.0% — that is price sitting
   *on* the line, a setup about to be invalidated. Ranked tightest-first it promotes the
-  setups closest to dying.
+  setups closest to dying. **As a stop that reasoning holds; as an entry RULEBOOK.md
+  reverses it**, because a setup sitting on its own invalidation is the best entry
+  available — the risk is a few cents and the answer comes on the next candle. The measure
+  is fine, it was being used for the wrong question. Small distance = an entry, large
+  distance = a watch.
 - **Distance from the confirm level** looked spectacular (reward/risk of 301x, 100x, 75x)
   and is an artifact: a confirmed channel's invalidation sits on the boundary it broke, so
   right after the break `confirm ≈ invalidation` by construction. Confirmed setups inside

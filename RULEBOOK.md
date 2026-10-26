@@ -206,6 +206,30 @@ Until they are rewired, read any reward:risk figure in this repo as what it is: 
 statement about where two lines sit, not about a trade. The section above says what the
 reference should be instead, and why the ledger cannot supply it yet.
 
+## Where you enter is the trade
+
+**The entry is at the invalidation, not in the middle of the range.** AMZN's daily falling
+wedge confirmed up on Oct 6; price is $248 with the invalidation near $230 and the target
+near $270. Taken here it risks the whole way back to the line for part of the move. Taken
+at the line it buys the same target against a stop that is immediate. Same setup, same
+levels — only the entry changed, and that is the whole difference between a trade and a
+guess.
+
+**So a confirmed setup sitting mid-range is a watch, not a signal.** What makes it
+actionable again is price coming back to the level that defines it, which is why the
+ledger has a `retest` stage at all.
+
+**This reverses something CLAUDE.md records as settled.** Under "Stop distance" it rejects
+ranking by distance from price to invalidation because the test "finds THM, EME and MLM at
+0.0% — price sitting *on* the line, a setup about to be invalidated... ranked tightest-first
+it promotes the setups closest to dying". Read as a *stop* that is right. Read as an
+*entry* it is backwards: a setup sitting on its own invalidation is the one offering the
+best entry there is, because the risk is a few cents and the answer arrives on the next
+candle. The measure was fine; what it was being used for was wrong.
+
+So the number is worth having after all, as **distance to invalidation**, and read the
+other way round: small is an entry, large is a watch.
+
 ## The stop moves to the last target the move has already paid
 
 **Invalidation is a stop only while nothing has been reached.** Before any target on the
