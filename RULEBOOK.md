@@ -173,6 +173,91 @@ stock has traded.
 both `slot_score` and `weekly_feature.score_setup`, so a bad number buys the row and the
 landing page. D's fix dropped it from the #2 bullish card to below the cutoff.
 
+## An invalidation is not a stop
+
+**It marks a trend change, not a trade.** The invalidation is where the reading stops being
+true — the pattern's thesis dies there. It is not where you would get out, it is not sized
+against anything, and nobody placed an order at it. Those are different questions and the
+level only answers the first.
+
+**So reward:risk measured from invalidation to target is not reward:risk.** It is the ratio
+of two distances on a drawing. `MIN_RR` currently flags **51 setups** on exactly that
+arithmetic, and every one of today's arguments about a "bad" setup rested on it: AMKR's
+main at 0.79x, PLTR's bear case at 0.48x, FCX's weekly against an $86.61 invalidation above
+the all-time high, CAT's pair at 45% and 74% overhead. None of those numbers mean what the
+label says.
+
+**A real stop is a price someone would trade against**, which is what `profileStop` is
+reaching for — the near edge of agreed price beyond the entry. A swing pivot is the other
+candidate. Both are prices the stock actually traded; an invalidation extended along a
+trendline is frequently not.
+
+**Three places violate this and are listed rather than ripped out**, because changing them
+moves rankings and lists that the ledger is read from:
+
+- `stop_fault`'s `MIN_RR = 1.0` — 51 of the current dead-stop listings, and the only
+  reason most of them are listed at all.
+- `slot_score`'s reward:risk term — `breakInvalidation` preferred, confirm-to-invalidation
+  as the fallback, so it is the same arithmetic deciding which two setups a row shows.
+- `weekly_feature.score_setup` — "+10 at ≥3x, +5 at ≥2x" against invalidation, and the
+  landing page prints the ratio in its reasons.
+
+Until they are rewired, read any reward:risk figure in this repo as what it is: a
+statement about where two lines sit, not about a trade. The section above says what the
+reference should be instead, and why the ledger cannot supply it yet.
+
+## Where you enter is the trade
+
+**The entry is at the invalidation, not in the middle of the range.** AMZN's daily falling
+wedge confirmed up on Oct 6; price is $248 with the invalidation near $230 and the target
+near $270. Taken here it risks the whole way back to the line for part of the move. Taken
+at the line it buys the same target against a stop that is immediate. Same setup, same
+levels — only the entry changed, and that is the whole difference between a trade and a
+guess.
+
+**So a confirmed setup sitting mid-range is a watch, not a signal.** What makes it
+actionable again is price coming back to the level that defines it, which is why the
+ledger has a `retest` stage at all.
+
+Said the short way: **an invalidation says wait for price to come to its level before
+taking it.** It is a level to be met, not a level to be feared.
+
+**This reverses something CLAUDE.md records as settled.** Under "Stop distance" it rejects
+ranking by distance from price to invalidation because the test "finds THM, EME and MLM at
+0.0% — price sitting *on* the line, a setup about to be invalidated... ranked tightest-first
+it promotes the setups closest to dying". Read as a *stop* that is right. Read as an
+*entry* it is backwards: a setup sitting on its own invalidation is the one offering the
+best entry there is, because the risk is a few cents and the answer arrives on the next
+candle. The measure was fine; what it was being used for was wrong.
+
+So the number is worth having after all, as **distance to invalidation**, and read the
+other way round: small is an entry, large is a watch.
+
+## The stop moves to the last target the move has already paid
+
+**Invalidation is a stop only while nothing has been reached.** Before any target on the
+stock has been met, the reading is unproven and nothing is banked, so the invalidation is
+the honest reference — being wrong costs what it costs. Once a target has been met, using
+it means giving the whole move back to find out you were wrong. By then you are too late.
+
+**After the first met target the stop sits just beyond it** — just above for a short, just
+below for a long. That is a price the move has already proved it can take out, so a return
+back through it says the move is failing, which is what a stop is for. AMZN is the case:
+shorting its weekly rising wedge at $248.60 against the $295.27 invalidation risks 19%,
+when the level that matters is the nearest objective price has already passed.
+
+**So reward:risk has two regimes and the setup's age decides which:**
+
+- nothing met yet → the invalidation is the reference, and the ratio means something
+- something met → the met target is the reference, and the invalidation is history
+
+**The ledger cannot do this yet, because it deletes the met targets.** `prune_finished`
+removes a setup once its target is reached and writes it to `data/completedCalls.json` —
+30 rows for the entire ledger, and **none for AMZN**, while the source tool shows three
+finished setups on that chart. The information this rule needs is exactly what we take off
+the page. Recording met targets per stock, and keeping them where a row can see them, is
+the prerequisite for computing a stop that means anything.
+
 ## A price the stock has never traded
 
 **Which side it is on decides whether it is a fault.** A level beyond the whole traded

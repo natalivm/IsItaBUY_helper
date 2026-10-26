@@ -1126,6 +1126,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             fh.write(new_text)
 
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
+            'failing': failing_setups(new_text), 'reward': reward_rank(new_text),
             'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
             'stretched': stretched_setups(new_text),
             'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
@@ -1807,10 +1808,16 @@ def slot_score(sv, stock):
         # reproduces the artifact CLAUDE.md records under "Stop distance": CVX's weekly
         # down channel sits 0.15% from its own invalidation, which scored as a reward:risk
         # of 369x and a tight stop, when what it actually means is a setup one close from
-        # dying. `breakInvalidation` is the stop as it stood on the day of the break, which
-        # is the number that means what it says; confirm-to-invalidation is the fallback.
+        # dying.
+        #
+        # The stop is `profileStop` and nothing else. It used to be `breakInvalidation`
+        # falling back to the live invalidation, and RULEBOOK.md has since settled that an
+        # invalidation is not a stop at all — it marks a trend change, so a ratio taken
+        # from it is between two numbers that do not form a trade. Where no profile stop
+        # exists the terms are simply skipped: no stop means no reward:risk, and
+        # substituting a level that is not one is how the wrong number got here.
         entry = sv.get('confirm') or price
-        stop = sv.get('breakInvalidation') or inval
+        stop = sv.get('profileStop')
         if stop and entry:
             risk = abs(entry - stop) / entry * 100
             if risk > 0:
@@ -1821,9 +1828,16 @@ def slot_score(sv, stock):
                 # Below SLOT_FLOOR it is not tight, it is degenerate.
                 if SLOT_FLOOR * 100 <= risk <= SLOT_TIGHT * 100:
                     score += 10
-        # Price already on top of the level that kills it: whatever the projection says,
-        # this is not one of the two readings a row should lead with.
-        if inval and abs(price - inval) / price < SLOT_FLOOR:
+        # Price sitting on the invalidation means opposite things either side of the break,
+        # and the old flat -25 read only one of them. On a **pending** setup the level is
+        # what kills it, so price arriving there is the reading about to die. On a
+        # **confirmed** one the level is the boundary the setup broke, so price coming back
+        # to it is the retest — which RULEBOOK.md ("Where you enter is the trade") calls
+        # the entry rather than the end: taken at the line the same target is bought
+        # against a stop that is immediate. The ledger has `atRisk` for a confirmed setup
+        # that closes back **past** it, which is the case this penalty was reaching for.
+        if inval and abs(price - inval) / price < SLOT_FLOOR and stage not in (
+                'confirmed', 'retest'):
             score -= 25
 
     if sv.get('auto'):
@@ -2416,13 +2430,28 @@ def stop_fault(sv, price, rng):
         if tgt and ((tgt > conf) if dirn == 'down' else (tgt < conf)):
             return 'dead', (f"target ${_fmt_price(tgt)} is on the wrong side of the "
                             f"${_fmt_price(conf)} entry for a {dirn} setup")
-        risk = abs(inv - conf)
-        if tgt and risk > 0:
+        # Reward:risk needs a **stop**, and an invalidation is not one — RULEBOOK.md
+        # records that it marks a trend change, so a ratio taken from it is between two
+        # numbers that do not form a trade. `profileStop` is the only stop on a row that
+        # both is a price the stock actually traded and does not walk with its trendline.
+        #
+        # Measured against the setups verified by hand, the new denominator is the better
+        # one and the 1.0 threshold survives it: of 43, exactly one flips from pass to
+        # fail (INTC's weekly falling wedge, 1.24 → 0.55), while AMKR's weekly ascending
+        # channel goes 0.79 → 1.90 and CAT's 0.77 → 1.10 — both setups confirmed correct
+        # by hand and flagged by the old test. It was failing the calls that were right.
+        #
+        # Where there is no `profileStop` the setup is not tested at all (182 of 412).
+        # No stop means no reward:risk; substituting a level that is not a stop is how
+        # the wrong number got here in the first place.
+        stop = sv.get('profileStop')
+        risk = abs(stop - conf) if stop else 0
+        if tgt and stop and risk > 0:
             rr = abs(tgt - conf) / risk
             if rr < MIN_RR:
                 return 'wide', (f"reward:risk {rr:.2f}x — target ${_fmt_price(tgt)} is nearer than "
-                                f"the ${_fmt_price(inv)} stop, so being right pays less than being "
-                                f"wrong costs")
+                                f"the ${_fmt_price(stop)} profile stop, so being right pays less "
+                                f"than being wrong costs")
     return None
 
 
@@ -2573,6 +2602,418 @@ def failing_setups(text):
                         stop, bars['t'][hit], bool(sv.get('auto')),
                         label == 'main' or label.endswith('alt')))
     return out
+
+
+# ── Reward to target: what is left to be made from here ──
+
+# A placeholder is a row holding a slot, not a reading.
+PLACEHOLDER = 'No clear pattern'
+
+# Stages that still make a live claim. `target` and `failed` are finished, and `update`
+# says the setup came apart and a replacement is owed, so none of the three has a target
+# worth measuring against.
+LIVE_STAGES = ('forming', 'signal', 'confirmed', 'retest', 'atRisk')
+
+
+def trade_progress(sv, price, trend=None):
+    """What the setup projected, how much of it price has already taken, and what is left.
+
+    Returns a dict, or None when the setup carries no measurable pair:
+
+      entry    the signal level — where the move starts being measured
+      target   where it ends
+      move     |target - entry| / entry, the whole projection as a fraction of the entry
+      done     how far price has come along that span, 1.0 at the target
+      left     1 - done, the share of the trade still on the table
+      reward   |target - price| / price, what is left in today's money
+
+    **Measured from the signal, not the invalidation.** The invalidation marks a trend
+    change rather than a trade stop (RULEBOOK.md), so a span taken from it is not a trade
+    and a ratio against it is not reward:risk. The signal is where the setup started
+    saying something, which makes signal → target the move it actually projected and
+    signal → price the part of it that has already happened.
+
+    `done` can exceed 1 (price past the target) or go negative (price back behind the
+    signal), and both are informative: the first is a call that should have closed, the
+    second a setup that has given back everything it made.
+    """
+    if not price or price <= 0:
+        return None
+    d = sv.get('direction')
+    if d == 'both':
+        # An either-direction setup has not chosen a side, so the trend picks one.
+        if trend == 'up':
+            d, entry, target = 'up', sv.get('breakUp'), sv.get('goalUp')
+        elif trend == 'down':
+            d, entry, target = 'down', sv.get('breakDown'), sv.get('goalDown')
+        else:
+            return None
+    elif d in ('up', 'down'):
+        target = sv.get('target')
+        # `signal` is the level the setup first spoke at. A forming setup can carry only
+        # a confirm, and a confirmed one only a signal, so either stands in for the other.
+        entry = sv.get('signal') if sv.get('signal') is not None else sv.get('confirm')
+    else:
+        return None
+    if target is None or not entry or entry <= 0:
+        return None
+    span = target - entry
+    if span == 0:
+        return None
+    done = (price - entry) / span
+    return {'dir': d, 'entry': entry, 'target': target,
+            'move': abs(span) / entry, 'done': done, 'left': 1 - done,
+            'reward': (target - price) / price if d == 'up' else (price - target) / price}
+
+
+# ── Bullish setups waiting on the turn ──
+
+# How near a trigger has to be before the setup is worth queuing. A reversal takes price
+# up through a level; one 40% away needs the turn to have happened already, which is the
+# pre-trigger form of the 📐 caveat (COHR's weekly wedge reads the best reward on the
+# ledger and its trigger sits +44.7% away).
+REACHABLE = 0.15
+
+# How stale a turn-up dot may be and still count as "this is turning". The Pine confirms a
+# pivot CONFIRM bars after the fact, so a dot is three bars late before anyone sees it.
+TURN_FRESH = 30
+
+
+def bottoming(ticker, timeframe='daily'):
+    """What the mean-reversion and trend indicators say about this stock bottoming.
+
+    Returns None where there are no candles. `turnUpAgo` is how many bars back the last
+    confirmed turn-up pivot in z sits — the Pine's own "being stretched is not a signal;
+    rolling over is", so a recent dot is the evidence and a deep z alone is not.
+    """
+    try:
+        import reversion as _rv
+        import matrix_state as _ms
+    except ImportError:
+        return None
+    bars = _rv.load(ticker, timeframe)
+    if not bars:
+        return None
+    s = _rv.stats(bars)
+    if not s:
+        return None
+    mb = _ms.load(ticker, timeframe)
+    st = _ms.state(mb) if mb else None
+    up, dn = s.get('lastTurnUp'), s.get('lastTurnDown')
+    return {'z': s['z'], 'halfLife': s['halfLife'], 'hurst': s['hurst'],
+            'reverting': s['hurst'] is None or s['hurst'] < 0.5,
+            'gated': s['gated'],
+            'turnUpAgo': up[2] if up else None, 'turnUpZ': up[1] if up else None,
+            'turnDownAgo': dn[2] if dn else None, 'turnDownZ': dn[1] if dn else None,
+            'matrix': st['trend'] if st else None,
+            'vsMa': st['priceVsMa'] if st else None}
+
+
+def price_asof(text):
+    """(date, days_old) for the newest stored price in the ledger, or (None, None).
+
+    Both rankings are read off `price` / `priceDate`, which the daily job writes from the
+    regular-session close. Nothing here sees pre-market, deliberately — an intraday print
+    must not re-label a setup — so a gap moves the real board before the run does. MELI
+    ranked second on the bullish queue and was taken out of it by a 10% pre-market gap
+    through its own invalidation, on prices two days old. The header says how old they are
+    so the list is never read as live.
+    """
+    dates = []
+    for e in parse_watchlist(text):
+        d = e['fields'].get('priceDate')
+        if d and d[2]:
+            dates.append(d[2])
+    if not dates:
+        return None, None
+    newest = max(dates)
+    try:
+        # `datetime` here is the class, not the module: datetime.date is an unbound
+        # method and calling it raises TypeError, which this used to swallow into a
+        # silent "no age". `_date` is the one the module imports for this.
+        d0 = _date(*(int(x) for x in newest.split('-')))
+        return newest, (_now_et().date() - d0).days
+    except (ValueError, TypeError):
+        return newest, None
+
+
+def _asof_line(text):
+    """One line on how stale the prices these rankings read are."""
+    when, age = price_asof(text)
+    if not when:
+        return "Prices: none stored."
+    if age is None:
+        return f"Prices as of {when} (regular-session close; pre-market is never read)."
+    how = "today's close" if age == 0 else f"{age} day{'s' if age != 1 else ''} old"
+    warn = "  ⚠ a gap since then reorders this before the daily run does." if age and age >= 1 else ""
+    return f"Prices as of {when} — {how}; pre-market is never read.{warn}"
+
+
+def _is_bottoming(b, fresh=TURN_FRESH):
+    """Is this stock actually turning, or merely cheap?
+
+    Three conditions, and the Pine's own reasoning behind each. **z below its mean**: there
+    has to be something to revert *from*. **A confirmed turn-up pivot inside `fresh`
+    bars**: "being stretched is not a signal; rolling over is" — price can stay stretched
+    far longer than it looks sustainable, so the dot is the evidence and a deep z alone is
+    not. **A reverting regime** (Hurst < 0.5): fading a trending series is how you get run
+    over.
+
+    `gated` disqualifies too. The Pine hides its dots when the half-life exceeds the
+    lookback, on the grounds that a series which will not come halfway back inside the
+    window being measured is not one to fade — VZ's half-life reads 5602 bars. Honouring
+    the gate here keeps this list agreeing with the panel you read it against.
+    """
+    if not b or b.get('z') is None or b.get('turnUpAgo') is None:
+        return False
+    return (b['z'] < 0 and b['turnUpAgo'] <= fresh
+            and b['reverting'] and not b['gated'])
+
+
+def _bottoming_miss(b, fresh=TURN_FRESH):
+    """Why a stock that looks like it is turning fails `_is_bottoming` — or None.
+
+    Only for the ones with a *fresh, deep* turn, which is the shape where the filter
+    dropping them is worth seeing. IREN is the case: z −2.45 with a turn-up three bars
+    ago, the strongest bottoming reading on the board, and the Hurst gate refuses it as
+    trending. The gate is right about what it measures — fading a trending series is how
+    you get run over — but a falling wedge is not a fade: the break is the trade and the
+    trend's strength is part of the pattern. So this is a counter-trend entry rather than
+    a mean-reversion one, which is a thing to know about a row, not a reason to hide it.
+
+    Returns a short reason, never a verdict; these print under their own heading.
+    """
+    if not b or b.get('z') is None or b.get('turnUpAgo') is None:
+        return None
+    if b['z'] >= -1.0 or b['turnUpAgo'] > 10:
+        return None                      # not a strong enough reading to argue about
+    if _is_bottoming(b, fresh):
+        return None
+    if b['gated']:
+        return "half-life past the lookback — the panel hides its dots here"
+    if not b['reverting']:
+        return "Hurst says trending: the bounce is counter-trend, not a fade"
+    return None
+
+
+def reversal_setups(text, include_auto=False, reach=REACHABLE, bottoming_only=True):
+    """Upward setups positioned for a turn, with the evidence on whether the stock is turning.
+
+    Rows are dicts. The ledger question is "which bullish readings are ready", so this
+    keeps the ones whose trigger price can still be reached and reports, for each, what
+    `reversion.py` and `matrix_state.py` say about the stock bottoming. It decides
+    nothing: a turn-up dot is three bars late by construction and the indicators are
+    evidence to read beside the chart, not a signal to act on.
+    """
+    out = []
+    tall = {(r[0], r[1]) for r in geometry_faults(text)}
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price, trend = main.get('price'), main.get('trend')
+        for i, (label, sv, _pos) in enumerate(_setups(e)):
+            if sv.get('dormant') or i > 1:
+                continue
+            pattern = sv.get('pattern') or main.get('pattern')
+            if pattern == PLACEHOLDER or sv.get('stage') not in LIVE_STAGES:
+                continue
+            auto = bool(main.get('auto')) or bool(sv.get('auto'))
+            if auto and not include_auto:
+                continue
+            pg = trade_progress(sv, price, trend)
+            if pg is None or pg['dir'] != 'up' or pg['reward'] <= 0:
+                continue
+            to_trigger = (pg['entry'] - price) / price
+            if to_trigger > reach:
+                continue
+            out.append({'ticker': main['ticker'], 'label': label, 'pattern': pattern,
+                        'timeframe': sv.get('timeframe') or main.get('timeframe'),
+                        'stage': sv.get('stage'), 'price': price, 'trend': trend,
+                        'rsi': main.get('rsi'), 'auto': auto,
+                        'tall': (main['ticker'], label) in tall,
+                        'trigger': pg['entry'], 'target': pg['target'],
+                        'toTrigger': to_trigger, 'reward': pg['reward'],
+                        'move': pg['move'], 'done': pg['done'],
+                        'triggered': pg['done'] > 0,
+                        'bot': bottoming(main['ticker'])})
+    if bottoming_only:
+        for r in out:
+            r['nearMiss'] = _bottoming_miss(r['bot'])
+        out = [r for r in out if _is_bottoming(r['bot']) or r['nearMiss']]
+    # Nearest trigger first: at a turn, what matters is which levels price reaches soonest.
+    out.sort(key=lambda r: (abs(r['toTrigger']), -r['reward']))
+    return out
+
+
+def print_reversal(rows, top=25, asof=None):
+    """The bullish queue, with the bottoming evidence beside each row."""
+    if not rows:
+        print("Nothing qualifies: no upward setup has a reachable trigger on a stock that is"
+              " turning.\n  `--all-setups` drops the bottoming filter and shows every"
+              " reachable trigger.")
+        return
+    print(f"{len(rows)} upward setup(s) with a reachable trigger, nearest first.")
+    if asof:
+        print(asof)
+    print()
+    print(f"  {'':8}{'stock':<7}{'tf':<8}{'pattern':<20}{'stage':<9}"
+          f"{'price':>9} {'trigger':>9} {'target':>9}  {'rwd':>6}  {'z':>6} {'turn':>6} {'regime':<10} matrix")
+    near = [r for r in rows if r.get('nearMiss')]
+    rows = [r for r in rows if not r.get('nearMiss')]
+    for r in rows[:top]:
+        b = r['bot'] or {}
+        z = f"{b['z']:.2f}" if b.get('z') is not None else '--'
+        turn = (f"{b['turnUpAgo']}b" if b.get('turnUpAgo') is not None else '--')
+        regime = ('reverting' if b.get('reverting') else 'trending') if b else '--'
+        mark = '→' if r['triggered'] else ' '
+        print(f"  {r['toTrigger'] * 100:+6.1f}% {mark}{r['ticker']:<7}{str(r['timeframe']):<8}"
+              f"{str(r['pattern']):<20}{str(r['stage']):<9}"
+              f"{'$' + _fmt_price(r['price']):>9} {'$' + _fmt_price(r['trigger']):>9}"
+              f" {'$' + _fmt_price(r['target']):>9}  {r['reward'] * 100:5.1f}%"
+              f"  {z:>6} {turn:>6} {regime:<10} {b.get('matrix') or '--'}"
+              + ("  📐" if r['tall'] else "") + ("  (auto)" if r['auto'] else ""))
+    if len(rows) > top:
+        print(f"  ... and {len(rows) - top} more")
+    print("\n  A negative trigger distance means price is already past it (→ = the move has"
+          " started).\n  z = mean-reversion score, turn = bars since the last confirmed turn-up"
+          " pivot\n  (three bars late by construction). Evidence to read beside the chart,"
+          " not a signal.")
+    if near:
+        print(f"\nStretched and turning, but the filter refuses them ({len(near)}) —"
+              " worth your own read:")
+        for r in near:
+            b = r['bot'] or {}
+            print(f"  {r['toTrigger'] * 100:+6.1f}%  {r['ticker']:<6}{str(r['timeframe']):<8}"
+                  f"{str(r['pattern']):<20}{str(r['stage']):<9} rwd {r['reward'] * 100:5.1f}%"
+                  f"  z {b['z']:+.2f}  turn {b['turnUpAgo']}b")
+            print(f"           {r['nearMiss']}")
+
+
+def _aligns(direction, trend):
+    """'with' / 'flat' / 'against' — how the stock's trend reads for this direction.
+
+    A flat trend is neither: demoting on "not moving" retires setups that are merely
+    waiting, which RULEBOOK.md records as the ENVA mistake. It sorts below the aligned
+    ones rather than out of the list.
+    """
+    if trend not in ('up', 'down'):
+        return 'flat'
+    return 'with' if trend == direction else 'against'
+
+
+def reward_rank(text, shown_only=True, include_auto=False):
+    """Every live setup ranked by the move left from today's price to its target.
+
+    Rows are (reward, ticker, label, pattern, timeframe, stage, price, target, direction,
+    trend, align, auto, rsi, tall, progress) — `progress` being `trade_progress`'s dict,
+    which carries the signal→target move and how much of it is already gone. Sorted by
+    the reward left from today's price, best first.
+
+    `shown_only` keeps it to the two setups a row displays, which is what the ledger is
+    read on; the stored ones are corroboration and do not hold a slot.
+
+    **`tall` is the caveat this metric cannot do without.** Ranked raw, the biggest rewards
+    are the biggest drawings: of the 102 trend-aligned setups, the 13 whose geometry
+    `geometry_faults` flags carry a median 40.7% against 20.6% for the rest, and 5 of the
+    top 10 are flagged. CLAUDE.md reads a tall drawing as a *horizon* label rather than a
+    defect — a multi-year channel is wide because the stock has multiplied since it began —
+    so these are the rows whose targets will not resolve this quarter. The reward is real
+    and the wait is long, and the ranking says nothing about the second unless it is
+    marked.
+    """
+    tall = {(r[0], r[1]) for r in geometry_faults(text)}
+    out = []
+    for e in parse_watchlist(text):
+        main = {k: v[2] for k, v in e['fields'].items()}
+        price, trend = main.get('price'), main.get('trend')
+        rsi = main.get('rsi')
+        stock_auto = bool(main.get('auto'))
+        for i, (label, sv, _pos) in enumerate(_setups(e)):
+            if shown_only and i > 1:          # main + alt are the row
+                continue
+            if sv.get('dormant'):
+                continue
+            pattern = sv.get('pattern') or main.get('pattern')
+            if pattern == PLACEHOLDER:
+                continue
+            if sv.get('stage') not in LIVE_STAGES:
+                continue
+            auto = stock_auto or bool(sv.get('auto'))
+            if auto and not include_auto:
+                continue
+            pg = trade_progress(sv, price, trend)
+            if pg is None:
+                continue
+            d = pg['dir']
+            out.append((pg['reward'], main['ticker'], label, pattern,
+                        sv.get('timeframe') or main.get('timeframe'), sv.get('stage'),
+                        price, pg['target'], d, trend, _aligns(d, trend), auto, rsi,
+                        (main['ticker'], label) in tall, pg))
+    out.sort(key=lambda r: -r[0])
+    return out
+
+
+PENDING_STAGES = ('forming', 'signal')
+
+
+def _done_text(pg, stage):
+    """How much of the signal→target move price has taken, in words where a number misleads.
+
+    A *forming* setup has not signalled, so price sitting behind the signal is the setup
+    working as intended rather than a move given back — "-97% done" on FTNT says only that
+    the trigger is most of a move away. The same reading on a *confirmed* setup is the
+    break undone, which is the condition `SLOT_UNDONE` and the "Break undone %" chip exist
+    for. Same arithmetic, opposite meaning, so the stage decides the wording.
+    """
+    done = pg['done']
+    if done < 0:
+        return "not triggered" if stage in PENDING_STAGES else "break undone"
+    if done > 1:
+        return "past target"
+    return f"{done * 100:.0f}% travelled"
+
+
+def _reward_line(row):
+    """One ranked setup: what is left from here, and how much of the move is already gone."""
+    (reward, tk, _lb, pat, tf, stage, price, target, d,
+     trend, _al, auto, rsi, tall, pg) = row
+    arrow = '↑' if d == 'up' else '↓'
+    return (f"  {reward * 100:6.1f}%  {tk:<6} {str(tf):<7} {str(pat):<20} {str(stage):<9}"
+            f" ${_fmt_price(price)} {arrow} ${_fmt_price(target)}"
+            f"  {pg['move'] * 100:3.0f}% move, {_done_text(pg, stage):<13}"
+            f"  RSI {rsi if rsi is not None else '--':>4}"
+            + ("  📐" if tall else "") + ("  (auto)" if auto else ""))
+
+
+def print_reward_rank(rows, top=20, asof=None):
+    """The ranking, trend-aligned setups first.
+
+    The leading number is what is left from today's price. The middle pair is the trade
+    itself — the whole signal→target move, and how much of it price has already taken.
+    A setup showing 80% done has had its move and is a watch, not an entry.
+    """
+    if asof:
+        print(asof)
+    buckets = [('with', 'Trend agrees'), ('flat', 'Trend flat'), ('against', 'Trend against')]
+    for key, heading in buckets:
+        part = [r for r in rows if r[10] == key and r[0] > 0]
+        if not part:
+            continue
+        print(f"\n{heading} ({len(part)}):")
+        for row in part[:top]:
+            print(_reward_line(row))
+        if len(part) > top:
+            print(f"  ... and {len(part) - top} more")
+        flagged = sum(1 for r in part[:top] if r[13])
+        if flagged:
+            print(f"  📐 = {flagged} of these {min(top, len(part))} are long-horizon drawings"
+                  " (geometry_faults): the reward is real, the wait is not this quarter.")
+    spent = [r for r in rows if r[0] <= 0]
+    if spent:
+        print(f"\nTarget already passed ({len(spent)}) — nothing left to make, these should close:")
+        for row in spent[:12]:
+            print(_reward_line(row))
+        if len(spent) > 12:
+            print(f"  ... and {len(spent) - 12} more")
 
 
 def stranded_setups(text):
@@ -2794,7 +3235,7 @@ def print_watchlist_report(result, missing, apply):
             tag = "auto" if auto else "posted"
             print(f"  {sym:<6} {tf:<7} {str(pattern):<20} confirmed {str(when):<12} "
                   f"${_fmt_price(conf)} → ${_fmt_price(price)}  {undone * 100:4.0f}% past, stop {stop * 100:3.0f}%  ({tag})")
-    failing = failing_setups(text)
+    failing = result.get('failing') or []
     if failing:
         print(f"\n💀 Closed past the shelter stop ({len(failing)} setups) — a close past `profileStop`")
         print("   and a follow-through beyond it. The invalidation rule cannot reach these:")
@@ -2803,6 +3244,14 @@ def print_watchlist_report(result, missing, apply):
         for sym, label, pattern, tf, stop, when, auto, shown in sorted(failing):
             print(f"  {sym:<6} {str(tf):<7} {str(pattern):<20} stop ${_fmt_price(stop)}"
                   f"  first close past {when}" + ("  (auto)" if auto else "") + ("  SHOWN" if shown else ""))
+    reward = [r for r in (result.get('reward') or []) if r[10] == 'with' and r[0] > 0]
+    if reward:
+        print(f"\n💰 Most left to make, trend agreeing ({len(reward)} setups) — what is still on")
+        print("   the table from today's price, with the whole signal→target move beside it and")
+        print("   how much of that move price has already taken:")
+        for row in reward[:8]:
+            print(_reward_line(row))
+        print("   📐 = long-horizon drawing. Full list: `python3 pattern_watchlist.py --reward`.")
     if result['review']:
         print("\n⚠ Needs review:")
         for line in result['review']:
@@ -2832,8 +3281,33 @@ if __name__ == "__main__":
     ap.add_argument("--dedupe", action="store_true", help=f"keep one setup per claim: swap an alt that repeats the main, drop stored setups whose target is within {DUPE * 100:.0f}% of a shown one")
     ap.add_argument("--strip-history", action="store_true", dest="strip_history", help="export every completed call to the labels file, then remove `history` from the ledger")
     ap.add_argument("--cap", action="store_true", help=f"hold every stock to {SETUP_CAP} shown readings, finished rows first (completed calls are exported before they go)")
+    ap.add_argument("--reversal", action="store_true", help="bullish setups whose trigger price is within reach, with what the mean-reversion and trend indicators say about the stock bottoming")
+    ap.add_argument("--reach", type=float, default=REACHABLE * 100, help="with --reversal: how far the trigger may sit from price, in %% (default {:.0f})".format(REACHABLE * 100))
+    ap.add_argument("--reward", action="store_true", help="rank live setups by the move left from today's price to their target, trend-aligned first")
+    ap.add_argument("--all-setups", action="store_true", dest="all_setups", help="with --reward: include the stored setups, not just the two a row shows")
+    ap.add_argument("--include-auto", action="store_true", dest="include_auto", help="with --reward: let auto-detected (red dot) setups into the ranking")
+    ap.add_argument("--top", type=int, default=20, help="with --reward: how many rows per bucket (default 20)")
     ap.add_argument("--dormant", action="store_true", help=f"shelve confirmed breaks older than {DORMANT_AGE}d whose break is >{DORMANT_UNDONE * 100:.0f}% undone against the stock's trend, and wake any whose break has re-formed")
     args = ap.parse_args()
+    if args.reversal:
+        with open(WATCHLIST_FILE) as fh:
+            wl = fh.read()
+        rows = reversal_setups(wl, include_auto=args.include_auto,
+                               reach=args.reach / 100,
+                               bottoming_only=not args.all_setups)
+        print_reversal(rows, top=args.top, asof=_asof_line(wl))
+        raise SystemExit(0)
+    if args.reward:
+        with open(WATCHLIST_FILE) as fh:
+            wl = fh.read()
+        rows = reward_rank(wl, shown_only=not args.all_setups,
+                           include_auto=args.include_auto)
+        scope = "every stored setup" if args.all_setups else "the two setups each row shows"
+        print(f"Reward to target from today's price — {scope}"
+              + (", auto included" if args.include_auto else ", hand-checked only") + ".")
+        print("Trend is the stock's own `trend`; a setup reading against it is listed last.")
+        print_reward_rank(rows, top=args.top, asof=_asof_line(wl))
+        raise SystemExit(0)
     if args.reslot:
         moved = reslot_setups(apply=args.apply)
         print(f"{'Reslotted' if args.apply else 'Would reslot'} {len(moved)} stock(s):")

@@ -402,7 +402,11 @@ in its own direction:
 
 - **Distance from today's price** finds THM, EME and MLM at 0.0% — that is price sitting
   *on* the line, a setup about to be invalidated. Ranked tightest-first it promotes the
-  setups closest to dying.
+  setups closest to dying. **As a stop that reasoning holds; as an entry RULEBOOK.md
+  reverses it**, because a setup sitting on its own invalidation is the best entry
+  available — the risk is a few cents and the answer comes on the next candle. The measure
+  is fine, it was being used for the wrong question. Small distance = an entry, large
+  distance = a watch.
 - **Distance from the confirm level** looked spectacular (reward/risk of 301x, 100x, 75x)
   and is an artifact: a confirmed channel's invalidation sits on the boundary it broke, so
   right after the break `confirm ≈ invalidation` by construction. Confirmed setups inside
@@ -572,6 +576,30 @@ is the mechanism behind most of what **🪦 Stranded** finds one symptom of.
   Comparing it to *price* instead is a different test and a worse one: it flags every `atRisk`
   setup, which is the stage that already says price has reached the stop.
 
+**RULEBOOK.md says an invalidation is not a stop** — it marks a trend change, so a ratio
+taken from it to the target is not reward:risk. **All three places that did it have been
+rewired.** `weekly_feature.score_setup` dropped the term outright (see "Ranking on the
+break"); `stop_fault` and `slot_score` now measure risk from **`profileStop`**, the only
+stop on a row that is both a price the stock actually traded and one that does not walk
+with its trendline. Where a setup has no profile stop — 182 of 412 — the reward:risk terms
+are skipped rather than fed a substitute, because no stop means no reward:risk, and
+substituting a level that is not one is how the wrong number got here.
+
+**The new denominator was checked against the setups verified by hand before the threshold
+was trusted**, since `MIN_RR = 1.0` was calibrated on the old one. Of 43 such setups
+exactly one flips from pass to fail — INTC's weekly falling wedge, 1.24 → 0.55 — while
+**AMKR's weekly ascending channel goes 0.79 → 1.90 and CAT's 0.77 → 1.10**, both setups
+confirmed correct by hand and flagged by the old test. It was failing the calls that were
+right, which is the strongest reason to believe the change. The flagged list falls from 68
+to 40; the `dead` count is unaffected at 5, those branches being untouched.
+
+The rulebook also says *when* an invalidation is still a usable reference: only while no
+target on the stock has been met. After the first one is reached the stop belongs just
+beyond that target, because risking back to the invalidation means giving the whole move
+up. **The ledger cannot compute that today** — `prune_finished` takes a met target off the
+page and into `data/completedCalls.json`, which holds 30 rows for the whole ledger and none
+for AMZN, so the levels the rule needs are the ones we delete.
+
 A fourth shape is the one that actually disqualifies most setups, and it is a ratio rather
 than a distance. **`MIN_RR = 1.0`**: when the target is nearer than the stop, being right
 pays less than being wrong costs, and the setup is not worth taking even when the read is
@@ -598,7 +626,7 @@ range is *correct*, not broken: on a stock at its highs the place for a short's 
 little above the high. QQQ's $764.44 against a $762.86 high is 0.2% out and perfectly
 tradeable; DAVE's is 11% out and a level price has no reason to visit. Without the margin
 the check flagged 204 setups, nearly all of them fine. With it, 59 — 43 machine-drawn and
-16 posted by hand. (Those counts are from when the check was written; after the redraws and cleanups since, the current list is 2 — one stop above every traded price and one decayed to zero — plus 44 failing the reward:risk test below.)
+16 posted by hand. (Those counts are from when the check was written; after the redraws and cleanups since, the current list is 5 dead plus 40 failing the reward:risk test below.)
 
 `python3 pattern_watchlist.py --deadstops` (dry run) / `--deadstops --apply` drops the
 auto-detected ones and lists the rest, the same policy `--thin` uses. The daily report
@@ -731,6 +759,105 @@ ones with a print inside `STRETCH_SOON` (7 days) under **⚠**. In the UI the mo
 keeps its colour — the move is still with the setup — and gains a warning outline and a ⚠,
 with the caution spelled out on hover.
 
+### How much is left to make, measured from the signal
+
+The ledger's scores answer "is this setup good". The question they do not answer is the
+one you ask before taking a trade: **how much of this move is still on the table?**
+`trade_progress()` and `reward_rank()` in `pattern_watchlist.py` answer it, and
+`python3 pattern_watchlist.py --reward` prints the ranking (the daily report carries the
+top 8 under **💰**).
+
+Three numbers per setup, all taken from the **signal**:
+
+- **reward** — `|target − price| / price`, what is left in today's money. This is the
+  ranking key.
+- **move** — `|target − signal| / signal`, the whole trade the pattern projected.
+- **travelled** — `(price − signal) / (target − signal)`, how much of that move price has
+  already taken.
+
+**The signal is the denominator, not the invalidation.** RULEBOOK.md records that an
+invalidation marks a trend change rather than a trade stop, so a span measured from it is
+not a trade and a ratio against it is not reward:risk — which is what `MIN_RR`,
+`slot_score`'s RR term and `weekly_feature`'s "+10 at ≥3x" are still doing. The signal is
+where the setup started saying something, so signal → target is the move it projected and
+signal → price is the part that has already happened.
+
+**`travelled` means opposite things at opposite stages, so it is printed in words.** A
+negative reading on a `forming` setup is the trigger still being ahead — FTNT's weekly
+channel reads −97%, which says only that price has most of a move to go before anything
+happens, and prints as *not triggered*. The identical arithmetic on a `confirmed` setup is
+the break given back, which is what `SLOT_UNDONE` and the "Break undone %" chip exist for,
+and prints as *break undone*. Two of the 102 trend-aligned setups are in that second state.
+
+Of the 79 trend-aligned confirmed setups, the median has **38% of its move behind it** and
+**26 are more than half spent** — those are rows whose headline reward is real but whose
+best entry was weeks ago, which is the "Where you enter is the trade" rule showing up as a
+number.
+
+**Alignment is a bucket, not a penalty.** The ranking splits on the stock's own `trend`:
+agreeing, flat, against. A flat trend is neither — demoting on "not moving" retires setups
+that are merely waiting, which is the ENVA mistake — so it sorts below the aligned ones
+rather than out of the list. 102 agree, 68 are flat, 34 read against.
+
+**📐 is the caveat the metric cannot do without.** Ranked raw, the biggest rewards are the
+biggest drawings: of the 102 trend-aligned setups the 13 that `geometry_faults` flags
+carry a **median 40.7% against 20.6%** for the rest, and 5 of the top 10 are flagged. A
+tall drawing is a *horizon* label rather than a defect (see "Too tall to draw"), so these
+are the rows whose targets will not resolve this quarter. The reward is real and the wait
+is long, and a ranking that does not mark them says nothing about the second.
+
+Auto-detected setups are excluded by default (a red dot is a reading nobody has checked);
+`--include-auto` lets them in, `--all-setups` reaches past the two a row shows, and
+`--top N` sets the depth.
+
+**The 💀 section had never printed.** `print_watchlist_report` called
+`failing_setups(text)` with no `text` in scope, so a full dry run died with a `NameError`
+after the 🪦 list — which is why the failing-setup list described above was only ever seen
+through its own flag. It reads `result['failing']` now, computed in `update_watchlist`
+beside `stranded` and the rest.
+
+### Bullish setups waiting on the turn
+
+`python3 pattern_watchlist.py --reversal` answers the question you ask near the end of a
+downtrend: **which bullish readings are ready for the reversal?** `reversal_setups()` keeps
+the upward setups whose trigger price is within `REACHABLE` (15%) of spot and attaches, for
+each, what `reversion.py` and `matrix_state.py` say about the stock actually bottoming.
+
+86 upward setups have a reachable trigger. Sorting those by trigger distance alone puts
+**overbought** names on top — ZS, XOM, VEEV, NOW and V all sit within 3% of an upward
+trigger while reading z +2.0 to +2.5 with their last turn-up 65–87 bars back and the matrix
+on POWER UP. Those are late in an *up*trend, not candidates for a turn. So the list filters
+on the bottoming evidence rather than the distance, and 15 rows survive.
+
+`_is_bottoming()` is the filter, and every condition is the Pine's own reasoning:
+
+- **z below its mean** — there has to be something to revert from;
+- **a confirmed turn-up pivot inside `TURN_FRESH` (30) bars** — *being stretched is not a
+  signal; rolling over is*. Price stays stretched far longer than it looks sustainable, so
+  the dot is the evidence and a deep z alone is not;
+- **a reverting regime** (Hurst < 0.5) — fading a trending series is how you get run over;
+- **not `gated`** — the panel hides its dots when the half-life exceeds the lookback, on
+  the grounds that a series which will not come halfway back inside the window being
+  measured is not one to fade. VZ's half-life reads 5602 bars. Honouring the gate keeps
+  this list agreeing with the panel it is read against.
+
+**The near-miss list is the point of the design.** A stock with a *fresh, deep* turn
+(z < −1, dot inside 10 bars) that the filter still refuses is printed under its own
+heading with the reason named, rather than dropped. IREN is the case: z −2.45 with a
+turn-up three bars ago, the strongest bottoming reading on the board, refused because
+Hurst reads trending. The gate is right about what it measures, and a falling wedge is not
+a fade — the break is the trade — so that row is a *counter-trend entry*, which is a thing
+to know about it rather than a reason to hide it. It earned the distinction the next
+session: **IREN fell another 3% pre-market**, which is the filter being right to withhold
+confidence and the near-miss list being right to keep showing the row.
+
+Loosening a threshold so a favourite passes is the failure mode this avoids. AVGO and AMZN
+pass on their own merits, and both were hand-identified as bottoming before the filter
+existed, which is the reason to believe it.
+
+`--all-setups` drops the bottoming filter, `--reach N` moves the 15%, `--include-auto`
+lets red-dot setups compete.
+
 ### Which two setups the row shows
 
 The two visible slots are the most valuable thing on a row, and they used to go to whatever
@@ -758,10 +885,25 @@ pair. 24 shown setups still fight both, which is fine where the stock holds noth
 fixed CVX. Measured from price, its weekly *down* channel sat 0.15% from its own
 invalidation, which scored as a reward:risk of **369x plus a tight-stop bonus** — and what
 it actually means is a setup one close from dying. This is the artifact recorded under
-"Stop distance" above, reproduced by writing the obvious thing. `breakInvalidation` is
-preferred, confirm-to-invalidation is the fallback, and `SLOT_FLOOR` (1%) marks where a
-stop stops being tight and starts being degenerate; price sitting that close to its own
-invalidation takes a penalty rather than a bonus.
+"Stop distance" above, reproduced by writing the obvious thing.
+
+**The stop is `profileStop` and nothing else.** It was `breakInvalidation` falling back to
+the live invalidation until the rulebook settled that an invalidation is not a stop; where
+no profile stop exists the reward:risk and tight-stop terms are skipped rather than fed a
+substitute. `SLOT_FLOOR` (1%) still marks where a stop stops being tight and starts being
+degenerate.
+
+**Price sitting on the invalidation means opposite things either side of the break**, and
+the flat −25 read only one of them. On a *pending* setup that level is what kills it, so
+price arriving there is the reading about to die. On a *confirmed* one it is the boundary
+the setup broke, so price coming back to it is the **retest** — which "Where you enter is
+the trade" calls the entry rather than the end: taken at the line, the same target is
+bought against a stop that is immediate. The penalty is now pending-only; `atRisk` already
+covers a confirmed setup that closes back *past* the level, which is the case it was
+reaching for.
+
+Rewiring both moved **49 rows**, none of them on a stock carrying `checkedOn` — the
+hand-composed rows stay exempt. It has not been applied.
 
 **Opposite directions on one row are not in themselves wrong** — 52 of 150 rows carry them,
 and the AMKR lesson is that setups pointing both ways differ by horizon rather than
@@ -1147,10 +1289,12 @@ The landing page renders two lists, both read straight from `data/weeklyFeature.
   "No clear pattern" placeholders. Score: stage (confirmed 40 / signal 25 / forming 12), RSI
   momentum (+20 with, −25 against, same thresholds as `pattern_watchlist`),
   trend agreement (+10 / −5), agreeing stored setups (+4 each, max +12), room to
-  target (0.6 per %, capped at 40%), reward/risk vs invalidation (+10 at ≥3x,
-  +5 at ≥2x) and freshness (+8 within 10 days, +4 within 30). A setup whose
-  target the price has already passed is dropped. Change the weights in
-  `weekly_feature.py`, not the data file.
+  target as a **gate** (+12 at ≥15%, +6 at ≥6%, rejected below 6%), entry quality
+  (up to +12, falling to nothing by half-spent, −15 past half and −30 past 75%)
+  and freshness (+8 within 10 days, +4 within 30). A setup whose target the price
+  has already passed is dropped, and so is one `geometry_faults` flags. Change the
+  weights in `weekly_feature.py`, not the data file. See "Ranking on the break"
+  below for why two terms were removed.
   The card itself is deliberately short — ticker, stage and RSI together under
   the name, then sparkline, price → target, the meter and the pattern. Stage and
   momentum share a row because they answer the same question: whether to act. The `why` reasons that used to be bulleted on it
@@ -1187,6 +1331,59 @@ The ledger's ⚡ chip sorts by **daily RSI, highest first** (no reading sorts
 last). Every row shows its RSI; the bolt and the accent colour mark only the
 setups momentum backs (≥60 for a long, ≤40 for a short), so the badge still
 says "actionable" while the order stays a plain number.
+
+### Ranking on the break, not on the target
+
+The shortlist used to pay most for the longest projection, which is the one number this
+ledger has measured as unreliable. Against the completed calls the **confirm level
+reproduces at 0.0% median error** while the target runs 6.7% and mostly is not reached at
+all — the source tool's own live setups project 30.1% and the ones that finish deliver
+12.1%. So the scoring now ranks the break: how clean it is, how recent, whether the stock
+is rolling over the setup's way, and whether enough room is left to bother. Room is a
+gate, never a prize.
+
+**Two terms were removed.**
+
+*Reward:risk against the invalidation* (+10 at ≥3x) measured nothing. RULEBOOK.md records
+that an invalidation marks a trend change rather than a trade stop, so the ratio was
+between two numbers that do not form a trade. The same caveat still applies to `MIN_RR`
+and `slot_score`'s RR term, which are not yet rewired.
+
+*Room to target at 0.6 per % up to +24* was the single biggest weight, and it was a
+detector for the biggest drawing on the board: across the trend-aligned ledger the setups
+`geometry_faults` flags carry a median **40.7%** of room against **20.6%** for the rest.
+It is now flat credit above a threshold, and a flagged drawing is excluded from the
+shortlist outright — it stays in the ledger, where a tall drawing is a horizon label
+rather than a defect, but a target that will not resolve this quarter is not what a weekly
+list is for.
+
+**The turn dot replaced the RSI level as the momentum term**, at +20 with the setup and
+−20 against. `reversion.py`'s own rule is that *being stretched is not a signal; rolling
+over is*, so the evidence is the confirmed pivot in z rather than its depth; RSI stays at
++8 / −10 because it is what the ⚡ chip shows. A gated reading counts for nothing either
+way, so the list agrees with the panel it is read against.
+
+It changes the board, and each change is checkable:
+
+| | | |
+|---|---|---|
+| **FRSH** | was the #1 card | z +2.50 with a turn **down** 21 bars ago — a long with the stock rolling over against it, and 📐 besides |
+| **VRT, ROAD** | were featured bearish | z −2.30 and −1.30 with turn-**ups** 17 and 7 bars ago — shorts on stocks bouncing |
+| **SPGI, ANET, APH** | now featured | every one carries a confirmed turn its own way, trend and RSI agreeing, under 25% of its move spent |
+
+FRSH is the case that matters: the "Targets" section above already records it leading the
+landing page on 40.7% of room "to a target that had effectively already played out". The
+old scoring put it first for exactly the reason it should not have been there.
+
+**Entry quality is what orders the list.** With room reduced to a gate every other term is
+categorical, and nine setups tied at 98 — a ranking that does not rank. The tiebreaker had
+to be something we believe, and how much of the entry is still available is the one
+continuous quantity on a row that is not the target. `ENTRY_CREDIT` pays the whole 12 to a
+break that has not moved and nothing by half-spent; 76 of the top 80 now score distinctly.
+
+**Being stretched still changes no score.** SPGI leads on RSI 72 and z +1.50, which is the
+"Stretched" condition — a risk to be visible rather than a forecast, per that section, so
+the chip warns and the ranking does not demote it.
 
 ### Rebuilding the lists
 

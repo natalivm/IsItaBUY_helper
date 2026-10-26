@@ -90,18 +90,70 @@ def _days_since(iso, today):
         return None
 
 
-def score_setup(s, agree_n, today):
+# ── Scoring ──
+#
+# Rank on the break, not on the target. Measured against the completed calls, the
+# confirm level reproduces at **0.0% median error** while the target runs 6.7% and
+# mostly is not reached at all — the source tool's live setups project 30.1% and the
+# ones that finish deliver 12.1%. So every term below is about the break: how clean it
+# is, how recent, whether the stock is turning behind it, and whether enough room is
+# left to be worth taking. Room is a gate, never a prize.
+
+ROOM_GOOD = 15.0        # % from price to target that counts as a real opportunity
+ROOM_MIN = 6.0          # below this there is not enough left to feature
+ROOM_CREDIT = 12        # flat, because a longer projection is not a better setup
+TURN_WITH = 20          # the stock is rolling over the setup's way
+TURN_AGAINST = -20      # ...or the wrong way, which is worse than no reading
+SPENT_HALF, SPENT_MOST = 0.5, 0.75
+SPENT_PENALTY = (-15, -30)
+ENTRY_CREDIT = 12       # the whole of it to a break that has not moved yet, none at half-spent
+
+
+def _turn_credit(bot, direction):
+    """(points, reason) from the mean-reversion panel, or (0, None).
+
+    `reversion.py`'s own rule is that *being stretched is not a signal; rolling over
+    is* — price stays stretched far longer than it looks sustainable, so the evidence
+    is the confirmed pivot in z, not the depth of it. An upward setup wants a turn-up
+    dot behind it and is actively worse off with a fresh turn-down.
+
+    A gated reading counts for nothing either way: the panel hides its dots when the
+    half-life exceeds the lookback, and a list that disagreed with the panel it is read
+    against would be its own kind of bug.
+    """
+    if not bot or bot.get('gated'):
+        return 0, None
+    fresh = pw.TURN_FRESH
+    up_ago, dn_ago = bot.get('turnUpAgo'), bot.get('turnDownAgo')
+    want, other = (up_ago, dn_ago) if direction == 'up' else (dn_ago, up_ago)
+    if want is not None and want <= fresh and (other is None or other > want):
+        side = 'up' if direction == 'up' else 'down'
+        return TURN_WITH, f"Turning {side} — pivot confirmed {want} bars ago"
+    if other is not None and other <= fresh:
+        return TURN_AGAINST, None
+    return 0, None
+
+
+def score_setup(s, agree_n, today, bot=None, tall=False, progress=None):
     """(score, why[]) for one setup. Higher is hotter; None when it can't be featured.
 
     The weights are deliberately blunt — this ranks a handful of setups for a
-    shortlist, it is not a model. In rough order of what makes a setup worth
-    looking at this week:
-      · how far along it is (a confirmed break beats one still forming),
-      · whether daily RSI and the stock's own trend back its direction,
+    shortlist, it is not a model. What it rewards, in order:
+      · how far along the break is (a confirmed one beats one still forming),
+      · whether the stock is rolling over the setup's way, and whether RSI and the
+        stock's own trend back its direction,
       · how many stored setups point at the same target,
-      · how much room is left to the target, and how that compares with the
-        distance to invalidation,
+      · enough room left to be worth taking — a gate, not a sliding reward,
       · how recently it moved.
+
+    **Two terms were removed and the reasons are worth keeping.** Reward:risk against
+    the invalidation (+10 at ≥3x) measured nothing: RULEBOOK.md records that an
+    invalidation marks a trend change rather than a trade stop, so the ratio was
+    between two numbers that do not form a trade. And room to target used to scale at
+    0.6 per % up to +24 — the single biggest weight — which made it a detector for the
+    longest drawing on the board: across the trend-aligned ledger the setups
+    `geometry_faults` flags carry a median 40.7% of room against 20.6% for the rest.
+    Paying for projection distance is paying for the number we know does not arrive.
     """
     stage, direction = s.get('stage'), s.get('direction')
     price, target = s.get('price'), s.get('target')
@@ -113,6 +165,13 @@ def score_setup(s, agree_n, today):
     # A target already behind the price has nothing left to offer.
     if (direction == 'up' and room <= 0) or (direction == 'down' and room >= 0):
         return None
+    if abs(room) < ROOM_MIN:
+        return None
+    # A long-horizon drawing is a horizon label rather than a defect (CLAUDE.md, "Too
+    # tall to draw"), so it stays in the ledger — but its target will not resolve this
+    # quarter, which is not what a weekly shortlist is for.
+    if tall:
+        return None
 
     why = []
     score = {'confirmed': 40, 'signal': 25, 'forming': 12}[stage]
@@ -123,13 +182,18 @@ def score_setup(s, agree_n, today):
         'forming': f"Still forming on the {tf} chart",
     }[stage])
 
+    turn, turn_why = _turn_credit(bot, direction)
+    score += turn
+    if turn_why:
+        why.append(turn_why)
+
     rsi = s.get('rsi')
     mom = pw._momentum(rsi, direction)
     if mom == 'with':
-        score += 20
+        score += 8
         why.append(f"Daily RSI {rsi:.0f} backs the {'upside' if direction == 'up' else 'downside'}")
     elif mom == 'against':
-        score -= 25
+        score -= 10
 
     trend = s.get('trend')
     if trend == direction:
@@ -142,19 +206,32 @@ def score_setup(s, agree_n, today):
         score += min(12, 4 * (agree_n - 1))
         why.append(f"{agree_n} stored setups point at the same target")
 
-    score += min(abs(room), 40) * 0.6
-    why.append(f"{abs(room):.1f}% from here to the target")
+    if abs(room) >= ROOM_GOOD:
+        score += ROOM_CREDIT
+        why.append(f"{abs(room):.1f}% from here to the target")
+    elif abs(room) >= ROOM_MIN:
+        score += ROOM_CREDIT // 2
+        why.append(f"{abs(room):.1f}% from here to the target")
 
-    inval = s.get('invalidation')
-    if inval:
-        risk = abs(price - inval) / price * 100
-        if risk > 0:
-            rr = abs(room) / risk
-            if rr >= 3:
-                score += 10
-                why.append(f"About {rr:.1f}x more room to the target than to invalidation")
-            elif rr >= 2:
-                score += 5
+    # A break most of the way to its target has had its entry. RULEBOOK.md puts the
+    # entry at the invalidation, not mid-range, so a move already made is a watch.
+    #
+    # This is also what orders the shortlist. With room reduced to a gate the other
+    # terms are all categorical, and nine setups tied at 98 — a ranking that does not
+    # rank. The tiebreaker has to be something we believe, and "how much of this entry
+    # is still available" is the one continuous quantity on a row that is not the
+    # target we know does not arrive.
+    done = (progress or {}).get('done')
+    if done is not None:
+        if done > SPENT_MOST:
+            score += SPENT_PENALTY[1]
+        elif done > SPENT_HALF:
+            score += SPENT_PENALTY[0]
+        else:
+            left = max(0.0, min(1.0, 1 - done / SPENT_HALF))
+            score += ENTRY_CREDIT * left
+            if done <= 0.25:
+                why.append(f"Only {max(done, 0) * 100:.0f}% of the move is spent")
 
     age = _days_since(s.get('stageDate'), today)
     if age is not None:
@@ -179,6 +256,12 @@ def hot_setups(text, limit=TOP_N, include_auto=False, today=None):
     until a human has checked them, which is not what belongs on a landing page.
     """
     today = today or pw._now_et().date()
+    # Computed once for the whole file rather than per setup: geometry_faults reparses
+    # the ledger and `bottoming` reads candle files off disk.
+    tall = {(r[0], r[2], r[3]) for r in pw.geometry_faults(text)}
+    prog = {(r[1], r[3], r[4]): r[14] for r in pw.reward_rank(text, shown_only=True,
+                                                              include_auto=True)}
+    bots = {}
     out = []
     for e in pw.parse_watchlist(text):
         f = e['fields']
@@ -198,7 +281,12 @@ def hot_setups(text, limit=TOP_N, include_auto=False, today=None):
                 continue
             if not s.get('pattern') or s['pattern'].lower().startswith('no clear pattern'):
                 continue
-            scored = score_setup(s, _agree_n(text, pos), today)
+            tk = main.get('ticker')
+            if tk not in bots:
+                bots[tk] = pw.bottoming(tk)
+            key = (tk, s.get('pattern'), s.get('timeframe') or main.get('timeframe'))
+            scored = score_setup(s, _agree_n(text, pos), today, bot=bots[tk],
+                                 tall=key in tall, progress=prog.get(key))
             if scored and (best is None or scored[0] > best[0]):
                 best = (scored[0], s, scored[1])
         if best:
