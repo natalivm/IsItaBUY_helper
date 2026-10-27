@@ -44,9 +44,8 @@ export const NU = defineStock({
   // RS REFRESHED Oct 27: 98 -> 74, straight off the selloff. `dataReviewedOn`
   // deliberately stays at 2026-10-10 — this is an RS read, not a review of the
   // latest earnings, and Q3 does not land until Nov 12.
-  // STILL STALE: `analystConsensus` is dated Oct 6 and predates both UBS's raise
-  // to $20.50 (from $18.20, Buy) and the election, so the $12-23 range is almost
-  // certainly being revised.
+  // `analystConsensus` re-checked Oct 27 and left as it stands — the numbers are
+  // still right, they are simply all pre-election. See the note beside the field.
   // ─────────────────────────────────────────────────────────────────────────
 
   // Q2 2026 UPDATE (Aug 13, 2026)
@@ -106,7 +105,16 @@ export const NU = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
 
 
-  analystConsensus: { rating: 'Buy', targetLow: 12, targetMedian: 19, targetHigh: 23, numAnalysts: 22 },  // stockanalysis.com, Oct 6 2026
+  analystConsensus: { rating: 'Buy', targetLow: 12, targetMedian: 19, targetHigh: 23, numAnalysts: 22 },
+  // Re-checked Oct 27 and left UNCHANGED, which is the finding rather than neglect. Every
+  // aggregator still lands on the same shape — 17 Buy / 4 Hold of 22; averages $18.77,
+  // $18.92 and $19.18; ChartMill's 26-analyst set runs $12.12 low to $24.15 high; JPMorgan
+  // holds the street high at $23; UBS raised to $20.50 on Oct 20. Nudging 19 to 19.18 would
+  // also put an AVERAGE into a median field, which is worse than leaving it.
+  // THE REAL CAVEAT IS THE DATE, NOT THE DIGITS: all of it predates the Oct 26 election.
+  // UBS's raise is six days before the vote and the selloff was yesterday, so no revision
+  // has landed yet. Next catalyst is the Q3 print on Nov 12 — expect the range to move then,
+  // not before. (Per RULEBOOK.md these targets anchor nothing in the model anyway.)
   revGrowth: [
     [0.30, 0.15, 0.12, 0.10, 0.08],  // Bear: FY26 ~locked by H1 (+~39%); then credit stress + regulation hit
     [0.38, 0.24, 0.19, 0.15, 0.12],  // Base: FY26/FY27 ≈ consensus $22.8B / $28.2B, then deceleration curve
