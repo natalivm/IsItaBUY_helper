@@ -279,12 +279,31 @@ const calculateEPS_PE = (t: TickerDefinition, sc: ScenarioConfig, showEnhancemen
 
   const terminalEps = epsArr[HORIZON - 1];
   const pricePerShare = terminalEps * exitPE;
+  // The near target is read straight off the same path: year-N EPS at the multiple that
+  // has blended that far from today's forward P/E toward the exit P/E. It is consistent
+  // with the headline by construction — priceArr[HORIZON - 1] is exactly
+  // `terminalEps * exitPE`, because the blend reaches exitPE on the last step.
+  //
+  // Unlike the DCF's near target, this one is checkable: its EPS is the base estimate
+  // compounded N times, which can be held against published consensus for that year.
+  // That is why the card labels this one "est" and the DCF one "model".
+  //
+  // THE NEAR TARGET CAN EXCEED THE 5-YEAR ONE, AND THAT IS NOT A BUG. The blend walks the
+  // multiple from today's forward P/E toward `exitPE`, so wherever the exit is far below
+  // where the stock trades now, compression outruns compounding and the path falls. 63 of
+  // 198 scenarios invert this way; 55 are bear cases, where a de-rating that takes time to
+  // play out is exactly what the bear case means. The 8 base/bull inversions all have the
+  // same signature — CRWD 207.8x -> 50x, SNOW 150.9x -> 30x, PLTR 122.7x -> 38x, DDOG
+  // 111.2x -> 40x, INTC 59.5x -> 18x — and read correctly as "this case needs a large
+  // multiple reset, and the reset is the dominant term". Do not clamp it.
+  const nearTarget = priceArr[NEAR_HORIZON - 1];
   const w = calculateWacc(t, sc);
 
   return buildProjectionData({
     ticker: t.ticker,
     w,
     pricePerShare,
+    nearTarget,
     currentPrice: t.currentPrice,
     revs,
     fcfs,

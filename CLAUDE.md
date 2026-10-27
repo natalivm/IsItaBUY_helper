@@ -1408,6 +1408,43 @@ python3 weekly_feature.py --include-auto    # let auto-detected setups compete
 Yahoo is blocked from Claude Code's sandbox (same 403 proxy as the price API), so
 run it `--offline` here; the Action does the real fetch.
 
+## Two targets per scenario: a near one and the five-year one
+
+Each scenario card carries a second, nearer number under the headline target —
+`NEAR_HORIZON = 2` years — because the five-year figure rests on estimates for years 1-3
+and on judgement for years 4-5, and nothing on the card used to say where that line fell.
+
+**The two models produce it differently and are labelled differently, because the numbers
+are not equally supported.**
+
+- **EPS_PE → `2Y est`.** Read off the same per-year path the model already built:
+  year-2 EPS at the multiple that has blended that far from today's forward P/E toward
+  `exitPE`. It is consistent with the headline by construction, since `priceArr[4]` is
+  exactly `terminalEps × exitPE`. It is also **checkable** — its EPS is the base estimate
+  compounded twice, which can be held against published consensus for that year. EME reads
+  $848 beside $1,218, and that $40.49 of EPS is +10% on consensus FY27.
+- **DCF → `2Y model`.** `presentValue × (1 + w)²` — the same arithmetic as the headline,
+  stopped earlier. Nothing new is assumed; the 5-year figure already embeds "the gap closes
+  and the asset then earns its required return" and this embeds less of it. But **no
+  external estimate stands behind it**: these two differ by horizon alone, which is why it
+  does not claim to be an estimate. NVDA reads $283.35 beside $412.15, the ratio being
+  `(1+w)³` at the 13.3% WACC the card already shows.
+
+**Labelled by horizon, not by calendar year.** `baseEps` is a forward estimate whose fiscal
+year differs per stock — FY26E for EME, FY27E for AZO, FY27E-Aug for MU, FY27E-Jan for
+CRWD — so an array index does not map to a calendar year across the ledger. Real years need
+a `baseEpsFy` field on all 66 EPS_PE stocks; relative labels need nothing and cannot be
+wrong.
+
+**The near target can exceed the five-year one, and that is not a defect.** The EPS_PE blend
+walks the multiple toward `exitPE`, so wherever the exit sits far below where the stock
+trades now, compression outruns compounding and the path declines. 63 of 198 scenarios
+invert. **55 are bear cases**, where a de-rating that takes time is precisely what the bear
+case says. The 8 base/bull inversions share one signature — CRWD 207.8x → 50x, SNOW 150.9x →
+30x, PLTR 122.7x → 38x, DDOG 111.2x → 40x, INTC 59.5x → 18x, plus DE, TER — and read
+correctly as *this case needs a large multiple reset and the reset dominates*. A DCF near
+target never inverts, since `(1+w)²  < (1+w)⁵` for any positive WACC.
+
 ## Data Freshness Tracking
 
 Prices auto-refresh daily, but everything else (fundamentals, RS, overrides, Burry/debt blocks) is hand-curated and goes stale silently. **`updatedOn` is NOT a freshness signal** — `update_prices.py` resets it to today on every price run. The real signal is **`dataReviewedOn`** (`'YYYY-MM-DD'`), which the price bot never touches.
