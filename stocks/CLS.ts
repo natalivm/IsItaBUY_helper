@@ -19,9 +19,12 @@ export const CLS = defineStock({
   beta: 1.35,
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 11.55,      // FY26E adj. EPS = company guide, RAISED AT Q3 2026 from $11.30 (was $8.75
-                       // at Q1). Still the FY26 basis — deliberately not re-based to the FY27 guide,
-                       // see the Q3 block below for why that decision is open rather than taken.
+  baseEps: 21.50,      // FY27E adj. EPS = COMPANY GUIDE, introduced at Q3 2026. Re-based off FY26
+                       // ($11.55 raised from $11.30, from $8.75 at Q1) because a flat epsCagr cannot
+                       // express a guided +86% followed by a fade — on the FY26 basis the model's
+                       // year one read $13.86 against that $21.50. The growth rate was cut in the
+                       // same edit, which is the whole lesson of EME: a forward re-base with the
+                       // rate left alone inflates the target by construction.
   rsRating: 95,         // IBD RS per user, 10/10/2026 (was 92)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
@@ -65,7 +68,16 @@ export const CLS = defineStock({
   // exactly the EME mistake (see stocks/EME.ts) — a forward re-base with the
   // growth rate left alone inflates the target by construction.
   // ─────────────────────────────────────────────────────────────────────────
-  epsCagr: [10, 20, 28],   // Q2 2026: base 18→20, bull 24→28 — FY27 guided to >65% EPS growth, then a cyclical fade
+  epsCagr: [5, 12, 20],    // POST-FY27 rates, off the $21.50 FY27 guide. The surge is in the base
+                           // now, so these are the fade. 12% is a judgement and not corroborated:
+                           // unlike EME there is NO published 2028+ consensus for Celestica, only
+                           // the CEO citing visibility into 2028 and demand forecasts running above
+                           // the 2027 outlook. Reasoning: not 20%, which carries the surge rate past
+                           // the surge; not 10%, too low while 2028 is guided higher; 12% is "still
+                           // growing, no longer doubling" for a contract manufacturer whose 9.0%
+                           // FY27 operating margin is already exceptional for EMS (peers 3-5%). The
+                           // uncertainty lives in the spread — if the AI cycle runs through 2029
+                           // this base is far too low, which is what the 20% bull is for.
   exitPE: [14, 22, 26],
   prob: [25, 50, 25],
 
@@ -82,9 +94,9 @@ export const CLS = defineStock({
   ],
   exitMultiple: [12, 16, 20],
   desc: [
-    'The FY27 acceleration fails to materialize and AI capex moderates; EPS compounds only ~10% from the $11.30 FY26 guide. P/E compresses to 14x as the market reprices EMS at its historical range. 5yr target {target} ({cagr} annualized).',
-    'Execution on the raised FY26 guide ($11.30 EPS) and a 65%+ FY27; then growth fades with the AI cycle. EPS compounds ~20% from $11.30; P/E compresses to 22x. 5yr target {target} ({cagr} annualized).',
-    'Sustained AI infrastructure super-cycle drives ~28% EPS CAGR. 1.6T platform ramp and additional hyperscaler wins extend the runway. Premium 26x multiple held on structural AI leadership. 5yr target {target} ({cagr} annualized).',
+    'The guided FY27 lands but the cycle turns straight after; EPS compounds only ~5% from the $21.50 FY27 guide and the P/E compresses to 14x as the market reprices EMS at its historical range. 5yr target {target} ({cagr} annualized).',
+    'FY27 delivers the guided $21.50 on ~$40B of revenue, then growth fades to a rate a contract manufacturer can hold; EPS compounds ~12% and the market pays 22x. 5yr target {target} ({cagr} annualized).',
+    'The AI infrastructure super-cycle runs past 2028 as management\'s demand visibility suggests; EPS compounds ~20% beyond the FY27 guide and a premium 26x holds on structural AI leadership. 5yr target {target} ({cagr} annualized).',
   ],
 
   termGrowth: [0.02, 0.025, 0.03],
