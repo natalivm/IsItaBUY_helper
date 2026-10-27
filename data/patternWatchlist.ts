@@ -1198,18 +1198,20 @@ export const PATTERN_STOCKS: PatternStock[] = [
     pattern: "Ascending Channel",
     timeframe: "weekly",
     direction: "down",
-    stage: "confirmed",
+    stage: "retest",
     stageDate: "2026-10-19",
     signal: 183.64,
     confirm: 176.77,
     invalidation: 186.08,
     breakInvalidation: 186.08,
     target: 126.57,
+    failRule:
+      "a completed weekly close above the lower boundary it broke ($188.52 the week of Oct 26, rising ~$2.44 a week), then a follow-through close above that candle's high.",
     lines: [
       { from: ["2026-03-30", 172.49], to: ["2026-10-19", 243.15] },
       { from: ["2026-03-30", 115.42], to: ["2026-10-19", 186.08] },
     ],
-    note: "The same break read as a channel rather than a wedge: signal on a weekly close below $183.64, confirmed below $176.77 the week of Oct 19 — the same confirmation candle as the wedge. The channel's width carries further, to $126.57. A weekly close back above $186.08 would put price inside it again.",
+    note: "The same break read as a channel rather than a wedge: signal on a weekly close below $183.64, confirmed below $176.77 the week of Oct 19 — the same confirmation candle as the wedge. The channel's width carries further, to $126.57. Price has rallied straight back to the boundary it broke: the week of Oct 26 reached $189.27 against a line now at $188.52 and sits at $187.06, so this is a retest rather than a failure. A completed weekly close above the line ends it.",
     alt: {
       pattern: "Rising Wedge",
       timeframe: "weekly",

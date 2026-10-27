@@ -230,7 +230,7 @@
  "ANET|main": {
   "label": "main",
   "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "stage": "retest",
   "ticker": "ANET"
  },
  "ANET|monthly Ascending Channel": {
