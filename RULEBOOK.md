@@ -151,6 +151,28 @@ not a reversion story", arriving from the fit rather than from Hurst.
 That is not a rounding gap, it is a different series — an intraday chart, which
 `public/bars/` does not carry. Say so rather than tuning a number until the two agree.
 
+## An analyst price target is not a ceiling
+
+**Never compress a model target toward the analyst range, and never flag one for clearing
+it.** Our target comes from actual data — the reported EPS base, the growth we think it
+compounds at, the multiple we think it ends on. Theirs is an opinion about price over the
+next twelve months. A five-year target that exceeds a one-year target is the ordinary
+result of measuring a longer horizon, not evidence of an error, and a check that treats
+their high as a ceiling just walks the model toward consensus, which is the one place it
+has nothing to add.
+
+A `review_status.py` check was built on exactly that mistake and removed the same day. It
+flagged nine stocks whose base target sat more than 20% above the analyst high — NU widest
+at 1.42x — and NU is the case that shows why it was wrong: its 18% EPS CAGR to FY31 sits
+**below** the street's own +27% FY27 estimate, so the model is not more aggressive than
+the street about the business at all. The 1.42x came entirely from comparing five years to
+one.
+
+**Consensus *EPS* is a different thing and is fair game.** An estimate of next year's
+earnings is a forecast of business results, and checking our year-one implied EPS against
+it is checking data against data. A price target is a view on a multiple as much as on the
+company, and nothing about it is ours to reproduce.
+
 ## Targets
 
 **Test `confirm ± height` before blaming the target.** If the arithmetic reproduces, the

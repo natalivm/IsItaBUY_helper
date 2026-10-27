@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ProjectionData, ValuationModelType } from '../types';
-import { getInstitutionalRating } from '../services/projectionService';
+import { getInstitutionalRating, NEAR_HORIZON } from '../services/projectionService';
 import { usd, pctFmt } from '../services/stockMetrics';
 import { applyNarrativeTokens, scenarioNarrativeTokens } from '../services/narrative';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ScenarioMetricsCard: React.FC<Props> = ({ data, currentPrice, modelType }) => {
-  const { config, pricePerShare, mosPrice, w } = data;
+  const { config, pricePerShare, nearTarget, mosPrice, w } = data;
   const isEpsPe = modelType === 'EPS_PE';
 
   // Use the standardized institutional rating logic for this specific scenario path
@@ -31,6 +31,23 @@ const ScenarioMetricsCard: React.FC<Props> = ({ data, currentPrice, modelType })
         <div className="flex flex-col">
           <span className="text-xs text-slate-400 uppercase font-bold tracking-widest">{isEpsPe ? 'EPS×PE 5Y Tgt:' : 'DCF 5Y Tgt:'}</span>
           <span className="text-base font-black text-white">{usd(pricePerShare)}</span>
+          {/* The near target is shown under the headline rather than beside it: it is the
+              same valuation on a shorter horizon, not a second opinion. Rendered only where
+              the model produces one — EPS_PE does not yet.
+
+              The two models earn DIFFERENT labels because the numbers are not equally
+              supported. An EPS_PE near target is checkable: its year-2 EPS can be held
+              against published consensus, which is a forecast of business results. A DCF
+              near target is the same discounted model on a shorter clock, with no external
+              estimate behind it — so it says MODEL, and only the EPS_PE one says EST. */}
+          {nearTarget !== undefined && (
+            <span className="text-xs font-bold text-slate-400 mt-0.5"
+              title={isEpsPe
+                ? `Year-${NEAR_HORIZON} EPS at the blended multiple. The EPS is checkable against published consensus.`
+                : `The same DCF compounded ${NEAR_HORIZON} years instead of 5. No external estimate stands behind it — it differs from the 5-year figure by horizon alone.`}>
+              {NEAR_HORIZON}Y {isEpsPe ? 'est' : 'model'}: {usd(nearTarget)}
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <span className="text-xs text-slate-400 uppercase font-bold tracking-widest">MoS (25%):</span>
