@@ -3202,7 +3202,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       { from: ["2026-09-14", 81.02], to: ["2026-10-23", 67.41] },
       { from: ["2026-09-14", 71.99], to: ["2026-10-23", 58.37] },
     ],
-    note: "The daily channel price has slid down since the September high. It is pressing the upper line at $65.85 with no break yet: a daily close above $67.40 or below $58.37 would start a signal, carrying to $76.44 up or $49.34 down.",
+    note: "The daily channel price has slid down since the September high, and it is still inside it — at $62.52 the stock sits between the two lines with nothing broken. A daily close above $66.47 or below $57.43 starts a signal, carrying to $75.51 up or $48.40 down. The source tool reads the same channel on the same levels.",
     alt: {
       pattern: "Inverted Hammer",
       timeframe: "daily",
