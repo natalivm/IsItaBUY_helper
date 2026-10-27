@@ -19,8 +19,14 @@ export const NU = defineStock({
   debt: 3200,
   beta: 1.55,
   costDebt: 0.07,      // EM premium
-  rsRating: 98,         // IBD RS per user, 10/10/2026 (was 21)
-  rsTrend: 'rising',
+  rsRating: 74,         // IBD RS per user, 10/27/2026 (was 98 on 10/10, 21 before that) —
+                        // 24 points given back on the Lula selloff. Still above the 70
+                        // momentum threshold in classifyStock, so the home-page group is
+                        // unchanged at PRIME_GROWTH.
+  rsTrend: 'falling',   // INFERRED from 98 -> 74 in 17 days, not read off IBD. Correct it
+                        // if the panel disagrees. It does not move the group either way
+                        // while RS stays >= 70: `hasGoodMomentum` already carries it, and
+                        // `hasMidRsRising` is only the fallback for RS 40-69.
   aiImpact: 'TAILWIND',  // nuFormer: in production for credit decisioning Brazil; expanding to lending + Mexico credit cards 2026
   modelType: 'EPS_PE',
   baseEps: 0.89,       // FY2026E EPS — stockanalysis.com consensus (Oct 6 2026, range $0.81-0.97; FY27E $1.13, +27%). H1 2026 NI $1.93B (~$0.40/sh). Prior: raised to ~$0.88 on 06/26 spot-check; prior $0.72 was set conservatively below consensus. Q1 2026 (reported May 14) NI $871M (Q1 record, +41% YoY FX-neutral), $0.18 EPS; guided ~$0.22-0.27/qtr Q2-Q3 → FY26 ~$0.85-0.95. IFRS/GAAP basis; ETR normalizes 15-20% through 2026.
@@ -35,10 +41,12 @@ export const NU = defineStock({
   // NOTHING BELOW WAS CUT FOR IT. Q2 2026 (Aug 13) is still the latest report
   // and it was a record; Q3 2026 lands NOV 12 2026 (consensus ~$0.22-0.23 EPS
   // on ~$5.97B revenue). First Investor Day Dec 8 2026.
-  // STALE AND NEEDS A HUMAN: `rsRating: 98` is dated 10/10, before a -17% day
-  // and a market-wide repricing — re-read it from IBD. `analystConsensus` is
-  // dated Oct 6 and predates both UBS's raise to $20.50 (from $18.20, Buy) and
-  // the election, so the $12-23 range is almost certainly being revised.
+  // RS REFRESHED Oct 27: 98 -> 74, straight off the selloff. `dataReviewedOn`
+  // deliberately stays at 2026-10-10 — this is an RS read, not a review of the
+  // latest earnings, and Q3 does not land until Nov 12.
+  // STILL STALE: `analystConsensus` is dated Oct 6 and predates both UBS's raise
+  // to $20.50 (from $18.20, Buy) and the election, so the $12-23 range is almost
+  // certainly being revised.
   // ─────────────────────────────────────────────────────────────────────────
 
   // Q2 2026 UPDATE (Aug 13, 2026)
