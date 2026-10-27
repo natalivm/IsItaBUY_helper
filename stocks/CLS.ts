@@ -6,12 +6,12 @@ export const CLS = defineStock({
   sector: 'EMS',
   themeColor: '#f97316',
   updatedOn: '10/26',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-10',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-27',
   currentPrice: 246.25,
   fairPriceRange: '$375 - $550',  // stockanalysis.com analyst target range (Sep 30 2026)
   shares0: 117.9,
-  rev25: 12400,        // FY2025; FY26 guide $20.5B (+65%); mgmt expects FY27 growth to ACCELERATE beyond 65%
+  rev25: 12400,        // FY2025; FY26 guide RAISED to $21.0B at Q3 (from $20.5B); FY27 guided ~$40.0B (+90%)
   fcfMargin25: 0.037,
   taxRate: 0.18,
   cash: 378,
@@ -19,7 +19,9 @@ export const CLS = defineStock({
   beta: 1.35,
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 11.30,      // FY26E adj. EPS = company guide $11.30 (raised at Q2 2026 from $8.75; consensus $11.21). Mgmt: FY27 adj. EPS to grow faster than revenue (>65%).
+  baseEps: 11.55,      // FY26E adj. EPS = company guide, RAISED AT Q3 2026 from $11.30 (was $8.75
+                       // at Q1). Still the FY26 basis — deliberately not re-based to the FY27 guide,
+                       // see the Q3 block below for why that decision is open rather than taken.
   rsRating: 95,         // IBD RS per user, 10/10/2026 (was 92)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
@@ -37,6 +39,32 @@ export const CLS = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
 
 
+  // Q3 2026 (reported Oct 26 2026, amc) — BEAT AND RAISED, AND THE SHAPE CHANGED
+  // ─────────────────────────────────────────────────────────────────────────
+  // Q3: revenue $5.83B (+83% YoY from $3.19B) vs $5.25-5.55B guided and $5.48B
+  // consensus. Adjusted EPS $3.30 (vs $1.58 LY) against $2.88-3.08 guided and
+  // $2.99 consensus; GAAP $3.26. Adjusted operating margin 8.5%, a company high.
+  // Q4 guide: revenue $6.275-6.575B, adj. EPS $3.37-3.57.
+  // FY26 raised: revenue $21.0B (from $20.5B), adj. EPS $11.55 (from $11.30).
+  // FCF guide CUT to $460M from $600M — working capital to fund 2027 growth,
+  // which is a real cash cost rather than a miss, but it is a cut.
+  // FY27 FIRST GUIDE: revenue ~$40.0B (+90%), adj. EPS $21.50, adj. op margin
+  // 9.0%, capex $1.5-2.0B. EPS came in slightly under the ~$22.17 estimate while
+  // revenue beat ~$37.98B. Mgmt says 2028 customer demand forecasts are
+  // meaningfully higher than the 2027 outlook, with no formal 2028 guidance.
+  // Stock ~$284 after hours, +9%.
+  //
+  // THE MODEL'S SHAPE NO LONGER FITS, AND THAT IS NOT FIXED HERE.
+  // A single `epsCagr` cannot express "+86% in FY27, then fade". On the FY26
+  // basis kept above, the model's year-one EPS is $11.55 x 1.20 = $13.86 against
+  // a company-guided $21.50 — it understates the near path badly. Re-basing to
+  // the FY27 guide fixes that and moves the target a long way, so it is a
+  // decision rather than a data refresh: at baseEps $21.50 the base case reads
+  // ~$762 at 10%, ~$833 at 12%, ~$951 at 15% and ~$1,177 if 20% is carried over
+  // unchanged, against ~$632 as it stands. Carrying the rate over unchanged is
+  // exactly the EME mistake (see stocks/EME.ts) — a forward re-base with the
+  // growth rate left alone inflates the target by construction.
+  // ─────────────────────────────────────────────────────────────────────────
   epsCagr: [10, 20, 28],   // Q2 2026: base 18→20, bull 24→28 — FY27 guided to >65% EPS growth, then a cyclical fade
   exitPE: [14, 22, 26],
   prob: [25, 50, 25],
