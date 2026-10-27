@@ -1429,7 +1429,31 @@ python3 review_status.py --days 75      # flag reviews older than 75 days (defau
 python3 review_status.py --strict       # exit 1 if anything needs review (CI gate)
 ```
 
-It flags stocks that are stale (review older than the threshold), never reviewed (no `dataReviewedOn`), or missing `lastReportTag` / `debtSafety` / `burry`. Use `lastReportTag` (e.g. `'Q1 2026'`) to record which earnings the data reflects — keep the convention consistent (calendar `Q# YYYY` or fiscal `Q# FY##`, but don't mix within a stock).
+It flags stocks that are stale (review older than the threshold), never reviewed (no `dataReviewedOn`), missing `lastReportTag` / `debtSafety` / `burry`, or carrying a **stretched base target**.
+
+**The stretched-target check, and what it cannot do.** For an EPS_PE stock the whole
+valuation is `baseEps × (1 + epsCagr)⁵ × exitPE` — three numbers. The `revGrowth`,
+`fcfMargin`, `bbRate`, `termGrowth`, `exitMultiple` and `ebitdaProxy` arrays are computed
+by `projectionService` and **never read by any component**: the UI takes only
+`pricePerShare`, `cagrs[4]`, `mosPrice`, `w` and `config`, so `revs`, `eps`, `netIncome`,
+`fcf`, `ebit`, `fcfYield`, `shares` and `years` are all dead. That rules out the obvious
+consistency check — nothing connects a scenario's EPS growth to its own revenue growth, and
+the median EPS_PE stock already runs **+5.3 points** of EPS growth above its revenue tail,
+so flagging that gap would flag half the universe on data nothing uses.
+
+What is left is the street. `VALUATION_STRETCH = 1.20` flags a base target more than 20%
+above the analyst **high**. Sitting above the high is ordinary — ours is a five-year view
+and theirs a one-year one, so 27 of 66 clear it and the median reads 0.91x — and the
+distribution is smooth with no natural break (p75 1.08x, p90 1.23x, max 1.42x), so the
+threshold stands at the 90th percentile rather than at a gap. Nine stocks are listed, NU
+widest at 1.42x.
+
+**It would not have caught EME, which is what prompted it.** EME's base target reached
+$1,218 against a $1,200 high — 1.02x, inside the threshold. The fault was not the level but
+the *move*: the Oct re-base shifted the base year forward (FY25A $25.87 → FY26E $32.86,
++27%) while the growth rate fell only two points, so the target rose 16% from the analyst
+median to past the high. Catching that needs the previous target, which nothing stores. Read
+this list as a queue of the most stretched valuations, not as a regression test. Use `lastReportTag` (e.g. `'Q1 2026'`) to record which earnings the data reflects — keep the convention consistent (calendar `Q# YYYY` or fiscal `Q# FY##`, but don't mix within a stock).
 
 ## Alpha Strategic View — Why Buy / Risks
 
