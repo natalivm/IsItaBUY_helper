@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const UBER = defineStock({
-  updatedOn: '10/26',
+  updatedOn: '10/27',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   ticker: 'UBER',
   name: 'Uber Technologies',
   sector: 'Mobility & Delivery Platform',
   themeColor: '#22c55e',
-  currentPrice: 66.13,
+  currentPrice: 65.78,
   fairPriceRange: '$70 - $150',  // stockanalysis.com analyst target range (Oct 7 2026)
   shares0: 2040,           // 2.04B (stockanalysis, Oct 2026) — buybacks continue
   rev25: 52020,            // FY2025 actual $52.0B; revGrowth[0] = FY26 (consensus $57.9B, +11% — business-model changes cut ~8pts vs GB growth), FY27E $66.8B (+15%)

@@ -5,7 +5,7 @@ export const DE = defineStock({
   name: 'Deere & Company',
   sector: 'Machinery',
   themeColor: '#10b981',
-  currentPrice: 641.25,
+  currentPrice: 639.23,
   updatedOn: '10/27',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',

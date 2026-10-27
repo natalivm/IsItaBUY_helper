@@ -5,7 +5,7 @@ export const SNOW = defineStock({
   name: 'Snowflake',
   sector: 'Cloud Data Platform / AI Analytics',
   themeColor: '#29B5E8',
-  currentPrice: 334.95,
+  currentPrice: 337.43,
   fairPriceRange: '$110 - $525',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 344,           // 343.9M shares outstanding at Jan 31, 2026 (10-K)
   rev25: 4684,            // FY26 total revenue ($4.684B, ended Jan 31, 2026); FY27E consensus $6.32B (+35%), FY28E $8.10B (+28%)

@@ -8,7 +8,7 @@ export const GLW = defineStock({
   updatedOn: '10/27',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-27',
-  currentPrice: 127.74,
+  currentPrice: 126.36,
   fairPriceRange: '$129 - $238',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 875,        // Q2 2026 diluted shares
   rev25: 16410,        // FY2025 core sales $16.41B (GAAP $15.63B); Q3 2026 core sales $5.08B (+19%), Q4 guided $5.2-5.3B (+19%); FY27E $23.10B (+20%)

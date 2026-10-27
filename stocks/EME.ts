@@ -8,7 +8,7 @@ export const EME = defineStock({
   dataReviewedOn: '2026-10-11',
   sector: 'Facilities Services · Data Center Infrastructure',
   themeColor: '#22d3ee',
-  currentPrice: 665.93,
+  currentPrice: 666.57,
   fairPriceRange: '$885 - $1,200',  // stockanalysis.com analyst target range (Aug 8 2026)
   shares0: 44.11,
   rev25: 16990,             // FY2025A; revGrowth[0] = FY26 (guide $20.0-20.5B raised; consensus $20.3B, +19.6%), FY27E $22.3B (+10%)

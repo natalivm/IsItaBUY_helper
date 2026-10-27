@@ -121,6 +121,17 @@
     "target": 185.52
   },
   {
+    "ticker": "HTFL",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-27",
+    "confirm": 56.3,
+    "invalidation": 44.22,
+    "target": 58.48
+  },
+  {
     "ticker": "KLAC",
     "pattern": "Rising Wedge",
     "timeframe": "daily",

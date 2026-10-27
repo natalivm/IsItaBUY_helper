@@ -5,10 +5,10 @@ export const BKNG = defineStock({
   name: 'Booking Holdings',
   sector: 'Online Travel / Marketplace',
   themeColor: '#003580',
-  updatedOn: '10/26',
+  updatedOn: '10/27',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
-  currentPrice: 153.14,
+  currentPrice: 150.14,
   fairPriceRange: '$170 - $301',  // stockanalysis.com analyst target range (Oct 7 2026)
   // 25-for-1 forward split effective 04/06/2026; 751.4M shares Oct 2026 after buybacks
   shares0: 751.4,

@@ -6,7 +6,7 @@ export const RBRK = defineStock({
   name: 'Rubrik',
   sector: 'Data Security',
   themeColor: '#22d3ee',
-  currentPrice: 133.4,
+  currentPrice: 135.68,
   lastReportTag: 'Q2 FY27',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$110 - $139',  // stockanalysis.com analyst target range (Oct 7 2026)

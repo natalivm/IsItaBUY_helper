@@ -8,7 +8,7 @@ export const ENVA = defineStock({
   updatedOn: '10/27',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-25',
-  currentPrice: 170.03,
+  currentPrice: 171.36,
   fairPriceRange: '$215 - $285',  // stockanalysis.com analyst target range (Oct 7 2026) — PRE-Q3, see the Oct 2026 note
   // Q3 2026 (reported Oct 22 2026, the session before a -6.6% day)
   // ─────────────────────────────────────────────────────────────────────────

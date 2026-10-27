@@ -5,7 +5,7 @@ export const MU = defineStock({
   name: 'Micron Technology',
   sector: 'DRAM / NAND Flash Memory',
   themeColor: '#1a73e8',
-  currentPrice: 903.7,
+  currentPrice: 928.76,
   shares0: 1149,       // ≈ Q4 FY26 diluted ($37.7B GAAP NI / $32.87 GAAP EPS)
   rev25: 133190,       // FY26A (FYE ~Aug/Sep 2026) $133.2B — base year; revGrowth[0] = FY27 (consensus $275.2B, FY28E $320.6B)
   fcfMargin25: 0.20,
@@ -17,7 +17,7 @@ export const MU = defineStock({
   rsRating: 94,         // IBD RS per user, 10/10/2026 (was 99)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '10/26',
+  updatedOn: '10/27',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
   fairPriceRange: '$361 - $3,000',  // stockanalysis.com analyst target range, Oct 8 2026

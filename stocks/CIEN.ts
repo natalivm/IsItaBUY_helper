@@ -8,7 +8,7 @@ export const CIEN = defineStock({
   name: 'Ciena Corporation',
   sector: 'Optical Networking / Telecom Infrastructure',
   themeColor: '#0ea5e9',
-  currentPrice: 335.93,
+  currentPrice: 351.17,
   fairPriceRange: '$347 - $660',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 141,
   rev25: 4770,         // FY2025; FY26 guide $6.42B ±$50M (+35%), FY27E consensus $8.40B (+31%)

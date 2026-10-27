@@ -5,7 +5,7 @@ export const STX = defineStock({
   name: 'Seagate Technology Holdings',
   sector: 'Data Storage / AI Infrastructure',
   themeColor: '#00a651',
-  currentPrice: 644.21,
+  currentPrice: 667.85,
   fairPriceRange: '$700 - $1,600',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 231,        // Q4 FY26 non-GAAP diluted (incl. exchangeable-note dilution)
   rev25: 12195,        // FY26A (FYE Jul 3 2026) $12.2B (+34%) — base year; revGrowth[0] = FY27 (consensus $18.97B, FY28E $25.5B)
@@ -19,7 +19,7 @@ export const STX = defineStock({
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // ratingOverride removed at Q4 FY26 review: after moving to the WDC-style EPS framework the model reads HOLD on its own.
-  updatedOn: '10/26',
+  updatedOn: '10/27',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
 
