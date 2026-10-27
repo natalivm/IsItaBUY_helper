@@ -7,11 +7,11 @@ export const SPGI = defineStock({
   sector: 'Financial Data',
   themeColor: '#c5a44e',
   currentPrice: 450.65,
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-11',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-27',
   fairPriceRange: '$477 - $553',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 294.8,      // 294.77M (stockanalysis, Oct 2026)
-  rev25: 13650,        // FY2025 PRO FORMA ex-Mobility (~$15.34B reported less ~$1.7B Mobility, spun Jul 1 2026 as MBGL); revGrowth[0] = FY26 (guide +5.9-7.9% ex-Mobility)
+  rev25: 13650,        // FY2025 PRO FORMA ex-Mobility (~$15.34B reported less ~$1.7B Mobility, spun Jul 1 2026 as MBGL); revGrowth[0] = FY26 (guide RAISED at Q3 to +7.4-8.4%, from +5.9-7.9%)
   fcfMargin25: 0.357,
   taxRate: 0.22,
   cash: 4130,          // stockanalysis (Jun 2026 balance sheet, around the spin)
@@ -35,10 +35,28 @@ export const SPGI = defineStock({
 
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 477, targetMedian: 521, targetHigh: 553, numAnalysts: 24 },  // stockanalysis.com (Oct 8 2026)
+  // Q3 2026 (reported Oct 27 2026, bmo) — BEAT, RAISED, AND CAPITAL IQ UP FOR REVIEW
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $3.68B, +7% YoY, against a consensus quoted anywhere from $3.64B to
+  // $3.716B depending on the source. Adjusted diluted EPS $4.58 (vs $4.20 LY)
+  // against ~$4.42-4.52; GAAP diluted EPS $4.45 — the two get swapped in some
+  // coverage, and $4.45 is the GAAP figure, not a miss on the adjusted one.
+  // FY26 REVENUE GROWTH OUTLOOK RAISED to +7.4-8.4% from +5.9-7.9%, which is the
+  // input this DCF actually uses, so revGrowth[0] moved with it across all three
+  // scenarios. FY26 adjusted diluted EPS guided $17.70-17.95. Buybacks stay above
+  // $7B for 2026.
+  //
+  // WATCH ITEM — STRATEGIC REVIEW OF CAPITAL IQ and associated data businesses,
+  // including a potential separation; they sit mostly inside Kensho Data &
+  // Platforms within Market Intelligence. No timeframe given. If it separates,
+  // `rev25` needs the same pro-forma treatment the Mobility spin got on Jul 1
+  // 2026 — that is a revenue-base change, which for a DCF is the whole model.
+  // Nothing is pre-empted here; the base is unchanged until something is agreed.
+  // ─────────────────────────────────────────────────────────────────────────
   revGrowth: [
-    [0.06, 0.04, 0.04, 0.04, 0.04],   // Bear: FY26 low end of guide, then issuance slump
-    [0.07, 0.075, 0.075, 0.07, 0.07], // Base: FY26 mid-guide (ex-Mobility), structural HSD growth
-    [0.08, 0.09, 0.09, 0.085, 0.08],  // Bull: ratings + index tailwinds compound
+    [0.074, 0.04, 0.04, 0.04, 0.04],   // Bear: FY26 low end of the RAISED guide, then issuance slump
+    [0.079, 0.075, 0.075, 0.07, 0.07], // Base: FY26 mid-guide (ex-Mobility), structural HSD growth
+    [0.084, 0.09, 0.09, 0.085, 0.08],  // Bull: ratings + index tailwinds compound
   ],
   fcfMargin: [
     [0.32, 0.31, 0.31, 0.30, 0.30],

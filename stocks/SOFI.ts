@@ -7,11 +7,11 @@ export const SOFI = defineStock({
   sector: 'FinTech / Digital Banking',
   themeColor: '#3b82f6',
   currentPrice: 14.46,
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-11',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-27',
   fairPriceRange: '$12 - $30',  // stockanalysis.com analyst target range (Sep 8 2026)
   shares0: 1290,
-  rev25: 3586,         // FY2025A adj. net revenue; revGrowth[0] = FY26 (guide $4.75-4.85B raised, +32-35%; consensus $4.88B), FY27E $6.10B (+25%)
+  rev25: 3586,         // FY2025A adj. net revenue; FY26 guide RAISED to $5.04B at Q3; FY27 outlook $6.4B (+27%)
   fcfMargin25: 0.347,
   taxRate: 0.15,
   cash: 3370,
@@ -22,7 +22,9 @@ export const SOFI = defineStock({
   // its balance-sheet debt/deposits are operational funding, so the decision
   // tree's lender rule applies (like ENVA/NU).
   modelType: 'EPS_PE',
-  baseEps: 0.59,       // FY26E adj. EPS — guide ~$0.60 (held at Q2), consensus $0.59 (range $0.56-0.63); FY27E $0.82 (+39%)
+  baseEps: 0.90,       // FY27E EPS = COMPANY OUTLOOK, introduced at Q3 2026. Re-based off FY26
+                       // ($0.61, raised from ~$0.60) for the same reason as CLS: a flat epsCagr
+                       // cannot express a guided +47.5% then a fade. Growth cut in the same edit.
   rsRating: 32,        // IBD RS per user, 10/11/2026 (was 37)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
@@ -38,7 +40,27 @@ export const SOFI = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
 
 
-  epsCagr: [8, 20, 27],   // From the FY26E $0.59 base; base = FY27 +39% consensus then a fade to mid-teens (haircut vs mgmt's 38-42% to 2028)
+  // Q3 2026 (reported Oct 27 2026, bmo) — BEAT AND RAISED, 2027 OUTLOOK INTRODUCED
+  // ─────────────────────────────────────────────────────────────────────────
+  // Q3: adjusted net revenue $1.4B, +44% YoY — a record. Adjusted EBITDA $469.8M
+  // (+70%, a 34% margin). GAAP net income $241M. Adjusted EPS $0.18 against a
+  // ~$0.16-0.168 consensus. Members +35% to a record 17.1M.
+  // FY26 raised: adj. net revenue $5.04B, adj. EBITDA $1.66B, net income $840M,
+  // EPS $0.61 (from ~$0.60).
+  // FY27 OUTLOOK INTRODUCED: adj. net revenue $6.4B, adj. EBITDA $2.24B,
+  // EPS $0.90 — +47.5% on the new FY26 base.
+  //
+  // SAME SHAPE PROBLEM AS CLS, AND IT BARELY MATTERS HERE. The model's year-one
+  // EPS on the FY26 basis is $0.61 x 1.20 = $0.73 against a company-guided
+  // $0.90, so the near path is understated. But the base target is ~$27 as it
+  // stands and a re-base to $0.90 lands ~$26 at 10%, ~$29 at 12%, ~$33 at 15%,
+  // ~$40 if the current 20% is carried over. The 10-12% band reproduces today's
+  // number, so unlike CLS the re-base here is a tidying rather than a revaluation.
+  // ─────────────────────────────────────────────────────────────────────────
+  epsCagr: [5, 11, 18],   // POST-FY27 rates, off the $0.90 FY27 outlook. The +47.5% is in the base
+                          // now. 11% reproduces roughly what the model said before the re-base
+                          // (~$27), so this is a tidying of the shape rather than a revaluation —
+                          // unlike CLS, where the same move is worth hundreds of dollars.
   exitPE: [11, 18, 25],   // Bank-like trough / growth-fintech / platform premium
   prob: [25, 50, 25],
 
@@ -56,9 +78,9 @@ export const SOFI = defineStock({
   exitMultiple: [12, 16, 20],
   ebitdaProxy: [0.22, 0.34, 0.40],
   desc: [
-    'Credit cycle deterioration forces reserve builds and growth slows sharply; EPS compounds only ~8% from the FY26E $0.59 and the P/E compresses to a bank-like 11x. 5yr target {target} ({cagr} annualized).',
-    'FY27 lands near the +39% consensus as operating leverage arrives, then growth normalizes toward mid-teens; EPS compounds ~20% and the market pays 18x for a scaled digital bank. 5yr target {target} ({cagr} annualized).',
-    'Management\'s high-30s/low-40s EPS CAGR plays out through 2028 and fee-platform plus crypto optionality materializes; EPS compounds ~27% and the P/E holds 25x. 5yr target {target} ({cagr} annualized).',
+    'The guided FY27 lands but a credit cycle turns straight after; EPS compounds only ~5% from the $0.90 FY27 outlook and the P/E compresses to a bank-like 11x. 5yr target {target} ({cagr} annualized).',
+    'FY27 delivers the guided $0.90 on $6.4B of revenue, then growth normalizes as a scaled digital bank; EPS compounds ~11% and the market pays 18x. 5yr target {target} ({cagr} annualized).',
+    'Growth holds past 2028 as the fee-platform and crypto optionality materialize; EPS compounds ~18% beyond the FY27 outlook and the P/E holds 25x. 5yr target {target} ({cagr} annualized).',
   ],
 
   bullMaOptVal: 19 * 1279 * 0.07,

@@ -6,12 +6,12 @@ export const GLW = defineStock({
   sector: 'Optical Fiber · Specialty Glass',
   themeColor: '#005daa',
   updatedOn: '10/27',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-12',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-10-27',
   currentPrice: 127.74,
   fairPriceRange: '$129 - $238',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 875,        // Q2 2026 diluted shares
-  rev25: 16410,        // FY2025 core sales $16.41B (GAAP $15.63B); FY26E consensus $19.31B (+18%), FY27E $23.10B (+20%)
+  rev25: 16410,        // FY2025 core sales $16.41B (GAAP $15.63B); Q3 2026 core sales $5.08B (+19%), Q4 guided $5.2-5.3B (+19%); FY27E $23.10B (+20%)
   fcfMargin25: 0.105,  // FY25 adjusted FCF $1.72B on core sales
   taxRate: 0.20,
   cash: 2504,          // Jun 30 2026
@@ -21,7 +21,10 @@ export const GLW = defineStock({
   // EPS_PE: Springboard capex cycle compresses FCF, GAAP EPS is distorted by
   // non-cash MTM on translated-earnings hedges, and the plan is framed in core EPS.
   modelType: 'EPS_PE',
-  baseEps: 3.29,       // FY2026E core EPS — stockanalysis consensus (Oct 9 2026; FY27E $4.37, +33%). H1 core EPS ~$1.48 (Q2 $0.78, +30%); Q3 guide $0.85-0.89. FY25 core EPS $2.52.
+  baseEps: 3.37,       // FY2026E core EPS, now built from the company's own numbers rather than
+                       // consensus: H1 $1.48 + Q3 actual $0.91 + Q4 guide midpoint $0.98. The guide
+                       // range puts FY26 at $3.35-3.39. Was $3.29 (stockanalysis consensus, Oct 9).
+                       // FY25 core EPS $2.52; FY27E consensus $4.37.
   rsRating: 78,        // IBD RS per user, 10/12/2026
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
@@ -42,6 +45,24 @@ export const GLW = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
 
 
+  // Q3 2026 (reported Oct 27 2026, bmo) — BEAT, AND Q4 GUIDED ABOVE CONSENSUS
+  // ─────────────────────────────────────────────────────────────────────────
+  // Core sales $5.08B, +19% YoY — the strongest growth since Springboard began —
+  // against ~$5.03B expected. Core EPS $0.91 against ~$0.88, growing roughly
+  // twice as fast as sales. GAAP diluted EPS $0.78, +56%. Core gross margin
+  // 40.5%, +150bps YoY.
+  // Optical Communications $2.38B, +44%; Enterprise Networks +84% — the AI build
+  // is doing the work here, and it is the segment to watch if capex cools.
+  // Q4 guide: core sales ~+19% to $5.2-5.3B (consensus ~$5.21B), core EPS ~+36%
+  // to $0.96-1.00 (consensus ~$0.93) — guided above on both lines.
+  //
+  // `baseEps` is now the company's arithmetic rather than a consensus print:
+  // H1 $1.48 + Q3 $0.91 + Q4 mid $0.98 = $3.37, a $3.35-3.39 range on the guide.
+  // No re-base is needed — there is no FY27 company guide here, only a $4.37
+  // consensus, and the 20% base rate is a deliberate fade against that +33%
+  // rather than a mismatch with a guided number (contrast CLS and SOFI, which
+  // both introduced FY27 guides at this print and had to be re-based).
+  // ─────────────────────────────────────────────────────────────────────────
   epsCagr: [8, 20, 26],
   exitPE: [16, 25, 32],
   prob: [25, 50, 25],
