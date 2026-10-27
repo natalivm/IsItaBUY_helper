@@ -180,6 +180,10 @@ export interface ProjectionData {
   config: ScenarioConfig;
   w: number;
   pricePerShare: number;
+  /** Target at the near horizon (NEAR_HORIZON years), or undefined where the model has no
+   *  principled way to produce one. Not every model does — see `nearTarget` in
+   *  projectionService. */
+  nearTarget?: number;
   mosPrice: number;
   mosUpside: number;
 }

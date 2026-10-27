@@ -10,6 +10,11 @@ import { CONFIGS, RATING_DEFS, RatingKey } from '../constants';
 // ── Named constants ──
 
 const HORIZON = 5;
+// The near horizon, shown beside the 5-year target. Two years is where published
+// estimates still reach: a DCF's near target is its own fair value compounded two
+// years rather than five, which is the same arithmetic stopped earlier rather than a
+// second model.
+export const NEAR_HORIZON = 2;
 const PROJECTION_YEARS = ["2026E", "2027E", "2028E", "2029E", "2030E"];
 
 // WACC parameters
@@ -113,6 +118,7 @@ function buildProjectionData(params: {
   ticker: string;
   w: number;
   pricePerShare: number;
+  nearTarget?: number;
   currentPrice: number;
   revs: number[];
   fcfs: number[];
@@ -122,7 +128,7 @@ function buildProjectionData(params: {
   netIncome: number[];
   config: ScenarioConfig;
 }): ProjectionData {
-  const { ticker, w, pricePerShare, currentPrice, revs, fcfs, shareHistory, eps, price, netIncome, config } = params;
+  const { ticker, w, pricePerShare, nearTarget, currentPrice, revs, fcfs, shareHistory, eps, price, netIncome, config } = params;
   const cagrValue = (Math.pow(pricePerShare / currentPrice, 1 / HORIZON) - 1) * 100;
   const cumReturnValue = (pricePerShare / currentPrice - 1) * 100;
 
@@ -142,6 +148,7 @@ function buildProjectionData(params: {
     cumReturns: Array(HORIZON).fill(cumReturnValue),
     fcfYield: fcfs.map((f, i) => (f / shareHistory[i]) / (pricePerShare * FCF_YIELD_PRICE_DISCOUNT) * 100),
     config,
+    nearTarget,
     mosPrice: pricePerShare * MOS_DISCOUNT,
     mosUpside: (pricePerShare * MOS_DISCOUNT / currentPrice - 1),
   };
@@ -199,12 +206,23 @@ const calculateDCF = (t: TickerDefinition, sc: ScenarioConfig, showEnhancements:
   // Express as a 5-year-forward target (fair value compounding at the cost of
   // equity) so DCF and EPS_PE names rate on the same expected-CAGR basis.
   const pricePerShare = presentValue * Math.pow(1 + w, HORIZON);
+  // The near target is the same number stopped earlier: fair value compounded two years
+  // at the cost of equity instead of five. Nothing new is assumed — the 5-year figure
+  // already embeds "the gap closes and the asset then earns its required return", and
+  // this embeds less of it.
+  //
+  // Read it differently from the EPS_PE near target, though. That one is corroborated
+  // (its year-2 EPS can be checked against published consensus); this one is the same
+  // model on a shorter horizon, so the two numbers here differ in horizon alone, not in
+  // how much evidence stands behind them.
+  const nearTarget = presentValue * Math.pow(1 + w, NEAR_HORIZON);
   const priceTrajectory = shareHistory.map((_, i) => pricePerShare * (0.85 + 0.03 * i));
 
   return buildProjectionData({
     ticker: t.ticker,
     w,
     pricePerShare,
+    nearTarget,
     currentPrice: t.currentPrice,
     revs,
     fcfs,
