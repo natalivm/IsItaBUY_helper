@@ -33,10 +33,19 @@ const ScenarioMetricsCard: React.FC<Props> = ({ data, currentPrice, modelType })
           <span className="text-base font-black text-white">{usd(pricePerShare)}</span>
           {/* The near target is shown under the headline rather than beside it: it is the
               same valuation on a shorter horizon, not a second opinion. Rendered only where
-              the model produces one — EPS_PE does not yet. */}
+              the model produces one — EPS_PE does not yet.
+
+              The two models earn DIFFERENT labels because the numbers are not equally
+              supported. An EPS_PE near target is checkable: its year-2 EPS can be held
+              against published consensus, which is a forecast of business results. A DCF
+              near target is the same discounted model on a shorter clock, with no external
+              estimate behind it — so it says MODEL, and only the EPS_PE one says EST. */}
           {nearTarget !== undefined && (
-            <span className="text-xs font-bold text-slate-400 mt-0.5">
-              {NEAR_HORIZON}Y: {usd(nearTarget)}
+            <span className="text-xs font-bold text-slate-400 mt-0.5"
+              title={isEpsPe
+                ? `Year-${NEAR_HORIZON} EPS at the blended multiple. The EPS is checkable against published consensus.`
+                : `The same DCF compounded ${NEAR_HORIZON} years instead of 5. No external estimate stands behind it — it differs from the 5-year figure by horizon alone.`}>
+              {NEAR_HORIZON}Y {isEpsPe ? 'est' : 'model'}: {usd(nearTarget)}
             </span>
           )}
         </div>
