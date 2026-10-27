@@ -1012,14 +1012,27 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             key, what = f"{sym}|{label}", _describe(s, main)
             tf = s.get('timeframe') or main.get('timeframe') or 'daily'
 
-            # A confirmed break that has come back to its boundary: report it so it can
+            # A confirmed break that has come back to its invalidation: report it so it can
             # be marked `retest` by hand. Never set here -- an automatic flag would flip
             # back and forth as price brushes the line, and post News each time.
+            #
+            # Which line that is decides what the arrival MEANS, and the message used to
+            # say "back on the broken boundary" for every pattern. That is only true of a
+            # channel, whose confirmed invalidation sits on the boundary it broke -- price
+            # returning there is the retest. A wedge invalidates on the FAR side at every
+            # stage (invalidation_line), so price reaching it has given the whole break
+            # back and is one close from `atRisk`. Calling that a retest flatters it.
             if stage == 'confirmed' and direction in ('up', 'down') and s.get('invalidation'):
                 inv = s['invalidation']
                 if inv and abs(price - inv) <= RETEST_BAND * inv:
-                    review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
-                                  f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
+                    pat = s.get('pattern') or main.get('pattern') or ''
+                    if 'Wedge' in pat:
+                        review.append(f"{sym} ({_describe(s, main)}): the break is given back to the far "
+                                      f"boundary ${_fmt_price(inv)} at ${_fmt_price(price)} — not a retest; "
+                                      f"a close past it marks it `atRisk`")
+                    else:
+                        review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
+                                      f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
             # A retest is a confirmed break, so it keeps running the target check.
             if stage in ('confirmed', 'retest', 'atRisk') and direction in ('up', 'down'):
                 since = max(old_date, s.get('stageDate') or old_date)
@@ -1053,9 +1066,22 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
                     if not past and stage == 'atRisk':
                         back = s.get('prevStage') or 'confirmed'
                         edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
-                        back_inside.append((sym, label, inv, new_price, back))
+                        back_inside.append((sym, label, inv, new_price, back, 'back inside'))
                         bot_notes[key] = (date, f"Closed ${new_price} back inside ${_fmt_price(inv)}; "
                                                 f"the break is intact again.")
+                        continue
+                    # `retest` is set by hand off the review line above, and nothing used to
+                    # clear it: a setup marked while price sat on the boundary kept reading
+                    # "Retest in progress" for good once price walked away. A retest is price
+                    # AT the line, so it ends when price is no longer there -- the same band
+                    # the review line uses to call one. Gated on a completed close on the
+                    # setup's own timeframe, like `atRisk` above, so it cannot flip intraday.
+                    if not past and stage == 'retest' and abs(price - inv) > RETEST_BAND * inv:
+                        back = s.get('prevStage') or 'confirmed'
+                        edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
+                        back_inside.append((sym, label, inv, new_price, back, 'away from'))
+                        bot_notes[key] = (date, f"Closed ${new_price}, away from ${_fmt_price(inv)}; "
+                                                f"the retest is over and the break stands.")
                         continue
                     if past:
                         review.append(f"{sym} ({label}): still past invalidation ${_fmt_price(inv)} at ${new_price} — a follow-through close marks it failed")
@@ -3163,8 +3189,8 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {label:<12} closed ${px} back past invalidation ${_fmt_price(inv)}")
     if result.get('back_inside'):
         print(f"\n✓ Back inside ({'marked' if apply else 'would mark'} stage → confirmed again):")
-        for sym, label, inv, px, back in result['back_inside']:
-            print(f"  {sym:<6} {label:<12} closed ${px} back inside ${_fmt_price(inv)} → {back}")
+        for sym, label, inv, px, back, why in result['back_inside']:
+            print(f"  {sym:<6} {label:<12} closed ${px} {why} ${_fmt_price(inv)} → {back}")
     mom = result.get('momentum') or []
     if mom:
         hot = [m for m in mom if m[2] == 'with']
