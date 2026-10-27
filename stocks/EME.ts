@@ -49,9 +49,20 @@ export const EME = defineStock({
                                // the better fit: $32.86 x 1.11 = $36.47 against FY27E consensus
                                // $36.75, where 9% gives $35.82. A higher target is also what a 27%
                                // guidance raise at Q2 ($32.00-33.25 from $28.25-29.75) should
-                               // produce. What is still open is a judgement, not a measurement:
-                               // whether 11% is the right TERMINAL rate through FY31 for a
-                               // contractor, as opposed to the right near-term one.
+                               // produce.
+                               // THE TERMINAL RATE WAS THE OPEN QUESTION AND IT CHECKS OUT (Oct 27
+                               // research): 11% sits almost exactly between the two published
+                               // long-term estimates — Chartmill 8.17%, Simply Wall St 12.77%/yr —
+                               // and in line with consensus for FY27 (~+11%) and FY28 (~+12.7%). It
+                               // is far below what the company has actually done, ~31-40%/yr over
+                               // the past five years. Conservative against history, middling against
+                               // forecasts; not aggressive on any reading.
+                               // The limit on that evidence: nobody publishes guidance past 2026 and
+                               // consensus thins after FY28, so years 4-5 are corroborated by
+                               // nothing. The risk named in the coverage is margins rather than
+                               // demand — mechanical margins already fell YoY on project mix, plus
+                               // labour availability, tariffs, supply chain and amortisation from
+                               // the five electrical contractors being acquired.
   exitPE: [16, 22, 27],        // bear: ordinary industrial; base: quality cyclical; bull: premium for DC visibility
   prob: [20, 50, 30],       // nudged bull after DC RPO +60% YoY and AI mechanical multiplier confirmed
 
