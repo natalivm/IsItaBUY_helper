@@ -950,7 +950,7 @@
  "DASH|main": {
   "label": "main",
   "setup": "Hammer (weekly)",
-  "stage": "confirmed",
+  "stage": "atRisk",
   "ticker": "DASH"
  },
  "DASH|weekly alt": {
