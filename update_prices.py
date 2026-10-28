@@ -834,6 +834,86 @@ def update_files(tickers, prices, apply=False):
 
 # ── Main ──
 
+def feature_drift(verbose=True):
+    """Compare the stored landing-page shortlist against what today's ledger would pick.
+
+    Returns (changed, lines). `changed` is True when either side's membership differs --
+    not when only the order or the scores moved, since a shortlist that names the same
+    six setups is not stale, and a daily "the numbers moved" would train the reader to
+    ignore this. Reads only; rebuilding is `python3 weekly_feature.py --apply`.
+    """
+    import re
+    import weekly_feature as wf
+
+    with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    fresh = wf.hot_setups(text)
+    now = {'up': [], 'down': []}
+    for s in fresh:
+        now[s['direction']].append(s)
+
+    try:
+        with open(wf.FEATURE_FILE) as fh:
+            stored_src = fh.read()
+    except FileNotFoundError:
+        return False, []
+    # The file also carries the earnings cards, so read only the `hot` array -- and walk
+    # its braces rather than matching indentation, which a reformat would silently break
+    # (the first version keyed off `setups:` and an indent, found nothing, and reported
+    # every setup as new while reporting none as dropped -- a diff with no left-hand side).
+    stored = []
+    at = stored_src.find('hot: [')
+    if at != -1:
+        i, depth, start = stored_src.index('[', at), 0, None
+        while i < len(stored_src):
+            ch = stored_src[i]
+            if ch == '[' and depth == 0:
+                depth = 1
+            elif ch == '{':
+                if depth == 1:
+                    start = i
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 1 and start is not None:
+                    item = stored_src[start:i]
+                    g = lambda k: (re.search(k + r':\s*"([^"]*)"', item) or [None, ''])[1]
+                    stored.append({'ticker': g('ticker'), 'direction': g('direction'),
+                                   'pattern': g('pattern'), 'timeframe': g('timeframe')})
+                    start = None
+            elif ch == ']' and depth == 1:
+                break
+            i += 1
+    if not stored:
+        return False, []
+
+    key = lambda s: (s['ticker'], s['pattern'], s['timeframe'])
+    lines, changed = [], False
+    for side, label in (('up', 'Bullish'), ('down', 'Bearish')):
+        was = [s for s in stored if s['direction'] == side]
+        isnow = now[side]
+        if {key(s) for s in was} == {key(s) for s in isnow}:
+            lines.append(f"  {label}: unchanged ({', '.join(s['ticker'] for s in isnow)})")
+            continue
+        changed = True
+        gone = [s for s in was if key(s) not in {key(x) for x in isnow}]
+        new_ = [s for s in isnow if key(s) not in {key(x) for x in was}]
+        lines.append(f"  {label}: now {', '.join(s['ticker'] for s in isnow)}")
+        for s in gone:
+            lines.append(f"    OUT  {s['ticker']:6} {s['timeframe']:8}{s['pattern']}")
+        for s in new_:
+            lines.append(f"    IN   {s['ticker']:6} {s['timeframe']:8}{s['pattern']}"
+                         f"  score {s.get('score', 0):.1f}")
+    if verbose:
+        print(f"\n{'='*72}")
+        print("HOTTEST SETUPS vs the stored landing page" + ("  — CHANGED" if changed else ""))
+        print('\n'.join(lines))
+        if changed:
+            print("\n  Rebuild with: python3 weekly_feature.py --apply")
+    return changed, lines
+
+
+
 def main():
     parser = argparse.ArgumentParser(description="Update stock prices from Yahoo Finance")
     parser.add_argument("--apply",   action="store_true", help="Write changes to files (default is dry run)")
@@ -998,6 +1078,19 @@ def main():
                     fh.write(annotated)
             if new_setups:
                 print("Auto-detected (red dot, check by hand):\n  " + "\n  ".join(f"{t}: {d}" for t, d in new_setups))
+
+            # The landing page's shortlist is rebuilt WEEKLY (Mondays, by
+            # .github/workflows/weekly-feature.yml) while every input to it -- price,
+            # rsi, trend, stage, the levels -- moves on this run. So the cards can go
+            # stale midweek without anything saying so, which is how EME and ANET stayed
+            # featured after their stages moved. This does not rebuild the file (that
+            # would make a weekly list a daily one); it recomputes the ranking on the
+            # ledger as it now stands and prints the difference, so the choice to
+            # refresh is a human's and is at least an informed one.
+            try:
+                feature_drift(verbose=True)
+            except Exception as exc:                       # never fail a price run on a report
+                print(f"\nCould not check the featured shortlist: {exc}")
 
         # Push to git if requested
         wl_changed = bool(wl_result and (wl_result['price_changes'] or wl_result['news']))
