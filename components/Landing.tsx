@@ -182,6 +182,33 @@ const RsiBar: React.FC<{ rsi: number; dn: boolean }> = ({ rsi, dn }) => {
 
 // ── Hottest setups ──
 
+// `hot` is a WEEKLY snapshot, so by Wednesday its stage and price can both be wrong:
+// EME and ANET were still reading "Break confirmed" after the ledger had moved them to
+// `retest`, and ANET's card showed $177.20 against a live $187.00, which also skewed its
+// meter and its % to target. The weekly cadence exists to keep the SELECTION steady --
+// the week's shortlist should not change under the reader every evening -- and it was
+// quietly freezing the facts on the card as well. Those are separate things: being
+// ranked last week is fine, asserting last week's stage is not. So the card reads stage,
+// price and RSI live from the ledger, exactly as the earnings cards beside it already do,
+// and only which six setups appear stays weekly.
+function liveView(h: HotSetup, stock?: PatternStock): HotSetup {
+  if (!stock) return h;
+  const same = (s?: { pattern?: string; timeframe?: string; direction?: string }) =>
+    !!s && s.pattern === h.pattern && s.timeframe === h.timeframe && s.direction === h.direction;
+  // A featured setup is always one the row shows, since hot_setups only considers main+alt.
+  const live = same(stock) ? stock : same(stock.alt) ? stock.alt : undefined;
+  if (!live) return h;
+  return {
+    ...h,
+    stage: live.stage,
+    price: stock.price ?? h.price,
+    priceDate: stock.priceDate ?? h.priceDate,
+    rsi: stock.rsi ?? h.rsi,
+    target: live.target ?? h.target,
+    invalidation: live.invalidation ?? h.invalidation,
+  };
+}
+
 const HotCard: React.FC<{ h: HotSetup; rank: number; onOpenWatchlist: (ticker: string) => void }> = ({ h, rank, onOpenWatchlist }) => {
   const st = status(h);
   const dn = h.direction === 'down';
@@ -304,8 +331,10 @@ const Landing: React.FC<LandingProps> = ({ covered, onOpenWatchlist, headerContr
     return { covered, tracked, confirmed, reporting: earnings.length };
   }, [covered, earnings]);
 
-  // Every featured setup is scored off the same run, so one date covers them all.
-  const pricedOn = hot.find(h => h.priceDate)?.priceDate;
+  // The cards now carry the ledger's prices, so this is the price run's date, not the
+  // date the shortlist was chosen. Every entry shares it, so the first one covers them all.
+  const pricedOn = hot.map(h => setups.get(h.ticker)?.priceDate).find(Boolean)
+    ?? hot.find(h => h.priceDate)?.priceDate;
 
   const byDay = useMemo(() => {
     const monday = new Date(weekOf + 'T12:00:00');
@@ -368,7 +397,7 @@ const Landing: React.FC<LandingProps> = ({ covered, onOpenWatchlist, headerContr
                   <h3 className={`side-head ${side}`}>{label}</h3>
                   <div className="hot-grid">
                     {picks.map((h, i) => (
-                      <HotCard key={h.ticker} h={h} rank={i} onOpenWatchlist={onOpenWatchlist} />
+                      <HotCard key={h.ticker} h={liveView(h, setups.get(h.ticker))} rank={i} onOpenWatchlist={onOpenWatchlist} />
                     ))}
                   </div>
                 </div>
