@@ -1213,6 +1213,60 @@ rather than `LEVEL` — **re-read that setup's `failRule`**, which is hand-writt
 quoting the old price and the pending follow-through wording, and is not rewritten for you.
 A wedge invalidates on the far side at every stage, so this never fires for one.
 
+### Retest and atRisk: both read the line, not the stored level
+
+**`_live_invalidation` is `_live_breaks` one field over, and it bites harder.** The at-risk
+test compares price against the setup's invalidation, which is a trendline read at the last
+completed candle and refreshed by `pattern_lines.relevel` — called at `update_prices.py:937`,
+*after* `update_watchlist` at `:919`. So the level reaching the test is always a run old; on
+a weekly setup that is a whole week of slope. ANET's weekly ascending channel is the case:
+its stored $186.08 is the line at the week of Oct 19, the line stands at $188.52, and a
+$187.06 price is **above the first and below the second**. Replayed at Friday's close,
+today's prices marked ANET, LITE and BKNG `atRisk` against stale levels; with the lines read
+live, Friday's list falls from 6 to 2. Both the at-risk test and the retest-candidate review
+line now use it, so the number the review line quotes is the line, not the cache.
+
+**Auto-detected setups are re-read here, unlike in `relevel`** — the same exception
+`relevel_breaks` takes, for the same reason. `relevel` skips them because the detector puts a
+*pending* channel's invalidation on the broken boundary while the rule names the far side.
+For a **confirmed** one they agree to the letter — `pattern_detect` writes
+`(broke if 'conf' in sig else far).at(last)`, and a wedge's far line either way — and this
+helper is only reached from the confirmed / retest / atRisk branch, so the disagreement
+cannot arise. Skipping them would have left the fault where it bites hardest: NVDA and UBER
+carry stock-level `auto` and NVDA was in the false list.
+
+**"Back on the broken boundary" is only true of a channel.** A channel's confirmed
+invalidation sits on the boundary it broke, so price arriving there *is* the retest. A wedge
+invalidates on the **far** side at every stage, so price reaching it has given the whole
+break back and is one close from `atRisk`. The review line said the channel sentence for
+every pattern; it now splits, and the four wedges that were on that list (AMAT, CACI, PINS,
+UBER weekly) were left `confirmed` rather than marked retests.
+
+**`retest` is set by hand and nothing used to clear it**, so a setup marked while price sat
+on the line kept reading "Retest in progress" after price walked away — AVGO ($342.33
+against $315.81) and KLAC ($153.66 against $134.29) had both been stuck there. The clear
+mirrors the `atRisk` restore: outside the same `RETEST_BAND`, on a completed close on the
+setup's own timeframe, back to `prevStage`.
+
+**That band test alone cannot end a retest the line chased.** A sloped invalidation travels:
+BKNG's broken upper boundary falls $1.62 a week against a band $2.28 wide, so it gives back
+71% of the band every week, tracks price down, and the test never fires. Dormancy cannot
+retire it either — that wants 120 days or 25% undone, and this was 93 days and 19.2%. So a
+second condition: **a break undone past `STRANDED_UNDONE` (10%) is not a retest**, whatever
+the distance says, because price reaching a boundary that came to *it* is not the event the
+word names.
+
+The split is clean on the 17 live retests — 15 under 2.5% undone with a **median age of 9
+days** (price came back to the line) against 2 at 14.7% and 19.2% undone and **86 and 93
+days** old (the line came down to price). The gap runs 9.8% → 14.7%, so any threshold in
+10–12% cuts the same two: **the gap does the work, not the number**, which is why
+`STRANDED_UNDONE` is reused rather than a new constant fitted — "the break has come apart" is
+the same claim it already makes — and why it moved up the file so one constant serves both.
+
+It clears to `prevStage` rather than to a stage of its own. A badly undone confirmed break is
+what it *is*; `SLOT_UNDONE` already discounts it and the UI's "Break undone %" chip already
+shows it. The fault was only ever the label.
+
 ## Bundle: what loads on which route
 
 `#` is the landing page, and it used to download the whole app — all 95 stock definitions,

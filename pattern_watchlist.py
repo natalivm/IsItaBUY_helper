@@ -380,6 +380,11 @@ def _r2(v):
 # structure; ADX only gates whether there is a trend at all, per the usual
 # convention that ADX measures strength and the DI/price side measures direction.
 RETEST_BAND = 0.015      # within 1.5% of the broken boundary counts as sitting on it
+# Price this far back past the confirm level is a break that has come apart. Used by
+# `stranded_setups` (with STRANDED_STOP) and by the retest clear, which needs it defined
+# up here: the same number means the same thing in both places, and it is the ledger's
+# existing definition rather than one fitted to the retests it cuts.
+STRANDED_UNDONE = 0.10
 TREND_MIN_BARS = 30      # fewer daily bars than this and the window is too short to call
 TREND_WINDOW = 63        # ~3 months of sessions, when reading trend off the stored candles
 TREND_SLOPE_BARS = 10    # lookback for "is the average sloping?"
@@ -799,6 +804,71 @@ def _live_breaks(s, text, pos, sym, tf, now_et, date):
     return {**s, 'breakUp': live_up, 'breakDown': live_dn}
 
 
+def _live_invalidation(s, main, text, pos, sym, tf, now_et, date):
+    """The setup's invalidation read off its own line at the latest completed candle.
+
+    Exactly the `_live_breaks` problem one field over, and it bites harder. A sloped
+    invalidation is a trendline read at the last completed candle, refreshed by
+    `pattern_lines.relevel` — which `update_prices` calls at line 937, *after* this pass at
+    line 919. So the level reaching the at-risk test is always a run old, and on a weekly
+    setup that is a whole week of slope. ANET's weekly channel is the case: its stored
+    $186.08 is the line at the week of Oct 19, the line stands at $188.52, and a $187.06
+    price is above the first and below the second. The stale number marks a healthy retest
+    `atRisk`; the live one does not.
+
+    Auto-detected setups are NOT skipped, though `relevel` skips them. That exception exists
+    because the detector puts a *pending* channel's invalidation on the broken boundary while
+    the rule names the far side, so re-reading would fight it. For a CONFIRMED one the two
+    agree to the letter — `pattern_detect` writes `(broke if 'conf' in sig else far).at(last)`
+    and a wedge's far line either way — and this helper is only ever reached from the
+    confirmed / retest / atRisk branch, so the disagreement cannot arise. Skipping them would
+    have left the fault in place exactly where it bites hardest: NVDA and UBER carry
+    stock-level `auto`, and both were in the false-at-risk list this fix removes. The same
+    argument `relevel_breaks` makes for re-reading auto setups daily applies here.
+
+    Returns None when the lines cannot say better — no lines, no candles, anchors off the
+    chart, a stage whose boundary the rule cannot name, or a live value more than
+    `BREAK_DRIFT` from the stored one, which means the lines and the level are not the same
+    drawing and a human reconciles them, not this test.
+    """
+    inv = s.get('invalidation')
+    if inv is None or s.get('stage') not in ('confirmed', 'retest', 'atRisk'):
+        return None
+    pattern = s.get('pattern') or main.get('pattern') or ''
+    want = _invalidation_line(pattern, s.get('direction'), s.get('stage'))
+    if want is None:
+        return None
+    lines = stored_lines(text, pos)
+    bars = _load_chart_bars(sym, tf)
+    if not lines or len(lines) < 2 or not bars or not bars.get('t'):
+        return None
+    t = list(bars['t'])
+    if tf == 'daily' and date > t[-1]:
+        t.append(date)
+    i = _completed_count(t, tf, now_et) - 1
+    if i < 0:
+        return None
+    at = {d: n for n, d in enumerate(t)}
+    (d0, v0), (d1, v1) = lines[want]
+    if d0 not in at or d1 not in at or at[d1] == at[d0]:
+        return None
+    live = v1 + (v1 - v0) / (at[d1] - at[d0]) * (i - at[d1])
+    if abs(live - inv) > BREAK_DRIFT * abs(inv):
+        return None
+    return live
+
+
+def _invalidation_line(pattern, direction, stage):
+    """Which of [upper, lower] the invalidation sits on. Mirrors pattern_lines.invalidation_line,
+    which cannot be imported here: pattern_lines imports this module."""
+    dn = direction == 'down'
+    if 'Channel' in pattern:
+        return (1 if dn else 0) if stage in ('confirmed', 'retest', 'atRisk') else (0 if dn else 1)
+    if 'Wedge' in pattern:
+        return 0 if dn else 1
+    return None
+
+
 def _pending_break(s, price):
     """(reason, next_stage) if a forming/signal setup closed past one of its limits, else (None, None).
 
@@ -1012,14 +1082,27 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             key, what = f"{sym}|{label}", _describe(s, main)
             tf = s.get('timeframe') or main.get('timeframe') or 'daily'
 
-            # A confirmed break that has come back to its boundary: report it so it can
+            # A confirmed break that has come back to its invalidation: report it so it can
             # be marked `retest` by hand. Never set here -- an automatic flag would flip
             # back and forth as price brushes the line, and post News each time.
+            #
+            # Which line that is decides what the arrival MEANS, and the message used to
+            # say "back on the broken boundary" for every pattern. That is only true of a
+            # channel, whose confirmed invalidation sits on the boundary it broke -- price
+            # returning there is the retest. A wedge invalidates on the FAR side at every
+            # stage (invalidation_line), so price reaching it has given the whole break
+            # back and is one close from `atRisk`. Calling that a retest flatters it.
             if stage == 'confirmed' and direction in ('up', 'down') and s.get('invalidation'):
-                inv = s['invalidation']
+                inv = _live_invalidation(s, main, text, pos, sym, tf, now_et, date) or s['invalidation']
                 if inv and abs(price - inv) <= RETEST_BAND * inv:
-                    review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
-                                  f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
+                    pat = s.get('pattern') or main.get('pattern') or ''
+                    if 'Wedge' in pat:
+                        review.append(f"{sym} ({_describe(s, main)}): the break is given back to the far "
+                                      f"boundary ${_fmt_price(inv)} at ${_fmt_price(price)} — not a retest; "
+                                      f"a close past it marks it `atRisk`")
+                    else:
+                        review.append(f"{sym} ({_describe(s, main)}): back on the broken boundary "
+                                      f"${_fmt_price(inv)} at ${_fmt_price(price)} — mark it `retest` if it is holding")
             # A retest is a confirmed break, so it keeps running the target check.
             if stage in ('confirmed', 'retest', 'atRisk') and direction in ('up', 'down'):
                 since = max(old_date, s.get('stageDate') or old_date)
@@ -1031,6 +1114,14 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
                     bot_notes[key] = (hit_date, f"Hit target ${_fmt_price(s['target'])}.")
                     continue
                 inv = s.get('invalidation')
+                # Against the LINE, not the cache. The stored level is refreshed by
+                # pattern_lines.relevel, which runs after this pass, so on a weekly setup it
+                # can be a week of slope behind the price it is compared with. See
+                # _live_invalidation; it falls back to the stored number whenever the lines
+                # cannot say better, so the only behaviour that changes is the lag.
+                live_inv = _live_invalidation(s, main, text, pos, sym, tf, now_et, date)
+                if live_inv is not None:
+                    inv = live_inv
                 # The first leg of the failure test: a completed close on the setup's own
                 # timeframe, back past invalidation. Only the follow-through close is left,
                 # so the setup is flagged `atRisk` rather than left reading "confirmed".
@@ -1053,10 +1144,53 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
                     if not past and stage == 'atRisk':
                         back = s.get('prevStage') or 'confirmed'
                         edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
-                        back_inside.append((sym, label, inv, new_price, back))
+                        back_inside.append((sym, label, inv, new_price, back, 'back inside'))
                         bot_notes[key] = (date, f"Closed ${new_price} back inside ${_fmt_price(inv)}; "
                                                 f"the break is intact again.")
                         continue
+                    # `retest` is set by hand off the review line above, and nothing used to
+                    # clear it: a setup marked while price sat on the boundary kept reading
+                    # "Retest in progress" for good once price walked away. A retest is price
+                    # AT the line, so it ends when price is no longer there -- the same band
+                    # the review line uses to call one. Gated on a completed close on the
+                    # setup's own timeframe, like `atRisk` above, so it cannot flip intraday.
+                    if not past and stage == 'retest' and abs(price - inv) > RETEST_BAND * inv:
+                        back = s.get('prevStage') or 'confirmed'
+                        edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
+                        back_inside.append((sym, label, inv, new_price, back, 'away from'))
+                        bot_notes[key] = (date, f"Closed ${new_price}, away from ${_fmt_price(inv)}; "
+                                                f"the retest is over and the break stands.")
+                        continue
+                    # Price reaching a boundary that came to IT is not the event a retest
+                    # names. A sloped invalidation travels: BKNG's broken upper boundary
+                    # falls $1.62 a week against a band $2.28 wide, so it gives back 71% of
+                    # the band every week, tracks price down, and the test above can never
+                    # fire. Dormancy cannot retire it either -- that wants 120 days or 25%
+                    # undone, and this was 93 days and 19.2%. Undone-ness is what separates
+                    # the two cases, and it separates them cleanly: of the 17 live retests,
+                    # 15 sat under 2.5% undone with a median age of 9 days (price came back
+                    # to the line) and 2 were 14.7% and 19.2% undone at 86 and 93 days (the
+                    # line came down to price). The gap runs from 9.8% to 14.7%, so any
+                    # threshold in 10-12% cuts the same two -- the gap does the work, not
+                    # the number -- and STRANDED_UNDONE is reused rather than fitted,
+                    # because "the break has come apart" is the same claim it already makes.
+                    #
+                    # It goes back to prevStage, not to a stage of its own: what it is IS a
+                    # confirmed break that is badly undone, which SLOT_UNDONE already
+                    # discounts and the UI's "Break undone %" chip already shows. The fault
+                    # was only ever the label reading "Retest in progress".
+                    if not past and stage == 'retest' and s.get('confirm') and direction in ('up', 'down'):
+                        conf = s['confirm']
+                        undone = (price - conf) / conf * (1 if direction == 'down' else -1)
+                        if undone > STRANDED_UNDONE:
+                            back = s.get('prevStage') or 'confirmed'
+                            edits += _stage_edits(text, pos, back, None)
+                            back_inside.append((sym, label, inv, new_price, back,
+                                                f"-- {undone * 100:.0f}% back past confirm ${_fmt_price(conf)}, so the boundary fell to meet it at"))
+                            bot_notes[key] = (date, f"The break is {undone * 100:.0f}% undone; price at "
+                                                    f"${_fmt_price(inv)} is the boundary falling to meet it, "
+                                                    f"not a retest.")
+                            continue
                     if past:
                         review.append(f"{sym} ({label}): still past invalidation ${_fmt_price(inv)} at ${new_price} — a follow-through close marks it failed")
 
@@ -2540,7 +2674,6 @@ def drop_dead_stops(apply=False, path=None):
     return dropped, review
 
 
-STRANDED_UNDONE = 0.10      # price this far back past the confirm level
 STRANDED_STOP = 0.40        # ...and an invalidation at least this far from price
 
 
@@ -3163,8 +3296,8 @@ def print_watchlist_report(result, missing, apply):
             print(f"  {sym:<6} {label:<12} closed ${px} back past invalidation ${_fmt_price(inv)}")
     if result.get('back_inside'):
         print(f"\n✓ Back inside ({'marked' if apply else 'would mark'} stage → confirmed again):")
-        for sym, label, inv, px, back in result['back_inside']:
-            print(f"  {sym:<6} {label:<12} closed ${px} back inside ${_fmt_price(inv)} → {back}")
+        for sym, label, inv, px, back, why in result['back_inside']:
+            print(f"  {sym:<6} {label:<12} closed ${px} {why} ${_fmt_price(inv)} → {back}")
     mom = result.get('momentum') or []
     if mom:
         hot = [m for m in mom if m[2] == 'with']
