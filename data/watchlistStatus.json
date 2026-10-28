@@ -3536,7 +3536,7 @@
  "WDC|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "retest",
   "ticker": "WDC"
  },
  "WDC|weekly Descending Channel": {
