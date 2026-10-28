@@ -1900,8 +1900,15 @@ def slot_score(sv, stock):
     if sv.get('dormant') or not price:
         return -1e9
 
-    score = {'confirmed': 40, 'retest': 34, 'signal': 25, 'atRisk': 8,
-             'update': -20, 'forming': 12}.get(stage, 0)
+    # A retest scores as the stage it came from, for the reason weekly_feature.LIVE_STAGES
+    # now spells out: it IS that setup with price back at the boundary, and `prevStage`
+    # reads "confirmed" on every live one. The flat 34 docked it 6 points for having been
+    # looked at, which is the same demotion the featured list used to apply by dropping it
+    # outright. `atRisk` keeps its 8: a completed close PAST the line is a real change of
+    # state, not an observation.
+    rank_stage = (sv.get('prevStage') or 'confirmed') if stage == 'retest' else stage
+    score = {'confirmed': 40, 'signal': 25, 'atRisk': 8,
+             'update': -20, 'forming': 12}.get(rank_stage, 0)
 
     target = sv.get('target')
     if direction == 'both':

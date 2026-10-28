@@ -97,6 +97,21 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       score: 105.9
     },
     {
+      ticker: "ANET",
+      name: "Arista Networks",
+      pattern: "Ascending Channel",
+      timeframe: "weekly",
+      direction: "down",
+      stage: "retest",
+      stageDate: "2026-10-19",
+      price: 187,
+      priceDate: "2026-10-27",
+      target: 126.57,
+      invalidation: 186.08,
+      rsi: 34.1,
+      score: 110
+    },
+    {
       ticker: "AMKR",
       name: "Amkor Technology, Inc.",
       pattern: "Ascending Channel",
@@ -112,34 +127,19 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       score: 109.4
     },
     {
-      ticker: "APH",
-      name: "Amphenol Corp",
-      pattern: "Rising Wedge",
-      timeframe: "weekly",
+      ticker: "EME",
+      name: "EMCOR Group, Inc.",
+      pattern: "Descending Channel",
+      timeframe: "daily",
       direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 78.21,
+      stage: "retest",
+      stageDate: "2026-10-23",
+      price: 666.36,
       priceDate: "2026-10-27",
-      target: 50.95,
-      invalidation: 90.03,
-      rsi: 36.2,
-      score: 107.8
-    },
-    {
-      ticker: "ETN",
-      name: "Eaton Corporation plc",
-      pattern: "Ascending Channel",
-      timeframe: "weekly",
-      direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 384.2,
-      priceDate: "2026-10-27",
-      target: 303.19,
-      invalidation: 396.35,
-      rsi: 35.1,
-      score: 107.3
+      target: 533.53,
+      invalidation: 671.99,
+      rsi: 33.5,
+      score: 108.9
     }
   ],
   earnings: [

@@ -1484,16 +1484,41 @@ indent. The first version keyed off `setups:` and a four-space indent, matched n
 reported every setup as new and none as dropped — a diff with no left-hand side, which
 reads as a total change rather than as a broken parser.
 
-**`LIVE_STAGES` excludes `retest`, and that is worth re-deciding.** The constant's comment
-argues the case for `atRisk` — a break whose own timeframe has closed back past
-invalidation is the last thing to feature — and then adds "`retest` is absent too" without
-its own reason. The two are opposites: `atRisk` is a break that closed back *past* the
-line, `retest` is one *holding at* it, and RULEBOOK.md calls that the best entry available,
-since the target is bought against a stop that is immediate. Marking the sixteen channels
-`retest` therefore knocked **EME and ANET** off the landing page. Scored as the confirmed
-breaks they are, the bearish list would read **ANET 110.0, AMKR 109.4, EME 108.9** — the
-two dropped setups back, with ANET leading. Unchanged pending a decision, because what
-belongs on a landing page is a judgement about readers, not about scoring.
+### A retest is not a demotion
+
+**`retest` now scores as the stage it came from**, in `weekly_feature.LIVE_STAGES` /
+`score_setup` and in `pattern_watchlist.slot_score` alike. It used to sit outside
+`LIVE_STAGES` beside `atRisk` and to take a flat 34 against `confirmed`'s 40 — the same
+penalty twice, once by exclusion and once by six points.
+
+The two stages were on the same side of a gate they belong on opposite sides of.
+**`atRisk` is a completed close PAST the line**, so the setup's state has genuinely
+changed and dropping it is right. **`retest` is price REACHING the line and holding**, and
+nothing about the setup changed at all: `prevStage` reads `confirmed` on every live one —
+same break, same confirm, same target, same levels. The only new thing is that somebody
+looked at the chart and wrote down where price is.
+
+So the label was a **demotion for being observed**. Marking the sixteen channels on Oct 26
+knocked **EME and ANET** off the landing page, and the next `--reslot` pass wanted to push
+ANET's and NVDA's retested channels out of their own rows' main slots. A ranking where
+looking harder at a setup removes it is backwards, and the incentive is worse than the one
+the exclusion guarded against: if the stage can only cost you, the safe move is never to
+mark anything. RULEBOOK.md agrees from the other end — taken at the line the same target is
+bought against a stop that is immediate, which is the best entry available rather than a
+reason to hide the row.
+
+Scored as `prevStage`, the bearish shortlist reads **ANET 110.0, AMKR 109.4, EME 108.9**
+(ETN and APH drop), and reslot's pending list falls from 6 rows to 4, ANET and NVDA no
+longer among them. The remaining four are unrelated — DASH's is its hammer going `atRisk`.
+The `why` line says so rather than hiding it: *"Break confirmed on the weekly chart, price
+back at the boundary it broke"*.
+
+**The known cost, recorded rather than fixed: `retest` has no automatic setter.** Fifteen
+of today's fifteen exist because they were marked by hand on one day, while the featured
+list is rebuilt by an Action with no human in the loop — so the shortlist now depends in
+part on whether someone remembered. That is an argument for wiring the setter (the review
+line already detects candidates every run, and the clear added beside it is already gated
+on a completed close, which is what would stop a setter flapping), not for a penalty.
 
 ## Two targets per scenario: a near one and the five-year one
 
