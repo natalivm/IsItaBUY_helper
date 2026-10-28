@@ -1462,6 +1462,39 @@ python3 weekly_feature.py --include-auto    # let auto-detected setups compete
 Yahoo is blocked from Claude Code's sandbox (same 403 proxy as the price API), so
 run it `--offline` here; the Action does the real fetch.
 
+### Every price run checks whether the shortlist has moved
+
+The landing page's lists are rebuilt **weekly** while every input to them — price, `rsi`,
+`trend`, stage, the levels — moves on the **daily** run. So the cards go stale midweek with
+nothing saying so. `feature_drift()` in `update_prices.py` closes that: after the detector
+and the cap, it recomputes `weekly_feature.hot_setups` on the ledger as it now stands and
+prints the difference under **HOTTEST SETUPS vs the stored landing page**.
+
+**It reports and never rebuilds.** Writing `weeklyFeature.ts` on every price run would make
+a weekly list a daily one, and the week's shortlist changing under the reader every evening
+is the thing the weekly cadence exists to prevent. The refresh stays
+`python3 weekly_feature.py --apply`, now an informed choice rather than a forgotten one.
+
+**Membership only — not order, not scores.** A shortlist naming the same six setups is not
+stale, and a daily "the numbers moved" is how a report gets ignored. On the first run
+bullish read *unchanged (INTU, SPGI, AZO)* though INTU and SPGI had swapped places.
+
+Parse the stored list by **walking the braces of the `hot` array**, not by matching an
+indent. The first version keyed off `setups:` and a four-space indent, matched nothing, and
+reported every setup as new and none as dropped — a diff with no left-hand side, which
+reads as a total change rather than as a broken parser.
+
+**`LIVE_STAGES` excludes `retest`, and that is worth re-deciding.** The constant's comment
+argues the case for `atRisk` — a break whose own timeframe has closed back past
+invalidation is the last thing to feature — and then adds "`retest` is absent too" without
+its own reason. The two are opposites: `atRisk` is a break that closed back *past* the
+line, `retest` is one *holding at* it, and RULEBOOK.md calls that the best entry available,
+since the target is bought against a stop that is immediate. Marking the sixteen channels
+`retest` therefore knocked **EME and ANET** off the landing page. Scored as the confirmed
+breaks they are, the bearish list would read **ANET 110.0, AMKR 109.4, EME 108.9** — the
+two dropped setups back, with ANET leading. Unchanged pending a decision, because what
+belongs on a landing page is a judgement about readers, not about scoring.
+
 ## Two targets per scenario: a near one and the five-year one
 
 Each scenario card carries a second, nearer number under the headline target —
