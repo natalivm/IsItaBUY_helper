@@ -1242,11 +1242,34 @@ break back and is one close from `atRisk`. The review line said the channel sent
 every pattern; it now splits, and the four wedges that were on that list (AMAT, CACI, PINS,
 UBER weekly) were left `confirmed` rather than marked retests.
 
-**`retest` is set by hand and nothing used to clear it**, so a setup marked while price sat
-on the line kept reading "Retest in progress" after price walked away — AVGO ($342.33
+**`retest` used to be set by hand with nothing to clear it**, so a setup marked while price
+sat on the line kept reading "Retest in progress" after price walked away — AVGO ($342.33
 against $315.81) and KLAC ($153.66 against $134.29) had both been stuck there. The clear
 mirrors the `atRisk` restore: outside the same `RETEST_BAND`, on a completed close on the
 setup's own timeframe, back to `prevStage`.
+
+**Both ends are wired now.** The review line said *"never set here — an automatic flag would
+flip back and forth as price brushes the line, and post News each time"*, which was right
+about a test run on live price. The setter sits inside the same
+`is_close and _period_closed(tf, date)` gate as the clear, so it reads a completed close on
+the setup's **own** timeframe: a weekly channel is judged on Fridays and cannot flap midweek.
+What is left to a human is the gap between closes, which the review line still covers — and
+it now steps aside on a run where the setter will act, so the two never both speak.
+
+Its conditions are the three the hand pass applied: a **channel** (a wedge invalidates on the
+far side, where arriving means the break is given back); price still on the right side of the
+line, since past it is `atRisk`; and the break not undone past `STRANDED_UNDONE`, without
+which set and clear would fight over BKNG every Friday.
+
+**Tested by replaying it against the sixteen channels marked by hand on Oct 26, and it is the
+hand pass that comes off worse.** It finds 12. Eleven are the same setups (NVDA's counts —
+reslot had since moved it from the alt slot to the main). The one it adds is **SIMO**, a
+weekly descending channel 1.26% under its line with the break still working, which nobody had
+looked at. Of the five it refuses, every one is a mark that should not have been made:
+**ALAB, D, GD and NUE** sit 1.7–2.3% from their *live* lines — outside `RETEST_BAND`, marked
+off the stale stored level before `_live_invalidation` existed — and **LHX** is past its line
+and belongs in `atRisk`. All four of the first group have been reverted to `confirmed` here,
+which is what the clear would have done on Friday anyway.
 
 **That band test alone cannot end a retest the line chased.** A sloped invalidation travels:
 BKNG's broken upper boundary falls $1.62 a week against a band $2.28 wide, so it gives back
@@ -1513,12 +1536,10 @@ longer among them. The remaining four are unrelated — DASH's is its hammer goi
 The `why` line says so rather than hiding it: *"Break confirmed on the weekly chart, price
 back at the boundary it broke"*.
 
-**The known cost, recorded rather than fixed: `retest` has no automatic setter.** Fifteen
-of today's fifteen exist because they were marked by hand on one day, while the featured
-list is rebuilt by an Action with no human in the loop — so the shortlist now depends in
-part on whether someone remembered. That is an argument for wiring the setter (the review
-line already detects candidates every run, and the clear added beside it is already gated
-on a completed close, which is what would stop a setter flapping), not for a penalty.
+**The cost this was recorded under is paid.** It read: `retest` has no automatic setter, so
+the shortlist depends in part on whether someone remembered to mark a row. The setter is
+wired now (see "Retest and atRisk" above), on the same completed-close gate as the clear, so
+the stage is maintained by the daily run rather than by memory.
 
 ## Two targets per scenario: a near one and the five-year one
 
