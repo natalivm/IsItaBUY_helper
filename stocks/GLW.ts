@@ -5,10 +5,10 @@ export const GLW = defineStock({
   name: 'Corning Inc',
   sector: 'Optical Fiber · Specialty Glass',
   themeColor: '#005daa',
-  updatedOn: '10/27',
+  updatedOn: '10/28',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-27',
-  currentPrice: 126.36,
+  currentPrice: 126.3,
   fairPriceRange: '$129 - $238',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 875,        // Q2 2026 diluted shares
   rev25: 16410,        // FY2025 core sales $16.41B (GAAP $15.63B); Q3 2026 core sales $5.08B (+19%), Q4 guided $5.2-5.3B (+19%); FY27E $23.10B (+20%)
