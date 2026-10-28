@@ -1242,11 +1242,34 @@ break back and is one close from `atRisk`. The review line said the channel sent
 every pattern; it now splits, and the four wedges that were on that list (AMAT, CACI, PINS,
 UBER weekly) were left `confirmed` rather than marked retests.
 
-**`retest` is set by hand and nothing used to clear it**, so a setup marked while price sat
-on the line kept reading "Retest in progress" after price walked away — AVGO ($342.33
+**`retest` used to be set by hand with nothing to clear it**, so a setup marked while price
+sat on the line kept reading "Retest in progress" after price walked away — AVGO ($342.33
 against $315.81) and KLAC ($153.66 against $134.29) had both been stuck there. The clear
 mirrors the `atRisk` restore: outside the same `RETEST_BAND`, on a completed close on the
 setup's own timeframe, back to `prevStage`.
+
+**Both ends are wired now.** The review line said *"never set here — an automatic flag would
+flip back and forth as price brushes the line, and post News each time"*, which was right
+about a test run on live price. The setter sits inside the same
+`is_close and _period_closed(tf, date)` gate as the clear, so it reads a completed close on
+the setup's **own** timeframe: a weekly channel is judged on Fridays and cannot flap midweek.
+What is left to a human is the gap between closes, which the review line still covers — and
+it now steps aside on a run where the setter will act, so the two never both speak.
+
+Its conditions are the three the hand pass applied: a **channel** (a wedge invalidates on the
+far side, where arriving means the break is given back); price still on the right side of the
+line, since past it is `atRisk`; and the break not undone past `STRANDED_UNDONE`, without
+which set and clear would fight over BKNG every Friday.
+
+**Tested by replaying it against the sixteen channels marked by hand on Oct 26, and it is the
+hand pass that comes off worse.** It finds 12. Eleven are the same setups (NVDA's counts —
+reslot had since moved it from the alt slot to the main). The one it adds is **SIMO**, a
+weekly descending channel 1.26% under its line with the break still working, which nobody had
+looked at. Of the five it refuses, every one is a mark that should not have been made:
+**ALAB, D, GD and NUE** sit 1.7–2.3% from their *live* lines — outside `RETEST_BAND`, marked
+off the stale stored level before `_live_invalidation` existed — and **LHX** is past its line
+and belongs in `atRisk`. All four of the first group have been reverted to `confirmed` here,
+which is what the clear would have done on Friday anyway.
 
 **That band test alone cannot end a retest the line chased.** A sloped invalidation travels:
 BKNG's broken upper boundary falls $1.62 a week against a band $2.28 wide, so it gives back
@@ -1484,16 +1507,39 @@ indent. The first version keyed off `setups:` and a four-space indent, matched n
 reported every setup as new and none as dropped — a diff with no left-hand side, which
 reads as a total change rather than as a broken parser.
 
-**`LIVE_STAGES` excludes `retest`, and that is worth re-deciding.** The constant's comment
-argues the case for `atRisk` — a break whose own timeframe has closed back past
-invalidation is the last thing to feature — and then adds "`retest` is absent too" without
-its own reason. The two are opposites: `atRisk` is a break that closed back *past* the
-line, `retest` is one *holding at* it, and RULEBOOK.md calls that the best entry available,
-since the target is bought against a stop that is immediate. Marking the sixteen channels
-`retest` therefore knocked **EME and ANET** off the landing page. Scored as the confirmed
-breaks they are, the bearish list would read **ANET 110.0, AMKR 109.4, EME 108.9** — the
-two dropped setups back, with ANET leading. Unchanged pending a decision, because what
-belongs on a landing page is a judgement about readers, not about scoring.
+### A retest is not a demotion
+
+**`retest` now scores as the stage it came from**, in `weekly_feature.LIVE_STAGES` /
+`score_setup` and in `pattern_watchlist.slot_score` alike. It used to sit outside
+`LIVE_STAGES` beside `atRisk` and to take a flat 34 against `confirmed`'s 40 — the same
+penalty twice, once by exclusion and once by six points.
+
+The two stages were on the same side of a gate they belong on opposite sides of.
+**`atRisk` is a completed close PAST the line**, so the setup's state has genuinely
+changed and dropping it is right. **`retest` is price REACHING the line and holding**, and
+nothing about the setup changed at all: `prevStage` reads `confirmed` on every live one —
+same break, same confirm, same target, same levels. The only new thing is that somebody
+looked at the chart and wrote down where price is.
+
+So the label was a **demotion for being observed**. Marking the sixteen channels on Oct 26
+knocked **EME and ANET** off the landing page, and the next `--reslot` pass wanted to push
+ANET's and NVDA's retested channels out of their own rows' main slots. A ranking where
+looking harder at a setup removes it is backwards, and the incentive is worse than the one
+the exclusion guarded against: if the stage can only cost you, the safe move is never to
+mark anything. RULEBOOK.md agrees from the other end — taken at the line the same target is
+bought against a stop that is immediate, which is the best entry available rather than a
+reason to hide the row.
+
+Scored as `prevStage`, the bearish shortlist reads **ANET 110.0, AMKR 109.4, EME 108.9**
+(ETN and APH drop), and reslot's pending list falls from 6 rows to 4, ANET and NVDA no
+longer among them. The remaining four are unrelated — DASH's is its hammer going `atRisk`.
+The `why` line says so rather than hiding it: *"Break confirmed on the weekly chart, price
+back at the boundary it broke"*.
+
+**The cost this was recorded under is paid.** It read: `retest` has no automatic setter, so
+the shortlist depends in part on whether someone remembered to mark a row. The setter is
+wired now (see "Retest and atRisk" above), on the same completed-close gate as the clear, so
+the stage is maintained by the daily run rather than by memory.
 
 ## Two targets per scenario: a near one and the five-year one
 

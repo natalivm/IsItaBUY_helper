@@ -52,8 +52,27 @@ TOP_N = 3     # per direction: the landing page shows this many bullish and this
 
 # Stages a setup can be featured in: it still has somewhere to go.
 # `atRisk` is deliberately absent: a break whose own timeframe has closed back past
-# invalidation is the last thing to feature as a hot setup. `retest` is absent too.
-LIVE_STAGES = ("confirmed", "signal", "forming")
+# invalidation is the last thing to feature as a hot setup.
+#
+# `retest` used to be absent alongside it, which had them on the same side of a gate they
+# belong on opposite sides of. `atRisk` is a completed close PAST the line -- the setup's
+# state has genuinely changed. `retest` is price REACHING the line and holding, and nothing
+# about the setup changed at all: `prevStage` reads "confirmed" on every live one, same
+# break, same confirm, same target, same levels. The only new thing is that somebody looked
+# at the chart and wrote down where price is.
+#
+# So excluding it made the label a DEMOTION: marking the sixteen channels on Oct 26 knocked
+# ANET and EME off the landing page, and ANET is the best bearish reading on the board
+# either way. A ranking where looking harder at a setup removes it is backwards, and the
+# incentive is worse than the one the exclusion guarded against -- if the stage can only
+# cost you, the safe move is to never mark anything. RULEBOOK.md agrees from the other end:
+# taken at the line the same target is bought against a stop that is immediate, which is the
+# best entry available rather than a reason to hide the row.
+#
+# Known cost, recorded rather than fixed: `retest` has no automatic setter, so the shortlist
+# now depends in part on a hand label. That is an argument for wiring the setter (the review
+# line in pattern_watchlist already detects candidates every run), not for a penalty.
+LIVE_STAGES = ("confirmed", "signal", "forming", "retest")
 
 
 # ── The week being featured ──
@@ -174,13 +193,19 @@ def score_setup(s, agree_n, today, bot=None, tall=False, progress=None):
         return None
 
     why = []
-    score = {'confirmed': 40, 'signal': 25, 'forming': 12}[stage]
+    # A retest scores as the stage it came from -- it IS that setup, with price back at the
+    # boundary. `prevStage` is written by whoever marked it; fall back to `confirmed`, which
+    # is the only value it has ever carried and the only stage a retest can come from.
+    rank_stage = s.get('prevStage') or 'confirmed' if stage == 'retest' else stage
+    if rank_stage not in ('confirmed', 'signal', 'forming'):
+        rank_stage = 'confirmed'
     tf = s.get('timeframe') or 'daily'
+    score = {'confirmed': 40, 'signal': 25, 'forming': 12}[rank_stage]
     why.append({
         'confirmed': f"Break confirmed on the {tf} chart",
         'signal': f"Signal candle on the {tf} chart, waiting on the confirm",
         'forming': f"Still forming on the {tf} chart",
-    }[stage])
+    }[rank_stage] + (", price back at the boundary it broke" if stage == 'retest' else ""))
 
     turn, turn_why = _turn_credit(bot, direction)
     score += turn

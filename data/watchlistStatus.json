@@ -86,7 +86,7 @@
  "ALAB|main": {
   "label": "main",
   "setup": "Ascending Channel (weekly)",
-  "stage": "retest",
+  "stage": "confirmed",
   "ticker": "ALAB"
  },
  "ALAB|weekly Falling Wedge": {
@@ -1142,7 +1142,7 @@
  "D|weekly alt": {
   "label": "weekly alt",
   "setup": "Ascending Channel (weekly)",
-  "stage": "retest",
+  "stage": "confirmed",
   "ticker": "D"
  },
  "EME|daily Falling Wedge": {
@@ -1394,7 +1394,7 @@
  "GD|weekly Ascending Channel": {
   "label": "weekly Ascending Channel",
   "setup": "Ascending Channel (weekly)",
-  "stage": "retest",
+  "stage": "confirmed",
   "ticker": "GD"
  },
  "GD|weekly Rising Wedge": {
@@ -2312,7 +2312,7 @@
  "NUE|weekly alt": {
   "label": "weekly alt",
   "setup": "Ascending Channel (weekly)",
-  "stage": "retest",
+  "stage": "confirmed",
   "ticker": "NUE"
  },
  "NU|daily Rising Wedge": {
