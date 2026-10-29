@@ -5,10 +5,10 @@ export const Q = defineStock({
   name: 'Qnity Electronics, Inc.',
   sector: 'Specialty Materials / Semiconductor & Electronics',
   themeColor: '#00857c',
-  updatedOn: '10/28',
+  updatedOn: '10/29',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 118.75,   // 52wk range ~$70-$177; DuPont electronics spin-off, listed Nov 2025
+  currentPrice: 122.79,   // 52wk range ~$70-$177; DuPont electronics spin-off, listed Nov 2025
   fairPriceRange: '$150 - $189',  // stockanalysis.com analyst target range, Oct 1 2026
   shares0: 209,           // ~209.6M shares (1 Qnity per 2 DuPont); mkt cap ~$33B
   rev25: 4754,            // FY2025 revenue $4,754M (+9.7% YoY); Q1 2026 sales $1.315B (+18% YoY, +17% organic)

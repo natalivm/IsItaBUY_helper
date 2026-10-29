@@ -5,7 +5,7 @@ export const KLAC = defineStock({
   name: 'KLA Corporation',
   sector: 'Semiconductor Equipment · Process Control & Inspection',
   themeColor: '#00539b',
-  currentPrice: 153.66,
+  currentPrice: 158.77,
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$175 - $325',  // stockanalysis.com analyst target range (Oct 6 2026)
@@ -85,7 +85,7 @@ export const KLAC = defineStock({
     },
   ],
 
-  updatedOn: '10/27',
+  updatedOn: '10/29',
 
   debtSafety: {
     netDebt: 1250,         // Oct 2026: ~$6.15B debt − ~$4.90B cash (stockanalysis)

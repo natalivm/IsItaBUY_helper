@@ -5,10 +5,10 @@ export const AGCO = defineStock({
   name: 'AGCO Corp',
   sector: 'Agriculture',
   themeColor: '#00d4aa',
-  updatedOn: '10/28',
+  updatedOn: '10/29',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 103.4,
+  currentPrice: 102.16,
   fairPriceRange: '$98 - $151',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 71.2,       // Q2 2026 diluted (after a $345M buyback in Q2)
   rev25: 10080,        // FY2025; FY26 guide $10.1-10.2B (cut at Q2), FY27E consensus $10.72B
