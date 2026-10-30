@@ -5,10 +5,10 @@ export const APH = defineStock({
   name: 'Amphenol Corp',
   sector: 'Electronic Components · Interconnect',
   themeColor: '#38bdf8',
-  updatedOn: '10/29',
+  updatedOn: '10/30',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 80.96,
+  currentPrice: 82.08,
   fairPriceRange: '$85 - $116',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 1278,
   rev25: 23095,        // FY2025 revenue $23.1B (was mis-set to $31B); FY26E consensus $35.6B (+54%), FY27E $42.6B (+20%)

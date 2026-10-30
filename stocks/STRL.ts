@@ -5,11 +5,11 @@ export const STRL = defineStock({
   name: 'Sterling Infrastructure, Inc.',
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
-  updatedOn: '10/29',
+  updatedOn: '10/30',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   nextEarningsOn: '2026-10-28',   // Q3 2026, after the close (per user, Oct 25 2026); Yahoo has no date for STRL
-  currentPrice: 388.87,
+  currentPrice: 373.66,
   fairPriceRange: '$700 - $1,000',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 30.59,              // stockanalysis (Oct 2026)
   rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (raised guide implies ~+64%; consensus $4.12B incl. Stone Ridge), FY27E $4.93B (+20%)

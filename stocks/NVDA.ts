@@ -5,7 +5,7 @@ export const NVDA = defineStock({
   name: 'NVIDIA Corporation',
   sector: 'Semiconductors / AI Infrastructure',
   themeColor: '#76b900',
-  currentPrice: 215.38,
+  currentPrice: 213.66,
   fairPriceRange: '$180 - $515',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 24400,
   rev25: 215900,       // FY26A (Jan 2026); FY27E consensus $411.7B (+91%), FY28E $692.2B (+68%; CFO reportedly guided ~70%)
@@ -20,7 +20,7 @@ export const NVDA = defineStock({
   aiImpact: 'TAILWIND',
 
 
-  updatedOn: '10/29',
+  updatedOn: '10/30',
   lastReportTag: 'Q2 FY27',
   dataReviewedOn: '2026-10-10',
 

@@ -11,6 +11,17 @@
     "target": 45.9
   },
   {
+    "ticker": "CAKE",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-28",
+    "confirm": 110.51,
+    "invalidation": 115.35,
+    "target": 104.51
+  },
+  {
     "ticker": "CRWD",
     "pattern": "Hammer",
     "timeframe": "daily",
@@ -119,6 +130,17 @@
     "confirm": 138.11,
     "invalidation": 132.08,
     "target": 185.52
+  },
+  {
+    "ticker": "GD",
+    "pattern": "Morning Star",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-26",
+    "confirm": 344.95,
+    "invalidation": 322.0,
+    "target": 367.9
   },
   {
     "ticker": "HTFL",

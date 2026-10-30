@@ -5,7 +5,7 @@ export const SNDK = defineStock({
   name: 'SanDisk Corporation',
   sector: 'NAND Flash Memory / AI Storage',
   themeColor: '#c0392b',
-  currentPrice: 1404.77,
+  currentPrice: 1330.05,
   shares0: 146.4,     // 146.42M (stockanalysis, Oct 2026)
   rev25: 20250,       // FY26A (Jun 2026) $20.25B (+175%) — base year; revGrowth[0] = FY27 (consensus $49.1B, +143%), FY28E $58.4B
   fcfMargin25: 0.57,  // TTM FCF $11.49B / rev $20.25B
@@ -17,7 +17,7 @@ export const SNDK = defineStock({
   rsRating: 85,       // IBD RS per user, 10/11/2026 (was 99)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
-  updatedOn: '10/29',
+  updatedOn: '10/30',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$1,000 - $3,600',  // stockanalysis.com analyst target range (Oct 9 2026)

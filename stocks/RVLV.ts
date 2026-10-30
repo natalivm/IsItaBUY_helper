@@ -5,7 +5,7 @@ export const RVLV = defineStock({
   name: 'Revolve Group, Inc.',
   sector: 'Consumer Discretionary · Fashion E-Commerce',
   themeColor: '#c2185b',
-  currentPrice: 22.59,
+  currentPrice: 23.09,
   fairPriceRange: '$24 - $37',  // stockanalysis.com analyst target range (Oct 6 2026)
   shares0: 71.1,       // 71.09M (stockanalysis, Oct 2026)
   rev25: 1230,         // FY2025A; revGrowth[0] = FY26 (consensus $1.39B, +13%), FY27E $1.51B (+9%)
@@ -21,7 +21,7 @@ export const RVLV = defineStock({
   aiImpact: 'TAILWIND',
 
 
-  updatedOn: '10/29',
+  updatedOn: '10/30',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   // Q2 2026 UPDATE (Aug 4, 2026) — first data review

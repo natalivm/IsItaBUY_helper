@@ -5,11 +5,11 @@ export const WDC = defineStock({
   name: 'Western Digital Corporation',
   sector: 'Data Storage / HDD & AI Infrastructure',
   themeColor: '#0073cf',
-  updatedOn: '10/29',
+  updatedOn: '10/30',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-10-24',
   nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
-  currentPrice: 396.42,   // 52wk ~$63-$800; ~-27% since late July ($545) and ~-50% off the high, despite a beat-and-raise
+  currentPrice: 395.41,   // 52wk ~$63-$800; ~-27% since late July ($545) and ~-50% off the high, despite a beat-and-raise
   fairPriceRange: '$420 - $1,050',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 388,           // ~388M diluted (Q4 FY26 / Q1 FY27 guide); HDD-only post-Sandisk spin; mkt cap ~$154B
   rev25: 12919,           // FY2026A (FYE Jul 3 2026) $12,919M (+36%) — base year; revGrowth[0] = FY27. FY27E consensus $19.22B (pre-Q1; Q1A $4.38B + Q2 guide ~$7.2B implies upside), FY28E $26.36B
