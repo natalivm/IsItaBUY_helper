@@ -5,8 +5,8 @@ export const FTNT = defineStock({
   name: 'Fortinet',
   sector: 'Cybersecurity',
   themeColor: '#06b6d4',
-  currentPrice: 139.1,
-  updatedOn: '10/30',
+  currentPrice: 136.08,
+  updatedOn: '10/31',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   fairPriceRange: '$104 - $220',  // stockanalysis.com analyst target range, Oct 7 2026 (old $80-135 was stale)

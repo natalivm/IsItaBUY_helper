@@ -5,10 +5,10 @@ export const CLS = defineStock({
   name: 'Celestica Inc.',
   sector: 'EMS',
   themeColor: '#f97316',
-  updatedOn: '10/30',
+  updatedOn: '10/31',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-27',
-  currentPrice: 282.75,   // Oct 27 per user — the post-Q3 move. The 10/26 price run caught $246.65, which was the close BEFORE the amc print.
+  currentPrice: 265.53,   // Oct 27 per user — the post-Q3 move. The 10/26 price run caught $246.65, which was the close BEFORE the amc print.
   fairPriceRange: '$375 - $550',  // stockanalysis.com analyst target range (Sep 30 2026)
   shares0: 117.9,
   rev25: 12400,        // FY2025; FY26 guide RAISED to $21.0B at Q3 (from $20.5B); FY27 guided ~$40.0B (+90%)

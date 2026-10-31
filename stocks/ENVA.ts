@@ -5,10 +5,10 @@ export const ENVA = defineStock({
   name: 'Enova International',
   sector: 'FinTech / Lending',
   themeColor: '#3b82f6',
-  updatedOn: '10/30',
+  updatedOn: '10/31',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-25',
-  currentPrice: 181.04,
+  currentPrice: 174.09,
   fairPriceRange: '$215 - $285',  // stockanalysis.com analyst target range (Oct 7 2026) — PRE-Q3, see the Oct 2026 note
   // Q3 2026 (reported Oct 22 2026, the session before a -6.6% day)
   // ─────────────────────────────────────────────────────────────────────────

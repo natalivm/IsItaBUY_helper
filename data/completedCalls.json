@@ -154,6 +154,28 @@
     "target": 58.48
   },
   {
+    "ticker": "IBM",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-29",
+    "confirm": 234.14,
+    "invalidation": 204.11,
+    "target": 257.86
+  },
+  {
+    "ticker": "IOVA",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-29",
+    "confirm": 13.64,
+    "invalidation": 15.64,
+    "target": 11.68
+  },
+  {
     "ticker": "KLAC",
     "pattern": "Rising Wedge",
     "timeframe": "daily",
@@ -207,6 +229,17 @@
     "confirm": 36.55,
     "invalidation": 26.43,
     "target": 41.17
+  },
+  {
+    "ticker": "LLY",
+    "pattern": "Falling Wedge",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-29",
+    "confirm": 1275.88,
+    "invalidation": 1097.46,
+    "target": 1412.07
   },
   {
     "ticker": "LMT",
@@ -308,6 +341,17 @@
     "target": 107.4
   },
   {
+    "ticker": "RDDT",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-29",
+    "confirm": 149.82,
+    "invalidation": 166.83,
+    "target": 127.34
+  },
+  {
     "ticker": "SPCX",
     "pattern": "Topping Tail",
     "timeframe": "weekly",
@@ -372,5 +416,16 @@
     "confirm": 158.71,
     "invalidation": 123.02,
     "target": 180.35
+  },
+  {
+    "ticker": "XOM",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-26",
+    "confirm": 158.71,
+    "invalidation": 138.12,
+    "target": 187.08
   }
 ]

@@ -5,10 +5,10 @@ export const CRDO = defineStock({
   name: 'Credo Technology Group Holding',
   sector: 'Semiconductors · AI Interconnect',
   themeColor: '#d4af37',
-  updatedOn: '10/30',
+  updatedOn: '10/31',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 165.29,
+  currentPrice: 150.99,
   fairPriceRange: '$185 - $315',  // stockanalysis.com analyst target range, Oct 5 2026
   shares0: 197,        // Q1 FY27 diluted (~$236M non-GAAP NI / $1.20)
   rev25: 1311,         // FY26A (Apr 2026) ≈ $1.31B (approx.) — base year; revGrowth[0] = FY27 (consensus $2.50B, FY28E $3.87B)

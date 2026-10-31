@@ -5,7 +5,7 @@ export const RTX = defineStock({
   name: 'RTX Corporation',
   sector: 'Aerospace & Defense',
   themeColor: '#003087',
-  currentPrice: 199.4,
+  currentPrice: 199.8,
   fairPriceRange: '$200 - $250',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 1350,
   rev25: 88600,        // FY2025A (was 90,400); revGrowth[0] = FY26 (guide $95-96B raised; consensus $96.2B, +8.5%), FY27E $103.4B (+7.5%)
@@ -21,7 +21,7 @@ export const RTX = defineStock({
   rsTrend: 'rising',
   aiImpact: 'NEUTRAL',
   // ratingOverride 'BUY' removed Oct 2026: it was a cap that "matched the model"; re-based to FY26E EPS (~26× today) the model reads HOLD, consistent with the "capital-preservation compounder" narrative.
-  updatedOn: '10/30',
+  updatedOn: '10/31',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   // Q2 2026 UPDATE (Jul 23, 2026) — first data review

@@ -5,7 +5,7 @@ export const META = defineStock({
   name: 'Meta Platforms',
   sector: 'Social Media / Digital Advertising / AI',
   themeColor: '#1877F2',
-  currentPrice: 624.52,
+  currentPrice: 614.99,
   fairPriceRange: '$580 - $1,050',  // stockanalysis.com analyst target range (Oct 8 2026 — PRE-Q3, needs a refresh)
   shares0: 2550,
   rev25: 256200,         // FY2026E $256.2B (+26%): Q1 $56.3B + Q2 $60.8B + Q3A $64.6B + Q4 guide $73-76B (mid $74.5B); FY27E $306.5B (+21%)
@@ -20,7 +20,7 @@ export const META = defineStock({
   rsRating: 81,          // IBD RS per user, 10/24/2026 (was 97 on 10/11) — the Q3 reaction and the -16% Oct 13->23 drawdown cost it 16 points
   rsTrend: 'falling',    // 97 -> 81 in under two weeks
   aiImpact: 'TAILWIND',
-  updatedOn: '10/30',
+  updatedOn: '10/31',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-24',
   nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced

@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const SMWB = defineStock({
-  updatedOn: '10/30',
+  updatedOn: '10/31',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   ticker: 'SMWB',
   name: 'Similarweb Ltd.',
   sector: 'Web Analytics',
   themeColor: '#3b82f6',
-  currentPrice: 8.98,
+  currentPrice: 8.74,
   fairPriceRange: '$9 - $12',  // stockanalysis.com analyst target range (Sep 25 2026)
   shares0: 88.25,      // 88.25M (stockanalysis, Oct 2026)
   rev25: 282.6,        // FY2025A $282.6M (was 286.5); revGrowth[0] = FY26 (guide $314-318M raised, +12%), FY27E $351M (+11%)
