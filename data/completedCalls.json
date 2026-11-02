@@ -165,6 +165,17 @@
     "target": 257.86
   },
   {
+    "ticker": "INTC",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 104.0,
+    "invalidation": 114.02,
+    "target": 72.58
+  },
+  {
     "ticker": "IOVA",
     "pattern": "Rising Wedge",
     "timeframe": "daily",
@@ -372,6 +383,17 @@
     "confirm": 149.04,
     "invalidation": 140.66,
     "target": 157.42
+  },
+  {
+    "ticker": "SPY",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 761.17,
+    "invalidation": 772.16,
+    "target": 748.54
   },
   {
     "ticker": "STRL",
