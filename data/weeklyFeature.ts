@@ -144,8 +144,50 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   ],
   earnings: [
     {
+      ticker: "CIFR",
+      name: "Cipher Mining Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "TEM",
+      name: "Tempus AI, Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "AAPL",
+      name: "Apple Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "AEHR",
+      name: "Aehr Test Systems",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "FN",
+      name: "Fabrinet",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "LIFE",
       name: "Ethos Technologies Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "ON",
+      name: "ON Semiconductor Corporation",
       date: "2026-11-02",
       estimated: true,
       time: "amc"
@@ -160,6 +202,20 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
     {
       ticker: "ETN",
       name: "Eaton Corporation plc",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "FISV",
+      name: "Fiserv, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "PFE",
+      name: "Pfizer Inc.",
       date: "2026-11-03",
       estimated: true,
       time: "bmo"
@@ -200,11 +256,32 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "CAR",
+      name: "Avis Budget Group, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "OUST",
+      name: "Ouster, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "SMCI",
       name: "Super Micro Computer, Inc.",
       date: "2026-11-03",
       estimated: true,
       time: "amc"
+    },
+    {
+      ticker: "CRCL",
+      name: "Circle Internet Group, Inc.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
     },
     {
       ticker: "CVS",
@@ -223,6 +300,13 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
     {
       ticker: "NVO",
       name: "Novo Nordisk A/S",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "RIOT",
+      name: "Riot Platforms, Inc.",
       date: "2026-11-04",
       estimated: true,
       time: "bmo"
@@ -263,8 +347,36 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "QCOM",
+      name: "QUALCOMM Incorporated",
+      date: "2026-11-04",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "CELH",
+      name: "Celsius Holdings, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "EOSE",
+      name: "Eos Energy Enterprises, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
       ticker: "IOVA",
       name: "Iovance Biotherapeutics, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "U",
+      name: "Unity Software Inc.",
       date: "2026-11-05",
       estimated: true,
       time: "bmo"
@@ -284,8 +396,22 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "KTOS",
+      name: "Kratos Defense & Security Solutions",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "LITE",
       name: "Lumentum Holdings Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "MP",
+      name: "MP Materials Corp.",
       date: "2026-11-05",
       estimated: true,
       time: "amc"
@@ -303,6 +429,20 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       date: "2026-11-05",
       estimated: true,
       time: "amc"
+    },
+    {
+      ticker: "OKLO",
+      name: "Oklo Inc.",
+      date: "2026-11-06",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "WULF",
+      name: "TeraWulf Inc.",
+      date: "2026-11-06",
+      estimated: true,
+      time: "bmo"
     }
   ]
 };

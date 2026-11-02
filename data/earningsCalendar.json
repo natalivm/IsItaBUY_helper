@@ -4,6 +4,16 @@
     "estimated": true,
     "time": "amc"
   },
+  "AAPL": {
+    "date": "2026-11-02",
+    "estimated": true,
+    "time": "amc"
+  },
+  "AEHR": {
+    "date": "2026-11-02",
+    "estimated": true,
+    "time": "amc"
+  },
   "ALAB": {
     "date": "2026-11-03",
     "estimated": true,
@@ -54,6 +64,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "CAR": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "amc"
+  },
   "CAT": {
     "date": "2026-10-29",
     "estimated": false,
@@ -67,6 +82,16 @@
   "CCJ": {
     "date": "2026-10-30",
     "estimated": false,
+    "time": "bmo"
+  },
+  "CELH": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "CIFR": {
+    "date": "2026-11-02",
+    "estimated": true,
     "time": "bmo"
   },
   "CLS": {
@@ -83,6 +108,11 @@
     "date": "2026-10-29",
     "estimated": false,
     "time": "amc"
+  },
+  "CRCL": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "bmo"
   },
   "CVS": {
     "date": "2026-11-04",
@@ -109,6 +139,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "EOSE": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "bmo"
+  },
   "ETN": {
     "date": "2026-11-03",
     "estimated": true,
@@ -118,6 +153,16 @@
     "date": "2026-10-27",
     "estimated": false,
     "time": "bmo"
+  },
+  "FISV": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "FN": {
+    "date": "2026-11-02",
+    "estimated": true,
+    "time": "amc"
   },
   "FTNT": {
     "date": "2026-10-28",
@@ -174,6 +219,11 @@
     "estimated": false,
     "time": "bmo"
   },
+  "KTOS": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
   "LHX": {
     "date": "2026-10-29",
     "estimated": false,
@@ -198,6 +248,11 @@
     "date": "2027-02-03",
     "estimated": false,
     "time": "tbd"
+  },
+  "MP": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
   },
   "MSFT": {
     "date": "2026-10-28",
@@ -224,8 +279,33 @@
     "estimated": true,
     "time": "bmo"
   },
+  "OKLO": {
+    "date": "2026-11-06",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "ON": {
+    "date": "2026-11-02",
+    "estimated": true,
+    "time": "amc"
+  },
+  "OUST": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "amc"
+  },
+  "PFE": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "bmo"
+  },
   "PLTR": {
     "date": "2026-11-02",
+    "estimated": true,
+    "time": "amc"
+  },
+  "QCOM": {
+    "date": "2026-11-04",
     "estimated": true,
     "time": "amc"
   },
@@ -233,6 +313,11 @@
     "date": "2026-10-29",
     "estimated": false,
     "time": "amc"
+  },
+  "RIOT": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "bmo"
   },
   "SHOP": {
     "date": "2026-11-03",
@@ -274,6 +359,16 @@
     "estimated": true,
     "time": "amc"
   },
+  "TEM": {
+    "date": "2026-11-02",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "U": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "bmo"
+  },
   "UBER": {
     "date": "2026-11-04",
     "estimated": true,
@@ -298,6 +393,11 @@
     "date": "2027-02-03",
     "estimated": false,
     "time": "tbd"
+  },
+  "WULF": {
+    "date": "2026-11-06",
+    "estimated": true,
+    "time": "bmo"
   },
   "XOM": {
     "date": "2026-10-30",
