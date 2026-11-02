@@ -63,23 +63,8 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 486.18,
       invalidation: 290.63,
-      rsi: 72.6,
+      rsi: 73.5,
       score: 94.8
-    },
-    {
-      ticker: "DELL",
-      name: "Dell Technologies",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-09-03",
-      price: 424.3,
-      priceDate: "2026-10-30",
-      target: 694.22,
-      invalidation: 342.09,
-      rsi: 43.9,
-      score: 94
     },
     {
       ticker: "SPGI",
@@ -93,38 +78,53 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 534.91,
       invalidation: 382.64,
-      rsi: 75.5,
+      rsi: 77.5,
       score: 92.1
     },
     {
-      ticker: "MRVL",
-      name: "Marvell Technology, Inc.",
-      pattern: "Evening Star",
-      timeframe: "weekly",
-      direction: "down",
+      ticker: "D",
+      name: "Dominion Energy, Inc.",
+      pattern: "Descending Channel",
+      timeframe: "daily",
+      direction: "up",
       stage: "confirmed",
-      stageDate: "2026-10-26",
-      price: 218.34,
-      priceDate: "2026-10-29",
-      target: 151.77,
-      invalidation: 301.27,
-      rsi: 40,
-      score: 97.4
+      stageDate: "2026-10-12",
+      price: 66.62,
+      priceDate: "2026-10-30",
+      target: 73.45,
+      invalidation: 57.78,
+      rsi: 65.2,
+      score: 89.6
     },
     {
-      ticker: "LITE",
-      name: "Lumentum Holdings Inc.",
+      ticker: "ANET",
+      name: "Arista Networks",
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
       stage: "confirmed",
       stageDate: "2026-10-19",
-      price: 840.7,
+      price: 168.86,
       priceDate: "2026-10-30",
-      target: 480.62,
-      invalidation: 874.58,
-      rsi: 51.8,
-      score: 97.1
+      target: 126.57,
+      invalidation: 188.52,
+      rsi: 35.8,
+      score: 99.8
+    },
+    {
+      ticker: "CRM",
+      name: "Salesforce, Inc.",
+      pattern: "Rising Wedge",
+      timeframe: "daily",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-10-29",
+      price: 229.17,
+      priceDate: "2026-10-30",
+      target: 162.44,
+      invalidation: 303.55,
+      rsi: 42.4,
+      score: 97.4
     },
     {
       ticker: "FCX",
@@ -137,18 +137,102 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       price: 62.47,
       priceDate: "2026-10-30",
       target: 51.24,
-      invalidation: 70.3,
-      rsi: 39,
+      invalidation: 71.11,
+      rsi: 30.4,
       score: 96.6
     }
   ],
   earnings: [
     {
+      ticker: "CIFR",
+      name: "Cipher Mining Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "TEM",
+      name: "Tempus AI, Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "AAPL",
+      name: "Apple Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "AEHR",
+      name: "Aehr Test Systems",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "FN",
+      name: "Fabrinet",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "LIFE",
+      name: "Ethos Technologies Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "ON",
+      name: "ON Semiconductor Corporation",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "PLTR",
       name: "Palantir Technologies",
       date: "2026-11-02",
-      estimated: false,
-      time: "tbd"
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "ETN",
+      name: "Eaton Corporation plc",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "FISV",
+      name: "Fiserv, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "PFE",
+      name: "Pfizer Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "SHOP",
+      name: "Shopify",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "ALAB",
+      name: "Astera Labs",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
     },
     {
       ticker: "AMD",
@@ -156,6 +240,83 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       date: "2026-11-03",
       estimated: true,
       time: "amc"
+    },
+    {
+      ticker: "ANET",
+      name: "Arista Networks",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "BKNG",
+      name: "Booking Holdings",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "CAR",
+      name: "Avis Budget Group, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "OUST",
+      name: "Ouster, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "SMCI",
+      name: "Super Micro Computer, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "CRCL",
+      name: "Circle Internet Group, Inc.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "CVS",
+      name: "CVS Health Corporation",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "DDOG",
+      name: "Datadog",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "NVO",
+      name: "Novo Nordisk A/S",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "RIOT",
+      name: "Riot Platforms, Inc.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "UBER",
+      name: "Uber Technologies",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
     },
     {
       ticker: "APP",
@@ -172,11 +333,116 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "CAVA",
+      name: "CAVA Group, Inc.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "COHR",
+      name: "Coherent Corp.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "QCOM",
+      name: "QUALCOMM Incorporated",
+      date: "2026-11-04",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "CELH",
+      name: "Celsius Holdings, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "EOSE",
+      name: "Eos Energy Enterprises, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "IOVA",
+      name: "Iovance Biotherapeutics, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "U",
+      name: "Unity Software Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "AAOI",
+      name: "Applied Optoelectronics, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "IREN",
       name: "IREN Limited",
       date: "2026-11-05",
       estimated: true,
       time: "amc"
+    },
+    {
+      ticker: "KTOS",
+      name: "Kratos Defense & Security Solutions",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "LITE",
+      name: "Lumentum Holdings Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "MP",
+      name: "MP Materials Corp.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "NET",
+      name: "Cloudflare, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "TEAM",
+      name: "Atlassian Corporation",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "OKLO",
+      name: "Oklo Inc.",
+      date: "2026-11-06",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "WULF",
+      name: "TeraWulf Inc.",
+      date: "2026-11-06",
+      estimated: true,
+      time: "bmo"
     }
   ]
 };
