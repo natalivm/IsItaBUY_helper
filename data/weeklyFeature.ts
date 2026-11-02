@@ -144,11 +144,39 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   ],
   earnings: [
     {
+      ticker: "LIFE",
+      name: "Ethos Technologies Inc.",
+      date: "2026-11-02",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "PLTR",
       name: "Palantir Technologies",
       date: "2026-11-02",
-      estimated: false,
-      time: "tbd"
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "ETN",
+      name: "Eaton Corporation plc",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "SHOP",
+      name: "Shopify",
+      date: "2026-11-03",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "ALAB",
+      name: "Astera Labs",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
     },
     {
       ticker: "AMD",
@@ -156,6 +184,55 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       date: "2026-11-03",
       estimated: true,
       time: "amc"
+    },
+    {
+      ticker: "ANET",
+      name: "Arista Networks",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "BKNG",
+      name: "Booking Holdings",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "SMCI",
+      name: "Super Micro Computer, Inc.",
+      date: "2026-11-03",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "CVS",
+      name: "CVS Health Corporation",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "DDOG",
+      name: "Datadog",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "NVO",
+      name: "Novo Nordisk A/S",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "UBER",
+      name: "Uber Technologies",
+      date: "2026-11-04",
+      estimated: true,
+      time: "bmo"
     },
     {
       ticker: "APP",
@@ -172,8 +249,57 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "CAVA",
+      name: "CAVA Group, Inc.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "COHR",
+      name: "Coherent Corp.",
+      date: "2026-11-04",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "IOVA",
+      name: "Iovance Biotherapeutics, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "AAOI",
+      name: "Applied Optoelectronics, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
       ticker: "IREN",
       name: "IREN Limited",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "LITE",
+      name: "Lumentum Holdings Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "NET",
+      name: "Cloudflare, Inc.",
+      date: "2026-11-05",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "TEAM",
+      name: "Atlassian Corporation",
       date: "2026-11-05",
       estimated: true,
       time: "amc"

@@ -1,4 +1,14 @@
 {
+  "AAOI": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
+  "ALAB": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "amc"
+  },
   "AMD": {
     "date": "2026-11-03",
     "estimated": true,
@@ -12,6 +22,11 @@
   "AMZN": {
     "date": "2026-10-29",
     "estimated": false,
+    "time": "amc"
+  },
+  "ANET": {
+    "date": "2026-11-03",
+    "estimated": true,
     "time": "amc"
   },
   "APH": {
@@ -29,6 +44,11 @@
     "estimated": true,
     "time": "amc"
   },
+  "BKNG": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "amc"
+  },
   "CAKE": {
     "date": "2026-10-27",
     "estimated": false,
@@ -38,6 +58,11 @@
     "date": "2026-10-29",
     "estimated": false,
     "time": "bmo"
+  },
+  "CAVA": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "amc"
   },
   "CCJ": {
     "date": "2026-10-30",
@@ -49,10 +74,20 @@
     "estimated": false,
     "time": "amc"
   },
+  "COHR": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "amc"
+  },
   "COIN": {
     "date": "2026-10-29",
     "estimated": false,
     "time": "amc"
+  },
+  "CVS": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "bmo"
   },
   "CVX": {
     "date": "2026-10-30",
@@ -64,10 +99,20 @@
     "estimated": false,
     "time": "bmo"
   },
+  "DDOG": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "bmo"
+  },
   "ENPH": {
     "date": "2026-10-27",
     "estimated": false,
     "time": "amc"
+  },
+  "ETN": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "bmo"
   },
   "FCX": {
     "date": "2026-10-27",
@@ -109,6 +154,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "IOVA": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "bmo"
+  },
   "IREN": {
     "date": "2026-11-05",
     "estimated": true,
@@ -129,6 +179,16 @@
     "estimated": false,
     "time": "bmo"
   },
+  "LIFE": {
+    "date": "2026-11-02",
+    "estimated": true,
+    "time": "amc"
+  },
+  "LITE": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
   "LLY": {
     "date": "2026-10-29",
     "estimated": false,
@@ -144,6 +204,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "NET": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
   "NOW": {
     "date": "2026-10-28",
     "estimated": false,
@@ -154,14 +219,29 @@
     "estimated": false,
     "time": "amc"
   },
+  "NVO": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "bmo"
+  },
   "PLTR": {
     "date": "2026-11-02",
-    "estimated": false,
-    "time": "tbd"
+    "estimated": true,
+    "time": "amc"
   },
   "RDDT": {
     "date": "2026-10-29",
     "estimated": false,
+    "time": "amc"
+  },
+  "SHOP": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "SMCI": {
+    "date": "2026-11-03",
+    "estimated": true,
     "time": "amc"
   },
   "SNDK": {
@@ -188,6 +268,16 @@
     "date": "2026-10-27",
     "estimated": false,
     "time": "amc"
+  },
+  "TEAM": {
+    "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
+  "UBER": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "bmo"
   },
   "V": {
     "date": "2026-10-27",
