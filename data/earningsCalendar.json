@@ -1,4 +1,9 @@
 {
+  "AMD": {
+    "date": "2026-11-03",
+    "estimated": true,
+    "time": "amc"
+  },
   "AMKR": {
     "date": "2026-10-26",
     "estimated": false,
@@ -13,6 +18,16 @@
     "date": "2026-10-28",
     "estimated": false,
     "time": "bmo"
+  },
+  "APP": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "amc"
+  },
+  "ARM": {
+    "date": "2026-11-04",
+    "estimated": true,
+    "time": "amc"
   },
   "CAKE": {
     "date": "2026-10-27",
