@@ -52,19 +52,19 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   generatedOn: "2026-11-02",
   hot: [
     {
-      ticker: "GD",
-      name: "General Dynamics Corporation",
+      ticker: "GXO",
+      name: "GXO Logistics",
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
       stage: "confirmed",
-      stageDate: "2026-06-08",
-      price: 372.59,
+      stageDate: "2026-10-19",
+      price: 50.27,
       priceDate: "2026-10-30",
-      target: 486.18,
-      invalidation: 290.63,
-      rsi: 73.5,
-      score: 94.8
+      target: 59.79,
+      invalidation: 44.22,
+      rsi: 66.5,
+      score: 98.6
     },
     {
       ticker: "SPGI",
@@ -78,7 +78,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 534.91,
       invalidation: 382.64,
-      rsi: 77.5,
+      rsi: 77.6,
       score: 92.1
     },
     {
@@ -93,7 +93,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 73.45,
       invalidation: 57.78,
-      rsi: 65.2,
+      rsi: 65.1,
       score: 89.6
     },
     {
@@ -108,7 +108,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 126.57,
       invalidation: 188.52,
-      rsi: 35.8,
+      rsi: 34.1,
       score: 99.8
     },
     {
@@ -123,7 +123,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 162.44,
       invalidation: 303.55,
-      rsi: 42.4,
+      rsi: 42.3,
       score: 97.4
     },
     {
@@ -138,7 +138,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-10-30",
       target: 51.24,
       invalidation: 71.11,
-      rsi: 30.4,
+      rsi: 30.1,
       score: 96.6
     }
   ],
