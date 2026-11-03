@@ -22,6 +22,17 @@
     "target": 104.51
   },
   {
+    "ticker": "CCJ",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 91.97,
+    "invalidation": 105.63,
+    "target": 73.12
+  },
+  {
     "ticker": "CRWD",
     "pattern": "Hammer",
     "timeframe": "daily",
@@ -143,6 +154,17 @@
     "target": 367.9
   },
   {
+    "ticker": "HPE",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 62.62,
+    "invalidation": 71.65,
+    "target": 53.11
+  },
+  {
     "ticker": "HTFL",
     "pattern": "Falling Wedge",
     "timeframe": "daily",
@@ -187,6 +209,17 @@
     "target": 11.68
   },
   {
+    "ticker": "IREN",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 39.33,
+    "invalidation": 49.49,
+    "target": 21.97
+  },
+  {
     "ticker": "KLAC",
     "pattern": "Rising Wedge",
     "timeframe": "daily",
@@ -218,6 +251,17 @@
     "confirm": 104.77,
     "invalidation": 96.79,
     "target": 110.01
+  },
+  {
+    "ticker": "KO",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 89.8,
+    "invalidation": 85.81,
+    "target": 96.07
   },
   {
     "ticker": "LIFE",
@@ -308,6 +352,28 @@
     "target": 711.96
   },
   {
+    "ticker": "MRVL",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 226.52,
+    "invalidation": 260.97,
+    "target": 182.95
+  },
+  {
+    "ticker": "MSFT",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 524.43,
+    "invalidation": 562.91,
+    "target": 509.91
+  },
+  {
     "ticker": "NBIS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -328,6 +394,17 @@
     "confirm": 346.15,
     "invalidation": 429.53,
     "target": 304.48
+  },
+  {
+    "ticker": "NUE",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 216.26,
+    "invalidation": 204.93,
+    "target": 281.56
   },
   {
     "ticker": "PANW",
