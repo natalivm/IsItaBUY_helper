@@ -5,8 +5,8 @@ export const DUOL = defineStock({
   name: 'Duolingo',
   sector: 'EdTech · Language Learning · AI Platform',
   themeColor: '#58cc02',
-  currentPrice: 135.27,
-  updatedOn: '11/03',
+  currentPrice: 128,
+  updatedOn: '11/04',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$80 - $210',  // stockanalysis.com analyst target range (Oct 2026)
