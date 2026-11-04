@@ -5,7 +5,7 @@ export const NU = defineStock({
   name: 'Nu Holdings',
   sector: 'FinTech / Digital Banking · LatAm',
   themeColor: '#8b5cf6',
-  currentPrice: 11.61,
+  currentPrice: 11.99,
   updatedOn: '11/04',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',

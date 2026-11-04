@@ -8,7 +8,7 @@ export const LLY = defineStock({
   updatedOn: '11/04',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 1409.38,
+  currentPrice: 1417.99,
   fairPriceRange: '$930 - $1,600',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 894,          // FY26 guide assumes ~894M shares (Q2 diluted 893.7M)
   rev25: 65200,

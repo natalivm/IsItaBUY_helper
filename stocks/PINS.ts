@@ -6,7 +6,7 @@ export const PINS = defineStock({
   name: 'Pinterest',
   sector: 'Social Commerce',
   themeColor: '#e60023',
-  currentPrice: 20.36,
+  currentPrice: 21.22,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$22 - $42',  // stockanalysis.com analyst target range (Aug 20 2026)

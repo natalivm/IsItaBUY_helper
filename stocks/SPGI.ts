@@ -6,7 +6,7 @@ export const SPGI = defineStock({
   name: 'S&P Global',
   sector: 'Financial Data',
   themeColor: '#c5a44e',
-  currentPrice: 466.03,
+  currentPrice: 481.69,
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-10-27',
   fairPriceRange: '$477 - $553',  // stockanalysis.com analyst target range (Oct 8 2026)
