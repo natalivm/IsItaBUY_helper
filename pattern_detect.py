@@ -29,14 +29,19 @@ import pattern_watchlist as pw
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 TIMEFRAMES = ('daily', 'weekly')
-WINDOW = {'daily': 160, 'weekly': 150}       # bars searched for a pattern
-MIN_SPAN = {'daily': 20, 'weekly': 10}       # bars between the first and last swing point
-RECENT = {'daily': 45, 'weekly': 26}         # the pattern must have formed / broken this recently
+# Monthly is NOT in TIMEFRAMES and is not a discovery timeframe: drawing one on every stock
+# would add ~150 machine readings nobody asked for, which is the red-dot-on-every-row failure
+# this file records elsewhere. It is scanned only where a monthly setup already exists, so a
+# stale one can be replaced instead of living forever -- see `_entry_tfs`.
+REFRESH_TF = 'monthly'
+WINDOW = {'daily': 160, 'weekly': 150, 'monthly': 120}   # bars searched for a pattern
+MIN_SPAN = {'daily': 20, 'weekly': 10, 'monthly': 8}     # bars between the first and last swing point
+RECENT = {'daily': 45, 'weekly': 26, 'monthly': 12}      # the pattern must have formed / broken this recently
 TOUCH = 0.015                                # a swing point within 1.5% of a line touches it
 MAX_PER_TF = 5                               # setups stored per timeframe; the UI shows the best weekly + best daily
 AGREE = 0.05                                 # targets within 5% of each other agree
 MIN_TOUCHES = 4                              # swing points on the two lines, at least
-MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7}   # pattern height vs price (posted daily setups top out ~0.5)
+MAX_HEIGHT = {'daily': 0.6, 'weekly': 0.7, 'monthly': 0.8}  # pattern height vs price (posted daily setups top out ~0.5)
 HEIGHT_VS = 'start'                           # price the pattern height is judged against
 MIN_SIDE_TOUCHES = 2                         # touches required on EACH boundary of a pattern
 SIDE_EXEMPT = 0.20                           # ...unless the pattern is this narrow vs price
@@ -483,16 +488,62 @@ def detect_candle(bars, tf, n):
 detect_hammer = detect_candle          # old name, still used by --compare and detect()
 
 
-def detect(ticker, bars_by_tf, now_et):
+BARS_LAG = {'daily': 5, 'weekly': 9, 'monthly': 40}   # days a candle file may trail the ledger's price date
+
+
+def bars_current(bars, tf, price_date):
+    """False when a candle file has fallen behind the ledger's own price date.
+
+    The weekly fetch and the daily fetch fail independently, and only the failure is
+    reported -- the stale file stays on disk and every reader downstream trusts it. 15 of
+    173 daily files were up to 12 days behind while their weekly files were current. NOW's
+    stopped on 2026-10-26 at $158.19, four sessions before the week that took it to
+    $105.12, and the detector read that chart as a *bullish* falling wedge confirmed at
+    $139.32 while the stock traded at $108.81.
+
+    A pattern is only as current as the candles under it, so a stale timeframe is dropped
+    rather than drawn on. The normal lag is one session (the price run writes the ledger
+    before the candles), three over a weekend, four across a holiday -- hence 5.
+    """
+    if not price_date or not bars or not bars.get('t'):
+        return True                                   # nothing to compare against: leave it alone
+    try:
+        last = date.fromisoformat(bars['t'][-1])
+        ref = date.fromisoformat(price_date)
+    except ValueError:
+        return True
+    return (ref - last).days <= BARS_LAG.get(tf, 5)
+
+
+def _entry_tfs(ticker, setups, main):
+    """The timeframes to scan for one entry: the discovery pair, plus monthly where it is owed.
+
+    A monthly setup has nothing that can replace it -- `refresh_stale` and `redo_stored` both
+    scan TIMEFRAMES, so NOW's monthly falling wedge sat on `update` projecting $221.52 up on a
+    stock that had lost a third of its value, with no path to a redraw. Monthly is added only
+    where the stock already carries a monthly reading AND the candle file is on disk, so this
+    replaces stale readings without drawing new ones anywhere.
+    """
+    tfs = ['weekly', 'daily']
+    wants = any((s.get('timeframe') or main.get('timeframe')) == REFRESH_TF for _, s, _ in setups)
+    if wants and os.path.exists(os.path.join('public', 'bars', f'{ticker}_{REFRESH_TF}.json')):
+        tfs.insert(0, REFRESH_TF)                 # steadiest chart first, as weekly is before daily
+    return tuple(tfs)
+
+
+def detect(ticker, bars_by_tf, now_et, timeframes=('weekly', 'daily')):
     """Every distinct valid setup, weekly first (steadier), then daily.
 
     Several patterns can be valid on one chart at once (e.g. a rising wedge and an
     ascending channel breaking down together); when their targets agree that is
     extra confidence, so all of them are kept: the clearest one per pattern and
     direction, up to MAX_PER_TF per timeframe.
+
+    `timeframes` defaults to the two this detector discovers on. `_entry_tfs` adds
+    'monthly' for the handful of stocks that already carry a monthly setup.
     """
     found = []
-    for tf in ('weekly', 'daily'):
+    for tf in timeframes:
         bars = bars_by_tf.get(tf)
         if not bars or len(bars['t']) < 40:
             continue
@@ -955,8 +1006,9 @@ def discover(text, movers, churned, now_et, top=DISCOVER_TOP):
             if s.get('target') and s.get('direction') in ('up', 'down') and s.get('stage') not in ('failed', 'target'):
                 calls.append((s['direction'], s['target']))
         # The candle files, not get_bars: write_chart_bars has already refreshed them earlier
-        # in the same run, so they are current, and this avoids a Yahoo fetch per stock on a
-        # pass that exists only to print a list.
+        # in the same run, which avoids a Yahoo fetch per stock on a pass that exists only to
+        # print a list. It does NOT make them current -- that refresh fails per symbol and per
+        # timeframe, so `bars_current` is what decides whether a chart may be drawn on.
         bars = {}
         for tf in TIMEFRAMES:
             path = os.path.join('public', 'bars', f'{tk}_{tf}.json')
@@ -967,7 +1019,7 @@ def discover(text, movers, churned, now_et, top=DISCOVER_TOP):
                     b = json.load(fh)
             except Exception:
                 continue
-            if b.get('t'):
+            if b.get('t') and bars_current(b, tf, m.get('priceDate')):
                 bars[tf] = b
         if not bars:
             continue
@@ -1026,7 +1078,7 @@ def refresh_stale(apply=False, trigger=None, verbose=True, now_et=None):
     with open(pw.WATCHLIST_FILE) as fh:
         text = fh.read()
     trigger = set(trigger or ())
-    dropped, added, cuts = [], [], []
+    dropped, added, cuts, unchecked = [], [], [], []
     for e in pw.parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
         tk = m['ticker']
@@ -1035,8 +1087,9 @@ def refresh_stale(apply=False, trigger=None, verbose=True, now_et=None):
         setups = pw._setups(e)
         if not any(s.get('stage') == 'update' for _, s, _ in setups):
             continue
+        tfs = _entry_tfs(tk, setups, m)
         bars = {}
-        for tf in TIMEFRAMES:
+        for tf in tfs:
             path = os.path.join('public', 'bars', f'{tk}_{tf}.json')
             if os.path.exists(path):
                 try:
@@ -1044,12 +1097,13 @@ def refresh_stale(apply=False, trigger=None, verbose=True, now_et=None):
                         b = json.load(fh)
                 except Exception:
                     continue
-                if b.get('t'):
+                if b.get('t') and bars_current(b, tf, m.get('priceDate')):
                     bars[tf] = b
+        tfs = tuple(tf for tf in tfs if tf in bars)
         if not bars:
             continue
         try:
-            found = rank_setups(detect(tk, bars, now_et))
+            found = rank_setups(detect(tk, bars, now_et, timeframes=tfs))
         except Exception:
             continue
         keep_main = keep_alt = None
@@ -1112,6 +1166,14 @@ def refresh_stale(apply=False, trigger=None, verbose=True, now_et=None):
                 sep = '' if body[:line_start].rstrip().endswith(',') else ','
                 body = body[:line_start] + sep + '\n' + '\n'.join(extra[1:-1]) + body[line_start:]
             added += [(tk, s['pattern'], s['timeframe'], s['direction'], s['stage']) for s in fresh]
+            # A green dot says somebody read this stock's setups against the charts. Replacing
+            # one of them with a machine drawing is RULEBOOK.md's own expiry condition -- the
+            # dot would otherwise vouch for a reading made after the person stopped looking --
+            # and it is the one expiry a script can cause, so it is the one that is wired.
+            drop = re.search(r'\n[ \t]*checkedOn: *"[^"]*",?', body)
+            if drop:
+                body = body[:drop.start()] + body[drop.end():]
+                unchecked.append(tk)
         cuts.append((a, b + 1, body))
     if verbose:
         print(f"\n♻ Stale readings replaced ({'' if apply else 'would be '}dropped {len(dropped)}, "
@@ -1120,6 +1182,8 @@ def refresh_stale(apply=False, trigger=None, verbose=True, now_et=None):
             print(f"  - {tk:<6}{pat[:20]:<21}{tf:<8}{str(d):<5} (was `update`)")
         for tk, pat, tf, d, st in added:
             print(f"  + {tk:<6}{pat[:20]:<21}{tf:<8}{str(d):<5}{st}  (auto, red dot)")
+        if unchecked:
+            print(f"  green dot cleared (a setup was replaced): {', '.join(sorted(set(unchecked)))}")
     if apply and cuts:
         archive_hand_setups(text, verbose=False)
         for a, b, body in sorted(cuts, key=lambda c: -c[0]):
@@ -1227,13 +1291,15 @@ def redo_stored(apply=False, refresh=False, verbose=True):
         if not any(auto for _, auto, _, _ in parts):
             n_hand += len(parts)
             continue
+        tfs = _entry_tfs(m['ticker'], pw._setups(e), m)
         try:
-            bars = {tf: get_bars(m['ticker'], tf, refresh) for tf in TIMEFRAMES}
+            bars = {tf: get_bars(m['ticker'], tf, refresh) for tf in tfs}
         except Exception as ex:
             if verbose:
                 print(f"  {m['ticker']}: candles failed ({ex})")
             continue
-        fresh = {(x['timeframe'], x['pattern'], x['direction']): x for x in detect(m['ticker'], bars, now_et)}
+        fresh = {(x['timeframe'], x['pattern'], x['direction']): x
+                 for x in detect(m['ticker'], bars, now_et, timeframes=tfs)}
         for label, auto, src, span in parts:
             if not auto:
                 n_hand += 1
