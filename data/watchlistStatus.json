@@ -2417,22 +2417,28 @@
   "stage": "confirmed",
   "ticker": "MRVL"
  },
- "MSFT|daily alt": {
-  "label": "daily alt",
+ "MSFT|daily Rising Wedge": {
+  "label": "daily Rising Wedge",
   "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "MSFT"
  },
  "MSFT|main": {
   "label": "main",
-  "setup": "Ascending Channel (weekly)",
-  "stage": "confirmed",
+  "setup": "Descending Channel (daily)",
+  "stage": "signal",
   "ticker": "MSFT"
  },
  "MSFT|monthly Rising Wedge": {
   "label": "monthly Rising Wedge",
   "setup": "Rising Wedge (monthly)",
   "stage": "forming",
+  "ticker": "MSFT"
+ },
+ "MSFT|weekly alt": {
+  "label": "weekly alt",
+  "setup": "Ascending Channel (weekly)",
+  "stage": "confirmed",
   "ticker": "MSFT"
  },
  "MU|daily Descending Channel": {
