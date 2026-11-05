@@ -1099,6 +1099,14 @@ def main():
                 with open(pattern_watchlist.WATCHLIST_FILE) as fh:
                     found = pattern_detect.discover(fh.read(), movers, churned,
                                                     pattern_watchlist._now_et())
+                # Stale readings go before the report: `update` is the ledger's own word for
+                # "post a new setup" and 106 had piled up because nobody ever did. Only
+                # `update` is replaced -- a working break, a live signal, a forming drawing
+                # that price has not overtaken are none of them stale.
+                pattern_detect.refresh_stale(apply=True, trigger=movers | churned, verbose=True)
+                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                    found = pattern_detect.discover(fh.read(), movers, churned,
+                                                    pattern_watchlist._now_et())
                 if found:
                     print(f"\n{'='*72}")
                     print(f"NEW READINGS on stocks that moved or churned today "

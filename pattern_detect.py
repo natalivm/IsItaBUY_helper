@@ -1001,6 +1001,134 @@ def discover(text, movers, churned, now_et, top=DISCOVER_TOP):
     return out[:top]
 
 
+def refresh_stale(apply=False, trigger=None, verbose=True, now_et=None):
+    """Drop `update` setups on triggered stocks and take the detector's current reading.
+
+    `update` is the ledger's own word for "post a new setup", and 106 of them had piled up
+    because nobody ever did. RULEBOOK.md already allows the detector to replace a stale
+    hand-posted setup rather than wait on a human -- that wait is what stranded them.
+
+    Only `update` is dropped. A confirmed break that is working, a signal that is live, a
+    forming drawing that has not been overtaken: none of those are stale and none are
+    touched. The trigger is the same one `discover` uses, so this only runs where price
+    actually moved or a setup actually came apart.
+
+    What comes back is a REPLACEMENT, not a refresh: on NFLX three stale setups collapse to
+    one rising wedge pointing DOWN where the old ones pointed up, and GEV's descending
+    channel flips down to up. That is the point -- the old reading is stale precisely
+    because price left it -- but it means the new ones are machine drawings and are written
+    `auto: true`, red-dotted until someone reads them.
+
+    The entry's own setups are archived verbatim first (archive_hand_setups), so the prose
+    on a dropped setup is recoverable.
+    """
+    now_et = now_et or pw._now_et()
+    with open(pw.WATCHLIST_FILE) as fh:
+        text = fh.read()
+    trigger = set(trigger or ())
+    dropped, added, cuts = [], [], []
+    for e in pw.parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk = m['ticker']
+        if tk not in trigger or m.get('auto') or m.get('pattern') == pw.NO_PATTERN:
+            continue
+        setups = pw._setups(e)
+        if not any(s.get('stage') == 'update' for _, s, _ in setups):
+            continue
+        bars = {}
+        for tf in TIMEFRAMES:
+            path = os.path.join('public', 'bars', f'{tk}_{tf}.json')
+            if os.path.exists(path):
+                try:
+                    with open(path) as fh:
+                        b = json.load(fh)
+                except Exception:
+                    continue
+                if b.get('t'):
+                    bars[tf] = b
+        if not bars:
+            continue
+        try:
+            found = rank_setups(detect(tk, bars, now_et))
+        except Exception:
+            continue
+        keep_main = keep_alt = None
+        keep_stored = []
+        for lb, s, pos in setups:
+            if s.get('stage') == 'update':
+                dropped.append((tk, lb, s.get('pattern') or m.get('pattern'),
+                                s.get('timeframe') or m.get('timeframe'), s.get('direction')))
+                continue
+            if lb == 'main':
+                keep_main = e['fields']
+            elif lb.endswith('alt') and e['alt'] is not None and keep_alt is None:
+                keep_alt = e['alt']
+            else:
+                keep_stored.append(pos)
+        have = {(s.get('pattern') or m.get('pattern'), s.get('timeframe') or m.get('timeframe'),
+                 s.get('direction')) for lb, s, _ in setups if s.get('stage') != 'update'}
+        fresh = []
+        for s in found:
+            if (s['pattern'], s['timeframe'], s['direction']) in have:
+                continue
+            if any(f['timeframe'] == s['timeframe'] for f in fresh):
+                continue                                  # one per timeframe
+            fresh.append(s)
+        if not fresh and keep_main is None:
+            continue                                      # nothing left and nothing to put there
+        if keep_main is None:                             # the main was stale: promote a survivor
+            keep_main = keep_alt or (keep_stored.pop(0) if keep_stored else None)
+            if keep_main is e['alt']:
+                keep_alt = None
+            if keep_main is None:
+                continue
+        a, b = e['span']
+        body = pw.rebuild_entry(text, e, keep_main, keep_alt, keep_stored, False, False, ())
+        extra = _more_ts(fresh, auto=True) if fresh else []
+        if extra:
+            # Anchor on `more:` itself and walk its brackets. The first version took the last
+            # '\n    ]' in the body, which on an entry with no `more` is the close of its
+            # entry-level `lines` array -- three stocks got setup objects spliced inside
+            # `lines`, and tsc caught it as `auto` not existing on PatternLine.
+            at = body.find('\n    more: [')
+            if at == -1:                                  # no `more` yet: open one before the final brace
+                last = body.rfind('\n  }')
+                sep = '' if body[:last].rstrip().endswith(',') else ','
+                body = (body[:last] + sep + '\n    more: [\n' + '\n'.join(extra[1:-1])
+                        + '\n    ],' + body[last:])
+            else:
+                depth, i = 0, body.index('[', at)
+                while i < len(body):
+                    if body[i] == '[':
+                        depth += 1
+                    elif body[i] == ']':
+                        depth -= 1
+                        if depth == 0:
+                            break
+                    i += 1
+                line_start = body.rfind('\n', 0, i)
+                # The item before the closing bracket already ends in a comma, so adding one
+                # here produced `},,` on 23 entries and tsc lost sync a thousand lines later.
+                sep = '' if body[:line_start].rstrip().endswith(',') else ','
+                body = body[:line_start] + sep + '\n' + '\n'.join(extra[1:-1]) + body[line_start:]
+            added += [(tk, s['pattern'], s['timeframe'], s['direction'], s['stage']) for s in fresh]
+        cuts.append((a, b + 1, body))
+    if verbose:
+        print(f"\n♻ Stale readings replaced ({'' if apply else 'would be '}dropped {len(dropped)}, "
+              f"drawn {len(added)}) on {len(set(d[0] for d in dropped))} stocks:")
+        for tk, lb, pat, tf, d in dropped:
+            print(f"  - {tk:<6}{pat[:20]:<21}{tf:<8}{str(d):<5} (was `update`)")
+        for tk, pat, tf, d, st in added:
+            print(f"  + {tk:<6}{pat[:20]:<21}{tf:<8}{str(d):<5}{st}  (auto, red dot)")
+    if apply and cuts:
+        archive_hand_setups(text, verbose=False)
+        for a, b, body in sorted(cuts, key=lambda c: -c[0]):
+            text = text[:a] + body + text[b:]
+        with open(pw.WATCHLIST_FILE, 'w') as fh:
+            fh.write(text)
+    return dropped, added
+
+
 def _trim_archive(keep=None):
     """Drop all but the newest ARCHIVE_KEEP copies: the Friday job writes one a week.
 
