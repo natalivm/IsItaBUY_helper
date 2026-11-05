@@ -1087,6 +1087,49 @@ def main():
             # would make a weekly list a daily one); it recomputes the ranking on the
             # ledger as it now stands and prints the difference, so the choice to
             # refresh is a human's and is at least an informed one.
+            # Stocks where something happened today get looked at for readings the row does
+            # not carry. The detector's own scan never revisits a hand-posted stock, so this
+            # is the only thing that would ever find one. It reports and writes nothing --
+            # see pattern_detect.discover for the measurement behind that choice.
+            try:
+                movers = {s for s, o, n in (wl_result or {}).get('price_changes', [])
+                          if o and n and abs(float(n) - float(o)) / float(o) >= pattern_detect.DISCOVER_MOVE}
+                churned = {r[0] for key in ('needs_update', 'at_risk', 'target_hits', 'failing')
+                           for r in ((wl_result or {}).get(key) or []) if r}
+                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                    found = pattern_detect.discover(fh.read(), movers, churned,
+                                                    pattern_watchlist._now_et())
+                # A failed setup can only be taken off the row here: prune_finished closes
+                # what its own rule can close, and that rule almost never fires.
+                pattern_watchlist.retire_failed(apply=True)
+
+                # Stale readings go before the report: `update` is the ledger's own word for
+                # "post a new setup" and 106 had piled up because nobody ever did. Only
+                # `update` is replaced -- a working break, a live signal, a forming drawing
+                # that price has not overtaken are none of them stale.
+                pattern_detect.refresh_stale(apply=True, trigger=movers | churned, verbose=True)
+                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                    found = pattern_detect.discover(fh.read(), movers, churned,
+                                                    pattern_watchlist._now_et())
+                if found:
+                    print(f"\n{'='*72}")
+                    print(f"NEW READINGS on stocks that moved or churned today "
+                          f"({len(movers)} moved, {len(churned)} churned) — nothing written:")
+                    for tk, px, s in found:
+                        print(f"  {tk:<6} {s['pattern']:<20}{s['timeframe']:<8}{s['direction']:<5}"
+                              f"{s['stage']:<10} ${px} → {s.get('target')}  confirm {s.get('confirm')}")
+                    print("  Post the ones worth posting; none of this is on a row.")
+
+                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                    faults = pattern_watchlist.confirm_faults(fh.read())
+                if faults:
+                    print(f"\n⚠ `confirm` does not match any candle on its own timeframe ({len(faults)}):")
+                    for tk, lb, pat, tf, d, c, other in faults:
+                        where = f" — matches {other}" if other else " — matches nothing"
+                        print(f"  {tk:<6}{pat[:20]:<21}{tf:<8}{d:<5}confirm {c}{where}")
+            except Exception as exc:
+                print(f"\nCould not scan for new readings: {exc}")
+
             try:
                 feature_drift(verbose=True)
             except Exception as exc:                       # never fail a price run on a report

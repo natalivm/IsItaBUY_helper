@@ -948,11 +948,20 @@ def _signal_candle_level(bars, iso, timeframe, direction):
     else:
         first = d
     lo_iso, hi_iso = first.isoformat(), iso
-    highs = [b[1] for b in bars if lo_iso <= b[0] <= hi_iso and b[1] is not None]
-    lows = [b[2] for b in bars if lo_iso <= b[0] <= hi_iso and b[2] is not None]
-    if not highs or not lows:
+    window = [b for b in bars if lo_iso <= b[0] <= hi_iso and b[1] is not None and b[2] is not None]
+    if not window:
         return None
-    return float(_fmt_price(max(highs) if direction == 'up' else min(lows)))
+    # The signal day's own bar has to be in the series, or the fold silently returns the
+    # period's extreme SO FAR and writes it as the confirm. `update_watchlist` runs before
+    # the candle files are rewritten, so on a Friday promotion the daily series can still
+    # stop at Thursday -- and five setups promoted on 2026-10-30 took Thursday's extreme:
+    # CAVA stored $59.82 (Oct 29's high) where the signal week's high is $60.33, CEG
+    # $266.89 against $267.00, plus GOOGL, NET and PANW. The docstring already promises
+    # None "when the bars do not cover the period"; it just never checked the near end.
+    if max(b[0] for b in window) != hi_iso:
+        return None
+    return float(_fmt_price(max(b[1] for b in window) if direction == 'up'
+                            else min(b[2] for b in window)))
 
 
 def _period_closed(timeframe, iso):
@@ -1812,6 +1821,124 @@ def record_completed(ticker, sv, finish_date, path=None):
         json.dump(have, fh, indent=2)
         fh.write('\n')
     return True
+
+
+def confirm_faults(text):
+    """Setups whose `confirm` is not an extreme of any candle on their own timeframe.
+
+    PATTERN_RULES has `confirm` as the signal candle's low (down) or high (up), folded over
+    the setup's own timeframe. When it is not, something wrote it from the wrong series --
+    DUOL's weekly wedge confirmed on a DAILY low, and five setups promoted on 2026-10-30
+    took the previous day's extreme because the fold ran before the candle files were
+    rewritten. Confirm is the one level this ledger reproduces at 0.0% median error against
+    the completed calls, so it is worth a nightly look. Reports; never edits.
+    """
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        for lb, s, pos in _setups(e):
+            c, d = s.get('confirm'), s.get('direction')
+            if c is None or d not in ('up', 'down'):
+                continue
+            tf = s.get('timeframe') or m.get('timeframe')
+            bars = _load_chart_bars(m['ticker'], tf)
+            if not bars or not bars.get('t'):
+                continue
+            series = bars['l'] if d == 'down' else bars['h']
+            if any(abs(x - c) <= 0.005 for x in series):
+                continue
+            other = [o for o in ('daily', 'weekly', 'monthly') if o != tf
+                     and (lambda b: b and any(abs(x - c) <= 0.005
+                                              for x in (b['l'] if d == 'down' else b['h'])))(
+                         _load_chart_bars(m['ticker'], o))]
+            out.append((m['ticker'], lb, s.get('pattern') or m.get('pattern'), tf, d, c, other))
+    return out
+
+
+FAILED_FILE = os.path.join(_DATA_DIR, 'failedCalls.json')
+
+
+def retire_failed(apply=False, path=None, verbose=True):
+    """Take `failed` setups off the ledger, keeping them in data/failedCalls.json.
+
+    `prune_finished` only removes a setup its own rule can close -- a completed close past
+    invalidation plus a follow-through -- and that rule almost never fires (see "the fail
+    rule cannot fire"). Anything marked `failed` by hand therefore sat on the row for good.
+
+    They are NOT written to completedCalls.json. pattern_reproduce.labels() reads every row
+    in that file with no stage filter, so a failure filed beside the targets would be scored
+    as a setup that paid; CLAUDE.md calls that quietly corrupting the training data. They go
+    to their own file, which nothing reads -- and keeping them matters, because the ledger
+    has held 1 failure against 30 targets and a winners-only label set is the known hole in
+    everything measured here.
+    """
+    path = path or WATCHLIST_FILE
+    with open(path) as fh:
+        text = fh.read()
+    have = []
+    if os.path.exists(FAILED_FILE):
+        with open(FAILED_FILE) as fh:
+            have = json.load(fh)
+    seen = {(r['ticker'], r['pattern'], r['timeframe'], r['stageDate']) for r in have}
+    cuts, gone, recorded = [], [], 0
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        setups = _setups(e)
+        if not any(s.get('stage') == 'failed' for _, s, _ in setups):
+            continue
+        main_pos = alt_pos = None
+        stored = []
+        for lb, s, pos in setups:
+            if s.get('stage') == 'failed':
+                row = {'ticker': m['ticker'], 'pattern': s.get('pattern') or m.get('pattern'),
+                       'timeframe': s.get('timeframe') or m.get('timeframe'),
+                       'direction': s.get('direction'), 'stage': 'failed',
+                       'stageDate': s.get('updateDate') or s.get('stageDate') or _date.today().isoformat(),
+                       'confirm': s.get('confirm'), 'invalidation': s.get('invalidation'),
+                       'target': s.get('target'), 'lastPrice': m.get('price')}
+                key = (row['ticker'], row['pattern'], row['timeframe'], row['stageDate'])
+                if key not in seen:
+                    seen.add(key)
+                    have.append(row)
+                    recorded += 1
+                gone.append((m['ticker'], lb, row['pattern'], row['timeframe']))
+                continue
+            if lb == 'main':
+                main_pos = e['fields']
+            elif lb.endswith('alt') and e['alt'] is not None and alt_pos is None:
+                alt_pos = e['alt']
+            else:
+                stored.append(pos)
+        if main_pos is None:                       # the main itself failed: promote a survivor
+            main_pos = alt_pos or (stored.pop(0) if stored else None)
+            if main_pos is alt_pos:
+                alt_pos = None
+        if main_pos is None:
+            # Nothing left on the row. prune_finished's own answer is a placeholder the
+            # detector fills on its next pass, so use that rather than leaving it empty.
+            a, b = e['span']
+            cuts.append((a, b + 1, placeholder_entry(
+                m['ticker'], m.get('name', m['ticker']), m.get('price'), m.get('priceDate'),
+                "Every setup on this stock failed. Nothing is drawn on the candles since: "
+                "the next detector run scans this placeholder.")))
+            continue
+        a, b = e['span']
+        cuts.append((a, b + 1, rebuild_entry(text, e, main_pos, alt_pos, stored, False, False, ())))
+    if verbose and gone:
+        print(f"\n☠ Failed setups retired ({'' if apply else 'would be '}removed {len(gone)}, "
+              f"{recorded} new in {os.path.basename(FAILED_FILE)}):")
+        for tk, lb, pat, tf in gone:
+            print(f"  {tk:<6}{pat[:20]:<21}{tf}")
+    if apply and cuts:
+        for a, b, body in sorted(cuts, key=lambda c: -c[0]):
+            text = text[:a] + body + text[b:]
+        with open(path, 'w') as fh:
+            fh.write(text)
+        have.sort(key=lambda r: (r['ticker'], r['stageDate']))
+        with open(FAILED_FILE, 'w') as fh:
+            json.dump(have, fh, indent=2)
+            fh.write('\n')
+    return gone, recorded
 
 
 def strip_history(apply=False, path=None):
