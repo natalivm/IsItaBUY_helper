@@ -910,6 +910,97 @@ ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'archive'
 ARCHIVE_KEEP = 8                             # weekly runs, so about two months of copies
 
 
+DISCOVER_MOVE = 0.08      # a close this far from the last one is "something happened here"
+DISCOVER_TOP = 8          # the whole list, per run -- the point is a list you read, not a queue
+
+
+def discover(text, movers, churned, now_et, top=DISCOVER_TOP):
+    """New readings on stocks where something happened today. REPORTS, never writes.
+
+    The detector only ever fills an empty row or redraws its own work (scan_targets), so a
+    stock carrying a hand-posted setup is never looked at again -- 159 of 173 entries. DASH's
+    bearish channel, MSFT's daily channel and VST's rising wedge all formed on candles we
+    already had and none of them could have been found here; they came from the source tool.
+
+    The obvious fix is to scan those stocks daily and store what turns up as `auto`. Measured
+    first: on 2026-11-04 the trigger below caught 48 stocks and the detector drew 178 patterns
+    their rows did not carry, 121 of them already confirmed or signalled. That is not a
+    discovery pass, it is the red dot losing its meaning in two days -- CLAUDE.md already
+    records the same thing being tried and backed out, because a dot that fires on almost
+    every row stops discriminating. Several were also the same break drawn twice (CLS
+    confirming an ascending AND a descending channel at $231.48) or the too-tall shape
+    (NFLX weekly to $20.45 from $64.10).
+
+    So it reports, like every other judgement call here -- stranded, failing, thin, too-tall
+    all report and never edit -- and it is filtered hard enough to stay readable:
+
+      * only `confirmed` or `signal`: a forming pattern is a drawing, not news;
+      * dropped when the row already makes that call (same direction, target within DUPE),
+        which is the test `_same_call` applies -- a second way of saying it is corroboration
+        the agreement badge already counts;
+      * deduped against each other on the same rule, so one chart cannot send three;
+      * one per stock, and `top` for the whole run.
+    """
+    out = []
+    trig = set(movers) | set(churned)
+    for e in pw.parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk = m['ticker']
+        if tk not in trig or m.get('pattern') == pw.NO_PATTERN or m.get('auto'):
+            continue                                    # placeholders and auto rows are scanned already
+        have, calls = set(), []
+        for lb, s, pos in pw._setups(e):
+            tf = s.get('timeframe') or m.get('timeframe')
+            have.add((s.get('pattern') or m.get('pattern'), tf, s.get('direction')))
+            if s.get('target') and s.get('direction') in ('up', 'down') and s.get('stage') not in ('failed', 'target'):
+                calls.append((s['direction'], s['target']))
+        # The candle files, not get_bars: write_chart_bars has already refreshed them earlier
+        # in the same run, so they are current, and this avoids a Yahoo fetch per stock on a
+        # pass that exists only to print a list.
+        bars = {}
+        for tf in TIMEFRAMES:
+            path = os.path.join('public', 'bars', f'{tk}_{tf}.json')
+            if not os.path.exists(path):
+                continue
+            try:
+                with open(path) as fh:
+                    b = json.load(fh)
+            except Exception:
+                continue
+            if b.get('t'):
+                bars[tf] = b
+        if not bars:
+            continue
+        try:
+            found = detect(tk, bars, now_et)
+        except Exception:
+            continue
+        kept = []
+        for s in rank_setups(found):
+            if s['stage'] not in ('confirmed', 'signal'):
+                continue
+            if (s['pattern'], s['timeframe'], s['direction']) in have:
+                continue
+            tgt = s.get('target')
+            if not tgt:
+                continue
+            if any(d == s['direction'] and abs(c - tgt) <= pw.DUPE * abs(c) for d, c in calls):
+                continue                                 # the row already says this
+            if any(k['direction'] == s['direction'] and abs(k['target'] - tgt) <= pw.DUPE * abs(k['target'])
+                   for k in kept):
+                continue                                 # one chart, one claim
+            kept.append(s)
+        if kept:
+            out.append((tk, m.get('price'), kept[0]))     # one per stock
+    # `score` is a tuple on a line setup and a bare number on a candle one, so sort on its
+    # first element the way rank_setups does rather than on the raw value.
+    def _rank(row):
+        sc = row[2].get('score') or (0, 0)
+        return (row[2]['stage'] != 'confirmed', -(sc[0] if isinstance(sc, tuple) else sc))
+    out.sort(key=_rank)
+    return out[:top]
+
+
 def _trim_archive(keep=None):
     """Drop all but the newest ARCHIVE_KEEP copies: the Friday job writes one a week.
 

@@ -10247,6 +10247,28 @@ export const PATTERN_STOCKS: PatternStock[] = [
         ],
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $164.60 or below $132.41 would start a signal.",
       },
+      {
+        pattern: "Rising Wedge",
+        timeframe: "weekly",
+        direction: "down",
+        stage: "confirmed",
+        stageDate: "2026-08-03",
+        signal: 152.01,
+        confirm: 142.15,
+        invalidation: 171.65,
+        target: 110.44,
+        lines: [
+          { from: ["2026-04-27", 168.42], to: ["2026-11-02", 171.44] },
+          { from: ["2026-04-27", 126.86], to: ["2026-11-02", 179.1] },
+        ],
+        signalRule:
+          "a completed weekly close below $152.01, the wedge's lower line. The week of Jul 27 closed $148.19.",
+        confirmRule:
+          "a later completed weekly close below $142.15, beyond the low of the week that signalled. The week of Aug 3 closed $140.59.",
+        failRule:
+          "a completed weekly close above $171.65, back inside the wedge. The wedge line stopped moving the week of Sep 21.",
+        note: "Three quarters done. Confirmed down the week of Aug 3 at $140.59 and price is $120.29 against a $110.44 objective \u2014 the tool ticks \u00bc $141.62, \u00bd $131.23 and \u00be $120.83 as reached. Reproduced off our own weekly candles: the signal week (Jul 27) closed $148.19 below $152.01 and its low is $142.15, which is the confirm to within a cent of the $142.16 the tool prints. A nearer, almost-finished version of the same bear case the weekly ascending channel on this row makes at $70.70.",
+      },
     ],
   },
   {

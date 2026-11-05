@@ -3929,6 +3929,12 @@
   "stage": "forming",
   "ticker": "VST"
  },
+ "VST|weekly Rising Wedge": {
+  "label": "weekly Rising Wedge",
+  "setup": "Rising Wedge (weekly)",
+  "stage": "confirmed",
+  "ticker": "VST"
+ },
  "VZ|main": {
   "label": "main",
   "setup": "Falling Wedge (daily)",

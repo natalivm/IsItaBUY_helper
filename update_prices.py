@@ -1087,6 +1087,29 @@ def main():
             # would make a weekly list a daily one); it recomputes the ranking on the
             # ledger as it now stands and prints the difference, so the choice to
             # refresh is a human's and is at least an informed one.
+            # Stocks where something happened today get looked at for readings the row does
+            # not carry. The detector's own scan never revisits a hand-posted stock, so this
+            # is the only thing that would ever find one. It reports and writes nothing --
+            # see pattern_detect.discover for the measurement behind that choice.
+            try:
+                movers = {s for s, o, n in (wl_result or {}).get('price_changes', [])
+                          if o and n and abs(float(n) - float(o)) / float(o) >= pattern_detect.DISCOVER_MOVE}
+                churned = {r[0] for key in ('needs_update', 'at_risk', 'target_hits', 'failing')
+                           for r in ((wl_result or {}).get(key) or []) if r}
+                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                    found = pattern_detect.discover(fh.read(), movers, churned,
+                                                    pattern_watchlist._now_et())
+                if found:
+                    print(f"\n{'='*72}")
+                    print(f"NEW READINGS on stocks that moved or churned today "
+                          f"({len(movers)} moved, {len(churned)} churned) — nothing written:")
+                    for tk, px, s in found:
+                        print(f"  {tk:<6} {s['pattern']:<20}{s['timeframe']:<8}{s['direction']:<5}"
+                              f"{s['stage']:<10} ${px} → {s.get('target')}  confirm {s.get('confirm')}")
+                    print("  Post the ones worth posting; none of this is on a row.")
+            except Exception as exc:
+                print(f"\nCould not scan for new readings: {exc}")
+
             try:
                 feature_drift(verbose=True)
             except Exception as exc:                       # never fail a price run on a report
