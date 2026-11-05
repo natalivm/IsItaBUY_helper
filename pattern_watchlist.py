@@ -948,11 +948,20 @@ def _signal_candle_level(bars, iso, timeframe, direction):
     else:
         first = d
     lo_iso, hi_iso = first.isoformat(), iso
-    highs = [b[1] for b in bars if lo_iso <= b[0] <= hi_iso and b[1] is not None]
-    lows = [b[2] for b in bars if lo_iso <= b[0] <= hi_iso and b[2] is not None]
-    if not highs or not lows:
+    window = [b for b in bars if lo_iso <= b[0] <= hi_iso and b[1] is not None and b[2] is not None]
+    if not window:
         return None
-    return float(_fmt_price(max(highs) if direction == 'up' else min(lows)))
+    # The signal day's own bar has to be in the series, or the fold silently returns the
+    # period's extreme SO FAR and writes it as the confirm. `update_watchlist` runs before
+    # the candle files are rewritten, so on a Friday promotion the daily series can still
+    # stop at Thursday -- and five setups promoted on 2026-10-30 took Thursday's extreme:
+    # CAVA stored $59.82 (Oct 29's high) where the signal week's high is $60.33, CEG
+    # $266.89 against $267.00, plus GOOGL, NET and PANW. The docstring already promises
+    # None "when the bars do not cover the period"; it just never checked the near end.
+    if max(b[0] for b in window) != hi_iso:
+        return None
+    return float(_fmt_price(max(b[1] for b in window) if direction == 'up'
+                            else min(b[2] for b in window)))
 
 
 def _period_closed(timeframe, iso):
