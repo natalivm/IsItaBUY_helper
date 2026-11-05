@@ -761,10 +761,65 @@ otherwise, which is what its docstring always promised. Confirm is the one level
 ledger reproduces at 0.0% median error against the completed calls, so it earns a guard.
 All 454 reproduce today.
 
-**The hole none of this fills: there is no monthly detection.**
-`pattern_detect.TIMEFRAMES` is `('weekly', 'daily')`, so nothing draws or refreshes a
-monthly pattern. NOW is the live case -- its monthly falling wedge still projects $221.52
-up on a stock that just lost a third of its value, and `refresh_stale` cannot reach it.
+### Monthly is refreshed, never discovered
+
+`pattern_detect.TIMEFRAMES` is still `('weekly', 'daily')` and that is deliberate. Monthly
+is a **refresh** timeframe: `_entry_tfs` adds it for a stock that already carries a monthly
+setup and has the candle file, so `refresh_stale` and `--redo-stored` can replace a stale
+monthly reading, and nothing else goes looking for one. Ten stocks qualify.
+
+**Discovering on monthly was rejected for the reason discovery on anything is rationed.**
+Scanning all 173 would draw ~150 machine readings nobody asked for, which is the red dot
+firing on almost every row and so discriminating on none — the same argument that cut
+`discover`'s 178 candidates to 8.
+
+NOW is the case the refresh was built for: a monthly falling wedge sat on `update`
+projecting **$221.52 up** on a stock that had lost a third of its value, with no path to a
+redraw, because the only two passes that could replace it scanned timeframes its setup was
+not on. It now reads a monthly ascending channel breaking **down** — confirmed $159.00,
+target $60.40 — which is what the chart says.
+
+The parameters are the existing series continued by horizon rather than fitted: `WINDOW`
+120 (the whole 10-year file), `MIN_SPAN` 8 (≈ 8 months, after daily's 20 ≈ 1 month and
+weekly's 10 ≈ 2.5), `RECENT` 12 (1 year, after 0.18 and 0.5 of one), `MAX_HEIGHT` 0.8 (a
+pattern spanning years is legitimately wider). There is **one** monthly label in
+`completedCalls.json`, so there is nothing to tune against and nothing was tuned. The
+corroboration that monthly geometry works at all is GOOGL: the detector puts its monthly
+confirm at **$276.92**, the hand-posted level to the cent.
+
+### Candles the ledger has outrun
+
+`write_chart_bars` fetches per symbol **and per timeframe**, and reports what failed — but a
+failure leaves the previous file on disk, and every reader downstream trusts it. 15 of 173
+daily files were up to **12 days** behind while the same stocks' weekly files were current,
+so the gap had been invisible in a report that only ever listed the night's own failures.
+
+NOW is what it costs. Its daily chart stopped on 2026-10-26 at $158.19, four sessions before
+the week that closed it at **$105.12**, and the detector read that chart as a *bullish*
+falling wedge confirming at $139.32 while the stock traded at $108.81. A pattern is only as
+current as the candles under it.
+
+- **`pattern_detect.bars_current`** drops a stale timeframe rather than drawing on it, in
+  both passes that read `public/bars/` (`refresh_stale`, `discover`). `BARS_LAG` allows
+  daily 5 days, weekly 9, monthly 40 — the normal lag is one session, since the price run
+  writes the ledger before the candles, three over a weekend and four across a holiday.
+- **`pattern_watchlist.stale_bars`** lists them, printed in the daily report under **🕯**.
+  It always checks `daily` whether or not the stock carries a daily setup, because `_trend`
+  and `discover` read it for every stock. 13 today, two of them missing outright (CRWV, NET).
+- **`reslot_setups` leaves a stale row alone.** Every term in `slot_score` reads something
+  derived from the daily chart — `trend` and `rsi` directly, the live levels through the
+  lines — so NOW still read `trend: up`, `rsi: 68.7`, and reslot wanted to hand the main
+  slot to an 8%-undone **bullish** break over the live bearish channel that had just
+  signalled. The row keeps the slots it has until the chart catches up.
+
+The guard is not the fix; refreshing the candles is (`python3 pattern_watchlist.py --bars`,
+blocked from this sandbox). What the guard buys is that a stale chart produces **no reading**
+instead of a confident wrong one.
+
+**`refresh_stale` now clears `checkedOn`.** RULEBOOK.md's rule that a green dot dies when any
+of the stock's setups is replaced by an auto-detected one was recorded as "not wired up —
+a rule for hand edits", and this is the one expiry a script can cause, so it is the one that
+is wired. Without it the dot vouches for a drawing made after the person stopped looking.
 
 ### Finished calls are not on the ledger at all
 

@@ -1310,7 +1310,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
     return {'momentum': momentum, 'thin': thin_setups(new_text), 'stranded': stranded_setups(new_text),
             'failing': failing_setups(new_text), 'reward': reward_rank(new_text),
             'geometry': geometry_faults(new_text), 'dead_stops': dead_stops(new_text),
-            'stretched': stretched_setups(new_text),
+            'stretched': stretched_setups(new_text), 'staleBars': stale_bars(new_text),
             'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'retested': retested, 'promoted': promoted,
@@ -2174,9 +2174,21 @@ def reslot_setups(apply=False, path=None):
     with open(path) as fh:
         text = fh.read()
     cuts, moved = [], []
+    # Every term in slot_score reads something derived from the daily chart -- `trend` and
+    # `rsi` directly, the setups' own live levels through their lines -- so a row whose
+    # candles the ledger has outrun is ranked on a stock that no longer exists. NOW is the
+    # case: its daily file stopped nine days and 32% before the price in the same entry, so
+    # it still read `trend: up`, `rsi: 68.7`, and reslot wanted to give the main slot to an
+    # 8%-undone BULLISH break over the live bearish channel that had just signalled. The row
+    # keeps the slots it has until the chart catches up; `stale_bars` lists what is behind.
+    stale_tk = {tk for tk, tf, _, _ in stale_bars(text) if tf == 'daily'}
+    skipped_stale = []
     for e in parse_watchlist(text):
         m = {k: v[2] for k, v in e['fields'].items()}
         tk = m.get('ticker')
+        if tk in stale_tk:
+            skipped_stale.append(tk)
+            continue
 
         def vals(pos):
             return {k: v[2] for k, v in pos.items() if k != '_span'}
@@ -2239,6 +2251,8 @@ def reslot_setups(apply=False, path=None):
     if apply and new_text != text:
         with open(path, 'w') as fh:
             fh.write(new_text)
+    if skipped_stale:
+        moved.append(f"(left alone, daily chart behind the price: {', '.join(sorted(set(skipped_stale)))})")
     return moved
 
 
@@ -3333,6 +3347,52 @@ def print_reward_rank(rows, top=20, asof=None):
             print(f"  ... and {len(spent) - 12} more")
 
 
+def stale_bars(text, bars_dir=None):
+    """[(ticker, timeframe, last candle, days behind)] for candle files the ledger has outrun.
+
+    `write_chart_bars` fetches per symbol AND per timeframe, and reports what failed -- but a
+    failure leaves the previous file in place, and every reader downstream trusts it. On the
+    first run 15 of 173 daily files were up to 12 days behind while the same stocks' weekly
+    files were current, so the gap had been invisible in a report that only ever listed the
+    night's own failures.
+
+    NOW is what it costs: its daily chart stopped on 2026-10-26 at $158.19, four sessions
+    before the week that closed it at $105.12, and the detector read that chart as a bullish
+    falling wedge confirming at $139.32 while the stock traded at $108.81. `bars_current` in
+    pattern_detect refuses to draw on one of these; this says which they are.
+    """
+    import pattern_detect as _pd
+    bars_dir = bars_dir or BARS_DIR
+    out = []
+    for e in parse_watchlist(text):
+        m = {k: v[2] for k, v in e['fields'].items()}
+        tk, pdte = m.get('ticker'), m.get('priceDate')
+        if not tk or not pdte:
+            continue
+        # 'daily' always: `_trend` and pattern_detect.discover read it for every stock,
+        # whether or not that stock carries a daily setup.
+        tfs = {'daily'} | {(s.get('timeframe') or m.get('timeframe')) for _, s, _ in _setups(e)}
+        for tf in sorted(t for t in tfs if t):
+            path = os.path.join(bars_dir, f'{tk}_{tf}.json')
+            if not os.path.exists(path):
+                out.append((tk, tf, None, None))
+                continue
+            try:
+                with open(path) as fh:
+                    b = json.load(fh)
+            except Exception:
+                out.append((tk, tf, None, None))
+                continue
+            if not b.get('t') or _pd.bars_current(b, tf, pdte):
+                continue
+            try:
+                lag = (_date.fromisoformat(pdte) - _date.fromisoformat(b['t'][-1])).days
+            except ValueError:
+                lag = None
+            out.append((tk, tf, b['t'][-1], lag))
+    return sorted(out, key=lambda r: (-(r[3] or 0), r[0]))
+
+
 def stranded_setups(text):
     """Confirmed setups whose break is undone and whose invalidation cannot reach price.
 
@@ -3549,6 +3609,17 @@ def print_watchlist_report(result, missing, apply):
                 print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {why}" + ("  (auto)" if auto else ""))
             if len(wide) > 12:
                 print(f"  ... and {len(wide) - 12} more")
+    stale = result.get('staleBars') or []
+    if stale:
+        print(f"\n🕯 Stale candle files ({len(stale)}) — the ledger's price has outrun these charts.")
+        print("   The fetch fails per symbol AND per timeframe, and a failure leaves the old file")
+        print("   in place, so every reading drawn on one is drawn on the wrong chart. The detector")
+        print("   refuses them (`bars_current`); refresh with `python3 pattern_watchlist.py --bars`:")
+        for tk, tf, last, lag in stale:
+            if last is None:
+                print(f"  {tk:<6} {tf:<8} missing")
+            else:
+                print(f"  {tk:<6} {tf:<8} last {last}  ({lag} days behind)")
     if stranded:
         print(f"\n🪦 Stranded (break undone by >{STRANDED_UNDONE * 100:.0f}% with an invalidation >{STRANDED_STOP * 100:.0f}% away —")
         print("   nothing can retire these; post a replacement or mark them `update` by hand):")
