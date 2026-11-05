@@ -1298,7 +1298,7 @@
  "DUOL|main": {
   "label": "main",
   "setup": "Rising Wedge (weekly)",
-  "stage": "signal",
+  "stage": "atRisk",
   "ticker": "DUOL"
  },
  "DUOL|weekly Ascending Channel": {
