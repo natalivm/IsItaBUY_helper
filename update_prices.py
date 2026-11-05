@@ -1099,6 +1099,10 @@ def main():
                 with open(pattern_watchlist.WATCHLIST_FILE) as fh:
                     found = pattern_detect.discover(fh.read(), movers, churned,
                                                     pattern_watchlist._now_et())
+                # A failed setup can only be taken off the row here: prune_finished closes
+                # what its own rule can close, and that rule almost never fires.
+                pattern_watchlist.retire_failed(apply=True)
+
                 # Stale readings go before the report: `update` is the ledger's own word for
                 # "post a new setup" and 106 had piled up because nobody ever did. Only
                 # `update` is replaced -- a working break, a live signal, a forming drawing
@@ -1115,6 +1119,14 @@ def main():
                         print(f"  {tk:<6} {s['pattern']:<20}{s['timeframe']:<8}{s['direction']:<5}"
                               f"{s['stage']:<10} ${px} → {s.get('target')}  confirm {s.get('confirm')}")
                     print("  Post the ones worth posting; none of this is on a row.")
+
+                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
+                    faults = pattern_watchlist.confirm_faults(fh.read())
+                if faults:
+                    print(f"\n⚠ `confirm` does not match any candle on its own timeframe ({len(faults)}):")
+                    for tk, lb, pat, tf, d, c, other in faults:
+                        where = f" — matches {other}" if other else " — matches nothing"
+                        print(f"  {tk:<6}{pat[:20]:<21}{tf:<8}{d:<5}confirm {c}{where}")
             except Exception as exc:
                 print(f"\nCould not scan for new readings: {exc}")
 
