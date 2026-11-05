@@ -38,7 +38,7 @@
  "AAPL|main": {
   "label": "main",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "failed",
   "ticker": "AAPL"
  },
  "AAPL|weekly Ascending Channel": {
@@ -1085,12 +1085,6 @@
   "stage": "confirmed",
   "ticker": "CRWV"
  },
- "CVS|daily Descending Channel": {
-  "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "failed",
-  "ticker": "CVS"
- },
  "CVS|main": {
   "label": "main",
   "setup": "Ascending Channel (daily)",
@@ -2102,7 +2096,7 @@
  "KRMN|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
-  "stage": "confirmed",
+  "stage": "retest",
   "ticker": "KRMN"
  },
  "KRMN|daily Falling Wedge": {
@@ -2131,12 +2125,6 @@
  },
  "KTOS|daily Descending Channel": {
   "label": "daily Descending Channel",
-  "setup": "Descending Channel (daily)",
-  "stage": "failed",
-  "ticker": "KTOS"
- },
- "KTOS|daily Descending Channel #2": {
-  "label": "daily Descending Channel #2",
   "setup": "Descending Channel (daily)",
   "stage": "update",
   "ticker": "KTOS"
