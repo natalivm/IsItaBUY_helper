@@ -144,6 +144,13 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
   ],
   earnings: [
     {
+      ticker: "B",
+      name: "Barrick Mining Corporation",
+      date: "2026-11-09",
+      estimated: false,
+      time: "bmo"
+    },
+    {
       ticker: "CEG",
       name: "Constellation Energy",
       date: "2026-11-09",
@@ -158,15 +165,50 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "bmo"
     },
     {
-      ticker: "MNDY",
-      name: "monday.com Ltd.",
+      ticker: "NRG",
+      name: "NRG Energy, Inc.",
       date: "2026-11-09",
       estimated: false,
       time: "bmo"
     },
     {
+      ticker: "ACHR",
+      name: "Archer Aviation Inc.",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
       ticker: "ASTS",
       name: "AST SpaceMobile",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "HIMS",
+      name: "Hims & Hers Health, Inc.",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "MARA",
+      name: "MARA Holdings, Inc.",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "OXY",
+      name: "Occidental Petroleum Corporation",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "PLUG",
+      name: "Plug Power Inc.",
       date: "2026-11-09",
       estimated: false,
       time: "amc"
@@ -179,8 +221,57 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
+      ticker: "TTD",
+      name: "The Trade Desk, Inc.",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "TTWO",
+      name: "Take-Two Interactive Software, Inc.",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "ZETA",
+      name: "Zeta Global Holdings Corp.",
+      date: "2026-11-09",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "LQDA",
+      name: "Liquidia Corporation",
+      date: "2026-11-10",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "SE",
+      name: "Sea Limited",
+      date: "2026-11-10",
+      estimated: false,
+      time: "bmo"
+    },
+    {
+      ticker: "WIX",
+      name: "Wix.com Ltd.",
+      date: "2026-11-10",
+      estimated: false,
+      time: "bmo"
+    },
+    {
       ticker: "CRWV",
       name: "CoreWeave, Inc.",
+      date: "2026-11-10",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "RGTI",
+      name: "Rigetti Computing, Inc.",
       date: "2026-11-10",
       estimated: false,
       time: "amc"
@@ -200,8 +291,22 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "bmo"
     },
     {
+      ticker: "TE",
+      name: "T1 Energy Inc.",
+      date: "2026-11-12",
+      estimated: false,
+      time: "bmo"
+    },
+    {
       ticker: "AMAT",
       name: "Applied Materials, Inc.",
+      date: "2026-11-12",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "ARWR",
+      name: "Arrowhead Pharmaceuticals, Inc.",
       date: "2026-11-12",
       estimated: false,
       time: "amc"
@@ -214,8 +319,15 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       time: "amc"
     },
     {
-      ticker: "HTFL",
-      name: "Heartflow, Inc.",
+      ticker: "CSCO",
+      name: "Cisco Systems, Inc.",
+      date: "2026-11-12",
+      estimated: false,
+      time: "amc"
+    },
+    {
+      ticker: "DLO",
+      name: "DLocal Limited",
       date: "2026-11-12",
       estimated: false,
       time: "amc"
