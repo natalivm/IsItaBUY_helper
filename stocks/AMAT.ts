@@ -8,7 +8,7 @@ export const AMAT = defineStock({
   updatedOn: '11/06',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 319.25,
+  currentPrice: 332.71,
   fairPriceRange: '$358 - $900',  // stockanalysis.com analyst target range (Sep 28 2026)
   shares0: 800,           // Q3 FY26 diluted 800M; mkt cap ~$406B
   rev25: 28370,           // FY25 revenue $28.37B; FY26E (Oct) consensus $34.25B (+21%), FY27E $46.2B (+35%)

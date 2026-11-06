@@ -5,7 +5,7 @@ export const ITT = defineStock({
   name: 'ITT Inc.',
   sector: 'Diversified Industrials',
   themeColor: '#3b82f6',
-  currentPrice: 195.92,
+  currentPrice: 205.55,
   updatedOn: '11/06',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',

@@ -5,7 +5,7 @@ export const META = defineStock({
   name: 'Meta Platforms',
   sector: 'Social Media / Digital Advertising / AI',
   themeColor: '#1877F2',
-  currentPrice: 605.08,
+  currentPrice: 610.15,
   fairPriceRange: '$580 - $1,050',  // stockanalysis.com analyst target range (Oct 8 2026 — PRE-Q3, needs a refresh)
   shares0: 2550,
   rev25: 256200,         // FY2026E $256.2B (+26%): Q1 $56.3B + Q2 $60.8B + Q3A $64.6B + Q4 guide $73-76B (mid $74.5B); FY27E $306.5B (+21%)

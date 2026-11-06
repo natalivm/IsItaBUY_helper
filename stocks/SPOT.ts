@@ -6,7 +6,7 @@ export const SPOT = defineStock({
   name: 'Spotify Technology S.A.',
   sector: 'Interactive Media / Audio',
   themeColor: '#C5A572',
-  currentPrice: 614.41,
+  currentPrice: 603.01,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$409 - $701',  // stockanalysis.com analyst target range (Oct 8 2026)
