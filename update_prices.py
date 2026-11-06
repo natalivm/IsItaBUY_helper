@@ -1096,9 +1096,6 @@ def main():
                           if o and n and abs(float(n) - float(o)) / float(o) >= pattern_detect.DISCOVER_MOVE}
                 churned = {r[0] for key in ('needs_update', 'at_risk', 'target_hits', 'failing')
                            for r in ((wl_result or {}).get(key) or []) if r}
-                with open(pattern_watchlist.WATCHLIST_FILE) as fh:
-                    found = pattern_detect.discover(fh.read(), movers, churned,
-                                                    pattern_watchlist._now_et())
                 # A failed setup can only be taken off the row here: prune_finished closes
                 # what its own rule can close, and that rule almost never fires.
                 pattern_watchlist.retire_failed(apply=True)
@@ -1108,6 +1105,11 @@ def main():
                 # `update` is replaced -- a working break, a live signal, a forming drawing
                 # that price has not overtaken are none of them stale.
                 pattern_detect.refresh_stale(apply=True, trigger=movers | churned, verbose=True)
+                # Scanned once, here, and deliberately after the two passes that rewrite the
+                # ledger: `discover` reports readings a row does not carry, so running it
+                # before `retire_failed` and `refresh_stale` asks that question of setups
+                # about to be removed or replaced. It used to run in both places and the
+                # first result was overwritten unread -- 44s of a 13-minute job, for nothing.
                 with open(pattern_watchlist.WATCHLIST_FILE) as fh:
                     found = pattern_detect.discover(fh.read(), movers, churned,
                                                     pattern_watchlist._now_et())
