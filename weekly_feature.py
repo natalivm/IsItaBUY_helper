@@ -457,6 +457,16 @@ def save_calendar(cal):
         fh.write("\n")
 
 
+# Prints to leave off "Reporting this week", {ticker: date}. Editorial rather than a data
+# correction: the date is real and stays in the calendar cache, and the stock keeps its
+# ledger row — only the card is suppressed. Keyed by DATE so a skip cannot silently outlive
+# the week it was meant for; next quarter's print for the same ticker appears as normal.
+EARNINGS_SKIP = {
+    'MNDY': '2026-11-09',
+    'HTFL': '2026-11-12',
+}
+
+
 def earnings_this_week(names, monday, friday, offline=False):
     """([{ticker, name, date, time, estimated}], calendar) for the featured week."""
     cal = load_calendar()
@@ -479,6 +489,7 @@ def earnings_this_week(names, monday, friday, offline=False):
         {'ticker': t, 'name': names.get(t, t), **ev}
         for t, ev in cal.items()
         if t in names and monday <= ev.get('date', '') <= friday
+        and EARNINGS_SKIP.get(t) != ev.get('date')
     ]
     rows.sort(key=lambda r: (r['date'], {'bmo': 0, 'tbd': 1, 'amc': 2}[r.get('time', 'tbd')], r['ticker']))
     return rows, cal

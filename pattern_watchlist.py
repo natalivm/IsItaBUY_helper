@@ -223,16 +223,44 @@ def fetch_daily_bars(symbols, headers, opener=None):
 
 # ── Chart candles ──
 
+# Every stock needs these two whatever its setups are drawn on: `_closing_in` reads the
+# daily chart for every setup on every timeframe, and `pattern_detect._entry_tfs` scans
+# weekly + daily on every entry. See `chart_timeframes`.
+ALWAYS_CHARTED = ('daily', 'weekly')
+
+
 def chart_timeframes(path=None):
-    """{ticker: {timeframes}} needed by the watchlist charts (main + alt setups)."""
+    """{ticker: {timeframes}} every reader needs — not just the ones a stock has setups on.
+
+    The expanded-row charts need the timeframes the stock's own setups are drawn on, and
+    that is all this used to return. Everything else reading `public/bars/` needs the
+    discovery pair for EVERY stock, whatever it carries: `_closing_in` reads the daily
+    chart for a setup of any timeframe, and `pattern_detect._entry_tfs` scans weekly and
+    daily on every entry, so `refresh_stale` and `discover` do too.
+
+    Asking only for the setups' own timeframes left **22 stocks with no daily request and
+    30 with no weekly**, and a timeframe nobody asks for cannot fail: CRWV and NET had no
+    daily file at all, and 11 more held one that simply stopped being refreshed on the day
+    their last daily setup was reslotted away — 2026-10-23 for six of them at once. That
+    is the cause of the stale charts the 🕯 report lists, and of NOW's bullish reading on a
+    chart four sessions behind the week that took a third off the stock. Not a fetch that
+    failed: a fetch that was never asked for.
+
+    It also put CRWV on the 💀 list. `_closing_in` loads the daily bars to ask whether
+    price is still travelling toward the target; with no file it returns False, so the
+    filter fails open and a setup 92% of the way to its target was reported as one that
+    had failed.
+
+    The cost is 52 more symbol-timeframe fetches a night, 302 → 354.
+    """
     with open(path or WATCHLIST_FILE) as fh:
         entries = parse_watchlist(fh.read())
     out = {}
     for e in entries:
         main = {k: v[2] for k, v in e['fields'].items()}
+        tfs = out.setdefault(main['ticker'], set(ALWAYS_CHARTED))
         for _, s, _ in _setups(e):
-            tf = s.get('timeframe') or main.get('timeframe') or 'daily'
-            out.setdefault(main['ticker'], set()).add(tf)
+            tfs.add(s.get('timeframe') or main.get('timeframe') or 'daily')
     return out
 
 
@@ -1620,7 +1648,13 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                 # chart up to the completion day, so taking the later date hands it bars
                 # from after the call was over.
                 when = sv.get('stageDate') if sv.get('stage') == 'target' else r[0]
-                record_completed(t_, sv, when or r[0])
+                # `apply` has to reach this. completedCalls.json is the label set
+                # pattern_reproduce trains on, and every tuning table in CLAUDE.md rests
+                # on it, so a dry run that appends to it changes what the detector is
+                # scored against -- `--prune` without `--apply` is documented as a dry run
+                # and was writing a label while removing nothing.
+                if apply:
+                    record_completed(t_, sv, when or r[0])
         a, b = e['span']
         if main_pos is None:
             reason = done['main'][1].rstrip('.')
@@ -2865,15 +2899,27 @@ STRANDED_STOP = 0.40        # ...and an invalidation at least this far from pric
 
 
 def _closing_in(ticker, sv, tf, price, tgt, back=40):
-    """Has price moved toward this setup's target over the last `back` sessions?"""
+    """Has price moved toward this setup's target over the last `back` sessions?
+
+    None when the daily chart cannot answer -- missing, too short, unreadable. Both callers
+    use this to WITHHOLD a report ("still travelling, so not failed / not stranded"), so a
+    False on no evidence is the filter failing open in the one direction that costs
+    something: it reports a working setup as a dead one. CRWV was exactly that. Its daily
+    file was never fetched (see `chart_timeframes`), so this returned False, and a weekly
+    channel 92% of the way to its target -- price 80.56 at the break, 43.66 now, target
+    38.98 -- was listed under 💀 as a setup that had failed.
+
+    Note it reads the DAILY chart whatever `tf` the setup is drawn on, which is deliberate:
+    the question is where the stock has gone lately, not what its own timeframe has closed.
+    """
     try:
         import pattern_lines as _pl
         b = _pl.load_bars(ticker, 'daily')
         if not b or len(b['c']) <= back:
-            return False
+            return None
         then = b['c'][-1 - back]
     except Exception:
-        return False
+        return None
     return (price < then) if tgt < price else (price > then)
 
 
@@ -2927,7 +2973,9 @@ def failing_setups(text):
             # confirmed down at $145.08, rallied to $267 — through this stop in April —
             # and is now falling toward its $119.67 target, which the source tool and a
             # human reading of the chart both still call correct.
-            if _closing_in(main['ticker'], sv, tf, main.get('price'), sv.get('target')):
+            # None = the daily chart cannot say. Withhold rather than report a failure on
+            # no evidence; the missing chart itself is listed under 🕯.
+            if _closing_in(main['ticker'], sv, tf, main.get('price'), sv.get('target')) is not False:
                 continue
             out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'), tf,
                         stop, bars['t'][hit], bool(sv.get('auto')),
@@ -3356,6 +3404,13 @@ def stale_bars(text, bars_dir=None):
     files were current, so the gap had been invisible in a report that only ever listed the
     night's own failures.
 
+    **Most of those were never fetched rather than failed**, which is why listing the night's
+    failures found nothing: `chart_timeframes` asked only for the timeframes a stock had
+    setups on, so a chart stopped being refreshed the day its last setup on that timeframe
+    was reslotted away. Fixed there on 2026-11-06 by always requesting ALWAYS_CHARTED. What
+    is listed here now is the real thing the docstring always claimed -- a fetch that was
+    asked for and did not land, as RDDT weekly was.
+
     NOW is what it costs: its daily chart stopped on 2026-10-26 at $158.19, four sessions
     before the week that closed it at $105.12, and the detector read that chart as a bullish
     falling wedge confirming at $139.32 while the stock traded at $108.81. `bars_current` in
@@ -3369,9 +3424,12 @@ def stale_bars(text, bars_dir=None):
         tk, pdte = m.get('ticker'), m.get('priceDate')
         if not tk or not pdte:
             continue
-        # 'daily' always: `_trend` and pattern_detect.discover read it for every stock,
-        # whether or not that stock carries a daily setup.
-        tfs = {'daily'} | {(s.get('timeframe') or m.get('timeframe')) for _, s, _ in _setups(e)}
+        # ALWAYS_CHARTED whatever the stock's setups are: those are the timeframes
+        # `chart_timeframes` requests for every stock, so those are the ones whose failure
+        # has to be visible here. Checking only 'daily' plus the setups' own timeframes left
+        # a failed weekly fetch unreportable on the ~30 stocks carrying no weekly setup --
+        # the same invisibility this list exists to end, half of it still open.
+        tfs = set(ALWAYS_CHARTED) | {(s.get('timeframe') or m.get('timeframe')) for _, s, _ in _setups(e)}
         for tf in sorted(t for t in tfs if t):
             path = os.path.join(bars_dir, f'{tk}_{tf}.json')
             if not os.path.exists(path):
@@ -3419,7 +3477,7 @@ def stranded_setups(text):
             # $165.07 falling: 14% above the confirm, so it read stranded, while in fact it
             # is heading for its $119.67 target. A setup still travelling toward its target
             # is not stranded whatever the snapshot says.
-            if tgt is not None and _closing_in(main['ticker'], sv, tf, price, tgt):
+            if tgt is not None and _closing_in(main['ticker'], sv, tf, price, tgt) is not False:
                 continue
             out.append((main['ticker'], label, sv.get('pattern') or main.get('pattern'),
                         sv.get('timeframe') or main.get('timeframe'), sv.get('stageDate'),
@@ -3612,9 +3670,11 @@ def print_watchlist_report(result, missing, apply):
     stale = result.get('staleBars') or []
     if stale:
         print(f"\n🕯 Stale candle files ({len(stale)}) — the ledger's price has outrun these charts.")
-        print("   The fetch fails per symbol AND per timeframe, and a failure leaves the old file")
-        print("   in place, so every reading drawn on one is drawn on the wrong chart. The detector")
-        print("   refuses them (`bars_current`); refresh with `python3 pattern_watchlist.py --bars`:")
+        print("   A failed fetch leaves the old file in place, so every reading drawn on one is")
+        print("   drawn on the wrong chart. The detector refuses them (`bars_current`); refresh")
+        print("   with `python3 pattern_watchlist.py --bars`. Until 2026-11-06 most of these were")
+        print("   not failures at all — `chart_timeframes` only asked for the timeframes a stock")
+        print("   had setups on, so a chart stopped being fetched the day its last setup moved:")
         for tk, tf, last, lag in stale:
             if last is None:
                 print(f"  {tk:<6} {tf:<8} missing")
