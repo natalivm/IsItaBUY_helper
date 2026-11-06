@@ -5,10 +5,10 @@ export const CEG = defineStock({
   name: 'Constellation Energy',
   sector: 'Power',
   themeColor: '#3b82f6',
-  updatedOn: '11/04',
+  updatedOn: '11/06',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
-  currentPrice: 245.72,
+  currentPrice: 239.65,
   fairPriceRange: '$290 - $395',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 358,
   rev25: 25200,        // FY2025; FY26E consensus $35.5B (+41% with Calpine), FY27E $36.7B

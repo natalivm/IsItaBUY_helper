@@ -1,5 +1,29 @@
 [
   {
+    "ticker": "AAOI",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-05",
+    "confirm": 104.25,
+    "invalidation": 57.06,
+    "target": 136.02,
+    "lastPrice": 46.89
+  },
+  {
+    "ticker": "AAPL",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-03",
+    "confirm": 345.25,
+    "invalidation": 336.44,
+    "target": 392.98,
+    "lastPrice": 344.17
+  },
+  {
     "ticker": "AAPL",
     "pattern": "Ascending Channel",
     "timeframe": "daily",

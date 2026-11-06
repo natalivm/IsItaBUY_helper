@@ -55,6 +55,17 @@
     "target": 73.12
   },
   {
+    "ticker": "CLS",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 296.12,
+    "invalidation": 396.14,
+    "target": 227.47
+  },
+  {
     "ticker": "CRWD",
     "pattern": "Hammer",
     "timeframe": "daily",
@@ -132,6 +143,17 @@
     "target": 59.01
   },
   {
+    "ticker": "DELL",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 450.0,
+    "invalidation": 529.97,
+    "target": 359.15
+  },
+  {
     "ticker": "DUK",
     "pattern": "Bullish Bald Candle",
     "timeframe": "daily",
@@ -163,6 +185,17 @@
     "confirm": 50.91,
     "invalidation": 49.12,
     "target": 56.81
+  },
+  {
+    "ticker": "FN",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 520.56,
+    "invalidation": 625.43,
+    "target": 303.09
   },
   {
     "ticker": "FRSH",
@@ -440,6 +473,17 @@
     "target": 182.95
   },
   {
+    "ticker": "MRVL",
+    "pattern": "Evening Star",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 226.52,
+    "invalidation": 301.27,
+    "target": 151.77
+  },
+  {
     "ticker": "MSFT",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -460,6 +504,17 @@
     "confirm": 217.73,
     "invalidation": 244.51,
     "target": 200.06
+  },
+  {
+    "ticker": "NBIS",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 163.27,
+    "invalidation": 282.46,
+    "target": 120.59
   },
   {
     "ticker": "NET",
@@ -493,6 +548,17 @@
     "confirm": 396.04,
     "invalidation": 436.73,
     "target": 359.59
+  },
+  {
+    "ticker": "PLTR",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 186.15,
+    "invalidation": 215.53,
+    "target": 155.04
   },
   {
     "ticker": "RBRK",
@@ -605,6 +671,17 @@
     "target": 300.0
   },
   {
+    "ticker": "STX",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 766.09,
+    "invalidation": 795.43,
+    "target": 523.77
+  },
+  {
     "ticker": "THM",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -625,6 +702,17 @@
     "confirm": 192.9,
     "invalidation": 141.0,
     "target": 246.39
+  },
+  {
+    "ticker": "VST",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-02",
+    "confirm": 142.15,
+    "invalidation": 171.65,
+    "target": 110.44
   },
   {
     "ticker": "XOM",
