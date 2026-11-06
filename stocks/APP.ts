@@ -13,13 +13,13 @@ export const APP = defineStock({
   shares0: 333,         // Q3 2026: 331M outstanding at Sep 30 (4.1M repurchased in the quarter for $1.4B); ~333M diluted
   rev25: 8324,          // FY2026E: Q1 $1,840M + Q2 $1,924M + Q3 actual $2,180M + Q4 guide mid $2,380M. Three quarters are now actual. Implies FY25 $5.55B at the "more than 50%" full-year growth management guided.
   fcfMargin25: 0.62,    // Q3 call reaffirmed FY26 FCF conversion of 70-75% of adj EBITDA; at an 84% EBITDA margin that is ~59-63% of revenue. Q3 itself ran 77% (Q2's 53% was the cash-tax timing management said would reverse, and it did).
-  taxRate: 0.127,
+  taxRate: 0.155,       // TIKR LTM effective rate through Q3 2026 (FY25 was 13.1%, which is where the 0.127 came from)
   cash: 3170,           // Sep 30 2026
   debt: 3500,           // Sep 30 2026 long-term debt; net debt ~$330M, under 0.1x adj EBITDA
-  beta: 2.22,
+  beta: 2.50,           // TIKR 5-year beta, Nov 6 2026 (was 2.22)
   costDebt: 0.05,
   modelType: 'EPS_PE',
-  baseEps: 16.36,       // FY2026E EPS built from the Q3 call: $3.54 + $3.76 + $4.30 + $4.77 (Q4 from the guided $2.01B adj EBITDA at Q3's 78% net-income conversion on ~330M shares). Note it does NOT rise on the beat — the Oct consensus already assumed a strong Q4, so three actual quarters land $0.31 below it. Prior: $16.67 (stockanalysis consensus, Oct 9 2026).
+  baseEps: 16.42,       // FY2026E EPS built from the Q3 call: net income of $1,241M + $1,267M + $1,440M actual + $1,568M guided on ~336M weighted diluted shares. Q1 is backed out of TIKR's LTM rather than estimated: LTM net income $5,013.25M less the reported Q2 and Q3 leaves Q4 2025 plus Q1 2026, and TIKR's LTM revenue of $7,608.89M less the three actual quarters fixes Q4 2025 at $1,665M. That correction is why this reads 16.42 and not the 16.36 first committed. It still does NOT rise on the beat — the Oct consensus already assumed a strong Q4. Prior: $16.67 (stockanalysis, Oct 9 2026).
   rsRating: 41,         // IBD RS per user, 10/10/2026 (was 58). STALE: predates a +71% week and the Q3 beat — needs a fresh IBD read, and it gates the quality boost in getInstitutionalRating.
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
@@ -44,14 +44,32 @@ export const APP = defineStock({
   // from ~17x to ~24x FY26E, so the +71% week was multiple expansion, and the
   // base case now assumes that multiple compresses rather than holds.
   //
-  // Not updated from the call, because it does not contain them: rsRating
-  // (still the Oct 10 IBD read of 41, pre-move) and analystConsensus (Oct 9,
-  // pre-print — the $325 low target is now far below spot). Both want a
-  // refresh from their own sources.
+  // VERIFIED AGAINST TIKR (Nov 6 2026 close, $391.22, +9.86%). LTM revenue
+  // $7,608.89M at an 88.8% gross margin and a 77.8% operating margin, net
+  // income $5,013.25M, diluted EPS $14.91 on 337.59M weighted diluted shares,
+  // EBITDA $6,043.96M, effective tax 15.5%. Street target $448.43.
+  //
+  // TIKR'S OWN FY26 ESTIMATE IS STALE AND MUST NOT BE COPIED IN. It carries
+  // revenue of $8,074.13M, which is arithmetically impossible: three actual
+  // quarters plus the LOW end of the Q4 guide is already $8,309M, and $8,074M
+  // would be +47.3% against the "more than 50%" management guided on this
+  // call. Its $16.65 FY26E EPS sits on that revenue and on a 341M share count
+  // the company is already below. The figures used here are built from
+  // reported quarters and the guide instead.
+  //
+  // What TIKR did correct: Q1 2026 net income, which was an estimate and is
+  // now backed out of the LTM (baseEps 16.36 -> 16.42), the tax rate (12.7%
+  // -> 15.5%), beta (2.22 -> 2.50) and FY25 net income in the burry block.
+  // And it corroborates the growth path: NTM P/E of 18.57x implies NTM EPS of
+  // $21.07, against the $21.02 the base case's FY27 produces. Within 1%.
+  //
+  // Not updated, because neither source carries it: rsRating (Oct 10 IBD read
+  // of 41, pre-move) and the analyst target low/high/count (Oct 9, pre-print
+  // — the $325 low is now far below spot).
   // ─────────────────────────────────────────────────────────────────────────
 
 
-  analystConsensus: { rating: 'Buy', targetLow: 325, targetMedian: 470, targetHigh: 790, numAnalysts: 33 },  // stockanalysis.com, Oct 9 2026
+  analystConsensus: { rating: 'Buy', targetLow: 325, targetMedian: 448.43, targetHigh: 790, numAnalysts: 33 },  // median = TIKR street target, Nov 6 2026; low/high/count still stockanalysis Oct 9 and pre-print
   revGrowth: [
     [0.14, 0.10, 0.07, 0.05, 0.05],  // Bear: the model transition stalls mid-rollout and consumer decelerates (~8% CAGR)
     [0.28, 0.22, 0.18, 0.15, 0.13],  // Base: FY27 +28% off a $9.5B Q4 run-rate, then deceleration (~19% CAGR). Management guides "roughly 30% annually over the long term"; this sits below that.
@@ -102,7 +120,7 @@ export const APP = defineStock({
 
   burry: {
     sbc: 210,
-    gaapNi: 3420,
+    gaapNi: 3334,       // TIKR FY25 actual ($3,333.75M); was 3420
     buyback: 2584,
     epsBasis: 'GAAP',
     fy: 'FY25',
@@ -112,8 +130,8 @@ export const APP = defineStock({
   },
 
   debtSafety: {
-    netDebt: 330,        // Sep 30 2026: debt $3,500M − cash $3,170M
-    ebitda: 7000,        // FY2026E: Q1 ~$1,536M + Q2 $1,614M + Q3 $1,840M + Q4 guide mid $2,010M
+    netDebt: 342,        // TIKR LTM, Nov 6 2026 ($342.41M). Management's own Q3 figures — $3.5B debt less $3.17B cash — give $330M, so the two agree to within 4%, unlike AMD where the definitions diverge.
+    ebitda: 7000,        // FY2026E: Q1 ~$1,536M + Q2 $1,614M + Q3 $1,840M + Q4 guide mid $2,010M. TIKR LTM is $6,043.96M, which is the same series one quarter behind.
     fy: 'FY26E',
     note: 'Net leverage under 0.1× on management\'s own figure, against the ~1× they say they would run long term. Q3 generated $1.4B of free cash and returned $1.4B; the buyback authorization was raised by $3.2B to $3.6B at the end of October.',
   },
