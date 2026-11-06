@@ -8,12 +8,12 @@ export const AMD = defineStock({
   currentPrice: 449.04,
   fairPriceRange: '$365 - $1,250',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 1670,        // Q4 2026 guided diluted, including the Taalas and World Labs closings. Customer warrants are NOT in it — management defers that to 2027 guidance once the vesting conditions are met.
-  rev25: 34600,         // FY2025; FY26E consensus $50.95B (+47%), FY27E $88.94B (+75%)
-  fcfMargin25: 0.06,    // Q3 FCF was $554M on $13.4B of revenue — 4%. Inventory rose $3B sequentially to $11.5B and capex is funding back-end capacity for the 2027 ramp. Management says both continue, so FY26 conversion is far below the 13% this assumed.
+  rev25: 34639,         // FY2025 actual per TIKR (12/27/25); FY26E consensus $50.95B (+47%), FY27E $88.94B (+75%)
+  fcfMargin25: 0.155,   // LTM per TIKR: CFO $9,123M − capex $2,067M = $7,056M on $45,436M of revenue. Corrects an 0.06 I derived by annualising Q3's $554M, which was one quarter distorted by a $3B inventory build and is not the run rate. The trend is still down — FY25 was 19.4% — as working capital and capacity capex fund the 2027 ramp.
   taxRate: 0.13,
   cash: 15800,          // Sep 2026 cash + ST investments
   debt: 7100,           // Sep 2026, including the $4.75B senior notes issued in August
-  beta: 1.85,
+  beta: 2.54,           // TIKR 5-year beta, Nov 6 2026 (was 1.85)
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 7.56,        // FY2026E non-GAAP EPS from the Q3 call: $0.89 + $1.66 + $2.09 actual + $2.92 guided (Q4 at $17B, 55% GM, $3.75B opex, 13% tax, 1.67B shares). Lands on the $7.59 consensus it replaces — the Q4 guide came in exactly where the street had FY26. Prior: $7.59 (stockanalysis consensus, Oct 6 2026).
@@ -56,13 +56,23 @@ export const AMD = defineStock({
   // as a demand forecast. GAAP EPS was $1.46 against non-GAAP $2.09 — a $1.1B
   // non-cash warrant charge that grows with the share price.
   //
-  // Not updated from the call: rsRating (Oct 10 IBD read) and
-  // analystConsensus (Oct 6, pre-print, median PT $635.5).
+  // VERIFIED AGAINST TIKR (Nov 6 2026 close, $449.04, +11.04% on the day).
+  // LTM revenue $45,436M, gross margin 56.0%, operating income $8,097M
+  // (17.8%), net income $7,619M, CFO $9,123M, capex $2,067M. Beta 2.54.
+  // Street target $650.22. NTM P/E 27.80x implies NTM EPS $16.15, which
+  // corroborates the $15.82 FY27 rebuilt from the guide above to within 2%.
+  // Two entries here were wrong and are corrected by it: fcfMargin25, which
+  // I had set to 0.06 by annualising one working-capital-distorted quarter
+  // against a real LTM 15.5%, and the burry block, whose $487M SBC and
+  // $5,009M net income were both well off the LTM $1,999M and $7,619M.
+  //
+  // Not updated, because neither source carries it: rsRating (Oct 10 IBD
+  // read) and the analyst target low/high/count (Oct 6, pre-print).
   // ─────────────────────────────────────────────────────────────────────────
 
 
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 365, targetMedian: 635.5, targetHigh: 1250, numAnalysts: 55 },  // stockanalysis.com, Oct 6 2026
+  analystConsensus: { rating: 'Strong Buy', targetLow: 365, targetMedian: 650.22, targetHigh: 1250, numAnalysts: 55 },  // median = TIKR street target, Nov 6 2026; low/high/count still stockanalysis Oct 6 and pre-print
 
   revGrowth: [
     [0.40, 0.20, 0.10, 0.08, 0.07],   // Bear: FY26 ~locked (H1 + Q3 guide); Helios ramp disappoints, AI digestion
@@ -131,19 +141,19 @@ export const AMD = defineStock({
   ],
 
   burry: {
-    sbc: 2000,          // Q2 2026 SBC $503M → ~$2.0B/yr run-rate (FY25 LTM was $487M per TIKR — likely understated)
-    gaapNi: 5009,
-    buyback: 355,
+    sbc: 1999,          // TIKR LTM through Q3 2026. FY25 $1,638M, FY24 $1,407M, FY23 $1,384M.
+    gaapNi: 7619,       // TIKR LTM. FY25 $4,335M.
+    buyback: 355,       // NOT re-verified — the Nov 6 TIKR pull did not include the financing section.
     epsBasis: 'NON_GAAP',
-    fy: 'FY25 LTM',
+    fy: 'LTM Q3 2026',
     overstatementPct: 32,
     overstatementSource: 'burry-published',
-    note: 'Critical per Burry — 32% overstatement. FY25 LTM actuals (TIKR): SBC $487M, GAAP NI $5.0B, buybacks just $355M = 0.73× SBC. Real dilution is the story: diluted share count grew from 1,229M (FY21) to 1,642M (LTM) = +33.6% over 5 years (+6%/yr CAGR). Unlike LRCX (which shrinks the float but at 10× MTM cost), AMD has not yet inflected to net buybacks. Stock +4-5× since 2021 grants amplifies the MTM cost; calibrated formula reproduces 34.5% from these inputs, within 2.5pp of Burry\'s 32%.',
+    note: 'Critical per Burry — 32%, his published figure, kept as published. The inputs behind it are now TIKR actuals rather than estimates, and they correct this entry twice over: SBC is $1,999M LTM, not the $487M a previous TIKR read recorded, and GAAP net income is $7,619M, not $5,009M. Naive SBC/NI is therefore 26% rather than the 40% those old inputs implied. Dilution remains the real story: diluted share count went from 1,229M (FY21) to 1,640M outstanding today, +33% over five years, and buybacks have not inflected to cover it — SBC has risen every year (1,384 → 1,407 → 1,638 → 1,999) while the stock went up 4-5x, so the mark-to-market cost of those grants compounds.',
   },
   debtSafety: {
-    netDebt: -8700,        // Sep 2026: $7.1B debt − $15.8B cash & ST investments. Still large net cash, but $3.9B less of it after the August notes and the inventory build.
-    ebitda: 15000,         // FY26E: non-GAAP op income run-rate (~$3.1B Q2, rising) + D&A — approximate
-    fy: 'FY26E',
-    note: 'GREEN by Step 1 — net cash (~$9.9B at Q2 2026). No leverage concern.',
+    netDebt: -6565,        // TIKR LTM, Nov 6 2026, and the figure that reconciles to the $663.3B market cap vs $656.7B enterprise value. Management's own Q3 numbers — $15.8B cash and short-term investments against $7.1B of debt — give -$8.7B; TIKR's debt definition is wider, most likely leases.
+    ebitda: 11143,         // TIKR LTM: operating income $8,097M + total D&A $3,046M. Cross-checks against TIKR's own LTM net debt/EBITDA of -0.57x, which implies $11.5B.
+    fy: 'LTM Q3 2026',
+    note: 'GREEN by Step 1 — net cash of $6.6B against $11.1B of LTM EBITDA. Net cash has fallen though: the August $4.75B notes and a $3B inventory build took it from roughly $9.9B at Q2. Not a leverage concern, but it is no longer a fortress getting stronger.',
   },
 });
