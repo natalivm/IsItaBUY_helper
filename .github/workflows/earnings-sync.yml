@@ -1,0 +1,64 @@
+name: Sync EPS After Earnings
+
+# Refresh `baseEps` from consensus for stocks that have just reported.
+#
+# Runs after the US close on weekdays, 40 minutes behind the price job so the
+# earnings calendar and prices it writes are already on main. A company that
+# reports before the open is picked up the same evening; one that reports after
+# the close is picked up the next evening, which is what the 5-day window is for.
+#
+# This WRITES to main. The guards that make that defensible live in
+# earnings_sync.py: EPS_PE stocks only, a 25% jump is reported rather than
+# written, scenarios are never touched, and `dataReviewedOn` is left alone so it
+# still means a person looked.
+
+on:
+  schedule:
+    - cron: '27 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      backlog:
+        description: 'Ignore the 5-day window: every stock whose model predates its last print'
+        type: boolean
+        default: false
+      dry_run:
+        description: 'Report what would change and write nothing'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  earnings-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh baseEps from consensus
+        run: |
+          python3 earnings_sync.py \
+            ${{ inputs.backlog && '--backlog' || '' }} \
+            ${{ inputs.dry_run && ' ' || '--apply' }}
+
+      - name: Commit and push if changed
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain stocks/)" ]; then
+            echo "No model changes to commit."
+            exit 0
+          fi
+          git add stocks/
+          git commit -m "Sync baseEps after earnings ($(date -u +%Y-%m-%d))"
+          for wait in 0 2 4 8 16; do
+            [ "$wait" -gt 0 ] && sleep "$wait" && git pull --rebase origin main
+            git push origin HEAD:main && exit 0
+          done
+          echo "Push failed after retries" >&2
+          exit 1

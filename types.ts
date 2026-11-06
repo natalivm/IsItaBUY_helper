@@ -103,6 +103,10 @@ export interface TickerDefinition {
   lastReportTag?: string;
   /** Date fundamentals/RS/overrides were last manually reviewed (YYYY-MM-DD). The price bot never touches this — it's the real staleness signal. See review_status.py. */
   dataReviewedOn?: string;
+  /** Date earnings_sync.py last refreshed `baseEps` from consensus (YYYY-MM-DD).
+   * Deliberately NOT dataReviewedOn: a bot writing that would destroy the one field
+   * that means a person looked, which is what review_status.py reports on. */
+  epsSyncedOn?: string;
   /** Next scheduled earnings date (YYYY-MM-DD). Once it passes without a newer
    * dataReviewedOn, review_status.py flags the stock however recent the review was. */
   nextEarningsOn?: string;
