@@ -1648,7 +1648,13 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                 # chart up to the completion day, so taking the later date hands it bars
                 # from after the call was over.
                 when = sv.get('stageDate') if sv.get('stage') == 'target' else r[0]
-                record_completed(t_, sv, when or r[0])
+                # `apply` has to reach this. completedCalls.json is the label set
+                # pattern_reproduce trains on, and every tuning table in CLAUDE.md rests
+                # on it, so a dry run that appends to it changes what the detector is
+                # scored against -- `--prune` without `--apply` is documented as a dry run
+                # and was writing a label while removing nothing.
+                if apply:
+                    record_completed(t_, sv, when or r[0])
         a, b = e['span']
         if main_pos is None:
             reason = done['main'][1].rstrip('.')
