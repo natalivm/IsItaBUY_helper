@@ -3418,9 +3418,12 @@ def stale_bars(text, bars_dir=None):
         tk, pdte = m.get('ticker'), m.get('priceDate')
         if not tk or not pdte:
             continue
-        # 'daily' always: `_trend` and pattern_detect.discover read it for every stock,
-        # whether or not that stock carries a daily setup.
-        tfs = {'daily'} | {(s.get('timeframe') or m.get('timeframe')) for _, s, _ in _setups(e)}
+        # ALWAYS_CHARTED whatever the stock's setups are: those are the timeframes
+        # `chart_timeframes` requests for every stock, so those are the ones whose failure
+        # has to be visible here. Checking only 'daily' plus the setups' own timeframes left
+        # a failed weekly fetch unreportable on the ~30 stocks carrying no weekly setup --
+        # the same invisibility this list exists to end, half of it still open.
+        tfs = set(ALWAYS_CHARTED) | {(s.get('timeframe') or m.get('timeframe')) for _, s, _ in _setups(e)}
         for tf in sorted(t for t in tfs if t):
             path = os.path.join(bars_dir, f'{tk}_{tf}.json')
             if not os.path.exists(path):
