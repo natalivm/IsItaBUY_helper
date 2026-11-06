@@ -72,6 +72,30 @@
     "lastPrice": 293.69
   },
   {
+    "ticker": "AZO",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 3007.8,
+    "invalidation": 3341.49,
+    "target": 955.4,
+    "lastPrice": 3216.35
+  },
+  {
+    "ticker": "AZO",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 2903.57,
+    "invalidation": 3636.0,
+    "target": 1631.85,
+    "lastPrice": 3216.35
+  },
+  {
     "ticker": "CLS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -180,6 +204,18 @@
     "lastPrice": 31.55
   },
   {
+    "ticker": "ETN",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 425.34,
+    "invalidation": 334.75,
+    "target": 675.18,
+    "lastPrice": 341.72
+  },
+  {
     "ticker": "FISV",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -252,6 +288,18 @@
     "lastPrice": 556.56
   },
   {
+    "ticker": "MNST",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 43.31,
+    "invalidation": 53.6,
+    "target": 34.95,
+    "lastPrice": 45.72
+  },
+  {
     "ticker": "OKLO",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -262,6 +310,18 @@
     "invalidation": 23.36,
     "target": 15.77,
     "lastPrice": 23.55
+  },
+  {
+    "ticker": "PAAS",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 45.32,
+    "invalidation": 35.12,
+    "target": 67.45,
+    "lastPrice": 41.17
   },
   {
     "ticker": "PLTR",

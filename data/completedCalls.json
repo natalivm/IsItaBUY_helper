@@ -187,6 +187,17 @@
     "target": 59.01
   },
   {
+    "ticker": "DDOG",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 228.57,
+    "invalidation": 302.27,
+    "target": 173.61
+  },
+  {
     "ticker": "DELL",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -218,6 +229,17 @@
     "confirm": 147.5,
     "invalidation": 154.67,
     "target": 127.72
+  },
+  {
+    "ticker": "EME",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 736.9,
+    "invalidation": 791.53,
+    "target": 601.77
   },
   {
     "ticker": "FISV",
