@@ -19,6 +19,11 @@
     "estimated": true,
     "time": "amc"
   },
+  "AMAT": {
+    "date": "2026-11-12",
+    "estimated": false,
+    "time": "amc"
+  },
   "AMD": {
     "date": "2026-11-03",
     "estimated": true,
@@ -54,6 +59,11 @@
     "estimated": true,
     "time": "amc"
   },
+  "ASTS": {
+    "date": "2026-11-09",
+    "estimated": false,
+    "time": "amc"
+  },
   "BKNG": {
     "date": "2026-11-03",
     "estimated": true,
@@ -79,8 +89,18 @@
     "estimated": true,
     "time": "amc"
   },
+  "CBRS": {
+    "date": "2026-11-12",
+    "estimated": false,
+    "time": "amc"
+  },
   "CCJ": {
     "date": "2026-10-30",
+    "estimated": false,
+    "time": "bmo"
+  },
+  "CEG": {
+    "date": "2026-11-09",
     "estimated": false,
     "time": "bmo"
   },
@@ -113,6 +133,11 @@
     "date": "2026-11-04",
     "estimated": true,
     "time": "bmo"
+  },
+  "CRWV": {
+    "date": "2026-11-10",
+    "estimated": false,
+    "time": "amc"
   },
   "CVS": {
     "date": "2026-11-04",
@@ -194,6 +219,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "HTFL": {
+    "date": "2026-11-12",
+    "estimated": false,
+    "time": "amc"
+  },
   "INTC": {
     "date": "2026-10-29",
     "estimated": false,
@@ -208,6 +238,11 @@
     "date": "2026-11-05",
     "estimated": true,
     "time": "amc"
+  },
+  "KKR": {
+    "date": "2026-11-09",
+    "estimated": false,
+    "time": "bmo"
   },
   "KLAC": {
     "date": "2026-10-28",
@@ -249,6 +284,11 @@
     "estimated": false,
     "time": "tbd"
   },
+  "MNDY": {
+    "date": "2026-11-09",
+    "estimated": false,
+    "time": "bmo"
+  },
   "MP": {
     "date": "2026-11-05",
     "estimated": true,
@@ -259,6 +299,11 @@
     "estimated": false,
     "time": "amc"
   },
+  "NBIS": {
+    "date": "2026-11-12",
+    "estimated": false,
+    "time": "bmo"
+  },
   "NET": {
     "date": "2026-11-05",
     "estimated": true,
@@ -266,6 +311,11 @@
   },
   "NOW": {
     "date": "2026-10-28",
+    "estimated": false,
+    "time": "amc"
+  },
+  "NU": {
+    "date": "2026-11-12",
     "estimated": false,
     "time": "amc"
   },
@@ -288,6 +338,11 @@
     "date": "2026-11-02",
     "estimated": true,
     "time": "amc"
+  },
+  "ONDS": {
+    "date": "2026-11-12",
+    "estimated": false,
+    "time": "bmo"
   },
   "OUST": {
     "date": "2026-11-03",
@@ -318,6 +373,11 @@
     "date": "2026-11-04",
     "estimated": true,
     "time": "bmo"
+  },
+  "RKLB": {
+    "date": "2026-11-09",
+    "estimated": false,
+    "time": "amc"
   },
   "SHOP": {
     "date": "2026-11-03",

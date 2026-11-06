@@ -411,7 +411,7 @@ const Landing: React.FC<LandingProps> = ({ covered, onOpenWatchlist, headerContr
             <h2>Reporting this week</h2>
             <p>
               Earnings between {span(weekOf, weekEnd)}, by the day they report, each
-              with the setup it carries into the print. A card opens that setup.
+              with the setup it carries into the print. A card opens that setup.{' '}
               <b>BMO</b> before the open, <b>AMC</b> after the close; <b>*</b> marks a
               date Yahoo has not confirmed.
             </p>
