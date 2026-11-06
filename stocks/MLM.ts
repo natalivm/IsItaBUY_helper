@@ -6,7 +6,7 @@ export const MLM = defineStock({
   name: 'Martin Marietta Materials',
   sector: 'Building Materials · Aggregates & Heavy Construction Materials',
   themeColor: '#5b7f3b',
-  currentPrice: 527.83,
+  currentPrice: 518.15,
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$496 - $800',  // stockanalysis.com analyst target range (Oct 2026)

@@ -11,6 +11,17 @@
     "target": 269.9
   },
   {
+    "ticker": "ARM",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 265.6,
+    "invalidation": 306.03,
+    "target": 182.14
+  },
+  {
     "ticker": "ASTS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -20,6 +31,28 @@
     "confirm": 62.31,
     "invalidation": 89.36,
     "target": 45.9
+  },
+  {
+    "ticker": "ASTS",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 42.0,
+    "invalidation": 42.58,
+    "target": 30.39
+  },
+  {
+    "ticker": "BE",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 215.12,
+    "invalidation": 261.33,
+    "target": 161.18
   },
   {
     "ticker": "CAKE",
@@ -42,6 +75,17 @@
     "confirm": 776.0,
     "invalidation": 1012.09,
     "target": 603.2
+  },
+  {
+    "ticker": "CBRS",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 177.61,
+    "invalidation": 270.28,
+    "target": 81.36
   },
   {
     "ticker": "CCJ",
@@ -240,6 +284,17 @@
     "confirm": 344.95,
     "invalidation": 322.0,
     "target": 367.9
+  },
+  {
+    "ticker": "GLW",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 150.94,
+    "invalidation": 170.69,
+    "target": 102.27
   },
   {
     "ticker": "GXO",
@@ -561,6 +616,17 @@
     "target": 155.04
   },
   {
+    "ticker": "QQQ",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 701.9,
+    "invalidation": 724.61,
+    "target": 649.99
+  },
+  {
     "ticker": "RBRK",
     "pattern": "Rising Wedge",
     "timeframe": "daily",
@@ -581,6 +647,28 @@
     "confirm": 149.82,
     "invalidation": 166.83,
     "target": 127.34
+  },
+  {
+    "ticker": "RDDT",
+    "pattern": "Rising Wedge",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-04",
+    "confirm": 165.55,
+    "invalidation": 248.83,
+    "target": 137.64
+  },
+  {
+    "ticker": "SEZL",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 129.53,
+    "invalidation": 118.23,
+    "target": 144.31
   },
   {
     "ticker": "SIMO",
@@ -625,6 +713,17 @@
     "confirm": 149.04,
     "invalidation": 140.66,
     "target": 157.42
+  },
+  {
+    "ticker": "SPCX",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 143.21,
+    "invalidation": 156.56,
+    "target": 125.49
   },
   {
     "ticker": "SPGI",
@@ -693,6 +792,50 @@
     "target": 1.61
   },
   {
+    "ticker": "UMAC",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 24.23,
+    "invalidation": 49.64,
+    "target": 10.58
+  },
+  {
+    "ticker": "USAR",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 13.03,
+    "invalidation": 13.73,
+    "target": 6.96
+  },
+  {
+    "ticker": "USAR",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 13.03,
+    "invalidation": 13.19,
+    "target": 7.47
+  },
+  {
+    "ticker": "V",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 408.59,
+    "invalidation": 405.0,
+    "target": 441.49
+  },
+  {
     "ticker": "VEEV",
     "pattern": "Descending Channel",
     "timeframe": "weekly",
@@ -713,6 +856,17 @@
     "confirm": 142.15,
     "invalidation": 171.65,
     "target": 110.44
+  },
+  {
+    "ticker": "WDC",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 456.75,
+    "invalidation": 548.47,
+    "target": 319.88
   },
   {
     "ticker": "XOM",

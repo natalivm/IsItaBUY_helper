@@ -48,6 +48,30 @@
     "lastPrice": 35.66
   },
   {
+    "ticker": "ASML",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 1653.53,
+    "invalidation": 1501.42,
+    "target": 2495.47,
+    "lastPrice": 1424.75
+  },
+  {
+    "ticker": "AVGO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-05",
+    "confirm": 357.35,
+    "invalidation": 298.16,
+    "target": 408.58,
+    "lastPrice": 293.69
+  },
+  {
     "ticker": "CLS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -84,6 +108,18 @@
     "lastPrice": 79.96
   },
   {
+    "ticker": "CVX",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 225.31,
+    "invalidation": 219.9,
+    "target": 273.38,
+    "lastPrice": 212.61
+  },
+  {
     "ticker": "D",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -94,6 +130,42 @@
     "invalidation": 66.35,
     "target": 57.28,
     "lastPrice": 69.75
+  },
+  {
+    "ticker": "DAVE",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-05",
+    "confirm": 354.43,
+    "invalidation": 296.36,
+    "target": 403.06,
+    "lastPrice": 278.59
+  },
+  {
+    "ticker": "DDOG",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-04",
+    "confirm": 245.31,
+    "invalidation": 204.84,
+    "target": 314.69,
+    "lastPrice": 179.04
+  },
+  {
+    "ticker": "EME",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-04",
+    "confirm": 794.95,
+    "invalidation": 647.62,
+    "target": 989.07,
+    "lastPrice": 608.45
   },
   {
     "ticker": "ENPH",
@@ -108,6 +180,18 @@
     "lastPrice": 31.55
   },
   {
+    "ticker": "FISV",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 47.14,
+    "invalidation": 50.85,
+    "target": 32.94,
+    "lastPrice": 62.88
+  },
+  {
     "ticker": "FRSH",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -118,6 +202,18 @@
     "invalidation": 14.2,
     "target": 21.79,
     "lastPrice": 13.26
+  },
+  {
+    "ticker": "KRMN",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 41.44,
+    "invalidation": 41.97,
+    "target": 22.68,
+    "lastPrice": 45.61
   },
   {
     "ticker": "KTOS",
@@ -156,6 +252,18 @@
     "lastPrice": 556.56
   },
   {
+    "ticker": "OKLO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 23.44,
+    "invalidation": 23.36,
+    "target": 15.77,
+    "lastPrice": 23.55
+  },
+  {
     "ticker": "PLTR",
     "pattern": "Descending Channel",
     "timeframe": "weekly",
@@ -166,6 +274,18 @@
     "invalidation": 184.72,
     "target": 260.4,
     "lastPrice": 171.7
+  },
+  {
+    "ticker": "RBRK",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 116.12,
+    "invalidation": 107.55,
+    "target": 171.49,
+    "lastPrice": 105.75
   },
   {
     "ticker": "RDDT",
@@ -180,6 +300,18 @@
     "lastPrice": 101.89
   },
   {
+    "ticker": "RIOT",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 14.78,
+    "invalidation": 16.07,
+    "target": 5.48,
+    "lastPrice": 16.71
+  },
+  {
     "ticker": "SHOP",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -192,6 +324,18 @@
     "lastPrice": 153.03
   },
   {
+    "ticker": "UBER",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 66.43,
+    "invalidation": 67.0,
+    "target": 35.15,
+    "lastPrice": 68.59
+  },
+  {
     "ticker": "VAL",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -202,5 +346,41 @@
     "invalidation": 87.87,
     "target": 108.39,
     "lastPrice": 82.77
+  },
+  {
+    "ticker": "VST",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-04",
+    "confirm": 146.94,
+    "invalidation": 135.13,
+    "target": 171.35,
+    "lastPrice": 124.8
+  },
+  {
+    "ticker": "XOM",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 179.16,
+    "invalidation": 168.87,
+    "target": 245.62,
+    "lastPrice": 165.87
+  },
+  {
+    "ticker": "XOP",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 200.86,
+    "invalidation": 192.76,
+    "target": 255.67,
+    "lastPrice": 173.77
   }
 ]
