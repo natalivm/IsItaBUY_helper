@@ -58,12 +58,22 @@ HEADERS = {
 _RF_RATE = 0.0425
 _ERP = 0.055
 _HORIZON = 5
-_SB_UPSIDE = 0.30
-_SB_SOFT = 0.25
-_BUY_UPSIDE = 0.15
-_BUY_SOFT = 0.12
-_AVOID_RATIO = 0.96
+# Mirrors services/projectionService.ts. Keep the two in step: this file decides what the
+# nightly run reports, that file decides what the site shows, and they were not the same.
+_SB_CAGR = 0.16           # >16%/yr -> STRONG BUY
+_SB_SOFT_CAGR = 0.13      # 13-16%/yr -> STRONG BUY with a quality signal
+_BUY_CAGR = 0.10          # >10%/yr -> BUY
+_BUY_SOFT_CAGR = 0.08     # 8-10%/yr -> BUY with a quality signal
+_OVERVALUED_CAGR = 0.03   # <3%/yr -> OVERVALUED, or HOLD if quality-boosted
 _RS_QUALITY = 80
+_RS_OVERVALUED = 30       # RS below this disqualifies the boost entirely
+
+
+def _boosted(rs, ai):
+    """The quality boost, including the RS floor the Python side was missing."""
+    if rs is not None and rs < _RS_OVERVALUED:
+        return False
+    return (rs is not None and rs >= _RS_QUALITY) or ai == 'TAILWIND'
 
 # Base-case driver template defaults (scenario index 1 in defineStock.ts)
 _BASE_REV_PREM  = [0.01, 0.01, 0.01, 0.01, 0.01]
@@ -392,14 +402,19 @@ def _rating_label(target, price, rs, ai):
     """Model rating label — does NOT apply ratingOverride."""
     if not target or not price or price == 0:
         return 'UNKNOWN'
-    upside = (target - price) / price
-    down_ratio = target / price
-    boosted = ((rs is not None and rs >= _RS_QUALITY) or ai == 'TAILWIND')
-    if upside > _SB_UPSIDE:                           return 'STRONG BUY'
-    if boosted and upside > _SB_SOFT:                 return 'STRONG BUY'
-    if upside > _BUY_UPSIDE:                          return 'BUY'
-    if boosted and upside > _BUY_SOFT:                return 'BUY'
-    if down_ratio < _AVOID_RATIO:
+    # Rate on the ANNUALIZED return, which is what services/projectionService.ts does and
+    # what the site renders. This used to compare total upside against 30/25/15/12% and so
+    # disagreed with the site on 33 of 95 stocks -- a 30% gain over five years is 5.4% a
+    # year, which the site calls HOLD and this called STRONG BUY. The nightly rating report
+    # and check_rating_changes both read this, so the run was reporting ratings the app
+    # never showed.
+    cagr = (target / price) ** (1 / _HORIZON) - 1
+    boosted = _boosted(rs, ai)
+    if cagr > _SB_CAGR:                               return 'STRONG BUY'
+    if boosted and cagr > _SB_SOFT_CAGR:              return 'STRONG BUY'
+    if cagr > _BUY_CAGR:                              return 'BUY'
+    if boosted and cagr > _BUY_SOFT_CAGR:             return 'BUY'
+    if cagr < _OVERVALUED_CAGR:
         return 'HOLD' if boosted else 'OVERVALUED'
     return 'HOLD'
 
