@@ -6,13 +6,13 @@ export const STRL = defineStock({
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
   updatedOn: '11/06',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-11',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-11-07',
   nextEarningsOn: '2026-10-28',   // Q3 2026, after the close (per user, Oct 25 2026); Yahoo has no date for STRL
   currentPrice: 252.82,
   fairPriceRange: '$700 - $1,000',  // stockanalysis.com analyst target range (Oct 8 2026)
   shares0: 30.59,              // stockanalysis (Oct 2026)
-  rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (raised guide implies ~+64%; consensus $4.12B incl. Stone Ridge), FY27E $4.93B (+20%)
+  rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (Q3 guide $4.63-4.73B, ~+88%), FY27E ~$5.6B
   fcfMargin25: 0.116,          // ~11.6% FCF margin (FY25 OCF ~$340M less ~$63M capex on $2.49B rev)
   taxRate: 0.24,
   cash: 464,                   // Jun 2026 (stockanalysis)
@@ -21,7 +21,10 @@ export const STRL = defineStock({
   costDebt: 0.055,
 
   modelType: 'EPS_PE',
-  baseEps: 20.04,              // FY26E adj. EPS consensus (raised guide implies +84% at midpoint; FY25A $10.88; FY27E $25.41 +27%). Prior $10.95 was FY25A.
+  baseEps: 21.84,              // FY26E adj. EPS. Q3 guide $21.70-21.96 (midpoint $21.83) and the 8-analyst
+                               // consensus $21.84 agree to a cent, which is why this one is not an estimate worth
+                               // arguing with. FY25A $10.88, so FY26 is +101%. FY27E $28.10 (9 analysts, $26.24-30.38),
+                               // +29% on FY26. Prior $20.04 was the pre-Q3 consensus off the August guide.
 
   rsRating: 77,                 // IBD RS per user, 10/11/2026 (was 96)
   rsTrend: 'falling',
@@ -66,6 +69,36 @@ export const STRL = defineStock({
   // this; treat it as stale rather than as upside.
   // ─────────────────────────────────────────────────────────────────────────
 
+  // Q3 2026 (reported Oct 28, after the close) — THE TEST ABOVE, ANSWERED
+  // ─────────────────────────────────────────────────────────────────────────
+  // The earnings half did not break. Revenue +127%, adj. diluted EPS $7.58
+  // (+118%), E-Infrastructure adj. operating margin 23%, combined backlog
+  // $6.14B and scoped work near $8B. The FY26 guide was RAISED a third time,
+  // to adj. EPS $21.70-21.96 from $19.70-20.30 — the company defended it
+  // rather than withdrawing it, which is exactly what the Oct note said the
+  // evening would decide.
+  //
+  // So the "44% cut" the price implied has not arrived. At $252.82 this is
+  // 11.6x FY26E and 9.0x FY27E ($28.10) on a business that just grew earnings
+  // 118%. The de-rating ran from 50.2x FY26E at the high to 11.6x now, and
+  // it did it through a quarter that beat.
+  //
+  // What did show up is smaller and real: Building Solutions revenue -5% on a
+  // slower homebuilder, and a guide that assumes heavier Q4 weather than 2025.
+  // Neither is the hyperscaler pause risksToBuy[0] describes. The stock still
+  // fell on the print.
+  //
+  // NOT REFRESHED, and each needs a number this review could not source:
+  //   - rsRating 77 is the Oct 11 IBD read, before most of the fall. RS gates
+  //     the quality boost below 30, so a collapsed reading would change the
+  //     rating. It needs your IBD number, not a guess from the chart.
+  //   - analystConsensus and fairPriceRange are Oct 8 and predate the print
+  //     and most of the de-rating. Treat as stale, not as upside.
+  //   - cash/debt are Jun 2026; the Q3 balance sheet is not in this file yet.
+  //   - nextEarningsOn is now in the past. The Oct note warns against dating
+  //     the next one off the old cadence, so it is left rather than guessed.
+  // ─────────────────────────────────────────────────────────────────────────
+
 
   // ── EPS/PE Scenarios ──
   epsCagr: [6, 14, 19],        // From the FY26E $20.04 base (re-based Oct 2026; was [8,14,18] off FY25A $10.95)
@@ -76,9 +109,9 @@ export const STRL = defineStock({
 
   analystConsensus: { rating: 'Strong Buy', targetLow: 700, targetMedian: 754, targetHigh: 1000, numAnalysts: 8 },  // stockanalysis.com (Oct 8 2026)
   revGrowth: [
-    [0.58, 0.05, 0.02, 0.02, 0.02],   // Bear: FY26 incl. acquisitions, then DC capex digests
-    [0.64, 0.18, 0.10, 0.08, 0.07],   // Base: FY26 ≈ $4.1B, FY27 ≈ consensus, then fade
-    [0.68, 0.25, 0.15, 0.12, 0.10],   // Bull: Supercycle + new geos + full CEC/Stone Ridge integration
+    [0.86, 0.05, 0.02, 0.02, 0.02],   // Bear: FY26 at the low end of the Q3 guide, then DC capex digests
+    [0.88, 0.18, 0.10, 0.08, 0.07],   // Base: FY26 ≈ $4.68B (guide midpoint), FY27 ≈ consensus, then fade
+    [0.90, 0.25, 0.15, 0.12, 0.10],   // Bull: Supercycle + new geos + full CEC/Stone Ridge integration
   ],
   fcfMargin: [
     [0.095, 0.085, 0.080, 0.075, 0.075],   // Bear: CEC integration friction, mix shift headwinds
@@ -93,18 +126,18 @@ export const STRL = defineStock({
 
   desc: [
     'Data center capex cycles down in 2027 as hyperscalers digest the build-out wave, and E-Infrastructure organic growth slows sharply; skilled labor scarcity caps throughput and semiconductor megaprojects slip. ' +
-      'Earnings grow only ~6% from the FY26E $20.04 and the market de-rates Sterling to 16x as growth decelerates. 5yr target {target} ({cagr} annualized).',
+      'Earnings grow only ~6% from the FY26E $21.84 and the market de-rates Sterling to 16x as growth decelerates. 5yr target {target} ({cagr} annualized).',
     'E-Infrastructure keeps growing as the record $4.3B backlog converts and CEC turnkey electrical plus Stone Ridge broaden the offering; semiconductor campuses add a second vector. ' +
-      'Earnings compound ~14% from $20.04 (FY27 +27% consensus, then fade) and the multiple settles at 22x. 5yr target {target} ({cagr} annualized).',
+      'Earnings compound ~14% from $21.84 (FY27 +29% consensus, then fade) and the multiple settles at 22x. 5yr target {target} ({cagr} annualized).',
     'The AI data center supercycle extends through 2028+ and the site-development-plus-electrical bundle becomes the industry standard across new geographies; project sizes keep scaling and margins expand. ' +
       'Earnings compound ~19% and the market sustains a 28x premium for execution and visibility. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'E-Infrastructure is cyclical, not structural — 2026\'s extraordinary growth (revenue +64%, EPS +84%) is a peak growth rate that will normalize as hyperscaler spending matures. ' +
+    'E-Infrastructure is cyclical, not structural — 2026\'s extraordinary growth (revenue +88%, EPS +101%) is a peak growth rate that will normalize as hyperscaler spending matures. ' +
       'Skilled labor shortages cap throughput, Building Solutions remains a drag, and federal transportation funding faces reauthorization uncertainty. Peak margins are the biggest risk.',
-    'Sterling is a proven beat-and-raise compounder: Q2 2026 adj. EPS +116%, backlog $4.33B (+116%), combined backlog $5.62B, book-to-burn 1.4x, and FY26 guidance raised again. ' +
-      'CEC plus Stone Ridge create a turnkey offering few competitors match at scale, and a net-cash balance sheet funds buybacks and M&A. At ~20x FY27E, the thesis is about earnings power, not re-rating.',
+    'Sterling is a proven beat-and-raise compounder: Q3 2026 adj. EPS +118%, revenue +127%, combined backlog $6.14B, scoped work near $8B, and FY26 guidance raised a third time. ' +
+      'CEC plus Stone Ridge create a turnkey offering few competitors match at scale, and a net-cash balance sheet funds buybacks and M&A. At ~9x FY27E the thesis needs no re-rating at all — it needs the guide to hold.',
     'Sterling as the undisputed E-Infrastructure platform: site development + turnkey electrical + underground utilities for data centers, semiconductor fabs and mega-distribution centers. ' +
       'Geographic expansion multiplies the addressable market and transportation margins keep improving; if the supercycle extends, earnings power keeps compounding well above consensus.',
   ],
