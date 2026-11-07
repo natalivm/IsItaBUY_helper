@@ -18,8 +18,9 @@ export const ANET = defineStock({
   debt: 0,
   beta: 1.64,          // TIKR 5-year beta, Nov 6 2026 (was 1.10). This raises the WACC and is the single biggest adverse input in this update.
   costDebt: 0.045,
-  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 83). Pre-dates the print; already at the ceiling, so little room to move.
-  rsTrend: 'rising',
+  rsRating: 77,         // IBD RS per user, 11/07/2026 (83 -> 99 -> 77). Still over the 70 momentum line, and the
+                        // 11.5% CAGR clears the hard 10% BUY line without the quality boost, so nothing moves.
+  rsTrend: 'falling',   // 99 -> 77 on the user's own successive reads
   aiImpact: 'TAILWIND',
   // Q3 2026 UPDATE (Nov 7 2026) — call plus TIKR quarterly actuals
   // ─────────────────────────────────────────────────────────────────────────
@@ -53,9 +54,11 @@ export const ANET = defineStock({
   // while revenue grew 58.5% — management's point being that the P&L did not
   // need to draw deferred down to get there.
   //
-  // Not updated: rsRating (Oct 10 IBD read, already at 99) and the analyst
-  // target low/high/count (Oct 9, pre-print). Street target median is TIKR's
-  // $246.25, within 1% of the $248 it replaces.
+  // RS REFRESHED 11/07: 99 -> 77. Nothing moves — above the 70 momentum line and
+  // the 11.5% CAGR clears the hard 10% BUY line unaided, so neither the rating nor
+  // the group depends on it. Still not updated: the analyst target low/high/count
+  // (Oct 9, pre-print). Street target median is TIKR's $246.25, within 1% of the
+  // $248 it replaces.
   // ─────────────────────────────────────────────────────────────────────────
 
 

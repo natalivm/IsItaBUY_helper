@@ -20,7 +20,10 @@ export const ALAB = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 4.32,       // FY2026E non-GAAP EPS: $0.56 + $0.80 + $1.32 ACTUAL + $1.64 guided. Unlike APP and AMD this one genuinely rises — Q3 came in at $1.32 against a $1.16-1.21 guide and Q4 is guided to $1.62-1.66, so the year lands 7.2% above the $4.03 consensus rather than on it. Prior: $4.03 (stockanalysis, Oct 9 2026; FY27E $6.39).
-  rsRating: 88,        // IBD RS per user, 10/10/2026 (was 98). Pre-dates the print and the week; needs a fresh read.
+  rsRating: 47,        // IBD RS per user, 11/07/2026 (98 -> 88 -> 47). A hard fall, and the one that costs a group:
+                       // 47 is under the 70 momentum line and rsTrend is falling, so the mid-RS exception does not
+                       // apply either. The rating is unaffected — a 17.6% CAGR clears the hard 16% STRONG BUY line
+                       // with no quality boost needed.
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',
   // Q3 2026 UPDATE (Nov 6 2026) — read off the earnings call
@@ -69,8 +72,13 @@ export const ALAB = defineStock({
   // $44.99M of capital leases. The model had debt at 0 and Q1 revenue
   // estimated at ~$335M against an actual $308.36M.
   //
-  // Not updated: rsRating (Oct 10 IBD read) and analystConsensus (Oct 9,
-  // pre-print — the $190 low target is now at spot).
+  // RS REFRESHED 11/07: 88 -> 47, and this is the one that moves a group —
+  // PRIME_GROWTH -> WATCH_LIST. The rating does not move: 17.6% clears the hard
+  // 16% STRONG BUY line outright, so unlike APP and AMD nothing here leans on the
+  // quality boost. A STRONG BUY in WATCH_LIST is the classifier doing its job —
+  // it wants a reason AND a tape, and the tape has gone.
+  // Still not updated: analystConsensus (Oct 9, pre-print — the $190 low target
+  // is now at spot).
   // ─────────────────────────────────────────────────────────────────────────
 
 

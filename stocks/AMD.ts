@@ -17,8 +17,10 @@ export const AMD = defineStock({
   costDebt: 0.04,
   modelType: 'EPS_PE',
   baseEps: 7.56,        // FY2026E non-GAAP EPS from the Q3 call: $0.89 + $1.66 + $2.09 actual + $2.92 guided (Q4 at $17B, 55% GM, $3.75B opex, 13% tax, 1.67B shares). Lands on the $7.59 consensus it replaces — the Q4 guide came in exactly where the street had FY26. Prior: $7.59 (stockanalysis consensus, Oct 6 2026).
-  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 97). Pre-dates the Q3 print; at 99 there is little room to move, but it gates the quality boost that is currently the difference between BUY and HOLD.
-  rsTrend: 'rising',
+  rsRating: 79,         // IBD RS per user, 11/07/2026 (97 -> 99 -> 79). It gates the quality boost that IS the
+                        // difference between BUY and HOLD here — the 9.3% CAGR is under the hard 10% BUY line —
+                        // but 79 is far above the 30 floor, so the verdict and the group both hold.
+  rsTrend: 'falling',   // 99 -> 79 on the user's own successive reads
   aiImpact: 'TAILWIND',
   // ratingOverride REMOVED 2026-11-07. It read 'HOLD' and was set after Q2 2026,
   // when the stock was $608 on ~80x FY26E / ~39x FY27E and the base case landed
@@ -73,8 +75,11 @@ export const AMD = defineStock({
   // against a real LTM 15.5%, and the burry block, whose $487M SBC and
   // $5,009M net income were both well off the LTM $1,999M and $7,619M.
   //
-  // Not updated, because neither source carries it: rsRating (Oct 10 IBD
-  // read) and the analyst target low/high/count (Oct 6, pre-print).
+  // RS REFRESHED 11/07: 99 -> 79. Nothing moves — still above the 70 momentum
+  // line, so BUY / PRIME_GROWTH either way — but note the boost is load-bearing:
+  // the 9.3% CAGR clears only the soft 8% BUY threshold, so a collapse below 30
+  // would take this to HOLD. 79 is nowhere near that.
+  // Still not updated: the analyst target low/high/count (Oct 6, pre-print).
   // ─────────────────────────────────────────────────────────────────────────
 
 

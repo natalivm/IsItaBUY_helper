@@ -20,8 +20,11 @@ export const APP = defineStock({
   costDebt: 0.05,
   modelType: 'EPS_PE',
   baseEps: 16.42,       // FY2026E EPS built from the Q3 call: net income of $1,241M + $1,267M + $1,440M actual + $1,568M guided on ~336M weighted diluted shares. Q1 is backed out of TIKR's LTM rather than estimated: LTM net income $5,013.25M less the reported Q2 and Q3 leaves Q4 2025 plus Q1 2026, and TIKR's LTM revenue of $7,608.89M less the three actual quarters fixes Q4 2025 at $1,665M. That correction is why this reads 16.42 and not the 16.36 first committed. It still does NOT rise on the beat — the Oct consensus already assumed a strong Q4. Prior: $16.67 (stockanalysis, Oct 9 2026).
-  rsRating: 41,         // IBD RS per user, 10/10/2026 (was 58). STALE: predates a +71% week and the Q3 beat — needs a fresh IBD read, and it gates the quality boost in getInstitutionalRating.
-  rsTrend: 'falling',
+  rsRating: 88,         // IBD RS per user, 11/07/2026 (58 -> 41 -> 88). The Oct 10 read of 41 was the stale one
+                        // the note below flagged: it predated the +71% week and the Q3 beat, and 88 is that move
+                        // showing up. Still matters for the verdict — at a 15.6% CAGR, APP is UNDER the hard 16%
+                        // STRONG BUY line and holds the label on the quality boost, which RS below 30 would remove.
+  rsTrend: 'rising',    // 41 -> 88 on the user's own successive reads; 'falling' described the pre-move reading
   aiImpact: 'TAILWIND',
   // Q3 2026 UPDATE (Nov 6 2026) — read off the earnings call
   // ─────────────────────────────────────────────────────────────────────────
@@ -63,9 +66,13 @@ export const APP = defineStock({
   // And it corroborates the growth path: NTM P/E of 18.57x implies NTM EPS of
   // $21.07, against the $21.02 the base case's FY27 produces. Within 1%.
   //
-  // Not updated, because neither source carries it: rsRating (Oct 10 IBD read
-  // of 41, pre-move) and the analyst target low/high/count (Oct 9, pre-print
-  // — the $325 low is now far below spot).
+  // RS REFRESHED 11/07: 41 -> 88, which moves the GROUP, not the rating.
+  // 88 clears the 70 momentum line, so WATCH_LIST -> PRIME_GROWTH. The rating is
+  // untouched at STRONG BUY, though not for the comfortable reason: the 15.6%
+  // CAGR sits just BELOW the hard 16% line and holds the label through the
+  // quality boost, so RS is load-bearing here in a way it is not for ALAB.
+  // Still not updated: the analyst target low/high/count (Oct 9, pre-print —
+  // the $325 low is now far below spot).
   // ─────────────────────────────────────────────────────────────────────────
 
 
