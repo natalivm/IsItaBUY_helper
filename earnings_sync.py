@@ -18,9 +18,18 @@ what `review_status.py` reports on, and a bot writing it would destroy the one s
 separating checked from unchecked. `epsSyncedOn` records what this script did instead,
 so the two stay distinguishable.
 
+NOTHING THIS WRITES REACHES main DIRECTLY
+-----------------------------------------
+The workflow runs this on a branch and opens a pull request. Every change is a diff
+to read before it is anything else, and the PR body carries the before/after rating for
+each stock so the consequence is visible without opening the files. That is the point:
+`baseEps` feeds the rating and the rating feeds the home-page group, so a misparsed
+figure moves a stock between PRIME GROWTH and AVOID. A diff catches that; a nightly
+commit to main does not.
+
 GUARDS
 ------
-Writing a valuation input unattended moves ratings and home-page groups, so:
+The guards below still apply, because a bad proposal wastes a review:
 
   * only `modelType: 'EPS_PE'` stocks are touched -- DCF stocks have no `baseEps`;
   * a change larger than MAX_JUMP is reported, never written. Yahoo's basis is not
@@ -39,7 +48,7 @@ the fiscal year end, which is not in any file here, so those are left and listed
 
 USAGE
     python3 earnings_sync.py                  # dry run: who reported, what would change
-    python3 earnings_sync.py --apply          # write it
+    python3 earnings_sync.py --apply          # write the files (the workflow then PRs them)
     python3 earnings_sync.py --window 10      # look back further (default 5 days)
     python3 earnings_sync.py --backlog        # every stock whose model predates its print
     python3 earnings_sync.py --quotes q.json  # read quotes from a file instead of Yahoo
@@ -203,7 +212,7 @@ def rating_of(path, price=None):
 
 # ── main ────────────────────────────────────────────────────────────────────────
 
-def run(apply=False, window=WINDOW, backlog=False, quotes_file=None, today=None):
+def run(apply=False, window=WINDOW, backlog=False, quotes_file=None, today=None, summary_path=None):
     today = today or date.today()
     todo = due(today, window, backlog)
     if not todo:
@@ -287,6 +296,37 @@ def run(apply=False, window=WINDOW, backlog=False, quotes_file=None, today=None)
               + ", ".join(f"{t} ({why})" for t, why in skipped))
     if not apply and wrote:
         print("\nDry run. Re-run with --apply to write.")
+
+    if summary_path:
+        lines = ["## Earnings sync", ""]
+        if wrote:
+            lines += [f"`baseEps` refreshed from consensus on **{len(wrote)}** stock(s) that have reported.",
+                      "", "| stock | baseEps | change | rating |", "|---|---|---|---|"]
+            for t, old_v, new_v, d, style, b, a in wrote:
+                rating = f"**{b} → {a}**" if b != a else b
+                lines.append(f"| {t} | {_fmt(old_v)} → {_fmt(new_v)} | {d:+.1%} | {rating} |")
+        else:
+            lines.append("No stock's `baseEps` moved enough to write.")
+        if moves:
+            lines += ["", f"⚠️ **{len(moves)} rating change(s)**: "
+                      + ", ".join(f"{t} {b} → {a}" for t, b, a in moves)
+                      + ". A rating change moves the home-page group, so check these first."]
+        if flagged:
+            lines += ["", "### Reported but NOT written — these want a human", "",
+                      "| stock | consensus | why |", "|---|---|---|"]
+            for t, old_v, new_v, why in flagged:
+                shown = f"{_fmt(old_v)} → {_fmt(new_v)}" if old_v else _fmt(new_v)
+                lines.append(f"| {t} | {shown} | {why} |")
+        if skipped:
+            lines += ["", "<details><summary>Skipped (" + str(len(skipped)) + ")</summary>", "",
+                      ", ".join(f"{t} ({why})" for t, why in skipped), "", "</details>"]
+        lines += ["", "---", "",
+                  "`scenarios` (epsCagr, exitPE, revGrowth) are NOT touched — those need guidance and "
+                  "transcripts, which no quote endpoint carries. `dataReviewedOn` is NOT touched either, "
+                  "so it still means a person looked; `epsSyncedOn` records this run."]
+        with open(summary_path, "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print(f"\nSummary written to {summary_path}")
     return 0
 
 
@@ -298,9 +338,10 @@ def main():
                     help="ignore the window: every stock whose model predates its last print")
     ap.add_argument("--quotes", help="read quotes from a JSON file instead of Yahoo (testing)")
     ap.add_argument("--today", help="pretend today is this date (testing)")
+    ap.add_argument("--summary", help="write a markdown summary here, for the pull request body")
     a = ap.parse_args()
     return run(apply=a.apply, window=a.window, backlog=a.backlog, quotes_file=a.quotes,
-               today=date.fromisoformat(a.today) if a.today else None)
+               today=date.fromisoformat(a.today) if a.today else None, summary_path=a.summary)
 
 
 if __name__ == "__main__":

@@ -10,12 +10,12 @@ export const ALAB = defineStock({
   dataReviewedOn: '2026-11-06',
   currentPrice: 190.71,
   fairPriceRange: '$190 - $500',  // stockanalysis.com analyst target range, Oct 9 2026
-  shares0: 187,        // Q4 2026 guided diluted (Q3 guide was ~185M, Q2 183.3M)
+  shares0: 187,        // Q4 2026 guided diluted. TIKR Q3 actual: 184.08M weighted diluted against 174.13M basic — a 5.7% overhang, which is the SBC story below rather than a rounding difference.
   rev25: 852.5,        // FY2025 revenue $852.5M (was mis-set to $1,345M); FY26E consensus $1.91B (+124%), FY27E $2.97B
   fcfMargin25: 0.33,   // FY25 FCF $281.8M
   taxRate: 0.12,       // non-GAAP ~12%
   cash: 1380,          // Sep 30 2026: cash, equivalents and marketable securities, up $125.3M in the quarter on record operating cash flow of $179.2M
-  debt: 0,
+  debt: 45,           // TIKR 9/30/26 total debt $44.99M — capital leases, not borrowings. Was 0.
   beta: 2.30,
   costDebt: 0.05,
   modelType: 'EPS_PE',
@@ -35,8 +35,9 @@ export const ALAB = defineStock({
   //
   // Q4 GUIDE: revenue $730-750M (+27% q/q), gross margin ~72%, opex
   // $194-200M, operating margin ~45%, tax ~12%, 187M diluted shares, non-GAAP
-  // EPS $1.62-1.66. That puts FY26 at ~$2.05B of revenue and $4.32 of EPS,
-  // 7% above the consensus this file was carrying.
+  // EPS $1.62-1.66. With TIKR's actual quarters (Q1 $308.36M, Q2 $392.40M,
+  // Q3 $584.90M) that puts FY26 at $2,026M of revenue and $4.32 of EPS, 7%
+  // above the consensus this file was carrying.
   //
   // Four new vectors moved from roadmap to dated: optical (NPO sampling this
   // quarter, ~6 months of qualification, revenue 2H 2027; management sizes
@@ -58,6 +59,15 @@ export const ALAB = defineStock({
   //
   // Opex long-term target is ~30% of revenue; it is running below that now
   // (Q4 guide ~26.6%), which is why operating margin is ahead of the model.
+  //
+  // VERIFIED AGAINST TIKR (quarterly, through 9/30/26). Revenue by quarter
+  // $270.58 / $308.36 / $392.40 / $584.90; gross margin sliding 75.6% ->
+  // 76.3% -> 73.3% -> 72.3% as the hardware-heavy switch mix grows, which is
+  // what the ~72% Q4 guide reflects. GAAP operating margin 30.6% in Q3 against
+  // the 44.7% non-GAAP, the difference being $82.59M of stock compensation in
+  // the quarter alone. Cash and short-term investments $1,378.24M against
+  // $44.99M of capital leases. The model had debt at 0 and Q1 revenue
+  // estimated at ~$335M against an actual $308.36M.
   //
   // Not updated: rsRating (Oct 10 IBD read) and analystConsensus (Oct 9,
   // pre-print — the $190 low target is now at spot).
@@ -114,20 +124,20 @@ export const ALAB = defineStock({
   bullMaOptVal: false,
 
   debtSafety: {
-    netDebt: -1380,        // no debt; $1.38B cash & securities (Sep 30 2026)
-    ebitda: 905,           // FY26E: non-GAAP operating income ~$865M on ~$2.05B of revenue (Q3 44.7%, Q4 guided ~45%) plus D&A
+    netDebt: -1333,        // TIKR 9/30/26: $44.99M of capital leases against $1,378.24M of cash and short-term investments
+    ebitda: 876,           // FY26E non-GAAP: operating income $858.6M on $2,026M of revenue (Q1 35.9%, Q2 39.1%, Q3 44.7%, Q4 guided ~45%) plus ~$17M of D&A. TIKR's LTM GAAP EBITDA is $412.62M; the whole gap is stock compensation, which is the point of the burry block.
     fy: 'FY26E',
     note: 'GREEN by Step 1 — net cash, no debt. The balance-sheet risk is SBC dilution, not leverage.',
   },
 
   burry: {
-    sbc: 167,
-    gaapNi: 219,        // FY25 GAAP NI $219M (stockanalysis); 2026 run-rate far higher (Q2 $153M) — refresh at FY26
-    buyback: 0,
+    sbc: 237,           // TIKR LTM through Q3 2026 ($236.86M): 82.59 + 63.99 + 48.91 + 41.37
+    gaapNi: 461,        // TIKR LTM ($461.32M): 182.94 + 153.09 + 80.31 + 44.98
+    buyback: 0,         // $0.03M LTM, which is rounding, not a programme
     epsBasis: 'NON_GAAP',
-    fy: 'FY25',
+    fy: 'LTM Q3 2026',
     overstatementPct: 75,
     overstatementSource: 'estimated',
-    note: 'Tragic — TIKR FY25 actuals: SBC $167M (16.6% of revenue — high), buybacks $0, recently turned GAAP-profitable (operating margin 22% LTM, +20pp swing from -29% FY24). The good news: elite 76% gross margins, 132% 3y revenue CAGR, FCF $343M ($176M after SBC adjustment). The bad news: post-IPO RSU wave is ongoing — diluted shares 131M (FY24) → 180M (FY26 LTM) = +37% in one year. Zero buyback offset. SBC = 49% of reported FCF (true owner FCF is half headline). 4y MTM at extreme high end (~5× since IPO grants) breaks the formula. 75% estimate reflects: recent profitability inflection (better than pure broken-SaaS), but elite-tier dilution velocity (worse than typical Critical). Watch the share-count trajectory — if dilution slows in FY27 as IPO vesting completes, ALAB could reclassify down to Critical 50%.',
+    note: 'Still 75%, but for different reasons than before and it is now a closer call. Two of the three things the old note rested on are no longer true. Naive SBC/NI has gone from 76% (FY25: $167M on $219M) to 51% (LTM: $237M on $461M), because GAAP net income more than doubled while SBC grew less. And the dilution velocity that justified Tragic over Critical has collapsed: weighted diluted shares ran 181.18 → 181.16 → 183.34 → 184.08 across the last four quarters and are guided to 187M, which is +3.2% a year, not the +37% the old note cited. The old note said explicitly that if dilution slowed as IPO vesting completed ALAB could reclassify to Critical 50%, and on the share count that condition is now met. What holds the estimate at 75 is the method rather than the narrative: the documented heuristic multiplies the naive ratio by an MTM amplifier, and even the gentle ~1.5x for a stock that has gone 1.44x in two years ($132.45 to $190.71) puts 51% back at ~77%. Note the old note had that input wrong too — it assumed ~5x since IPO grants, and the stock has round-tripped from $483 in June. SBC is still 15.2% of revenue and buybacks are $0.03M, so the dilution is unmitigated; it is just no longer accelerating.',
   },
 });
