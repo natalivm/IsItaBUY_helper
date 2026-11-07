@@ -20,7 +20,14 @@ export const AMD = defineStock({
   rsRating: 99,         // IBD RS per user, 10/10/2026 (was 97). Pre-dates the Q3 print; at 99 there is little room to move, but it gates the quality boost that is currently the difference between BUY and HOLD.
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  ratingOverride: 'HOLD',  // NEEDS A DECISION. Set after Q2 2026 when the base case landed ~at spot (~1% CAGR) and the stock was $608 on ~80× FY26E / ~39× FY27E. It is $449 now, 59× / 28×, and the base case lands at a 9.3% CAGR — so the reasoning this override was written on no longer holds. It is a hard override, not a floor, so it is now actively suppressing a BUY rather than preventing an overstated OVERVALUED. Either remove it and let the model read BUY, or re-argue it on today's multiple; leaving it unexamined is the one option that is wrong.
+  // ratingOverride REMOVED 2026-11-07. It read 'HOLD' and was set after Q2 2026,
+  // when the stock was $608 on ~80x FY26E / ~39x FY27E and the base case landed
+  // at spot — about a 1% CAGR — so flooring it at HOLD stopped the model calling
+  // the #2 AI platform OVERVALUED on a technicality. At $449 and ~59x / ~28x that
+  // premise is gone: the base case now lands at a 9.3% CAGR and the model reads
+  // BUY on its own. A hard override was no longer preventing an overstatement, it
+  // was suppressing the model's actual answer. Restoring it is one line if the
+  // judgement goes the other way.
   updatedOn: '11/06',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-06',

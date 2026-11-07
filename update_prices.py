@@ -76,8 +76,14 @@ def _boosted(rs, ai):
     return (rs is not None and rs >= _RS_QUALITY) or ai == 'TAILWIND'
 
 # Base-case driver template defaults (scenario index 1 in defineStock.ts)
-_BASE_REV_PREM  = [0.01, 0.01, 0.01, 0.01, 0.01]
-_BASE_FCF_UPLIFT = [0.005, 0.005, 0.01, 0.01, 0.01]
+# Mirrors DRIVER_TEMPLATES in stocks/defineStock.ts, where bear and BASE carry no
+# hidden premium and only the bull case does. These used to be [0.01]*5 and
+# [0.005, 0.005, 0.01, 0.01, 0.01] — the exact values that file's own comment records
+# removing in Oct 2026 for "silently adding +1pt revenue growth and +0.5-1pt FCF margin,
+# inflating every DCF base target". The TS was fixed then and this was not, so this file
+# kept inflating every DCF base target for another month.
+_BASE_REV_PREM  = [0.0, 0.0, 0.0, 0.0, 0.0]
+_BASE_FCF_UPLIFT = [0.0, 0.0, 0.0, 0.0, 0.0]
 _BASE_BB_RATE    = 0.015
 _BASE_EBITDA     = 0.22
 _BASE_TERM_GROWTH = 0.025
@@ -392,7 +398,15 @@ def _base_target(p, price):
         net_debt = (p.get('debt', 0) or 0) - (p.get('cash', 0) or 0)
         ma_opt = p.get('maOptVal_base', 0.0) or 0.0
         equity = sum(pv_fcfs) + pv_tv - net_debt + ma_opt
-        return equity / share_hist[-1]
+        # Mirror services/projectionService.ts exactly, both lines deliberately:
+        #  - divide by shares0, NOT the buyback-shrunk count. The TS comment explains
+        #    why: the cash funding the buyback is already inside equity value, so
+        #    shrinking the share count too would count it twice.
+        #  - compound the per-share present value forward HORIZON years at the WACC.
+        #    `pricePerShare` in the TS is a 5-year-forward price, not a present value,
+        #    and the rating thresholds annualize it on that assumption.
+        present = max(0.0, equity / (p.get('shares0', 1) or 1))
+        return present * (1 + w) ** _HORIZON
 
     except (ZeroDivisionError, TypeError, ValueError):
         return None
