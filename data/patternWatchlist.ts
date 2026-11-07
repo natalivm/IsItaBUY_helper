@@ -10851,18 +10851,22 @@ export const PATTERN_STOCKS: PatternStock[] = [
         timeframe: "weekly",
         direction: "up",
         stage: "failed",
-        stageDate: "2026-11-07",
+        stageDate: "2026-10-12",
         signal: 50.75,
         confirm: 52.15,
-        invalidation: 18.91,
-        breakInvalidation: 26.83,
+        invalidation: 41.96,
         profileStop: 32.84,
         target: 100.29,
+        signalRule:
+          "a completed weekly close above $50.75; a close back inside cancels it.",
+        confirmRule:
+          "a later completed weekly close above $52.15, beyond the high of the candle that formed it.",
+        failRule: "a completed weekly close below $41.96, back inside the wedge.",
         lines: [
           { from: ["2026-05-18", 111.99], to: ["2026-11-02", 20.12] },
           { from: ["2026-05-18", 62.45], to: ["2026-11-02", 14.95] },
         ],
-        note: "Source tool, Nov 7 2026: up break failed. This is the setup that has held the last place on the stranded list \u2014 confirmed above $52.15 on Sep 21 against a price of $32.82, 37% below its own break, with an $18.91 invalidation it could never reach. It was left alone because CLAUDE.md records the user validating all four AMKR setups; the source tool has now closed it itself.",
+        note: "Source tool, Nov 7 2026, from the setup's own panel. Formed week of Sep 8; retest held the week of Sep 14 \u2014 back at the wedge line (low $45.33) and held, that week's $50.30 close being entry 1; confirmed week of Sep 21 above $52.15; failed week of Oct 12 on a weekly close below $41.96, back inside the wedge. The stored $18.91 invalidation was ours, not theirs, and it is why this sat on the stranded list unreachable: our fitted lower boundary reads $20.89 at the week it failed against their $41.96, so the two are not the same drawing and only theirs is a level price actually closed through. The lines below are our fit and still disagree \u2014 they are left as drawn rather than guessed at from two panel numbers.",
       },
       {
         pattern: "Descending Channel",
