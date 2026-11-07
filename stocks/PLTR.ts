@@ -94,13 +94,45 @@ export const PLTR = defineStock({
   // almost exactly ($0.41/$0.41, $0.44/$0.44) because Palantir adds SBC back and
   // then applies a normalized tax rate, and the two roughly cancel.
   //
-  // THE REAL UNMODELLED RISK IS TAX. Effective GAAP tax was 1.2% in Q3 ($13.56M on
-  // $1,148M of pre-tax income) and $9.8M / $12.2M / $15.4M / $13.6M across the four
-  // quarters — call it 1-2% throughout. epsCagr [20, 30, 40] compounds five years
-  // off a base that pays essentially no tax. Normalizing to even 15-20% is a
-  // one-off 15-19% cut to EPS, roughly 3-4 points a year off a five-year CAGR, and
-  // nothing in this model expresses it. It is the single largest thing standing
-  // between the modelled path and the realized one.
+  // TAX, AND THE epsCagr RECALIBRATION IT TURNED UP. Effective GAAP tax was 1.2% in
+  // Q3 ($13.56M on $1,148M pre-tax) and $9.8M / $12.2M / $15.4M / $13.6M across the
+  // four quarters — 1-2% throughout, on NOLs and stock-comp deductions. Pre-tax
+  // margin flat with the rate going 1% -> 21% takes net margin from 51% to ~41% on
+  // its own, with no operating deterioration at all.
+  //
+  // Chasing that through the model exposed something larger: epsCagr and revGrowth
+  // had never been reconciled, and ALL THREE legs were incoherent. Against the
+  // stored revenue paths, FY30 net margin came out:
+  //
+  //        bear revenue $16.71B, epsCagr 20 -> 54% net margin
+  //        base revenue $22.67B, epsCagr 30 -> 55%
+  //        bull revenue $29.96B, epsCagr 40 -> 56%
+  //
+  // Every case needed margin ABOVE today's 51% — in the bear case especially — while
+  // tax rises off ~1%. For scale, the most profitable large software companies run
+  // 35-40%. Consensus does not assume expansion either: FY27E EPS ~$2.35 on FY27
+  // revenue ~$12.39B is a 49% net margin, i.e. flat.
+  //
+  // So epsCagr is re-solved from a coherent margin rather than left as a growth rate
+  // nobody had cross-checked: bear 40% of FY30 revenue (tax normalized plus some
+  // deleverage), base 45% (tax to ~18-20%, partly offset by operating leverage),
+  // bull 52% (tax stays low, full leverage). That gives [12, 24, 38].
+  //
+  // THIS REVERSES THE RATING SET EARLIER TODAY, and the file should say so plainly.
+  // Rebuilding baseEps to $1.69 took PLTR HOLD -> BUY at an 8.25% CAGR. On the
+  // corrected epsCagr the same base reads 3.26%, so it is HOLD again and
+  // WATCH_LIST again. Both steps were right: $1.69 is what three reported quarters
+  // and a tight Q4 guide give, and it was the growth rate applied to it that was
+  // wrong. The BUY existed only because a 30% five-year CAGR was carrying a margin
+  // assumption nobody had written down.
+  //
+  // What this does NOT say is that the business disappoints. It says $160 already
+  // pays for base-case revenue at a healthy margin: at epsCagr 24 and a 38x exit the
+  // five-year target is $188, a 3.3% annual return. The bull leg is intact at 38.
+  //
+  // One interaction left alone: exitPE [25, 38, 55]. A 38x exit on a company still
+  // compounding 24% is defensible, but it is now doing more of the work than before
+  // and a cut there would compound with this one. Worth a look, not a guess.
   //
   // NOT REFRESHED: nextEarningsOn is now in the past (Q4 lands early Feb 2027 on
   // the usual cadence, left unguessed). The burry block is still FY25, correctly —
@@ -177,7 +209,10 @@ export const PLTR = defineStock({
 
   termGrowth: [0.02, 0.03, 0.035],
 
-  epsCagr: [20, 30, 40],   // Re-based at Q2 2026 (was 38/50/65 off a $0.89 trailing-GAAP base): FY27E ~+39% then decelerating ≈ 30% from $1.69
+  // RECALIBRATED 11/07 against the model's OWN revenue path — see the note above. Was [20, 30, 40],
+  // which required net margin to EXPAND from today's 51% in all three cases while the tax rate rises
+  // from ~1%. These hold margin coherent instead: bear 40%, base 45%, bull 52% of FY30 revenue.
+  epsCagr: [12, 24, 38],
   exitPE: [25, 38, 55],
   prob: [30, 50, 20],
 
