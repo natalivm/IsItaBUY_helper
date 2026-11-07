@@ -36,6 +36,18 @@
     "lastPrice": 349.51
   },
   {
+    "ticker": "ACHR",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 4.81,
+    "invalidation": 5.76,
+    "target": 1.93,
+    "lastPrice": 4.44
+  },
+  {
     "ticker": "AMKR",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -46,6 +58,18 @@
     "invalidation": 41.42,
     "target": 21.04,
     "lastPrice": 35.66
+  },
+  {
+    "ticker": "ASML",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-05",
+    "confirm": 1722.33,
+    "invalidation": 1391.77,
+    "target": 2081.23,
+    "lastPrice": 1424.75
   },
   {
     "ticker": "ASML",

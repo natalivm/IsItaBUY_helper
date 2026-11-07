@@ -561,6 +561,17 @@
     "target": 151.77
   },
   {
+    "ticker": "MRVL",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 245.1,
+    "invalidation": 303.86,
+    "target": 137.77
+  },
+  {
     "ticker": "MSFT",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
