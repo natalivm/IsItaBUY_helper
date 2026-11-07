@@ -751,6 +751,25 @@ failure against 30 targets, and the first clear-out was **15 at once**, the firs
 sample of the other half. Where a stock loses every setup it gets the placeholder
 `prune_finished` already uses.
 
+**And `prune_finished` was deleting the ones it never got to see.** `_finished` returns
+`failed` for any setup carrying that stage, and the *stored* branch dropped whatever it
+returned -- so a failure inside `more: [...]` was cut from the entry before `retire_failed`,
+the only thing that writes a label, ever ran. A **shown** failure survived, because its
+branch marks it in place and leaves it. Which slot a setup happened to sit in decided
+whether the evidence was kept.
+
+Replayed head to head on the same ledger, the old code removes AMKR's weekly falling wedge
+and records nothing; the fix removes it and records it. Over the last 40 commits **8 were
+lost this way** -- MU, MLM, GD, TWLO, KKR, XOP, THM and AMKR -- against a file holding 39,
+so roughly a sixth of the record was missing. All 8 were recovered from git history with
+their levels and are in `failedCalls.json` now.
+
+Read this beside "why the loser half is missing", which blames a stop nothing can reach.
+That is true and was not the whole of it: part of the loser half was being collected and
+then thrown away. The fix is that a stored failure is kept on the row and marked, exactly
+as a shown one is, leaving a single owner of "a failure leaves the ledger" -- and that owner
+runs later in the same job and re-reads the file, so nothing waits for tomorrow.
+
 **`pattern_watchlist.confirm_faults` checks each `confirm` is a candle extreme on its OWN
 timeframe**, which is what PATTERN_RULES says it is. Reports, never edits. It exists
 because DUOL's weekly wedge confirmed on a *daily* low and five setups promoted on

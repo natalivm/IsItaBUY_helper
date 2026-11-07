@@ -1595,6 +1595,29 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                 # also be the one that forgets.
                 if not r:
                     stored_live.append(pos)
+                elif r[3] == 'failed':
+                    # A failure is a LABEL, and `retire_failed` is the only thing that writes
+                    # one. Dropping a stored failure here deleted it before that ever ran, so
+                    # it left the ledger with no row in data/failedCalls.json at all -- 8 of
+                    # them over the last 40 commits (MU, MLM, GD, TWLO, KKR, XOP, THM and
+                    # AMKR's weekly falling wedge), against a file holding 39.
+                    #
+                    # That is the exact hole this file keeps describing from the other side:
+                    # "why the loser half is missing" records 1 failure against 30 targets and
+                    # blames a stop nothing can reach, which is true and was not the whole of
+                    # it. A shown failure survives because the branch below marks it in place
+                    # and leaves it; a stored one was simply cut. The slot it happened to sit
+                    # in decided whether the evidence was kept.
+                    #
+                    # So keep it on the row and mark it, exactly as a shown one is marked, and
+                    # let the single owner of "a failure leaves the ledger" record it. That
+                    # owner runs later in this same job and re-reads the file, so nothing waits
+                    # for tomorrow.
+                    stored_live.append(pos)
+                    if sv.get('stage') != 'failed':
+                        edits += _stage_edits(text, pos, 'failed', r[0])
+                        notes[f"{t_}|{label}"] = (r[0], r[1], f"{t_} · pattern failed")
+                        report.append(f"{t_} ({label}): pattern failed — {r[1]}")
                 else:
                     # ...but not quietly. A stored setup is dropped by being left out of
                     # `stored_live` when the entry is rebuilt, which is invisible to the
