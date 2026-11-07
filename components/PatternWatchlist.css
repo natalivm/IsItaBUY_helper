@@ -389,3 +389,27 @@
 .pbw .pr-card{animation:pr-in .14s ease-out}
 @keyframes pr-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 }
+
+/* ── Valuation group headers (PRIME / TURBO / WATCH / AVOID) ──
+   Section bands inside the ledger when the Groups chip is on. Sticky, so the group
+   you are reading stays named while you scroll a long section. Colours mirror
+   GROUP_META in constants.ts. */
+.pbw .vgroup{
+  position:sticky;top:0;z-index:2;
+  display:flex;align-items:center;gap:8px;
+  padding:7px 12px;margin:0;
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--pbw-row-bg,#0b1220);
+  border-top:1px solid rgba(148,163,184,.14);
+  border-bottom:1px solid rgba(148,163,184,.14);
+}
+.pbw .vgroup .n{
+  font-size:10px;font-weight:700;letter-spacing:.04em;
+  padding:1px 7px;border-radius:999px;
+  background:rgba(148,163,184,.14);color:inherit;opacity:.85;
+}
+.pbw .vgroup.vg-prime_growth{color:#059669;box-shadow:inset 3px 0 0 rgba(5,150,105,.55)}
+.pbw .vgroup.vg-turbo_growth{color:#e879f9;box-shadow:inset 3px 0 0 rgba(232,121,249,.55)}
+.pbw .vgroup.vg-watch_list  {color:#94a3b8;box-shadow:inset 3px 0 0 rgba(148,163,184,.45)}
+.pbw .vgroup.vg-avoid       {color:#f87171;box-shadow:inset 3px 0 0 rgba(248,113,113,.55)}
+.pbw .vgroup.vg-uncovered   {color:#64748b;box-shadow:inset 3px 0 0 rgba(100,116,139,.35)}

@@ -764,6 +764,20 @@ interface PatternWatchlistProps {
   initialQuery?: string;
 }
 
+// The valuation groups. Spelled out here rather than imported from constants.ts:
+// that module builds TICKERS from every file in stocks/, so importing it for four
+// strings would drag the definitions into this chunk and undo the lazy load above.
+// They must match GROUP_META in constants.ts.
+type VGroup = 'PRIME_GROWTH' | 'TURBO_GROWTH' | 'WATCH_LIST' | 'AVOID' | 'UNCOVERED';
+const VGROUP_ORDER: VGroup[] = ['PRIME_GROWTH', 'TURBO_GROWTH', 'WATCH_LIST', 'AVOID', 'UNCOVERED'];
+const VGROUP_LABEL: Record<VGroup, string> = {
+  PRIME_GROWTH: 'PRIME GROWTH',
+  TURBO_GROWTH: 'TURBO GROWTH',
+  WATCH_LIST: 'WATCH LIST',
+  AVOID: 'AVOID',
+  UNCOVERED: 'NOT COVERED',
+};
+
 const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStock, headerControls, initialQuery = '' }) => {
   const [filter, setFilter] = useState<string>(() => readPref('pbw-filter', 'all'));
   const [sortBy, setSortBy] = useState<'default' | 'target' | 'momentum'>(() => {
@@ -781,6 +795,7 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
   // One row open at a time: opening another closes the last, so the ledger
   // never turns into a stack of panels.
   const [openTicker, setOpenTicker] = useState<string | null>(null);
+  const [grouped, setGrouped] = useState(() => readPref('pbw-grouped', '1') !== '0');
 
   useEffect(() => { setQuery(initialQuery); setPicked(initialQuery); }, [initialQuery]);
 
@@ -805,6 +820,26 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
   }, [catalog]);
 
   const hasPage = useMemo(() => new Set(catalog.map(c => c.ticker)), [catalog]);
+
+  // Valuation groups (PRIME / TURBO / WATCH / AVOID), fetched AFTER first paint.
+  // `services/universe` pulls all 95 stock definitions, ~110 KB gzipped, and this
+  // chunk is otherwise ~10 KB. Importing it at the top would put the definitions on
+  // the critical path of a page that renders fine without them, so the ledger paints
+  // flat and regroups a moment later. A stock with no valuation page — SPY, QQQ and
+  // the watchlist-only symbols — has no group and lands in "Not covered".
+  const [groupOf, setGroupOf] = useState<Record<string, VGroup> | null>(null);
+  useEffect(() => {
+    let live = true;
+    import('../services/universe')
+      .then(({ buildUniverse }) => {
+        if (!live) return;
+        const m: Record<string, VGroup> = {};
+        buildUniverse().universeData.forEach(r => { m[r.ticker] = r.group as VGroup; });
+        setGroupOf(m);
+      })
+      .catch(() => { /* leave the ledger flat rather than break it */ });
+    return () => { live = false; };
+  }, []);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: allRows.length };
@@ -841,6 +876,20 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
     return out;
   }, [allRows, activeFilter, query, picked, sortBy]);
 
+  // The filtered, sorted rows split into the four valuation groups, in order, plus the
+  // ledger entries that have no valuation page. Order and sort inside each group are
+  // whatever `rows` already decided, so the sort chips keep working.
+  const sections = useMemo(() => {
+    if (!grouped || !groupOf) return null;
+    const by: Record<string, typeof rows> = {};
+    rows.forEach(r => {
+      const g = groupOf[r.ticker] ?? 'UNCOVERED';
+      (by[g] ||= []).push(r);
+    });
+    return VGROUP_ORDER.map(k => [k, VGROUP_LABEL[k], by[k] || []] as const)
+      .filter(([, , items]) => items.length > 0);
+  }, [rows, grouped, groupOf]);
+
   const asOf = useMemo(() => PATTERN_STOCKS.map(s => s.priceDate).sort().pop(), []);
 
   return (
@@ -869,6 +918,11 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
               onClick={() => { const next = sortBy === 'target' ? 'default' : 'target'; setSortBy(next); writePref('pbw-sort', next); }}>
               %<span className="n">{sortBy === 'target' ? '↓' : ''}</span>
             </button>
+            <button className="chip" aria-pressed={grouped}
+              title="Split the list into PRIME GROWTH / TURBO GROWTH / WATCH LIST / AVOID"
+              onClick={() => { const next = !grouped; setGrouped(next); writePref('pbw-grouped', next ? '1' : '0'); }}>
+              Groups
+            </button>
             <button className="chip momchip" aria-pressed={sortBy === 'momentum'}
               title="Sort by daily RSI, highest first. The bolt marks setups RSI backs (≥60 for a long, ≤40 for a short)"
               onClick={() => { const next = sortBy === 'momentum' ? 'default' : 'momentum'; setSortBy(next); writePref('pbw-sort', next); }}>
@@ -887,12 +941,26 @@ const PatternWatchlist: React.FC<PatternWatchlistProps> = ({ catalog, onOpenStoc
           <div className="rows">
             {rows.length === 0
               ? <div className="empty">No stocks match this filter.</div>
-              : rows.map(r => (
-                <LedgerRow key={r.ticker} row={r} hasPage={hasPage.has(r.ticker)}
-                  open={openTicker === r.ticker}
-                  onToggle={() => setOpenTicker(t => t === r.ticker ? null : r.ticker)}
-                  onOpenPage={onOpenStock} />
-              ))}
+              : sections
+                ? sections.map(([key, label, items]) => (
+                  <React.Fragment key={key}>
+                    <div className={`vgroup vg-${key.toLowerCase()}`}>
+                      {label}<span className="n">{items.length}</span>
+                    </div>
+                    {items.map(r => (
+                      <LedgerRow key={r.ticker} row={r} hasPage={hasPage.has(r.ticker)}
+                        open={openTicker === r.ticker}
+                        onToggle={() => setOpenTicker(t => t === r.ticker ? null : r.ticker)}
+                        onOpenPage={onOpenStock} />
+                    ))}
+                  </React.Fragment>
+                ))
+                : rows.map(r => (
+                  <LedgerRow key={r.ticker} row={r} hasPage={hasPage.has(r.ticker)}
+                    open={openTicker === r.ticker}
+                    onToggle={() => setOpenTicker(t => t === r.ticker ? null : r.ticker)}
+                    onOpenPage={onOpenStock} />
+                ))}
           </div>
         </div>
 
