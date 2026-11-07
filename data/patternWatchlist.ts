@@ -4435,7 +4435,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "PLTR",
     name: "Palantir Technologies Inc.",
-    checkedOn: "2026-10-25",
+    checkedOn: "2026-11-07",
     trend: "flat",
     rsi: 25.1,
     price: 160.38,
@@ -4511,17 +4511,20 @@ export const PATTERN_STOCKS: PatternStock[] = [
       {
         pattern: "Ascending Channel",
         timeframe: "weekly",
-        direction: "both",
-        stage: "forming",
-        breakUp: 208.2,
-        breakDown: 144.04,
-        goalUp: 272.35,
-        goalDown: 79.89,
-        lines: [
-          { from: ["2026-04-20", 152.68], to: ["2026-11-02", 208.2] },
-          { from: ["2026-04-20", 88.53], to: ["2026-11-02", 144.04] },
-        ],
-        note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $208.20 or below $144.04 would start a signal.",
+        direction: "down",
+        stage: "signal",
+        stageDate: "2026-11-02",
+        signal: 162.69,
+        confirm: 152.6,
+        invalidation: 234.1,
+        target: 91.28,
+        signalRule:
+          "a completed weekly close below $162.69; a close back inside cancels it.",
+        confirmRule:
+          "a later completed weekly close below $152.60, beyond the low of the candle that formed it.",
+        failRule:
+          "a completed weekly close above $234.10, then a follow-through close above that candle's high.",
+        note: "Source tool, Nov 7 2026, from the setup's own panel. This REPLACES the either-direction placeholder that sat here with no signal, confirm or target \u2014 which is the hand-off CLAUDE.md describes: a both-way setup that breaks cannot draw its own directional levels, so a human has to. OURS NEVER SAW THE BREAK AT ALL: our lower boundary read $144.04 at the week of Nov 2 against their $162.69, and price closed $160.38 \u2014 through their line and not ours. Same pattern, different fit, and theirs is the one price respected. Three checks against our candles, all exact: the week of Nov 2 is the first close under $162.69 (the week before closed $184.11); their confirm $152.60 IS that week's low, so confirm is the signal candle's extreme as PATTERN_RULES requires; and the quarter steps reproduce at $144.84, $126.98, $109.13, $91.28. Retest is a pullback to $162.69 closing below it, 8 candles left, the cheaper entry. Lines dropped \u2014 the stored pair is the drawing that missed the break.",
       },
       {
         pattern: "Ascending Channel",
