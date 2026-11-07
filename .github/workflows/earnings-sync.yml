@@ -1,0 +1,79 @@
+name: Sync EPS After Earnings
+
+# Refresh `baseEps` from consensus for stocks that have just reported, and open a
+# pull request with the result. NOTHING FROM THIS REACHES main WITHOUT A REVIEW.
+#
+# Runs after the US close on weekdays, 40 minutes behind the price job so the
+# earnings calendar and prices it writes are already on main. A company that
+# reports before the open is picked up the same evening; one that reports after
+# the close is picked up the next evening, which is what the 5-day window is for.
+#
+# The PR body carries the before/after rating for every stock it touches, because
+# `baseEps` feeds the rating and the rating feeds the home-page group — so the
+# consequence of a misparsed figure is visible in the PR without opening a file.
+# The guards that keep bad proposals out of the diff live in earnings_sync.py.
+#
+# One open PR at a time: the branch is fixed, so a later run updates the existing
+# PR rather than opening a second one against the same backlog.
+
+on:
+  schedule:
+    - cron: '27 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      backlog:
+        description: 'Ignore the 5-day window: every stock whose model predates its last print'
+        type: boolean
+        default: false
+      dry_run:
+        description: 'Report what would change, open no pull request'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  earnings-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh baseEps from consensus
+        id: sync
+        run: |
+          python3 earnings_sync.py \
+            ${{ inputs.backlog && '--backlog' || '' }} \
+            ${{ inputs.dry_run && ' ' || '--apply --summary pr-body.md' }}
+
+      - name: Open or update the pull request
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain stocks/)" ]; then
+            echo "No model changes — nothing to propose."
+            exit 0
+          fi
+          BRANCH=bot/earnings-sync
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add stocks/
+          git commit -m "Sync baseEps after earnings ($(date -u +%Y-%m-%d))" -m "$(cat pr-body.md)"
+          git push --force-with-lease -u origin "$BRANCH"
+          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+            gh pr edit "$BRANCH" --body-file pr-body.md
+            echo "Updated the open pull request."
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "Sync baseEps after earnings ($(date -u +%Y-%m-%d))" \
+              --body-file pr-body.md
+          fi
