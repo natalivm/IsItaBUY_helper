@@ -1195,7 +1195,20 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
                     # AT the line, so it ends when price is no longer there -- the same band
                     # the review line uses to call one. Gated on a completed close on the
                     # setup's own timeframe, like `atRisk` above, so it cannot flip intraday.
-                    if not past and stage == 'retest' and abs(price - inv) > RETEST_BAND * inv:
+                    #
+                    # CHANNELS ONLY, mirroring the setter below. The setter requires
+                    # `'Channel' in pat` because a channel's confirmed invalidation sits on
+                    # the boundary it broke, so "price at the invalidation" IS "price at the
+                    # retested line". A wedge invalidates on the FAR side, so that test
+                    # measures against a level the retest has nothing to do with -- and
+                    # since the setter will not mark a wedge, clearing one could only ever
+                    # undo a hand edit, with no way back. ACHR is the case: the source tool
+                    # reports its daily rising wedge retesting the wedge line at $4.45 and
+                    # holding, while its invalidation sits at $4.56, so this cleared a true
+                    # retest on the first run after it was posted.
+                    if (not past and stage == 'retest'
+                            and 'Channel' in (s.get('pattern') or main.get('pattern') or '')
+                            and abs(price - inv) > RETEST_BAND * inv):
                         back = s.get('prevStage') or 'confirmed'
                         edits += _stage_edits(text, pos, back, None)   # stageDate was never moved
                         back_inside.append((sym, label, inv, new_price, back, 'away from'))
