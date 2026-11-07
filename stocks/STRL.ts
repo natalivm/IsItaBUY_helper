@@ -153,11 +153,24 @@ export const STRL = defineStock({
   // Management calls it collection timing and says a major portion was banked in
   // early October, which is credible and is NOT the whole story: a business
   // growing revenue 127% consumes working capital whether or not any single
-  // collection slips. The base fcfMargin path here runs 11.6% rising to 14.0%,
-  // i.e. it assumes expansion while the actual series is falling hard. STRL
-  // rates on EPS_PE so this moves the backup model only, but it is the one
-  // genuinely new negative in the data and it is invisible in the EPS line.
-  // Worth re-reading at Q4, when the October collections show up.
+  // collection slips.
+  //
+  // CHECKED, and the first read of this overstated it. The model's base year of
+  // 11.6% is not optimistic — it is mid-range. 9M FCF is $311.64M on $3,557.79M
+  // of revenue, 8.8%, and FY26 lands anywhere from 8.8% to 14.9% purely on how
+  // much of the Q3 receivable is collected in Q4 ($100M of Q4 FCF gives 8.8%,
+  // $385M gives 14.9%). 11.6% sits in the middle of that, so re-cutting it would
+  // be false precision on a number one collection cycle decides. Left alone.
+  //
+  // THE REAL TENSION IS BETWEEN THIS PATH AND THE GROWTH ONE, and it is worth
+  // more than the base year. The expansion to 14.0% is structurally defensible —
+  // at a 20.8% EBITDA margin, ~3% capex and a 24% tax rate, ~13-14% is about
+  // where FCF lands once growth stops consuming working capital. But it only
+  // happens BECAUSE the base revGrowth collapses to [0.18, 0.10, 0.08, 0.07]
+  // after FY26. Management guides 20-30% organic for several years. You can have
+  // that growth or you can have that cash conversion; at those levels you cannot
+  // have both, and the two arrays in this file currently assume you can.
+  // Re-read at Q4 when the October collections land.
   //
   // SECOND, Q4 IS GUIDED SHARPLY DOWN AND THE FY NUMBER IS NOT A RUN-RATE.
   // 9M GAAP diluted EPS is $15.01 against a $19.16-19.42 FY guide, so Q4 GAAP
