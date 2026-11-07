@@ -191,18 +191,18 @@ export const PLTR = defineStock({
 
   desc: [
     'Enterprise AI spending normalizes as ROI proof-points lag deployment hype; AIP boot-camps convert to pilots but not full rollouts. Revenue growth falls from ~80% to the low teens by FY30. ' +
-      'EPS compounds ~20% from the $1.69 FY26E base while the multiple compresses from ~95× toward 25×. 5yr target {target} ({cagr} annualized) — multiple compression overwhelms strong absolute growth.',
+      'EPS compounds ~12% from the $1.69 FY26E base while the multiple compresses from ~95× toward 25×. 5yr target {target} ({cagr} annualized) — multiple compression overwhelms strong absolute growth.',
     'AIP scales: US commercial sustains triple-digit growth into FY27 then decelerates gracefully; government modernization continues. FY26 lands at the raised ~$8.15B guide. ' +
-      'EPS compounds ~30% from the $1.69 base as margins expand. The multiple compresses from ~95× to ~38× through earnings growth. 5yr target {target} ({cagr} annualized) — quality compounds but you pay the multiple-compression tax.',
+      'EPS compounds ~24% from the $1.69 base as a normalizing tax rate eats the operating leverage. The multiple compresses from ~95× to ~38× through earnings growth. 5yr target {target} ({cagr} annualized) — quality compounds but you pay the multiple-compression tax.',
     'AIP becomes the default enterprise AI orchestration layer; revenue sustains 40%+ growth through FY28 and government wins AI-enabled defense modernization (Maven, TITAN, NGC2). ' +
-      'EPS compounds ~40% from the $1.69 base and the market awards a 55× exit P/E for durable growth + structural moat. 5yr target {target} ({cagr} annualized).',
+      'EPS compounds ~38% from the $1.69 base and the market awards a 55× exit P/E for durable growth + structural moat. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
     'AI spending hype-cycle peaks; enterprises pull back on big-platform commitments and favor point-solutions. AIP pilots fail to convert to production at scale. ' +
       'Government budget cycle tightens. At ~95× FY26E EPS, multiple compression dominates returns even with continued revenue growth.',
     'Q2 2026 (revenue +93%, US commercial +149%, record $2.1B US commercial TCV, the largest guide raise in company history) shows AIP converting at scale. ' +
-      'Margins and FCF validate the software unit economics. EPS compounds ~30% annually, and from ~95× FY26E the multiple compression still eats most of it. Verdict: BUY, barely — the Q3 guide lifted the base just past the line, and the whole margin is one quarter\'s stock-comp assumption.',
+      'Margins and FCF validate the software unit economics. EPS compounds ~24% annually once the near-zero tax rate is allowed to normalize, and from ~95× FY26E multiple compression eats the rest. Verdict: HOLD — the Q3 guide genuinely lifted the base, but $160 already pays for base-case revenue at a healthy margin.',
     'AIP becomes the operating system for enterprise AI — every Fortune 500 builds on Foundry/AIP. Government wins TITAN, Maven, NGC2 expansions plus international defense. ' +
       'Revenue sustains 40%+ growth through FY28. The "enterprise AI infrastructure layer" thesis re-rates the multiple permanently above software peers.',
   ],
