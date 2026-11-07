@@ -6,45 +6,69 @@ export const ANET = defineStock({
   sector: 'Cloud Networking',
   themeColor: '#6366f1',
   updatedOn: '11/06',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-10',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-11-07',
   currentPrice: 170.8,
   fairPriceRange: '$190 - $289',  // stockanalysis.com analyst target range, Oct 9 2026
-  shares0: 1276,       // Q2 2026 diluted
-  rev25: 9006,         // FY2025; FY26E consensus $12.68B (+41%; mgmt ~$12.6B), FY27E $16.34B (+29%)
-  fcfMargin25: 0.47,
-  taxRate: 0.215,
-  cash: 13343,         // Jun 30 2026: $2.29B cash + $11.05B marketable securities
+  shares0: 1280,       // Q4 2026 guided diluted (TIKR Q3 actual 1,278.20 weighted diluted, 1,262.20 basic)
+  rev25: 9006,         // FY2025. FY26 is now $13,352M from TIKR's actual quarters ($2,709.0 + $3,035.7 + $3,657.6) plus the $3.95B Q4 guide midpoint — +48.3%, against the $12.68B consensus this file was built on. FY27 is guided to ~$18.5B.
+  fcfMargin25: 0.47,   // FY2025. FY26 is running 40.3% through three quarters and LTM is 42.2% — see fcfMargin below.
+  taxRate: 0.21,       // guided for Q4 and FY27. TIKR LTM actual is 18.5%, so this is the conservative of the two.
+  cash: 14359,         // TIKR LTM net cash at 9/30/26; management said $14.4B of cash and marketable securities, no debt
   debt: 0,
-  beta: 1.10,
+  beta: 1.64,          // TIKR 5-year beta, Nov 6 2026 (was 1.10). This raises the WACC and is the single biggest adverse input in this update.
   costDebt: 0.045,
-  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 83)
+  rsRating: 99,         // IBD RS per user, 10/10/2026 (was 83). Pre-dates the print; already at the ceiling, so little room to move.
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
-  // Q2 2026 UPDATE (Aug 4, 2026) — first data review
+  // Q3 2026 UPDATE (Nov 7 2026) — call plus TIKR quarterly actuals
   // ─────────────────────────────────────────────────────────────────────────
-  // First $3B+ quarter. Revenue $3,036M (+37.7% y/y, +12.1% q/q). Non-GAAP
-  // GM 63.4%, op margin 49.9%; non-GAAP EPS $1.02, GAAP $0.95. SBC $120M.
-  // H1 OCF $2.78B. Cash + securities $13.3B, no debt; no buybacks in H1.
-  // Deferred revenue $6.87B; inventory $2.54B. Q3 GUIDE: revenue ~$3.3B,
-  // non-GAAP op margin 48-49%, EPS $1.06-1.08. Mgmt: FY26 ~$12.6B (~+40%);
-  // visibility ~2 quarters, guidance supply-gated; supply tightness and
-  // component inflation expected to last until 2028. Street: Strong Buy
-  // (32), PT $190-289 (median $248); FY26E EPS $4.12 / rev $12.68B, FY27E
-  // $5.22 / $16.34B. ~53× FY26E / ~42× FY27E.
+  // Revenue $3,657.6M, +58.5% y/y — the largest year-over-year growth in
+  // Arista's history as a public company, and well above the ~$3.3B guided.
+  // Non-GAAP gross margin 64%, operating margin 49.1%, net income $1.53B,
+  // diluted EPS $1.20 against a $1.06-1.08 guide. FY26 guidance raised for
+  // the FOURTH time this year, to just over $13.3B (+48%).
+  //
+  // FY27 FIRST GUIDE, and it is the reason this file changed shape: revenue
+  // +38-40% to ~$18.5B, gross margin 62-64%, operating margin ~49%, tax ~21%.
+  // Within it, AI fabrics double to ~$7B from $3.5B and campus grows 60% to
+  // ~$2B from $1.25B. The model's base case had FY26 at +40% and FY27 at
+  // +27%; both were too low, the first by an actual and the second by a
+  // guide. revGrowth now starts from the actual and takes the guide.
+  //
+  // THE OFFSET IS CASH CONVERSION, and it is why this is not a straight
+  // upgrade. FCF margin by quarter: 49.2% -> 60.5% -> 34.7% -> 30.1%. FY26 is
+  // running 40.3% against FY25's 47%, because inventory went $2.5B -> $3.2B
+  // (a $674.6M build in Q3 alone) and purchase commitments $9.7B -> $11.4B,
+  // now including a multi-year memory agreement. Management says the
+  // fluctuations continue. fcfMargin starts at 0.40 and recovers as the
+  // inventory ships, which is what it was bought for.
+  //
+  // Beta 1.10 -> 1.64 per TIKR, which raises the WACC and is the single
+  // biggest adverse input here — it works against the revenue upgrade.
+  //
+  // Two quirks worth not misreading. GAAP EPS of $1.22 EXCEEDS the $1.20
+  // non-GAAP, because Other Non Operating income was +$135.8M in Q3 against
+  // ~$4M in prior quarters. And deferred revenue FELL slightly to $6.8B
+  // while revenue grew 58.5% — management's point being that the P&L did not
+  // need to draw deferred down to get there.
+  //
+  // Not updated: rsRating (Oct 10 IBD read, already at 99) and the analyst
+  // target low/high/count (Oct 9, pre-print). Street target median is TIKR's
+  // $246.25, within 1% of the $248 it replaces.
   // ─────────────────────────────────────────────────────────────────────────
 
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 190, targetMedian: 248, targetHigh: 289, numAnalysts: 32 },  // stockanalysis.com, Oct 9 2026
+  analystConsensus: { rating: 'Strong Buy', targetLow: 190, targetMedian: 246.25, targetHigh: 289, numAnalysts: 32 },  // median = TIKR street target, Nov 6 2026; low/high/count still stockanalysis Oct 9
   revGrowth: [
-    [0.38, 0.10, 0.095, 0.09, 0.085],  // Bear: FY26 ~locked near $12.4B; AI networking spend normalizes from FY27
-    [0.40, 0.27, 0.18, 0.17, 0.16],    // Base (+0.5%/yr revPrem): FY26 ≈ consensus $12.68B, FY27 ≈ $16.3B consensus, then mid/high-teens
-    [0.41, 0.31, 0.24, 0.21, 0.20],    // Bull (+1-1.5%/yr revPrem): scale-up/ESUN + new 10% customers
+    [0.483, 0.30, 0.13, 0.11, 0.10],   // Bear: FY26 is actual, so a bear case can only start at FY27 — guide missed on supply or AI digestion, then normalizes
+    [0.483, 0.386, 0.23, 0.18, 0.15],  // Base: FY26 actual +48.3%, FY27 at the guided ~$18.5B midpoint, then decay. Reaching ~$32B by FY30 is ~16% of the >$200B TAM management sizes
+    [0.483, 0.42, 0.30, 0.25, 0.20],   // Bull: above the guide, scale-up reaching production in 2028 as described, campus compounding off the 60% it is guided to in 2027
   ],
   fcfMargin: [
-    [0.46, 0.455, 0.45, 0.445, 0.44],
-    [0.46, 0.4625, 0.465, 0.4675, 0.47],
-    [0.46, 0.465, 0.47, 0.475, 0.48],
+    [0.38, 0.38, 0.385, 0.39, 0.39],     // Bear: the working-capital drain does not reverse
+    [0.40, 0.43, 0.45, 0.46, 0.465],     // Base: FY26 is running 40.3%, down from FY25's 47%, entirely on inventory ($2.5B -> $3.2B) and purchase commitments ($9.7B -> $11.4B). Recovers as the inventory ships, which is what it was bought for
+    [0.41, 0.45, 0.47, 0.48, 0.49],      // Bull: the build converts quickly and conversion returns to the FY25 level
   ],
   exitMultiple: [18, 28, 32],
   desc: [
@@ -69,8 +93,8 @@ export const ANET = defineStock({
     },
   ],
   debtSafety: {
-    netDebt: -13343,
-    ebitda: 6300,          // FY26E: non-GAAP op margin ~49% × $12.68B + D&A — approximate
+    netDebt: -14359,       // TIKR LTM at 9/30/26
+    ebitda: 6050,          // FY26E GAAP: $1,181.1 + $1,401.4 + $1,666.0 actual plus Q4 at ~45% of the $3.95B guide, plus D&A. TIKR LTM GAAP EBITDA is $5,304.2M.
     fy: 'FY26E',
     note: 'Zero debt, $13.3B cash & securities (Jun 30 2026). One of the cleanest balance sheets in networking. Net cash exceeds annual EBITDA nearly 3×.',
   },
