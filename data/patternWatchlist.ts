@@ -2631,6 +2631,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "STRL",
     name: "Sterling Infrastructure, Inc.",
+    checkedOn: "2026-11-07",
     trend: "down",
     rsi: 22.6,
     price: 252.82,
@@ -2667,6 +2668,10 @@ export const PATTERN_STOCKS: PatternStock[] = [
       ],
       note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $365.35 on Oct 23.",
     },
+    keyLevel: {
+      price: 239.36,
+      text: "$239.36 confirms the weekly descending channel \u2014 the low of the week that formed it. Back above $285.17 and the formation cancels instead.",
+    },
     more: [
       {
         pattern: "Descending Channel",
@@ -2689,38 +2694,39 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $516.00 on Sep 18.",
       },
       {
-        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
-        direction: "up",
-        stage: "confirmed",
-        stageDate: "2026-09-28",
-        signal: 497.15,
-        confirm: 516.95,
-        invalidation: 206.56,
-        target: 696.29,
-        lines: [
-          { from: ["2026-06-01", 1005.68], to: ["2026-11-02", 206.56] },
-          { from: ["2026-06-01", 806.54], to: ["2026-11-02", 7.42] },
-        ],
-        note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $516.95 on Sep 28.",
+        direction: "down",
+        stage: "signal",
+        stageDate: "2026-11-02",
+        signal: 285.17,
+        confirm: 239.36,
+        invalidation: 515.61,
+        target: 54.74,
+        signalRule:
+          "a completed weekly close below $285.17; a close back inside cancels it.",
+        confirmRule:
+          "a later completed weekly close below $239.36, beyond the low of the candle that formed it.",
+        failRule:
+          "a completed weekly close above $515.61, then a follow-through close above that candle's high.",
+        note: "Source tool, Nov 7 2026, from the setup's own panel \u2014 and it REPLACES a machine drawing that said the opposite. Ours had this confirmed UP to $696.29 on a $252.82 stock, with a lower boundary extrapolating to $7.42; its confirm was $516.95, the same number as the falling wedge's, which is the detector drawing one break twice. Theirs: formed on the week of Nov 2 with the first weekly close below $285.17 ($252.82). Confirms below $239.36 \u2014 which is that same week's low, so confirm is the signal candle's extreme exactly as PATTERN_RULES says. Retest is a pullback to $285.17 that closes below it, 8 candles left, and it is the cheaper entry. Measured move $54.74 in quarters: $227.56, $169.96, $112.35, $54.74. That is a 78% fall and squarely a 📐 drawing \u2014 read it as a horizon, not a forecast. Lines dropped rather than kept: the stored pair fitted the upward reading and are not this drawing.",
       },
       {
-        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
         stage: "confirmed",
-        stageDate: "2026-09-28",
-        signal: 470.24,
+        stageDate: "2026-09-14",
+        signal: 482.15,
         confirm: 516.95,
-        invalidation: 289.73,
-        target: 681.53,
-        lines: [
-          { from: ["2026-05-18", 1082.17], to: ["2026-11-02", 164.27] },
-          { from: ["2026-05-18", 702.51], to: ["2026-11-02", 289.73] },
-        ],
-        note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $516.95 on Sep 28.",
+        invalidation: 126.68,
+        target: 731.25,
+        signalRule: "a completed weekly close above $482.15.",
+        confirmRule:
+          "a later completed weekly close above $516.95, beyond the high of the candle that formed it.",
+        failRule:
+          "a completed weekly close below $126.68, back inside the wedge. The wedge line stopped moving the week of Nov 2 2026.",
+        note: "Source tool, Nov 7 2026. Same call we held, three of four levels wrong: formed the week of Sep 7 above $482.15 (closed $511.04), confirmed the week of Sep 14 above $516.95 (closed $518.68), both verified against our own candles. No retest inside 8 candles. Measured move $731.25 in quarters: $544.42 reached, then $606.70, $668.98, $731.25 \u2014 so a quarter done and then price went the other way. OUR OWN RULES DISCOUNT THIS HARD and they are right to: price $252.82 against a $516.95 confirm is the break 51% undone, past DORMANT_UNDONE, so SLOT_UNDONE strips it of the credit its confirmed stage claims. The source tool ranks it first on this stock; we do not, and the difference is that their ranking cannot see a break being given back. Levels imported, slot not.",
       },
       {
         auto: true,
@@ -4429,7 +4435,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
   {
     ticker: "PLTR",
     name: "Palantir Technologies Inc.",
-    checkedOn: "2026-10-25",
+    checkedOn: "2026-11-07",
     trend: "flat",
     rsi: 25.1,
     price: 160.38,
@@ -4505,17 +4511,20 @@ export const PATTERN_STOCKS: PatternStock[] = [
       {
         pattern: "Ascending Channel",
         timeframe: "weekly",
-        direction: "both",
-        stage: "forming",
-        breakUp: 208.2,
-        breakDown: 144.04,
-        goalUp: 272.35,
-        goalDown: 79.89,
-        lines: [
-          { from: ["2026-04-20", 152.68], to: ["2026-11-02", 208.2] },
-          { from: ["2026-04-20", 88.53], to: ["2026-11-02", 144.04] },
-        ],
-        note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $208.20 or below $144.04 would start a signal.",
+        direction: "down",
+        stage: "signal",
+        stageDate: "2026-11-02",
+        signal: 162.69,
+        confirm: 152.6,
+        invalidation: 234.1,
+        target: 91.28,
+        signalRule:
+          "a completed weekly close below $162.69; a close back inside cancels it.",
+        confirmRule:
+          "a later completed weekly close below $152.60, beyond the low of the candle that formed it.",
+        failRule:
+          "a completed weekly close above $234.10, then a follow-through close above that candle's high.",
+        note: "Source tool, Nov 7 2026, from the setup's own panel. This REPLACES the either-direction placeholder that sat here with no signal, confirm or target \u2014 which is the hand-off CLAUDE.md describes: a both-way setup that breaks cannot draw its own directional levels, so a human has to. OURS NEVER SAW THE BREAK AT ALL: our lower boundary read $144.04 at the week of Nov 2 against their $162.69, and price closed $160.38 \u2014 through their line and not ours. Same pattern, different fit, and theirs is the one price respected. Three checks against our candles, all exact: the week of Nov 2 is the first close under $162.69 (the week before closed $184.11); their confirm $152.60 IS that week's low, so confirm is the signal candle's extreme as PATTERN_RULES requires; and the quarter steps reproduce at $144.84, $126.98, $109.13, $91.28. Retest is a pullback to $162.69 closing below it, 8 candles left, the cheaper entry. Lines dropped \u2014 the stored pair is the drawing that missed the break.",
       },
       {
         pattern: "Ascending Channel",
@@ -10728,7 +10737,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     signalRule: "a completed weekly close below $60.45; a close back inside cancels it.",
     confirmRule: "a later completed weekly close below $42.66, beyond the signal candle's low.",
     failRule: "a completed weekly close back inside the broken boundary, above $75.96.",
-    note: "The wide rising channel off the 2025 lows, broken down and confirmed on the week of Oct 12 with a weekly close below $42.66. The channel is wide, so the measured move is an aggressive $16.48 and the $75.96 invalidation sits 93% overhead — a level nothing will trade against. The direction is the evidence here; neither number is a stop. Levels taken from the source tool Oct 25. The drawing now starts at the week of Jun 15 rather than Apr 2025 — the same two lines over a shorter span, holding the June high touches and the Jul 13 low touch. Extended back to 2025 the lower boundary reached -$25.75, a price nothing could have traded against; no level moved.",
+    note: "The wide rising channel off the 2025 lows, broken down and confirmed on the week of Oct 12 with a weekly close below $42.66. The channel is wide, so the measured move is an aggressive $16.48 and the $75.96 invalidation sits 93% overhead — a level nothing will trade against. The direction is the evidence here; neither number is a stop. Levels taken from the source tool Oct 25. The drawing now starts at the week of Jun 15 rather than Apr 2025 — the same two lines over a shorter span, holding the June high touches and the Jul 13 low touch. Extended back to 2025 the lower boundary reached -$25.75, a price nothing could have traded against; no level moved. UNRESOLVED, Nov 7: the source tool's list also shows a weekly Ascending Channel as \"up, measured move reached\", which reads as a contradiction of this downward call and probably is not one. AMKR ran $14.03 (Apr 2025) to $96.68 (Jun 2026), so an ascending channel breaking UP and reaching its objective during that run is a COMPLETED call, while this one is the live break the other way \u2014 confirmed on the week of Oct 12, which closed $41.82 against the $42.66 level. If that reading is right, the completed one is a training label we do not hold: data/completedCalls.json has no AMKR row at all. Its panel would settle both questions; until then nothing here is changed.",
     keyLevel: {
       price: 40.19,
       text: "$40.19 confirms the falling wedge: target $46.30 against a $35.10 stop, 1.7x, and that close lands on or after Monday's print. Stretched, watched, not yet turned.",

@@ -2,17 +2,17 @@
 // Loaded on demand by stocks/prose/index.ts when a detail page opens.
 export const prose = {
   reasonsToBuy: [
-    'CEC acquisition adds turnkey electrical capability, creating a site-development-plus-electrical bundle no competitor can match at scale',
-    'Record backlog with strong book-to-burn ratio provides multi-year earnings visibility rare for a construction company',
-    'Five consecutive years of accelerating EPS growth demonstrates genuine operating leverage, not just cycle tailwinds',
-    'AI data center boom drives structural demand for underground utilities and high-voltage infrastructure as project complexity grows',
-    'Near net-cash balance sheet and active buyback program provide capital return optionality alongside organic growth',
+    'Visible work now runs years ahead, on campuses already permitted and powered for later phases',
+    'The electrical arm is scaling far faster than planned on almost no capital, and is ahead of its margin plan',
+    'Site margins step up as campuses reach later phases and new regions become vertically integrated',
+    'Management targets sustained double-digit organic profit growth, with acquisitions adding crews rather than carrying the story',
+    'Net cash plus a large undrawn revolver funds growth, tuck-ins and buybacks at the same time',
   ],
   risksToBuy: [
-    'Data center capex is cyclical — a hyperscaler spending pause would simultaneously crush earnings and compress the elevated multiple',
-    'Growth is now heavily acquisition-assisted, so organic momentum and integration need to keep pace with a much bigger base',
-    'Skilled labor scarcity is an acute bottleneck that could cap throughput and pressure margins as project scale grows',
-    'IIJA expiration in late 2026 creates funding uncertainty for the Transportation segment if a successor bill is delayed',
-    'CEC integration execution risk is real — cultural and operational friction could delay synergy realization in the most critical growth segment',
+    'Capacity rather than demand is the binding constraint — growth needs hiring and acquiring to keep pace',
+    'Data center capex is cyclical, and a hyperscaler pause would hit the segment the company is built around',
+    'Permitting and local opposition can stall projects, with the rules in its biggest growth state currently unsettled',
+    'Cash conversion is falling as receivables balloon with growth, even while reported earnings accelerate',
+    'Building Solutions is shrinking with housing and management expects the pressure to persist',
   ],
 };

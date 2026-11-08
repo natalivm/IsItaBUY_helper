@@ -49,6 +49,18 @@
   },
   {
     "ticker": "AMKR",
+    "pattern": "Falling Wedge",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-10-12",
+    "confirm": 52.15,
+    "invalidation": 41.96,
+    "target": 100.29,
+    "lastPrice": 32.82
+  },
+  {
+    "ticker": "AMKR",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
     "direction": "down",
@@ -98,18 +110,6 @@
   {
     "ticker": "AZO",
     "pattern": "Ascending Channel",
-    "timeframe": "weekly",
-    "direction": "down",
-    "stage": "failed",
-    "stageDate": "2026-11-06",
-    "confirm": 3007.8,
-    "invalidation": 3341.49,
-    "target": 955.4,
-    "lastPrice": 3216.35
-  },
-  {
-    "ticker": "AZO",
-    "pattern": "Ascending Channel",
     "timeframe": "daily",
     "direction": "down",
     "stage": "failed",
@@ -117,6 +117,18 @@
     "confirm": 2903.57,
     "invalidation": 3636.0,
     "target": 1631.85,
+    "lastPrice": 3216.35
+  },
+  {
+    "ticker": "AZO",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 3007.8,
+    "invalidation": 3341.49,
+    "target": 955.4,
     "lastPrice": 3216.35
   },
   {
@@ -264,6 +276,30 @@
     "lastPrice": 13.26
   },
   {
+    "ticker": "GD",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-10-30",
+    "confirm": 349.84,
+    "invalidation": 359.91,
+    "target": 298.66,
+    "lastPrice": 372.59
+  },
+  {
+    "ticker": "KKR",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-02",
+    "confirm": 92.7,
+    "invalidation": 96.05,
+    "target": 72.02,
+    "lastPrice": 98.01
+  },
+  {
     "ticker": "KRMN",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -302,6 +338,18 @@
   {
     "ticker": "MLM",
     "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-10-30",
+    "confirm": 502.56,
+    "invalidation": 531.59,
+    "target": 307.31,
+    "lastPrice": 540.41
+  },
+  {
+    "ticker": "MLM",
+    "pattern": "Ascending Channel",
     "timeframe": "daily",
     "direction": "down",
     "stage": "failed",
@@ -322,6 +370,18 @@
     "invalidation": 53.6,
     "target": 34.95,
     "lastPrice": 45.72
+  },
+  {
+    "ticker": "MU",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-10-28",
+    "confirm": 913.56,
+    "invalidation": 968.82,
+    "target": 638.57,
+    "lastPrice": 934.27
   },
   {
     "ticker": "OKLO",
@@ -408,6 +468,30 @@
     "lastPrice": 153.03
   },
   {
+    "ticker": "THM",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 2.31,
+    "invalidation": 1.7,
+    "target": 3.07,
+    "lastPrice": 1.21
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-10-30",
+    "confirm": 244.89,
+    "invalidation": 211.4,
+    "target": 341.74,
+    "lastPrice": 205.03
+  },
+  {
     "ticker": "UBER",
     "pattern": "Descending Channel",
     "timeframe": "weekly",
@@ -454,6 +538,18 @@
     "invalidation": 168.87,
     "target": 245.62,
     "lastPrice": 165.87
+  },
+  {
+    "ticker": "XOP",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-02",
+    "confirm": 203.6,
+    "invalidation": 198.04,
+    "target": 293.49,
+    "lastPrice": 193.56
   },
   {
     "ticker": "XOP",

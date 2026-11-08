@@ -6,24 +6,30 @@ export const STRL = defineStock({
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
   updatedOn: '11/06',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-11',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-11-07',
   nextEarningsOn: '2026-10-28',   // Q3 2026, after the close (per user, Oct 25 2026); Yahoo has no date for STRL
   currentPrice: 252.82,
-  fairPriceRange: '$700 - $1,000',  // stockanalysis.com analyst target range (Oct 8 2026)
-  shares0: 30.59,              // stockanalysis (Oct 2026)
-  rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (raised guide implies ~+64%; consensus $4.12B incl. Stone Ridge), FY27E $4.93B (+20%)
+  fairPriceRange: '$565 - $834',  // post-Q3 analyst range, Nov 2 2026 (individual cuts since run to $500)
+  shares0: 30.5,               // TIKR, Nov 6 2026 (market cap $7,711.65M at $252.82 reproduces to $7,711M)
+  rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (Q3 guide $4.63-4.73B, ~+88%), FY27E ~$5.6B
   fcfMargin25: 0.116,          // ~11.6% FCF margin (FY25 OCF ~$340M less ~$63M capex on $2.49B rev)
-  taxRate: 0.24,
-  cash: 464,                   // Jun 2026 (stockanalysis)
-  debt: 337,
-  beta: 1.15,
+  taxRate: 0.24,               // confirmed: effective rate 24.5% / 23.3% / 24.9% across Q1-Q3 2026 (TIKR)
+  cash: 217,                   // Q3 2026 quarter end, per the call. Gross debt fell from $337M because the
+  debt: 95,                    // term loan was repaid on Jul 2 out of the expanded $1.5B revolver (now out to
+                               // Jul 2031); net cash barely moved, -$127M to -$122M. TIKR reads LTM net debt
+                               // -$51M, the difference being leases it counts as debt and the call does not.
+  beta: 1.86,                  // TIKR 5-yr beta, Nov 6 2026 (was 1.15). Raises the DCF WACC; STRL rates on
+                               // EPS_PE, so this moves the backup model only.
   costDebt: 0.055,
 
   modelType: 'EPS_PE',
-  baseEps: 20.04,              // FY26E adj. EPS consensus (raised guide implies +84% at midpoint; FY25A $10.88; FY27E $25.41 +27%). Prior $10.95 was FY25A.
+  baseEps: 21.84,              // FY26E adj. EPS. Q3 guide $21.70-21.96 (midpoint $21.83) and the 8-analyst
+                               // consensus $21.84 agree to a cent, which is why this one is not an estimate worth
+                               // arguing with. FY25A $10.88, so FY26 is +101%. FY27E $28.10 (9 analysts, $26.24-30.38),
+                               // +29% on FY26. Prior $20.04 was the pre-Q3 consensus off the August guide.
 
-  rsRating: 77,                 // IBD RS per user, 10/11/2026 (was 96)
+  rsRating: 40,                 // IBD RS per user, 11/07/2026 (was 77 on 10/11, 96 before that)
   rsTrend: 'falling',
   aiImpact: 'TAILWIND',        // Data centers + semiconductor campuses drive E-Infrastructure; CEC adds turnkey electrical
   // Q2 2026 UPDATE (Aug 3, 2026) — first data review
@@ -66,6 +72,137 @@ export const STRL = defineStock({
   // this; treat it as stale rather than as upside.
   // ─────────────────────────────────────────────────────────────────────────
 
+  // Q3 2026 (reported Oct 28, after the close) — THE TEST ABOVE, ANSWERED
+  // ─────────────────────────────────────────────────────────────────────────
+  // The earnings half did not break. Revenue +127%, adj. diluted EPS $7.58
+  // (+118%), E-Infrastructure adj. operating margin 23%, combined backlog
+  // $6.14B and scoped work near $8B. The FY26 guide was RAISED a third time,
+  // to adj. EPS $21.70-21.96 from $19.70-20.30 — the company defended it
+  // rather than withdrawing it, which is exactly what the Oct note said the
+  // evening would decide.
+  //
+  // So the "44% cut" the price implied has not arrived. At $252.82 this is
+  // 11.6x FY26E and 9.0x FY27E ($28.10) on a business that just grew earnings
+  // 118%. The de-rating ran from 50.2x FY26E at the high to 11.6x now, and
+  // it did it through a quarter that beat.
+  //
+  // What did show up is smaller and real: Building Solutions revenue -5% on a
+  // slower homebuilder, and a guide that assumes heavier Q4 weather than 2025.
+  // Neither is the hyperscaler pause the risk bullets describe. The stock still
+  // fell on the print.
+  //
+  // FROM THE CALL (Oct 29) — what the segments and the framework actually say
+  // ─────────────────────────────────────────────────────────────────────────
+  // E-Infrastructure revenue +212%, adj. operating income +171%, margin 23%.
+  // Site development more than DOUBLED organically. CEC (electrical) did $426M
+  // in the quarter, roughly quadrupling its pro-forma prior year, and full year
+  // "could exceed $1 billion".
+  //
+  // The margin line needs reading carefully, because the headline falls while
+  // both halves improve. Segment margin declined y/y only because CEC went from
+  // 10% to a third of segment revenue, and electrical is structurally
+  // lower-margin (more pass-through material). Site margins held flat q/q while
+  // absorbing the Micron ramp, whose first ~$600M was 4 million cubic yards of
+  // purchased rock — material-heavy, low-margin, and rolling into normal phases
+  // around Q2 2027. CEC core margin is already +150bps against a 300-500bps
+  // commitment, with ~160bps of noncore drag being wound down through 2027.
+  // So "margins fell" and "both businesses improved" are both true this quarter.
+  //
+  // Transportation revenue -3% BY CHOICE — crews redeployed into E-Infra — and
+  // adj. operating income still +22% at a 19.7% margin. Q4 implies ~19% group
+  // margin against 21.6% in Q3: seasonality, deliberate holiday scheduling, and
+  // a weather assumption set against 2025's unusually easy winter.
+  //
+  // VISIBILITY, which is the actual reason to own this: scoped work ~$8B (+90%),
+  // E-Infra scoped ~$7B (+130%). Beyond that, thousands of acres already
+  // permitted and POWERED on campuses being worked today — management puts it at
+  // more than five further years of work that appears in no backlog number.
+  //
+  // THE FRAMEWORK, AND WHY epsCagr IS NOT RAISED ON IT. Management now targets
+  // 20-30% annual ORGANIC profitability growth "over the next several years",
+  // says 2027 "meets or exceeds" it, and frames ~50% a year including M&A
+  // against a 48% six-year record. Our base epsCagr is 14 — a deliberate fade
+  // from FY27's +29% consensus down to ~10% by year five, i.e. well under
+  // management's own organic floor. That gap is a choice, not an oversight:
+  // a multiyear target is the weakest input class there is, the rating is
+  // already STRONG BUY at the hard 16% threshold, and raising the base would
+  // only push an already-extreme $925 target further from a $253 stock without
+  // changing a single decision. If 2027 lands inside the organic range, raise it
+  // then on the print.
+  //
+  // THE BINDING CONSTRAINT IS CAPACITY, NOT DEMAND — management says so
+  // repeatedly ("more opportunity than we have capacity"), which is why M&A is
+  // framed as buying crews rather than buying growth, and why exceeding 20-30%
+  // depends on acquisitions landing. Permitting noise is real but unresolved
+  // rather than negative: Texas TCEQ is in limbo over automated water permits,
+  // and management reports nobody backing off. Building Solutions stays under
+  // pressure into 2027. The Q3 receivables spike was collection timing and was
+  // largely banked in early October.
+  //
+  // TWO THINGS THE EPS LINE HIDES, both from the TIKR quarterlies (Nov 6)
+  // ─────────────────────────────────────────────────────────────────────────
+  // FIRST, FREE CASH FLOW HAS GONE THE OTHER WAY FROM EARNINGS. Quarterly FCF
+  // margin reads 21.1% -> 17.7% -> 9.6% -> 3.4% across Q4'25 to Q3'26 while
+  // EBITDA margin EXPANDED over the same four quarters, 18.3% -> 21.7%. The
+  // whole divergence is working capital: receivables took $344.75M out of Q3
+  // alone, so $214.93M of net income converted to $99.07M of operating cash and
+  // $53.26M of FCF. (That ties out against the call's "$427M of 9M operating
+  // cash flow" to the dollar, so it is the same arithmetic, not a different
+  // basis.) TTM FCF margin is 10.9%.
+  //
+  // Management calls it collection timing and says a major portion was banked in
+  // early October, which is credible and is NOT the whole story: a business
+  // growing revenue 127% consumes working capital whether or not any single
+  // collection slips.
+  //
+  // CHECKED, and the first read of this overstated it. The model's base year of
+  // 11.6% is not optimistic — it is mid-range. 9M FCF is $311.64M on $3,557.79M
+  // of revenue, 8.8%, and FY26 lands anywhere from 8.8% to 14.9% purely on how
+  // much of the Q3 receivable is collected in Q4 ($100M of Q4 FCF gives 8.8%,
+  // $385M gives 14.9%). 11.6% sits in the middle of that, so re-cutting it would
+  // be false precision on a number one collection cycle decides. Left alone.
+  //
+  // THE REAL TENSION IS BETWEEN THIS PATH AND THE GROWTH ONE, and it is worth
+  // more than the base year. The expansion to 14.0% is structurally defensible —
+  // at a 20.8% EBITDA margin, ~3% capex and a 24% tax rate, ~13-14% is about
+  // where FCF lands once growth stops consuming working capital. But it only
+  // happens BECAUSE the base revGrowth collapses to [0.18, 0.10, 0.08, 0.07]
+  // after FY26. Management guides 20-30% organic for several years. You can have
+  // that growth or you can have that cash conversion; at those levels you cannot
+  // have both, and the two arrays in this file currently assume you can.
+  // Re-read at Q4 when the October collections land.
+  //
+  // SECOND, Q4 IS GUIDED SHARPLY DOWN AND THE FY NUMBER IS NOT A RUN-RATE.
+  // 9M GAAP diluted EPS is $15.01 against a $19.16-19.42 FY guide, so Q4 GAAP
+  // is $4.15-4.41 — a 38% sequential FALL from Q3's $6.92. No assumption is
+  // needed for that, it is the guide minus the reported quarters. Seasonality,
+  // holiday scheduling and the weather assumption are the stated reasons. Anyone
+  // annualising Q3 gets a number the company has already said it will not hit.
+  //
+  // (baseEps is the ADJUSTED figure, $21.84. The adjusted-to-GAAP gap runs about
+  // $0.66-0.80 a quarter, ~$2.5 a year, mostly intangible amortisation from CEC
+  // and Stone Ridge. exitPE is applied to adjusted EPS, which is the convention
+  // across this ledger — just do not compare it to a GAAP P/E screen.)
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // STILL NOT REFRESHED:
+  //   - nextEarningsOn is now in the past. The Oct note warns against dating
+  //     the next one off the old cadence, so it is left rather than guessed.
+  //
+  // RS CAME IN AT 40 (from 77), and it moves the GROUP but not the rating.
+  // The rating is untouched because 29.6% CAGR clears the hard 16% STRONG BUY
+  // line, which needs no quality boost — the label holds all the way down to
+  // RS 10. The group is a different test: at a $7.7B cap STRL is not large-cap,
+  // so it needs momentum, and 40 is under the 70 "good momentum" line while the
+  // mid-RS alternative wants rsTrend 'rising' against the actual 'falling'. So
+  // TURBO_GROWTH -> WATCH_LIST.
+  //
+  // That pairing is uncomfortable and it is correct: the cheapest the stock has
+  // ever been on forward earnings, rated STRONG BUY by the model, sitting in
+  // WATCH_LIST because price momentum is poor. The classifier deliberately wants
+  // a reason AND a tape, and right now only the reason is there.
+  // ─────────────────────────────────────────────────────────────────────────
+
 
   // ── EPS/PE Scenarios ──
   epsCagr: [6, 14, 19],        // From the FY26E $20.04 base (re-based Oct 2026; was [8,14,18] off FY25A $10.95)
@@ -74,11 +211,16 @@ export const STRL = defineStock({
 
   // ── DCF backup scenarios ──
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 700, targetMedian: 754, targetHigh: 1000, numAnalysts: 8 },  // stockanalysis.com (Oct 8 2026)
+  // Nov 2 2026, after the print. The mean $693.43 is corroborated twice — Yahoo's forecast page and
+  // the TIKR card of Nov 6 give the same figure to the cent. Every target moved DOWN through a quarter
+  // that beat and raised: Cantor $742 -> $565 (Overweight), Oppenheimer $950 -> $775, Stifel $804 -> $742,
+  // DA Davidson $700 -> $680, Argus $700 -> $500 — all of them still Buy-equivalent. That is analysts
+  // marking the multiple, not the earnings, which is the same move the Oct note described the market making.
+  analystConsensus: { rating: 'Buy', targetLow: 565, targetMedian: 693.43, targetHigh: 834, numAnalysts: 8 },
   revGrowth: [
-    [0.58, 0.05, 0.02, 0.02, 0.02],   // Bear: FY26 incl. acquisitions, then DC capex digests
-    [0.64, 0.18, 0.10, 0.08, 0.07],   // Base: FY26 ≈ $4.1B, FY27 ≈ consensus, then fade
-    [0.68, 0.25, 0.15, 0.12, 0.10],   // Bull: Supercycle + new geos + full CEC/Stone Ridge integration
+    [0.86, 0.05, 0.02, 0.02, 0.02],   // Bear: FY26 at the low end of the Q3 guide, then DC capex digests
+    [0.88, 0.18, 0.10, 0.08, 0.07],   // Base: FY26 ≈ $4.68B (guide midpoint), FY27 ≈ consensus, then fade
+    [0.90, 0.25, 0.15, 0.12, 0.10],   // Bull: Supercycle + new geos + full CEC/Stone Ridge integration
   ],
   fcfMargin: [
     [0.095, 0.085, 0.080, 0.075, 0.075],   // Bear: CEC integration friction, mix shift headwinds
@@ -87,24 +229,24 @@ export const STRL = defineStock({
   ],
   termGrowth: [0.015, 0.025, 0.030],
   exitMultiple: [8, 12, 15],
-  bbRate: [0.005, 0.012, 0.020],     // $400M buyback program authorized Nov 2025; ~1% annual at current market cap
+  bbRate: [0.008, 0.020, 0.030],     // $123M of stock repurchased in 9M 2026 per the cash flow statement (~2.1% annualized of a $7.7B cap); $267M left on the authorization
   ebitdaProxy: [0.17, 0.205, 0.23],   // FY25 adj. EBITDA margin >20% (first time in history); $503.8M EBITDA; expanding with E-Infra mix shift
   bullMaOptVal: 391 * 30.7 * 0.03,   // M&A optionality in fragmented infrastructure market (lower % at $15B+ market cap)
 
   desc: [
     'Data center capex cycles down in 2027 as hyperscalers digest the build-out wave, and E-Infrastructure organic growth slows sharply; skilled labor scarcity caps throughput and semiconductor megaprojects slip. ' +
-      'Earnings grow only ~6% from the FY26E $20.04 and the market de-rates Sterling to 16x as growth decelerates. 5yr target {target} ({cagr} annualized).',
+      'Earnings grow only ~6% from the FY26E $21.84 and the market de-rates Sterling to 16x as growth decelerates. 5yr target {target} ({cagr} annualized).',
     'E-Infrastructure keeps growing as the record $4.3B backlog converts and CEC turnkey electrical plus Stone Ridge broaden the offering; semiconductor campuses add a second vector. ' +
-      'Earnings compound ~14% from $20.04 (FY27 +27% consensus, then fade) and the multiple settles at 22x. 5yr target {target} ({cagr} annualized).',
+      'Earnings compound ~14% from $21.84 (FY27 +29% consensus, then fade) and the multiple settles at 22x. 5yr target {target} ({cagr} annualized).',
     'The AI data center supercycle extends through 2028+ and the site-development-plus-electrical bundle becomes the industry standard across new geographies; project sizes keep scaling and margins expand. ' +
       'Earnings compound ~19% and the market sustains a 28x premium for execution and visibility. 5yr target {target} ({cagr} annualized).',
   ],
 
   thesis: [
-    'E-Infrastructure is cyclical, not structural — 2026\'s extraordinary growth (revenue +64%, EPS +84%) is a peak growth rate that will normalize as hyperscaler spending matures. ' +
+    'E-Infrastructure is cyclical, not structural — 2026\'s extraordinary growth (revenue +88%, EPS +101%) is a peak growth rate that will normalize as hyperscaler spending matures. ' +
       'Skilled labor shortages cap throughput, Building Solutions remains a drag, and federal transportation funding faces reauthorization uncertainty. Peak margins are the biggest risk.',
-    'Sterling is a proven beat-and-raise compounder: Q2 2026 adj. EPS +116%, backlog $4.33B (+116%), combined backlog $5.62B, book-to-burn 1.4x, and FY26 guidance raised again. ' +
-      'CEC plus Stone Ridge create a turnkey offering few competitors match at scale, and a net-cash balance sheet funds buybacks and M&A. At ~20x FY27E, the thesis is about earnings power, not re-rating.',
+    'Sterling is a proven beat-and-raise compounder: Q3 2026 adj. EPS +118%, revenue +127%, combined backlog $6.14B, scoped work near $8B, and FY26 guidance raised a third time. ' +
+      'CEC plus Stone Ridge create a turnkey offering few competitors match at scale, and a net-cash balance sheet funds buybacks and M&A. At ~9x FY27E the thesis needs no re-rating at all — it needs the guide to hold.',
     'Sterling as the undisputed E-Infrastructure platform: site development + turnkey electrical + underground utilities for data centers, semiconductor fabs and mega-distribution centers. ' +
       'Geographic expansion multiplies the addressable market and transportation margins keep improving; if the supercycle extends, earnings power keeps compounding well above consensus.',
   ],
@@ -125,9 +267,9 @@ export const STRL = defineStock({
   ],
 
   debtSafety: {
-    netDebt: -128,         // Jun 2026 (stockanalysis): ~$464M cash − ~$337M debt
-    ebitda: 714,           // TTM EBITDA
-    fy: 'TTM Q2 2026',
-    note: 'Net cash ~$0.13B even after the CEC and Stone Ridge acquisitions. Step 1 GREEN.',
+    netDebt: -122,         // Q3 2026 per the call: $217M cash − $95M debt
+    ebitda: 901,           // TTM reported EBITDA through Q3 2026 (TIKR quarterlies); FY26E adj. guide is $970-981M
+    fy: 'Q3 2026 / FY26E guide',
+    note: 'Net cash $0.12B after CEC and Stone Ridge, plus a $1.5B revolver undrawn to Jul 2031. Step 1 GREEN.',
   },
 });

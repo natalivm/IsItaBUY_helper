@@ -7,22 +7,28 @@ export const AMZN = defineStock({
   themeColor: '#ff9900',
   currentPrice: 259.3,
   fairPriceRange: '$230 - $405',  // stockanalysis.com analyst target range, Oct 7 2026
-  shares0: 10800,
-  rev25: 828400,         // FY2026E consensus $828.4B (Q1 $181.5B + Q2 $200.6B + Q3 guide $197-202B); FY27E $948.4B (+14.5%)
-  fcfMargin25: 0.00,     // FY2026 peak capex year — TTM FCF turned NEGATIVE (-$7.6B at Q2) on +$66B y/y capex
+  shares0: 10813,      // TIKR, Nov 6 2026 ($259.30 x 10,813.14 gives the $2,803,847M cap)
+  rev25: 827600,         // FY2026 now three actuals plus a guide: 181,519 + 200,606 + 201,944 + Q4 mid 243,500 = $827.6B.
+                         // The $828.4B consensus this replaces was right to 0.1%. FY27E ~$948B (+14.5%).
+  fcfMargin25: -0.059,   // LTM FCF is -$46.9B on $797.5B of revenue. It was -$7.6B at Q2; Q3 alone burned $34.8B
+                         // on $77.3B of capex, a -17.3% quarterly FCF margin. This is far past 'peak capex year'.
   taxRate: 0.18,
-  cash: 100000,
-  debt: 60000,
-  beta: 1.20,
+  cash: 58714,           // cash and equivalents at Q3 close (TIKR); was 100000, which included securities
+  debt: 249329,          // DERIVED: TIKR LTM net debt is +$190,615M, so debt = cash + that. The old 60000 left this
+                         // file asserting $40B of NET CASH while Amazon issued $152.9B of debt in four quarters
+                         // against $28.8B repaid. The figure includes leases, as TIKR's net debt does.
+  beta: 1.5,             // TIKR 5-yr beta, Nov 6 2026 (was 1.20)
   costDebt: 0.045,
   modelType: 'EPS_PE',
-  baseEps: 8.31,         // FY2026E adjusted EPS — stockanalysis consensus (Oct 7 2026; range $7.65-9.49; FY27E $10.47, +26%). EXCLUDES the one-time Anthropic mark-ups (Q1 $16.8B, Q2 $53.4B pre-tax) that inflate GAAP NI. Prior: $7.85.
+  baseEps: 7.83,         // FY2026E adjusted EPS, rebuilt from reported quarters — see the Q3 note for the bridge.
+                         // Was $8.31, the Oct 7 consensus. Still EXCLUDES the Anthropic mark-ups (Q1 $16.8B,
+                         // Q2 $53.4B pre-tax); FY27E ~$10.47 (+34% on this base).
   rsRating: 98,          // IBD RS per user, 10/10/2026 (was 64)
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   updatedOn: '11/06',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-10',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-11-07',
 
   // Q2 2026 UPDATE (Jul 30, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
@@ -36,14 +42,70 @@ export const AMZN = defineStock({
   // validates the capex; FCF is the price of admission.
   // ─────────────────────────────────────────────────────────────────────────
 
+  // Q3 2026 (reported Oct 29, after the close)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Revenue $201.9B (+12%, +13% ex-FX), operating income $28.1B at a 13.9%
+  // margin — the highest ever. AWS $46.0B, +39.3%, the SIXTH straight quarter
+  // of acceleration and its fastest in nearly five years; AWS operating income
+  // $17.8B at a 38.7% margin, backlog $578B growing triple digits. Ads $19.6B
+  // (+12%, depressed ~850bp by the Prime Day shift into Q2; management expects
+  // high teens in Q4). Q4 guide: revenue $240-247B, operating income
+  // $28.5-33.5B.
+  //
+  // REBUILDING baseEps, AND THE BASIS IS THE WHOLE DIFFICULTY. Consensus for
+  // "FY2026 EPS" ranges from $8.03 to $12.84 depending on whether the Anthropic
+  // mark-ups are in. TIKR is in the second camp: its LTM P/E of 20.96x implies
+  // $12.37 and the four reported quarters sum to exactly that, so its "EPS Excl
+  // Extra Items" does NOT strip them. The line that does is EBT Excl. Unusual
+  // Items, which is clean:
+  //
+  //   Q1  24,295 x 0.775 / 10,874 = $1.73
+  //   Q2  27,611 x 0.775 / 10,903 = $1.96
+  //   Q3  27,755 x 0.775 / 10,929 = $1.97
+  //   Q4  op guide mid 31,000 less ~400 net interest = 30,600 -> $2.16
+  //                                               FY26 = $7.83
+  //
+  // (0.775 is the effective rate net of the discrete tax on the Anthropic
+  // gains, which the headline 22.5-24.0% rates include.)
+  //
+  // So $8.31 was ~6% high. The rating survives — 9.78% -> 8.48% CAGR, still BUY
+  // on the soft 8% threshold the quality boost allows — but the margin is now
+  // 2.2% of EPS. Below $7.66 this is a HOLD.
+  //
+  // Q3 WAS NOT THE MISS IT WAS REPORTED AS. Headlines read $1.89 against
+  // $1.96-2.01. On this basis Q3 earned $1.97: the shortfall was an $890M
+  // investment LOSS below the operating line, the mirror image of the gains
+  // that flatter Q1 and Q2. Operating income rose 61%.
+  //
+  // THE BALANCE SHEET HAD THE SIGN WRONG. This file said net cash $40B. TIKR
+  // reads net debt of +$190.6B. Amazon issued $152.9B of debt across the last
+  // four quarters against $28.8B repaid, while cash fell from $90.1B to $58.7B.
+  // debtSafety stays GREEN but now by Step 2 at 1.05x, not Step 1.
+  //
+  // AND THE CASH BURN IS PAST 'PEAK CAPEX YEAR'. LTM FCF is -$46.9B on $797.5B
+  // of revenue, -5.9%. Q3 alone burned $34.8B on $77.3B of capex. Management
+  // reaffirmed ~$220B of 2026 cash capex and said 2027 will be "meaningfully
+  // more". fcfMargin25 moves 0.00 -> -0.059 to say so. AMZN rates on EPS_PE, so
+  // this is the backup model, but it is the number the bear case is about.
+  //
+  // AWS GUIDANCE IS THE OTHER HALF, and the base revenue path only half reflects
+  // it. Jassy guided AWS "north of 40%" in BOTH 2027 and 2028, with stated
+  // visibility ("big chunks are reserved well in advance") and $578B of backlog.
+  // At ~21% of revenue, AWS +40% plus non-AWS +7.5% gives ~14.4% total for FY27,
+  // which is exactly the 0.14 already stored. Carry it to 2028 and the implied
+  // total is ~15.6% against the 0.12 in year two. Left alone rather than marked
+  // up: a two-year-out segment target is the weakest input class, it is the same
+  // trap the STRL note refused, and revGrowth feeds only the DCF backup here. The
+  // comment on that row said "AWS 15-18%", which is simply stale, and is fixed.
+  // ─────────────────────────────────────────────────────────────────────────
 
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 230, targetMedian: 330, targetHigh: 405, numAnalysts: 60 },  // stockanalysis.com, Oct 7 2026
+  analystConsensus: { rating: 'Strong Buy', targetLow: 230, targetMedian: 326.85, targetHigh: 405, numAnalysts: 60 },  // median = TIKR street target Nov 6 2026 (was $330, so barely moved); low/high still Oct 7
 
   // rev25 = FY2026 estimate; year-1 = FY2027 growth
   revGrowth: [
     [0.10, 0.09, 0.08, 0.07, 0.06], // Bear: AWS decelerates to high-single-digits, retail flats
-    [0.14, 0.12, 0.11, 0.10, 0.09], // Base: AWS 15-18%, ads 20%+, retail stable
+    [0.14, 0.12, 0.11, 0.10, 0.09], // Base: see the Q3 note — 0.14 is right for FY27 but 0.12 under-models FY28
     [0.18, 0.16, 0.14, 0.12, 0.11], // Bull: Trainium/Leo/Rufus all scale; all-three-engines
   ],
   // fcfMargin25 = 4% (FY2026 peak capex); year-1 = FY2027 as capex moderates
@@ -56,10 +118,10 @@ export const AMZN = defineStock({
 
   desc: [
     '2026 record margins prove fleeting — AI capex (TTM FCF already negative) fails to generate enough incremental AWS revenue. Enterprise AI slower than hyped; Azure/Google take share. AWS decelerates to high-single digits by FY28. ' +
-      'Retail margin stalls at 8% on labor/tariff costs; Amazon Leo burns cash without revenue payback. EPS CAGR ~6% from the $8.31 FY26E base. Multiple 22×. 5yr target {target} ({cagr} annualized).',
-    'AWS re-acceleration (+37% in Q2 2026) + Trainium sold-out validates the AI infrastructure thesis. AWS sustains high-teens+ growth through FY28. Retail margin expands to 10-11% on robotics/automation. Ads reaches $80B+ by FY28. ' +
+      'Retail margin stalls at 8% on labor/tariff costs; Amazon Leo burns cash without revenue payback. EPS CAGR ~6% from the $7.83 FY26E base. Multiple 22×. 5yr target {target} ({cagr} annualized).',
+    'AWS re-acceleration (+39.3% in Q3 2026, sixth straight quarter) + Trainium sold-out validates the AI infrastructure thesis. Management guides AWS above 40% in both FY27 and FY28. Retail margin expands to 10-11% on robotics/automation. Ads reaches $80B+ by FY28. ' +
       'Leo commercial Q3 launch + Delta/Apple anchor deals build toward the "many billion-dollar revenue" vision. CapEx peaks FY26-27, FCF inflects sharply. ' +
-      'EPS compounds ~13% (FY27E +26% consensus, then ~10%/yr). Multiple 27×. 5yr target {target} ({cagr} annualized).',
+      'EPS compounds ~13% (FY27E +34% consensus off the rebuilt base, then ~10%/yr). Multiple 27×. 5yr target {target} ({cagr} annualized).',
     'Trainium becomes the leading AI chip ($50B+ standalone implied) as T3/T4 scale. Leo launches profitably Q3 2026 (Delta, Apple, enterprises) and grows into an AWS-like capital return story. ' +
       'Rufus agentic commerce expands wallet share; ads grow to $100B+ with first-party shopper data advantage. All three engines at full speed. EPS compounds ~18% CAGR. Multiple 30×. 5yr target {target} ({cagr} annualized).',
   ],
@@ -83,10 +145,10 @@ export const AMZN = defineStock({
   prob: [20, 50, 30],
 
   debtSafety: {
-    netDebt: -40000,       // approx.: ~$100B cash & securities vs ~$60B long-term debt (excl. leases)
-    ebitda: 190000,        // approx. FY26E: op income ~$95B+ + D&A ~$90B+
-    fy: 'FY26E',
-    note: 'GREEN by Step 1 — net cash (approximate). Leverage is not the risk; capex-driven negative FCF is the thing to watch. Figures approximate.',
+    netDebt: 190615,       // TIKR LTM, Nov 6 2026. This was -40000 — the sign was wrong, not just the magnitude.
+    ebitda: 181219,        // LTM reported EBITDA (49,025 + 47,449 + 42,797 + 41,948)
+    fy: 'LTM Q3 2026',
+    note: 'No longer net cash: Amazon issued $152.9B of debt in four quarters against $28.8B repaid, and the file still said net cash $40B. Still GREEN, but by Step 2 at 1.05x rather than Step 1. The thing to watch is unchanged and now much larger — LTM FCF is -$46.9B.',
   },
 
   burry: {
