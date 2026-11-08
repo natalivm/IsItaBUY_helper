@@ -305,6 +305,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $492.21 on Nov 2.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -322,6 +323,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -341,6 +343,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $523.92 on Oct 26.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -520,6 +523,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -537,6 +541,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -579,6 +584,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $32.69 on Oct 14.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "both",
@@ -595,6 +601,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -609,6 +616,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -864,6 +872,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "Nothing is active here. $184.63 below and $215.06 above are what Wednesday's print picks between, with half the multiple already gone — 56.7x to 29.0x."
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -898,6 +907,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $170.80 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -915,6 +925,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -932,6 +943,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -947,6 +959,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $250.42 or below $177.59 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -993,6 +1006,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "$116.03 is the stop, below the $123-136 landing zone rather than inside it: a stop the thesis expects to be hit is not a stop. Entry is a daily close back above $138.92, never a resting bid."
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -1010,6 +1024,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -1027,6 +1042,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -1166,6 +1182,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -1244,6 +1261,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -1262,6 +1280,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $375.27 or below $223.71 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -1458,6 +1477,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $226.00 on Nov 4.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -1593,6 +1613,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -1641,6 +1662,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "Down 39% and still 57.2x. The daily channel is confirmed down to $72.58; $85.71 is the Matrix buy stop, with price just above it. The 4h reads reverting with a turn-up dot, the daily trending — the bottom is a 4h claim.",
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -1658,6 +1680,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -1674,6 +1697,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $111.37 on Sep 21.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -1690,6 +1714,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $63.20 on Nov 2.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -1706,6 +1731,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $63.20 on Nov 2.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -1745,6 +1771,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $198.77 on Nov 2.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -1780,6 +1807,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -1796,6 +1824,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $237.52 on Oct 16.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -1812,6 +1841,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $255.69 on Sep 8.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -1898,6 +1928,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -1973,6 +2004,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $356.78 on Oct 16.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -1991,6 +2023,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -2153,6 +2186,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $190.66 on Sep 21.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "both",
@@ -2169,6 +2203,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -2189,6 +2224,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $161.89 on Jun 15.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -2467,6 +2503,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "14% off the high at 29.8x: almost nothing is priced out, so a miss has room to travel. The daily channel points to $269.90 but goes into the print unchecked.",
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -2484,6 +2521,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -2500,6 +2538,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $273.23 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -2516,6 +2555,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. A daily close beyond the line on Nov 4 gave a signal; it needs a close beyond $271.49 to confirm.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -2530,6 +2570,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -2568,6 +2609,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $56.29 on Oct 23.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -2585,6 +2627,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -2600,6 +2643,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. No break yet: a daily close above $59.40 or below $50.11 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -2664,6 +2708,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $496.54 on Oct 14.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -2686,6 +2731,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -2790,6 +2836,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. A weekly close beyond the line on Oct 26 gave a signal; it needs a close beyond $225.04 to confirm.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -2807,6 +2854,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -2824,6 +2872,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $227.95 on Oct 9.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -2865,6 +2914,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $187.23 on Sep 28.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -2905,6 +2955,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close below $848.64 on Sep 28.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -2924,6 +2975,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -2962,6 +3014,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $1,260.00 on Jun 29.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -2979,6 +3032,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Morning Star",
         timeframe: "weekly",
         direction: "up",
@@ -2992,6 +3046,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected morning star on the weekly chart. A weekly close above $853.55 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -3067,6 +3122,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -3199,6 +3255,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -3217,6 +3274,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $104.85 on Sep 7.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -3234,6 +3292,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $104.85 on Sep 7.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -3313,6 +3372,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $191.18 on Sep 21.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -3330,6 +3390,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -3347,6 +3408,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $199.70 on Jul 20.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -3364,6 +3426,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $209.85 on Aug 31.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -3448,6 +3511,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $7.05 on Oct 27.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "both",
@@ -3479,6 +3543,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -3516,6 +3581,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $13.47 on Oct 7.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "both",
@@ -3550,6 +3616,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -3566,6 +3633,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Nov 6 gave a signal; it needs a close beyond $8.29 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -3871,6 +3939,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "A long rising channel from early 2025 topped near $100 at the start of 2026. Price broke the lower line over the summer and confirmed with a weekly close below $46.16. The $2.15 target (−95%) comes from the full channel height and is an extreme projection.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -4159,6 +4228,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close below $681.23 on Oct 26.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -4176,6 +4246,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -4192,6 +4263,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $791.20 on Sep 17.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -4208,6 +4280,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $791.20 on Sep 17.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -4315,6 +4388,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $235.70 on Oct 16.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -4349,6 +4423,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $253.30 on Sep 7.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -4368,6 +4443,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $156.00 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -4385,6 +4461,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -4424,6 +4501,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $89.01 on Sep 8.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -4488,6 +4566,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "The Oct 16 low, and the hinge between the two daily wedges. Above $201.34 the falling wedge signals toward $228.04 and new highs past $212.94; a close below $184.45 confirms the rising wedge toward $173.14.",
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -4505,6 +4584,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -4521,6 +4601,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $172.41 on Aug 10.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -4560,6 +4641,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Source tool, Nov 7 2026, from the setup's own panel. This REPLACES the either-direction placeholder that sat here with no signal, confirm or target \u2014 which is the hand-off CLAUDE.md describes: a both-way setup that breaks cannot draw its own directional levels, so a human has to. OURS NEVER SAW THE BREAK AT ALL: our lower boundary read $144.04 at the week of Nov 2 against their $162.69, and price closed $160.38 \u2014 through their line and not ours. Same pattern, different fit, and theirs is the one price respected. Three checks against our candles, all exact: the week of Nov 2 is the first close under $162.69 (the week before closed $184.11); their confirm $152.60 IS that week's low, so confirm is the signal candle's extreme as PATTERN_RULES requires; and the quarter steps reproduce at $144.84, $126.98, $109.13, $91.28. Retest is a pullback to $162.69 closing below it, 8 candles left, the cheaper entry. Lines dropped \u2014 the stored pair is the drawing that missed the break.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -4686,6 +4768,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $79.85 on May 25.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -4806,6 +4889,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -4880,6 +4964,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $237.69 on Sep 25.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -4898,6 +4983,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -4935,6 +5021,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $266.28 on Aug 17.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -4951,6 +5038,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. A weekly close beyond the line on Oct 26 gave a signal; it needs a close beyond $241.50 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -4991,6 +5079,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $312.25 on Oct 2.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "weekly",
       direction: "down",
@@ -5010,6 +5099,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -5028,6 +5118,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $312.18 on Oct 16.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -5045,6 +5136,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $308.61 on Oct 15.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -5062,6 +5154,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $333.72 on Sep 1.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -5124,6 +5217,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $70.63 on Oct 8.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -5298,6 +5392,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -5314,6 +5409,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $445.00 on Sep 21.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -5329,6 +5425,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. No break yet: a daily close above $482.05 or below $314.34 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -5377,6 +5474,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "Hold $70.70 and the weekly channel is intact with $97.35 in play. Lose it on a weekly close and the broken wedge's $50.95 and the channel agree for the first time."
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -5412,6 +5510,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "The structure the wedge is breaking down inside, and the reason the breakdown is not the whole story. Price has climbed this channel since early 2024 and at $74.09 is still between its lines — $70.70 beneath, $97.35 above. Nothing has broken here in either direction. A weekly close below $70.70 opens $44.04 and settles the argument with the wedge above; hold it and the channel's own top at $97.35 is where this goes instead, which is the bull case on this stock in one number.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -5430,6 +5529,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $79.90 on Jun 15.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -5550,6 +5650,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Nov 6 gave a signal; it needs a close beyond $5.98 to confirm.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -5567,6 +5668,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -5584,6 +5686,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $7.05 on Jun 29.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "up",
@@ -5714,6 +5817,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $434.46 on Sep 21.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -5732,6 +5836,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -5812,6 +5917,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $3,146.00 on Oct 19.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -5949,6 +6055,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $650.77 on Aug 10.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "weekly",
       direction: "down",
@@ -5987,6 +6094,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $624.24 on Oct 23.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -6045,6 +6153,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -6061,6 +6170,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -6079,6 +6189,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $66.22 on Jul 20.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -6160,6 +6271,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $261.93 on Oct 20.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -6179,6 +6291,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -6196,6 +6309,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $279.92 on Aug 27.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -6273,6 +6387,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "$250.00 is the bottom edge of where this stock has lived — 88 weeks traded $250-325 against 14 below it. No bottoming signal yet: hlGate suppresses every turn dot."
     },
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -6291,6 +6406,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -6307,6 +6423,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $197.50 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -6323,6 +6440,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $296.12 on Oct 19.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -6342,6 +6460,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $197.50 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -6493,6 +6612,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $186.51 on Nov 5.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -6511,6 +6631,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -6528,6 +6649,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $236.86 on Sep 21.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -6568,6 +6690,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $561.62 on May 18.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -6587,6 +6710,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -6662,6 +6786,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -6786,6 +6911,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $691.09 on Oct 22.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -6804,6 +6930,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -6821,6 +6948,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $762.19 on Oct 1.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -6840,6 +6968,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $763.69 on Sep 28.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -6856,6 +6985,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $579.48 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -6995,6 +7125,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $423.83 on Oct 14.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -7014,6 +7145,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -7054,6 +7186,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close below $90.06 on Oct 19.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -7073,6 +7206,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -7146,6 +7280,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $11.91 to confirm.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -7181,6 +7316,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $10.63 on Jul 13.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -7198,6 +7334,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $12.90 on Oct 1.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -7239,6 +7376,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $47.12 on Oct 19.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "weekly",
       direction: "down",
@@ -7257,6 +7395,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -7297,6 +7436,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $50.83 on Nov 4.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -7331,6 +7471,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $43.38 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -7347,6 +7488,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $56.17 on Sep 9.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -7387,6 +7529,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $117.00 on Oct 2.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -7406,6 +7549,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -7420,6 +7564,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -7560,6 +7705,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -7575,6 +7721,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -7592,6 +7739,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $203.85 on Sep 21.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -7630,6 +7778,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $336.20 on Oct 16.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "weekly",
       direction: "down",
@@ -7645,6 +7794,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -7661,6 +7811,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. A daily close beyond the line on Oct 23 gave a signal; it needs a close beyond $330.40 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -7700,6 +7851,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $93.14 on Oct 29.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -7718,6 +7870,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -7736,6 +7889,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $99.71 on Sep 16.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -7753,6 +7907,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $93.20 on Oct 29.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -7767,6 +7922,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -7838,6 +7994,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $46.42 on Aug 28.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -7856,6 +8013,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -7916,6 +8074,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -7931,6 +8090,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. No break yet: a daily close above $46.17 or below $32.61 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -8000,6 +8160,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $218.50 on Nov 5.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -8017,6 +8178,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -8034,6 +8196,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $310.30 on Sep 8.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -8050,6 +8213,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $263.14 on Oct 21.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -8108,6 +8272,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -8126,6 +8291,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $1,781.73 on Jul 6.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -8224,6 +8390,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $45.78 on Sep 1.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "both",
@@ -8240,6 +8407,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -8254,6 +8422,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -8294,6 +8463,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $13.75 on May 11.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -8312,6 +8482,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -8405,6 +8576,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -8448,6 +8620,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $45.15 on Sep 9.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -8465,6 +8638,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -8560,6 +8734,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -8597,6 +8772,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $7.31 on Jul 6.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -8656,6 +8832,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $42.95 on Oct 22.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -8673,6 +8850,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -8690,6 +8868,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -8733,6 +8912,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $20.57 on Sep 4.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "weekly",
       direction: "up",
@@ -8754,6 +8934,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -8796,6 +8977,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $122.54 on Sep 22.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "both",
@@ -8812,6 +8994,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -8827,6 +9010,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $166.40 or below $108.47 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -8904,6 +9088,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $143.92 on Oct 26.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -8940,6 +9125,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -8957,6 +9143,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $126.37 on Oct 30.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -9032,6 +9219,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $93.86 on Sep 28.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -9112,6 +9300,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $22.90 on Aug 31.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -9208,6 +9397,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. No break yet.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -9223,6 +9413,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -9241,6 +9432,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $178.98 or below $112.86 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -9280,6 +9472,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $246.00 on Oct 14.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -9392,6 +9585,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $28.61 on Jun 29.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -9427,6 +9621,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $42.31 on Sep 21.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -9444,6 +9639,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $36.38 on Sep 15.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -9463,6 +9659,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. A weekly close beyond the line on Oct 12 gave a signal; it needs a close beyond $31.43 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -9480,6 +9677,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -9517,6 +9715,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $7.38 on Aug 3.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -9534,6 +9733,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -9551,6 +9751,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $8.32 on Nov 6.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -9567,6 +9768,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $8.49 on Oct 9.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -9583,6 +9785,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $8.49 on Oct 9.",
       },
       {
+        auto: true,
         pattern: "Bearish Engulfing",
         timeframe: "weekly",
         direction: "down",
@@ -9617,6 +9820,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $295.26 on Nov 2.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -9635,6 +9839,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -9652,6 +9857,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $287.93 on Nov 5.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -9669,6 +9875,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $320.43 on Oct 21.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -9685,6 +9892,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $268.27 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -9727,6 +9935,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $500.03 on Oct 5.",
     alt: {
+      auto: true,
       pattern: "Bearish Engulfing",
       timeframe: "weekly",
       direction: "down",
@@ -9756,6 +9965,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $436.50 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -9789,6 +9999,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. No break yet: a daily close above $508.15 or below $352.36 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -9834,6 +10045,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "The de-rating has happened, 56x to 24.8x; the estimate cut that would justify it has not, and Tuesday asks. The weekly wedge points to $13.34, unchecked.",
     },
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -9853,6 +10065,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -9979,6 +10192,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $307.92 on Aug 24.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "weekly",
       direction: "up",
@@ -9997,6 +10211,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -10014,6 +10229,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $317.99 on Oct 1.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -10031,6 +10247,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. A daily close beyond the line on Oct 29 gave a signal; it needs a close beyond $346.70 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -10048,6 +10265,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. A daily close beyond the line on Oct 29 gave a signal; it needs a close beyond $346.70 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -10089,6 +10307,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $69.54 on Sep 28.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -10107,6 +10326,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -10126,6 +10346,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $71.79 on Aug 3.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -10259,6 +10480,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $335.75 on Nov 4.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -10276,6 +10498,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -10293,6 +10516,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $468.19 on Sep 8.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -10309,6 +10533,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $258.62 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -10326,6 +10551,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -10341,6 +10567,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $433.47 or below $261.07 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -10380,6 +10607,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $331.42 on Oct 14.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -10399,6 +10627,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -10433,6 +10662,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $341.03 on Sep 7.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -10450,6 +10680,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -10504,6 +10735,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $197.10 to confirm.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -10521,6 +10753,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -10537,6 +10770,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $199.76 on Oct 5.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -10553,6 +10787,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $205.20 on Oct 6.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -10568,6 +10803,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $249.92 or below $178.87 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Evening Star",
         timeframe: "weekly",
         direction: "down",
@@ -10662,6 +10898,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close above $404.74 on Oct 19.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -10680,6 +10917,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -10697,6 +10935,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $372.22 on Sep 14.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -10714,6 +10953,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $373.64 on Sep 8.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -10729,6 +10969,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $477.33 or below $339.15 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -10890,6 +11131,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "Everything stands on $94.71 — the boundary September's break came from, with the wedge floor at $93.14 just beneath. Earnings on Oct 27 settle it."
     },
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -10955,6 +11197,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
       text: "Both setups die here: the topping tail's invalidation at $95.37 and the channel's boundary at $95.55, 0.2% apart, while RSI is still 59 and the trend up."
     },
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -11041,6 +11284,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "A falling wedge drawn from the July highs: the upper line is at $34.25, the floor at $28.01, and price at $31.60 is still between them, so nothing has broken on this timeframe. What has changed is underneath it — the daily chart turned up in the week of Oct 20 and the alt below is one close from confirming. A weekly close above $34.25 would be the signal here, with the measured move from the wedge's wide end at $44.72. Earnings are Tuesday Oct 27 after the close.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -11059,6 +11303,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $35.00 or below $27.76 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -11185,6 +11430,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -11202,6 +11448,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $147.88 on Jul 27.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -11310,6 +11557,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $162.56 on Sep 21.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -11328,6 +11576,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -11348,6 +11597,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $144.71 on Jun 15.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -11368,6 +11618,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $145.15 on Jun 15.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -11385,6 +11636,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $165.95 on Oct 8.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -11651,6 +11903,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Morning Star",
         timeframe: "weekly",
         direction: "up",
@@ -11662,6 +11915,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected morning star on the weekly chart. A weekly close above $78.40 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -11738,6 +11992,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $345.75 on Oct 26.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -11757,6 +12012,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -11774,6 +12030,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -11847,6 +12104,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -11863,6 +12121,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $47.01 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -11879,6 +12138,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $105.58 on Sep 28.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -11895,6 +12155,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Nov 6 gave a signal; it needs a close beyond $55.78 to confirm.",
       },
       {
+        auto: true,
         pattern: "Inverted Hammer",
         timeframe: "weekly",
         direction: "up",
@@ -11908,6 +12169,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected inverted hammer on the weekly chart. A weekly close above $65.34 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -11946,6 +12208,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $420.03 on Oct 14.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "both",
@@ -11980,6 +12243,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Inverted Hammer",
         timeframe: "weekly",
         direction: "up",
@@ -11993,6 +12257,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected inverted hammer on the weekly chart. A weekly close above $375.86 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -12010,6 +12275,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -12050,6 +12316,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. A daily close beyond the line on Oct 30 gave a signal; it needs a close beyond $69.64 to confirm.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -12068,6 +12335,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -12086,6 +12354,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $77.68 on Oct 1.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -12103,6 +12372,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -12162,6 +12432,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $26.76 on Aug 17.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -12180,6 +12451,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -12197,6 +12469,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $26.20 on May 4.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -12217,6 +12490,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close above $29.88 on Oct 19.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -12234,6 +12508,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $28.08 on Oct 2.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -12317,6 +12592,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $38.67 on Oct 12.",
     alt: {
+      auto: true,
       pattern: "Inverted Hammer",
       timeframe: "weekly",
       direction: "up",
@@ -12347,6 +12623,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $43.97 on Sep 28.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -12365,6 +12642,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. No break yet: a daily close above $42.96 or below $26.36 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -12454,6 +12732,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected falling wedge on the weekly chart. A weekly close beyond the line on Oct 26 gave a signal; it needs a close beyond $109.12 to confirm.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -12471,6 +12750,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -12488,6 +12768,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $132.09 on Sep 10.",
       },
       {
+        auto: true,
         pattern: "Morning Star",
         timeframe: "weekly",
         direction: "up",
@@ -12499,6 +12780,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected morning star on the weekly chart. A weekly close above $112.49 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -12575,6 +12857,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $17.83 on Oct 8.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -12593,6 +12876,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -12613,6 +12897,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $21.83 on Sep 14.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -12654,6 +12939,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. A daily close beyond the line on Oct 30 gave a signal; it needs a close beyond $71.00 to confirm.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -12672,6 +12958,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -12707,6 +12994,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -12724,6 +13012,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Oct 30 gave a signal; it needs a close beyond $71.00 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -12764,6 +13053,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. A weekly close beyond the line on Oct 26 gave a signal; it needs a close beyond $161.72 to confirm.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -12782,6 +13072,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -12799,6 +13090,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $170.63 on Sep 8.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -12816,6 +13108,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $228.05 on May 18.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -12876,6 +13169,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -12949,6 +13243,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $27.63 on Oct 9.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -12967,6 +13262,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -12983,6 +13279,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -13001,6 +13298,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $35.52 or below $26.12 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -13040,6 +13338,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $2.71 on Oct 9.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -13076,6 +13375,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -13134,6 +13434,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $45.31 on Sep 28.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "both",
@@ -13225,6 +13526,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $52.98 on Jul 6.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -13259,6 +13561,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $31.90 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -13275,6 +13578,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $52.98 on Jul 6.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -13291,6 +13595,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $43.17 on Oct 13.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -13310,6 +13615,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $41.05 on Oct 29.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -13367,6 +13673,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -13426,6 +13733,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $14.07 on Oct 8.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -13458,6 +13766,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Hammer",
         timeframe: "weekly",
         direction: "up",
@@ -13468,6 +13777,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected hammer on the weekly chart. A weekly close above $12.97 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -13483,6 +13793,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. No break yet: a daily close above $16.18 or below $10.57 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Hammer",
         timeframe: "daily",
         direction: "up",
@@ -13516,6 +13827,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $40.60 on Oct 1.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -13534,6 +13846,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Evening Star",
         timeframe: "weekly",
         direction: "down",
@@ -13545,6 +13858,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected evening star on the weekly chart. The break was confirmed with a weekly close below $37.40 on Oct 26.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -13561,6 +13875,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $41.53 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -13577,6 +13892,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $41.53 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -13616,6 +13932,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $81.64 on Nov 5.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "down",
@@ -13636,6 +13953,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -13652,6 +13970,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $95.97 on Oct 28.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -13668,6 +13987,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $105.72 on Oct 7.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -13685,6 +14005,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -13700,6 +14021,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $99.96 or below $59.12 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -13740,6 +14062,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected rising wedge on the daily chart. The break was confirmed with a daily close below $30.33 on Nov 5.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -13758,6 +14081,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -13775,6 +14099,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $28.50 on Aug 10.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -13792,6 +14117,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $32.11 on Oct 1.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -13808,6 +14134,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. A weekly close beyond the line on Oct 26 gave a signal; it needs a close beyond $30.33 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -13824,6 +14151,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $29.37 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -13866,6 +14194,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $26.68 on Nov 2.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -13884,6 +14213,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -13916,6 +14246,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -13931,6 +14262,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $30.71 or below $25.94 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -13971,6 +14303,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $203.53 on Oct 27.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -13989,6 +14322,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -14022,6 +14356,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $211.33 on Sep 14.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -14037,6 +14372,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $268.16 or below $191.81 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -14095,6 +14431,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -14147,6 +14484,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Source tool, week of Nov 2 2026. Formed on a completed weekly close above $4.27; a close back inside cancels it. Confirms on a later weekly close above $4.45, beyond the high of the candle that formed it. A pullback to the wedge line that closes above it is the earlier, cheaper entry \u2014 8 candles left. Steps $5.10 / $5.93 / $6.76 / $7.59.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -14165,6 +14503,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $6.10 or below $3.60 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -14206,6 +14545,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $7.42 on Oct 19.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -14240,6 +14580,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $9.49 on Oct 12.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -14257,6 +14598,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $11.85 on Sep 9.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -14273,6 +14615,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. The break was confirmed with a weekly close below $9.69 on Aug 10.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -14292,6 +14635,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. The break was confirmed with a daily close above $11.88 on Sep 18.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -14332,6 +14676,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $13.82 on Sep 22.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -14349,6 +14694,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -14365,6 +14711,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close below $12.83 on Sep 21.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -14383,6 +14730,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $16.71 or below $9.85 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Bullish Engulfing",
         timeframe: "weekly",
         direction: "up",
@@ -14393,6 +14741,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected bullish engulfing on the weekly chart. A weekly close above $13.31 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -14408,6 +14757,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. No break yet: a daily close above $17.76 or below $11.25 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -14445,6 +14795,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the weekly chart. The break was confirmed with a weekly close below $51.19 on Jun 22.",
     alt: {
+      auto: true,
       pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
@@ -14462,6 +14813,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -14478,6 +14830,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $59.55 on Aug 17.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -14494,6 +14847,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. The break was confirmed with a weekly close above $58.99 on Aug 17.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "down",
@@ -14510,6 +14864,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $56.25 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -14528,6 +14883,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $68.53 or below $41.56 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -14566,6 +14922,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $1.83 on Oct 7.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -14600,6 +14957,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $1.44 on Nov 2.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -14614,6 +14972,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -14629,6 +14988,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $1.98 or below $1.25 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Morning Star",
         timeframe: "weekly",
         direction: "up",
@@ -14639,6 +14999,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected morning star on the weekly chart. A weekly close above $1.59 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -14697,6 +15058,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -14716,6 +15078,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. A weekly close beyond the line on Oct 19 gave a signal; it needs a close beyond $74.12 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -14733,6 +15096,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Inverted Hammer",
         timeframe: "weekly",
         direction: "up",
@@ -14743,6 +15107,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected inverted hammer on the weekly chart. A weekly close above $81.89 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -14760,6 +15125,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -14798,6 +15164,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $75.49 to confirm.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "weekly",
       direction: "up",
@@ -14815,6 +15182,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -14831,6 +15199,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $77.09 on Oct 20.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "daily",
         direction: "down",
@@ -14847,6 +15216,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the daily chart. A daily close beyond the line on Nov 5 gave a signal; it needs a close beyond $75.49 to confirm.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -14861,6 +15231,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -14936,6 +15307,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $14.45 on Oct 8.",
     alt: {
+      auto: true,
       pattern: "Falling Wedge",
       timeframe: "daily",
       direction: "up",
@@ -14971,6 +15343,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $11.90 to confirm.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -14987,6 +15360,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. A daily close beyond the line on Nov 6 gave a signal; it needs a close beyond $11.90 to confirm.",
       },
       {
+        auto: true,
         pattern: "Hammer",
         timeframe: "weekly",
         direction: "up",
@@ -14997,6 +15371,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected hammer on the weekly chart. A weekly close above $11.90 would confirm it.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -15052,6 +15427,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -15066,6 +15442,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
@@ -15104,6 +15481,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $108.45 on Oct 16.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "weekly",
       direction: "down",
@@ -15121,6 +15499,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "down",
@@ -15137,6 +15516,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $103.14 on Nov 2.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -15153,6 +15533,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $108.67 on Oct 2.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "down",
@@ -15169,6 +15550,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. A weekly close beyond the line on Nov 2 gave a signal; it needs a close beyond $93.35 to confirm.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -15184,6 +15566,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $128.53 or below $86.16 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -15225,6 +15608,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected ascending channel on the daily chart. The break was confirmed with a daily close below $13.39 on Oct 30.",
     alt: {
+      auto: true,
       pattern: "Descending Channel",
       timeframe: "daily",
       direction: "up",
@@ -15242,6 +15626,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "up",
@@ -15258,6 +15643,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. The break was confirmed with a weekly close above $15.43 on Aug 31.",
       },
       {
+        auto: true,
         pattern: "Rising Wedge",
         timeframe: "weekly",
         direction: "down",
@@ -15275,6 +15661,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected rising wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -15290,6 +15677,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $15.38 or below $9.06 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -15305,6 +15693,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected ascending channel on the weekly chart. No break yet: a weekly close above $16.85 or below $12.96 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Ascending Channel",
         timeframe: "daily",
         direction: "both",
@@ -15343,6 +15732,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     ],
     note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close below $62.22 on Oct 6.",
     alt: {
+      auto: true,
       pattern: "Ascending Channel",
       timeframe: "daily",
       direction: "down",
@@ -15360,6 +15750,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
     },
     more: [
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "up",
@@ -15376,6 +15767,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the daily chart. The break was confirmed with a daily close above $59.62 on Oct 28.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "weekly",
         direction: "up",
@@ -15393,6 +15785,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the weekly chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Falling Wedge",
         timeframe: "daily",
         direction: "up",
@@ -15410,6 +15803,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected falling wedge on the daily chart. No break yet.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "weekly",
         direction: "both",
@@ -15425,6 +15819,7 @@ export const PATTERN_STOCKS: PatternStock[] = [
         note: "Auto-detected descending channel on the weekly chart. No break yet: a weekly close above $82.94 or below $53.82 would start a signal.",
       },
       {
+        auto: true,
         pattern: "Descending Channel",
         timeframe: "daily",
         direction: "both",
