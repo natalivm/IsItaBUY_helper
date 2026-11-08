@@ -95,6 +95,42 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   lows Jun 8 / Jul 27; signal $488.47, target $664.85, invalidation $401.41.
   Also QQQ, IREN, META, COST, GE, TWLO and others.
 
+### The flat-boundary clause, and why it is not a mislabelled triangle
+
+"The bottom can be flat" / "the top can be flat" above deliberately absorbs a shape that
+classical TA names separately and gives the OPPOSITE bias to:
+
+| shape | this rulebook | classical TA |
+|---|---|---|
+| falling roof, flat floor | Falling Wedge → breaks **up** | Descending Triangle → breaks **down** |
+| flat roof, rising floor | Rising Wedge → breaks **down** | Ascending Triangle → breaks **up** |
+
+That is not a small disagreement — it inverts the trade — and `_classify` has no separate
+branch for it, so every such pattern lands in the wedge bucket. Measured across the ledger
+by the far line's move as a fraction of mid price, "flat" being within ±3%:
+
+| | n | hand-posted | median break undone | atRisk / update / failed |
+|---|---|---|---|---|
+| Falling Wedge, flat bottom | 12 | 10 | **−0.9%** | 1 |
+| Falling Wedge, true wedge | 142 | 100 | **+12.1%** | 10 |
+| Rising Wedge, flat top | 20 | 16 | **−11.4%** | 0 |
+| Rising Wedge, true wedge | 85 | 66 | −7.2% | 3 |
+
+(positive = the break has been given back.) 32 of 259 fitted wedges, 12.4%, carry the
+flat-boundary shape. If the classical reading were right about these, their breaks — drawn
+in the wedge direction — should be systematically given back. **They are the better-behaved
+group in both pairs**, by 13 points among the falling and 4 among the rising.
+
+So the ledger gives no support for splitting them out, and the clause stands. Two caveats
+that keep this from being a settled result: n is 12 and 20, and "break undone" is a
+snapshot of live setups rather than a resolved outcome, which is the survivorship trap
+CLAUDE.md describes in its own words. What would settle it is completed calls on the
+flat-boundary shape specifically.
+
+**And 26 of the 32 are hand-posted from the source tool**, so this is not the detector
+inventing a reading — the source tool draws these as wedges too, and the two systems agree
+against the textbook. Worth knowing before anyone "fixes" it.
+
 ## 4. Symmetrical Triangle / Megaphone
 
 - **Shape:** two **non-parallel** lines sloping in **opposite** directions.
