@@ -22,6 +22,17 @@
     "target": 182.14
   },
   {
+    "ticker": "ARRY",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-06",
+    "confirm": 3.68,
+    "invalidation": 2.77,
+    "target": 5.4
+  },
+  {
     "ticker": "ASTS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -196,6 +207,17 @@
     "confirm": 228.57,
     "invalidation": 302.27,
     "target": 173.61
+  },
+  {
+    "ticker": "DELL",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 548.4,
+    "invalidation": 624.86,
+    "target": 424.32
   },
   {
     "ticker": "DELL",
@@ -440,6 +462,17 @@
     "target": 96.07
   },
   {
+    "ticker": "KRMN",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-06",
+    "confirm": 37.14,
+    "invalidation": 34.44,
+    "target": 42.53
+  },
+  {
     "ticker": "LIFE",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -517,6 +550,17 @@
     "target": 561.66
   },
   {
+    "ticker": "MELI",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-26",
+    "confirm": 1828.22,
+    "invalidation": 1989.46,
+    "target": 1628.94
+  },
+  {
     "ticker": "META",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -537,6 +581,17 @@
     "confirm": 696.51,
     "invalidation": 681.05,
     "target": 711.96
+  },
+  {
+    "ticker": "MLM",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-29",
+    "confirm": 473.4,
+    "invalidation": 449.94,
+    "target": 528.56
   },
   {
     "ticker": "MRVL",
@@ -570,6 +625,17 @@
     "confirm": 245.1,
     "invalidation": 303.86,
     "target": 137.77
+  },
+  {
+    "ticker": "MRVL",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 214.56,
+    "invalidation": 244.44,
+    "target": 146.88
   },
   {
     "ticker": "MSFT",
@@ -691,6 +757,17 @@
     "confirm": 165.55,
     "invalidation": 248.83,
     "target": 137.64
+  },
+  {
+    "ticker": "RIOT",
+    "pattern": "Inverted Hammer",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-06",
+    "confirm": 14.48,
+    "invalidation": 11.79,
+    "target": 17.17
   },
   {
     "ticker": "SEZL",
@@ -823,6 +900,39 @@
     "confirm": 2.11,
     "invalidation": 2.14,
     "target": 1.61
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 251.0,
+    "invalidation": 323.28,
+    "target": 187.05
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 252.5,
+    "invalidation": 266.83,
+    "target": 201.25
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 232.73,
+    "invalidation": 284.75,
+    "target": 209.25
   },
   {
     "ticker": "UMAC",

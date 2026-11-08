@@ -770,6 +770,31 @@ then thrown away. The fix is that a stored failure is kept on the row and marked
 as a shown one is, leaving a single owner of "a failure leaves the ledger" -- and that owner
 runs later in the same job and re-reads the file, so nothing waits for tomorrow.
 
+**The same hole was one stage over, and it cost more.** A stored setup never enters `done`
+-- the stored branch appends it to `stored_gone` and `continue`s -- and the loop that calls
+`record_completed` only ever walked `done`. So a stored call that reached its **target** was
+cut from the row with no label written, exactly as a stored failure was. Which slot a setup
+happened to sit in decided whether the evidence was kept, and that is not a property of the
+call: `dedupe_setups` and `reslot_setups` move setups between the slots and `more` on their
+own, so where a call is sitting when it completes is an accident of the last re-rank.
+
+It is the more common shape, because targets are reached far more often than the fail rule
+fires. **10 were lost over the last 80 commits** -- ARRY, DELL, KRMN, MELI, MLM, MRVL, RIOT
+and three of TWLO's -- against a file holding 85, so about a ninth of the label set. All 10
+were recovered from git history with their levels. `completedCalls.json` holds **95**, and
+the headline reproduces out of sample: confirm **0.0%** median error, target **6.2%** (wedges
+4.8% at n=22, channels 8.0% at n=52), which continues the 6.7% / 4.8% / 6.7% series this file
+records at 23, 24 and 26 labels.
+
+**The two gates on recording are both right and are easy to confuse.** `posted` reads the
+**entry's** `auto` and `sv.get('auto')` reads the **setup's**, and the entry flag is not
+redundant: `_ts_entry` writes `auto: true` once on the entry and leaves the setups it
+generates unflagged, so on a machine-drawn stock a setup with no flag of its own is still
+detector output. APP is the case -- four setups, none individually flagged, every note
+reading "Auto-detected", two of them reaching target on the Nov 5 gap. Recording those would
+score the detector against its own drawings and inflate every table above. The entry gate is
+what stops it.
+
 **`pattern_watchlist.confirm_faults` checks each `confirm` is a candle extreme on its OWN
 timeframe**, which is what PATTERN_RULES says it is. Reports, never edits. It exists
 because DUOL's weekly wedge confirmed on a *daily* low and five setups promoted on

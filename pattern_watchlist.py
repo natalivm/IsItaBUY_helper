@@ -1625,7 +1625,7 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                     # prune." Held until the cut is actually made, because the `edits`
                     # path below returns without rebuilding and leaves the clean-up to the
                     # next run — reporting here would name setups that are still there.
-                    stored_gone.append((label, r))
+                    stored_gone.append((label, sv, r))
                 continue
             if not r:
                 continue
@@ -1702,8 +1702,21 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
         for label, r in done.items():
             notes[f"{t_}|{label}"] = r[:3]
             report.append(f"{t_} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
-        for label, r in stored_gone:
+        for label, sv, r in stored_gone:
             report.append(f"{t_} ({label}, stored): {r[2].split(' · ')[1]} — {r[1]}")
+            # The same gap the stored FAILURE branch had, one stage over. A stored setup
+            # never enters `done`, so the recording loop above -- which only ever walked
+            # `done` -- could not see it, and a stored call that reached its target was cut
+            # with no label written. Which slot a setup happened to sit in decided whether
+            # the evidence was kept, exactly as it did for failures, and a stored target is
+            # the MORE common shape: `dedupe_setups` and `reslot` move setups between the
+            # slots and `more` on their own, so where a call is sitting when it completes
+            # is not a property of the call. Same two gates as the slot path: an entry the
+            # detector drew is not a label (scoring the detector against its own drawings
+            # is circular, which is what `posted` is for), and nor is a setup carrying its
+            # own `auto`.
+            if apply and posted and not sv.get('auto') and r[3] == 'target':
+                record_completed(t_, sv, sv.get('stageDate') if sv.get('stage') == 'target' else r[0])
     new_text = text
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
