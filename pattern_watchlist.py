@@ -1070,6 +1070,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
         text = fh.read()
     entries = parse_watchlist(text)
     edits, price_changes, target_hits, needs_update, review = [], [], [], [], []
+    stale_quotes = []               # fetch failed: re-checked against the stored price
     at_risk, back_inside = [], []   # confirmed breaks that closed past invalidation, and ones that came back
     retested = []                   # ...and ones that closed back ON the boundary they broke
     promoted = []                   # pending setups whose close carried them forward a stage
@@ -1081,9 +1082,25 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
         main = {k: v[2] for k, v in f.items()}
         sym = main.get('ticker')
         if quotes is None:
-            q = {'price': main.get('price'), 'date': main.get('priceDate') or today, 'bars': []}
+            q = {'price': main.get('price'), 'date': main.get('priceDate') or today,
+                 'bars': _stored_daily(sym)}
         else:
             q = quotes.get(sym)
+        # A failed fetch used to skip the stock outright, and that threw away every check
+        # the candles already on disk can answer. APP is the case: it gapped through its
+        # confirm and both of its upward targets in one bar on Nov 5, its quote failed on
+        # the Nov 6 run, and two completed calls sat on `confirmed` because the whole entry
+        # was skipped -- while 185 of 191 stocks updated normally, so nothing in the report
+        # said a word about it. Six stocks were stranded a day behind that way.
+        #
+        # Falling back to the stored price is exactly what `--apply` (quotes=None) does for
+        # every stock, and that path is documented as a legitimate re-check. The price is a
+        # run old; the stage checks still run, against the same stored candles. A stale
+        # price is a far smaller error than a call left open after it finished.
+        if quotes is not None and (not q or q.get('price') is None) and main.get('price') is not None:
+            q = {'price': main.get('price'), 'date': main.get('priceDate') or today,
+                 'bars': _stored_daily(sym)}
+            stale_quotes.append(sym)
         if not q or q.get('price') is None:
             continue
         price, date = q['price'], q['date']
@@ -1355,7 +1372,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'retested': retested, 'promoted': promoted,
-            'review': review, 'news': news}
+            'review': review, 'news': news, 'stale_quotes': stale_quotes}
 
 
 # ── News feed ──
@@ -1625,7 +1642,7 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
                     # prune." Held until the cut is actually made, because the `edits`
                     # path below returns without rebuilding and leaves the clean-up to the
                     # next run — reporting here would name setups that are still there.
-                    stored_gone.append((label, r))
+                    stored_gone.append((label, sv, r))
                 continue
             if not r:
                 continue
@@ -1702,8 +1719,21 @@ def prune_finished(apply=False, now_et=None, path=None, news_path=None, snapshot
         for label, r in done.items():
             notes[f"{t_}|{label}"] = r[:3]
             report.append(f"{t_} ({label}): {r[2].split(' · ')[1]} — {r[1]}")
-        for label, r in stored_gone:
+        for label, sv, r in stored_gone:
             report.append(f"{t_} ({label}, stored): {r[2].split(' · ')[1]} — {r[1]}")
+            # The same gap the stored FAILURE branch had, one stage over. A stored setup
+            # never enters `done`, so the recording loop above -- which only ever walked
+            # `done` -- could not see it, and a stored call that reached its target was cut
+            # with no label written. Which slot a setup happened to sit in decided whether
+            # the evidence was kept, exactly as it did for failures, and a stored target is
+            # the MORE common shape: `dedupe_setups` and `reslot` move setups between the
+            # slots and `more` on their own, so where a call is sitting when it completes
+            # is not a property of the call. Same two gates as the slot path: an entry the
+            # detector drew is not a label (scoring the detector against its own drawings
+            # is circular, which is what `posted` is for), and nor is a setup carrying its
+            # own `auto`.
+            if apply and posted and not sv.get('auto') and r[3] == 'target':
+                record_completed(t_, sv, sv.get('stageDate') if sv.get('stage') == 'target' else r[0])
     new_text = text
     for a, b, repl in sorted(cuts, reverse=True):
         new_text = new_text[:a] + repl + new_text[b:]
@@ -1870,9 +1900,44 @@ def _cap_plan(text, e):
 
 
 def record_completed(ticker, sv, finish_date, path=None):
-    """Append one completed call to the labels file, if it is not already there."""
+    """Append one completed call to the labels file, if it is not already there.
+
+    `invalidation` is OPTIONAL and the other two are not, because that is exactly what
+    `pattern_reproduce` scores: it replays the chart, runs the detector and compares the
+    confirm and the target. The invalidation is carried into the label dict and never read
+    by anything -- grep says so, and the two files here are the only consumers of the whole
+    labels file.
+
+    Requiring it cost real labels, and the shape of the loss is systematic rather than bad
+    luck. A completed call in the source tool drops its invalidation row, correctly: the
+    setup is over, so there is no longer a level that would kill it. The panels therefore
+    publish confirm, target and the completion date and never the stop -- INTU's daily
+    descending channel and DELL's weekly ascending channel were both refused on it, each
+    verified to the cent against our own candles. Every finished panel from here on would
+    have been refused the same way.
+
+    Inventing a stop to satisfy the check is the alternative and it is worse: RULEBOOK.md's
+    import rule is that every level is reproduced from our candles before it is written, and
+    a derived invalidation reproduces nothing.
+    """
     conf, inv, tgt = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
-    if not (conf and inv and tgt):
+    if not (conf and tgt):
+        return False
+    # The third gate, and the one the other two cannot see. `posted` reads the entry's
+    # `auto` and `sv.get('auto')` reads the setup's, but a setup can be detector output and
+    # carry neither: `_ts_entry` flags the entry rather than the setups, and a promotion
+    # into a slot drops a per-setup flag the same way `checkedOn` was being dropped. DELL's
+    # weekly ascending channel is the case -- it was recorded as a label with the
+    # detector's own $359.15 target against the source tool's published $331.28 for the
+    # identical $450.00 confirm, and its note reads "Auto-detected ascending channel on the
+    # weekly chart" in so many words.
+    #
+    # So the note is the evidence when the flag is gone. That sentence is written by
+    # `pattern_detect` and by nothing else, and on the hand-posted stocks **535 of 797**
+    # setups carry it without a flag -- every one of them a label in waiting. A label drawn
+    # by the detector makes "did the detector rebuild this setup?" close to tautological,
+    # which is the circularity `posted` exists to prevent, reached by a route it cannot see.
+    if (sv.get('note') or '').startswith('Auto-detected'):
         return False
     path = path or COMPLETED_FILE
     have = []
@@ -3703,6 +3768,12 @@ def print_watchlist_report(result, missing, apply):
                 print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {why}" + ("  (auto)" if auto else ""))
             if len(wide) > 12:
                 print(f"  ... and {len(wide) - 12} more")
+    sq = result.get('stale_quotes') or []
+    if sq:
+        print(f"\n📵 Quote fetch failed ({len(sq)}) — re-checked against the stored price instead")
+        print("   of being skipped. The stage checks ran on the candles already on disk; only the")
+        print("   price is a run old. Six stocks sat a day behind in silence before this printed:")
+        print("  " + "  ".join(sq))
     stale = result.get('staleBars') or []
     if stale:
         print(f"\n🕯 Stale candle files ({len(stale)}) — the ledger's price has outrun these charts.")

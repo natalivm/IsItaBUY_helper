@@ -8,7 +8,8 @@
     "stageDate": "2026-11-04",
     "confirm": 256.68,
     "invalidation": 238.13,
-    "target": 269.9
+    "target": 269.9,
+    "source": "posted"
   },
   {
     "ticker": "ARM",
@@ -19,7 +20,20 @@
     "stageDate": "2026-11-05",
     "confirm": 265.6,
     "invalidation": 306.03,
-    "target": 182.14
+    "target": 182.14,
+    "source": "posted"
+  },
+  {
+    "ticker": "ARRY",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-06",
+    "confirm": 3.68,
+    "invalidation": 2.77,
+    "target": 5.4,
+    "source": "detector"
   },
   {
     "ticker": "ASTS",
@@ -41,7 +55,8 @@
     "stageDate": "2026-11-05",
     "confirm": 42.0,
     "invalidation": 42.58,
-    "target": 30.39
+    "target": 30.39,
+    "source": "posted"
   },
   {
     "ticker": "BE",
@@ -52,7 +67,8 @@
     "stageDate": "2026-11-05",
     "confirm": 215.12,
     "invalidation": 261.33,
-    "target": 161.18
+    "target": 161.18,
+    "source": "detector"
   },
   {
     "ticker": "CAKE",
@@ -63,7 +79,8 @@
     "stageDate": "2026-10-28",
     "confirm": 110.51,
     "invalidation": 115.35,
-    "target": 104.51
+    "target": 104.51,
+    "source": "posted"
   },
   {
     "ticker": "CAT",
@@ -74,7 +91,8 @@
     "stageDate": "2026-11-04",
     "confirm": 776.0,
     "invalidation": 1012.09,
-    "target": 603.2
+    "target": 603.2,
+    "source": "posted"
   },
   {
     "ticker": "CBRS",
@@ -85,7 +103,8 @@
     "stageDate": "2026-11-05",
     "confirm": 177.61,
     "invalidation": 270.28,
-    "target": 81.36
+    "target": 81.36,
+    "source": "detector"
   },
   {
     "ticker": "CCJ",
@@ -96,7 +115,8 @@
     "stageDate": "2026-11-02",
     "confirm": 91.97,
     "invalidation": 105.63,
-    "target": 73.12
+    "target": 73.12,
+    "source": "posted"
   },
   {
     "ticker": "CLS",
@@ -107,7 +127,8 @@
     "stageDate": "2026-11-02",
     "confirm": 296.12,
     "invalidation": 396.14,
-    "target": 227.47
+    "target": 227.47,
+    "source": "detector"
   },
   {
     "ticker": "CRWD",
@@ -173,7 +194,8 @@
     "stageDate": "2026-10-26",
     "confirm": 208.69,
     "invalidation": 204.19,
-    "target": 235.15
+    "target": 235.15,
+    "source": "detector"
   },
   {
     "ticker": "D",
@@ -195,7 +217,20 @@
     "stageDate": "2026-11-05",
     "confirm": 228.57,
     "invalidation": 302.27,
-    "target": 173.61
+    "target": 173.61,
+    "source": "detector"
+  },
+  {
+    "ticker": "DELL",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 548.4,
+    "invalidation": 624.86,
+    "target": 424.32,
+    "source": "detector"
   },
   {
     "ticker": "DELL",
@@ -205,8 +240,8 @@
     "stage": "target",
     "stageDate": "2026-11-02",
     "confirm": 450.0,
-    "invalidation": 529.97,
-    "target": 359.15
+    "invalidation": null,
+    "target": 331.28
   },
   {
     "ticker": "DUK",
@@ -217,7 +252,8 @@
     "stageDate": "2026-11-04",
     "confirm": 125.48,
     "invalidation": 121.24,
-    "target": 129.73
+    "target": 129.73,
+    "source": "posted"
   },
   {
     "ticker": "DUOL",
@@ -228,7 +264,8 @@
     "stageDate": "2026-11-03",
     "confirm": 147.5,
     "invalidation": 154.67,
-    "target": 127.72
+    "target": 127.72,
+    "source": "detector"
   },
   {
     "ticker": "EME",
@@ -239,7 +276,8 @@
     "stageDate": "2026-11-05",
     "confirm": 736.9,
     "invalidation": 791.53,
-    "target": 601.77
+    "target": 601.77,
+    "source": "detector"
   },
   {
     "ticker": "FISV",
@@ -250,7 +288,8 @@
     "stageDate": "2026-11-03",
     "confirm": 50.91,
     "invalidation": 49.12,
-    "target": 56.81
+    "target": 56.81,
+    "source": "detector"
   },
   {
     "ticker": "FN",
@@ -261,7 +300,8 @@
     "stageDate": "2026-11-02",
     "confirm": 520.56,
     "invalidation": 625.43,
-    "target": 303.09
+    "target": 303.09,
+    "source": "detector"
   },
   {
     "ticker": "FRSH",
@@ -305,7 +345,8 @@
     "stageDate": "2026-10-26",
     "confirm": 344.95,
     "invalidation": 322.0,
-    "target": 367.9
+    "target": 367.9,
+    "source": "detector"
   },
   {
     "ticker": "GLW",
@@ -316,7 +357,8 @@
     "stageDate": "2026-11-05",
     "confirm": 150.94,
     "invalidation": 170.69,
-    "target": 102.27
+    "target": 102.27,
+    "source": "posted"
   },
   {
     "ticker": "GXO",
@@ -327,7 +369,8 @@
     "stageDate": "2026-11-03",
     "confirm": 46.01,
     "invalidation": 41.5,
-    "target": 53.11
+    "target": 53.11,
+    "source": "detector"
   },
   {
     "ticker": "HPE",
@@ -338,7 +381,8 @@
     "stageDate": "2026-11-02",
     "confirm": 62.62,
     "invalidation": 71.65,
-    "target": 53.11
+    "target": 53.11,
+    "source": "detector"
   },
   {
     "ticker": "HTFL",
@@ -349,7 +393,8 @@
     "stageDate": "2026-10-27",
     "confirm": 56.3,
     "invalidation": 44.22,
-    "target": 58.48
+    "target": 58.48,
+    "source": "posted"
   },
   {
     "ticker": "IBM",
@@ -360,7 +405,8 @@
     "stageDate": "2026-10-29",
     "confirm": 234.14,
     "invalidation": 204.11,
-    "target": 257.86
+    "target": 257.86,
+    "source": "posted"
   },
   {
     "ticker": "INTC",
@@ -371,7 +417,19 @@
     "stageDate": "2026-10-30",
     "confirm": 104.0,
     "invalidation": 114.02,
-    "target": 72.58
+    "target": 72.58,
+    "source": "posted"
+  },
+  {
+    "ticker": "INTU",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-04",
+    "confirm": 311.66,
+    "invalidation": null,
+    "target": 364.75
   },
   {
     "ticker": "IOVA",
@@ -382,7 +440,8 @@
     "stageDate": "2026-10-29",
     "confirm": 13.64,
     "invalidation": 15.64,
-    "target": 11.68
+    "target": 11.68,
+    "source": "posted"
   },
   {
     "ticker": "IREN",
@@ -393,7 +452,8 @@
     "stageDate": "2026-11-02",
     "confirm": 39.33,
     "invalidation": 49.49,
-    "target": 21.97
+    "target": 21.97,
+    "source": "posted"
   },
   {
     "ticker": "KLAC",
@@ -437,7 +497,20 @@
     "stageDate": "2026-11-02",
     "confirm": 89.8,
     "invalidation": 85.81,
-    "target": 96.07
+    "target": 96.07,
+    "source": "detector"
+  },
+  {
+    "ticker": "KRMN",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-06",
+    "confirm": 37.14,
+    "invalidation": 34.44,
+    "target": 42.53,
+    "source": "detector"
   },
   {
     "ticker": "LIFE",
@@ -470,7 +543,8 @@
     "stageDate": "2026-11-03",
     "confirm": 39.41,
     "invalidation": 36.16,
-    "target": 48.45
+    "target": 48.45,
+    "source": "detector"
   },
   {
     "ticker": "LLY",
@@ -481,7 +555,8 @@
     "stageDate": "2026-10-29",
     "confirm": 1275.88,
     "invalidation": 1097.46,
-    "target": 1412.07
+    "target": 1412.07,
+    "source": "posted"
   },
   {
     "ticker": "LMT",
@@ -517,6 +592,18 @@
     "target": 561.66
   },
   {
+    "ticker": "MELI",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-26",
+    "confirm": 1828.22,
+    "invalidation": 1989.46,
+    "target": 1628.94,
+    "source": "detector"
+  },
+  {
     "ticker": "META",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -539,6 +626,18 @@
     "target": 711.96
   },
   {
+    "ticker": "MLM",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-10-29",
+    "confirm": 473.4,
+    "invalidation": 449.94,
+    "target": 528.56,
+    "source": "detector"
+  },
+  {
     "ticker": "MRVL",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -547,7 +646,8 @@
     "stageDate": "2026-11-02",
     "confirm": 226.52,
     "invalidation": 260.97,
-    "target": 182.95
+    "target": 182.95,
+    "source": "detector"
   },
   {
     "ticker": "MRVL",
@@ -558,7 +658,8 @@
     "stageDate": "2026-11-02",
     "confirm": 226.52,
     "invalidation": 301.27,
-    "target": 151.77
+    "target": 151.77,
+    "source": "detector"
   },
   {
     "ticker": "MRVL",
@@ -569,7 +670,20 @@
     "stageDate": "2026-11-05",
     "confirm": 245.1,
     "invalidation": 303.86,
-    "target": 137.77
+    "target": 137.77,
+    "source": "detector"
+  },
+  {
+    "ticker": "MRVL",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-05",
+    "confirm": 214.56,
+    "invalidation": 244.44,
+    "target": 146.88,
+    "source": "detector"
   },
   {
     "ticker": "MSFT",
@@ -580,7 +694,8 @@
     "stageDate": "2026-11-02",
     "confirm": 524.43,
     "invalidation": 562.91,
-    "target": 509.91
+    "target": 509.91,
+    "source": "posted"
   },
   {
     "ticker": "NBIS",
@@ -602,7 +717,8 @@
     "stageDate": "2026-11-02",
     "confirm": 163.27,
     "invalidation": 282.46,
-    "target": 120.59
+    "target": 120.59,
+    "source": "detector"
   },
   {
     "ticker": "NET",
@@ -624,7 +740,8 @@
     "stageDate": "2026-11-02",
     "confirm": 216.26,
     "invalidation": 204.93,
-    "target": 281.56
+    "target": 281.56,
+    "source": "detector"
   },
   {
     "ticker": "PANW",
@@ -646,7 +763,8 @@
     "stageDate": "2026-11-02",
     "confirm": 186.15,
     "invalidation": 215.53,
-    "target": 155.04
+    "target": 155.04,
+    "source": "detector"
   },
   {
     "ticker": "QQQ",
@@ -657,7 +775,8 @@
     "stageDate": "2026-11-05",
     "confirm": 701.9,
     "invalidation": 724.61,
-    "target": 649.99
+    "target": 649.99,
+    "source": "posted"
   },
   {
     "ticker": "RBRK",
@@ -679,7 +798,8 @@
     "stageDate": "2026-10-29",
     "confirm": 149.82,
     "invalidation": 166.83,
-    "target": 127.34
+    "target": 127.34,
+    "source": "posted"
   },
   {
     "ticker": "RDDT",
@@ -690,7 +810,20 @@
     "stageDate": "2026-11-04",
     "confirm": 165.55,
     "invalidation": 248.83,
-    "target": 137.64
+    "target": 137.64,
+    "source": "detector"
+  },
+  {
+    "ticker": "RIOT",
+    "pattern": "Inverted Hammer",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-06",
+    "confirm": 14.48,
+    "invalidation": 11.79,
+    "target": 17.17,
+    "source": "detector"
   },
   {
     "ticker": "SEZL",
@@ -701,7 +834,8 @@
     "stageDate": "2026-11-05",
     "confirm": 129.53,
     "invalidation": 118.23,
-    "target": 144.31
+    "target": 144.31,
+    "source": "detector"
   },
   {
     "ticker": "SIMO",
@@ -712,7 +846,8 @@
     "stageDate": "2026-11-04",
     "confirm": 220.74,
     "invalidation": 295.19,
-    "target": 179.25
+    "target": 179.25,
+    "source": "detector"
   },
   {
     "ticker": "SNOW",
@@ -723,7 +858,8 @@
     "stageDate": "2026-11-03",
     "confirm": 335.11,
     "invalidation": 349.84,
-    "target": 285.4
+    "target": 285.4,
+    "source": "detector"
   },
   {
     "ticker": "SPCX",
@@ -756,7 +892,8 @@
     "stageDate": "2026-11-05",
     "confirm": 143.21,
     "invalidation": 156.56,
-    "target": 125.49
+    "target": 125.49,
+    "source": "detector"
   },
   {
     "ticker": "SPGI",
@@ -767,7 +904,8 @@
     "stageDate": "2026-11-04",
     "confirm": 439.45,
     "invalidation": 431.46,
-    "target": 480.27
+    "target": 480.27,
+    "source": "detector"
   },
   {
     "ticker": "SPY",
@@ -778,7 +916,8 @@
     "stageDate": "2026-10-30",
     "confirm": 761.17,
     "invalidation": 772.16,
-    "target": 748.54
+    "target": 748.54,
+    "source": "posted"
   },
   {
     "ticker": "STRL",
@@ -800,7 +939,8 @@
     "stageDate": "2026-11-04",
     "confirm": 509.03,
     "invalidation": 680.69,
-    "target": 300.0
+    "target": 300.0,
+    "source": "posted"
   },
   {
     "ticker": "STX",
@@ -811,7 +951,8 @@
     "stageDate": "2026-11-02",
     "confirm": 766.09,
     "invalidation": 795.43,
-    "target": 523.77
+    "target": 523.77,
+    "source": "posted"
   },
   {
     "ticker": "THM",
@@ -822,7 +963,44 @@
     "stageDate": "2026-11-04",
     "confirm": 2.11,
     "invalidation": 2.14,
-    "target": 1.61
+    "target": 1.61,
+    "source": "detector"
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 251.0,
+    "invalidation": 323.28,
+    "target": 187.05,
+    "source": "detector"
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 252.5,
+    "invalidation": 266.83,
+    "target": 201.25,
+    "source": "detector"
+  },
+  {
+    "ticker": "TWLO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-10-30",
+    "confirm": 232.73,
+    "invalidation": 284.75,
+    "target": 209.25,
+    "source": "detector"
   },
   {
     "ticker": "UMAC",
@@ -833,7 +1011,8 @@
     "stageDate": "2026-11-05",
     "confirm": 24.23,
     "invalidation": 49.64,
-    "target": 10.58
+    "target": 10.58,
+    "source": "posted"
   },
   {
     "ticker": "USAR",
@@ -844,7 +1023,8 @@
     "stageDate": "2026-11-05",
     "confirm": 13.03,
     "invalidation": 13.73,
-    "target": 6.96
+    "target": 6.96,
+    "source": "detector"
   },
   {
     "ticker": "USAR",
@@ -855,7 +1035,8 @@
     "stageDate": "2026-11-05",
     "confirm": 13.03,
     "invalidation": 13.19,
-    "target": 7.47
+    "target": 7.47,
+    "source": "detector"
   },
   {
     "ticker": "V",
@@ -866,7 +1047,8 @@
     "stageDate": "2026-11-05",
     "confirm": 408.59,
     "invalidation": 405.0,
-    "target": 441.49
+    "target": 441.49,
+    "source": "posted"
   },
   {
     "ticker": "VEEV",
@@ -888,7 +1070,8 @@
     "stageDate": "2026-11-02",
     "confirm": 142.15,
     "invalidation": 171.65,
-    "target": 110.44
+    "target": 110.44,
+    "source": "posted"
   },
   {
     "ticker": "WDC",
@@ -899,7 +1082,8 @@
     "stageDate": "2026-11-05",
     "confirm": 456.75,
     "invalidation": 548.47,
-    "target": 319.88
+    "target": 319.88,
+    "source": "detector"
   },
   {
     "ticker": "XOM",
@@ -932,6 +1116,7 @@
     "stageDate": "2026-10-26",
     "confirm": 158.71,
     "invalidation": 138.12,
-    "target": 187.08
+    "target": 187.08,
+    "source": "posted"
   }
 ]

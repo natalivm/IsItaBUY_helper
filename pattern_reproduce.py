@@ -57,13 +57,13 @@ def labels():
     spans = [(m.group(1), m.start()) for m in re.finditer(r'ticker: "([A-Z.]+)"', text)]
     out, seen = [], set()
 
-    def add(tk, pattern, tf, direction, date, confirm, invalidation, target):
+    def add(tk, pattern, tf, direction, date, confirm, invalidation, target, source=None):
         key = (tk, pattern, tf, date)
         if key in seen:
             return
         seen.add(key)
         out.append({'ticker': tk, 'pattern': pattern, 'tf': tf, 'dir': direction,
-                    'date': date, 'confirm': confirm,
+                    'date': date, 'confirm': confirm, 'source': source,
                     'invalidation': invalidation, 'target': target})
 
     for m in ROW.finditer(text):
@@ -74,7 +74,8 @@ def labels():
         with open(pw.COMPLETED_FILE) as fh:
             for r in json.load(fh):
                 add(r['ticker'], r['pattern'], r['timeframe'], r['direction'],
-                    r['stageDate'], r['confirm'], r['invalidation'], r['target'])
+                    r['stageDate'], r['confirm'], r.get('invalidation'), r['target'],
+                    r.get('source'))
     return out
 
 
@@ -168,3 +169,25 @@ if __name__ == '__main__':
     print(f"    wedges {r['wedge_err']:.1f}% (n={r['n_wedge']})   "
           f"channels {r['channel_err']:.1f}% (n={r['n_channel']})")
     print(f"  (replay stops {BACK} bar(s) before the completion day)")
+
+    # SPLIT BY PROVENANCE, because the blended number is not the one to read. 40 of the 96
+    # labels were drawn by the detector itself -- `record_completed`'s two `auto` gates
+    # could not see them, every one having lost its per-setup flag -- so on those the
+    # harness is asking whether the detector rebuilds its own drawing. It does, at 1.1%
+    # against 9.0% for the calls that came from the source tool. The headline is a blend of
+    # a tautology and a measurement, and the 9.0% is the measurement.
+    all_l = labels()
+    groups = [('detector-drawn (circular)', lambda L: L.get('source') == 'detector'),
+              ('from the source tool', lambda L: L.get('source') == 'posted'),
+              ('provenance unknown', lambda L: L.get('source') not in ('detector', 'posted'))]
+    print("\n  by provenance:")
+    g = globals()
+    for name, pred in groups:
+        g['labels'] = (lambda p_: (lambda: [L for L in all_l if p_(L)]))(pred)
+        rr = score({})
+        if not rr['usable']:
+            continue
+        print(f"    {name:26} n={rr['usable']:>3}  right pattern {rr['pattern']:>2}  "
+              f"levels close {rr['levels']:>2}  confirm {rr['confirm_err']:.1f}%  "
+              f"target {rr['target_err']:.1f}%")
+    g['labels'] = lambda: all_l

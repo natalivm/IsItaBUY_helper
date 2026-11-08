@@ -7,13 +7,14 @@ export const META = defineStock({
   themeColor: '#1877F2',
   currentPrice: 610.15,
   fairPriceRange: '$580 - $1,050',  // stockanalysis.com analyst target range (Oct 8 2026 — PRE-Q3, needs a refresh)
-  shares0: 2550,
+  shares0: 2556.24,     // TIKR, Nov 6 2026 ($610.15 x 2,556.24 gives the $1,559,691M cap)
   rev25: 256200,         // FY2026E $256.2B (+26%): Q1 $56.3B + Q2 $60.8B + Q3A $64.6B + Q4 guide $73-76B (mid $74.5B); FY27E $306.5B (+21%)
   fcfMargin25: 0.02,     // FY2026E: capex raised to $135-145B; FCF now tracking ~zero (Q2 +$0.8B, Q3 -$2.1B)
   taxRate: 0.14,         // Normalized FY2026 rate: 13-16% guided (Q1 was -23% including $8B one-time benefit)
-  cash: 90260,           // Jun 2026 (stockanalysis): $90.3B — STALE, Sep 2026 balance sheet not yet pulled
-  debt: 112320,          // Jun 2026: $112.3B incl. leases (up sharply — data-center financing) — STALE as above
-  beta: 1.23,
+  cash: 82400,           // Q3 2026 per the call: cash and marketable securities. No longer stale.
+  debt: 114793,          // Q3: $83.7B of stated debt plus ~$31.1B of leases, derived from TIKR's LTM net debt
+                         // of +$32,393M against that cash. Same lease-inclusive convention as before.
+  beta: 1.18,            // TIKR 5-yr beta, Nov 6 2026 (was 1.23)
   costDebt: 0.045,
   modelType: 'EPS_PE',
   baseEps: 29.80,        // FY2026E GAAP EPS consensus post-Q3 (Oct 23 2026): Zacks $29.94, Yahoo $29.38, MarketBeat $30.01. FY27E $33.83 (was $34.55). Absorbs Q3's $9.89B legal charge. Prior: $30.40 (pre-Q3).
@@ -22,7 +23,7 @@ export const META = defineStock({
   aiImpact: 'TAILWIND',
   updatedOn: '11/06',
   lastReportTag: 'Q3 2026',
-  dataReviewedOn: '2026-10-24',
+  dataReviewedOn: '2026-11-08',
   nextEarningsOn: '2027-02-03',   // tentative per Investing.com; confirm against IR when announced
   // ⚠ 2-FOR-1 EQUIVALENT SPLIT EFFECTIVE JAN 19 2027 — ACTION REQUIRED THEN
   // ─────────────────────────────────────────────────────────────────────────
@@ -52,6 +53,21 @@ export const META = defineStock({
   // -15.7% from Oct 13 ($762.50). The AI-spend/FCF story outweighed the beat.
   // ─────────────────────────────────────────────────────────────────────────
 
+  // BALANCE SHEET REFRESHED Nov 8 2026 (the Q3 call and the TIKR card)
+  // ─────────────────────────────────────────────────────────────────────────
+  // cash/debt carried a STALE marker since the Q3 review; they are Q3 actuals
+  // now. Net debt $22.1B -> $32.4B in a quarter, still only 0.27x LTM EBITDA.
+  // beta 1.23 -> 1.18, shares0 2550 -> 2556.24, street target $800 -> $850.10.
+  // META rates on EPS_PE, so none of this moves the rating: BUY at 10.13%.
+  //
+  // WORTH MORE THAN THE REFRESH ITSELF, the Q3 EPS work now has an independent
+  // check. TIKR's NTM P/E of 18.52x at $610.15 implies NTM EPS of $32.95, and
+  // NTM spans Q4 FY26 plus Q1-Q3 FY27 — so it should land between the stored
+  // FY26E $29.80 and FY27E $33.83, nearer the latter. It does, almost exactly.
+  // LTM P/E 20.81x implies $29.32 against a FY26E of $29.80, which is the same
+  // statement one quarter back. The consensus figures taken on Oct 24 hold.
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Q2 2026 UPDATE (Jul 29, 2026) — first data review
   // ─────────────────────────────────────────────────────────────────────────
   // Revenue $60.8B (+28%, beat ~$60.2B) but EPS $6.18 vs $7.22 expected
@@ -65,7 +81,10 @@ export const META = defineStock({
 
 
 
-  analystConsensus: { rating: 'Strong Buy', targetLow: 580, targetMedian: 800, targetHigh: 1050, numAnalysts: 63 },  // stockanalysis.com (Oct 8 2026)
+  // Median is TIKR's street target of Nov 6; low/high/count still Oct 8. Note the direction: the target went
+  // UP, $800 -> $850.10, while the stock fell from ~$762 to $610. Analysts are raising numbers into a falling
+  // tape here, the same shape as PLTR and the opposite of STRL, where every target was cut through a beat.
+  analystConsensus: { rating: 'Strong Buy', targetLow: 580, targetMedian: 850.1, targetHigh: 1050, numAnalysts: 63 },
 
   // rev25 = FY2026 estimate; year-1 = FY2027 growth rate
   revGrowth: [
@@ -123,10 +142,10 @@ export const META = defineStock({
   ],
 
   debtSafety: {
-    netDebt: 22060,        // Jun 2026: ~$112.3B debt (incl. leases) − ~$90.3B cash (stockanalysis)
-    ebitda: 109660,        // TTM EBITDA
-    fy: 'TTM Q2 2026',
-    note: 'GREEN (~0.2×). Swung from net cash to modest net debt as data-center financing ramps — watch the trajectory, not the level.',
+    netDebt: 32393,        // TIKR LTM, Nov 6 2026 (was 22,060 at Q2)
+    ebitda: 119974,        // LTM, derived from TIKR's 0.27x net-debt/EBITDA on that net debt
+    fy: 'LTM Q3 2026',
+    note: 'GREEN at 0.27x. Net debt grew $22.1B -> $32.4B in one quarter as data-center financing ramps. The level is still trivial against $120B of LTM EBITDA; the trajectory is the thing, and it is the same story as the negative free cash flow.',
   },
 
   burry: {

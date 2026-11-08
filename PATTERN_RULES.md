@@ -95,6 +95,42 @@ Hammer (forming). Each has its own lines, levels, stage and News posts.
   lows Jun 8 / Jul 27; signal $488.47, target $664.85, invalidation $401.41.
   Also QQQ, IREN, META, COST, GE, TWLO and others.
 
+### The flat-boundary clause, and why it is not a mislabelled triangle
+
+"The bottom can be flat" / "the top can be flat" above deliberately absorbs a shape that
+classical TA names separately and gives the OPPOSITE bias to:
+
+| shape | this rulebook | classical TA |
+|---|---|---|
+| falling roof, flat floor | Falling Wedge → breaks **up** | Descending Triangle → breaks **down** |
+| flat roof, rising floor | Rising Wedge → breaks **down** | Ascending Triangle → breaks **up** |
+
+That is not a small disagreement — it inverts the trade — and `_classify` has no separate
+branch for it, so every such pattern lands in the wedge bucket. Measured across the ledger
+by the far line's move as a fraction of mid price, "flat" being within ±3%:
+
+| | n | hand-posted | median break undone | atRisk / update / failed |
+|---|---|---|---|---|
+| Falling Wedge, flat bottom | 12 | 10 | **−0.9%** | 1 |
+| Falling Wedge, true wedge | 142 | 100 | **+12.1%** | 10 |
+| Rising Wedge, flat top | 20 | 16 | **−11.4%** | 0 |
+| Rising Wedge, true wedge | 85 | 66 | −7.2% | 3 |
+
+(positive = the break has been given back.) 32 of 259 fitted wedges, 12.4%, carry the
+flat-boundary shape. If the classical reading were right about these, their breaks — drawn
+in the wedge direction — should be systematically given back. **They are the better-behaved
+group in both pairs**, by 13 points among the falling and 4 among the rising.
+
+So the ledger gives no support for splitting them out, and the clause stands. Two caveats
+that keep this from being a settled result: n is 12 and 20, and "break undone" is a
+snapshot of live setups rather than a resolved outcome, which is the survivorship trap
+CLAUDE.md describes in its own words. What would settle it is completed calls on the
+flat-boundary shape specifically.
+
+**And 26 of the 32 are hand-posted from the source tool**, so this is not the detector
+inventing a reading — the source tool draws these as wedges too, and the two systems agree
+against the textbook. Worth knowing before anyone "fixes" it.
+
 ## 4. Symmetrical Triangle / Megaphone
 
 - **Shape:** two **non-parallel** lines sloping in **opposite** directions.
@@ -174,6 +210,32 @@ flag at all; there is no room for four swing-point touches.
 single case is how a detector ends up tuned to CVX, and every change that has gone in had
 8 to 22 completed calls behind it. When more completed flags are recorded as `history`
 rows, `pattern_reproduce.py` will measure this the way it measured the wedges.
+
+**The measuring rule now has outside corroboration, which weakens half the objection.**
+The rules above were reverse-engineered from one CVX call, and the stated risk was tuning
+to that one case. An independent published description of the same pattern (ChartGuys'
+Bear Flag schematic, Nov 2026) states it the same way without reference to CVX:
+
+| | ChartGuys | derived above from CVX |
+|---|---|---|
+| entry | "breakdown close below flag base" | a close past the flag's extreme |
+| stop | "above upper flag boundary or last lower high" | the flag's own extreme |
+| target | "project flagpole height down from breakdown" | the pole projected off the flag's extreme |
+
+So the *construction* is not a CVX artifact — two sources derive it independently. What is
+still n=1 is the **accuracy**: whether a pole projected this way lands where price actually
+goes. That is the half `pattern_reproduce.py` has to settle, and it still needs labels.
+
+One difference worth keeping: they project the pole **from the breakdown level**, the
+derivation above projects it **from the flag's extreme**. On CVX the two are within a few
+cents, so that call cannot separate them; a second labelled flag probably can.
+
+**They also publish a second, shorter target — "conservative = flag height"** — i.e. the
+flag's own depth instead of the pole. That is directly relevant to the longest-running
+finding in CLAUDE.md: measured-move targets mostly are not reached, in this ledger and in
+the source tool's own completed calls (30.1% projected against 12.1% delivered). A
+conservative variant is the first convention seen anywhere that addresses it. Not adopted —
+there is nothing here to measure it against — but it is the shape an answer would take.
 
 ## 6. Candle patterns (single- and multi-candle reversals)
 

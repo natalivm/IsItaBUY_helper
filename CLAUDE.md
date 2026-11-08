@@ -770,6 +770,92 @@ then thrown away. The fix is that a stored failure is kept on the row and marked
 as a shown one is, leaving a single owner of "a failure leaves the ledger" -- and that owner
 runs later in the same job and re-reads the file, so nothing waits for tomorrow.
 
+**The same hole was one stage over, and it cost more.** A stored setup never enters `done`
+-- the stored branch appends it to `stored_gone` and `continue`s -- and the loop that calls
+`record_completed` only ever walked `done`. So a stored call that reached its **target** was
+cut from the row with no label written, exactly as a stored failure was. Which slot a setup
+happened to sit in decided whether the evidence was kept, and that is not a property of the
+call: `dedupe_setups` and `reslot_setups` move setups between the slots and `more` on their
+own, so where a call is sitting when it completes is an accident of the last re-rank.
+
+It is the more common shape, because targets are reached far more often than the fail rule
+fires. **10 were lost over the last 80 commits** -- ARRY, DELL, KRMN, MELI, MLM, MRVL, RIOT
+and three of TWLO's -- against a file holding 85, so about a ninth of the label set. All 10
+were recovered from git history with their levels. `completedCalls.json` holds **95**, and
+the headline reproduces out of sample: confirm **0.0%** median error, target **6.2%** (wedges
+4.8% at n=22, channels 8.0% at n=52), which continues the 6.7% / 4.8% / 6.7% series this file
+records at 23, 24 and 26 labels.
+
+**The two gates on recording are both right and are easy to confuse.** `posted` reads the
+**entry's** `auto` and `sv.get('auto')` reads the **setup's**, and the entry flag is not
+redundant: `_ts_entry` writes `auto: true` once on the entry and leaves the setups it
+generates unflagged, so on a machine-drawn stock a setup with no flag of its own is still
+detector output. APP is the case -- four setups, none individually flagged, every note
+reading "Auto-detected", two of them reaching target on the Nov 5 gap. Recording those would
+score the detector against its own drawings and inflate every table above. The entry gate is
+what stops it.
+
+### 42% of the label set is the detector grading its own homework
+
+`record_completed` has two gates meant to keep the detector's own drawings out of the
+training labels, and **neither can see the case that actually happens.** `posted` reads the
+**entry's** `auto` and `sv.get('auto')` reads the **setup's** — but `_ts_entry` flags the
+entry and leaves the setups it generates bare, and a promotion into a slot drops a
+per-setup flag, the same way `checkedOn` was being dropped before `HEADER_KEYS` was fixed.
+A detector drawing that has lost its flag passes both.
+
+DELL is how it surfaced. Its weekly ascending channel was recorded as a label carrying the
+detector's own **$359.15** target against the source tool's published **$331.28** for the
+identical **$450.00** confirm, and the setup's own note reads *"Auto-detected ascending
+channel on the weekly chart"* in so many words.
+
+It is not a handful. On the hand-posted stocks **535 of 797 setups** carry that note without
+a flag — every one a label in waiting — and of the 64 labels traceable through 150 commits
+of history, **40 are detector drawings and not one of them carried `auto: true` anywhere.**
+The flag loss is systematic, not a few accidents.
+
+**Split by provenance, the harness says two completely different things:**
+
+| | n | right pattern | levels close | confirm | target |
+|---|---|---|---|---|---|
+| detector-drawn (circular) | 40 | 34 | 30 | 0.0% | **1.1%** |
+| from the source tool | 24 | 20 | 10 | 0.0% | **11.7%** |
+| provenance unknown | 30 | 23 | 15 | 0.0% | 6.7% |
+| **blended headline** | 94 | 77 | 55 | 0.0% | **6.7%** |
+
+On its own drawings the detector reproduces the target to **1.1%**; on the source tool's it
+is **11.7%**. The headline is a blend of a tautology and a measurement, and *the measurement
+is the second row.* "Levels close" tells the same story harder — 30 of 40 against 10 of 24.
+
+**What this costs the tuning tables above.** `HEIGHT_REF`, `MIN_SIDE_TOUCHES`,
+`SIDE_EXEMPT`, `HEIGHT_VS` and the `MIN_ROOM` sweep were all measured on the blended set.
+Their *direction* is probably safe — each was argued from what the construction should be
+before it was measured, which is the discipline the "n is 23" section insists on — but the
+magnitudes are diluted toward zero by labels that cannot move, and worse, **any change that
+makes the detector more self-consistent scores free points on 42% of the set.** That is a
+scoreboard a tuner can game without improving anything. Re-measure on
+`source == 'posted'` before moving a parameter on a table alone.
+
+**Three things changed and one deliberately did not.**
+
+- A third gate: `record_completed` refuses a setup whose `note` starts `Auto-detected`. The
+  note is the evidence once the flag is gone — `pattern_detect` writes that sentence and
+  nothing else does.
+- Every label carries `source`: `detector` (40), `posted` (24), absent where 150 commits of
+  history could not reach it (32). `pattern_reproduce` prints the three-way split on every
+  run, so the blended number can never again be read without the breakdown under it.
+- **`invalidation` is now optional on a label**, requiring only `confirm` and `target` —
+  which is exactly what the harness scores. It carried the invalidation into the label dict
+  and never read it. The requirement was costing real labels in a systematic way: a
+  *completed* source-tool panel drops its invalidation row, correctly, because the setup is
+  over and no level would kill it any more. So every finished panel was refused. INTU's
+  daily descending channel (confirm $311.66, target $364.75, reached Nov 4) and DELL's
+  weekly ascending channel were both verified to the cent against our own candles and both
+  turned away over a field nothing reads.
+- **The 40 were not deleted.** They record that price reached a level, which is true and was
+  expensive to collect; what was wrong was reading them as a score. Marking provenance keeps
+  the fact and removes the claim.
+
 **`pattern_watchlist.confirm_faults` checks each `confirm` is a candle extreme on its OWN
 timeframe**, which is what PATTERN_RULES says it is. Reports, never edits. It exists
 because DUOL's weekly wedge confirmed on a *daily* low and five setups promoted on
