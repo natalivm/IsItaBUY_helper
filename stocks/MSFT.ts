@@ -89,11 +89,15 @@ export const MSFT = defineStock({
   // elevated, and weak PC demand. Devices and Consumer overall -3%. It is ~5% of
   // revenue, so it costs about a point of company growth.
   //
-  // NOT SET: analystConsensus is omitted rather than invented. TIKR gives a street
-  // target of $634.14 and nothing else — the type needs a low, a high and a count,
-  // and three made-up numbers to display one real one is not a trade worth making.
-  // That and rsRating are the two things to fill first.
   // ─────────────────────────────────────────────────────────────────────────
+
+  // Street targets, Nov 2026: $440 low, $634.14 average, $870 high, 58 analysts polled by
+  // S&P Global. TIKR's street target prints the SAME $634.14 to the cent, from a different
+  // feed, which is why this is set rather than left empty as it first was. The median is
+  // ~$631 across 57 analysts, so mean and median are within half a percent and the field
+  // takes the corroborated figure. Ratings mix is 53 Buy, 2 Hold, 0 Sell.
+  analystConsensus: { rating: 'Strong Buy', targetLow: 440, targetMedian: 634.14, targetHigh: 870, numAnalysts: 58 },
+  fairPriceRange: '$440 - $870',
 
   // rev25 = FY2026 ACTUAL; year one is FY27, which Q1 and the Q2 guide have largely set
   revGrowth: [
