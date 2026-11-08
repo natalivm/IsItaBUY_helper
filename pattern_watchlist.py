@@ -1070,6 +1070,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
         text = fh.read()
     entries = parse_watchlist(text)
     edits, price_changes, target_hits, needs_update, review = [], [], [], [], []
+    stale_quotes = []               # fetch failed: re-checked against the stored price
     at_risk, back_inside = [], []   # confirmed breaks that closed past invalidation, and ones that came back
     retested = []                   # ...and ones that closed back ON the boundary they broke
     promoted = []                   # pending setups whose close carried them forward a stage
@@ -1081,9 +1082,25 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
         main = {k: v[2] for k, v in f.items()}
         sym = main.get('ticker')
         if quotes is None:
-            q = {'price': main.get('price'), 'date': main.get('priceDate') or today, 'bars': []}
+            q = {'price': main.get('price'), 'date': main.get('priceDate') or today,
+                 'bars': _stored_daily(sym)}
         else:
             q = quotes.get(sym)
+        # A failed fetch used to skip the stock outright, and that threw away every check
+        # the candles already on disk can answer. APP is the case: it gapped through its
+        # confirm and both of its upward targets in one bar on Nov 5, its quote failed on
+        # the Nov 6 run, and two completed calls sat on `confirmed` because the whole entry
+        # was skipped -- while 185 of 191 stocks updated normally, so nothing in the report
+        # said a word about it. Six stocks were stranded a day behind that way.
+        #
+        # Falling back to the stored price is exactly what `--apply` (quotes=None) does for
+        # every stock, and that path is documented as a legitimate re-check. The price is a
+        # run old; the stage checks still run, against the same stored candles. A stale
+        # price is a far smaller error than a call left open after it finished.
+        if quotes is not None and (not q or q.get('price') is None) and main.get('price') is not None:
+            q = {'price': main.get('price'), 'date': main.get('priceDate') or today,
+                 'bars': _stored_daily(sym)}
+            stale_quotes.append(sym)
         if not q or q.get('price') is None:
             continue
         price, date = q['price'], q['date']
@@ -1355,7 +1372,7 @@ def update_watchlist(quotes, apply=False, path=None, news_path=None,
             'dormant': dormant_candidates(new_text), 'wake': wake_candidates(new_text),
             'price_changes': price_changes, 'target_hits': target_hits, 'needs_update': needs_update,
             'at_risk': at_risk, 'back_inside': back_inside, 'retested': retested, 'promoted': promoted,
-            'review': review, 'news': news}
+            'review': review, 'news': news, 'stale_quotes': stale_quotes}
 
 
 # ── News feed ──
@@ -3716,6 +3733,12 @@ def print_watchlist_report(result, missing, apply):
                 print(f"  {tk:<6} {str(tf):<7} {str(pat):<19} {why}" + ("  (auto)" if auto else ""))
             if len(wide) > 12:
                 print(f"  ... and {len(wide) - 12} more")
+    sq = result.get('stale_quotes') or []
+    if sq:
+        print(f"\n📵 Quote fetch failed ({len(sq)}) — re-checked against the stored price instead")
+        print("   of being skipped. The stage checks ran on the candles already on disk; only the")
+        print("   price is a run old. Six stocks sat a day behind in silence before this printed:")
+        print("  " + "  ".join(sq))
     stale = result.get('staleBars') or []
     if stale:
         print(f"\n🕯 Stale candle files ({len(stale)}) — the ledger's price has outrun these charts.")
