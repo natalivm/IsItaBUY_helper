@@ -175,6 +175,32 @@ single case is how a detector ends up tuned to CVX, and every change that has go
 8 to 22 completed calls behind it. When more completed flags are recorded as `history`
 rows, `pattern_reproduce.py` will measure this the way it measured the wedges.
 
+**The measuring rule now has outside corroboration, which weakens half the objection.**
+The rules above were reverse-engineered from one CVX call, and the stated risk was tuning
+to that one case. An independent published description of the same pattern (ChartGuys'
+Bear Flag schematic, Nov 2026) states it the same way without reference to CVX:
+
+| | ChartGuys | derived above from CVX |
+|---|---|---|
+| entry | "breakdown close below flag base" | a close past the flag's extreme |
+| stop | "above upper flag boundary or last lower high" | the flag's own extreme |
+| target | "project flagpole height down from breakdown" | the pole projected off the flag's extreme |
+
+So the *construction* is not a CVX artifact — two sources derive it independently. What is
+still n=1 is the **accuracy**: whether a pole projected this way lands where price actually
+goes. That is the half `pattern_reproduce.py` has to settle, and it still needs labels.
+
+One difference worth keeping: they project the pole **from the breakdown level**, the
+derivation above projects it **from the flag's extreme**. On CVX the two are within a few
+cents, so that call cannot separate them; a second labelled flag probably can.
+
+**They also publish a second, shorter target — "conservative = flag height"** — i.e. the
+flag's own depth instead of the pole. That is directly relevant to the longest-running
+finding in CLAUDE.md: measured-move targets mostly are not reached, in this ledger and in
+the source tool's own completed calls (30.1% projected against 12.1% delivered). A
+conservative variant is the first convention seen anywhere that addresses it. Not adopted —
+there is nothing here to measure it against — but it is the shape an answer would take.
+
 ## 6. Candle patterns (single- and multi-candle reversals)
 
 The pattern is the candle (or the two or three candles) itself — **no trendlines**.
