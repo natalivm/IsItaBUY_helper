@@ -8,7 +8,7 @@ export const MSFT = defineStock({
   updatedOn: '11/08',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-11-08',
-  nextEarningsOn: '2027-01-27',   // Q2 FY27, late January on the usual cadence — NOT confirmed by IR
+  nextEarningsOn: '2027-01-26',   // Q2 FY27 — IBD's EPS Due Date, Nov 6 2026
 
   currentPrice: 530.61,
   shares0: 7426.19,      // TIKR, Nov 6 2026 ($530.61 x 7,426.19 gives the $3,940,413M cap)
@@ -19,8 +19,11 @@ export const MSFT = defineStock({
   rev25: 331839,
   fcfMargin25: 0.202,    // FY26 actual: $66,987M of FCF on $331,839M. LTM is already 17.3% — see the note.
   taxRate: 0.20,         // effective 19.4% FY26, 19.7% LTM, and management guides ~20% for Q2 FY27
-  cash: 20281,           // cash and equivalents at the LTM close (TIKR)
-  debt: 89703,           // DERIVED so net debt reproduces TIKR's LTM +$69,422M; lease-inclusive
+  cash: 64509,           // TIKR LTM: cash and equivalents $20,281M + short-term investments $44,228M
+  debt: 133931,          // TIKR LTM total debt. 64,509 - 133,931 = the -$69,422M of net debt below,
+                         // so both sides are now the reported gross figures rather than a derivation.
+                         // $98,450M of it is CAPITAL LEASES (87,687 long-term + 10,763 current) against
+                         // $35,481M of actual borrowings — this is the datacentre build, not borrowing.
   beta: 1.04,            // TIKR 5-yr beta, Nov 6 2026
   costDebt: 0.04,
 
@@ -34,11 +37,12 @@ export const MSFT = defineStock({
                          // and NTM reaches a quarter further into FY28, so the two bracket this.
                          // Set at 20.40 between them. REPLACE with a published FY27 consensus.
 
-  rsRating: 50,          // PLACEHOLDER — no IBD read supplied. The stock is +4.4% over twelve
-  rsTrend: 'rising',     // months but ran hard off the July low, hence 'rising'. BOTH NEED YOUR
-                         // NUMBER: at 50 the stock is under the 70 momentum line, so the GROUP
-                         // depends entirely on the trend flag. The rating does not — 10.99% clears
-                         // the hard 10% BUY line without the quality boost.
+  rsRating: 83,          // IBD, Nov 6 2026. Composite 99, EPS Rating 91, SMR A, ACC/DIS A,
+  rsTrend: 'flat',       // industry group 27 of 142 with a Group RS of A. The stock is 5.1% off its
+                         // 52-week high and 2.7% above its 50-day line, holding the 10-week — a
+                         // pullback being supported rather than an RS line making new ground, hence
+                         // 'flat'. The trend flag no longer carries anything: 83 clears the 70
+                         // momentum line on its own, so PRIME_GROWTH does not rest on it.
   aiImpact: 'TAILWIND',
 
   // Q1 FY27 (reported Oct 28 2026) — the first quarter of the new segment structure
@@ -74,6 +78,14 @@ export const MSFT = defineStock({
   // company will "access additional sources of funding when we believe it is
   // attractive" — it has not yet tapped the debt markets. Same shape as AMZN, less
   // far along: Amazon is already at -5.9%.
+  //
+  // THE BALANCE SHEET IS WHERE THAT SPEND SHOWS UP. Net PP&E went $154,552M (FY24) ->
+  // $240,675M (FY25) -> $377,022M (LTM), gross $504,230M. The capex line above is the
+  // flow; this is the stock it has built, and it is why the lease balance below is what
+  // it is: $98,450M of capital leases against $35,481M of borrowings. Total assets
+  // $779,403M, equity $470,509M, book value $63.35 a share. IBD prints debt/equity at
+  // 25%, which is the lease-inclusive figure (133,931 / 470,509 = 28%) rather than the
+  // 7.5% the borrowings alone would give.
   //
   // MARGINS ARE AT THE CEILING, which is what sets epsCagr below. Net margin is 41.2%
   // LTM against an operating margin of 47.1% and a ~20% tax rate, so there is very
