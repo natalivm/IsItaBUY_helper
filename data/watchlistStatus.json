@@ -380,6 +380,12 @@
  "APH|daily Descending Channel": {
   "label": "daily Descending Channel",
   "setup": "Descending Channel (daily)",
+  "stage": "confirmed",
+  "ticker": "APH"
+ },
+ "APH|daily Descending Channel #2": {
+  "label": "daily Descending Channel #2",
+  "setup": "Descending Channel (daily)",
   "stage": "forming",
   "ticker": "APH"
  },
@@ -391,14 +397,14 @@
  },
  "APH|daily alt": {
   "label": "daily alt",
-  "setup": "Descending Channel (daily)",
+  "setup": "Rising Wedge (daily)",
   "stage": "confirmed",
   "ticker": "APH"
  },
  "APH|main": {
   "label": "main",
   "setup": "Rising Wedge (weekly)",
-  "stage": "confirmed",
+  "stage": "retest",
   "ticker": "APH"
  },
  "APH|weekly Ascending Channel": {
