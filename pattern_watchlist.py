@@ -1900,9 +1900,44 @@ def _cap_plan(text, e):
 
 
 def record_completed(ticker, sv, finish_date, path=None):
-    """Append one completed call to the labels file, if it is not already there."""
+    """Append one completed call to the labels file, if it is not already there.
+
+    `invalidation` is OPTIONAL and the other two are not, because that is exactly what
+    `pattern_reproduce` scores: it replays the chart, runs the detector and compares the
+    confirm and the target. The invalidation is carried into the label dict and never read
+    by anything -- grep says so, and the two files here are the only consumers of the whole
+    labels file.
+
+    Requiring it cost real labels, and the shape of the loss is systematic rather than bad
+    luck. A completed call in the source tool drops its invalidation row, correctly: the
+    setup is over, so there is no longer a level that would kill it. The panels therefore
+    publish confirm, target and the completion date and never the stop -- INTU's daily
+    descending channel and DELL's weekly ascending channel were both refused on it, each
+    verified to the cent against our own candles. Every finished panel from here on would
+    have been refused the same way.
+
+    Inventing a stop to satisfy the check is the alternative and it is worse: RULEBOOK.md's
+    import rule is that every level is reproduced from our candles before it is written, and
+    a derived invalidation reproduces nothing.
+    """
     conf, inv, tgt = sv.get('confirm'), sv.get('invalidation'), sv.get('target')
-    if not (conf and inv and tgt):
+    if not (conf and tgt):
+        return False
+    # The third gate, and the one the other two cannot see. `posted` reads the entry's
+    # `auto` and `sv.get('auto')` reads the setup's, but a setup can be detector output and
+    # carry neither: `_ts_entry` flags the entry rather than the setups, and a promotion
+    # into a slot drops a per-setup flag the same way `checkedOn` was being dropped. DELL's
+    # weekly ascending channel is the case -- it was recorded as a label with the
+    # detector's own $359.15 target against the source tool's published $331.28 for the
+    # identical $450.00 confirm, and its note reads "Auto-detected ascending channel on the
+    # weekly chart" in so many words.
+    #
+    # So the note is the evidence when the flag is gone. That sentence is written by
+    # `pattern_detect` and by nothing else, and on the hand-posted stocks **535 of 797**
+    # setups carry it without a flag -- every one of them a label in waiting. A label drawn
+    # by the detector makes "did the detector rebuild this setup?" close to tautological,
+    # which is the circularity `posted` exists to prevent, reached by a route it cannot see.
+    if (sv.get('note') or '').startswith('Auto-detected'):
         return False
     path = path or COMPLETED_FILE
     have = []
