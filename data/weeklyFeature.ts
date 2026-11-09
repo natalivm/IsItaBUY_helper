@@ -49,23 +49,8 @@ export interface WeeklyFeature {
 export const WEEKLY_FEATURE: WeeklyFeature = {
   weekOf: "2026-11-09",
   weekEnd: "2026-11-13",
-  generatedOn: "2026-11-06",
+  generatedOn: "2026-11-09",
   hot: [
-    {
-      ticker: "LMT",
-      name: "Lockheed Martin Corp.",
-      pattern: "Descending Channel",
-      timeframe: "weekly",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 567.08,
-      priceDate: "2026-11-06",
-      target: 697.97,
-      invalidation: 528.28,
-      rsi: 79,
-      score: 102.2
-    },
     {
       ticker: "CAR",
       name: "Avis Budget Group, Inc.",
@@ -78,7 +63,7 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-11-06",
       target: 150.18,
       invalidation: 95.35,
-      rsi: 62,
+      rsi: 64.9,
       score: 101.8
     },
     {
@@ -93,23 +78,38 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       priceDate: "2026-11-06",
       target: 144.54,
       invalidation: 89.55,
-      rsi: 53.8,
-      score: 100.3
+      rsi: 57.9,
+      score: 96.3
     },
     {
-      ticker: "HPE",
-      name: "Hewlett Packard Enterprise Company",
+      ticker: "ARRY",
+      name: "Array Technologies",
       pattern: "Descending Channel",
+      timeframe: "daily",
+      direction: "up",
+      stage: "signal",
+      stageDate: "2026-11-06",
+      price: 5.86,
+      priceDate: "2026-11-06",
+      target: 8.7,
+      invalidation: 2.73,
+      rsi: 74.4,
+      score: 93.9
+    },
+    {
+      ticker: "ZETA",
+      name: "Zeta Global Holdings Corp.",
+      pattern: "Rising Wedge",
       timeframe: "daily",
       direction: "down",
       stage: "confirmed",
       stageDate: "2026-11-05",
-      price: 44.77,
+      price: 31.03,
       priceDate: "2026-11-06",
-      target: 34.14,
-      invalidation: 49.39,
-      rsi: 30.9,
-      score: 102
+      target: 23.8,
+      invalidation: 37.3,
+      rsi: 38,
+      score: 105.3
     },
     {
       ticker: "MRVL",
@@ -122,24 +122,24 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       price: 141.2,
       priceDate: "2026-11-06",
       target: 93.01,
-      invalidation: 238.78,
-      rsi: 26.8,
+      invalidation: 162.92,
+      rsi: 22.7,
       score: 101.9
     },
     {
-      ticker: "ANET",
-      name: "Arista Networks",
+      ticker: "DLO",
+      name: "DLocal Limited",
       pattern: "Ascending Channel",
-      timeframe: "weekly",
+      timeframe: "daily",
       direction: "down",
       stage: "confirmed",
-      stageDate: "2026-10-19",
-      price: 170.8,
+      stageDate: "2026-10-30",
+      price: 13.95,
       priceDate: "2026-11-06",
-      target: 126.57,
-      invalidation: 190.95,
-      rsi: 34.1,
-      score: 100.6
+      target: 10.3,
+      invalidation: 14.23,
+      rsi: 41,
+      score: 101.5
     }
   ],
   earnings: [
