@@ -5,12 +5,12 @@ export const PLTR = defineStock({
   name: 'Palantir Technologies',
   sector: 'AI / Data Analytics Software',
   themeColor: '#0ea5e9',
-  updatedOn: '11/06',
+  updatedOn: '11/10',
   nextEarningsOn: '2026-11-02',   // Q3 2026, after the close; per Benzinga Oct 2026 and
                                   // unconfirmed by Palantir IR. Yahoo overrides this when it has a date.
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-07',
-  currentPrice: 160.38,
+  currentPrice: 169.2,
   fairPriceRange: '$80 - $265',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 2409.5,     // Shares outstanding, TIKR Nov 6 2026 ($160.38 x 2,409.5 gives the $386,435M cap).
                        // Was 2300, which was simply stale -- NOT dilution. Diluted share count is FLAT:

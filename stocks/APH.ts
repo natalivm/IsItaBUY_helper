@@ -5,10 +5,10 @@ export const APH = defineStock({
   name: 'Amphenol Corp',
   sector: 'Electronic Components · Interconnect',
   themeColor: '#38bdf8',
-  updatedOn: '11/06',
+  updatedOn: '11/10',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-08',
-  currentPrice: 74.59,
+  currentPrice: 80.71,
   fairPriceRange: '$85 - $116',  // stockanalysis.com analyst target range, Oct 8 2026
   // 2-FOR-1 SPLIT EFFECTIVE SEP 3 2026. This was 1278 — PRE-split — while currentPrice and baseEps
   // were both already post-split, so the file carried a market cap of half the real one ($95.3B

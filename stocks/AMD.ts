@@ -5,7 +5,7 @@ export const AMD = defineStock({
   name: 'Advanced Micro Devices',
   sector: 'Semiconductors / AI Compute',
   themeColor: '#ed1c24',
-  currentPrice: 449.04,
+  currentPrice: 508.58,
   fairPriceRange: '$365 - $1,250',  // stockanalysis.com analyst target range, Oct 6 2026
   shares0: 1670,        // Q4 2026 guided diluted, including the Taalas and World Labs closings. Customer warrants are NOT in it — management defers that to 2027 guidance once the vesting conditions are met.
   rev25: 34639,         // FY2025 actual per TIKR (12/27/25); FY26E consensus $50.95B (+47%), FY27E $88.94B (+75%)
@@ -30,7 +30,7 @@ export const AMD = defineStock({
   // BUY on its own. A hard override was no longer preventing an overstatement, it
   // was suppressing the model's actual answer. Restoring it is one line if the
   // judgement goes the other way.
-  updatedOn: '11/06',
+  updatedOn: '11/10',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-06',
 

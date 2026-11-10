@@ -48,6 +48,18 @@
     "lastPrice": 4.44
   },
   {
+    "ticker": "ADBE",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 256.78,
+    "invalidation": 241.07,
+    "target": 291.96,
+    "lastPrice": 237.32
+  },
+  {
     "ticker": "AMKR",
     "pattern": "Falling Wedge",
     "timeframe": "weekly",
@@ -216,6 +228,18 @@
     "lastPrice": 179.04
   },
   {
+    "ticker": "DLO",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 13.39,
+    "invalidation": 14.23,
+    "target": 10.3,
+    "lastPrice": 14.39
+  },
+  {
     "ticker": "EME",
     "pattern": "Falling Wedge",
     "timeframe": "daily",
@@ -336,6 +360,18 @@
     "lastPrice": 259.74
   },
   {
+    "ticker": "LMND",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-06",
+    "confirm": 41.57,
+    "invalidation": 40.32,
+    "target": 50.04,
+    "lastPrice": 39.97
+  },
+  {
     "ticker": "MLM",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -384,6 +420,18 @@
     "lastPrice": 934.27
   },
   {
+    "ticker": "NRG",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 81.64,
+    "invalidation": 94.22,
+    "target": 38.77,
+    "lastPrice": 97.4
+  },
+  {
     "ticker": "OKLO",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -394,6 +442,18 @@
     "invalidation": 23.36,
     "target": 15.77,
     "lastPrice": 23.55
+  },
+  {
+    "ticker": "ONDS",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 5.22,
+    "invalidation": 5.47,
+    "target": 4.1,
+    "lastPrice": 5.97
   },
   {
     "ticker": "PAAS",
@@ -466,6 +526,30 @@
     "invalidation": 162.31,
     "target": 204.69,
     "lastPrice": 153.03
+  },
+  {
+    "ticker": "STX",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-05",
+    "confirm": 687.05,
+    "invalidation": 528.89,
+    "target": 776.96,
+    "lastPrice": 506.14
+  },
+  {
+    "ticker": "TEM",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 67.03,
+    "invalidation": 82.41,
+    "target": 40.85,
+    "lastPrice": 84.44
   },
   {
     "ticker": "THM",
