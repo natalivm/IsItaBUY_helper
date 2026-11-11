@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const PANW = defineStock({
-  updatedOn: '11/10',
+  updatedOn: '11/11',
   lastReportTag: 'Q4 FY26',
   dataReviewedOn: '2026-10-10',
   ticker: 'PANW',
   name: 'Palo Alto Networks',
   sector: 'Cybersecurity',
   themeColor: '#00a3e0',
-  currentPrice: 330.89,
+  currentPrice: 326.36,
   fairPriceRange: '$190 - $475',  // stockanalysis.com analyst target range, Oct 7 2026
   shares0: 845,        // FY27 guide 844-847M non-GAAP diluted (post CyberArk stock deal; was 770)
   rev25: 11480,        // FY26A (Jul 2026) $11.48B (+24.5%) — base year; revGrowth[0] = FY27 (guide $14.10-14.20B), FY28E $16.23B

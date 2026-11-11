@@ -432,6 +432,18 @@
     "lastPrice": 97.4
   },
   {
+    "ticker": "NRG",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 81.64,
+    "invalidation": 88.77,
+    "target": 54.75,
+    "lastPrice": 97.11
+  },
+  {
     "ticker": "OKLO",
     "pattern": "Descending Channel",
     "timeframe": "daily",

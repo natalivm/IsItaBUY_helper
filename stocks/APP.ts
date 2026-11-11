@@ -5,10 +5,10 @@ export const APP = defineStock({
   name: 'AppLovin Corporation',
   sector: 'Ad-Tech / AI Monetization',
   themeColor: '#f97316',
-  updatedOn: '11/10',
+  updatedOn: '11/11',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-06',
-  currentPrice: 410,
+  currentPrice: 395.51,
   fairPriceRange: '$325 - $790',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 333,         // Q3 2026: 331M outstanding at Sep 30 (4.1M repurchased in the quarter for $1.4B); ~333M diluted
   rev25: 8324,          // FY2026E: Q1 $1,840M + Q2 $1,924M + Q3 actual $2,180M + Q4 guide mid $2,380M. Three quarters are now actual. Implies FY25 $5.55B at the "more than 50%" full-year growth management guided.
