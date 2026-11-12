@@ -312,6 +312,18 @@
     "lastPrice": 372.59
   },
   {
+    "ticker": "HIMS",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 27.94,
+    "invalidation": 22.62,
+    "target": 35.05,
+    "lastPrice": 20.81
+  },
+  {
     "ticker": "KKR",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -372,6 +384,18 @@
     "lastPrice": 39.97
   },
   {
+    "ticker": "LRCX",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 218.5,
+    "invalidation": 222.81,
+    "target": 79.75,
+    "lastPrice": 235.88
+  },
+  {
     "ticker": "MLM",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -406,6 +430,18 @@
     "invalidation": 53.6,
     "target": 34.95,
     "lastPrice": 45.72
+  },
+  {
+    "ticker": "MRVL",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 154.78,
+    "invalidation": 156.97,
+    "target": 93.01,
+    "lastPrice": 168.8
   },
   {
     "ticker": "MU",
@@ -466,6 +502,18 @@
     "invalidation": 5.47,
     "target": 4.1,
     "lastPrice": 5.97
+  },
+  {
+    "ticker": "OXY",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 56.25,
+    "invalidation": 64.31,
+    "target": 49.21,
+    "lastPrice": 57.24
   },
   {
     "ticker": "PAAS",
@@ -576,6 +624,30 @@
     "lastPrice": 1.21
   },
   {
+    "ticker": "TTD",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 13.82,
+    "invalidation": 15.14,
+    "target": 6.31,
+    "lastPrice": 15.98
+  },
+  {
+    "ticker": "TTWO",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 203.53,
+    "invalidation": 216.14,
+    "target": 103.5,
+    "lastPrice": 231.31
+  },
+  {
     "ticker": "TWLO",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -622,6 +694,30 @@
     "invalidation": 135.13,
     "target": 171.35,
     "lastPrice": 124.8
+  },
+  {
+    "ticker": "WIX",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 77.09,
+    "invalidation": 69.78,
+    "target": 88.42,
+    "lastPrice": 68.34
+  },
+  {
+    "ticker": "WIX",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-10",
+    "confirm": 81.23,
+    "invalidation": 70.46,
+    "target": 91.59,
+    "lastPrice": 68.34
   },
   {
     "ticker": "XOM",

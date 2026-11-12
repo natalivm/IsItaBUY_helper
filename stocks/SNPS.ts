@@ -5,7 +5,7 @@ export const SNPS = defineStock({
   name: 'Synopsys',
   sector: 'EDA Software / Chip Design',
   themeColor: '#7b2cbf',
-  currentPrice: 459.95,
+  currentPrice: 462.12,
   fairPriceRange: '$415 - $700',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 192,
   rev25: 7054,         // FY2025; FY26 guide midpoint $9.715B (+38% incl. Ansys), FY27E consensus $11.03B (+13.5%)
@@ -21,7 +21,7 @@ export const SNPS = defineStock({
   rsTrend: 'rising',
   aiImpact: 'TAILWIND',
   // ratingOverride 'HOLD' removed 10/11/2026: it was conditional on weak RS; RS has turned (38 → 96), so the model's BUY (~10% base CAGR, quality-boosted) stands.
-  updatedOn: '11/11',
+  updatedOn: '11/12',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-10',
 

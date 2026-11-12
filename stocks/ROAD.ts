@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const ROAD = defineStock({
-  updatedOn: '11/11',
+  updatedOn: '11/12',
   lastReportTag: 'Q3 FY26',
   dataReviewedOn: '2026-10-11',
   ticker: 'ROAD',
   name: 'Construction Partners, Inc.',
   sector: 'Infrastructure Construction · Road & Highway',
   themeColor: '#f59e0b',
-  currentPrice: 81.64,
+  currentPrice: 84.03,
   fairPriceRange: '$115 - $165',  // stockanalysis.com analyst target range (Oct 2026)
   shares0: 56.76,              // stockanalysis (Oct 2026)
   rev25: 2810,                 // FY 09/2025 revenue $2.81B (was 2,300); revGrowth[0] = FY26 (consensus $3.67B, +30%), FY27E $4.08B (+11%)
