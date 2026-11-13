@@ -5,10 +5,10 @@ export const ANET = defineStock({
   name: 'Arista Networks',
   sector: 'Cloud Networking',
   themeColor: '#6366f1',
-  updatedOn: '11/12',
+  updatedOn: '11/13',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-07',
-  currentPrice: 196.68,
+  currentPrice: 206.63,
   fairPriceRange: '$190 - $289',  // stockanalysis.com analyst target range, Oct 9 2026
   shares0: 1280,       // Q4 2026 guided diluted (TIKR Q3 actual 1,278.20 weighted diluted, 1,262.20 basic)
   rev25: 9006,         // FY2025. FY26 is now $13,352M from TIKR's actual quarters ($2,709.0 + $3,035.7 + $3,657.6) plus the $3.95B Q4 guide midpoint — +48.3%, against the $12.68B consensus this file was built on. FY27 is guided to ~$18.5B.

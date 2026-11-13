@@ -5,11 +5,11 @@ export const STRL = defineStock({
   name: 'Sterling Infrastructure, Inc.',
   sector: 'Infrastructure Services · E-Infrastructure & Transportation',
   themeColor: '#e67e22',
-  updatedOn: '11/12',
+  updatedOn: '11/13',
   lastReportTag: 'Q3 2026',
   dataReviewedOn: '2026-11-07',
   nextEarningsOn: '2026-10-28',   // Q3 2026, after the close (per user, Oct 25 2026); Yahoo has no date for STRL
-  currentPrice: 303.85,
+  currentPrice: 301.6,
   fairPriceRange: '$565 - $834',  // post-Q3 analyst range, Nov 2 2026 (individual cuts since run to $500)
   shares0: 30.5,               // TIKR, Nov 6 2026 (market cap $7,711.65M at $252.82 reproduces to $7,711M)
   rev25: 2490,                 // FY2025 actual $2.49B; revGrowth[0] = FY26 (Q3 guide $4.63-4.73B, ~+88%), FY27E ~$5.6B

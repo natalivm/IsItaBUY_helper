@@ -48,6 +48,18 @@
     "lastPrice": 4.44
   },
   {
+    "ticker": "ACHR",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-09",
+    "confirm": 4.13,
+    "invalidation": 4.56,
+    "target": 3.21,
+    "lastPrice": 4.33
+  },
+  {
     "ticker": "ADBE",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -58,6 +70,30 @@
     "invalidation": 241.07,
     "target": 291.96,
     "lastPrice": 237.32
+  },
+  {
+    "ticker": "AMAT",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 362.93,
+    "invalidation": 374.9,
+    "target": 167.62,
+    "lastPrice": 380.95
+  },
+  {
+    "ticker": "AMD",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 492.21,
+    "invalidation": 517.75,
+    "target": 338.42,
+    "lastPrice": 585.3
   },
   {
     "ticker": "AMKR",
@@ -166,6 +202,18 @@
     "invalidation": 156.52,
     "target": 242.35,
     "lastPrice": 151.5
+  },
+  {
+    "ticker": "CRDO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 130.26,
+    "invalidation": 137.71,
+    "target": 59.24,
+    "lastPrice": 139.81
   },
   {
     "ticker": "CVS",
@@ -324,6 +372,18 @@
     "lastPrice": 20.81
   },
   {
+    "ticker": "HPE",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 49.16,
+    "invalidation": 49.39,
+    "target": 34.14,
+    "lastPrice": 50.16
+  },
+  {
     "ticker": "KKR",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -396,6 +456,30 @@
     "lastPrice": 235.88
   },
   {
+    "ticker": "LRCX",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 218.5,
+    "invalidation": 225.43,
+    "target": 92.56,
+    "lastPrice": 233.78
+  },
+  {
+    "ticker": "LRCX",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-12",
+    "confirm": 218.5,
+    "invalidation": 222.54,
+    "target": 70.37,
+    "lastPrice": 233.78
+  },
+  {
     "ticker": "MLM",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -456,6 +540,18 @@
     "lastPrice": 934.27
   },
   {
+    "ticker": "NBIS",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 140.02,
+    "invalidation": 140.54,
+    "target": 71.87,
+    "lastPrice": 128.64
+  },
+  {
     "ticker": "NRG",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -490,6 +586,18 @@
     "invalidation": 23.36,
     "target": 15.77,
     "lastPrice": 23.55
+  },
+  {
+    "ticker": "ON",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 68.61,
+    "invalidation": 72.83,
+    "target": 53.21,
+    "lastPrice": 73.73
   },
   {
     "ticker": "ONDS",
@@ -586,6 +694,18 @@
     "invalidation": 162.31,
     "target": 204.69,
     "lastPrice": 153.03
+  },
+  {
+    "ticker": "SNOW",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 287.93,
+    "invalidation": 300.92,
+    "target": 243.69,
+    "lastPrice": 298.7
   },
   {
     "ticker": "STX",
@@ -754,5 +874,17 @@
     "invalidation": 192.76,
     "target": 255.67,
     "lastPrice": 173.77
+  },
+  {
+    "ticker": "ZETA",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-11",
+    "confirm": 32.95,
+    "invalidation": 34.85,
+    "target": 26.58,
+    "lastPrice": 37.27
   }
 ]

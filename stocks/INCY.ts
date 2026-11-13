@@ -5,8 +5,8 @@ export const INCY = defineStock({
   name: 'Incyte Corporation',
   sector: 'Biopharmaceuticals / Oncology & Dermatology',
   themeColor: '#00a3a1',
-  currentPrice: 122.27,
-  updatedOn: '11/12',
+  currentPrice: 121.7,
+  updatedOn: '11/13',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$86 - $157',  // stockanalysis.com analyst target range (Oct 2026)

@@ -5,12 +5,12 @@ export const MSFT = defineStock({
   name: 'Microsoft Corporation',
   sector: 'Cloud / Enterprise Software / AI Infrastructure',
   themeColor: '#00a4ef',
-  updatedOn: '11/12',
+  updatedOn: '11/13',
   lastReportTag: 'Q1 FY27',
   dataReviewedOn: '2026-11-08',
   nextEarningsOn: '2027-01-26',   // Q2 FY27 — IBD's EPS Due Date, Nov 6 2026
 
-  currentPrice: 521.12,
+  currentPrice: 523,
   shares0: 7426.19,      // TIKR, Nov 6 2026 ($530.61 x 7,426.19 gives the $3,940,413M cap)
 
   // FISCAL YEAR ENDS JUNE. rev25 is FY2026 ACTUAL (year ended 30 Jun 2026), the last complete
