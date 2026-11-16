@@ -45,7 +45,7 @@ If the script is unavailable, prices can be updated via web search:
    ```
    Sources that reliably return prices in search snippets: **investing.com, CNBC, Morningstar, TradingView, stockanalysis.com, finviz.com**.
 
-   **Note**: Direct API calls (Yahoo Finance, yfinance Python) and WebFetch to major finance sites are blocked from this environment (403 proxy). WebSearch is the only reliable method from Claude Code.
+   **Note (re-tested 2026-11-16)**: this used to say Yahoo was blocked from Claude Code's sandbox. It is not, any more — what fails is narrower. Yahoo's **chart** endpoint (`v8/finance/chart`) and its **fundamentals time series** answer from here, so `python3 update_prices.py` works (the batch quote call fails and it falls back to per-symbol chart requests) and so does `fetch_fundamentals.py`. What still fails is the **quote** endpoint (`v7/finance/quote`), because the cookie-and-crumb handshake it needs is refused — that is `earnings_sync.py` and the Yahoo half of `weekly_feature.py`, which still want `--offline` here. `stockanalysis.com` and `sec.gov/files` return 403; `data.sec.gov` and Nasdaq's calendar API answer. Web search is the fallback, not the only method.
 
 3. **Update prices** — use `sed` for bulk updates:
    ```bash
@@ -1839,10 +1839,57 @@ python3 review_status.py --strict       # exit 1 if anything needs review (CI ga
 ```
 
 **"Reported since review" reads two sources**: the stock file's own `nextEarningsOn` and
-`data/earningsCalendar.json` (Yahoo, cached by `weekly_feature.py`). The calendar is only
+`data/earningsCalendar.json` (Yahoo, cached by `weekly_feature.py`; gaps filled from Nasdaq by `fetch_fundamentals.py --earnings`). The calendar is only
 ever added to, so a past date there is the stock's latest known print. Before this the check
-read `nextEarningsOn` alone, which 91 of 96 files do not carry, so it reported 0 while 23
-stocks had printed since their last review.
+read `nextEarningsOn` alone, which 91 of 96 files do not carry, so it reported 0. With
+Yahoo's dates it found 23 stocks that had printed since their last review; with Nasdaq's
+filling the rest, **58**.
+
+### Reported figures and earnings dates, fetched (`fetch_fundamentals.py`)
+
+A review used to start from a web search for each number. `fetch_fundamentals.py` puts the
+reported ones in the repo instead, and `.github/workflows/fetch-fundamentals.yml` runs it on
+weekdays at 22:53 UTC, committing only when a company has filed something new.
+
+```bash
+python3 fetch_fundamentals.py                  # dry run, every stock
+python3 fetch_fundamentals.py --apply          # write data/fundamentals.json
+python3 fetch_fundamentals.py NVDA AMAT        # only these
+python3 fetch_fundamentals.py --compare        # stock files vs the cache, no network
+python3 fetch_fundamentals.py --earnings       # dry run: fill missing earnings dates
+python3 fetch_fundamentals.py --earnings --apply
+```
+
+- **`data/fundamentals.json`** — per stock, the last 4 fiscal years, 6 quarters and the
+  trailing twelve months of revenue, diluted EPS, net income, SBC, buybacks, EBITDA, EBIT,
+  interest expense, debt, cash, operating cash flow and capex, in millions of the reporting
+  currency, plus a `derived` block holding exactly the inputs `burry` and `debtSafety` take.
+  The site never imports it. `fetchedOn` is the day the figures last *changed*.
+- **`data/earningsCalendar.json` gaps** — report dates from Nasdaq's calendar for every
+  tracked symbol with no upcoming date, watchlist-only names included. Yahoo's quote
+  endpoint had left **57 of 96** stock files and most of the watchlist without one; NVDA,
+  PANW and INTU were reporting within three days and were on no list. It only fills a gap or
+  moves a date forward, and writes the same three keys `weekly_feature.py` does.
+
+**It never edits a stock file.** Which fiscal year, what `overstatementPct`, whether a
+leverage note still holds — those are a review, and `dataReviewedOn` is the signal a bot
+writing it would destroy.
+
+**`--compare` is like-for-like or it is noise.** The first version compared every figure
+and flagged **82 of 96** stocks, which says nothing: half the blocks are entered as
+estimates or trailing twelve months, a stock file's EBITDA is usually the company's adjusted
+figure where Yahoo's is GAAP, and net debt may or may not count leases. So `burry` (GAAP
+lines with one definition) is compared on the basis its own `fy` label names — a fiscal
+year, the trailing twelve months, or skipped when the label says estimate — and
+`debtSafety` is compared only on whether leverage crosses 2.0x, the one thing it decides.
+Read a line there as "check which definition the block used", not as an error.
+
+**Two things about Yahoo that cost an hour each.** It answers **429 to a full browser
+User-Agent** sent without a browser's cookies and 200 to a plain `Mozilla/5.0`, so the
+header is deliberately bare; and a 429 retried at once extends the ban, so the run stops,
+keeps what it has and resumes with the unfetched stocks next time. It also opens a row for a
+fiscal year the day it ends, weeks before anything is filed — `derive()` takes the latest
+year that carries an income statement, not the latest row.
 
 It flags stocks that are stale (review older than the threshold), never reviewed (no `dataReviewedOn`), or missing `lastReportTag` / `debtSafety` / `burry`. Use `lastReportTag` (e.g. `'Q1 2026'`) to record which earnings the data reflects — keep the convention consistent (calendar `Q# YYYY` or fiscal `Q# FY##`, but don't mix within a stock).
 

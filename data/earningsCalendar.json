@@ -14,15 +14,30 @@
     "estimated": false,
     "time": "amc"
   },
+  "ADBE": {
+    "date": "2026-12-09",
+    "estimated": true,
+    "time": "amc"
+  },
   "AEHR": {
     "date": "2026-11-02",
     "estimated": true,
     "time": "amc"
   },
+  "AGCO": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "tbd"
+  },
   "ALAB": {
     "date": "2026-11-03",
     "estimated": true,
     "time": "amc"
+  },
+  "ALOY": {
+    "date": "2026-11-19",
+    "estimated": true,
+    "time": "tbd"
   },
   "AMAT": {
     "date": "2026-11-12",
@@ -64,25 +79,60 @@
     "estimated": true,
     "time": "amc"
   },
+  "ARRY": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
   "ARWR": {
     "date": "2026-11-12",
     "estimated": false,
     "time": "amc"
+  },
+  "ASML": {
+    "date": "2026-10-14",
+    "estimated": false,
+    "time": "tbd"
   },
   "ASTS": {
     "date": "2026-11-09",
     "estimated": false,
     "time": "amc"
   },
+  "AVGO": {
+    "date": "2026-12-09",
+    "estimated": true,
+    "time": "amc"
+  },
+  "AXON": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "AZO": {
+    "date": "2026-12-08",
+    "estimated": true,
+    "time": "bmo"
+  },
   "B": {
     "date": "2026-11-09",
     "estimated": false,
     "time": "bmo"
   },
+  "BE": {
+    "date": "2026-10-22",
+    "estimated": false,
+    "time": "tbd"
+  },
   "BKNG": {
     "date": "2026-11-03",
     "estimated": true,
     "time": "amc"
+  },
+  "CACI": {
+    "date": "2026-10-21",
+    "estimated": false,
+    "time": "tbd"
   },
   "CAKE": {
     "date": "2026-10-27",
@@ -124,6 +174,11 @@
     "estimated": true,
     "time": "bmo"
   },
+  "CIEN": {
+    "date": "2026-12-10",
+    "estimated": true,
+    "time": "bmo"
+  },
   "CIFR": {
     "date": "2026-11-02",
     "estimated": true,
@@ -144,10 +199,30 @@
     "estimated": false,
     "time": "amc"
   },
+  "COST": {
+    "date": "2026-12-10",
+    "estimated": true,
+    "time": "tbd"
+  },
   "CRCL": {
     "date": "2026-11-04",
     "estimated": true,
     "time": "bmo"
+  },
+  "CRDO": {
+    "date": "2026-12-01",
+    "estimated": true,
+    "time": "amc"
+  },
+  "CRM": {
+    "date": "2026-12-02",
+    "estimated": true,
+    "time": "amc"
+  },
+  "CRWD": {
+    "date": "2026-12-01",
+    "estimated": true,
+    "time": "amc"
   },
   "CRWV": {
     "date": "2026-11-10",
@@ -174,20 +249,60 @@
     "estimated": false,
     "time": "bmo"
   },
+  "DASH": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "DAVE": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
   "DDOG": {
     "date": "2026-11-04",
     "estimated": true,
     "time": "bmo"
+  },
+  "DE": {
+    "date": "2026-11-25",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "DELL": {
+    "date": "2026-11-24",
+    "estimated": true,
+    "time": "amc"
   },
   "DLO": {
     "date": "2026-11-12",
     "estimated": false,
     "time": "amc"
   },
+  "DUK": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "DUOL": {
+    "date": "2026-11-03",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "EME": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "tbd"
+  },
   "ENPH": {
     "date": "2026-10-27",
     "estimated": false,
     "time": "amc"
+  },
+  "ENVA": {
+    "date": "2026-10-22",
+    "estimated": false,
+    "time": "tbd"
   },
   "EOSE": {
     "date": "2026-11-05",
@@ -204,15 +319,30 @@
     "estimated": false,
     "time": "bmo"
   },
+  "FICO": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
   "FISV": {
     "date": "2026-11-03",
     "estimated": true,
     "time": "bmo"
   },
+  "FLEX": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "tbd"
+  },
   "FN": {
     "date": "2026-11-02",
     "estimated": true,
     "time": "amc"
+  },
+  "FRSH": {
+    "date": "2026-11-03",
+    "estimated": false,
+    "time": "tbd"
   },
   "FTNT": {
     "date": "2026-10-28",
@@ -224,6 +354,11 @@
     "estimated": false,
     "time": "bmo"
   },
+  "GE": {
+    "date": "2026-10-20",
+    "estimated": false,
+    "time": "tbd"
+  },
   "GEV": {
     "date": "2026-10-28",
     "estimated": false,
@@ -234,10 +369,20 @@
     "estimated": false,
     "time": "bmo"
   },
+  "GM": {
+    "date": "2026-10-20",
+    "estimated": false,
+    "time": "tbd"
+  },
   "GOOGL": {
     "date": "2026-10-28",
     "estimated": false,
     "time": "amc"
+  },
+  "GXO": {
+    "date": "2026-11-03",
+    "estimated": false,
+    "time": "tbd"
   },
   "HIMS": {
     "date": "2026-11-09",
@@ -249,14 +394,34 @@
     "estimated": false,
     "time": "amc"
   },
+  "HPE": {
+    "date": "2026-11-23",
+    "estimated": true,
+    "time": "amc"
+  },
   "HTFL": {
     "date": "2026-11-12",
     "estimated": false,
     "time": "amc"
   },
+  "IBM": {
+    "date": "2026-10-21",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "INCY": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "tbd"
+  },
   "INTC": {
     "date": "2026-10-29",
     "estimated": false,
+    "time": "amc"
+  },
+  "INTU": {
+    "date": "2026-11-19",
+    "estimated": true,
     "time": "amc"
   },
   "IOVA": {
@@ -269,6 +434,16 @@
     "estimated": true,
     "time": "amc"
   },
+  "ITT": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "JPM": {
+    "date": "2026-10-13",
+    "estimated": false,
+    "time": "tbd"
+  },
   "KKR": {
     "date": "2026-11-09",
     "estimated": false,
@@ -279,10 +454,20 @@
     "estimated": false,
     "time": "amc"
   },
+  "KMB": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
+  },
   "KO": {
     "date": "2026-10-27",
     "estimated": false,
     "time": "bmo"
+  },
+  "KRMN": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
   },
   "KTOS": {
     "date": "2026-11-05",
@@ -309,18 +494,43 @@
     "estimated": false,
     "time": "bmo"
   },
+  "LMND": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "LMT": {
+    "date": "2026-10-22",
+    "estimated": false,
+    "time": "tbd"
+  },
   "LQDA": {
     "date": "2026-11-10",
     "estimated": false,
     "time": "bmo"
+  },
+  "LRCX": {
+    "date": "2026-10-21",
+    "estimated": false,
+    "time": "tbd"
   },
   "MARA": {
     "date": "2026-11-09",
     "estimated": false,
     "time": "amc"
   },
+  "MELI": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
   "META": {
     "date": "2027-02-03",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "MLM": {
+    "date": "2026-11-04",
     "estimated": false,
     "time": "tbd"
   },
@@ -329,8 +539,18 @@
     "estimated": false,
     "time": "bmo"
   },
+  "MNST": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
+  },
   "MP": {
     "date": "2026-11-05",
+    "estimated": true,
+    "time": "amc"
+  },
+  "MRVL": {
+    "date": "2026-12-01",
     "estimated": true,
     "time": "amc"
   },
@@ -338,6 +558,11 @@
     "date": "2026-10-28",
     "estimated": false,
     "time": "amc"
+  },
+  "MU": {
+    "date": "2026-12-16",
+    "estimated": true,
+    "time": "tbd"
   },
   "NBIS": {
     "date": "2026-11-12",
@@ -348,6 +573,11 @@
     "date": "2026-11-05",
     "estimated": true,
     "time": "amc"
+  },
+  "NFLX": {
+    "date": "2026-10-20",
+    "estimated": false,
+    "time": "tbd"
   },
   "NOW": {
     "date": "2026-10-28",
@@ -367,6 +597,11 @@
   "NUE": {
     "date": "2026-10-26",
     "estimated": false,
+    "time": "amc"
+  },
+  "NVDA": {
+    "date": "2026-11-17",
+    "estimated": true,
     "time": "amc"
   },
   "NVO": {
@@ -389,6 +624,11 @@
     "estimated": false,
     "time": "bmo"
   },
+  "ORCL": {
+    "date": "2026-12-09",
+    "estimated": true,
+    "time": "tbd"
+  },
   "OUST": {
     "date": "2026-11-03",
     "estimated": true,
@@ -399,10 +639,25 @@
     "estimated": false,
     "time": "amc"
   },
+  "PAAS": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "PANW": {
+    "date": "2026-11-18",
+    "estimated": true,
+    "time": "amc"
+  },
   "PFE": {
     "date": "2026-11-03",
     "estimated": true,
     "time": "bmo"
+  },
+  "PINS": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "tbd"
   },
   "PLTR": {
     "date": "2026-11-02",
@@ -414,8 +669,18 @@
     "estimated": false,
     "time": "amc"
   },
+  "Q": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
+  },
   "QCOM": {
     "date": "2026-11-04",
+    "estimated": true,
+    "time": "amc"
+  },
+  "RBRK": {
+    "date": "2026-11-30",
     "estimated": true,
     "time": "amc"
   },
@@ -439,24 +704,69 @@
     "estimated": false,
     "time": "amc"
   },
+  "ROAD": {
+    "date": "2026-11-19",
+    "estimated": true,
+    "time": "bmo"
+  },
+  "RTX": {
+    "date": "2026-10-20",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "RVLV": {
+    "date": "2026-11-03",
+    "estimated": false,
+    "time": "tbd"
+  },
   "SE": {
     "date": "2026-11-10",
     "estimated": false,
     "time": "bmo"
+  },
+  "SEZL": {
+    "date": "2026-11-04",
+    "estimated": false,
+    "time": "tbd"
   },
   "SHOP": {
     "date": "2026-11-03",
     "estimated": true,
     "time": "bmo"
   },
+  "SIMO": {
+    "date": "2026-10-28",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "SLB": {
+    "date": "2026-10-23",
+    "estimated": false,
+    "time": "tbd"
+  },
   "SMCI": {
     "date": "2026-11-03",
     "estimated": true,
     "time": "amc"
   },
+  "SMWB": {
+    "date": "2026-11-17",
+    "estimated": true,
+    "time": "bmo"
+  },
   "SNDK": {
     "date": "2026-10-29",
     "estimated": false,
+    "time": "amc"
+  },
+  "SNOW": {
+    "date": "2026-12-02",
+    "estimated": true,
+    "time": "amc"
+  },
+  "SNPS": {
+    "date": "2026-12-08",
+    "estimated": true,
     "time": "amc"
   },
   "SOFI": {
@@ -464,10 +774,20 @@
     "estimated": false,
     "time": "bmo"
   },
+  "SPCX": {
+    "date": "2026-10-20",
+    "estimated": false,
+    "time": "tbd"
+  },
   "SPGI": {
     "date": "2026-10-27",
     "estimated": false,
     "time": "bmo"
+  },
+  "SPOT": {
+    "date": "2026-10-22",
+    "estimated": false,
+    "time": "tbd"
   },
   "STRL": {
     "date": "2026-10-28",
@@ -494,6 +814,26 @@
     "estimated": true,
     "time": "bmo"
   },
+  "TER": {
+    "date": "2026-10-27",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "THM": {
+    "date": "2026-11-10",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "TLN": {
+    "date": "2026-11-03",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "TSLA": {
+    "date": "2026-10-21",
+    "estimated": false,
+    "time": "tbd"
+  },
   "TTD": {
     "date": "2026-11-09",
     "estimated": false,
@@ -503,6 +843,11 @@
     "date": "2026-11-09",
     "estimated": false,
     "time": "amc"
+  },
+  "TWLO": {
+    "date": "2026-10-29",
+    "estimated": false,
+    "time": "tbd"
   },
   "U": {
     "date": "2026-11-05",
@@ -514,15 +859,40 @@
     "estimated": true,
     "time": "bmo"
   },
+  "UMAC": {
+    "date": "2026-11-05",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "USAR": {
+    "date": "2026-11-09",
+    "estimated": false,
+    "time": "tbd"
+  },
   "V": {
     "date": "2026-10-27",
     "estimated": false,
     "time": "amc"
   },
+  "VAL": {
+    "date": "2026-11-02",
+    "estimated": false,
+    "time": "tbd"
+  },
+  "VEEV": {
+    "date": "2026-11-19",
+    "estimated": true,
+    "time": "tbd"
+  },
   "VRT": {
     "date": "2026-10-28",
     "estimated": false,
     "time": "bmo"
+  },
+  "VST": {
+    "date": "2026-11-06",
+    "estimated": false,
+    "time": "tbd"
   },
   "VZ": {
     "date": "2026-10-26",
@@ -544,6 +914,11 @@
     "estimated": true,
     "time": "bmo"
   },
+  "WWD": {
+    "date": "2026-11-18",
+    "estimated": true,
+    "time": "amc"
+  },
   "XOM": {
     "date": "2026-10-30",
     "estimated": false,
@@ -552,6 +927,11 @@
   "ZETA": {
     "date": "2026-11-09",
     "estimated": false,
+    "time": "amc"
+  },
+  "ZS": {
+    "date": "2026-12-02",
+    "estimated": true,
     "time": "amc"
   }
 }

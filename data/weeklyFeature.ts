@@ -142,5 +142,62 @@ export const WEEKLY_FEATURE: WeeklyFeature = {
       score: 85.7
     }
   ],
-  earnings: []
+  earnings: [
+    {
+      ticker: "SMWB",
+      name: "Similarweb Ltd.",
+      date: "2026-11-17",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "NVDA",
+      name: "NVIDIA Corporation",
+      date: "2026-11-17",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "PANW",
+      name: "Palo Alto Networks",
+      date: "2026-11-18",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "WWD",
+      name: "Woodward, Inc.",
+      date: "2026-11-18",
+      estimated: true,
+      time: "amc"
+    },
+    {
+      ticker: "ROAD",
+      name: "Construction Partners, Inc.",
+      date: "2026-11-19",
+      estimated: true,
+      time: "bmo"
+    },
+    {
+      ticker: "ALOY",
+      name: "REalloys Inc.",
+      date: "2026-11-19",
+      estimated: true,
+      time: "tbd"
+    },
+    {
+      ticker: "VEEV",
+      name: "Veeva Systems Inc.",
+      date: "2026-11-19",
+      estimated: true,
+      time: "tbd"
+    },
+    {
+      ticker: "INTU",
+      name: "Intuit Inc.",
+      date: "2026-11-19",
+      estimated: true,
+      time: "amc"
+    }
+  ]
 };
