@@ -1838,6 +1838,12 @@ python3 review_status.py --days 75      # flag reviews older than 75 days (defau
 python3 review_status.py --strict       # exit 1 if anything needs review (CI gate)
 ```
 
+**"Reported since review" reads two sources**: the stock file's own `nextEarningsOn` and
+`data/earningsCalendar.json` (Yahoo, cached by `weekly_feature.py`). The calendar is only
+ever added to, so a past date there is the stock's latest known print. Before this the check
+read `nextEarningsOn` alone, which 91 of 96 files do not carry, so it reported 0 while 23
+stocks had printed since their last review.
+
 It flags stocks that are stale (review older than the threshold), never reviewed (no `dataReviewedOn`), or missing `lastReportTag` / `debtSafety` / `burry`. Use `lastReportTag` (e.g. `'Q1 2026'`) to record which earnings the data reflects — keep the convention consistent (calendar `Q# YYYY` or fiscal `Q# FY##`, but don't mix within a stock).
 
 ## Alpha Strategic View — Why Buy / Risks

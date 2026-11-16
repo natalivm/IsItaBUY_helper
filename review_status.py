@@ -31,11 +31,14 @@ fundamentals / RS / override after checking the latest earnings.
 
 import argparse
 import glob
+import json
 import os
 import re
 from datetime import date, datetime
 
 STOCKS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stocks")
+
+CALENDAR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "earningsCalendar.json")
 
 # A review older than this many days has likely missed at least one earnings cycle.
 DEFAULT_STALE_DAYS = 90
@@ -73,6 +76,18 @@ def load_stocks():
     return rows
 
 
+def load_calendar():
+    """Yahoo's earnings dates, cached by weekly_feature.py. The cache is only ever
+    added to, so a date in the past is the stock's most recent known print — which
+    is exactly what "reported since review" needs, for the stocks whose file
+    carries no hand-entered `nextEarningsOn`."""
+    try:
+        with open(CALENDAR, encoding="utf-8") as f:
+            return {k: v.get("date") for k, v in json.load(f).items() if isinstance(v, dict)}
+    except (OSError, ValueError):
+        return {}
+
+
 def review_age(reviewed, today):
     if not reviewed:
         return None
@@ -108,21 +123,32 @@ def main():
             fresh.append(r)
 
     # Earnings landed since the last review: the date-based check elapsed-days can't make.
+    # Both sources count: the stock file's own `nextEarningsOn` and the Yahoo
+    # calendar. Whichever passed date is latest is the print to compare against.
+    calendar = load_calendar()
     reported = []
     for r in rows:
-        ne = r["nextEarnings"]
-        if not ne:
+        passed = []
+        for ne in (r["nextEarnings"], calendar.get(r["ticker"])):
+            if not ne:
+                continue
+            try:
+                ne_d = datetime.strptime(ne, "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if ne_d <= today:
+                passed.append(ne)
+        r["hasDate"] = bool(r["nextEarnings"] or calendar.get(r["ticker"]))
+        if not passed:
             continue
-        try:
-            ne_d = datetime.strptime(ne, "%Y-%m-%d").date()
-        except ValueError:
-            continue
-        if ne_d <= today and (not r["reviewed"] or r["reviewed"] < ne):
+        ne = max(passed)
+        if not r["reviewed"] or r["reviewed"] < ne:
+            r["reportedOn"] = ne
             reported.append(r)
     reported_set = {r["ticker"] for r in reported}
 
     no_report = [r for r in rows if not r["lastReport"]]
-    no_next = [r for r in rows if not r["nextEarnings"]]
+    no_next = [r for r in rows if not r["hasDate"]]
     no_debt = [r for r in rows if not r["hasDebt"]]
     no_burry = [r for r in rows if not r["hasBurry"]]
 
@@ -131,7 +157,7 @@ def main():
     print(f"  STALE (> {args.days}d):          {len(stale)}")
     print(f"  never reviewed (no date): {len(never)}")
     print(f"  REPORTED since review:    {len(reported)}")
-    print(f"  missing nextEarningsOn:   {len(no_next)}")
+    print(f"  no earnings date on file: {len(no_next)}")
     print(f"  missing lastReportTag:    {len(no_report)}")
     print(f"  missing debtSafety:       {len(no_debt)}")
     print(f"  missing burry:            {len(no_burry)}")
@@ -143,16 +169,16 @@ def main():
 
     if reported:
         print("\n── REPORTED SINCE REVIEW — earnings landed after dataReviewedOn (review regardless of age) ──")
-        for r in sorted(reported, key=lambda x: x["nextEarnings"]):
+        for r in sorted(reported, key=lambda x: x["reportedOn"]):
             age = f"{r['age']}d ago" if r["age"] is not None else "never reviewed"
-            print(f"  {r['ticker']:6} reported {r['nextEarnings']}  reviewed {r['reviewed'] or '-'} ({age})  lastReport={r['lastReport'] or '?'}")
+            print(f"  {r['ticker']:6} reported {r['reportedOn']}  reviewed {r['reviewed'] or '-'} ({age})  lastReport={r['lastReport'] or '?'}")
 
     if never:
         print("\n── NEVER REVIEWED — no dataReviewedOn (set one after checking latest earnings) ──")
         print("  " + "  ".join(r["ticker"] for r in never))
 
     if no_next:
-        print(f"\n── MISSING nextEarningsOn ({len(no_next)}) — can't tell if earnings landed since review ──")
+        print(f"\n── NO EARNINGS DATE ({len(no_next)}) — neither nextEarningsOn nor the Yahoo calendar; can't tell if earnings landed since review ──")
         print("  " + "  ".join(r["ticker"] for r in no_next))
 
     if no_report:
