@@ -47,297 +47,100 @@ export interface WeeklyFeature {
 }
 
 export const WEEKLY_FEATURE: WeeklyFeature = {
-  weekOf: "2026-11-09",
-  weekEnd: "2026-11-13",
-  generatedOn: "2026-11-09",
+  weekOf: "2026-11-16",
+  weekEnd: "2026-11-20",
+  generatedOn: "2026-11-16",
   hot: [
-    {
-      ticker: "CAR",
-      name: "Avis Budget Group, Inc.",
-      pattern: "Falling Wedge",
-      timeframe: "weekly",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-11-06",
-      price: 118.83,
-      priceDate: "2026-11-06",
-      target: 150.18,
-      invalidation: 95.35,
-      rsi: 64.9,
-      score: 101.8
-    },
-    {
-      ticker: "KKR",
-      name: "KKR & Co. Inc.",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "up",
-      stage: "confirmed",
-      stageDate: "2026-10-29",
-      price: 96.48,
-      priceDate: "2026-11-06",
-      target: 144.54,
-      invalidation: 89.55,
-      rsi: 57.9,
-      score: 96.3
-    },
-    {
-      ticker: "ARRY",
-      name: "Array Technologies",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "up",
-      stage: "signal",
-      stageDate: "2026-11-06",
-      price: 5.86,
-      priceDate: "2026-11-06",
-      target: 8.7,
-      invalidation: 2.73,
-      rsi: 74.4,
-      score: 93.9
-    },
-    {
-      ticker: "ZETA",
-      name: "Zeta Global Holdings Corp.",
-      pattern: "Rising Wedge",
-      timeframe: "daily",
-      direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-11-05",
-      price: 31.03,
-      priceDate: "2026-11-06",
-      target: 23.8,
-      invalidation: 37.3,
-      rsi: 38,
-      score: 105.3
-    },
-    {
-      ticker: "MRVL",
-      name: "Marvell Technology, Inc.",
-      pattern: "Descending Channel",
-      timeframe: "daily",
-      direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-11-06",
-      price: 141.2,
-      priceDate: "2026-11-06",
-      target: 93.01,
-      invalidation: 162.92,
-      rsi: 22.7,
-      score: 101.9
-    },
-    {
-      ticker: "DLO",
-      name: "DLocal Limited",
-      pattern: "Ascending Channel",
-      timeframe: "daily",
-      direction: "down",
-      stage: "confirmed",
-      stageDate: "2026-10-30",
-      price: 13.95,
-      priceDate: "2026-11-06",
-      target: 10.3,
-      invalidation: 14.23,
-      rsi: 41,
-      score: 101.5
-    }
-  ],
-  earnings: [
-    {
-      ticker: "B",
-      name: "Barrick Mining Corporation",
-      date: "2026-11-09",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "CEG",
-      name: "Constellation Energy",
-      date: "2026-11-09",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "KKR",
-      name: "KKR & Co. Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "NRG",
-      name: "NRG Energy, Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "ACHR",
-      name: "Archer Aviation Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "ASTS",
-      name: "AST SpaceMobile",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "HIMS",
-      name: "Hims & Hers Health, Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "MARA",
-      name: "MARA Holdings, Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "OXY",
-      name: "Occidental Petroleum Corporation",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "PLUG",
-      name: "Plug Power Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "RKLB",
-      name: "Rocket Lab USA, Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
-    },
     {
       ticker: "TTD",
       name: "The Trade Desk, Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
+      pattern: "Falling Wedge",
+      timeframe: "daily",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-11-10",
+      price: 15.68,
+      priceDate: "2026-11-13",
+      target: 20.3,
+      invalidation: 8.88,
+      rsi: 67.6,
+      score: 102.3
+    },
+    {
+      ticker: "APP",
+      name: "AppLovin Corporation",
+      pattern: "Descending Channel",
+      timeframe: "daily",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-11-06",
+      price: 393.68,
+      priceDate: "2026-11-12",
+      target: 483.59,
+      invalidation: 296.47,
+      rsi: 70.7,
+      score: 98.5
     },
     {
       ticker: "TTWO",
       name: "Take-Two Interactive Software, Inc.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
+      pattern: "Descending Channel",
+      timeframe: "weekly",
+      direction: "up",
+      stage: "confirmed",
+      stageDate: "2026-05-11",
+      price: 227.82,
+      priceDate: "2026-11-13",
+      target: 270.92,
+      invalidation: 150.85,
+      rsi: 63.9,
+      score: 97
     },
     {
-      ticker: "ZETA",
-      name: "Zeta Global Holdings Corp.",
-      date: "2026-11-09",
-      estimated: false,
-      time: "amc"
+      ticker: "ZS",
+      name: "Zscaler",
+      pattern: "Rising Wedge",
+      timeframe: "weekly",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-11-13",
+      price: 192.47,
+      priceDate: "2026-11-13",
+      target: 137.27,
+      invalidation: 274.83,
+      rsi: 35.8,
+      score: 104.2
     },
     {
-      ticker: "LQDA",
-      name: "Liquidia Corporation",
-      date: "2026-11-10",
-      estimated: false,
-      time: "bmo"
+      ticker: "RTX",
+      name: "RTX Corporation",
+      pattern: "Ascending Channel",
+      timeframe: "weekly",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-09-21",
+      price: 198.58,
+      priceDate: "2026-11-13",
+      target: 145.92,
+      invalidation: 203.04,
+      rsi: 53.6,
+      score: 94
     },
     {
-      ticker: "SE",
-      name: "Sea Limited",
-      date: "2026-11-10",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "WIX",
-      name: "Wix.com Ltd.",
-      date: "2026-11-10",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "CRWV",
-      name: "CoreWeave, Inc.",
-      date: "2026-11-10",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "RGTI",
-      name: "Rigetti Computing, Inc.",
-      date: "2026-11-10",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "NBIS",
-      name: "Nebius Group N.V.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "ONDS",
-      name: "Ondas Inc.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "TE",
-      name: "T1 Energy Inc.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "bmo"
-    },
-    {
-      ticker: "AMAT",
-      name: "Applied Materials, Inc.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "ARWR",
-      name: "Arrowhead Pharmaceuticals, Inc.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "CBRS",
-      name: "Cerebras Systems Inc.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "CSCO",
-      name: "Cisco Systems, Inc.",
-      date: "2026-11-12",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "DLO",
-      name: "DLocal Limited",
-      date: "2026-11-12",
-      estimated: false,
-      time: "amc"
-    },
-    {
-      ticker: "NU",
-      name: "Nu Holdings",
-      date: "2026-11-12",
-      estimated: false,
-      time: "amc"
+      ticker: "PINS",
+      name: "Pinterest",
+      pattern: "Rising Wedge",
+      timeframe: "daily",
+      direction: "down",
+      stage: "confirmed",
+      stageDate: "2026-09-04",
+      price: 19.15,
+      priceDate: "2026-11-13",
+      target: 15.68,
+      invalidation: 23.89,
+      rsi: 40.9,
+      score: 85.7
     }
-  ]
+  ],
+  earnings: []
 };
