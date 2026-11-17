@@ -10,7 +10,7 @@ export const prose = {
   ],
   risksToBuy: [
     'Brazil macro shock — elevated SELIC rates and household debt-service stress could trigger a sharp delinquency cycle',
-    'Rapid credit-book expansion into unsecured lending increases sensitivity to any deterioration in Brazilian consumer credit',
+    'Late-stage delinquencies are rising while the credit book expands quickly into unsecured lending, raising sensitivity to Brazilian consumer credit',
     'Mexico banking regulation could impose capital requirements or product restrictions that slow the second S-curve',
     'FX volatility across Brazil, Mexico, and Colombia directly compresses dollar-reported earnings without any operational change',
     'Valuation reflects compounding expectations already — any growth deceleration or credit scare would re-rate the multiple sharply',
