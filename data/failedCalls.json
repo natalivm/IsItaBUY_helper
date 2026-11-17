@@ -60,6 +60,18 @@
     "lastPrice": 4.33
   },
   {
+    "ticker": "ACHR",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-13",
+    "confirm": 4.45,
+    "invalidation": 4.14,
+    "target": 5.29,
+    "lastPrice": 3.74
+  },
+  {
     "ticker": "ADBE",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -144,6 +156,18 @@
     "lastPrice": 197.29
   },
   {
+    "ticker": "ARWR",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-16",
+    "confirm": 59.62,
+    "invalidation": 45.74,
+    "target": 71.32,
+    "lastPrice": 44.21
+  },
+  {
     "ticker": "ASML",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -178,6 +202,18 @@
     "invalidation": 298.16,
     "target": 408.58,
     "lastPrice": 293.69
+  },
+  {
+    "ticker": "AVGO",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-16",
+    "confirm": 356.85,
+    "invalidation": 335.08,
+    "target": 458.41,
+    "lastPrice": 333.4
   },
   {
     "ticker": "AZO",
@@ -552,6 +588,18 @@
     "lastPrice": 45.72
   },
   {
+    "ticker": "MP",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-13",
+    "confirm": 37.35,
+    "invalidation": 37.77,
+    "target": 17.65,
+    "lastPrice": 36.09
+  },
+  {
     "ticker": "MRVL",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -684,6 +732,18 @@
     "lastPrice": 171.7
   },
   {
+    "ticker": "PLUG",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-16",
+    "confirm": 1.48,
+    "invalidation": 1.22,
+    "target": 2.03,
+    "lastPrice": 1.07
+  },
+  {
     "ticker": "RBRK",
     "pattern": "Descending Channel",
     "timeframe": "weekly",
@@ -706,6 +766,18 @@
     "invalidation": 141.15,
     "target": 173.56,
     "lastPrice": 101.89
+  },
+  {
+    "ticker": "RGTI",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-16",
+    "confirm": 11.9,
+    "invalidation": 10.3,
+    "target": 16.73,
+    "lastPrice": 9.06
   },
   {
     "ticker": "RIOT",
