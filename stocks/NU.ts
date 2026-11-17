@@ -7,12 +7,12 @@ export const NU = defineStock({
   themeColor: '#8b5cf6',
   currentPrice: 12.68,
   updatedOn: '11/17',
-  lastReportTag: 'Q2 2026',
-  dataReviewedOn: '2026-10-10',
+  lastReportTag: 'Q3 2026',
+  dataReviewedOn: '2026-11-17',
   fairPriceRange: '$16 - $54',  // bear-to-base 5y model range (post Q2 2026 bear fix)
   // ~$84.9B market cap / $16.15 = ~5,254M shares
   shares0: 5254,
-  rev25: 16500,        // $16.5B 2025A (Q4 revenue $4.9B; full-year ~$16.5B). FY26E consensus $22.8B, FY27E $28.2B (stockanalysis, Oct 2026)
+  rev25: 16500,        // $16.5B 2025A (Q4 revenue $4.9B; full-year ~$16.5B). FY26E consensus $23.0B, FY27E $27.7B (stockanalysis, Nov 2026; was $22.8B / $28.2B)
   fcfMargin25: 0.20,   // Approx from ~24% EBIT margin 2024 * (1 - tax)
   taxRate: 0.18,
   cash: 3000,          // $3B unrestricted at Nu Holdings level (Q4 2025 disclosure)
@@ -29,7 +29,30 @@ export const NU = defineStock({
                         // `hasMidRsRising` is only the fallback for RS 40-69.
   aiImpact: 'TAILWIND',  // nuFormer: in production for credit decisioning Brazil; expanding to lending + Mexico credit cards 2026
   modelType: 'EPS_PE',
-  baseEps: 0.89,       // FY2026E EPS — stockanalysis.com consensus (Oct 6 2026, range $0.81-0.97; FY27E $1.13, +27%). H1 2026 NI $1.93B (~$0.40/sh). Prior: raised to ~$0.88 on 06/26 spot-check; prior $0.72 was set conservatively below consensus. Q1 2026 (reported May 14) NI $871M (Q1 record, +41% YoY FX-neutral), $0.18 EPS; guided ~$0.22-0.27/qtr Q2-Q3 → FY26 ~$0.85-0.95. IFRS/GAAP basis; ETR normalizes 15-20% through 2026.
+  baseEps: 0.87,       // FY2026E EPS — stockanalysis.com consensus (Nov 2026, range $0.80-0.95; FY27E $1.09, +25%). 9M 2026 NI ~$3.0B ($871M + $1.06B + ~$1.1B). Prior: $0.89 (Oct 6 2026 consensus; FY27E $1.13). H1 2026 NI $1.93B (~$0.40/sh). Prior: raised to ~$0.88 on 06/26 spot-check; prior $0.72 was set conservatively below consensus. Q1 2026 (reported May 14) NI $871M (Q1 record, +41% YoY FX-neutral), $0.18 EPS; guided ~$0.22-0.27/qtr Q2-Q3 → FY26 ~$0.85-0.95. IFRS/GAAP basis; ETR normalizes 15-20% through 2026.
+  // Q3 2026 UPDATE (Nov 12, 2026)
+  // ─────────────────────────────────────────────────────────────────────────
+  // Record net income ~$1.1B (+31% YoY FXN — decelerating from +49% in Q2),
+  // ROE 32%. Gross revenue $6.3B (+37%), gross profit $2.6B (+35%), NII $3.9B.
+  // NIM 22.5% (22.9% in Q2). Risk-adjusted NIM 12.1% reported (12.4% in Q2);
+  // a one-time charge on receivables from payment institutions placed under
+  // liquidation cost 63bps — 12.7% recurring vs 11.9% recurring in Q2.
+  // CREDIT IS THE WATCH ITEM: NPL 90+ 7.3% (6.9% in Q2) — now ABOVE the 7%
+  // Q3'24 peak; NPL 15-90 4.9% (4.8%); 90+ coverage 234%. Credit book $41.6B
+  // (+33% YoY, +6% QoQ: cards $27.2B, unsecured $11.0B, secured $3.4B).
+  // Deposits $47.5B (+19%), cost 87% of interbank. Customers ~143M (+3.7M:
+  // Brazil nearly 120M, Mexico 16.6M, Colombia 6.1M); activity 83.6%; ARPAC
+  // ~$18. Efficiency ratio 19.3%; FY26 guide improved to 19-19.5% (from ~20%),
+  // with Q4 expenses up sequentially. Nu US launched Sep 10 (all 50 states);
+  // Nu Global live Oct 15 (37 countries). Investor Day Dec 8 2026. Street:
+  // Buy (23), PT $12-23 (median $18.90); FY26E EPS $0.87, FY27E $1.09 — both
+  // trimmed a touch (BRL translation + slower NI growth).
+  // epsCagr / exitPE / prob HELD: record profit vs a second straight rise in
+  // late-stage delinquencies — the quarter confirms the existing distribution.
+  // Sources: nu.com Q3 2026 release; Motley Fool call transcript (Nov 13);
+  // stockanalysis.com.
+  // ─────────────────────────────────────────────────────────────────────────
+
   // OCT 26 2026 — COUNTRY RISK, NOT COMPANY RISK
   // ─────────────────────────────────────────────────────────────────────────
   // Closed -16.95% at $12.59 (from $15.16) on Lula's win over Flavio Bolsonaro;
@@ -105,7 +128,7 @@ export const NU = defineStock({
   // ─────────────────────────────────────────────────────────────────────────
 
 
-  analystConsensus: { rating: 'Buy', targetLow: 12, targetMedian: 19, targetHigh: 23, numAnalysts: 22 },
+  analystConsensus: { rating: 'Buy', targetLow: 12, targetMedian: 18.9, targetHigh: 23, numAnalysts: 23 },  // stockanalysis.com, Nov 16 2026 (post-Q3; median was 19, 22 analysts). The note below is the Oct 27 pre-print check, kept for the record.
   // Re-checked Oct 27 and left UNCHANGED, which is the finding rather than neglect. Every
   // aggregator still lands on the same shape — 17 Buy / 4 Hold of 22; averages $18.77,
   // $18.92 and $19.18; ChartMill's 26-analyst set runs $12.12 low to $24.15 high; JPMorgan
@@ -117,7 +140,7 @@ export const NU = defineStock({
   // not before. (Per RULEBOOK.md these targets anchor nothing in the model anyway.)
   revGrowth: [
     [0.30, 0.15, 0.12, 0.10, 0.08],  // Bear: FY26 ~locked by H1 (+~39%); then credit stress + regulation hit
-    [0.38, 0.24, 0.19, 0.15, 0.12],  // Base: FY26/FY27 ≈ consensus $22.8B / $28.2B, then deceleration curve
+    [0.38, 0.24, 0.19, 0.15, 0.12],  // Base: FY26/FY27 ≈ consensus (Q2-era $22.8B / $28.2B; now $23.0B / $27.7B), then deceleration curve
     [0.42, 0.30, 0.25, 0.21, 0.17],  // Bull: Mexico S-curve + AI-driven ARPU
   ],
   fcfMargin: [
@@ -128,15 +151,15 @@ export const NU = defineStock({
   exitMultiple: [12, 18, 24],
 
   desc: [
-    'Brazil macro shock triggers delinquency spike past 7-8% — 4 consecutive quarters of NPL improvement reverse sharply. SELIC holding high combined with Brazil corporate tax rate hike to 45% compress net income. Mexico banking license delayed, blocking credit scale-up. 2026 investment year costs hit without revenue payback. Multiple re-rates to traditional EM bank comps (~10x P/E). 5yr target {target} ({cagr} annualized).',
-    'Q2 2026 momentum sustains — first $1B+ net-income quarter, ROE 33%, risk-adjusted NIM rebounding to 12.4% — despite investment-year headwinds. nuFormer AI, now in production for card decisioning (Brazil+Mexico) and Brazil unsecured lending, moderately improves risk-adjusted NIM as Q1 seasonality normalizes. Mexico inflects after its first IFRS-profitable quarter and the Aug 2026 bank launch; LDR (35%) scales as the second S-curve matures. ARPAC keeps climbing (~$17, +22% YoY) as super-core and high-income deepen. Structural ETR decline offsets investment-year OpEx without touching the core trajectory. US optionality without near-term P&L drag. EPS compounds ~18% a year as growth gradually decelerates, at ~16× earnings. 5yr target {target} ({cagr} annualized).',
+    'Brazil macro shock turns the rise in late-stage delinquencies — 90+ NPL already 7.3% in Q3 2026, above the prior peak — into a full credit cycle. SELIC holding high combined with Brazil corporate tax rate hike to 45% compress net income. Mexico banking license delayed, blocking credit scale-up. 2026 investment year costs hit without revenue payback. Multiple re-rates to traditional EM bank comps (~10x P/E). 5yr target {target} ({cagr} annualized).',
+    'Q3 2026 momentum sustains — record ~$1.1B net income, ROE 32%, recurring risk-adjusted NIM 12.7% — despite investment-year headwinds and a late-stage delinquency uptick that has to stabilize. nuFormer AI, now in production for card decisioning (Brazil+Mexico) and Brazil unsecured lending, moderately improves risk-adjusted NIM as Q1 seasonality normalizes. Mexico inflects after its first IFRS-profitable quarter and the Aug 2026 bank launch; LDR (35%) scales as the second S-curve matures. ARPAC keeps climbing (~$18) as super-core and high-income deepen. Structural ETR decline offsets investment-year OpEx without touching the core trajectory. US optionality without near-term P&L drag. EPS compounds ~18% a year as growth gradually decelerates, at ~16× earnings. 5yr target {target} ({cagr} annualized).',
     'nuFormer AI proves structurally transformative across all geographies — $29B unused credit limit pool converts to IBB at meaningfully lower loss rates, driving ARPAC beyond $20+. Mexico banking license clears, LDR expands rapidly to rival Brazil. Super-core growing 100% YoY compounds into material P&L. US fintech launch captures a profitable niche. ROE sustains 35%+, P/E re-rates toward premium global digital bank comps (~22x). 5yr target {target} ({cagr} annualized).',
   ],
 
   // Recalibrated 10/11/2026 (targets too high): was [12,25,34] / [11,20,25] → base $54, 2.3× the highest analyst target ($23).
   // 25%/yr EPS for five straight years at a 20× exit assumed no deceleration as NU scales; base now ≈ revenue growth
   // (~17-20% as Brazil matures) plus modest operating leverage, at a P/E near today's ~18×.
-  epsCagr: [8, 18, 26],  // 2031E EPS ≈ $1.31 / $2.04 / $2.83 from the FY26E $0.89 base
+  epsCagr: [8, 18, 26],  // 2031E EPS ≈ $1.28 / $1.99 / $2.76 from the FY26E $0.87 base
   exitPE: [10, 16, 22],   // Bear 15→11: narrative re-rates to traditional EM bank comps (10-12×)
   prob: [25, 50, 25],     // Was [15, 45, 40] — reset to the default after the recalibration;     // Held post-Q2 2026 too (record quarter vs 90+ NPL uptick + Brazil election risk). Held post-Q1 2026 — Mexico's first IFRS-profitable quarter + AI in production confirm the bull S-curve, but YoY NI decel (50%→41%) and seasonal CLA cap further upgrade; quarter confirms the existing distribution
 
@@ -150,7 +173,7 @@ export const NU = defineStock({
     netDebt: 200,          // $3.2B corporate debt − $3.0B holdco cash (deposits fund the credit book — operational)
     ebitda: 5000,          // proxy: LTM pre-tax income (~$4.6B IFRS) — banks have no meaningful EBITDA
     fy: 'LTM Q2 2026',
-    note: 'Digital bank: $45B of deposits fund the loan book (operational, not corporate leverage). Holdco debt roughly offset by holdco cash; tier is GREEN by construction — the real risk is credit quality (90+ NPL 6.9%), not leverage.',
+    note: 'Digital bank: ~$47B of deposits fund the loan book (operational, not corporate leverage). Holdco debt roughly offset by holdco cash; tier is GREEN by construction — the real risk is credit quality (90+ NPL 7.3% at Q3 2026, up from 6.9%), not leverage. Net debt / EBITDA inputs are still the LTM Q2 2026 figures.',
   },
 
   burry: {
