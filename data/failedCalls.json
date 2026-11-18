@@ -168,6 +168,18 @@
     "lastPrice": 44.21
   },
   {
+    "ticker": "ARWR",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-17",
+    "confirm": 59.62,
+    "invalidation": 44.05,
+    "target": 77.24,
+    "lastPrice": 42.99
+  },
+  {
     "ticker": "ASML",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -310,6 +322,18 @@
     "invalidation": 66.35,
     "target": 57.28,
     "lastPrice": 69.75
+  },
+  {
+    "ticker": "DASH",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-17",
+    "confirm": 191.02,
+    "invalidation": 170.34,
+    "target": 212.16,
+    "lastPrice": 164.91
   },
   {
     "ticker": "DAVE",
@@ -804,6 +828,18 @@
     "lastPrice": 153.03
   },
   {
+    "ticker": "SIMO",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-16",
+    "confirm": 283.5,
+    "invalidation": 163.71,
+    "target": 401.23,
+    "lastPrice": 152.04
+  },
+  {
     "ticker": "SNOW",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -948,6 +984,18 @@
     "lastPrice": 68.34
   },
   {
+    "ticker": "WWD",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-17",
+    "confirm": 318.08,
+    "invalidation": 311.71,
+    "target": 357.08,
+    "lastPrice": 309.74
+  },
+  {
     "ticker": "XOM",
     "pattern": "Descending Channel",
     "timeframe": "weekly",
@@ -994,5 +1042,17 @@
     "invalidation": 34.85,
     "target": 26.58,
     "lastPrice": 37.27
+  },
+  {
+    "ticker": "ZETA",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-17",
+    "confirm": 35.35,
+    "invalidation": 34.69,
+    "target": 39.72,
+    "lastPrice": 33.54
   }
 ]

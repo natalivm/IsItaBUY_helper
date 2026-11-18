@@ -131,6 +131,17 @@
     "source": "detector"
   },
   {
+    "ticker": "COST",
+    "pattern": "Falling Wedge",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "target",
+    "stageDate": "2026-11-17",
+    "confirm": 925.14,
+    "invalidation": 853.42,
+    "target": 1123.05
+  },
+  {
     "ticker": "CRWD",
     "pattern": "Hammer",
     "timeframe": "daily",
@@ -848,6 +859,17 @@
     "invalidation": 295.19,
     "target": 179.25,
     "source": "detector"
+  },
+  {
+    "ticker": "SNDK",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-17",
+    "confirm": 1401.01,
+    "invalidation": 1702.55,
+    "target": 748.24
   },
   {
     "ticker": "SNOW",

@@ -5,8 +5,8 @@ export const ASTS = defineStock({
   name: 'AST SpaceMobile',
   sector: 'Space Technology',
   themeColor: '#38bdf8',
-  currentPrice: 28.58,
-  updatedOn: '11/17',
+  currentPrice: 27.59,
+  updatedOn: '11/18',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-11',
   fairPriceRange: '$42.50 - $108',  // stockanalysis.com analyst target range (Oct 2026)
