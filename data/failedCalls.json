@@ -480,6 +480,18 @@
     "lastPrice": 50.16
   },
   {
+    "ticker": "HTFL",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-18",
+    "confirm": 56.29,
+    "invalidation": 46.44,
+    "target": 63.68,
+    "lastPrice": 45.89
+  },
+  {
     "ticker": "KKR",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -514,6 +526,18 @@
     "invalidation": 37.88,
     "target": 44.9,
     "lastPrice": 35.96
+  },
+  {
+    "ticker": "KTOS",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-18",
+    "confirm": 40.57,
+    "invalidation": 31.55,
+    "target": 45.42,
+    "lastPrice": 30.24
   },
   {
     "ticker": "LHX",

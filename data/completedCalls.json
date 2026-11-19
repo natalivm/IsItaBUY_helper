@@ -291,6 +291,17 @@
     "source": "detector"
   },
   {
+    "ticker": "FCX",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-18",
+    "confirm": 67.23,
+    "invalidation": 73.15,
+    "target": 51.24
+  },
+  {
     "ticker": "FISV",
     "pattern": "Descending Channel",
     "timeframe": "daily",
