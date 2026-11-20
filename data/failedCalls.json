@@ -252,6 +252,18 @@
     "lastPrice": 3216.35
   },
   {
+    "ticker": "B",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-18",
+    "confirm": 40.26,
+    "invalidation": 36.26,
+    "target": 44.39,
+    "lastPrice": 33.37
+  },
+  {
     "ticker": "CLS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -658,6 +670,18 @@
     "invalidation": 156.97,
     "target": 93.01,
     "lastPrice": 168.8
+  },
+  {
+    "ticker": "MSFT",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-19",
+    "confirm": 519.4,
+    "invalidation": 499.74,
+    "target": 685.42,
+    "lastPrice": 498.3
   },
   {
     "ticker": "MU",
