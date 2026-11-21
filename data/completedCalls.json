@@ -302,6 +302,17 @@
     "target": 51.24
   },
   {
+    "ticker": "FCX",
+    "pattern": "Rising Wedge",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-20",
+    "confirm": 71.51,
+    "invalidation": 89.57,
+    "target": 47.73
+  },
+  {
     "ticker": "FISV",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -381,6 +392,17 @@
     "invalidation": 170.69,
     "target": 102.27,
     "source": "posted"
+  },
+  {
+    "ticker": "GOOGL",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-20",
+    "confirm": 352.3,
+    "invalidation": 491.8,
+    "target": 263.16
   },
   {
     "ticker": "GXO",
@@ -567,6 +589,17 @@
     "invalidation": 36.16,
     "target": 48.45,
     "source": "detector"
+  },
+  {
+    "ticker": "LITE",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-20",
+    "confirm": 800.0,
+    "invalidation": 893.78,
+    "target": 480.62
   },
   {
     "ticker": "LLY",

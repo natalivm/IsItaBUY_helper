@@ -72,6 +72,18 @@
     "lastPrice": 3.74
   },
   {
+    "ticker": "ACHR",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-18",
+    "confirm": 4.45,
+    "invalidation": 3.46,
+    "target": 5.73,
+    "lastPrice": 2.91
+  },
+  {
     "ticker": "ADBE",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -154,6 +166,18 @@
     "invalidation": 190.95,
     "target": 126.57,
     "lastPrice": 197.29
+  },
+  {
+    "ticker": "ARRY",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 4.69,
+    "invalidation": 3.94,
+    "target": 7.25,
+    "lastPrice": 3.79
   },
   {
     "ticker": "ARWR",
@@ -264,6 +288,42 @@
     "lastPrice": 33.37
   },
   {
+    "ticker": "B",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 44.14,
+    "invalidation": 32.24,
+    "target": 54.15,
+    "lastPrice": 31.54
+  },
+  {
+    "ticker": "CACI",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 650.77,
+    "invalidation": 603.02,
+    "target": 986.42,
+    "lastPrice": 587.81
+  },
+  {
+    "ticker": "CCJ",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 100.14,
+    "invalidation": 67.67,
+    "target": 117.92,
+    "lastPrice": 58.0
+  },
+  {
     "ticker": "CLS",
     "pattern": "Ascending Channel",
     "timeframe": "daily",
@@ -337,6 +397,18 @@
   },
   {
     "ticker": "DASH",
+    "pattern": "Hammer",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-13",
+    "confirm": 191.4,
+    "invalidation": 178.04,
+    "target": 204.76,
+    "lastPrice": 152.6
+  },
+  {
+    "ticker": "DASH",
     "pattern": "Descending Channel",
     "timeframe": "daily",
     "direction": "up",
@@ -346,6 +418,18 @@
     "invalidation": 170.34,
     "target": 212.16,
     "lastPrice": 164.91
+  },
+  {
+    "ticker": "DASH",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 199.89,
+    "invalidation": 164.08,
+    "target": 278.12,
+    "lastPrice": 152.6
   },
   {
     "ticker": "DAVE",
@@ -612,6 +696,18 @@
     "lastPrice": 233.78
   },
   {
+    "ticker": "META",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 664.24,
+    "invalidation": 597.99,
+    "target": 996.1,
+    "lastPrice": 560.84
+  },
+  {
     "ticker": "MLM",
     "pattern": "Ascending Channel",
     "timeframe": "weekly",
@@ -732,6 +828,18 @@
     "lastPrice": 97.11
   },
   {
+    "ticker": "OIH",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-19",
+    "confirm": 384.6,
+    "invalidation": 350.88,
+    "target": 442.12,
+    "lastPrice": 329.73
+  },
+  {
     "ticker": "OKLO",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -802,6 +910,30 @@
     "invalidation": 184.72,
     "target": 260.4,
     "lastPrice": 171.7
+  },
+  {
+    "ticker": "PLTR",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 172.41,
+    "invalidation": 154.94,
+    "target": 237.24,
+    "lastPrice": 143.49
+  },
+  {
+    "ticker": "PLTR",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 174.76,
+    "invalidation": 149.25,
+    "target": 244.58,
+    "lastPrice": 143.49
   },
   {
     "ticker": "PLUG",
@@ -888,6 +1020,18 @@
     "lastPrice": 152.04
   },
   {
+    "ticker": "SMCI",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 42.31,
+    "invalidation": 25.77,
+    "target": 57.18,
+    "lastPrice": 21.65
+  },
+  {
     "ticker": "SNOW",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -898,6 +1042,18 @@
     "invalidation": 300.92,
     "target": 243.69,
     "lastPrice": 298.7
+  },
+  {
+    "ticker": "SNPS",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 500.03,
+    "invalidation": 407.63,
+    "target": 639.1,
+    "lastPrice": 396.17
   },
   {
     "ticker": "STX",
@@ -934,6 +1090,18 @@
     "invalidation": 1.7,
     "target": 3.07,
     "lastPrice": 1.21
+  },
+  {
+    "ticker": "TLN",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 366.02,
+    "invalidation": 338.28,
+    "target": 472.89,
+    "lastPrice": 332.92
   },
   {
     "ticker": "TTD",
@@ -994,6 +1162,18 @@
     "invalidation": 87.87,
     "target": 108.39,
     "lastPrice": 82.77
+  },
+  {
+    "ticker": "VRT",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-20",
+    "confirm": 203.3,
+    "invalidation": 179.32,
+    "target": 358.75,
+    "lastPrice": 166.24
   },
   {
     "ticker": "VST",
