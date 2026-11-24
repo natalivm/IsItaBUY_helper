@@ -696,6 +696,18 @@
     "lastPrice": 233.78
   },
   {
+    "ticker": "LRCX",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-23",
+    "confirm": 203.45,
+    "invalidation": 208.82,
+    "target": 63.47,
+    "lastPrice": 209.76
+  },
+  {
     "ticker": "META",
     "pattern": "Descending Channel",
     "timeframe": "weekly",
@@ -826,6 +838,18 @@
     "invalidation": 88.77,
     "target": 54.75,
     "lastPrice": 97.11
+  },
+  {
+    "ticker": "NVDA",
+    "pattern": "Ascending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-23",
+    "confirm": 145.71,
+    "invalidation": 151.31,
+    "target": 53.23,
+    "lastPrice": 165.05
   },
   {
     "ticker": "OIH",
