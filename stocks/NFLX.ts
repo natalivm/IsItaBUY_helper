@@ -1,14 +1,14 @@
 import { defineStock } from './defineStock';
 
 export const NFLX = defineStock({
-  updatedOn: '11/24',
+  updatedOn: '11/25',
   lastReportTag: 'Q2 2026',
   dataReviewedOn: '2026-10-10',
   ticker: 'NFLX',
   name: 'Netflix',
   sector: 'Entertainment',
   themeColor: '#ff007f',
-  currentPrice: 58.1,
+  currentPrice: 58.87,
   fairPriceRange: '$57 - $135',  // stockanalysis.com analyst target range, Oct 8 2026
   shares0: 4222.0,
   rev25: 45180,

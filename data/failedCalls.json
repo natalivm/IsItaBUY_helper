@@ -336,6 +336,18 @@
     "lastPrice": 236.41
   },
   {
+    "ticker": "CLS",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-23",
+    "confirm": 359.05,
+    "invalidation": 220.01,
+    "target": 464.68,
+    "lastPrice": 196.64
+  },
+  {
     "ticker": "COIN",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -1078,6 +1090,18 @@
     "invalidation": 407.63,
     "target": 639.1,
     "lastPrice": 396.17
+  },
+  {
+    "ticker": "SOFI",
+    "pattern": "Falling Wedge",
+    "timeframe": "daily",
+    "direction": "up",
+    "stage": "failed",
+    "stageDate": "2026-11-23",
+    "confirm": 16.76,
+    "invalidation": 13.38,
+    "target": 18.54,
+    "lastPrice": 12.86
   },
   {
     "ticker": "STX",
