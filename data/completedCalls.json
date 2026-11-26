@@ -164,6 +164,17 @@
     "target": 53.37
   },
   {
+    "ticker": "CRWV",
+    "pattern": "Ascending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "target",
+    "stageDate": "2026-11-25",
+    "confirm": 80.56,
+    "invalidation": 145.92,
+    "target": 38.98
+  },
+  {
     "ticker": "CVX",
     "pattern": "Falling Wedge",
     "timeframe": "weekly",
