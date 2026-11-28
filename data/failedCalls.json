@@ -540,6 +540,18 @@
     "lastPrice": 62.88
   },
   {
+    "ticker": "FN",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-27",
+    "confirm": 305.63,
+    "invalidation": 307.38,
+    "target": 130.51,
+    "lastPrice": 307.59
+  },
+  {
     "ticker": "FRSH",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -876,6 +888,18 @@
     "lastPrice": 329.73
   },
   {
+    "ticker": "OIH",
+    "pattern": "Descending Channel",
+    "timeframe": "daily",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-27",
+    "confirm": 353.74,
+    "invalidation": 353.81,
+    "target": 308.75,
+    "lastPrice": 356.25
+  },
+  {
     "ticker": "OKLO",
     "pattern": "Descending Channel",
     "timeframe": "daily",
@@ -982,6 +1006,18 @@
     "invalidation": 1.22,
     "target": 2.03,
     "lastPrice": 1.07
+  },
+  {
+    "ticker": "PLUG",
+    "pattern": "Descending Channel",
+    "timeframe": "weekly",
+    "direction": "down",
+    "stage": "failed",
+    "stageDate": "2026-11-27",
+    "confirm": 1.1,
+    "invalidation": 1.17,
+    "target": 0.48,
+    "lastPrice": 1.16
   },
   {
     "ticker": "RBRK",
